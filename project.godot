@@ -14,6 +14,120 @@ config/name="Midnight Apex"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*res://scripts/globals.gd"
+SignalBus="*res://scripts/SignalBus.gd"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=480
+window/stretch/mode="viewport"
+
+[input]
+
+ui_accept={
+"deadzone": 0.5,
+"events": [{
+"alt": false,
+"ctrl": false,
+"echo": false,
+"key_label": 0,
+"keycode": 4194308,
+"metakey": false,
+"physical_keycode": 0,
+"pressed": false,
+"shift": false,
+"type": 0,
+"unicode": 0
+}, {
+"alt": false,
+"ctrl": false,
+"echo": false,
+"key_label": 0,
+"keycode": 32,
+"metakey": false,
+"physical_keycode": 0,
+"pressed": false,
+"shift": false,
+"type": 0,
+"unicode": 0
+}]
+}
+ui_cancel={
+"deadzone": 0.5,
+"events": [{
+"alt": false,
+"ctrl": false,
+"echo": false,
+"key_label": 0,
+"keycode": 4194309,
+"metakey": false,
+"physical_keycode": 0,
+"pressed": false,
+"shift": false,
+"type": 0,
+"unicode": 0
+}]
+}
+qte_mash={
+"deadzone": 0.5,
+"events": [{
+"alt": false,
+"ctrl": false,
+"echo": false,
+"key_label": 0,
+"keycode": 32,
+"metakey": false,
+"physical_keycode": 0,
+"pressed": false,
+"shift": false,
+"type": 0,
+"unicode": 0
+}, {
+"alt": false,
+"ctrl": false,
+"echo": false,
+"key_label": 0,
+"keycode": 88,
+"metakey": false,
+"physical_keycode": 0,
+"pressed": false,
+"shift": false,
+"type": 0,
+"unicode": 0
+}]
+}
+qte_timing={
+"deadzone": 0.5,
+"events": [{
+"alt": false,
+"ctrl": false,
+"echo": false,
+"key_label": 0,
+"keycode": 4194308,
+"metakey": false,
+"physical_keycode": 0,
+"pressed": false,
+"shift": false,
+"type": 0,
+"unicode": 0
+}, {
+"alt": false,
+"ctrl": false,
+"echo": false,
+"key_label": 0,
+"keycode": 90,
+"metakey": false,
+"physical_keycode": 0,
+"pressed": false,
+"shift": false,
+"type": 0,
+"unicode": 0
+}]
+}
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

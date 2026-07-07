@@ -1,0 +1,38 @@
+# Myth Driver #1
+
+## 1. Narrative Identity
+
+- **Role:** Antagonist / Former ally
+- **Backstory:** Heavily dislikes and distrusts the police because of some bad incident in his past. Never truly accepted Sabine because of her uncle-dad.
+- **Conflict:** Sabine's connection to law enforcement (through her uncle) made him unable to trust her, despite her individual merit. He was instrumental in the decision to oust her.
+- **Resolution:** Sabine confronts him; they reconcile but she ultimately leaves with her own crew.
+
+## 2. Battle Identity
+
+- **Archetype:** TODO
+- **Face type:** TODO (A — Scowling / B — Grinning / F — Focused)
+- **Comfortable turn types (2× bluff rate):** TODO
+- **Weak turn types (never bluffs):** TODO
+
+## 3. Deception Profile
+
+- **Lie rate:** TODO (0–100%)
+- **Clash-position weighting:** TODO (entry only / entry+apex / all)
+- **Intensity:** TODO (1–5)
+- **Reverse psychology:** TODO (yes / no)
+
+## 4. Progression / Tier
+
+- **Tier:** TODO (Novice / Veteran / Top)
+- **Difficulty class:** TODO (Wild / Lieutenant / Boss)
+- **Level range:** TODO
+
+## 5. Stance Preferences
+
+Archetype's **strong turns** and **weak turns** are fixed by the pattern-read tables. On those turn types, stance selection is deterministic from the archetype's 3-stance sequence.
+
+For all **other turn types**, this character's per-position stance preference:
+
+- **Entry (pos 0) preference:** TODO
+- **Apex (pos 1) preference:** TODO
+- **Exit (pos 2) preference:** TODO

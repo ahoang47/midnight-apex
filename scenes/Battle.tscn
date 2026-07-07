@@ -1,0 +1,177 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" uid="uid://cj2sdgu2xh5bp" path="res://scripts/TurnManager.gd" id="1"]
+[ext_resource type="Script" uid="uid://dvnxm8lvkk5jc" path="res://scripts/CarAnimator.gd" id="2"]
+[ext_resource type="Script" uid="uid://bn7wif10gmyff" path="res://scripts/FaceController.gd" id="3"]
+[ext_resource type="Script" uid="uid://yuq362lefey7" path="res://scripts/StraightTimer.gd" id="4"]
+[ext_resource type="Script" uid="uid://2o6dw66y85x6" path="res://scripts/CardHandUI.gd" id="5"]
+
+[node name="Battle" type="Node"]
+script = ExtResource("1")
+
+[node name="World3D" type="SubViewport" parent="."]
+size = Vector2i(640, 480)
+transparent_bg = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D"]
+shadow_enabled = false
+
+[node name="Camera3D" type="Camera3D" parent="World3D"]
+position = Vector3(0, 5, 8)
+
+[node name="StraightRoad" type="Node3D" parent="World3D"]
+
+[node name="StraightRoadMesh" type="MeshInstance3D" parent="World3D/StraightRoad"]
+mesh = SubResource(1)
+
+[node name="CornerRoad" type="Node3D" parent="World3D"]
+visible = false
+
+[node name="CornerRoadMesh" type="MeshInstance3D" parent="World3D/CornerRoad"]
+mesh = SubResource(2)
+
+[node name="PlayerCube" type="MeshInstance3D" parent="World3D"]
+mesh = SubResource(3)
+
+[node name="OpponentCube" type="MeshInstance3D" parent="World3D"]
+mesh = SubResource(3)
+
+[node name="CarAnimators" type="Node" parent="World3D"]
+
+[node name="PlayerCarAnimator" type="Node" parent="World3D/CarAnimators"]
+script = ExtResource("2")
+
+[node name="OpponentCarAnimator" type="Node" parent="World3D/CarAnimators"]
+script = ExtResource("2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("5")
+
+[node name="TopBar" type="HBoxContainer" parent="CanvasLayer"]
+
+[node name="PositionLabel" type="Label" parent="CanvasLayer/TopBar"]
+text = "--"
+
+[node name="PhaseLabel" type="Label" parent="CanvasLayer/TopBar"]
+text = "LAP 1/3"
+
+[node name="TurnTypeLabel" type="Label" parent="CanvasLayer/TopBar"]
+text = ""
+
+[node name="CornerTimerBar" type="TextureProgressBar" parent="CanvasLayer/TopBar"]
+script = ExtResource("4")
+
+[node name="CenterContent" type="HBoxContainer" parent="CanvasLayer"]
+
+[node name="OpponentPanel" type="VBoxContainer" parent="CanvasLayer/CenterContent"]
+custom_minimum_size = Vector2(160, 0)
+
+[node name="FaceStack" type="Control" parent="CanvasLayer/CenterContent/OpponentPanel"]
+custom_minimum_size = Vector2(120, 160)
+
+[node name="FaceATK" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
+modulate = Color(1, 1, 1, 0)
+
+[node name="FaceDEF" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
+modulate = Color(1, 1, 1, 0)
+
+[node name="FaceNEU" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
+modulate = Color(1, 1, 1, 0)
+
+[node name="TellOverlay" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
+modulate = Color(1, 1, 1, 0)
+
+[node name="OpponentNameLabel" type="Label" parent="CanvasLayer/CenterContent/OpponentPanel"]
+text = ""
+
+[node name="DPBarOpponent" type="TextureProgressBar" parent="CanvasLayer/CenterContent/OpponentPanel"]
+
+[node name="CenterGap" type="Control" parent="CanvasLayer/CenterContent"]
+
+[node name="CardPanel" type="VBoxContainer" parent="CanvasLayer/CenterContent"]
+custom_minimum_size = Vector2(180, 0)
+
+[node name="PhasePromptLabel" type="Label" parent="CanvasLayer/CenterContent/CardPanel"]
+text = ""
+
+[node name="StraightTimerBar" type="TextureProgressBar" parent="CanvasLayer/CenterContent/CardPanel"]
+
+[node name="AttackButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel"]
+text = "ATTACK (x0)"
+
+[node name="DefendButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel"]
+text = "DEFEND (x0)"
+
+[node name="SteadyButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel"]
+text = "STEADY (x0)"
+
+[node name="BottomBar" type="HBoxContainer" parent="CanvasLayer"]
+
+[node name="PhaseColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar"]
+
+[node name="EntryLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn"]
+text = "ENTRY"
+
+[node name="ApexLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn"]
+text = "APEX"
+
+[node name="ExitLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn"]
+text = "EXIT"
+
+[node name="PlayerColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar"]
+
+[node name="P1Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn"]
+
+[node name="P1Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P1Panel"]
+
+[node name="P2Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn"]
+
+[node name="P2Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P2Panel"]
+
+[node name="P3Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn"]
+
+[node name="P3Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P3Panel"]
+
+[node name="OpponentColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar"]
+
+[node name="O1Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn"]
+
+[node name="O1Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O1Panel"]
+
+[node name="O2Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn"]
+
+[node name="O2Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O2Panel"]
+
+[node name="O3Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn"]
+
+[node name="O3Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O3Panel"]
+
+[node name="DPBarPlayer" type="TextureProgressBar" parent="CanvasLayer/BottomBar"]
+
+[node name="QTEOverlay" type="CenterContainer" parent="CanvasLayer"]
+visible = false
+
+[node name="QTEPromptLabel" type="Label" parent="CanvasLayer/QTEOverlay"]
+text = ""
+
+[node name="MashIndicator" type="TextureProgressBar" parent="CanvasLayer/QTEOverlay"]
+
+[node name="TimingIndicator" type="Control" parent="CanvasLayer/QTEOverlay"]
+
+[node name="QteTarget" type="TextureRect" parent="CanvasLayer/QTEOverlay/TimingIndicator"]
+
+[node name="QteMarker" type="TextureRect" parent="CanvasLayer/QTEOverlay/TimingIndicator"]
+
+[node name="FaceController" type="Node" parent="."]
+script = ExtResource("3")
+
+[sub_resource type="BoxMesh" id="1"]
+size = Vector3(4, 0.1, 30)
+
+[sub_resource type="BoxMesh" id="2"]
+size = Vector3(4, 0.1, 15)
+
+[sub_resource type="BoxMesh" id="3"]
+size = Vector3(1, 1, 1)

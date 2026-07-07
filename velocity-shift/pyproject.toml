@@ -1,0 +1,8 @@
+[project]
+name = "velocity-shift"
+version = "0.1.0"
+description = "Turn-based racing combat engine prototype"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
