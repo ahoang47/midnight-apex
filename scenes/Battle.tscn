@@ -1,171 +1,10 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://cjl6hlyyix6jl"]
 
 [ext_resource type="Script" uid="uid://cj2sdgu2xh5bp" path="res://scripts/TurnManager.gd" id="1"]
 [ext_resource type="Script" uid="uid://dvnxm8lvkk5jc" path="res://scripts/CarAnimator.gd" id="2"]
 [ext_resource type="Script" uid="uid://bn7wif10gmyff" path="res://scripts/FaceController.gd" id="3"]
 [ext_resource type="Script" uid="uid://yuq362lefey7" path="res://scripts/StraightTimer.gd" id="4"]
 [ext_resource type="Script" uid="uid://2o6dw66y85x6" path="res://scripts/CardHandUI.gd" id="5"]
-
-[node name="Battle" type="Node"]
-script = ExtResource("1")
-
-[node name="World3D" type="SubViewport" parent="."]
-size = Vector2i(640, 480)
-transparent_bg = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D"]
-shadow_enabled = false
-
-[node name="Camera3D" type="Camera3D" parent="World3D"]
-position = Vector3(0, 5, 8)
-
-[node name="StraightRoad" type="Node3D" parent="World3D"]
-
-[node name="StraightRoadMesh" type="MeshInstance3D" parent="World3D/StraightRoad"]
-mesh = SubResource(1)
-
-[node name="CornerRoad" type="Node3D" parent="World3D"]
-visible = false
-
-[node name="CornerRoadMesh" type="MeshInstance3D" parent="World3D/CornerRoad"]
-mesh = SubResource(2)
-
-[node name="PlayerCube" type="MeshInstance3D" parent="World3D"]
-mesh = SubResource(3)
-
-[node name="OpponentCube" type="MeshInstance3D" parent="World3D"]
-mesh = SubResource(3)
-
-[node name="CarAnimators" type="Node" parent="World3D"]
-
-[node name="PlayerCarAnimator" type="Node" parent="World3D/CarAnimators"]
-script = ExtResource("2")
-
-[node name="OpponentCarAnimator" type="Node" parent="World3D/CarAnimators"]
-script = ExtResource("2")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-script = ExtResource("5")
-
-[node name="TopBar" type="HBoxContainer" parent="CanvasLayer"]
-
-[node name="PositionLabel" type="Label" parent="CanvasLayer/TopBar"]
-text = "--"
-
-[node name="PhaseLabel" type="Label" parent="CanvasLayer/TopBar"]
-text = "LAP 1/3"
-
-[node name="TurnTypeLabel" type="Label" parent="CanvasLayer/TopBar"]
-text = ""
-
-[node name="CornerTimerBar" type="TextureProgressBar" parent="CanvasLayer/TopBar"]
-script = ExtResource("4")
-
-[node name="CenterContent" type="HBoxContainer" parent="CanvasLayer"]
-
-[node name="OpponentPanel" type="VBoxContainer" parent="CanvasLayer/CenterContent"]
-custom_minimum_size = Vector2(160, 0)
-
-[node name="FaceStack" type="Control" parent="CanvasLayer/CenterContent/OpponentPanel"]
-custom_minimum_size = Vector2(120, 160)
-
-[node name="FaceATK" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
-modulate = Color(1, 1, 1, 0)
-
-[node name="FaceDEF" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
-modulate = Color(1, 1, 1, 0)
-
-[node name="FaceNEU" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
-modulate = Color(1, 1, 1, 0)
-
-[node name="TellOverlay" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack"]
-modulate = Color(1, 1, 1, 0)
-
-[node name="OpponentNameLabel" type="Label" parent="CanvasLayer/CenterContent/OpponentPanel"]
-text = ""
-
-[node name="DPBarOpponent" type="TextureProgressBar" parent="CanvasLayer/CenterContent/OpponentPanel"]
-
-[node name="CenterGap" type="Control" parent="CanvasLayer/CenterContent"]
-
-[node name="CardPanel" type="VBoxContainer" parent="CanvasLayer/CenterContent"]
-custom_minimum_size = Vector2(180, 0)
-
-[node name="PhasePromptLabel" type="Label" parent="CanvasLayer/CenterContent/CardPanel"]
-text = ""
-
-[node name="StraightTimerBar" type="TextureProgressBar" parent="CanvasLayer/CenterContent/CardPanel"]
-
-[node name="AttackButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel"]
-text = "ATTACK (x0)"
-
-[node name="DefendButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel"]
-text = "DEFEND (x0)"
-
-[node name="SteadyButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel"]
-text = "STEADY (x0)"
-
-[node name="BottomBar" type="HBoxContainer" parent="CanvasLayer"]
-
-[node name="PhaseColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar"]
-
-[node name="EntryLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn"]
-text = "ENTRY"
-
-[node name="ApexLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn"]
-text = "APEX"
-
-[node name="ExitLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn"]
-text = "EXIT"
-
-[node name="PlayerColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar"]
-
-[node name="P1Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn"]
-
-[node name="P1Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P1Panel"]
-
-[node name="P2Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn"]
-
-[node name="P2Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P2Panel"]
-
-[node name="P3Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn"]
-
-[node name="P3Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P3Panel"]
-
-[node name="OpponentColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar"]
-
-[node name="O1Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn"]
-
-[node name="O1Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O1Panel"]
-
-[node name="O2Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn"]
-
-[node name="O2Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O2Panel"]
-
-[node name="O3Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn"]
-
-[node name="O3Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O3Panel"]
-
-[node name="DPBarPlayer" type="TextureProgressBar" parent="CanvasLayer/BottomBar"]
-
-[node name="QTEOverlay" type="CenterContainer" parent="CanvasLayer"]
-visible = false
-
-[node name="QTEPromptLabel" type="Label" parent="CanvasLayer/QTEOverlay"]
-text = ""
-
-[node name="MashIndicator" type="TextureProgressBar" parent="CanvasLayer/QTEOverlay"]
-
-[node name="TimingIndicator" type="Control" parent="CanvasLayer/QTEOverlay"]
-
-[node name="QteTarget" type="TextureRect" parent="CanvasLayer/QTEOverlay/TimingIndicator"]
-
-[node name="QteMarker" type="TextureRect" parent="CanvasLayer/QTEOverlay/TimingIndicator"]
-
-[node name="FaceController" type="Node" parent="."]
-script = ExtResource("3")
 
 [sub_resource type="BoxMesh" id="1"]
 size = Vector3(4, 0.1, 30)
@@ -174,4 +13,202 @@ size = Vector3(4, 0.1, 30)
 size = Vector3(4, 0.1, 15)
 
 [sub_resource type="BoxMesh" id="3"]
-size = Vector3(1, 1, 1)
+
+[node name="Battle" type="Node" unique_id=1730419706]
+script = ExtResource("1")
+
+[node name="World3D" type="SubViewport" parent="." unique_id=1182557822]
+transparent_bg = true
+size = Vector2i(640, 480)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World3D" unique_id=1405685386]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D" unique_id=2015569183]
+
+[node name="Camera3D" type="Camera3D" parent="World3D" unique_id=1046787934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 8)
+
+[node name="StraightRoad" type="Node3D" parent="World3D" unique_id=661296987]
+
+[node name="StraightRoadMesh" type="MeshInstance3D" parent="World3D/StraightRoad" unique_id=1646267230]
+mesh = SubResource("1")
+
+[node name="CornerRoad" type="Node3D" parent="World3D" unique_id=779277324]
+visible = false
+
+[node name="CornerRoadMesh" type="MeshInstance3D" parent="World3D/CornerRoad" unique_id=1023725343]
+mesh = SubResource("2")
+
+[node name="PlayerCube" type="MeshInstance3D" parent="World3D" unique_id=588854623]
+mesh = SubResource("3")
+
+[node name="OpponentCube" type="MeshInstance3D" parent="World3D" unique_id=223032349]
+mesh = SubResource("3")
+
+[node name="CarAnimators" type="Node" parent="World3D" unique_id=742828375]
+
+[node name="PlayerCarAnimator" type="Node" parent="World3D/CarAnimators" unique_id=179663130]
+script = ExtResource("2")
+
+[node name="OpponentCarAnimator" type="Node" parent="World3D/CarAnimators" unique_id=901838961]
+script = ExtResource("2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1173076481]
+script = ExtResource("5")
+
+[node name="TopBar" type="HBoxContainer" parent="CanvasLayer" unique_id=2104318624]
+
+[node name="PositionLabel" type="Label" parent="CanvasLayer/TopBar" unique_id=238878195]
+layout_mode = 2
+text = "--"
+
+[node name="PhaseLabel" type="Label" parent="CanvasLayer/TopBar" unique_id=1594909499]
+layout_mode = 2
+text = "LAP 1/3"
+
+[node name="TurnTypeLabel" type="Label" parent="CanvasLayer/TopBar" unique_id=1594726058]
+layout_mode = 2
+
+[node name="CornerTimerBar" type="TextureProgressBar" parent="CanvasLayer/TopBar" unique_id=483334693]
+layout_mode = 2
+script = ExtResource("4")
+
+[node name="CenterContent" type="HBoxContainer" parent="CanvasLayer" unique_id=1549541074]
+
+[node name="OpponentPanel" type="VBoxContainer" parent="CanvasLayer/CenterContent" unique_id=1803621400]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+
+[node name="FaceStack" type="Control" parent="CanvasLayer/CenterContent/OpponentPanel" unique_id=2096533075]
+custom_minimum_size = Vector2(120, 160)
+layout_mode = 2
+
+[node name="FaceATK" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack" unique_id=1954897134]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+
+[node name="FaceDEF" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack" unique_id=1565406080]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+
+[node name="FaceNEU" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack" unique_id=446775873]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+
+[node name="TellOverlay" type="TextureRect" parent="CanvasLayer/CenterContent/OpponentPanel/FaceStack" unique_id=2038292490]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+
+[node name="OpponentNameLabel" type="Label" parent="CanvasLayer/CenterContent/OpponentPanel" unique_id=807433335]
+layout_mode = 2
+
+[node name="DPBarOpponent" type="TextureProgressBar" parent="CanvasLayer/CenterContent/OpponentPanel" unique_id=1422620358]
+layout_mode = 2
+
+[node name="CenterGap" type="Control" parent="CanvasLayer/CenterContent" unique_id=1197358752]
+layout_mode = 2
+
+[node name="CardPanel" type="VBoxContainer" parent="CanvasLayer/CenterContent" unique_id=1969905599]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+
+[node name="PhasePromptLabel" type="Label" parent="CanvasLayer/CenterContent/CardPanel" unique_id=1682865765]
+layout_mode = 2
+
+[node name="StraightTimerBar" type="TextureProgressBar" parent="CanvasLayer/CenterContent/CardPanel" unique_id=1618050409]
+layout_mode = 2
+
+[node name="AttackButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel" unique_id=529599801]
+layout_mode = 2
+text = "ATTACK (x0)"
+
+[node name="DefendButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel" unique_id=1560101830]
+layout_mode = 2
+text = "DEFEND (x0)"
+
+[node name="SteadyButton" type="Button" parent="CanvasLayer/CenterContent/CardPanel" unique_id=315998835]
+layout_mode = 2
+text = "STEADY (x0)"
+
+[node name="BottomBar" type="HBoxContainer" parent="CanvasLayer" unique_id=1435098258]
+
+[node name="PhaseColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar" unique_id=606684921]
+layout_mode = 2
+
+[node name="EntryLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn" unique_id=961534961]
+layout_mode = 2
+text = "ENTRY"
+
+[node name="ApexLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn" unique_id=517150431]
+layout_mode = 2
+text = "APEX"
+
+[node name="ExitLabel" type="Label" parent="CanvasLayer/BottomBar/PhaseColumn" unique_id=845855221]
+layout_mode = 2
+text = "EXIT"
+
+[node name="PlayerColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar" unique_id=455548321]
+layout_mode = 2
+
+[node name="P1Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn" unique_id=680867088]
+layout_mode = 2
+
+[node name="P1Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P1Panel" unique_id=596565304]
+layout_mode = 0
+
+[node name="P2Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn" unique_id=771404329]
+layout_mode = 2
+
+[node name="P2Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P2Panel" unique_id=1161087631]
+layout_mode = 0
+
+[node name="P3Panel" type="Panel" parent="CanvasLayer/BottomBar/PlayerColumn" unique_id=444811211]
+layout_mode = 2
+
+[node name="P3Label" type="Label" parent="CanvasLayer/BottomBar/PlayerColumn/P3Panel" unique_id=1767292196]
+layout_mode = 0
+
+[node name="OpponentColumn" type="VBoxContainer" parent="CanvasLayer/BottomBar" unique_id=1046865353]
+layout_mode = 2
+
+[node name="O1Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn" unique_id=1876563670]
+layout_mode = 2
+
+[node name="O1Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O1Panel" unique_id=1061478506]
+layout_mode = 0
+
+[node name="O2Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn" unique_id=1161041954]
+layout_mode = 2
+
+[node name="O2Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O2Panel" unique_id=995599069]
+layout_mode = 0
+
+[node name="O3Panel" type="Panel" parent="CanvasLayer/BottomBar/OpponentColumn" unique_id=1620779934]
+layout_mode = 2
+
+[node name="O3Label" type="Label" parent="CanvasLayer/BottomBar/OpponentColumn/O3Panel" unique_id=1589436430]
+layout_mode = 0
+
+[node name="DPBarPlayer" type="TextureProgressBar" parent="CanvasLayer/BottomBar" unique_id=1714998219]
+layout_mode = 2
+
+[node name="QTEOverlay" type="CenterContainer" parent="CanvasLayer" unique_id=1739325376]
+visible = false
+
+[node name="QTEPromptLabel" type="Label" parent="CanvasLayer/QTEOverlay" unique_id=1292625515]
+layout_mode = 2
+
+[node name="MashIndicator" type="TextureProgressBar" parent="CanvasLayer/QTEOverlay" unique_id=1799503916]
+layout_mode = 2
+
+[node name="TimingIndicator" type="Control" parent="CanvasLayer/QTEOverlay" unique_id=1748013449]
+layout_mode = 2
+
+[node name="QteTarget" type="TextureRect" parent="CanvasLayer/QTEOverlay/TimingIndicator" unique_id=1971851598]
+layout_mode = 0
+
+[node name="QteMarker" type="TextureRect" parent="CanvasLayer/QTEOverlay/TimingIndicator" unique_id=303685890]
+layout_mode = 0
+
+[node name="FaceController" type="Node" parent="." unique_id=1127715295]
+script = ExtResource("3")
