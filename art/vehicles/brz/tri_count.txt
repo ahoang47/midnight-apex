@@ -1,0 +1,8 @@
+BRZ_Body 2885
+BRZ_Lamps 352
+BRZ_Parts 762
+BRZ_Under 36
+BRZ_Exhaust_L 22
+BRZ_Exhaust_R 22
+TOTAL 4079
+(effects, not in total: glow sprites + blob shadow 10)

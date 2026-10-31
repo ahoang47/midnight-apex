@@ -93,3 +93,22 @@ Built the complete Godot prototype per `velocity-shift/overview/godot_prototype.
 
 **Earlier entries lost with the box (summarised):** 2026-10-31 — first art guide written (general, not S2000-specific, after context from Desmond); later the same day reorganised so the car rules are the only binding standard and all scene content is mood reference ("The key rules are for the cars only. The scene will likely not make it to the game.").
 
+## 2026-10-31 — BRZ reference car (detail pass) + S2000/BRZ duo vibe check (Arthur, Art Director)
+
+- `art/vehicles/brz/` — **new.** Subaru BRZ (ZD8) built to the vehicle standard (Part A), the same way as the S2000.
+  - Size: 4,079 tris (≤ 5k).
+  - Blueprint IoU: side .9651 / top .9815 / front .9453 / rear .9275, against gates of .95 / .95 / .92 / .92.
+  - Paint: blue, matched to the reference photos.
+  - Textures:
+    - 1024² body: baked AO, painted form shading for the door scoop, hood valley, haunch and ducktail, and vector panel lines from the blueprint's feature lines
+    - 256² atlas: 10 twin-spoke wheel, lamps, honeycomb grille, fictional plate and badges
+    - 256×128 painted env map
+    - all RGB555 + Bayer
+  - Contents: clay + detail build scripts, blueprint data and IoU gate, `.blend/.glb/.obj/.fbx` exports, clean and PSX renders, compare sheets, README.
+  - Verified: rebuilt from a temp copy of the folder with the same tri count and IoU, and byte-identical textures.
+  - The front 3/4 dealer photo is left out because its licensing is unclear.
+- `art/mood/tokyo_v2/` — **added** `scene_duo.py`, `post_duo.py` and `renders/duo/` previews. They show both cars parked side by side on the Tokyo v2 night street, using the same unlit/PSX recipe and post (640×448 → RGB555 + Bayer → 2× nearest). This is a non-binding vibe check; `scene_v2.py` is untouched.
+- `velocity-shift/overview/art_direction.md` — A.1.5 added, pending lead review: trust the blueprint and classify its lines before overriding it.
+
+**Reasoning:**
+- **The corrected lesson.** The blueprint was right. BRZ passes 2–3 misread the window/DLO lines and trusted a low, about 4%-small photo camera solve. Pass 4 rebuilt from the blueprint alone, like the S2000, and was approved. The lead approved the detail pass ("Way better… hit detail work"), asked to see the BRZ next to the S2000 in a similar scene, and approved pushing to `proto-build` without a PR.

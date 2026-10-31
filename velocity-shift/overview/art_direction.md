@@ -44,6 +44,13 @@ culture, atmospheric roads); characters lean **JoJo** and are never rendered in-
    glass white like the background).
 4. **[MUST]** *(added 2026-10-31 after v2, lead's request on the BRZ)* Shape sign-off at **clay**: stop at untextured grey clay and get the lead's approval of the shape before
    texturing and detailing.
+5. **[MUST]** *(added 2026-10-31 from the BRZ rebuild — pending lead review)* **Trust the blueprint; classify its lines
+   before you override it.** When the blueprint seems to disagree with a photo, the usual cause is misread lines: glass
+   or DLO edges taken for body edges, or the other way round. A low or small photo camera solve causes it too. Trace and
+   classify the blueprint lines (body silhouette, glass/DLO, lamps, trim), then build from the blueprint alone, the
+   S2000 way. Photos are a final visual check (A.1.3) and never set geometry. *(Correction to the lesson in A.1.3: the
+   BRZ blueprint was right. Passes 2–3 misread its window lines and trusted a low photo camera. The blueprint-only
+   pass 4 fixed the shape.)*
 
 ### A.2 Geometry
 1. **[MUST]** Budget **≤ 5,000 triangles** per car (body, glass, lamps, wheels, tyres, trim). Mod parts ≤ 300 triangles each.

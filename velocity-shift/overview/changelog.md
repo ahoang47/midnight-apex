@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-10-31 — BRZ (detail pass) added; S2000 + BRZ duo vibe check; A.1.5 blueprint lesson (pending review)
+
+- `art/vehicles/brz/` — **new.** Subaru BRZ (ZD8), the second car built to Part A.
+  - Size and gate: 4,079 tris. Blueprint IoU side .965 / top .982 / front .945 / rear .928.
+  - Paint and textures: blue. Painted 1024² body (baked AO, vector panel lines) and a 256² atlas, both RGB555 + Bayer.
+  - Lamps: wedge headlights and swept boomerang taillights.
+  - Faked shine. Made-up brands only.
+  - Contents: build scripts (clay + detail), blueprint data, exports (`.blend/.glb/.obj/.fbx`), key renders and a README.
+- `art/mood/tokyo_v2/scene_duo.py`, `post_duo.py`, `renders/duo/` — **new.** The S2000 and BRZ parked side by side on the Tokyo v2 street. This is a vibe check and non-binding. `scene_v2.py` is unchanged.
+- `overview/art_direction.md` — **A.1.5 added (pending lead review):** trust the blueprint and classify its lines before overriding it; photos never set geometry. A note corrects the BRZ lesson quoted in A.1.3.
+
+**Reasoning:**
+- **The lesson.** The BRZ took four clay passes.
+  - Passes 2–3 concluded that "the blueprint draws the car too tall" and moved the body toward a photo camera solve. That solve turned out to be about 4% small and low.
+  - The lead's correction: the blueprint doesn't disagree; the window lines were confused.
+  - Pass 4 went back to the S2000 method (classify the blueprint lines, build from the blueprint alone, gate on IoU) and was approved ("Way better").
+  - Recording the corrected lesson keeps A.1.3's photo check from being read as permission to override the blueprint.
+- **The duo.** The lead asked to see the BRZ next to the S2000 in a similar scene before pushing.
+
+---
+
 ## 2026-10-31 — `art_direction.md` restored after data loss (reconstructed v2)
 
 `overview/art_direction.md` re-added. The v2 draft was never committed and was lost when the art box was wiped (2026-10-31 ~11:31 AM PT). Rebuilt from the approved skill text, the chat record and the surviving Tokyo v2 style-reference sheet.

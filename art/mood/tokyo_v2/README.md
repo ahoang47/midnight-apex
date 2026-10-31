@@ -18,3 +18,22 @@ blender -b --python scene_v2.py    # textures (make_tex_v2.py), scene .blend, ra
 python3 post_v2.py                 # bloom/quantise/upscale, _800.jpg previews, contact sheet
 python3 make_style_reference.py    # palette + annotated crops
 ```
+
+## Duo: S2000 + BRZ (added 2026-10-31, vibe check, non-binding)
+`scene_duo.py` reruns `scene_v2.py`'s world and S2000 section unchanged, so the single-car scene is not touched. It
+then parks the S2000 and the BRZ (`art/vehicles/brz/brz_lowpoly.blend`) side by side:
+- both noses face down the street
+- about 1 m gap between the doors
+- the BRZ is staggered 1.1 m back
+- they sit under the sodium lamp one block before the konbini, so the storefront stays in the distance
+- each car has its own blob shadow, headlight-throw decal and lamp glow sprites
+
+The BRZ gets the scene's own fake shine. Its paint env is 0.22 with a cool tint, lower than the S2000's 0.45, because
+the neon env map blotched its darker blue panels. `post_duo.py` is the same post as `post_v2.py`: bloom → RGB555 + Bayer
+→ 2× nearest, 640×448 → 1280×896.
+```
+blender -b --python scene_duo.py    # tokyo_duo.blend + raw/neon passes in renders/duo/
+python3 post_duo.py                 # duo_*.png, _800.jpg previews, duo_contact
+```
+Previews: `renders/duo/duo_{hero_front34,rear34,side_by_side,establishing}_800.jpg` and `duo_contact_800.jpg`.
+A test rebuild from a temp copy of the repo layout matched the box render pixel for pixel.

@@ -5,3 +5,6 @@ tex/
 renders/raw_*.png
 renders/neon_*.png
 renders/tokyo_v2_*.png
+renders/duo/raw_*.png
+renders/duo/neon_*.png
+renders/duo/duo_*.png
