@@ -1,0 +1,8 @@
+*.blend1
+renders/cmp_*.png
+renders/compare_front.png
+renders/compare_rear.png
+renders/*_ps2.png
+renders/*_640.png
+renders/s2000_closeup_front_tex.png
+renders/s2000_closeup_rear_tex.png

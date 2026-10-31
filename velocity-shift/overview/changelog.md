@@ -4,6 +4,22 @@
 
 ---
 
+## 2026-10-31 — `art_direction.md` restored after data loss (reconstructed v2)
+
+`overview/art_direction.md` re-added. The v2 draft was never committed and was lost when the art box was wiped (2026-10-31 ~11:31 AM PT). Rebuilt from the approved skill text, the chat record and the surviving Tokyo v2 style-reference sheet.
+
+- **Part A — Vehicle standard [MUST]:** blueprint build + IoU gate (side/top ≥ 0.95, front/rear ≥ 0.92), ≤ 5k tris, painted 1024² body with baked AO, vector panel lines, 256² parts atlas, 512² fabric, RGB555 + Bayer textures, faked shine (ambient + one key + Blinn + painted env map, env ≤ 0.45), opaque cool-tinted glass, no interior/brakes/engine, made-up brands, review in the 640×480 reference frame, checklist, Godot shader sketch (untested).
+- **Part B — [VIBE]/[PROPOSAL]:** what made Tokyo v2 work, its palette, district proposals, cameras, portraits/UI, engine notes, advisory scene checklist.
+- **Part C:** naming and `art/` layout, open questions Q1–Q9, doc conflicts K1–K7. **Appendix W:** S2000 worked example.
+- **New since v2 (flagged pending review):** A.1.3 photo check of window/roof/hood/wheel lines (IoU alone missed a too-tall BRZ body), A.1.4 clay-stage shape sign-off.
+- Touge/Wangan palette and fog numbers are re-proposed (originals lost) and still need sign-off (Q2).
+
+**Reasoning:** lead asked to restore the rules from the chat session and push finished art so it isn't lost again.
+
+**Lost entries (summarised):** 2026-10-31 — `art_direction.md` created as the general game art guide (after context from Desmond); then reorganised so car rules come first and are the only binding standard, with all scene content relabelled [VIBE]/[PROPOSAL] and nothing deleted.
+
+---
+
 ## 2026-07-07 — Human-centric tasks stripped from prototype doc
 
 All 16 `🧑 You:` sections removed from `overview/godot_prototype.md` — autoload registration, editor setup, constant tuning, verification steps, and placeholder notes. The doc is now MCP-only; no tasks require manual editor intervention.
