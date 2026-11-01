@@ -95,7 +95,7 @@ Opponent notices player.
 #### Denial (refusing to accept gap)
 - "No—no way you're that far ahead already!"
 - "That's not possible… I had the better launch!"
-- "No way, you probably have more than $100,000 under the hood!"
+- "No way, you probably have more than 100,000 <currency> under the hood!"
 - "This is a trick. It has to be a trick!"
 - "I refuse to believe I'm losing this badly!"
 

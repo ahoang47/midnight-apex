@@ -3,9 +3,10 @@
 ## 1. Narrative Identity
 
 - **Role:** Jealous rival
-- **Backstory:** Jealous of Sabine because she was a better driver than him. Knew she wasn't involved in the sting operation that triggered the ousting, but figured it would be a convenient way to get rid of her so he could be the better driver.
-- **Conflict:** His jealousy drove him to exploit the situation and manipulate the other Myth Drivers against Sabine, knowing full well she was innocent.
-- **Resolution:** Sabine confronts him; they reconcile but she leaves.
+- **District:** Street
+- **Backstory:** Jealous of Sabine because she was a better driver than him. Knew she wasn't an informant in the police sweep that triggered the ousting (there was no informant), but figured it would be a convenient way to get rid of her so he could be the better driver. He also wanted out, to go pro in the circuit.
+- **Conflict:** Back then, his jealousy drove him to exploit the situation and manipulate the other Myth Drivers against Sabine, knowing full well she was innocent.
+- **Resolution:** The truth comes out at the summit of Fushigi-Yama; they reconcile but she leaves.
 
 ## 2. Battle Identity
 

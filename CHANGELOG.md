@@ -8,6 +8,29 @@
 
 ---
 
+## 2026-10-31 — Story canon locked: three Myth Drivers, no informant, Fushigi-Yama summit [story] (Nathaniel, Narrative Lead)
+
+Applies the lead's canon decisions from the lore audit. Not committed or pushed. Mechanical fields (archetype, face type, lie rate, stance preferences) were left as `TODO`.
+
+**New:**
+- `story/canon.md` — source-of-truth page: the 10 decisions, a backstory timeline (ousting → breakup → player arrives → districts → summit → ending) and open questions.
+
+**Changed:**
+- `story/pitch.md` — fictional mashup city (name `<TBD>`); districts' in-world names `<TBD>`; Fushigi-Yama added to Touge; dusk opening instead of "normal daytime life"; player any gender, Sabine always female (opposite-gender rule dropped); "Circuit specialist" → Street specialist (#3) with Myth Driver numbers per district; Myth Drivers haven't spoken since the breakup; sweep was benign and there was no informant; Sabine believes the rumor; "four Myth Drivers" → three; challenge-each climax → summit meeting; ending → calm decline + parting-shot TODO.
+- `story/plot.md` — dusk opening (daylight commute flagged TODO); "U-Haul" and "Novelty Hill Rd" removed; `<Mentor>`/`<mentor>` → Sabine; duplicated garage-intro bullets removed from §3; unfinished garage script flagged TODO; "Americanized" removed; Myth Driver numbers on district beats; sections renumbered 8–11 → 7–10 (there was no §7); "all four" → three; Honor Restoration and Final Meeting rewritten around the Fushigi-Yama summit; cut-off "They each individually agree" kept and flagged TODO; Sabine's arc now "believes the rumor; learns the truth at the summit".
+- `story/barks.md` — "$100,000" → "100,000 <currency>".
+- `story/characters/sabine.md` — believes the snitch rumor until the summit; Myth Driver #4 line deleted; "tells them to fuck off" → calm decline + parting-shot TODO.
+- `story/characters/myth_driver_1/2/3.md` — District field added (Touge/Wangan/Street); snitch rumor named as each one's cover; "sting operation" → police sweep; #2/#3 talking to each other moved clearly into the past; #3 gains the go-pro motive; resolution "Sabine confronts him" → truth comes out at the Fushigi-Yama summit.
+- `story/characters/index.md` — pointer to `canon.md`; district added to each Myth Driver.
+
+**Reasoning:**
+- The audit found the Myth Driver count (3 vs 4), who knows the truth, who confronts whom, the setting (real US road and dollars vs Japanese districts), time of day and the mentor's gender all contradicting each other across files. The lead resolved them; `canon.md` keeps them in one place so the other files don't drift again.
+- Names, the parting shot and the summit setup were left as `<TBD>`/`<TODO>` rather than invented, because the lead decides major plot points.
+
+**Not changed (systems questions for Barry):** pink slips as a boss stake in `story/barks.md` (car loss was removed in the 2026-06-17 mod redesign); the three personality lists that don't map to each other (`barks.md` "Personalities", the barks mid-race categories, and the sim's six AI personalities).
+
+---
+
 ## 2026-10-31 — Repo restructure: one layout, one AGENTS.md, one changelog [repo] (Desmond, Chief of Design)
 
 Layout approved by the lead. Done with `git mv` so file history is kept. Not committed or pushed; staged on local branch `restructure` (from `origin/proto-build`) for the lead's review.

@@ -4,12 +4,11 @@
 
 - **Role:** Mentor
 - **Backstory:** Raised by her uncle, a detective (inspiration: Makoto Date from *Yakuza*). Quietly turned down a date request from Myth Driver #2 because she valued his friendship, never told anybody — but a no-name low-level racer witnessed it and spread rumors.
-- **Conflict:** When she discovers the true reason the Myth Drivers ousted her:
+- **Conflict:** Until the end she believes she was ousted over the snitch rumor from the police sweep. When she discovers the true reasons at the summit of Fushigi-Yama:
   - **Myth Driver #1** — upset because it's not her fault her uncle-dad is a cop
   - **Myth Driver #2** — upset because she was nothing but kind to him and he took a personal vendetta over something they should've just talked about
   - **Myth Driver #3** — upset because he's a little punk bitch
-  - **Myth Driver #4** — upset that he was making those decisions for her
-- **Resolution:** Reconciles with them, but tells them to fuck off — she has her own crew now.
+- **Resolution:** Reconciles with them, then calmly declines their offer to rejoin — she has her own crew now. Gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
 
 ## 2. Battle Identity
 

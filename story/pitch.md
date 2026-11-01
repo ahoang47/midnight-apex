@@ -2,7 +2,7 @@
 
 ## High Concept
 
-A narrative-driven street racing RPG set in a moody, night-only city where players progress through interconnected underground racing scenes using a tactical, decision-based racing system.
+A narrative-driven street racing RPG set in a moody, night-only fictional city (name `<TBD>`; a mashup that is neither Japan nor the US) where players progress through interconnected underground racing scenes using a tactical, decision-based racing system.
 
 The player does not directly control the vehicle. Instead, races are resolved through strategic inputs, timing-based reactions, opponent prediction, and risk management systems that transform street racing into high-speed psychological combat.
 
@@ -74,7 +74,7 @@ without relying on simulator driving execution.
 
 # District Structure
 
-The city is divided into 3 core racing districts:
+The city is divided into 3 core racing districts (in-world names `<TBD>`):
 
 ## Touge District
 
@@ -82,6 +82,7 @@ The city is divided into 3 core racing districts:
 - precision-focused racing
 - downhill pressure battles
 - fog-heavy atmosphere and narrow visibility
+- home of Fushigi-Yama, the mountain where the story climaxes
 
 ### Racer Archetypes
 - Delinquent
@@ -226,11 +227,11 @@ Inspired by:
 
 ## Premise
 
-The player is a young adult relocating to a new city for work.
+The player is a young adult (any gender) relocating to a new city for work.
 
 The opening establishes:
 
-- normal daytime life
+- arrival at dusk (the game is set at night from then on)
 - nighttime isolation
 - underground car enthusiasm
 
@@ -242,9 +243,9 @@ The opposing racer — later revealed as the mentor — helps rebuild the destro
 
 # Mentor Character
 
-The mentor is:
+The mentor is Sabine:
 
-- opposite gender of player selection
+- always female (the player character can be any gender)
 - approximately 10+ years older
 - a respected mid-tier elite racer
 - one of the only known drivers capable of competing across all disciplines at a high level
@@ -263,16 +264,16 @@ They serve as:
 
 Three legendary former racers exist within the city’s history:
 
-- Touge specialist
-- Wangan specialist
-- Circuit specialist
+- Touge specialist (Myth Driver #1)
+- Wangan specialist (Myth Driver #2)
+- Street specialist (Myth Driver #3) — in this universe, circuit and street racing are the same scene
 
 These racers:
 
 - are no longer active rulers of the scene
 - are considered washed-up or semi-retired legends
 - still command enormous respect from current district bosses
-- are no longer friends with each other
+- are no longer friends with each other, and have not spoken since the breakup
 
 
 
@@ -281,6 +282,8 @@ These racers:
 # Core Story Mystery
 
 A major police sweep years earlier fractured the old underground racing generation.
+
+The sweep itself was benign and coincidental — there was no informant. The snitch story was a convenient cover each Myth Driver used for his own personal reason to push the mentor out.
 
 The mentor became associated with rumors of being an informant (“snitch”), leading to exclusion from upper racing circles.
 
@@ -303,24 +306,27 @@ into:
 
 “Can anyone involved actually see this objectively anymore?”
 
-The player constantly pressures the mentor for answers throughout the game, but the mentor repeatedly deflects or avoids discussing the past.
+The player constantly pressures the mentor for answers throughout the game, but the mentor repeatedly deflects or avoids discussing the past. She genuinely believes she was ousted over the snitch rumor and does not know the real reasons.
 
-After defeating all three district bosses and meeting all four Myth Drivers, the player directly confronts the mentor.
+After defeating all three district bosses and racing all three Myth Drivers, the player directly confronts the mentor.
 
 The mentor finally admits:
 - the incident truly happened
 - they were present
 - but they were not the informant
 
-The player then challenges all three Myth Drivers in order to restore the mentor’s honor and force the old generation to confront the truth directly.
+To restore the mentor’s honor and force the old generation to confront the truth directly, the player tricks all three Myth Drivers and the mentor into meeting at the summit of Fushigi-Yama, the Touge district’s mountain — the first time they have met since the breakup.
 
-After the Myth Drivers are defeated:
-- they agree to finally meet with the mentor
+At the summit:
+- the truth comes out: there was no informant, only each Myth Driver’s personal reason
+- the mentor learns the real reasons for the first time
 - reconciliation occurs
 - the former generation offers the mentor a place beside them again
 
-The mentor declines, declaring they already found a new crew:
+The mentor calmly declines, declaring she already found a new crew:
 the one formed around the player during the game.
+
+She then gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
 
 ---
 

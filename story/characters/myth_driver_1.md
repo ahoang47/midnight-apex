@@ -3,9 +3,10 @@
 ## 1. Narrative Identity
 
 - **Role:** Antagonist / Former ally
+- **District:** Touge
 - **Backstory:** Heavily dislikes and distrusts the police because of some bad incident in his past. Never truly accepted Sabine because of her uncle-dad.
-- **Conflict:** Sabine's connection to law enforcement (through her uncle) made him unable to trust her, despite her individual merit. He was instrumental in the decision to oust her.
-- **Resolution:** Sabine confronts him; they reconcile but she ultimately leaves with her own crew.
+- **Conflict:** Sabine's connection to law enforcement (through her uncle) made him unable to trust her, despite her individual merit. He was instrumental in the decision to oust her, using the snitch rumor from the police sweep as cover.
+- **Resolution:** The truth comes out at the summit of Fushigi-Yama; they reconcile but she ultimately leaves with her own crew.
 
 ## 2. Battle Identity
 

@@ -3,9 +3,10 @@
 ## 1. Narrative Identity
 
 - **Role:** Former friend / Resentful rival
-- **Backstory:** Asked Sabine out on a date once; she politely rejected him and they remained friends. However, he secretly resents her because he believes she told everybody about it. Myth Drivers #1 and #3 still bring it up.
-- **Conflict:** His resentment festered — he took a personal vendetta against Sabine for something she didn't do rather than talking to her directly.
-- **Resolution:** Sabine confronts him; they reconcile but she leaves.
+- **District:** Wangan
+- **Backstory:** Asked Sabine out on a date once; she politely rejected him and they remained friends. However, he secretly resents her because he believes she told everybody about it. Before the breakup, Myth Drivers #1 and #3 kept bringing it up; none of them has spoken since.
+- **Conflict:** His resentment festered — he took a personal vendetta against Sabine for something she didn't do rather than talking to her directly, and hid it behind the snitch rumor from the police sweep.
+- **Resolution:** The truth comes out at the summit of Fushigi-Yama; they reconcile but she leaves.
 
 ## 2. Battle Identity
 

@@ -7,7 +7,7 @@ ACT 1 — INTRODUCTION
 1. Opening Sequence
 
 PC relocates to new city for work
-Establishes normal daytime life
+PC arrives at dusk; night from then on
 Nighttime exploration of city begins
 Exposure to underground racing culture
 First illegal race encounter occurs
@@ -15,20 +15,20 @@ PC participates in initial race event
 Race ends in catastrophic engine failure 
 
 Scene opens with PC driving a moving box truck towing a distinctively tuner styled car. It’s golden hour. 
-U-Haul pulls up to a small house with a large garage.
+Moving truck pulls up to a small house with a large garage.
 fade to black 
 Garage is now open, car is parked in the garage. 
 
 PC: “Home sweet home. Happy to have found a space like this.
 Better get moved in before I start work tomorrow.” 
 
-Scene transition to daylight
+Scene transition to dusk the next day `<TODO: was daylight; canon is dusk opening, night from then on — confirm the commute-to-work tutorial still works at dusk>`
 Introduce overworld controls, allow player to drive to work. 
 Popup: <This is how you traverse the overworld. Use [controls] to move. Try it out!> 
 When driver arrives to work: 
 Popup: <Great job on arriving to your new company. Now get to work.> 
 
-Scene transition to PC driving home from work, looks like Novelty Hill Rd
+Scene transition to PC driving home from work, a winding back road on the edge of the city
 Car approaches PC’s car, starts flashing headlights. 
 
 PC: “Are they challenging me to a race?” 
@@ -60,13 +60,13 @@ PC: “I just moved to the area, I saw this road on the GPS and thought it looke
 ???: “I see. Well let me personally introduce myself, I’m Sabine. Nice to meet you.” 
 PC: “I see, I’m <insert name field>” 
 Popup: <Tell Sabine your name: [text input field]> 
-<Mentor>: “Nice to meet you, <name>. I have a shop nearby, why don’t we tow the car over there and I can introduce you to some of my friends?” 
+Sabine: “Nice to meet you, <name>. I have a shop nearby, why don’t we tow the car over there and I can introduce you to some of my friends?” 
 PC: “That’d be great! I appreciate it. How do you know I’m not a serial killer though?” 
 Sabine: “How do you know I’m not one?” 
 
 Tow truck pulls up on screen.
 fade to black
-Scene transitions to <mentor>’s garage.
+Scene transitions to Sabine’s garage.
 ---
 
 2. Garage Intro
@@ -80,13 +80,11 @@ Pans to <Tuner>
 Sabine: “This is <Tuner>, he’s your go to for any car modifications! He’ll be installing a data acquisition (DAQ) system to your car to get real race data and guide your engine, suspension, and chassis tuning. The more races you run, the more data he gets, and the better your car will be.” 
 Pans to <Buyer> 
 Sabine: “This is <Buyer>, she’s got people that can get you parts for wholesale prices. 
+`<TODO: rest of garage intro script>`
 ---
 
 ## 3. Crew Introduction & Debt
 
-- Mentor brings PC to crew location
-- PC is introduced to mentor’s crew
-- Crew evaluates PC as outsider entrant
 - Mentor explains financial obligation for repair/rebuild
 - Mentor assigns racing-based repayment condition
 - PC formally enters underground racing system
@@ -135,7 +133,7 @@ Each district contains:
 - rumors of mentor begin surfacing
 - Touge Boss establishes ideological dominance
 - PC defeats Touge Boss
-- Touge Myth Driver reveals first contradiction in history
+- Touge Myth Driver (#1) reveals first contradiction in history
 
 ---
 
@@ -160,7 +158,7 @@ Each district contains:
 - mentor reputation becomes contested
 - Wangan Boss presents pragmatic interpretation of events
 - PC defeats Wangan Boss
-- Wangan Myth Driver reframes mentor as scapegoat possibility
+- Wangan Myth Driver (#2) reframes mentor as scapegoat possibility
 
 ---
 
@@ -179,19 +177,19 @@ Each district contains:
 - Increase pressure on mentor for answers
 
 ## Key Beats
-- PC enters Americanized street racing scene
+- PC enters street racing scene
 - racers openly discuss mentor controversy
 - conflicting interpretations of mentor escalate
 - PC repeatedly confronts mentor (mentor deflects)
 - Street Boss frames conflict as cultural fracture
 - PC defeats Street Boss
-- Street Myth Driver introduces emotional regret and fractured memory
+- Street Myth Driver (#3) introduces emotional regret and fractured memory
 
 ---
 
 # ACT 3 — CONFRONTATION
 
-## 8. Mentor Confrontation
+## 7. Mentor Confrontation
 
 - PC has encountered all three Myth Drivers
 - PC recognizes contradictions in all accounts
@@ -200,38 +198,39 @@ Each district contains:
   - incident occurred
   - mentor was present
   - mentor was not informant/snitch
-- Mentor refuses full clarity on emotional past
+- Mentor still believes she was ousted over the snitch rumor; she does not know the real reasons
 
 ---
 
-## 9. Honor Restoration Arc
+## 8. Honor Restoration Arc
 
 - PC chooses to defend mentor’s reputation
-- PC challenges all four Myth Drivers
-- They each individually agree 
-- each confrontation reframes historical narrative
-- victories shift perception of mentor’s role
-- old generation begins reconsidering past assumptions
+- PC tricks all three Myth Drivers and Sabine into meeting at the summit of Fushigi-Yama (the Touge district’s mountain)
+- They each individually agree `<TODO: original line was cut off here — agree to what? Austin to decide>`
+- the summit is the first time the Myth Drivers have met since the breakup
 
 ---
 
 # ACT 4 — RESOLUTION
 
-## 10. Final Meeting
+## 9. Final Meeting
 
-- All four Myth Drivers agree to meet mentor
+- All three Myth Drivers and Sabine meet at the summit of Fushigi-Yama
 - Full confrontation of historical truth occurs
+- the truth comes out: there was no informant; the police sweep was coincidental, and the snitch story covered each Myth Driver’s personal reason
+- Sabine learns the real reasons for the first time
 - Contradictions are reconciled
 - Emotional closure achieved between old generation and mentor
 
 ---
 
-## 11. Final Resolution
+## 10. Final Resolution
 
 - Myth Drivers invite mentor to return to old generation
 - Mentor acknowledges reconciliation
-- Mentor declines return
+- Mentor calmly declines return
 - Mentor declares loyalty to current crew (PC’s crew)
+- Mentor gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
 - PC fully integrated into underground racing world
 
 ---
@@ -250,7 +249,7 @@ Each district contains:
 
 - Entry point into underground world
 - Subject of rumor and accusation
-- Withholds truth until late confrontation
+- Believes the snitch rumor was the reason; learns the real reasons only at the summit
 - Recontextualized rather than simply vindicated
 
 ---
