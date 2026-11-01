@@ -2,8 +2,10 @@
 Balance Gauntlet — verifies gameplay feel across stat archetypes, QTE execution
 levels, clash outcome scenarios, and encounter types.
 
-The game has no per-encounter tuning knobs — difficulty is set by the level
-gap between combatants. This script tests the fixed game-rule constants.
+Archetypes (cars.py), encounter ratios (ai.ENCOUNTER_RATIOS) and turn limits
+(cli.ENCOUNTER_MAX_TURNS) are imported from the engine, not copied.
+Note: the archetype PASS rule is only "at least one win and one loss"; read
+the win/loss counts, not just the PASS tag.
 
 Usage:
   python3 scripts/balance_gauntlet.py          # only show failures
@@ -29,24 +31,34 @@ QTE_LEVELS = {
     "strong": 9.0,
 }
 
-ARCHETYPES = [
-    ("POW",      BASE_LEVEL, 800, 100, 100),
-    ("EN",       BASE_LEVEL, 100, 800, 100),
-    ("POW+EN",   BASE_LEVEL, 500, 500, 100),
-    ("BALANCED", BASE_LEVEL, 400, 400, 400),
-]
+# Archetypes, encounter ratios and turn limits come from the engine so the
+# gauntlet tests what the game actually runs (sim code is the source of truth).
+from velocity_shift.cars import ARCHETYPES as CAR_ARCHETYPES, build_stats
+from velocity_shift.ai import ENCOUNTER_RATIOS
+from velocity_shift.cli import ENCOUNTER_MAX_TURNS as _CLI_MAX_TURNS
+
+ARCHETYPES = [(name,) for name in CAR_ARCHETYPES]
+
+_ENC_LABELS = {"wild": "Wild", "lieutenant": "Lieutenant", "boss": "Boss"}
 
 ENCOUNTER_TYPES: dict[str, float] = {
-    "Wild":        0.35,
-    "Lieutenant":  0.75,
-    "Boss":        1.15,
+    _ENC_LABELS[k]: v for k, v in ENCOUNTER_RATIOS.items()
 }
 
 ENCOUNTER_MAX_TURNS = {
-    "Wild": 4,
-    "Lieutenant": 10,
-    "Boss": 15,
+    _ENC_LABELS[k]: v for k, v in _CLI_MAX_TURNS.items()
 }
+
+
+def _opp_level(p_level: int, enc_name: str) -> int:
+    """Same rule as cli.py: round(player_level * ratio), min 1."""
+    return max(1, round(p_level * ENCOUNTER_TYPES[enc_name]))
+
+
+def _stats(arch_name: str, level: int) -> tuple[float, float, float]:
+    """(pow, en, han) from cars.build_stats, as the engine builds them."""
+    return build_stats(arch_name, level)
+
 
 # Each outcome label maps to (player_stances, opponent_stances) that produce it
 _CLASH_PAIRS = {
@@ -123,10 +135,10 @@ def _predict_winner(p_arch, o_arch, p_qte: float, o_qte: float,
     Cycles through clash sequences per-turn instead of using averages.
     Returns 'Player', 'Opponent', or 'Tie'.
     """
-    _, p_level, p_pow, p_en, p_han = p_arch
-    _, o_level, o_pow, o_en, o_han = o_arch
-
-    o_level = max(1, int(p_level * ENCOUNTER_TYPES[enc_name]))
+    p_level = BASE_LEVEL
+    o_level = _opp_level(p_level, enc_name)
+    p_pow, p_en, p_han = _stats(p_arch[0], p_level)
+    o_pow, o_en, o_han = _stats(o_arch[0], o_level)
     max_turns = ENCOUNTER_MAX_TURNS[enc_name]
 
     p_max_hp = p_level * HP_PER_LEVEL
@@ -199,16 +211,18 @@ def run_gauntlet() -> dict:
         ratio = ENCOUNTER_TYPES[enc_name]
         for clash_scenario in CLASH_SCENARIO_SEQS:
             for p_arch in ARCHETYPES:
-                p_name, p_level, p_pow, p_en, p_han = p_arch
+                p_name = p_arch[0]
+                p_level = BASE_LEVEL
+                p_pow, p_en, p_han = _stats(p_name, p_level)
+                o_level = _opp_level(p_level, enc_name)
                 for o_arch in ARCHETYPES:
-                    o_name, _, o_pow, o_en, o_han = o_arch
+                    o_name = o_arch[0]
+                    o_pow, o_en, o_han = _stats(o_name, o_level)
 
                     for p_qte_label, p_qte_val in QTE_LEVELS.items():
                         for o_qte_label, o_qte_val in QTE_LEVELS.items():
                             qte_key = f"{p_qte_label}_v_{o_qte_label}"
                             key = (p_name, o_name)
-
-                            o_level = max(1, int(p_level * ratio))
 
                             p_stat = CombatantStats(
                                 name="Player", pow=p_pow, en=p_en, han=p_han,

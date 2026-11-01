@@ -45,6 +45,26 @@ The lead approved the character base pass. One male and one female base body is 
 - Every outfit shares the tee/jeans silhouette; skirts and shorts need an add-on or a body variant.
 - The hood/collar add-on and Hair_B are visible on import and must be toggled in-game.
 - Ears are flat quads.
+## 2026-10-31 — Sim tooling fixes: runner crash, gauntlet uses engine values, build-matrix format [sim] (Barry, Chief of Systems)
+
+Tooling only. No game constants, formulas or docs changed. Not committed or pushed.
+
+**Changed:**
+- `sim/velocity_shift/simulation.py` — the player card callback took 4 arguments, but `match.run_match` passes 5 (it now also passes the opponent's hand). Every `SimulationRunner` match crashed with a `TypeError`. The callback now accepts the opponent's hand and ignores it, since the simulated player still picks at random.
+- `sim/scripts/balance_gauntlet.py` — removed its own copies of the settings and imports them from the engine instead. Archetypes and stats come from `cars.ARCHETYPES` and `cars.build_stats`, encounter ratios from `ai.ENCOUNTER_RATIOS`, turn limits from `cli.ENCOUNTER_MAX_TURNS`, and the opponent level uses the same `round(level × ratio)` rule as `cli.py`. Before this it tested 4 hand-set 800/100/100-style builds, ratios 0.35/0.75/1.15 and 4/10/15 turns, none of which the game uses. It now runs 6 archetypes × 3 encounters, 5832 runs, and still prints ALL CHECKS PASS. The docstring now warns that the archetype PASS rule is only "at least one win and one loss".
+- `sim/scripts/generate_build_matrix.py` — rewritten. The old version wrote pow/def/eff presets from a retired stat model into `config/sample_builds.json`, and `cli.py` (`pb["archetype"]`) would then crash on any preset. It now writes the archetype + level format the CLI reads (6 archetypes × 6 tiers) and stores no stats. It only prints a table unless you pass `--write`. Its `--write` output is byte-identical to the current `config/sample_builds.json`, so that file did not change.
+
+**New:**
+- `sim/tests/test_simulation.py` — 3 smoke tests for `SimulationRunner` and `simulate_batch`, so a signature drift like this one fails the tests. 25/25 pass.
+
+**Reasoning:**
+- The tools have to measure what the engine actually runs before they can back a balance change. The gauntlet in particular was passing while testing values from an older design.
+
+**Still open (not touched here):**
+- `scripts/design_opponent.py` and `scripts/design_racers.py` still use the old POW/DEF/EFF model and a hard-coded CLASH_STAKES of 0.3 (the code uses 0.35), and `--stronger` is documented but doesn't exist.
+- The rubber-band threshold of 0.15 is hard-coded in `match.py` and copied in the gauntlet's predictor.
+- The gauntlet's PASS rule is still too loose to catch imbalance.
+- Doc sync and the encounter-scaling proposal (the ratio counts twice, in both opponent level and QTE) come next.
 
 ---
 

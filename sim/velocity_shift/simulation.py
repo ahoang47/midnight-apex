@@ -51,7 +51,7 @@ class SimulationRunner:
 
     def _make_player_card_fn(self) -> Callable:
         rng = self._rng
-        return lambda t, ci, hand, clashes: rng.choice(hand)
+        return lambda t, ci, hand, opp_hand, clashes: rng.choice(hand)
 
     def _make_player_qte_fn(self) -> Callable[[int], float]:
         return lambda t: self._rng.uniform(1.0, 10.0)
