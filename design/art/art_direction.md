@@ -51,15 +51,39 @@ culture, atmospheric roads); characters lean **JoJo** and are never rendered in-
    S2000 way. Photos are a final visual check (A.1.3) and never set geometry. *(Correction to the lesson in A.1.3: the
    BRZ blueprint was right. Passes 2–3 misread its window lines and trusted a low photo camera. The blueprint-only
    pass 4 fixed the shape.)*
+   *(Binding from 2026-10-31, lean rebuilds.)* Classification covers every line you build from, not just the silhouette:
+   tell **body lines** (shutlines, arch edges, bumper and pocket edges) from **lamp/lens outlines** and glass before
+   modelling a feature, and record them in the car's keyline table. The blueprint is the truth for lamp shape, lamp depth
+   (side and top views) and arch gap; photos only confirm.
 
 ### A.2 Geometry
-1. **[MUST]** Budget **≤ 5,000 triangles** per car (body, glass, lamps, wheels, tyres, trim). Mod parts ≤ 300 triangles each.
+1. **[MUST]** Budget **≤ 2,000 triangles max per car**, everything included: body, glass, lamps, wheels, tyres,
+   struts/arms, trim and FX quads (glow sprites). Mod parts ≤ 300 triangles each. Geometry carries the silhouette and
+   the wheel arches; the **detail work lives in the shading and textures** (A.3, A.4), not in extra loops.
 2. **[MUST]** Smooth shading with crisp *intended* edges (marked sharp / split normals). No faceted flat shading, no
    wavy highlights on large panels (hood, doors) — fix the topology, don't hide it.
-3. **[MUST NOT]** Model brakes/calipers, suspension, engine bay or interior. Glass is **opaque** — no interior needed.
+3. **[MUST NOT]** Model brakes/calipers, engine bay or interior. Glass is **opaque** — no interior needed. Suspension
+   is modelled only as the simple strut + arm rig in A.2.7, nothing more detailed.
 4. **[MUST]** Stock body by default. Aftermarket parts only when asked; a mod must visibly change silhouette or livery.
 5. Lamps, grilles, vents and badges are mostly painted, with only enough geometry to catch the silhouette (lamp
-   recesses, intake openings).
+   recesses, intake openings). Headlamps follow A.2.8.
+6. **[MUST]** **Mono body mesh:** the body is one mesh with the aero (spoiler, lips, skirts, mirrors) merged in. Separate
+   objects only for the four wheels, the steering pivots and the strut follow nodes (A.2.7).
+7. **[MUST]** **Suspension + steering rig:**
+   - Wheels are separate objects, each pivoted at its hub centre; front wheels steer about a vertical pivot at the hub.
+   - Body origin at the car's estimated centre of mass, so the engine's vehicle body (e.g. Godot `VehicleBody3D` with
+     one `VehicleWheel3D` per corner) behaves without offsets.
+   - Suspension travel about **±4–5 cm**, or less where the blueprint's arch gap does not allow it. Steering lock **±30°**.
+   - **9-pose clearance test** before hand-off: full lock left / centre / full lock right × full bump / static / full
+     droop, no wheel–body intersection in any pose. Keep the clearance report with the asset.
+   - A simple **strut + arm** per corner on a separate **non-spinning follow node** that tracks only wheel position and
+     steer (never wheel spin). Document the engine setup (node names, wheel radius, travel) in the asset README.
+8. **[MUST]** **Headlamps: light molding + painted lamp art.** Give each headlamp a little real geometry — a shallow
+   pocket (a few cm deep, depth from the blueprint side/top views) or a thin raised surround — traced from the
+   blueprint's lamp outline (A.1.5). Do not over-carve the nose. Pocket walls/surround are dark trim. The lamp itself is
+   **painted** on the lens faces (housing rim, projector/reflector with hotspot, inner lamp, indicator, lens highlight),
+   with UVs planar to the lens so the art reads true in the front view, and a value range that does not clip to white
+   after RGB555 + dither and the faked shine.
 
 ### A.3 Textures — "low poly ≠ low texture"
 1. **[MUST]** Painted body texture **1024²** with **baked AO** (crevices, panel gaps, wheel wells).
@@ -99,7 +123,9 @@ culture, atmospheric roads); characters lean **JoJo** and are never rendered in-
 
 ### A.7 Vehicle checklist (must pass)
 - [ ] Silhouette IoU passes the gate; window/roof/hood/wheel lines checked against photos; clay signed off
-- [ ] ≤ 5,000 triangles; no brakes, interior, engine
+- [ ] ≤ 2,000 triangles incl. wheels, struts and FX; mono body mesh; no brakes, interior, engine
+- [ ] Rig: hub-pivoted wheels, origin at est. CoM, travel/lock per A.2.7, 9-pose clearance passes
+- [ ] Headlamps: light molding (shallow pocket or thin surround) + painted lamp art that does not clip
 - [ ] Crisp single panel lines; no UV seams visible on body
 - [ ] Plates flat; tyre lettering reads correctly on both sides
 - [ ] Shine reads as a painted env map (not mirror, not plastic); glass cool-tinted, not orange
@@ -233,8 +259,9 @@ were lost with the box and are **re-proposed** here.
 Also pending: confirm the IoU bar (A.1.2), reserving stance colours for UI (B.5).
 
 ### C.3 Doc conflicts found while writing (for Design)
-- **K1** `design/godot-build-guide.md` says "Low-poly PS1-style" car body; the approved reference car is ~4.4k tris (PS2-era
-  budget). Proposal: reword to "low-poly PSX/early-PS2 style, ≤ 5k tris".
+- **K1** `design/godot-build-guide.md` says "Low-poly PS1-style" car body; the car budget is now ≤ 2,000 tris per car
+  (A.2.1, 2026-10-31; the first reference builds were ~4.4k). Proposal: reword to "low-poly PSX/early-PS2 style,
+  ≤ 2k tris per car incl. wheels".
 - **K2** Third stance called "Neutral" in some docs and "Steady" in lockout tables/UI asset list (Q6).
 - **K3** Pitch says three Myth Drivers; plot outline and Sabine's sheet mention a fourth.
 - **K4** Project display is 640×480; the approved vibe-check frames were 640×448 (Q3).
@@ -250,7 +277,8 @@ Also pending: confirm the IoU bar (A.1.2), reserving stance colours for UI (B.5)
 Reference car for Part A. Source: `art/vehicles/s2000/`.
 - **Build:** procedural Blender 4.2 script (`build_s2000.py`) from a four-view blueprint; 4.14 m long, wheelbase
   2.41 m as measured on the drawing, soft top as black fabric ending at the rear deck (trunk lid in body paint).
-- **Triangles:** 4,354. **IoU:** side 0.961, top 0.992, front 0.925, rear 0.944.
+- **Triangles:** 4,354. **IoU:** side 0.961, top 0.992, front 0.925, rear 0.944. *(This is the original reference
+  build, kept for history. The game version is the ≤ 2,000-tri lean rebuild in `art/vehicles/s2000/lean/`, see its README.)*
 - **Textures:** `s2000_body.png` (1024², vector panel lines, baked Cycles AO, quantised), `s2000_atlas.png` (256²
   parts), `s2000_softtop.png` (fabric).
 - **Rules applied:** opaque cool-tinted glass, no interior, no calipers, made-up badges/plate, smooth shading.

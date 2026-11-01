@@ -1,0 +1,14 @@
+S2000_Body          1244
+S2000_SoftTop        264
+S2000_Mirror_L        12
+S2000_Mirror_R        12
+S2000_Liner_FL        20
+S2000_Liner_FR        20
+S2000_Liner_RL        20
+S2000_Liner_RR        20
+
+wheels (4 x 10-sided) 144
+suspension (4 x strut + arm) 64
+headlamp molding (2 x 12-corner surround: raised lip + inner wall) 96
+MONO S2000_Body 1708 (incl. headlamp molding)
+TOTAL rendered 1916  (cap 2000: OK)

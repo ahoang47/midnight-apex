@@ -1,0 +1,14 @@
+BRZ_Body            1364
+BRZ_Cabin            243
+BRZ_Mirror_L          12
+BRZ_Mirror_R          12
+BRZ_Liner_FL          20
+BRZ_Liner_FR          20
+BRZ_Liner_RL          20
+BRZ_Liner_RR          20
+
+wheels (4 x 10-sided) 144
+suspension (4 x strut + arm) 64
+headlamp molding (2 x 10-corner surround: raised lip + inner wall) 80
+MONO BRZ_Body 1791 (incl. headlamp molding)
+TOTAL rendered 1999  (cap 2000: OK)

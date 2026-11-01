@@ -8,6 +8,32 @@
 
 ---
 
+## 2026-10-31 — Lean cars: WRX STI, S2000, BRZ at ≤ 2,000 tris with suspension rig and headlamp molding; Part A updated [art] (Arthur, Art Director)
+
+Lead approved the lean rebuilds. The approved originals (S2000 4,354 tris, BRZ 4,079 tris) stay in place for history; the lean build in each car's `lean/` folder is the new game version, with an engine copy in `assets/cars/`.
+
+**New:**
+- `art/vehicles/wrx_sti/` — Subaru Impreza WRX STI (GDB "bugeye"), built blueprint-only: pass-2 clay trace (`build_wrx.py`, `make_all.py`, `bp/`, `parts/`, `tex/`, blueprint, keyline table) plus the lean build in `lean/`. **1,966 tris**; IoU side .978 / top .978 / front .956 / rear .956; 9-pose clearance all clear (tightest 18 mm). Headlamps sit in a shallow 3.5 cm pocket cut into the nose with painted lamp art on the lens faces; 4-tri head-glow quad hidden by default.
+- `art/vehicles/s2000/lean/` — **1,916 tris**; IoU side .952 / top .992 / front .930 / rear .951; clearance all clear (tightest 3 mm at full lock + bump). Thin raised surround around each headlamp, lamp art re-fitted.
+- `art/vehicles/brz/lean/` — **1,999 tris**; IoU side .971 / top .980 / front .948 / rear .932; clearance all clear (tightest 16 mm). Thin raised surround around each headlamp.
+- `art/vehicles/lean_common/` — shared lean tools: `leanlib.py` (loft, rig, clearance), `render_kit.py`, `deliver_kit.py` (RGB555 + Bayer sheets), `susp_follow.gd`, `lamps/` (headlamp close-ups, outline segmentation, molding ring), `threeview/` (three-view sheets), `lineup/` (3-car lineup).
+- `assets/cars/{wrx_sti,s2000,brz}/` — `car_<id>.glb` (textures embedded), `susp_follow.gd` and a README with the Godot VehicleBody3D / VehicleWheel3D setup, tri count and glow FX note.
+- Every lean car: mono body mesh (aero merged), separate hub-pivoted wheels, body origin at the estimated centre of mass, ±30° steering lock, strut + arm on a non-spinning `Susp_XX` follow node driven by `susp_follow.gd`.
+
+**Changed:**
+- `design/art/art_direction.md` Part A — budget **≤ 5,000 → ≤ 2,000 tris per car** incl. wheels, struts and FX, detail in shading/textures (A.2.1, A.7, K1); suspension no longer forbidden — only the simple strut + arm rig is allowed (A.2.3); new A.2.6 mono body mesh, A.2.7 suspension + steering rig with the 9-pose clearance test, A.2.8 headlamp light molding + painted lamp art; A.1.5 line classification extended to lamp outlines vs body lines and made binding; Appendix W notes the S2000 lean game version.
+- `art/vehicles/s2000/README.md`, `art/vehicles/brz/README.md` — pointer to the lean game version at the top. Nothing else in the original builds changed.
+
+**Reasoning:**
+- The lead set a 2,000-tri cap per car: cars need to be cheap enough for the game scene, and the look comes from painted textures and faked shine, not loops.
+- Working suspension with separately pivoted wheels mattered more to the lead than extra body detail; the strut sits on a follow node so it tracks travel and steer without spinning with the wheel.
+- Flat painted headlamps read as blobs at the lean budget. A little real geometry (shallow pocket on the WRX, thin surround on the S2000/BRZ) plus painted art reads at low cost. The WRX pocket was kept shallow so the nose isn't over-carved.
+- The blueprint stays the truth: lamp outlines and pocket depth were taken from classified blueprint lines (body line vs lamp outline), not photos.
+
+**Known gaps:** S2000 and BRZ lean builds have no lamp glow sprites or blob shadow yet; the rig and `susp_follow.gd` are untested inside Godot; S2000 front clearance at full lock + bump is tight (3 mm).
+
+---
+
 ## 2026-10-31 — Story canon locked: three Myth Drivers, no informant, Fushigi-Yama summit [story] (Nathaniel, Narrative Lead)
 
 Applies the lead's canon decisions from the lore audit. Not committed or pushed. Mechanical fields (archetype, face type, lie rate, stance preferences) were left as `TODO`.

@@ -1,0 +1,247 @@
+{
+ "spec": {
+  "bump": 0.045,
+  "droop": 0.05,
+  "lock_deg": 30.0
+ },
+ "poses": [
+  {
+   "pose": "steer -30 deg, travel +0.045",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0169,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0169,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.0213,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.0212,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer -30 deg, travel +0.000",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0278,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0278,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer -30 deg, travel -0.050",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0327,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0327,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer +0 deg, travel +0.045",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0162,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0162,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.0213,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.0212,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer +0 deg, travel +0.000",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0351,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer +0 deg, travel -0.050",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0427,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.041,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer +30 deg, travel +0.045",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0169,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0169,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.0213,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.0212,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer +30 deg, travel +0.000",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0247,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0278,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    }
+   }
+  },
+  {
+   "pose": "steer +30 deg, travel -0.050",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0279,
+     "nearest": "BRZ_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.03,
+     "nearest": "BRZ_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.035,
+     "nearest": "BRZ_Body"
+    }
+   }
+  }
+ ],
+ "all_clear": true,
+ "tightest": {
+  "gap_m": 0.0162,
+  "pose": "steer +0 deg, travel +0.045",
+  "corner": "FL",
+  "against": "BRZ_Body"
+ },
+ "tightest_front": {
+  "gap_m": 0.0162,
+  "pose": "steer +0 deg, travel +0.045",
+  "corner": "FL",
+  "against": "BRZ_Body"
+ }
+}

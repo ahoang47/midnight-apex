@@ -1,5 +1,7 @@
 # car_brz — Subaru BRZ (ZD8, 2022+) — detail pass
 
+> **Game version (2026-10-31):** the lean build in [`lean/`](lean/README.md), **1,999 tris** (≤ 2,000 cap incl. wheels, struts, FX), hub-pivoted wheels + strut rig, headlamp light molding. Engine copy: `assets/cars/brz/`. The build below is the approved original, kept for history.
+
 Second car built to the vehicle standard (`design/art/art_direction.md`, Part A), the same way as the S2000
 (`art/vehicles/s2000`): straight from the four-view blueprint, gated on blueprint IoU, then painted.
 

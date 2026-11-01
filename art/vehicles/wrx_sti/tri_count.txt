@@ -1,0 +1,26 @@
+STI_FrontLip          36
+STI_Scoop             56
+STI_Wing              82
+WRX_Body            2860
+WRX_Cabin            648
+WRX_Decals           312
+WRX_Liner_FL          26
+WRX_Liner_FR          26
+WRX_Liner_RL          26
+WRX_Liner_RR          26
+WRX_LipSpoiler        36   (base-WRX blueprint part, hidden in the STI build)
+WRX_Mirror_L          32
+WRX_Mirror_R          32
+WRX_Scoop             56   (base-WRX blueprint part, hidden in the STI build)
+WRX_Under             12
+WRX_Wheel_FL         188
+WRX_Wheel_FR         188
+WRX_Wheel_RL         188
+WRX_Wheel_RR         188
+TOTAL (STI build, as rendered) 4926
+body shell (WRX_Body + WRX_Cabin) 3508
+
+MONO BODY (pass 2): WRX_Body = 4174 tris  (joined: STI_FrontLip, STI_Scoop, STI_Wing, WRX_Cabin, WRX_Decals, WRX_Liner_FL, WRX_Liner_FR, WRX_Liner_RL, WRX_Liner_RR, WRX_Mirror_L, WRX_Mirror_R, WRX_Under)
+wheels (4 separate pivoted objects) = 752
+TOTAL as exported (WRX_Body + 4 wheels) = 4926
+shading QC (loft quads): {"body": {"faces": 1380, "flipped": 0, "degenerate": 0, "nonplanar_gt5pct": 35, "worst_nonplanar_pct": 53.5, "worst_at": [[53.5, [2.075, 0.662, 0.732]], [46.3, [-0.899, -0.821, 0.404]], [34.8, [1.933, 0.76, 0.775]], [29.1, [2.023, -0.729, 0.736]], [27.4, [1.933, 0.796, 0.725]], [27.1, [1.933, -0.76, 0.775]], [25.8, [1.933, -0.796, 0.725]], [24.5, [2.023, 0.729, 0.736]]]}, "cabin": {"faces": 324, "flipped": 0, "degenerate": 0, "nonplanar_gt5pct": 16, "worst_nonplanar_pct": 12.2, "worst_at": [[12.2, [-1.424, -0.628, 1.078]], [11.9, [-1.424, 0.628, 1.078]], [10.3, [-0.961, -0.585, 1.369]], [10.2, [-0.961, 0.585, 1.369]], [9.5, [-1.525, -0.604, 1.086]], [9.4, [-1.525, 0.604, 1.086]], [9.3, [0.41, 0.777, 0.978]], [9.2, [0.41, -0.777, 0.978]]]}}

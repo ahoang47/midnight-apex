@@ -1,0 +1,39 @@
+{
+ "sti_mono": {
+  "side": 0.9731,
+  "top": 0.9747,
+  "front": 0.9603,
+  "rear": 0.9469
+ },
+ "sti_aero_masked": {
+  "side": 0.984,
+  "top": 0.9777,
+  "front": 0.9613,
+  "rear": 0.9606
+ },
+ "no_aero": {
+  "side": 0.9757,
+  "top": 0.9783,
+  "front": 0.9619,
+  "rear": 0.9488
+ },
+ "wrx_base": {
+  "side": 0.981,
+  "top": 0.9783,
+  "front": 0.9619,
+  "rear": 0.9488
+ },
+ "gate": {
+  "side": 0.984,
+  "top": 0.9777,
+  "front": 0.9613,
+  "rear": 0.9606
+ },
+ "gate_pass": true,
+ "gate_thresholds": {
+  "side": 0.95,
+  "top": 0.95,
+  "front": 0.92,
+  "rear": 0.92
+ }
+}

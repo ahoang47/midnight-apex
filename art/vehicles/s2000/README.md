@@ -1,5 +1,7 @@
 # car_s2000 — Honda S2000 (AP1), stock soft top — reference car
 
+> **Game version (2026-10-31):** the lean build in [`lean/`](lean/README.md), **1,916 tris** (≤ 2,000 cap incl. wheels, struts, FX), hub-pivoted wheels + strut rig, headlamp light molding. Engine copy: `assets/cars/s2000/`. The build below is the approved original, kept for history.
+
 Binding reference for the vehicle standard (`design/art/art_direction.md`, Part A; Appendix W).
 
 | | |

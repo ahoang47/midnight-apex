@@ -1,0 +1,411 @@
+{
+ "spec": {
+  "bump": 0.065,
+  "droop": 0.08,
+  "lock_deg": 30.0,
+  "roll_deg": 3.0
+ },
+ "poses": [
+  {
+   "pose": "steer -30 deg, travel +0.065",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0221,
+     "nearest": "WRX_Liner_FL"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0221,
+     "nearest": "WRX_Liner_FR"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.0181,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.0181,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer -30 deg, travel +0.000",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FL"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FR"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer -30 deg, travel -0.080",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FL"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FR"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer +0 deg, travel +0.065",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0328,
+     "nearest": "WRX_Liner_FL"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0328,
+     "nearest": "WRX_Liner_FR"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.0181,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.0181,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer +0 deg, travel +0.000",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0719,
+     "nearest": "WRX_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0721,
+     "nearest": "WRX_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer +0 deg, travel -0.080",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0787,
+     "nearest": "WRX_Body"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0787,
+     "nearest": "WRX_Body"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer +30 deg, travel +0.065",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0221,
+     "nearest": "WRX_Liner_FL"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0221,
+     "nearest": "WRX_Liner_FR"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.0181,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.0181,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer +30 deg, travel +0.000",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FL"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FR"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  },
+  {
+   "pose": "steer +30 deg, travel -0.080",
+   "corners": {
+    "FL": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FL"
+    },
+    "FR": {
+     "overlaps": {},
+     "min_gap_m": 0.0573,
+     "nearest": "WRX_Liner_FR"
+    },
+    "RL": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RL"
+    },
+    "RR": {
+     "overlaps": {},
+     "min_gap_m": 0.047,
+     "nearest": "WRX_Liner_RR"
+    }
+   }
+  }
+ ],
+ "all_clear": true,
+ "tightest": {
+  "gap_m": 0.0181,
+  "pose": "steer -30 deg, travel +0.065",
+  "corner": "RL",
+  "against": "WRX_Liner_RL"
+ },
+ "tightest_front": {
+  "gap_m": 0.0221,
+  "pose": "steer -30 deg, travel +0.065",
+  "corner": "FR",
+  "against": "WRX_Liner_FR"
+ },
+ "mono_recheck": {
+  "all_clear": true,
+  "tightest": {
+   "gap_m": 0.0181,
+   "pose": "steer -30 deg, travel +0.065",
+   "corner": "RL",
+   "against": "WRX_Body"
+  },
+  "tightest_front": {
+   "gap_m": 0.0221,
+   "pose": "steer -30 deg, travel +0.065",
+   "corner": "FR",
+   "against": "WRX_Body"
+  }
+ },
+ "shading_qc": {
+  "body": {
+   "faces": 1380,
+   "flipped": 0,
+   "degenerate": 0,
+   "nonplanar_gt5pct": 35,
+   "worst_nonplanar_pct": 53.5,
+   "worst_at": [
+    [
+     53.5,
+     [
+      2.075,
+      0.662,
+      0.732
+     ]
+    ],
+    [
+     46.3,
+     [
+      -0.899,
+      -0.821,
+      0.404
+     ]
+    ],
+    [
+     34.8,
+     [
+      1.933,
+      0.76,
+      0.775
+     ]
+    ],
+    [
+     29.1,
+     [
+      2.023,
+      -0.729,
+      0.736
+     ]
+    ],
+    [
+     27.4,
+     [
+      1.933,
+      0.796,
+      0.725
+     ]
+    ],
+    [
+     27.1,
+     [
+      1.933,
+      -0.76,
+      0.775
+     ]
+    ],
+    [
+     25.8,
+     [
+      1.933,
+      -0.796,
+      0.725
+     ]
+    ],
+    [
+     24.5,
+     [
+      2.023,
+      0.729,
+      0.736
+     ]
+    ]
+   ]
+  },
+  "cabin": {
+   "faces": 324,
+   "flipped": 0,
+   "degenerate": 0,
+   "nonplanar_gt5pct": 16,
+   "worst_nonplanar_pct": 12.2,
+   "worst_at": [
+    [
+     12.2,
+     [
+      -1.424,
+      -0.628,
+      1.078
+     ]
+    ],
+    [
+     11.9,
+     [
+      -1.424,
+      0.628,
+      1.078
+     ]
+    ],
+    [
+     10.3,
+     [
+      -0.961,
+      -0.585,
+      1.369
+     ]
+    ],
+    [
+     10.2,
+     [
+      -0.961,
+      0.585,
+      1.369
+     ]
+    ],
+    [
+     9.5,
+     [
+      -1.525,
+      -0.604,
+      1.086
+     ]
+    ],
+    [
+     9.4,
+     [
+      -1.525,
+      0.604,
+      1.086
+     ]
+    ],
+    [
+     9.3,
+     [
+      0.41,
+      0.777,
+      0.978
+     ]
+    ],
+    [
+     9.2,
+     [
+      0.41,
+      -0.777,
+      0.978
+     ]
+    ]
+   ]
+  }
+ }
+}
