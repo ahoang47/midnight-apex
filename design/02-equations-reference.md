@@ -1,6 +1,6 @@
 # Velocity Shift — Equations Reference
 
-Every formula in the combat engine. All are pure functions in `velocity_shift/equations.py`. All game-rule constants are module-level names — tunable in one place, never per-encounter.
+Every formula in the combat engine. All are pure functions in `sim/velocity_shift/equations.py`. All game-rule constants are module-level names — tunable in one place, never per-encounter.
 
 ---
 
@@ -20,7 +20,7 @@ max_hp = level × HP_PER_LEVEL (120)
 
 ## 2. Damage (per clash, before mitigation)
 
-**File:** `velocity_shift/equations.py` — `compute_damage()`
+**File:** `sim/velocity_shift/equations.py` — `compute_damage()`
 
 ```
 DP_i = POW × QTE_factor × clash_mult_i × battle_mult
@@ -51,7 +51,7 @@ opponent_mitigation_mult = max(MITIGATION_FLOOR, 1 - (opponent_EN / 1000) × MIT
 
 ## 3. QTE Effectiveness
 
-**File:** `velocity_shift/equations.py` — `qte_factor()`
+**File:** `sim/velocity_shift/equations.py` — `qte_factor()`
 
 ```
 QTE_factor = QTE_score / QTE_NORMALIZER (10)
@@ -67,7 +67,7 @@ QTE_factor = QTE_score / QTE_NORMALIZER (10)
 
 ## 4. Clash Multiplier
 
-**File:** `velocity_shift/equations.py` — `clash_mult()`
+**File:** `sim/velocity_shift/equations.py` — `clash_mult()`
 
 ```
 clash_mult = 1 + CLASH_STAKES (0.35) × outcome_value
@@ -89,7 +89,7 @@ clash_mult = 1 + CLASH_STAKES (0.35) × outcome_value
 
 ## 5. Battle Multiplier
 
-**File:** `velocity_shift/combat.py` — (inline in `resolve_turn()`)
+**File:** `sim/velocity_shift/combat.py` — (inline in `resolve_turn()`)
 
 ```
 battle_mult = 1 + BATTLE_BONUS (0.05) × |sum(outcome_values)|
@@ -111,7 +111,7 @@ battle_mult = 1 + BATTLE_BONUS (0.05) × |sum(outcome_values)|
 
 ## 6. Stance Resolution
 
-**File:** `velocity_shift/equations.py` — `resolve_stance()`
+**File:** `sim/velocity_shift/equations.py` — `resolve_stance()`
 
 ```
 Attack  vs Attack   → NEUTRAL
@@ -131,7 +131,7 @@ RPS cycle: **Attack > Neutral > Defend > Attack**
 
 ## 7. Battle Winner
 
-**File:** `velocity_shift/combat.py` — `battle_winner()`
+**File:** `sim/velocity_shift/combat.py` — `battle_winner()`
 
 ```
 outcome_values = [outcome_value_1, outcome_value_2, outcome_value_3]
@@ -149,7 +149,7 @@ battle_mult = 1 + 0.05 × |sum|
 
 ## 8. Damage Mitigation
 
-**File:** `velocity_shift/equations.py` — `damage_mitigation()`
+**File:** `sim/velocity_shift/equations.py` — `damage_mitigation()`
 
 ```
 mitigation_mult = max(MITIGATION_FLOOR, 1 - (EN / 1000) × MITIGATION_PER_1000 × QTE_factor)

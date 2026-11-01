@@ -1,6 +1,6 @@
 # art/
 
-Source art for Midnight Apex. Rules: `velocity-shift/overview/art_direction.md` (Part A is binding for vehicles).
+Source art for Midnight Apex. Rules: `design/art/art_direction.md` (Part A is binding for vehicles).
 Naming: lowercase snake_case, `category_variant_direction`.
 
 - `vehicles/<car_id>/` — one folder per car: build script(s), textures, `.glb`/`.blend` (+ `.obj`/`.fbx`), blueprint

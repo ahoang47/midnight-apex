@@ -1,6 +1,6 @@
 # car_s2000 — Honda S2000 (AP1), stock soft top — reference car
 
-Binding reference for the vehicle standard (`velocity-shift/overview/art_direction.md`, Part A; Appendix W).
+Binding reference for the vehicle standard (`design/art/art_direction.md`, Part A; Appendix W).
 
 | | |
 |---|---|

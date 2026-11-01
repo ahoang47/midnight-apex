@@ -1,6 +1,6 @@
 # Velocity Shift — Skill Trees (Design Reference)
 
-> **Status:** Deferred. Mods (shop-bought equipment with trade-offs/unique effects) serve as the player's stat expression layer. Skill tree categories and mechanics are not yet decided. See `Notes/mod_notes.md` for current design.
+> **Status:** Deferred. Mods (shop-bought equipment with trade-offs/unique effects) serve as the player's stat expression layer. Skill tree categories and mechanics are not yet decided. See `design/notes/mod_notes.md` for current design.
 
 ---
 

@@ -9,4 +9,4 @@
 
 Each sheet follows the same structure: **Narrative Identity**, **Battle Identity** (archetype, face type, comfortable/weak turn types), **Deception Profile** (lie rate, clash-position weighting, intensity, reverse psychology), **Progression / Tier**, and **Stance Preferences**.
 
-Mechanical fields are marked `TODO` — assign values per the pattern-read system in `Notes/06-pattern-read.md`.
+Mechanical fields are marked `TODO` — assign values per the pattern-read system in `design/06-pattern-read.md`.

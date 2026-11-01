@@ -33,7 +33,7 @@
 
 ## 5. Stance Preferences
 
-Archetype's **strong turns** and **weak turns** are fixed by the pattern-read tables (see `Notes/06-pattern-read.md` — Archetype Reference table). On those turn types, stance selection is deterministic from the archetype's 3-stance sequence.
+Archetype's **strong turns** and **weak turns** are fixed by the pattern-read tables (see `design/06-pattern-read.md` — Archetype Reference table). On those turn types, stance selection is deterministic from the archetype's 3-stance sequence.
 
 For all **other turn types**, this character's per-position stance preference:
 

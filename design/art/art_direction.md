@@ -25,7 +25,7 @@ dither. *Low poly is not low texture.* A modern/photoreal render with a retro fi
 was tried (Tokyo v1) and rejected as "a cheap simulacrum of a PS2 game". The approved reference is Tokyo v2 and the
 S2000 reference car (Appendix W).
 
-Pitch alignment (`velocity-shift/story/high_level_story.md`): cars and environments lean **Initial D** (grounded tuning
+Pitch alignment (`story/pitch.md`): cars and environments lean **Initial D** (grounded tuning
 culture, atmospheric roads); characters lean **JoJo** and are never rendered in-world (portraits/overlays only).
 
 ---
@@ -71,7 +71,7 @@ culture, atmospheric roads); characters lean **JoJo** and are never rendered in-
 5. **[MUST]** Quantise textures to ~5 bits/channel (RGB555) with ordered (Bayer) dither at authoring time; import
    lossless (PNG), no texture compression that smears the dither.
 6. **[MUST]** Made-up names, badges, plates and liveries. **No real brands or logos.** Shared body mesh + swappable
-   livery texture/material (player vs opponent, per Appendix E of `godot_prototype.md`).
+   livery texture/material (player vs opponent, per Appendix E of `design/godot-build-guide.md`).
 7. Avoid decals wrapped over strong curvature — they bend; put plates/badges on flat sub-panels.
 
 ### A.4 Materials and faked shine
@@ -209,7 +209,7 @@ were lost with the box and are **re-proposed** here.
 # Part C — Naming, layout, open questions, doc conflicts
 
 ### C.1 Naming and folders
-- Lowercase snake_case, `category_variant_direction` (from `godot_prototype.md` Appendix E), e.g. `road_corner_left`,
+- Lowercase snake_case, `category_variant_direction` (from `design/godot-build-guide.md` Appendix E), e.g. `road_corner_left`,
   `face_grinning_atk.png`, `car_s2000_body.png`.
 - Source-art layout (in use from 2026-10-31, see `art/README.md`):
   `art/vehicles/<car_id>/` → `README.md`, build script(s) at the top level, exports (`.glb`, `.blend`, optional
@@ -233,7 +233,7 @@ were lost with the box and are **re-proposed** here.
 Also pending: confirm the IoU bar (A.1.2), reserving stance colours for UI (B.5).
 
 ### C.3 Doc conflicts found while writing (for Design)
-- **K1** `godot_prototype.md` says "Low-poly PS1-style" car body; the approved reference car is ~4.4k tris (PS2-era
+- **K1** `design/godot-build-guide.md` says "Low-poly PS1-style" car body; the approved reference car is ~4.4k tris (PS2-era
   budget). Proposal: reword to "low-poly PSX/early-PS2 style, ≤ 5k tris".
 - **K2** Third stance called "Neutral" in some docs and "Steady" in lockout tables/UI asset list (Q6).
 - **K3** Pitch says three Myth Drivers; plot outline and Sabine's sheet mention a fourth.

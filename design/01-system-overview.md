@@ -7,7 +7,7 @@ A turn-based racing combat engine. Two combatants race. Each turn they select ca
 ## Architecture
 
 ```
-main.py
+sim/main.py
   └─> velocity_shift/
         ├─> cli.py          — Interactive match setup, prompts, display, run_cli
         ├─> models.py       — Data classes: Stance, CombatantStats, TurnState, MatchConfig, etc.
@@ -21,23 +21,23 @@ main.py
         └─> config.py       — build_from_archetype factory
   └─> config/
         └─> sample_builds.json  — Preset player builds
-  └─> overview/                — Design docs (keep in sync if variables change)
+  └─> ../design/               — Design docs at repo root (keep in sync if variables change)
 ```
 
 ### Package boundaries
 
 | File | Role |
 |------|------|
-| `velocity_shift/models.py` | All data classes and enums — no logic |
-| `velocity_shift/equations.py` | Pure functions — no state, no side effects. All game constants as module-level names in equations.py — tunable in one place |
-| `velocity_shift/deck.py` | Deck class — construction, draw, discard lifecycle |
-| `velocity_shift/combat.py` | Turn resolution orchestration + clash/battle logic |
-| `velocity_shift/match.py` | Multi-turn match loop with callbacks |
-| `velocity_shift/ai.py` | AI card selection strategies + QTE generation |
-| `velocity_shift/trace.py` | Structured execution logger |
-| `velocity_shift/simulation.py` | Headless batch runner + result export |
-| `velocity_shift/cli.py` | Interactive frontend (setup, prompts, display, entry point) |
-| `velocity_shift/config.py` | Factory function for archetype-based builds |
+| `sim/velocity_shift/models.py` | All data classes and enums — no logic |
+| `sim/velocity_shift/equations.py` | Pure functions — no state, no side effects. All game constants as module-level names in equations.py — tunable in one place |
+| `sim/velocity_shift/deck.py` | Deck class — construction, draw, discard lifecycle |
+| `sim/velocity_shift/combat.py` | Turn resolution orchestration + clash/battle logic |
+| `sim/velocity_shift/match.py` | Multi-turn match loop with callbacks |
+| `sim/velocity_shift/ai.py` | AI card selection strategies + QTE generation |
+| `sim/velocity_shift/trace.py` | Structured execution logger |
+| `sim/velocity_shift/simulation.py` | Headless batch runner + result export |
+| `sim/velocity_shift/cli.py` | Interactive frontend (setup, prompts, display, entry point) |
+| `sim/velocity_shift/config.py` | Factory function for archetype-based builds |
 
 ---
 

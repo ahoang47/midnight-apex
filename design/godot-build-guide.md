@@ -3,7 +3,7 @@
 > Build a playable Godot prototype using only colored cubes. Tune gameplay constants,
 > then replace cubes with real art — gameplay comes first.
 >
-> The Python code in `velocity_shift/` is reference/prototype only — this is a
+> The Python code in `sim/velocity_shift/` is reference/prototype only — this is a
 > full GDScript rewrite.
 
 ## How this works
@@ -45,7 +45,7 @@ enum PhaseType { AGGRESSIVE, REACTIVE, UNPREDICTABLE }
 enum QteType { MASH, TIMING }
 ```
 
-**Balance constants** (match `velocity_shift/equations.py` exactly):
+**Balance constants** (match `sim/velocity_shift/equations.py` exactly):
 
 | Name | Value | Notes |
 |------|-------|-------|
@@ -212,7 +212,7 @@ Battle (Node)                                   ← TurnManager.gd attached
 
 ## 3. Deck
 
-**Goal:** 192-card stat-proportional deck. GDScript port of `velocity_shift/deck.py`.
+**Goal:** 192-card stat-proportional deck. GDScript port of `sim/velocity_shift/deck.py`.
 
 ### 3.1 `Deck.gd`
 
@@ -326,7 +326,7 @@ func on_pick_timeout(phase_index):
 
 ## 5. Combat Math
 
-**Goal:** Pure functions, 1:1 port from `velocity_shift/equations.py` + `combat.py`.
+**Goal:** Pure functions, 1:1 port from `sim/velocity_shift/equations.py` + `combat.py`.
 
 ### 5.1 `CombatResolver.gd`
 
@@ -362,7 +362,7 @@ static func qte_rubber_band(player_gap: float, threshold: float, p_qte: float, o
     # Proportional blend: leader's disadvantaged stat erodes toward 1.0 as gap widens
 ```
 
-Reference: `velocity_shift/equations.py` — every formula is there.
+Reference: `sim/velocity_shift/equations.py` — every formula is there.
 
 ---
 
@@ -520,7 +520,7 @@ static func is_comfortable_turn(archetype: String, turn_type: String) -> bool
 static func is_weak_turn(archetype: String, turn_type: String) -> bool
 ```
 
-**`PersonalityData.gd`** — 6 personality configs (Bruiser, Endurance, Swift, AR P, AR E, AR H) with 3 phases each (matching `velocity_shift/ai.py`):
+**`PersonalityData.gd`** — 6 personality configs (Bruiser, Endurance, Swift, AR P, AR E, AR H) with 3 phases each (matching `sim/velocity_shift/ai.py`):
 
 | Personality | Phase 0 | Phase 1 | Phase 2 |
 |-------------|---------|---------|---------|

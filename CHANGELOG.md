@@ -1,10 +1,71 @@
 # Changelog
 
-> Session journal tracking overview doc updates. Add entries chronologically.
+> Session journal for the whole repo: changes, decisions, reasoning, and reversions. **Read before making changes** to avoid repeating past mistakes. Newest entry at the top.
+>
+> Entries before 2026-10-31 "Repo restructure" were merged from two older logs and keep their **original wording and paths**. Old → new paths: `velocity-shift/overview/0X-*.md` (also written `overview/0X-*.md` or `Notes/06-pattern-read.md`) → `design/0X-*.md`; `godot_prototype.md` → `design/godot-build-guide.md`; `art_direction.md` → `design/art/art_direction.md`; `Notes/` → `design/notes/`; `story/high_level_story.md` → `story/pitch.md`; `story/plot_points.md` → `story/plot.md`; `story/character_sheets.md` → `story/characters/index.md`; `story/sabine.md`, `story/myth_driver_*.md` → `story/characters/`; `velocity_shift/`, `tests/`, `scripts/*.py`, `config/`, `main.py` of the prototype → `sim/…`.
+>
+> Same-day ordering between the two old logs is a best guess (neither log recorded times). On 2026-10-31 Arthur wrote the restore and BRZ entries into both logs; both copies are kept.
+
+---
+
+## 2026-10-31 — Repo restructure: one layout, one AGENTS.md, one changelog [repo] (Desmond, Chief of Design)
+
+Layout approved by the lead. Done with `git mv` so file history is kept. Not committed or pushed; staged on local branch `restructure` (from `origin/proto-build`) for the lead's review.
+
+**Moves:**
+- `velocity-shift/overview/01–06-*.md` → `design/` (same names); `godot_prototype.md` → `design/godot-build-guide.md`; `sample_battle_screen.html` → `design/`; `art_direction.md` → `design/art/art_direction.md`.
+- `velocity-shift/Notes/Notes.md`, `mod_notes.md` → `design/notes/`.
+- `velocity-shift/story/high_level_story.md` → `story/pitch.md`; `plot_points.md` → `story/plot.md`; `barks.md` → `story/barks.md`; `sabine.md`, `myth_driver_1-3.md` → `story/characters/`; `character_sheets.md` → `story/characters/index.md`.
+- `velocity-shift/velocity_shift/`, `tests/`, `scripts/`, `config/`, `main.py`, `pyproject.toml`, `.gitignore` → `sim/`; `readme.md` → `sim/README.md`.
+- Godot project (`project.godot`, `scenes/`, `scripts/`, `icon.*`) and Arthur's source-art tree `art/` stay at the root.
+
+**New:**
+- `assets/{cars,env,faces,ui,fonts}/.gitkeep` and `design/art/.gitkeep` — empty homes for game-ready art.
+- Empty `.gdignore` in `sim/`, `design/`, `story/` so Godot does not import Python, docs or story files.
+- `AGENTS.md` (root) — merges the two old AGENTS.md files: repo rules, Godot facts, sim test instructions with `sim/` paths, folder map with owners (Barry: `sim/` + `design/`; Nathaniel: `story/`; Arthur: `assets/`, `art/`, `design/art/`; Desmond: coordination), and the rule that `sim/` code is the source of truth for numbers.
+- `CHANGELOG.md` (root) — this file; merges `overview/changelog.md` and `velocity-shift/overview/changelog.md` with every entry kept and tagged by origin.
+- `sim/.gitignore` — added `__pycache__/` (running the tests left untracked bytecode in the tree).
+
+**Removed:** `velocity-shift/AGENTS.md`, `overview/changelog.md`, `velocity-shift/overview/changelog.md`, and the now-empty `velocity-shift/` and `overview/` folders.
+
+**References updated:** `design/01-system-overview.md` (architecture tree root `sim/main.py`, docs path `../design/`, `velocity_shift/…` → `sim/velocity_shift/…`), `design/02`, `03`, `04`, `godot-build-guide.md` (`velocity_shift/…` → `sim/velocity_shift/…`), `design/05-skill-trees.md` (`Notes/mod_notes.md` → `design/notes/mod_notes.md`), `design/art/art_direction.md` (pitch path, `godot_prototype.md` → `design/godot-build-guide.md` ×3), `story/characters/index.md` and `sabine.md` (`Notes/06-pattern-read.md` → `design/06-pattern-read.md`), `art/README.md`, `art/vehicles/brz/README.md`, `art/vehicles/s2000/README.md` (art guide path). No game logic or numbers changed. Sim tests: 22/22 pass from `sim/`.
+
+**Reasoning:**
+- The Python prototype, design docs and story were all nested under one game subfolder inside the Godot project, with two AGENTS.md files and two changelogs that had already drifted (both received the same 2026-10-31 art entries). One top-level home per discipline lets each bot own one folder.
+- Numbers had drifted across docs (HP per level, deck size, stance naming). Making `sim/` the single source of truth and having docs point at it stops further drift. Known conflicts were **listed, not fixed** — they belong to Barry (Systems & Balance).
+- `.gdignore` keeps Godot from importing hundreds of non-game files and slowing the editor.
+
+---
+
+## 2026-10-31 — BRZ reference car (detail pass) + S2000/BRZ duo vibe check (Arthur, Art Director)
+
+> *Merged entry — from root `overview/changelog.md` (Godot project log).*
+
+
+- `art/vehicles/brz/` — **new.** Subaru BRZ (ZD8) built to the vehicle standard (Part A), the same way as the S2000.
+  - Size: 4,079 tris (≤ 5k).
+  - Blueprint IoU: side .9651 / top .9815 / front .9453 / rear .9275, against gates of .95 / .95 / .92 / .92.
+  - Paint: blue, matched to the reference photos.
+  - Textures:
+    - 1024² body: baked AO, painted form shading for the door scoop, hood valley, haunch and ducktail, and vector panel lines from the blueprint's feature lines
+    - 256² atlas: 10 twin-spoke wheel, lamps, honeycomb grille, fictional plate and badges
+    - 256×128 painted env map
+    - all RGB555 + Bayer
+  - Contents: clay + detail build scripts, blueprint data and IoU gate, `.blend/.glb/.obj/.fbx` exports, clean and PSX renders, compare sheets, README.
+  - Verified: rebuilt from a temp copy of the folder with the same tri count and IoU, and byte-identical textures.
+  - The front 3/4 dealer photo is left out because its licensing is unclear.
+- `art/mood/tokyo_v2/` — **added** `scene_duo.py`, `post_duo.py` and `renders/duo/` previews. They show both cars parked side by side on the Tokyo v2 night street, using the same unlit/PSX recipe and post (640×448 → RGB555 + Bayer → 2× nearest). This is a non-binding vibe check; `scene_v2.py` is untouched.
+- `velocity-shift/overview/art_direction.md` — A.1.5 added, pending lead review: trust the blueprint and classify its lines before overriding it.
+
+**Reasoning:**
+- **The corrected lesson.** The blueprint was right. BRZ passes 2–3 misread the window/DLO lines and trusted a low, about 4%-small photo camera solve. Pass 4 rebuilt from the blueprint alone, like the S2000, and was approved. The lead approved the detail pass ("Way better… hit detail work"), asked to see the BRZ next to the S2000 in a similar scene, and approved pushing to `proto-build` without a PR.
 
 ---
 
 ## 2026-10-31 — BRZ (detail pass) added; S2000 + BRZ duo vibe check; A.1.5 blueprint lesson (pending review)
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 - `art/vehicles/brz/` — **new.** Subaru BRZ (ZD8), the second car built to Part A.
   - Size and gate: 4,079 tris. Blueprint IoU side .965 / top .982 / front .945 / rear .928.
@@ -25,7 +86,29 @@
 
 ---
 
+## 2026-10-31 — Art direction guide + S2000 reference car restored after art-box data loss (Arthur, Art Director)
+
+> *Merged entry — from root `overview/changelog.md` (Godot project log).*
+
+
+- `velocity-shift/overview/art_direction.md` — **restored (reconstructed)** v2 draft of the game-wide art guide. Part A is the binding vehicle standard; Part B is [VIBE]/[PROPOSAL] scene guidance; Part C has naming, open questions Q1–Q9 and doc conflicts K1–K7; Appendix W is the S2000 worked example.
+- `art/` — new source-art tree. `art/vehicles/s2000/` holds the S2000 reference car (build scripts, textures, `.glb/.blend/.obj/.fbx`, blueprint refs, IoU overlays, key renders, README). `art/mood/tokyo_v2/` holds the Tokyo v2 vibe-check scene scripts and small previews (generated files git-ignored).
+
+**Reasoning:** the original guide (written 2026-10-30/31, never committed) and all S2000 work lived only on the art box's `/workspace`, which was wiped when the box moved to a fresh instance (2026-10-31 ~11:31 AM PT; restore step reported "store empty; first boot"). The lead asked to restore the S2000 and the rules and to push finished art to the repo so it can't be lost again.
+
+**Recovery detail:**
+- S2000: recovered **verbatim** from the last zip sent in chat (scripts, textures, exports, references). Re-running the scripts reproduces it pixel-identically (4,354 tris; IoU side .961 / top .992 / front .925 / rear .944). Hard-coded `/workspace/s2000` paths were made relative for the repo copy.
+- Art guide: **reconstructed** from the approved skill text, the chat record and the surviving style-reference sheet; structure and every binding rule match v2, wording and the Touge/Wangan palette/fog numbers are re-proposed. Two rules from the BRZ build were added and flagged as pending lead review (photo check of window/roof/hood/wheel lines beyond IoU; clay-stage shape sign-off).
+- Tokyo v2 scene: scripts **rebuilt** from the recipe (originals lost); the approved original frames survive at `art/mood/tokyo_v2/renders/original_800/`.
+
+**Earlier entries lost with the box (summarised):** 2026-10-31 — first art guide written (general, not S2000-specific, after context from Desmond); later the same day reorganised so the car rules are the only binding standard and all scene content is mood reference ("The key rules are for the cars only. The scene will likely not make it to the game.").
+
+---
+
 ## 2026-10-31 — `art_direction.md` restored after data loss (reconstructed v2)
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 `overview/art_direction.md` re-added. The v2 draft was never committed and was lost when the art box was wiped (2026-10-31 ~11:31 AM PT). Rebuilt from the approved skill text, the chat record and the surviving Tokyo v2 style-reference sheet.
 
@@ -41,7 +124,105 @@
 
 ---
 
+## 2026-07-07 — Fixed Battle.tscn loading error + missing class_names
+
+> *Merged entry — from root `overview/changelog.md` (Godot project log).*
+
+
+- `scenes/Battle.tscn` — Fixed `load_steps=2` → `load_steps=6` in scene header. The value was too low (2 instead of 6: 1 scene + 2 ext_resources + 3 sub_resources), causing Godot's parser to choke when encountering all 5 resource entries before node data.
+- `scripts/StraightTimer.gd` — Added `class_name StraightTimer` so GDScript can resolve the type in `TurnManager.gd:32` (`straight_timer: StraightTimer`).
+- `scripts/CardHandUI.gd` — Added `class_name CardHandUI` so GDScript can resolve the type in `TurnManager.gd:33` (`card_hand_ui: CardHandUI`).
+- `scripts/FaceController.gd` — Added `class_name FaceController` so GDScript can resolve the type hint.
+- `scenes/Battle.tscn` — Added `FaceController` node (`res://scripts/FaceController.gd`) as child of root `Battle` node.
+- `scripts/TurnManager.gd` — Changed static call `FaceController.set_face_sequence(...)` to instance call via `@onready var face_controller: FaceController = $FaceController`.
+- `scenes/Battle.tscn` — Added `uid=` fields to `ext_resource` lines (needed in Godot 4.4+). Attached `StraightTimer.gd` to `CornerTimerBar` and `CardHandUI.gd` to `CanvasLayer` so their `@onready` paths resolve. Updated `load_steps` to 9.
+- `scripts/RoadScroller.gd` — Changed `extends ShaderMaterial` → `extends Node` with `@export var material: ShaderMaterial`. `ShaderMaterial` (a `Resource`) has no `_process` or `get_tree()` — both are `Node` methods.
+
+**User handoffs (still needed):**
+- Register `globals.gd` and `SignalBus.gd` as autoloads in Project Settings
+- Color PlayerCube (blue) and OpponentCube (red) materials in editor
+- Position Camera3D at (0, 5, 8) looking at (0, 0, -5) — verify after scene import
+- Resize ground plane to look like a narrow road lane
+- Arrange UI panels so they don't obscure the 3D viewport
+- Tune constants in `globals.gd` via playtesting (Step 15)
+
+---
+
+## 2026-07-07 — Full 15-step Godot prototype build
+
+> *Merged entry — from root `overview/changelog.md` (Godot project log).*
+
+
+Built the complete Godot prototype per `velocity-shift/overview/godot_prototype.md`. 27 scripts + 1 scene + project config.
+
+**Project config:**
+- Display: 640×480, viewport stretch, keep aspect
+- Input maps: `qte_mash` (Space/X), `qte_timing` (Enter/Z), `ui_accept`, `ui_cancel`
+
+**Phase 1 — Foundation (Steps 1–4):**
+- `scripts/globals.gd` — enums, constants (CLASH_STAKES=0.35, DECK_SIZE=192, etc.), lockout lookup
+- `scripts/SignalBus.gd` — 12 signals
+- `scripts/CombatantStats.gd` — Resource: name, pow, en, han, level
+- `scripts/MatchConfig.gd` — Resource: player/opponent stats, max_turns, seed, etc.
+- `scenes/Battle.tscn` — Full hierarchy: SubViewport (World3D), CanvasLayer (UI), TurnManager
+- `scripts/Deck.gd` — 192-card stat-proportional deck with ALPHA=0.85 smoothing
+- `scripts/StraightTimer.gd` — 12s countdown, 3×4s phases, signal on timeout
+- `scripts/CardHandUI.gd` — 3 stance buttons, count display, lockout, auto-pick
+
+**Phase 2 — Core Combat Loop (Steps 5–7):**
+- `scripts/CombatResolver.gd` — All pure combat math: resolve_stance, clash_mult, compute_damage, mitigation, qte_factor, HAN mod, rubber-band split
+- `scripts/TurnManager.gd` — State machine: START→STRAIGHT→CORNER_PLAYBACK→DAMAGE_BATCH→END_TURN→MATCH_COMPLETE, full data flow
+- `scripts/QTEController.gd` — Mash (fill bar with depletion) + Timing (oscillating marker) QTE modes, difficulty scaling
+
+**Phase 3 — AI + Tell System (Steps 8–9):**
+- `scripts/AIPicker.gd` — EV-scoring card selection, 6 behavior overrides (highest_ev, counter, alternate, repeat_win, etc.)
+- `scripts/AIQTE.gd` — Opponent QTE generation with encounter ratio scaling
+- `scripts/TurnTypeData.gd` — 8 turn types × 3 archetypes stance sequence tables + QTE type lookup + bluff tables
+- `scripts/ArchetypeData.gd` — Meta-archetype mapping, face type, comfort/weak turn zones
+- `scripts/PersonalityData.gd` — 6 personalities (Bruiser, Endurance, Swift, AR P, AR E, AR H) with 3 phases each
+- `scripts/TrackData.gd` — 3 preset circuit layouts (10-turn sequences)
+- `scripts/TellGenerator.gd` — Deception flow: lie rate, position weighting, intensity, comfort/weak scaling
+- `scripts/FaceController.gd` — Face display with alpha crossfade, tell overlay
+
+**Phase 4 — Display + Animation (Steps 10–12):**
+- `scripts/PositionTracker.gd` — Cumulative DP, gap, rubber-band threshold
+- `scripts/DamageDisplay.gd` — DP bar tweens
+- `scripts/ClashDisplay.gd` — 2×3 stance grid with color-coded panels
+- `scripts/PhaseAnnouncer.gd` — Lap boundary overlay
+- `scripts/CarAnimator.gd` — Z-offset by DP gap, surge/drop, corner path blank
+- `scripts/AnimationTreeBlendManager.gd` — Stance blend schedule (0-4-8-12s)
+- `scripts/BattleCamera.gd` — Chase cam, corner transitions, overtake swing
+
+**Phase 5 — Scene Management (Steps 13–14):**
+- `scripts/StageManager.gd` — Scene loading (Battle.tscn) with auto-MatchConfig wiring
+- `scripts/RoadScroller.gd` — UV-offset parallax shader material
+
+---
+
+## 2026-07-07 — velocity-shift copied into repo as reference
+
+> *Merged entry — from root `overview/changelog.md` (Godot project log).*
+
+
+- Copied entire `velocity-shift/` project into midnight-apex root (minus `.git/` and `__pycache__/`) so all prototype reference material is local.
+- Updated `AGENTS.md` intro path from absolute `C:\...` to relative `velocity-shift/`.
+
+---
+
+## 2026-07-07 — Initial setup
+
+> *Merged entry — from root `overview/changelog.md` (Godot project log).*
+
+
+- Created `AGENTS.md` combining midnight-apex project context with velocity-shift reference. Key directives: no auto-push, changelog maintenance, velocity-shift as prototype reference.
+- Created `overview/changelog.md` for change tracking.
+
+---
+
 ## 2026-07-07 — Human-centric tasks stripped from prototype doc
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 All 16 `🧑 You:` sections removed from `overview/godot_prototype.md` — autoload registration, editor setup, constant tuning, verification steps, and placeholder notes. The doc is now MCP-only; no tasks require manual editor intervention.
 
@@ -50,6 +231,9 @@ All 16 `🧑 You:` sections removed from `overview/godot_prototype.md` — autol
 ---
 
 ## 2026-07-06 — Godot docs merged into single prototype document
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 `overview/godot_outline.md` + `overview/godot_cube_prototype.md` → `overview/godot_prototype.md`
 
@@ -70,6 +254,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 
 ## 2026-07-06 — Exit→Entry lockout mechanic
 
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
+
 `overview/03-deckbuilding-clash.md` — added Exit→Entry lockout section with 3 placeholder matrices (Attack / Defend / Steady exit), 8×8 turn-type cross-reference (all TBD except Chicane→Hairpin / Attack→Steady). Narrative justification for the Chicane→Hairpin example.
 
 `overview/01-system-overview.md` — added key design property #9.
@@ -83,6 +270,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 ---
 
 ## 2026-07-03 — Cube prototype tutorial added
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 `overview/godot_cube_prototype.md` — new file alongside the existing `godot_outline.md`:
 
@@ -99,6 +289,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 
 ## 2026-07-03 — Level-gap QTE difficulty scaling
 
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
+
 `overview/godot_outline.md` — QTE timing/mash difficulty is now driven by level gap:
 
 - **§4.1 QTEController.gd** — added `qte_difficulty()` static function: `timing_window_ms` shrinks and `speed_multiplier` increases as `opponent_level - player_level` grows
@@ -113,6 +306,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 
 ## 2026-07-02 — Decision window updated: 8s real-time + corner cinematic scene
 
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
+
 `overview/06-pattern-read.md` — updated Decision window:
 - Removed slo-mo framing; 4s → 8s real-time straightaway approach to select all 3 cards
 - Timeout auto-selects unselected positions (semi-random)
@@ -125,6 +321,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 ---
 
 ## 2026-07-02 — Corner cinematic system + segment-based rendering
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 `overview/godot_outline.md` — added corner cinematic system (§4.4):
 - Segment-based rendering (Initial D: Another Stage style) — each turn loads/unloads its own straight + corner segment
@@ -144,6 +343,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 
 ## 2026-07-02 — Merged remote godot_outline.md (1093-line full Godot implementation outline)
 
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
+
 `overview/godot_outline.md` — replaced the 27-line placeholder with the full implementation outline from the remote branch, covering:
 - Sections 1–8: Foundation, Engine Core, AI Layer, Corner + QTE, Position + Blend System, 3D Visuals, Art Integration, Wrap
 - Appendices A–G: Turn Flow, Signals, Data Flow, Art Checklist, QTE Lookup, AI Stance Lookup, Notes/Gotchas
@@ -154,6 +356,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 ---
 
 ## 2026-07-02 — Stance projection changed to positioning-based car motion system
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 `overview/06-pattern-read.md` — replaced the entire **Car motion types** section:
 - **Channel 1 (entry):** track position — outside bias = ATK, center bias = NEU, full-width weaving = DEF
@@ -171,6 +376,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 
 ## 2026-06-30 — Decision window added to pattern-read doc
 
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
+
 `overview/06-pattern-read.md` — added a **Decision window** section at the end explaining that time slows to a crawl before each turn, giving the player 4 seconds to read the opponent's face and select a card. Passing on timeout is equivalent to playing a neutral with zero effect.
 
 **Reasoning:** Formalizes the real-time pressure that makes the telegraphing system meaningful — players must read bluff tells under time constraint, not with unlimited analysis. The 4-second window creates a tension rhythm (observe → decide → execute) that matches the racing theme.
@@ -178,6 +386,9 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 ---
 
 ## 2026-06-26 — Character sheets restructured with pattern-read fields
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 ### Split into per-character files
 
@@ -190,7 +401,12 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 
 **Reasoning:** Each character needs mechanical attributes that plug into the pattern-read system (face expressions, bluff behavior, turn-type proficiency) so their in-match behavior is consistent with their narrative identity. The TODO fields are intentionally left blank for the author to assign meaningful values.
 
+---
+
 ## 2026-06-26 — Track layout randomization removed from pattern-read doc
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 `Notes/06-pattern-read.md` — removed all references to randomized track layout generation:
 - **Line 45**: "randomized 10 turn sequence" → "predetermined 10-turn sequence"
@@ -199,11 +415,21 @@ Merged the comprehensive reference outline and the step-by-step cube tutorial in
 
 **Reasoning:** Player pattern memorization was a concern for fixed layouts, but since the game is narrative-driven, each character has their own bluffing habits defined by lie rate, personality, and the archetype comfort/weak zone system. The track itself becomes authored scenery rather than RNG.
 
+---
+
 ## 2026-06-26 — Fixed preset builds format
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 `config/sample_builds.json` used the old stat system (`pow`/`def`/`eff` with no `archetype`/`level`), causing `KeyError: 'archetype'` when selecting a preset build. Replaced with builds keyed by archetype + level, matching the current `cars.build_stats()` API. 36 presets (6 archetypes × 6 tier levels).
 
+---
+
 ## 2026-06-26 — Deckbuilding & Clash Docs Rewrite
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 ### Fully rewritten: `overview/03-deckbuilding-clash.md`
 
@@ -217,7 +443,12 @@ The doc was highly out of date vs the codebase. Changes:
 - **Flowchart** — updated to show sequential clash flow instead of batch arrangement
 - **Played cards → discard** — noted opponent cards return to draw pile reshuffled
 
+---
+
 ## 2026-06-23 — Unused Code Cleanup
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 ### Removed dead code across the codebase
 
@@ -249,6 +480,9 @@ The doc was highly out of date vs the codebase. Changes:
 
 ## 2026-06-21 — DNF State Removed
 
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
+
 ### Removed knockout / early-exit mechanic
 
 **Removed** the DNF (Did Not Finish) rule where a combatant would lose when cumulative damage received ≥ max_hp. The match always runs all `max_turns`, then decides by position.
@@ -268,6 +502,9 @@ The doc was highly out of date vs the codebase. Changes:
 ---
 
 ## 2026-06-20 — HAN Stat Use
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 ### Unified HAN → QTE modifier for both sides
 
@@ -291,6 +528,9 @@ The doc was highly out of date vs the codebase. Changes:
 
 ## 2026-06-17 — Mod System Redesign
 
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
+
 ### Rewritten: `Notes/mod_notes.md`
 
 **Replaced** the entire mod system design:
@@ -308,7 +548,12 @@ The doc was highly out of date vs the codebase. Changes:
 - Flagged tree design as deferred with link to `Notes/mod_notes.md`
 - Kept additive-only principle and system interactions as design guardrails
 
+---
+
 ## 2026-06-10 — AI Personality Documentation + HP_PER_LEVEL Fixes
+
+> *Merged entry — from `velocity-shift/overview/changelog.md` (prototype/design-docs log).*
+
 
 ### Updated: `overview/04-difficulty-tuning.md`
 

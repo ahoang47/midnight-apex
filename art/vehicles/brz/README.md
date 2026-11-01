@@ -1,6 +1,6 @@
 # car_brz — Subaru BRZ (ZD8, 2022+) — detail pass
 
-Second car built to the vehicle standard (`velocity-shift/overview/art_direction.md`, Part A), the same way as the S2000
+Second car built to the vehicle standard (`design/art/art_direction.md`, Part A), the same way as the S2000
 (`art/vehicles/s2000`): straight from the four-view blueprint, gated on blueprint IoU, then painted.
 
 | | |

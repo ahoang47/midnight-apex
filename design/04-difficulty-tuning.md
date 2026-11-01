@@ -6,7 +6,7 @@ There are no tuning knobs. Difficulty is driven entirely by the **level gap** be
 
 ## Archetype Progression System
 
-Builds belong to an archetype and a level. Stats are computed from `velocity_shift/cars.py`. All archetypes start at 33/33/33 at level 1 and progress toward their target over 100 levels via an ease-in curve.
+Builds belong to an archetype and a level. Stats are computed from `sim/velocity_shift/cars.py`. All archetypes start at 33/33/33 at level 1 and progress toward their target over 100 levels via an ease-in curve.
 
 **Specialization curve:**
 
@@ -115,7 +115,7 @@ Trailer: damage_qte   = lerp(own QTE, 1.0, t)
 
 ## AI Difficulty — Phase-Based Personalities
 
-Difficulty is driven by the level gap (above), but opponent *behavior variety* comes from 6 phase-based AI personalities defined in `velocity_shift/ai.py`. Each personality has 3 phase-indexed behaviors — which index is active depends on the encounter's phase count.
+Difficulty is driven by the level gap (above), but opponent *behavior variety* comes from 6 phase-based AI personalities defined in `sim/velocity_shift/ai.py`. Each personality has 3 phase-indexed behaviors — which index is active depends on the encounter's phase count.
 
 ### Personalities
 

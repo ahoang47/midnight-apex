@@ -89,7 +89,7 @@ Cards are chosen one position at a time:
 2. **Middle (pos 1):** From remaining 5 cards, player picks 1, opponent picks 1. Clash resolves.
 3. **Anchor (pos 2):** From remaining 4 cards, each side picks their final card. Clash resolves.
 
-The opponent's AI picks use a phase-based personality (`velocity_shift/ai.py` — 6 personalities, each with 1–3 phase-indexed behaviors). Each phase defines hand requirements (minimum card counts per stance) and a selection strategy (EV scoring, behavior overrides like `counter`, `alternate`, `highest_ev`, or pure random for unpredictable phases).
+The opponent's AI picks use a phase-based personality (`sim/velocity_shift/ai.py` — 6 personalities, each with 1–3 phase-indexed behaviors). Each phase defines hand requirements (minimum card counts per stance) and a selection strategy (EV scoring, behavior overrides like `counter`, `alternate`, `highest_ev`, or pure random for unpredictable phases).
 
 After all 3 clashes resolve, damage is computed for the turn.
 
