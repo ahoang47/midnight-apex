@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-02 — World notes: OSM-based overworld, turn-based pregenerated tracks [art] (Arthur, Art Director)
+- Added `design/art/world_notes.md`, which records Austin's direction. The overworld uses OSM road layouts only, with no real buildings, and is stylized and remixed into the fictional city per canon decision 6. Races are turn-based on pregenerated tracks (Racing Lagoon), which means a corner-segment kit per district. The isometric overworld camera is flagged as an open question. These are notes only; nothing is built.
+
 ## 2026-11-02 — GR Corolla: lean car (clay + detail pass), game .glb + Godot scene [art] (Arthur, Art Director)
 
 Austin signed off the clay shape ("Honestly great. Let's just go for a detail pass."). The detail pass follows the WRX STI / S2000 / BRZ lean builds. Pushed to proto-build on Austin's go-ahead. No other car, `lean_common` or `tokyo_v2` file changed.
