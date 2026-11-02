@@ -19,7 +19,7 @@ One file for the whole repo. Read it before touching anything.
 | `sim/` | Python math model: the text-based prototype, tests, balance scripts, presets | **Barry** (Systems & Balance) |
 | `design/` | Systems docs `01`–`06`, `godot-build-guide.md`, `sample_battle_screen.html`, `notes/` (lead's notes + mod notes) | **Barry** (Systems & Balance) |
 | `design/art/` | Art direction guide (`art_direction.md`) | **Arthur** (Art Director) |
-| `assets/` | Game-ready art for Godot: `cars/`, `env/`, `faces/`, `ui/`, `fonts/` | **Arthur** (Art Director) |
+| `assets/` | Game-ready art for Godot: `cars/`, `characters/`, `env/`, `faces/`, `ui/`, `fonts/` | **Arthur** (Art Director) |
 | `art/` | Source art (Blender builds, blueprints, mood scenes) | **Arthur** (Art Director) |
 | `story/` | `pitch.md`, `plot.md`, `barks.md`, `characters/` (index, Sabine, Myth Drivers) | **Nathaniel** (Narrative), guided by the lead |
 | `AGENTS.md`, `CHANGELOG.md`, cross-folder work | Coordination | **Desmond** (Chief of Design) |

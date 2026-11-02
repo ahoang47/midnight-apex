@@ -1,0 +1,35 @@
+# Godot 4.6.3 import check - 2026-11-01 21:15 PST (tune-up + painted-outfit restructure)
+# project: /workspace/characters/godot_check (headless). Plain-import checks run in a copy without retarget settings.
+
+## 1) Plain import: skeleton, meshes, blend shapes, animation
+(Godot's glTF importer sanitises ':' -> '_': 'mixamorig_Hips'. Mixamo FBX imported into Godot gets the same names.)
+
+res://char_base_m.glb skeleton=CharBase_M/Skeleton3D bones=25 ["mixamorig_Hips", "mixamorig_Spine", "mixamorig_Spine1", "mixamorig_Spine2", "mixamorig_Neck", "mixamorig_Head", "mixamorig_HeadTop_End", "mixamorig_LeftShoulder", "mixamorig_LeftArm", "mixamorig_LeftForeArm", "mixamorig_LeftHand", "mixamorig_RightShoulder", "mixamorig_RightArm", "mixamorig_RightForeArm", "mixamorig_RightHand", "mixamorig_LeftUpLeg", "mixamorig_LeftLeg", "mixamorig_LeftFoot", "mixamorig_LeftToeBase", "mixamorig_LeftToe_End", "mixamorig_RightUpLeg", "mixamorig_RightLeg", "mixamorig_RightFoot", "mixamorig_RightToeBase", "mixamorig_RightToe_End"]
+   mesh M_Body surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh M_Hair_A surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh M_Hair_B surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh M_Head surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh M_Hood surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   anims ["deform_test"]
+res://char_base_f.glb skeleton=CharBase_F/Skeleton3D bones=25 ["mixamorig_Hips", "mixamorig_Spine", "mixamorig_Spine1", "mixamorig_Spine2", "mixamorig_Neck", "mixamorig_Head", "mixamorig_HeadTop_End", "mixamorig_LeftShoulder", "mixamorig_LeftArm", "mixamorig_LeftForeArm", "mixamorig_LeftHand", "mixamorig_RightShoulder", "mixamorig_RightArm", "mixamorig_RightForeArm", "mixamorig_RightHand", "mixamorig_LeftUpLeg", "mixamorig_LeftLeg", "mixamorig_LeftFoot", "mixamorig_LeftToeBase", "mixamorig_LeftToe_End", "mixamorig_RightUpLeg", "mixamorig_RightLeg", "mixamorig_RightFoot", "mixamorig_RightToeBase", "mixamorig_RightToe_End"]
+   mesh F_Body surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh F_Collar surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh F_Hair_A surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh F_Hair_B surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   mesh F_Head surfaces=1 blendshapes=[&"Slim", &"Bulky"] skin=true
+   anims ["deform_test"]
+
+## 2) BoneMap -> SkeletonProfileHumanoid (build/humanoid_bonemap.tres)
+save bonemap: 0
+res://char_base_m.glb  required=17  UNMAPPED_REQUIRED=[]  optional_unmapped=34 [&"Root", &"LeftEye", &"RightEye", &"Jaw", &"LeftThumbMetacarpal", &"LeftThumbProximal", &"LeftThumbDistal", &"LeftIndexProximal", &"LeftIndexIntermediate", &"LeftIndexDistal", &"LeftMiddleProximal", &"LeftMiddleIntermediate", &"LeftMiddleDistal", &"LeftRingProximal", &"LeftRingIntermediate", &"LeftRingDistal", &"LeftLittleProximal", &"LeftLittleIntermediate", &"LeftLittleDistal", &"RightThumbMetacarpal", &"RightThumbProximal", &"RightThumbDistal", &"RightIndexProximal", &"RightIndexIntermediate", &"RightIndexDistal", &"RightMiddleProximal", &"RightMiddleIntermediate", &"RightMiddleDistal", &"RightRingProximal", &"RightRingIntermediate", &"RightRingDistal", &"RightLittleProximal", &"RightLittleIntermediate", &"RightLittleDistal"]
+res://char_base_f.glb  required=17  UNMAPPED_REQUIRED=[]  optional_unmapped=34 [&"Root", &"LeftEye", &"RightEye", &"Jaw", &"LeftThumbMetacarpal", &"LeftThumbProximal", &"LeftThumbDistal", &"LeftIndexProximal", &"LeftIndexIntermediate", &"LeftIndexDistal", &"LeftMiddleProximal", &"LeftMiddleIntermediate", &"LeftMiddleDistal", &"LeftRingProximal", &"LeftRingIntermediate", &"LeftRingDistal", &"LeftLittleProximal", &"LeftLittleIntermediate", &"LeftLittleDistal", &"RightThumbMetacarpal", &"RightThumbProximal", &"RightThumbDistal", &"RightIndexProximal", &"RightIndexIntermediate", &"RightIndexDistal", &"RightMiddleProximal", &"RightMiddleIntermediate", &"RightMiddleDistal", &"RightRingProximal", &"RightRingIntermediate", &"RightRingDistal", &"RightLittleProximal", &"RightLittleIntermediate", &"RightLittleDistal"]
+
+## 3) Retargeted import (bone_map + rename bones + rest fixer)
+res://char_base_m.glb  skeleton=CharBase_M/GeneralSkeleton  bones=["Hips", "Spine", "Chest", "UpperChest", "Neck", "Head", "mixamorig_HeadTop_End", "LeftShoulder", "LeftUpperArm", "LeftLowerArm", "LeftHand", "RightShoulder", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "LeftToes", "mixamorig_LeftToe_End", "RightUpperLeg", "RightLowerLeg", "RightFoot", "RightToes", "mixamorig_RightToe_End"]
+   required profile bones missing after retarget: []
+   deform_test tracks (retargeted): ["%GeneralSkeleton:UpperChest", "%GeneralSkeleton:Head", "%GeneralSkeleton:LeftUpperArm", "%GeneralSkeleton:LeftLowerArm", "%GeneralSkeleton:RightUpperArm", "%GeneralSkeleton:RightLowerArm"]
+res://char_base_f.glb  skeleton=CharBase_F/GeneralSkeleton  bones=["Hips", "Spine", "Chest", "UpperChest", "Neck", "Head", "mixamorig_HeadTop_End", "LeftShoulder", "LeftUpperArm", "LeftLowerArm", "LeftHand", "RightShoulder", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "LeftToes", "mixamorig_LeftToe_End", "RightUpperLeg", "RightLowerLeg", "RightFoot", "RightToes", "mixamorig_RightToe_End"]
+   required profile bones missing after retarget: []
+   deform_test tracks (retargeted): ["%GeneralSkeleton:UpperChest", "%GeneralSkeleton:Head", "%GeneralSkeleton:LeftUpperArm", "%GeneralSkeleton:LeftLowerArm", "%GeneralSkeleton:RightUpperArm", "%GeneralSkeleton:RightLowerArm"]
+
+## import errors on final re-import: 0

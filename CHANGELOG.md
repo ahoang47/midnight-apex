@@ -8,6 +8,46 @@
 
 ---
 
+## 2026-11-01 — Character bases (male/female): Mixamo-named rig, painted outfit atlases, Slim/Bulky [art] (Arthur, Art Director)
+
+The lead approved the character base pass. One male and one female base body is now the shared start point for every human character. Work toward individual characters comes next.
+
+**New:**
+- `assets/characters/base/` — game-ready files:
+  - `char_base_m.glb` and `char_base_f.glb` (textures embedded), `textures/{m,f}/*.png`, and `humanoid_bonemap.tres`.
+  - A README covering the Godot import: BoneMap → SkeletonProfileHumanoid, nearest filtering, outfit texture swap, Slim/Bulky blend shapes, hiding/showing the hood or collar add-on, and tri counts.
+- `art/characters/base/` — source:
+  - `char_base.blend` and the build scripts (`build/`: `spec.py`, `paint_textures.py`, `build_char.py`, `render_checks.py`, `compose.py`, and headless Godot checks in `build/godot/`).
+  - Review renders: turnarounds for male/female × standard/slim/bulky, swap sheets, `builds_lineup`, `lineup_mf`, `tuneup_before_after`, `deform_check`.
+  - Paint templates `renders/uv_template_{m,f}.png`, `godot_import_log.txt`, a README and `CREDITS.md`.
+- **Skeleton:**
+  - 25 bones with Mixamo names (`mixamorig:Hips` …), identical names and hierarchy for both sexes.
+  - Clean deform rig with no IK or poles, T-pose, root at the feet.
+  - Male 1.83 m, female 1.70 m. Godot 4.6.3 BoneMap check: all 17 required bones mapped (unmapped bones are optional: root, eyes, jaw, fingers). Retargeted import gives `GeneralSkeleton`.
+- **Mesh:**
+  - One skinned body mesh per sex (686 tris). Clothes are painted onto a 256² outfit atlas; changing outfit means swapping the texture.
+  - Separate pieces: the Head (124 tris, 128² face), two hair pieces per sex, and a tiny outfit add-on (male hood 40 tris, female jacket collar 20 tris).
+  - Complete characters: male 880 (tee) / 920 (hoodie); female 900–974. Budget ≤ 1,200.
+- **Outfits:** tee + jeans + sneakers for both sexes, plus a teal hoodie (male) and a mustard zip jacket (female). Hair: male crop and quiff; female bob, and a side-swept fringe with a high ponytail.
+- **Body builds:** `Slim` / `Bulky` shape keys on every mesh with one skeleton. Bulky widens the torso, belly and chest, thickens the limbs and neck, and shifts the limbs outward.
+
+**Reasoning:**
+- Mixamo names plus the humanoid BoneMap let any Mixamo or humanoid animation library retarget onto both sexes. A single shared rig keeps animation sets shared too.
+- The lead asked for clothes painted on, the classic PS1 way, instead of layered meshes. That gives one mesh, no poke-through, cheaper characters, and outfits that cost only a texture. Small silhouette steps (tee hem, sleeve hem, jeans hem, sneaker shape) keep the clothed read.
+- The CC0 source character had an Akira/Kaneda-like outfit and face. The bases were rebuilt from scratch and the look fully replaced, to keep to the no-real-IP rule. The original download is not in the repo (see `CREDITS.md`).
+- Tune-up pass after review: heads +12% with a shorter neck (≈6.6 heads tall), arms about 8.5% shorter, the female ponytail reads from the front, and Bulky/Slim pushed further so the three builds read distinctly.
+
+**Known gaps:**
+- No finger bones (mitten hands with a thumb).
+- Bone rolls are untested against a real Mixamo FBX.
+- Godot's Auto-Map wasn't run headless; the BoneMap was built from an explicit name table.
+- Shape keys don't move joints.
+- Every outfit shares the tee/jeans silhouette; skirts and shorts need an add-on or a body variant.
+- The hood/collar add-on and Hair_B are visible on import and must be toggled in-game.
+- Ears are flat quads.
+
+---
+
 ## 2026-10-31 — Lean cars: WRX STI, S2000, BRZ at ≤ 2,000 tris with suspension rig and headlamp molding; Part A updated [art] (Arthur, Art Director)
 
 Lead approved the lean rebuilds. The approved originals (S2000 4,354 tris, BRZ 4,079 tris) stay in place for history; the lean build in each car's `lean/` folder is the new game version, with an engine copy in `assets/cars/`.

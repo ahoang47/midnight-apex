@@ -1,0 +1,32 @@
+{
+ "m": {
+  "Body": 686,
+  "Head": 124,
+  "Hair_A": 70,
+  "Hair_B": 70,
+  "Hood": 40,
+  "_height_body_hairA": 1.832,
+  "_lowest": 0.0,
+  "_combos": {
+   "Hair_A+outfit_tee": 880,
+   "Hair_A+outfit_hoodie": 920,
+   "Hair_B+outfit_tee": 880,
+   "Hair_B+outfit_hoodie": 920
+  }
+ },
+ "f": {
+  "Body": 686,
+  "Head": 124,
+  "Hair_A": 90,
+  "Hair_B": 144,
+  "Collar": 20,
+  "_height_body_hairA": 1.704,
+  "_lowest": 0.0,
+  "_combos": {
+   "Hair_A+outfit_tee": 900,
+   "Hair_A+outfit_jacket": 920,
+   "Hair_B+outfit_tee": 954,
+   "Hair_B+outfit_jacket": 974
+  }
+ }
+}

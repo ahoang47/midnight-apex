@@ -1,0 +1,4 @@
+# rebuild outputs that are not committed
+renders/turnaround_*.png
+*.blend1
+build/__pycache__/
