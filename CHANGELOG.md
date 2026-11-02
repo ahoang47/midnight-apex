@@ -8,6 +8,36 @@
 
 ---
 
+## 2026-11-02 — Story: private snitch accusation, PC's betrayal hook, why Sabine takes the PC in [story] (Nathaniel, Narrative Lead)
+
+Lead approved. Committed on the lead's go-ahead (push pending).
+
+**Changed:**
+- `story/canon.md`:
+  - Decision 2: the accusation never spread. Only the Myth Drivers and Sabine know; they froze her out quietly, and the scene only knows she vanished around the sweep.
+  - Decision 3: she believes she was frozen out over the accusation and never told anyone.
+  - Decision 4: Myth Driver races happen "during the Finale" (was stale "Act 2").
+  - Decision 13: the PC's old crew/family believe the PC betrayed them, plus the Round 1 hook.
+  - New decision 14: why Sabine takes the PC in (needs a driver; sees herself in them, never admits it).
+  - Timeline steps 1–5 rewritten so nothing is public.
+  - New open question: how/when the PC first learns there was an accusation `<TBD>`.
+- `story/plot.md`:
+  - §1–2: Sabine's reasons for taking the PC in.
+  - Round 1 Touge: the first-pass crew boss line ("Sabine? She was one of us…") and the PC's hook.
+  - Every beat implying the scene knows a snitch rumor rewritten as disappearance, speculation and misremembering (Round 1 Touge, Round 2 all three, Round 3 Street, Mentor Confrontation, Summit Setup wording, Mentor Arc, Player Arc).
+- `story/pitch.md` — Core Story Mystery: the accusation stays private; the scene only knows she vanished.
+- `story/characters/sabine.md`, `myth_driver_1.md`, `myth_driver_2.md` — "snitch rumor" → private accusation; the date stays private (no low-level racer spreading it); Sabine's reason for taking the PC in.
+- New `<CHECK: rewritten for private-rumor canon — Austin to confirm>` markers wherever the original intent was unclear.
+
+- Follow-up (lead): the PC puts the accusation together from clues in the crew reveals; nobody tells them. New canon decision 15; the open question is closed and replaced by a "clue per reveal" item. The PC names it at the Mentor Confrontation and Sabine confirms she was accused and not the informant. The dependent `<CHECK>`s (timeline step 5, `plot.md` Mentor Confrontation, `pitch.md` Core Story Mystery) are cleared. Each round's intro in `plot.md` gets a `<TODO: clue per reveal>` with an example. Myth Driver #2's scapegoat `<CHECK>` stays, noting the PC already knows by then.
+
+- Follow-up (lead): the Mentor Confrontation is locked at the end of Round 3 (`<PROPOSAL>` removed in `plot.md` and `pitch.md`). The PC pieces together misleading clues and accuses Sabine of being the snitch (her reaction `<TODO>`), which blows up their relationship. The PC races the Myth Drivers while estranged. At the summit the benign sweep comes out, and the PC owns repeating the Myth Drivers' mistake. Sabine's choice of the PC's crew now follows the PC's apology. The PC's motive after the rift is locked as canon decision 16: doubt (the Myth Drivers' contradicting accounts) drives the racing, and guilt (it echoes home) makes it personal. The motive TODO is closed in `plot.md` §7–8, the Player Arc and `pitch.md`. Also locked: the PC tricks only the Myth Drivers into the summit and is honest with Sabine ("I was wrong. Be there.", first-pass), the first time the PC breaks their pattern of leaving without explanation. Updated in canon decision 4, timeline step 7 and the open questions, `plot.md` §8 and the Player Arc (first step toward the apology), and `pitch.md`. Then superseded by the lead: there is **no trick**. The PC honestly invites Sabine to the summit to apologize, and the three Myth Drivers each hear about it separately, feel guilty, and come on their own, perhaps to apologize too (`<TODO: how word reaches the Myth Drivers>`). The trick TODO and the cut-off "They each individually agree" TODO are closed. Updated in canon decision 4, timeline step 7, the open questions, `plot.md` §8–9 and `pitch.md`. Also locked: Myth Driver #2 hints at Sabine's innocence (possible scapegoat) in his Finale race out of guilt over her ousting. It's one of the first cracks in the PC's certainty and foreshadows his summit apology. New canon decision 17; the #2 `<CHECK>` in `plot.md` §7 is cleared; `myth_driver_2.md` is updated. Then Myth Driver #3's motive was replaced (lead): not jealousy. He wanted out to go pro and didn't want Sabine hurt by him leaving, so he was glad she was gone; letting her be pushed out was easier on him and harder on her. He never actually went pro (why: `<TBD>`). It's also a real reason she declines to rejoin, and he mirrors the PC (leaving without facing the goodbye). His `<CHECK>` is cleared: in his Finale race he half-owns it, and the full reason comes at the summit. Updated: canon decisions 2, 5 and 9, timeline steps 1 and 8, the open questions; `plot.md` §7, §9, §10 and the Player Arc; `pitch.md`; `myth_driver_3.md` (role and story), `sabine.md`, `characters/index.md` (role). Final pass: Myth Driver #1's contradiction (first pass) is that he insists Sabine *left* on her own the night of the sweep, while #2's hints say she was *pushed*. It's the first time two accounts can't both be true, and it starts the PC's doubt. New canon decision 18; the `<TODO: what it is>` in `plot.md` §7 is resolved; `myth_driver_1.md` and the open questions are updated. Also made explicit in canon (decision 2, timeline step 1) and `myth_driver_1.md` that all three Myth Drivers knew about Sabine's uncle-dad; only #1 held it against her. Updated: canon decisions 5, 13 and 15, timeline steps 5–8 and the open questions; `plot.md` Rounds intro and clue lines, Mentor Confrontation, §7–10, Mentor and Player Arcs; `pitch.md` Core Story Mystery.
+
+**Reasoning:**
+- The lead wants the accusation hidden, which adds mystery and keeps Sabine's story in shadow. It also means the PC hears only "she vanished, she must have had something to hide", the same thing their own people say about them.
+
+---
+
 ## 2026-11-01 — Character bases (male/female): Mixamo-named rig, painted outfit atlases, Slim/Bulky [art] (Arthur, Art Director)
 
 The lead approved the character base pass. One male and one female base body is now the shared start point for every human character. Work toward individual characters comes next.

@@ -5,7 +5,7 @@
 - [Sabine](sabine.md) — Mentor
 - [Myth Driver #1](myth_driver_1.md) — Antagonist / Former ally (Touge)
 - [Myth Driver #2](myth_driver_2.md) — Former friend / Resentful rival (Wangan)
-- [Myth Driver #3](myth_driver_3.md) — Jealous rival (Street)
+- [Myth Driver #3](myth_driver_3.md) — Former friend / Left without a goodbye (Street)
 
 ---
 

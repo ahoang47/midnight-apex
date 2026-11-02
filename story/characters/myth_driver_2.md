@@ -4,9 +4,10 @@
 
 - **Role:** Former friend / Resentful rival
 - **District:** Wangan
-- **Backstory:** Asked Sabine out on a date once; she politely rejected him and they remained friends. However, he secretly resents her because he believes she told everybody about it. Before the breakup, Myth Drivers #1 and #3 kept bringing it up; none of them has spoken since.
-- **Conflict:** His resentment festered — he took a personal vendetta against Sabine for something she didn't do rather than talking to her directly, and hid it behind the snitch rumor from the police sweep.
-- **Resolution:** The truth comes out at the summit of Fushigi-Yama; they reconcile but she leaves.
+- **Backstory:** Asked Sabine out on a date once; she politely rejected him and they remained friends. However, he secretly resents her because he believes she told people about it (she didn't, and it never got around) `<CHECK: rewritten for private-rumor canon — Austin to confirm>`. Before the breakup, Myth Drivers #1 and #3 kept bringing it up; none of them has spoken since.
+- **Conflict:** His resentment festered — he took a personal vendetta against Sabine for something she didn't do rather than talking to her directly, and hid it behind the private snitch accusation from the police sweep.
+- **Finale race:** His guilt over ousting her leaks out as hints that she may have been a scapegoat — one of the first cracks in the PC's certainty.
+- **Resolution:** Hearing the PC is apologizing to Sabine, he comes to the summit of Fushigi-Yama on his own, likely to apologize too. The truth comes out; they reconcile but she leaves.
 
 ## 2. Battle Identity
 

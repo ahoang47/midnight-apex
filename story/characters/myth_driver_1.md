@@ -4,8 +4,9 @@
 
 - **Role:** Antagonist / Former ally
 - **District:** Touge
-- **Backstory:** Heavily dislikes and distrusts the police because of some bad incident in his past. Never truly accepted Sabine because of her uncle-dad.
-- **Conflict:** Sabine's connection to law enforcement (through her uncle) made him unable to trust her, despite her individual merit. He was instrumental in the decision to oust her, using the snitch rumor from the police sweep as cover.
+- **Backstory:** Heavily dislikes and distrusts the police because of some bad incident in his past. Never truly accepted Sabine because of her uncle-dad. Everyone in the group knew about her uncle; only he held it against her.
+- **Conflict:** Sabine's connection to law enforcement (through her uncle) made him unable to trust her, despite her individual merit. He was instrumental in the decision to oust her, using the private snitch accusation from the police sweep as cover.
+- **Finale race (first pass):** Insists Sabine left on her own the night of the sweep. This clashes with #2's hints that she was pushed: the first time two Myth Driver accounts can't both be true.
 - **Resolution:** The truth comes out at the summit of Fushigi-Yama; they reconcile but she ultimately leaves with her own crew.
 
 ## 2. Battle Identity

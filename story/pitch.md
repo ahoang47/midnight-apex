@@ -268,7 +268,7 @@ Three legendary former racers exist within the city’s history:
 
 - Touge specialist (Myth Driver #1)
 - Wangan specialist (Myth Driver #2)
-- Street specialist (Myth Driver #3) — in this universe, circuit and street racing are the same scene
+- Street specialist (Myth Driver #3) — in this universe, circuit and street racing are the same scene; he wanted out to go pro, but it never happened `<TBD: why his pro career fell through>`
 
 These racers:
 
@@ -285,9 +285,9 @@ These racers:
 
 A major police sweep years earlier fractured the old underground racing generation.
 
-The sweep itself was benign and coincidental — there was no informant. The snitch story was a convenient cover each Myth Driver used for his own personal reason to push the mentor out.
+The sweep itself was benign and coincidental — there was no informant. The snitch story was a convenient cover each Myth Driver used, privately, for his own personal reason to push the mentor out.
 
-The mentor became associated with rumors of being an informant (“snitch”), leading to exclusion from upper racing circles.
+The accusation never spread. The old generation froze the mentor out quietly; the wider scene only knows she vanished without a word around the time of the sweep.
 
 The truth is never presented directly.
 
@@ -308,25 +308,21 @@ into:
 
 “Can anyone involved actually see this objectively anymore?”
 
-The player constantly pressures the mentor for answers throughout the game, but the mentor repeatedly deflects or avoids discussing the past. She genuinely believes she was ousted over the snitch rumor and does not know the real reasons.
+The player constantly pressures the mentor for answers throughout the game, but the mentor repeatedly deflects or avoids discussing the past. She genuinely believes she was frozen out over the snitch accusation and does not know the real reasons.
 
-After beating the crews in all three rounds, the player directly confronts the mentor `<PROPOSAL: placement — see plot.md, end of Round 3>`.
+Nobody tells the player about the accusation; they piece it together from clues in the crew reveals — and the clues are bad data that point toward the mentor’s guilt. At the end of Round 3, the player accuses the mentor of being the snitch. She is hurt and refuses to defend herself or denies it (`<TODO: Sabine's reaction>`), and the relationship blows up going into the Finale.
 
-The mentor finally admits:
-- the incident truly happened
-- they were present
-- but they were not the informant
-
-To restore the mentor’s honor and force the old generation to confront the truth directly, the player tricks all three Myth Drivers and the mentor into meeting at the summit of Fushigi-Yama, the Touge district’s mountain — the first time they have met since the breakup.
+Estranged from her, the player races the Myth Drivers. Their accounts contradict each other, and doubt sets in; the rift also echoes what the player did back home, and guilt won't let it end the same way. So the player, honest for once, invites the mentor to the summit of Fushigi-Yama, the Touge district’s mountain, to apologize (“I was wrong. Be there.”). There is no trick. The three Myth Drivers each hear about it separately, feel guilty, and show up on their own, perhaps to apologize too. It is the first time they have met since the breakup.
 
 At the summit:
-- the truth comes out: there was no informant, only each Myth Driver’s personal reason
+- the truth comes out: the police sweep was benign; there was no informant, only each Myth Driver’s personal reason
 - the mentor learns the real reasons for the first time
+- the player realizes they made the same mistake the Myth Drivers did, and has to own it and apologize
 - reconciliation occurs
 - the former generation offers the mentor a place beside them again
 
-The mentor calmly declines, declaring she already found a new crew:
-the one formed around the player during the game.
+After the player’s apology, the mentor calmly declines, declaring she already found a new crew:
+the one formed around the player during the game. She also won’t go back to a group the Street specialist let her be pushed out of, rather than face telling her he was leaving.
 
 She then gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
 

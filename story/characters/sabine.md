@@ -3,12 +3,13 @@
 ## 1. Narrative Identity
 
 - **Role:** Mentor
-- **Backstory:** Raised by her uncle, a detective (inspiration: Makoto Date from *Yakuza*). Quietly turned down a date request from Myth Driver #2 because she valued his friendship, never told anybody — but a no-name low-level racer witnessed it and spread rumors.
-- **Conflict:** Until the end she believes she was ousted over the snitch rumor from the police sweep. When she discovers the true reasons at the summit of Fushigi-Yama:
+- **Backstory:** Raised by her uncle, a detective (inspiration: Makoto Date from *Yakuza*). Quietly turned down a date request from Myth Driver #2 because she valued his friendship, never told anybody, and it stayed private `<CHECK: rewritten for private-rumor canon — Austin to confirm>`.
+- **Why she takes the PC in:** on the surface, her garage hasn't had a real driver since the breakup and crews won't take her seriously without one; underneath, she sees herself in the PC (someone who showed up alone and won't say why). She never admits the second.
+- **Conflict:** Until the end she believes she was frozen out over the snitch accusation from the police sweep, which only she and the Myth Drivers know about; to everyone else she just vanished. When she discovers the true reasons at the summit of Fushigi-Yama:
   - **Myth Driver #1** — upset because it's not her fault her uncle-dad is a cop
   - **Myth Driver #2** — upset because she was nothing but kind to him and he took a personal vendetta over something they should've just talked about
-  - **Myth Driver #3** — upset because he's a little punk bitch
-- **Resolution:** Reconciles with them, then calmly declines their offer to rejoin — she has her own crew now. Gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
+  - **Myth Driver #3** — upset because he's a little punk bitch: he let her be pushed out rather than tell her he was leaving to go pro (and never even went)
+- **Resolution:** Reconciles with them, then calmly declines their offer to rejoin — she has her own crew now, and she won't go back to a group #3 let her be pushed out of. Gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
 
 ## 2. Battle Identity
 
