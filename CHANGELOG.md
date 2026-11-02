@@ -8,6 +8,70 @@
 
 ---
 
+## 2026-11-02 — GR Corolla: lean car (clay + detail pass), game .glb + Godot scene [art] (Arthur, Art Director)
+
+Austin signed off the clay shape ("Honestly great. Let's just go for a detail pass."). The detail pass follows the WRX STI / S2000 / BRZ lean builds. Pushed to proto-build on Austin's go-ahead. No other car, `lean_common` or `tokyo_v2` file changed.
+
+**New:**
+- `assets/cars/gr_corolla/`:
+  - `car_gr_corolla.glb` (textures embedded; Godot import hints give the VehicleBody3D `GRC` and VehicleWheel3D `Hub_XX`).
+  - `car_gr_corolla.tscn`: an inherited scene with mass, COM, wheel/travel/steer/AWD values, a body collision box, `susp_follow.gd` on `Susp_XX` and the glow FX hidden. This is new compared with the other cars, which ship the .glb only.
+  - `susp_follow.gd` + `.uid` (same script as the other cars, own uid) and a README with the rig table.
+- `art/vehicles/gr_corolla/`: sources and scripts. Blueprint: the Dimensions.com vector SVG (`bp/gr_dimensions.svg`). Clay output is in `out/` and `renders/`; detail output is in `detail/` (blend, glb, textures, gates, renders). Also `make_all.sh`, `threeview/`, `lineup/` and `godot/make_tscn.py`.
+- `art/mood/tokyo_gr/`: night vibe check of the GR on the Tokyo v2 street (non-binding). It reuses `tokyo_v2/scene_v2.py` unchanged, the same way `scene_duo.py` does.
+
+**Numbers:**
+- **1,888 tris** total (cap 2,000; clay was 1,922).
+- IoU: side .978, top .991, front .978, rear .978 (pass).
+- 9-pose clearance: all clear, tightest 7.6 mm.
+- Textures: body 1024², parts atlas 256², glow 128×64, env 256×128. All RGB555 + Bayer.
+
+**Detail pass:**
+- **Clay review fixes:**
+  - Nose shading: custom split normals taken from the uncut loft.
+  - Grille and diffuser:
+    - Douglas–Peucker corner outlines with planar floors.
+    - The diffuser is now one centre + exhaust opening.
+    - The corner vents are painted.
+  - Wing tip filled (28 tris).
+  - Mirrors are tapered 3-ring shells.
+- **Livery:**
+  - White body; gloss-black roof, pillars, wing and mirrors.
+  - Matte-black lower aero.
+  - Red diffuser accent.
+- **Painted detail:**
+  - Panel lines drawn from the SVG vectors.
+  - Hex grille and intake mesh; vent slats; diffuser fins.
+  - Tail lamps.
+  - Flat made-up plates.
+- **Badges:**
+  - A made-up apex-chevron emblem.
+  - An illegible red badge.
+  - The real maker emblem paths in the SVG are dropped and never painted.
+- **Lamps:**
+  - The headlamp lens art comes from the parts atlas on the 30 mm molding pocket.
+  - Head + tail glow sprites (`GRC_FX_LampGlow`, hidden by default).
+- **Wheels:** 15-spoke gunmetal wheels; the made-up tyre lettering reads correctly on both sides.
+
+**Checked in Godot 4.6.3** (Compatibility fallback, scratch copy of the repo):
+- The .glb imports and the scene loads.
+- The car settles at the design ride height, drives and steers.
+- The struts follow the wheels.
+- Sheet: `art/vehicles/gr_corolla/detail/renders/gr_corolla_detail_godot46_800.jpg`.
+
+**Reasoning:**
+- The livery is white with a black roof, so the GR stands apart from the blue/red/blue lineup.
+- Cutting the angular rear corner vents and the jagged grille outline caused the saw-tooth clay read, so that detail is carried in the texture instead.
+
+**Known gaps:**
+- Tail lamps are painted on the body texture. They light up only through the glow sprites, as on the WRX.
+- The body material's env term also shows on the dark grille floor: a neon band in the Tokyo shot.
+- The mirrors still read a little boxy.
+- Headless Godot import of the repo needs the Blender importer disabled or a Blender path set, because of the `.blend` sources. This is not new and not specific to this car.
+- Corrected a claim from the clay README: the flat 20/30 mm clearance entries are the liner inner-wall offsets, not a probe radius.
+
+---
+
 ## 2026-11-02 — Story: private snitch accusation, PC's betrayal hook, why Sabine takes the PC in [story] (Nathaniel, Narrative Lead)
 
 Lead approved. Committed on the lead's go-ahead (push pending).

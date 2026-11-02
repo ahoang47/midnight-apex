@@ -1,0 +1,31 @@
+GRC_Body            1494
+GRC_Exhaust_C         16
+GRC_Exhaust_L         16
+GRC_Exhaust_R         16
+GRC_FX_LampGlow        8
+GRC_Fin                4
+GRC_Liner_FL          14
+GRC_Liner_FR          14
+GRC_Liner_RL          14
+GRC_Liner_RR          14
+GRC_Mirror_L          20
+GRC_Mirror_R          20
+GRC_Susp_FL           16
+GRC_Susp_FR           16
+GRC_Susp_RL           16
+GRC_Susp_RR           16
+GRC_Under              2
+GRC_Wheel_FL          36
+GRC_Wheel_FR          36
+GRC_Wheel_RL          36
+GRC_Wheel_RR          36
+GRC_Wing              28
+
+MONO GRC_Body 1672  (loft + pockets 1494 [loft before pockets 1146], wing 28, fin 4, mirrors 40, exhaust 48, liners 56, floor 2)
+wheels (4 x 10-sided) 144
+suspension (4 x strut + arm) 64
+FX head + tail lamp glow quads (GRC_FX_LampGlow, hidden by default) 8
+TOTAL rendered 1888  (cap 2000: OK)
+stations 35, half-section points 9
+shading QC (loft quads): {"body": {"faces": 544, "flipped": 0, "degenerate": 0, "nonplanar_gt5pct": 62, "worst_nonplanar_pct": 46.4, "worst_at": [[46.4, [1.696, -0.893, 0.354]], [20.9, [-1.598, 0.662, 1.13]], [19.6, [-1.598, -0.662, 1.13]], [19.4, [-1.42, 0.671, 1.165]], [18.9, [-2.03, 0.645, 0.709]], [18.5, [-1.42, -0.671, 1.165]]]}}
+pockets: [{"name": "headlamp", "view": "front", "mode": "fourier", "rim_points": 8, "depth_m": 0.03, "step_mm": [48.0, 48.0, 48.0, 37.3, 37.3, 31.0, 38.5, 45.5]}, {"name": "grille", "view": "front", "mode": "corners", "rim_points": 8, "depth_m": 0.05, "step_mm": [45.9, 37.5, 70.2, 46.5, 46.2, 69.7, 38.1, 45.9]}, {"name": "side_intake", "view": "front", "mode": "corners", "rim_points": 5, "depth_m": 0.04, "step_mm": [40.9, 39.1, 40.6, 41.2, 38.2]}, {"name": "hood_vent", "view": "top", "mode": "corners", "rim_points": 4, "depth_m": 0.02, "step_mm": [19.9, 20.1, 19.9, 20.1]}, {"name": "fender_vent", "view": "side", "mode": "corners", "rim_points": 4, "depth_m": 0.016, "step_mm": [15.5, 16.6, 15.8, 16.1]}, {"name": "rear_diffuser", "view": "rear", "mode": "corners", "rim_points": 6, "depth_m": 0.04, "step_mm": [40.1, 40.0, 38.2, 41.7, 41.8, 38.1]}]

@@ -1,0 +1,31 @@
+GRC_Body            1560
+GRC_Exhaust_C         16
+GRC_Exhaust_L         16
+GRC_Exhaust_R         16
+GRC_FX_HeadGlow        4
+GRC_Fin                4
+GRC_Liner_FL          14
+GRC_Liner_FR          14
+GRC_Liner_RL          14
+GRC_Liner_RR          14
+GRC_Mirror_L          12
+GRC_Mirror_R          12
+GRC_Susp_FL           16
+GRC_Susp_FR           16
+GRC_Susp_RL           16
+GRC_Susp_RR           16
+GRC_Under              2
+GRC_Wheel_FL          36
+GRC_Wheel_FR          36
+GRC_Wheel_RL          36
+GRC_Wheel_RR          36
+GRC_Wing              16
+
+MONO GRC_Body 1710  (loft + pockets 1560 [loft before pockets 1146], wing 16, fin 4, mirrors 24, exhaust 48, liners 56, floor 2)
+wheels (4 x 10-sided) 144
+suspension (4 x strut + arm) 64
+FX head lamp glow quads (GRC_FX_HeadGlow, hidden) 4
+TOTAL rendered 1922  (cap 2000: OK)
+stations 35, half-section points 9
+shading QC (loft quads): {"body": {"faces": 544, "flipped": 0, "degenerate": 0, "nonplanar_gt5pct": 62, "worst_nonplanar_pct": 46.4, "worst_at": [[46.4, [1.696, -0.893, 0.354]], [20.9, [-1.598, 0.662, 1.13]], [19.6, [-1.598, -0.662, 1.13]], [19.4, [-1.42, 0.671, 1.165]], [18.9, [-2.03, 0.645, 0.709]], [18.5, [-1.42, -0.671, 1.165]]]}}
+pockets: [{"name": "headlamp", "view": "front", "n": 8, "depth_m": 0.03, "step_mm": [48.0, 48.0, 48.0, 37.3, 37.3, 31.0, 38.5, 45.5, 31.0]}, {"name": "grille", "view": "front", "n": 8, "depth_m": 0.05, "step_mm": [51.7, 52.2, 52.2, 52.2, 51.6, 51.7, 50.0, 51.6, 52.2]}, {"name": "side_intake", "view": "front", "n": 6, "depth_m": 0.04, "step_mm": [64.0, 59.1, 56.3, 56.3, 64.0, 64.0, 64.0]}, {"name": "hood_vent", "view": "top", "n": 4, "depth_m": 0.022, "step_mm": [22.3, 22.3, 23.2, 22.5, 22.3]}, {"name": "fender_vent", "view": "side", "n": 4, "depth_m": 0.018, "step_mm": [18.0, 18.0, 19.1, 18.0, 18.0]}, {"name": "rear_diffuser", "view": "rear", "n": 4, "depth_m": 0.04, "step_mm": [41.4, 52.9, 64.0, 41.0, 41.0]}]

@@ -1,0 +1,93 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/cars/gr_corolla/car_gr_corolla.glb" id="1_glb"]
+[ext_resource type="Script" path="res://assets/cars/gr_corolla/susp_follow.gd" id="2_susp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_body"]
+size = Vector3(1.8, 0.95, 4.35)
+
+[node name="car_gr_corolla" instance=ExtResource("1_glb")]
+
+[node name="GRC" parent="." index="0"]
+mass = 1475.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0.0, 0.52, 0.26)
+
+[node name="GRC_FX_LampGlow" parent="GRC" index="1"]
+visible = false
+
+[node name="Hub_FL" parent="GRC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.785000, 0.419500, 1.328642)
+use_as_traction = true
+use_as_steering = true
+wheel_rest_length = 0.15
+wheel_radius = 0.321
+wheel_friction_slip = 3.0
+suspension_travel = 0.085
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_FL" parent="GRC" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.785000, 0.419500, 1.328642)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_FL")
+steers = true
+
+[node name="Hub_FR" parent="GRC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785000, 0.419500, 1.328642)
+use_as_traction = true
+use_as_steering = true
+wheel_rest_length = 0.15
+wheel_radius = 0.321
+wheel_friction_slip = 3.0
+suspension_travel = 0.085
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_FR" parent="GRC" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785000, 0.419500, 1.328642)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_FR")
+steers = true
+
+[node name="Hub_RL" parent="GRC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.785000, 0.419500, -1.328642)
+use_as_traction = true
+use_as_steering = false
+wheel_rest_length = 0.15
+wheel_radius = 0.321
+wheel_friction_slip = 3.0
+suspension_travel = 0.095
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_RL" parent="GRC" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.785000, 0.419500, -1.328642)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_RL")
+steers = false
+
+[node name="Hub_RR" parent="GRC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785000, 0.419500, -1.328642)
+use_as_traction = true
+use_as_steering = false
+wheel_rest_length = 0.15
+wheel_radius = 0.321
+wheel_friction_slip = 3.0
+suspension_travel = 0.095
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_RR" parent="GRC" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785000, 0.419500, -1.328642)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_RR")
+steers = false
+
+[node name="BodyCollision" type="CollisionShape3D" parent="GRC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("BoxShape3D_body")
