@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-02 — World notes: overworld camera reference [art] (Arthur, Art Director)
+- Updated `design/art/world_notes.md` with the overworld camera, based on Racing Lagoon free roam at 16:30 (Austin's reference). It's a high overhead perspective view at roughly 50–65°, rotatable, and not a chase cam or true isometric. Also added what that means for art: rooftops and ground carry the look, no one-sided cut-outs, and a lighter overworld car LOD.
+
 ## 2026-11-02 — World notes: OSM-based overworld, turn-based pregenerated tracks [art] (Arthur, Art Director)
 - Added `design/art/world_notes.md`, which records Austin's direction. The overworld uses OSM road layouts only, with no real buildings, and is stylized and remixed into the fictional city per canon decision 6. Races are turn-based on pregenerated tracks (Racing Lagoon), which means a corner-segment kit per district. The isometric overworld camera is flagged as an open question. These are notes only; nothing is built.
 
