@@ -2,22 +2,22 @@ class_name ArchetypeData
 
 static func get_meta_archetype(archetype: String) -> String:
 	match archetype:
-		"Bruiser", "AR P":
+		"Aggressive":
 			return "POW"
-		"Endurance", "AR E":
+		"Defensive", "Balanced":
 			return "EN"
-		"Swift", "AR H":
+		"Precise", "Adaptive":
 			return "HAN"
 		_:
 			return "HAN"
 
 static func get_face_type(archetype: String) -> String:
 	match archetype:
-		"Bruiser", "AR P":
+		"Aggressive":
 			return "Scowling"
-		"Endurance", "AR E":
+		"Defensive", "Balanced":
 			return "Grinning"
-		"Swift", "AR H":
+		"Precise", "Adaptive":
 			return "Focused"
 		_:
 			return "Focused"
@@ -32,22 +32,22 @@ static func is_weak_turn(archetype: String, turn_type: String) -> bool:
 
 static func _comfortable_zones(archetype: String) -> Array:
 	match archetype:
-		"Bruiser", "AR P":
+		"Aggressive":
 			return ["Sweeper", "Increasing Radius"]
-		"Endurance", "AR E":
+		"Defensive", "Balanced":
 			return ["Constant Radius", "Sweeper"]
-		"Swift", "AR H":
+		"Precise", "Adaptive":
 			return ["Chicane", "Esses"]
 		_:
 			return []
 
 static func _weak_zones(archetype: String) -> Array:
 	match archetype:
-		"Bruiser", "AR P":
+		"Aggressive":
 			return ["Hairpin", "Decreasing Radius"]
-		"Endurance", "AR E":
+		"Defensive", "Balanced":
 			return ["Chicane", "Esses"]
-		"Swift", "AR H":
+		"Precise", "Adaptive":
 			return ["Sweeper", "Hairpin"]
 		_:
 			return []

@@ -43,12 +43,11 @@ POW_abs = total_budget × pow_pct / 100
 
 | Archetype | L1 split | L100 target (POW / EN / HAN) | Deck bias | Play style |
 |---|---|---|---|---|
-| **Bruiser** | 33/33/33 | 55 / 20 / 25 | Heavy Attack cards | High burst, glassy |
-| **Endurance** | 33/33/33 | 20 / 55 / 25 | Heavy Defend cards | Damage mitigation, outlasts opponents |
-| **Swift** | 33/33/33 | 25 / 20 / 55 | Heavy Neutral cards | Flexible stance choices |
-| **AR P** | 33/33/33 | 40 / 30 / 30 | Mild Attack lean | Jack-of-all-trades, power-tilt |
-| **AR E** | 33/33/33 | 30 / 40 / 30 | Mild Defend lean | Jack-of-all-trades, endurance-tilt |
-| **AR H** | 33/33/33 | 30 / 30 / 40 | Mild Neutral lean | Jack-of-all-trades, handling-tilt |
+| **Aggressive** | 33/33/33 | 55 / 20 / 25 | Heavy Attack cards | High burst, glassy |
+| **Defensive** | 33/33/33 | 20 / 55 / 25 | Heavy Defend cards | Damage mitigation, outlasts opponents |
+| **Precise** | 33/33/33 | 25 / 20 / 55 | Heavy Neutral cards | Flexible stance choices |
+| **Balanced** | 33/33/33 | 30 / 40 / 30 | Mild Defend lean | Jack-of-all-trades, endurance-tilt |
+| **Adaptive** | 33/33/33 | 30 / 30 / 40 | Mild Neutral lean | Jack-of-all-trades, handling-tilt |
 
 ---
 
@@ -121,12 +120,11 @@ Difficulty is driven by the level gap (above), but opponent *behavior variety* c
 
 | Personality | Phase 0 | Phase 1 | Phase 2 |
 |-------------|---------|---------|---------|
-| **Bruiser** | AGGRESSIVE (Atk+3) | REACTIVE (counter) | UNPREDICTABLE |
-| **Endurance** | REACTIVE (counter) | AGGRESSIVE (Atk+3) | UNPREDICTABLE |
-| **Swift** | AGGRESSIVE (highest_ev) | REACTIVE (counter) | UNPREDICTABLE |
-| **AR P** | AGGRESSIVE (Atk+4) | AGGRESSIVE (Def+4) | AGGRESSIVE (Neu+4) |
-| **AR E** | AGGRESSIVE (alternate) | REACTIVE (counter) | REACTIVE (repeat_win) |
-| **AR H** | AGGRESSIVE (third_highest_ev) | REACTIVE (second_highest_ev) | UNPREDICTABLE |
+| **Aggressive** | AGGRESSIVE (Atk+3) | REACTIVE (counter) | UNPREDICTABLE |
+| **Defensive** | REACTIVE (counter) | AGGRESSIVE (Atk+3) | UNPREDICTABLE |
+| **Precise** | AGGRESSIVE (highest_ev) | REACTIVE (counter) | UNPREDICTABLE |
+| **Balanced** | AGGRESSIVE (alternate) | REACTIVE (counter) | REACTIVE (repeat_win) |
+| **Adaptive** | AGGRESSIVE (third_highest_ev) | REACTIVE (second_highest_ev) | UNPREDICTABLE |
 
 ### Phases per encounter
 

@@ -132,6 +132,38 @@ Approved by the lead in the Narrative/Systems chat. Not committed or pushed.
 
 ---
 
+## 2026-11-01 — Archetypes renamed to plain English; AR P cut (5 archetypes × 15 racer types) [sim][design] (Barry, Chief of Systems)
+
+Approved by the lead in the Narrative/Systems chat. Not committed or pushed.
+
+**Rename:** Bruiser → **Aggressive**, Endurance → **Defensive**, Swift → **Precise**, AR E → **Balanced**, AR H → **Adaptive**. **AR P removed.** The stat splits and AI phase behaviors of the five survivors are unchanged.
+
+**Changed:**
+- `sim/velocity_shift/cars.py` — archetype keys renamed; AR P (40/30/30) removed.
+- `sim/velocity_shift/ai.py` — personality configs renamed (`AGGRESSIVE_DRIVER`, `DEFENSIVE_DRIVER`, `PRECISE_DRIVER`, `BALANCED_DRIVER`, `ADAPTIVE_DRIVER`; the `_DRIVER` suffix keeps them apart from `PhaseType.AGGRESSIVE`); AR P config and map entry removed; the `get_personality` fallback is now Aggressive.
+- `sim/config/sample_builds.json` — regenerated with `generate_build_matrix.py --write`: 30 presets (5 archetypes × 6 tiers), up from 36.
+- `sim/tests/test_cars.py`, `test_equations.py`, `test_simulation.py` — new names. 25/25 pass.
+- `design/04-difficulty-tuning.md` (archetype and personality tables), `design/06-pattern-read.md` (sequence sections, the shared-sequence note, the face table), `design/03-deckbuilding-clash.md` (examples, "6 personalities" → 5), `design/notes/mod_notes.md` (example).
+- The stat name EN ("Endurance") in `01` and `02` is a stat, not the archetype, so it was left as is.
+
+**Gauntlet after the change** (engine values, 5 archetypes): Aggressive 756–540, Defensive 598–698, Precise 603–693, Balanced 645–651, Adaptive 638–658.
+
+**Reasoning:**
+- The lead wants each district to have one racer type per archetype, with racer types leaning to one archetype (named rivals can break it). 15 racer types ÷ 3 districts = 5 per district, so 5 archetypes divide evenly.
+- AR P was cut because its stats sit close to Aggressive's and its opening phase attacks every card, so it plays like Aggressive in Wild races (which only use phase 1).
+- Names describe how each one drives, so someone outside the dev team can read them.
+
+**Godot (done after the lead's go-ahead, since no playtest was running):**
+- `scripts/ArchetypeData.gd` — match arms renamed and AR P dropped (Balanced shares Defensive's EN meta-archetype, face, and comfortable/weak turns; Adaptive shares Precise's).
+- `scripts/PersonalityData.gd` — configs renamed (`_aggressive` … `_adaptive`), `_ar_p` removed, fallback is now Aggressive.
+- `scripts/TurnTypeData.gd` — base-archetype mapping is now Balanced → Defensive and Adaptive → Precise; the table keys were renamed.
+- `design/godot-build-guide.md` — names updated. Its personality phase table was stale (it didn't match `ai.py` for any archetype), so it was replaced with a pointer to `ai.py` and `04-difficulty-tuning.md`.
+- No Godot editor on this computer, so the scripts were checked by search only (no old names left anywhere in `scripts/` or `scenes/`), not by running the game.
+
+**Flag for Desmond and Arthur:** with AR P gone, face types are Aggressive = Scowling, Defensive and Balanced = Grinning, Precise and Adaptive = Focused, so two pairs share a face.
+
+---
+
 ## 2026-10-31 — Sim tooling fixes: runner crash, gauntlet uses engine values, build-matrix format [sim] (Barry, Chief of Systems)
 
 Tooling only. No game constants, formulas or docs changed. Not committed or pushed.

@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 ARCHETYPES: dict[str, dict[str, float]] = {
-    "Bruiser":                {"pow": 55, "en": 20, "han": 25},
-    "Endurance":              {"pow": 20, "en": 55, "han": 25},
-    "Swift":                  {"pow": 25, "en": 20, "han": 55},
-    "AR P":                   {"pow": 40, "en": 30, "han": 30},
-    "AR E":                   {"pow": 30, "en": 40, "han": 30},
-    "AR H":                   {"pow": 30, "en": 30, "han": 40},
+    # Plain-English names (2026-11-01). Old names: Bruiser, Endurance, Swift,
+    # AR E, AR H. AR P was cut (5 archetypes x 15 racer types).
+    "Aggressive":             {"pow": 55, "en": 20, "han": 25},
+    "Defensive":              {"pow": 20, "en": 55, "han": 25},
+    "Precise":                {"pow": 25, "en": 20, "han": 55},
+    "Balanced":               {"pow": 30, "en": 40, "han": 30},
+    "Adaptive":               {"pow": 30, "en": 30, "han": 40},
 }
 
 START_PCT: float = 100.0 / 3.0

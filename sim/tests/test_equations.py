@@ -56,13 +56,13 @@ def test_apply_han_qte_mod_neutral():
 
 
 def test_apply_han_qte_mod_high():
-    """Swift-like han_pct=0.55, raw=7 → ~7.76."""
+    """Precise-like han_pct=0.55, raw=7 → ~7.76."""
     eff = apply_han_qte_mod(7.0, 0.55)
     assert abs(eff - 7.7583) < 1e-4
 
 
 def test_apply_han_qte_mod_low():
-    """Bruiser-like han_pct=0.25, raw=7 → ~6.71."""
+    """Aggressive-like han_pct=0.25, raw=7 → ~6.71."""
     eff = apply_han_qte_mod(7.0, 0.25)
     assert abs(eff - 6.7083) < 1e-4
 

@@ -16,7 +16,7 @@
 
 ## Archetypes (Chassis)
 
-- Fixed stat ratio from L1 (e.g. Bruiser = 55/20/25, Swift = 25/20/55)
+- Fixed stat ratio from L1 (e.g. Aggressive = 55/20/25, Precise = 25/20/55)
 - Each level multiplies the ratio linearly — identity is immediate and permanent
 - No convergence, no redistribution of the ratio
 

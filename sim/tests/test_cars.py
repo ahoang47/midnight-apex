@@ -1,7 +1,7 @@
 from velocity_shift.cars import ARCHETYPES, progress, stat_pct, build_stats
 
-# All 6 archetypes must be defined
-ALL_ARCHETYPES = ["Bruiser", "Endurance", "Swift", "AR P", "AR E", "AR H"]
+# All 5 archetypes must be defined
+ALL_ARCHETYPES = ["Aggressive", "Defensive", "Precise", "Balanced", "Adaptive"]
 
 
 def test_archetypes_defined():

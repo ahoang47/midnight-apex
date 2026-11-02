@@ -178,8 +178,8 @@ def pick_ai_card(
 
 # ── Personality definitions ──────────────────────────────────────────
 
-BRUISER = PersonalityConfig(
-    name="Bruiser",
+AGGRESSIVE_DRIVER = PersonalityConfig(
+    name="Aggressive",
     phases=[
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
@@ -197,8 +197,8 @@ BRUISER = PersonalityConfig(
     ],
 )
 
-ENDURANCE = PersonalityConfig(
-    name="Endurance",
+DEFENSIVE_DRIVER = PersonalityConfig(
+    name="Defensive",
     phases=[
         PersonalityPhase(
             phase_type=PhaseType.REACTIVE,
@@ -216,8 +216,8 @@ ENDURANCE = PersonalityConfig(
     ],
 )
 
-SWIFT = PersonalityConfig(
-    name="Swift",
+PRECISE_DRIVER = PersonalityConfig(
+    name="Precise",
     phases=[
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
@@ -235,29 +235,8 @@ SWIFT = PersonalityConfig(
     ],
 )
 
-AR_P = PersonalityConfig(
-    name="AR P",
-    phases=[
-        PersonalityPhase(
-            phase_type=PhaseType.AGGRESSIVE,
-            weights={Stance.ATTACK: 4, Stance.DEFEND: 0, Stance.NEUTRAL: 0},
-            hand_requirements={Stance.ATTACK: 2},
-        ),
-        PersonalityPhase(
-            phase_type=PhaseType.AGGRESSIVE,
-            weights={Stance.ATTACK: 0, Stance.DEFEND: 4, Stance.NEUTRAL: 0},
-            hand_requirements={Stance.DEFEND: 2},
-        ),
-        PersonalityPhase(
-            phase_type=PhaseType.AGGRESSIVE,
-            weights={Stance.ATTACK: 0, Stance.DEFEND: 0, Stance.NEUTRAL: 4},
-            hand_requirements={Stance.NEUTRAL: 2},
-        ),
-    ],
-)
-
-AR_E = PersonalityConfig(
-    name="AR E",
+BALANCED_DRIVER = PersonalityConfig(
+    name="Balanced",
     phases=[
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
@@ -277,8 +256,8 @@ AR_E = PersonalityConfig(
     ],
 )
 
-AR_H = PersonalityConfig(
-    name="AR H",
+ADAPTIVE_DRIVER = PersonalityConfig(
+    name="Adaptive",
     phases=[
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
@@ -297,18 +276,17 @@ AR_H = PersonalityConfig(
 )
 
 PERSONALITY_MAP = {
-    "Bruiser": BRUISER,
-    "Endurance": ENDURANCE,
-    "Swift": SWIFT,
-    "AR P": AR_P,
-    "AR E": AR_E,
-    "AR H": AR_H,
+    "Aggressive": AGGRESSIVE_DRIVER,
+    "Defensive": DEFENSIVE_DRIVER,
+    "Precise": PRECISE_DRIVER,
+    "Balanced": BALANCED_DRIVER,
+    "Adaptive": ADAPTIVE_DRIVER,
 }
 
 
 def get_personality(archetype: str) -> PersonalityConfig:
     """Look up personality config by archetype name."""
-    return PERSONALITY_MAP.get(archetype, BRUISER)
+    return PERSONALITY_MAP.get(archetype, AGGRESSIVE_DRIVER)
 
 
 def get_ai_qte(

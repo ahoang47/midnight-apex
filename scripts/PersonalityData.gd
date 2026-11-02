@@ -2,18 +2,17 @@ class_name PersonalityData
 
 static func get_personality(name: String) -> Dictionary:
 	var map = {
-		"Bruiser": _bruiser(),
-		"Endurance": _endurance(),
-		"Swift": _swift(),
-		"AR P": _ar_p(),
-		"AR E": _ar_e(),
-		"AR H": _ar_h(),
+		"Aggressive": _aggressive(),
+		"Defensive": _defensive(),
+		"Precise": _precise(),
+		"Balanced": _balanced(),
+		"Adaptive": _adaptive(),
 	}
-	return map.get(name, _bruiser())
+	return map.get(name, _aggressive())
 
-static func _bruiser() -> Dictionary:
+static func _aggressive() -> Dictionary:
 	return {
-		"name": "Bruiser",
+		"name": "Aggressive",
 		"phases": [
 			{"phase_type": Globals.PhaseType.AGGRESSIVE, "weights": {Globals.Stance.ATTACK: 3, Globals.Stance.DEFEND: 0, Globals.Stance.NEUTRAL: 1}, "hand_requirements": {Globals.Stance.ATTACK: 2}},
 			{"phase_type": Globals.PhaseType.REACTIVE, "behavior_override": "counter", "hand_requirements": {Globals.Stance.ATTACK: 1, Globals.Stance.DEFEND: 1, Globals.Stance.NEUTRAL: 1}},
@@ -21,9 +20,9 @@ static func _bruiser() -> Dictionary:
 		]
 	}
 
-static func _endurance() -> Dictionary:
+static func _defensive() -> Dictionary:
 	return {
-		"name": "Endurance",
+		"name": "Defensive",
 		"phases": [
 			{"phase_type": Globals.PhaseType.REACTIVE, "behavior_override": "counter", "hand_requirements": {Globals.Stance.ATTACK: 1, Globals.Stance.DEFEND: 1, Globals.Stance.NEUTRAL: 1}},
 			{"phase_type": Globals.PhaseType.AGGRESSIVE, "weights": {Globals.Stance.ATTACK: 3, Globals.Stance.DEFEND: 0, Globals.Stance.NEUTRAL: 1}, "hand_requirements": {Globals.Stance.ATTACK: 2}},
@@ -31,9 +30,9 @@ static func _endurance() -> Dictionary:
 		]
 	}
 
-static func _swift() -> Dictionary:
+static func _precise() -> Dictionary:
 	return {
-		"name": "Swift",
+		"name": "Precise",
 		"phases": [
 			{"phase_type": Globals.PhaseType.AGGRESSIVE, "behavior_override": "highest_ev", "hand_requirements": {Globals.Stance.ATTACK: 1, Globals.Stance.DEFEND: 1, Globals.Stance.NEUTRAL: 1}},
 			{"phase_type": Globals.PhaseType.REACTIVE, "behavior_override": "counter", "hand_requirements": {Globals.Stance.ATTACK: 1, Globals.Stance.DEFEND: 1, Globals.Stance.NEUTRAL: 1}},
@@ -41,19 +40,9 @@ static func _swift() -> Dictionary:
 		]
 	}
 
-static func _ar_p() -> Dictionary:
+static func _balanced() -> Dictionary:
 	return {
-		"name": "AR P",
-		"phases": [
-			{"phase_type": Globals.PhaseType.AGGRESSIVE, "weights": {Globals.Stance.ATTACK: 4, Globals.Stance.DEFEND: 0, Globals.Stance.NEUTRAL: 0}, "hand_requirements": {Globals.Stance.ATTACK: 2}},
-			{"phase_type": Globals.PhaseType.AGGRESSIVE, "weights": {Globals.Stance.ATTACK: 0, Globals.Stance.DEFEND: 4, Globals.Stance.NEUTRAL: 0}, "hand_requirements": {Globals.Stance.DEFEND: 2}},
-			{"phase_type": Globals.PhaseType.AGGRESSIVE, "weights": {Globals.Stance.ATTACK: 0, Globals.Stance.DEFEND: 0, Globals.Stance.NEUTRAL: 4}, "hand_requirements": {Globals.Stance.NEUTRAL: 2}},
-		]
-	}
-
-static func _ar_e() -> Dictionary:
-	return {
-		"name": "AR E",
+		"name": "Balanced",
 		"phases": [
 			{"phase_type": Globals.PhaseType.AGGRESSIVE, "behavior_override": "alternate", "hand_requirements": {Globals.Stance.ATTACK: 2, Globals.Stance.DEFEND: 1}},
 			{"phase_type": Globals.PhaseType.REACTIVE, "behavior_override": "counter", "hand_requirements": {Globals.Stance.ATTACK: 1, Globals.Stance.DEFEND: 1, Globals.Stance.NEUTRAL: 1}},
@@ -61,9 +50,9 @@ static func _ar_e() -> Dictionary:
 		]
 	}
 
-static func _ar_h() -> Dictionary:
+static func _adaptive() -> Dictionary:
 	return {
-		"name": "AR H",
+		"name": "Adaptive",
 		"phases": [
 			{"phase_type": Globals.PhaseType.AGGRESSIVE, "behavior_override": "third_highest_ev", "hand_requirements": {Globals.Stance.ATTACK: 1, Globals.Stance.DEFEND: 1, Globals.Stance.NEUTRAL: 1}},
 			{"phase_type": Globals.PhaseType.REACTIVE, "behavior_override": "second_highest_ev", "hand_requirements": {Globals.Stance.ATTACK: 1, Globals.Stance.DEFEND: 1, Globals.Stance.NEUTRAL: 1}},

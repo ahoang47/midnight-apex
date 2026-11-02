@@ -9,15 +9,15 @@ from velocity_shift.simulation import SimulationRunner, simulate_batch
 
 
 def _cfg(encounter: str = "wild", seed: int = 1) -> MatchConfig:
-    p = build_stats("Bruiser", 50)
-    o = build_stats("Swift", 38)
+    p = build_stats("Aggressive", 50)
+    o = build_stats("Precise", 38)
     return MatchConfig(
         player_stats=CombatantStats("Player", *p, level=50),
         opponent_stats=CombatantStats("Opponent", *o, level=38),
         max_turns=10,
         seed=seed,
         encounter_type=encounter,
-        rival_personality="Swift",
+        rival_personality="Precise",
     )
 
 

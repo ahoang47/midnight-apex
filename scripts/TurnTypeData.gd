@@ -29,14 +29,13 @@ static func get_bluff_stance(turn_type: String, archetype: String, position: int
 
 static func _get_base_archetype(archetype: String) -> String:
 	match archetype:
-		"AR P": return "Bruiser"
-		"AR E": return "Endurance"
-		"AR H": return "Swift"
+		"Balanced": return "Defensive"
+		"Adaptive": return "Precise"
 		_: return archetype
 
 static func _stances_by_archetype(archetype: String) -> Dictionary:
 	match archetype:
-		"Bruiser":
+		"Aggressive":
 			return {
 				"Hairpin": [Globals.Stance.DEFEND, Globals.Stance.DEFEND, Globals.Stance.ATTACK],
 				"Constant Radius": [Globals.Stance.DEFEND, Globals.Stance.ATTACK, Globals.Stance.ATTACK],
@@ -47,7 +46,7 @@ static func _stances_by_archetype(archetype: String) -> Dictionary:
 				"Esses": [Globals.Stance.DEFEND, Globals.Stance.DEFEND, Globals.Stance.ATTACK],
 				"Sweeper": [Globals.Stance.DEFEND, Globals.Stance.ATTACK, Globals.Stance.ATTACK],
 			}
-		"Endurance":
+		"Defensive":
 			return {
 				"Hairpin": [Globals.Stance.NEUTRAL, Globals.Stance.ATTACK, Globals.Stance.ATTACK],
 				"Constant Radius": [Globals.Stance.NEUTRAL, Globals.Stance.DEFEND, Globals.Stance.NEUTRAL],
@@ -58,7 +57,7 @@ static func _stances_by_archetype(archetype: String) -> Dictionary:
 				"Esses": [Globals.Stance.NEUTRAL, Globals.Stance.NEUTRAL, Globals.Stance.NEUTRAL],
 				"Sweeper": [Globals.Stance.NEUTRAL, Globals.Stance.DEFEND, Globals.Stance.NEUTRAL],
 			}
-		"Swift":
+		"Precise":
 			return {
 				"Hairpin": [Globals.Stance.DEFEND, Globals.Stance.NEUTRAL, Globals.Stance.ATTACK],
 				"Constant Radius": [Globals.Stance.NEUTRAL, Globals.Stance.NEUTRAL, Globals.Stance.ATTACK],
@@ -73,7 +72,7 @@ static func _stances_by_archetype(archetype: String) -> Dictionary:
 
 static func _bluffs_by_archetype(archetype: String) -> Dictionary:
 	match archetype:
-		"Bruiser":
+		"Aggressive":
 			return {
 				"Hairpin": [Globals.Stance.ATTACK, Globals.Stance.ATTACK, Globals.Stance.NEUTRAL],
 				"Constant Radius": [Globals.Stance.ATTACK, Globals.Stance.NEUTRAL, Globals.Stance.NEUTRAL],
@@ -84,7 +83,7 @@ static func _bluffs_by_archetype(archetype: String) -> Dictionary:
 				"Esses": [Globals.Stance.ATTACK, Globals.Stance.ATTACK, Globals.Stance.NEUTRAL],
 				"Sweeper": [Globals.Stance.ATTACK, Globals.Stance.NEUTRAL, Globals.Stance.NEUTRAL],
 			}
-		"Endurance":
+		"Defensive":
 			return {
 				"Hairpin": [Globals.Stance.ATTACK, Globals.Stance.DEFEND, Globals.Stance.DEFEND],
 				"Constant Radius": [Globals.Stance.ATTACK, Globals.Stance.NEUTRAL, Globals.Stance.ATTACK],
@@ -95,7 +94,7 @@ static func _bluffs_by_archetype(archetype: String) -> Dictionary:
 				"Esses": [Globals.Stance.ATTACK, Globals.Stance.ATTACK, Globals.Stance.ATTACK],
 				"Sweeper": [Globals.Stance.ATTACK, Globals.Stance.NEUTRAL, Globals.Stance.ATTACK],
 			}
-		"Swift":
+		"Precise":
 			return {
 				"Hairpin": [Globals.Stance.ATTACK, Globals.Stance.DEFEND, Globals.Stance.NEUTRAL],
 				"Constant Radius": [Globals.Stance.DEFEND, Globals.Stance.DEFEND, Globals.Stance.NEUTRAL],

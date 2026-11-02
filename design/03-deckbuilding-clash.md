@@ -89,7 +89,7 @@ Cards are chosen one position at a time:
 2. **Middle (pos 1):** From remaining 5 cards, player picks 1, opponent picks 1. Clash resolves.
 3. **Anchor (pos 2):** From remaining 4 cards, each side picks their final card. Clash resolves.
 
-The opponent's AI picks use a phase-based personality (`sim/velocity_shift/ai.py` — 6 personalities, each with 1–3 phase-indexed behaviors). Each phase defines hand requirements (minimum card counts per stance) and a selection strategy (EV scoring, behavior overrides like `counter`, `alternate`, `highest_ev`, or pure random for unpredictable phases).
+The opponent's AI picks use a phase-based personality (`sim/velocity_shift/ai.py` — 5 personalities, each with 1–3 phase-indexed behaviors). Each phase defines hand requirements (minimum card counts per stance) and a selection strategy (EV scoring, behavior overrides like `counter`, `alternate`, `highest_ev`, or pure random for unpredictable phases).
 
 After all 3 clashes resolve, damage is computed for the turn.
 
@@ -208,7 +208,7 @@ han_pct  = HAN / (POW + EN + HAN)
 modified = raw_QTE × (1 + HAN_QTE_WEIGHT × (han_pct - 1/3))
 ```
 
-Where `HAN_QTE_WEIGHT = 0.5`. Neutral at `han_pct = 1/3` (no change). A high-HAN build (Swift, 55% HAN) gets ~+10.8%; a low-HAN build (Bruiser, 25%) gets ~−4.2%. The same formula applies to both player and AI. This value is then normalised to a `qte_factor` (score / 10.0, clamped 0–1) by `resolve_turn`.
+Where `HAN_QTE_WEIGHT = 0.5`. Neutral at `han_pct = 1/3` (no change). A high-HAN build (Precise, 55% HAN) gets ~+10.8%; a low-HAN build (Aggressive, 25%) gets ~−4.2%. The same formula applies to both player and AI. This value is then normalised to a `qte_factor` (score / 10.0, clamped 0–1) by `resolve_turn`.
 
 ### QTE rubber-band (proportional blend)
 

@@ -30,7 +30,7 @@ Each turn type defines a 3-stance sequence per archetype representing the racing
 - **Apex (pos 1):** the defining moment of the corner 
 - **Exit (pos 2):** power/acceleration 
 
-### Bruiser (POW)
+### Aggressive (POW)
 
 | Turn Type | Description | Entry/Bluff | Apex/Bluff | Exit/Bluff | must not appear before | must not appear after |
 |---|---|---|---|---|---|---|
@@ -43,7 +43,7 @@ Each turn type defines a 3-stance sequence per archetype representing the racing
 | Esses (S-Bends) | A flowing sequence of continuous, alternating curves. Getting the first turn correct in a sequence is crucial, as a mistake ruins the line for the rest. | DEF/ATK | DEF/ATK | ATK/NEU | Chicanes | Chicanes |
 | Sweepers | Long, fast, gradual turns where drivers hold a consistent, high-speed arc for a prolonged time. | DEF/ATK | ATK/NEU | ATK/NEU | N/A | N/A |
 
-### Endurance (EN)
+### Defensive (EN)
 
 | Turn Type | Description | Entry/Bluff | Apex/Bluff | Exit/Bluff | must not appear before | must not appear after |
 |---|---|---|---|---|---|---|
@@ -56,7 +56,7 @@ Each turn type defines a 3-stance sequence per archetype representing the racing
 | Esses (S-Bends) | A flowing sequence of continuous, alternating curves. Getting the first turn correct in a sequence is crucial, as a mistake ruins the line for the rest. | NEU/ATK | NEU/ATK | NEU/ATK | Chicanes | Chicanes |
 | Sweepers | Long, fast, gradual turns where drivers hold a consistent, high-speed arc for a prolonged time. | NEU/ATK | DEF/NEU | NEU/ATK | N/A | N/A |
 
-### Swift (HAN)
+### Precise (HAN)
 
 | Turn Type | Description | Entry/Bluff | Apex/Bluff | Exit/Bluff | must not appear before | must not appear after |
 |---|---|---|---|---|---|---|
@@ -69,7 +69,7 @@ Each turn type defines a 3-stance sequence per archetype representing the racing
 | Esses (S-Bends) | A flowing sequence of continuous, alternating curves. Getting the first turn correct in a sequence is crucial, as a mistake ruins the line for the rest. | NEU/DEF | ATK/NEU | ATK/NEU | Chicanes | Chicanes |
 | Sweepers | Long, fast, gradual turns where drivers hold a consistent, high-speed arc for a prolonged time. | DEF/ATK | NEU/DEF | ATK/NEU | N/A | N/A |
 
-> **AR P, AR E, AR H** share the same 3-stance sequences as their base archetypes (Bruiser, Endurance, Swift respectively).
+> **Balanced** and **Adaptive** share the same 3-stance sequences as Defensive and Precise respectively.
 
 - Each match generates a **track layout**: a predetermined 10-turn sequence. A single turn type drives all 3 clashes — the entry/apex/exit lookup within the turn type provides the per-position stance.
 
@@ -93,12 +93,11 @@ Each archetype has **2 comfortable** turn types (double the normal bluff rate) a
 
 | Archetype | Face type | Comfortable (2× bluff rate) | Weak (never bluffs) |
 |-----------|-----------|----------------------------|---------------------|
-| Bruiser (POW) | A — Scowling | Sweepers, Increasing Radius | Hairpins, Decreasing Radius |
-| AR P | A — Scowling | Sweepers, Increasing Radius | Hairpins, Decreasing Radius |
-| Endurance (EN) | B — Grinning | Constant Radius, Sweepers | Chicanes, Esses (S-Bends) |
-| AR E | B — Grinning | Constant Radius, Sweepers | Chicanes, Esses (S-Bends) |
-| Swift (HAN) | F — Focused | Chicanes, Esses (S-Bends) | Sweepers, Hairpins |
-| AR H | F — Focused | Chicanes, Esses (S-Bends) | Sweepers, Hairpins |
+| Aggressive (POW) | A — Scowling | Sweepers, Increasing Radius | Hairpins, Decreasing Radius |
+| Defensive (EN) | B — Grinning | Constant Radius, Sweepers | Chicanes, Esses (S-Bends) |
+| Balanced | B — Grinning | Constant Radius, Sweepers | Chicanes, Esses (S-Bends) |
+| Precise (HAN) | F — Focused | Chicanes, Esses (S-Bends) | Sweepers, Hairpins |
+| Adaptive | F — Focused | Chicanes, Esses (S-Bends) | Sweepers, Hairpins |
 
 ### Car motion types
 

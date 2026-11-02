@@ -520,16 +520,7 @@ static func is_comfortable_turn(archetype: String, turn_type: String) -> bool
 static func is_weak_turn(archetype: String, turn_type: String) -> bool
 ```
 
-**`PersonalityData.gd`** — 6 personality configs (Bruiser, Endurance, Swift, AR P, AR E, AR H) with 3 phases each (matching `sim/velocity_shift/ai.py`):
-
-| Personality | Phase 0 | Phase 1 | Phase 2 |
-|-------------|---------|---------|---------|
-| Bruiser | AGR 70% / REA 30% | AGR 100% | AGR 50% / REA 50% |
-| Endurance | REA 70% / AGR 30% | REA 100% | REA 50% / AGR 50% |
-| Swift | UNP 100% | REA 50% / UNP 50% | AGR 100% |
-| AR P | AGR 70% / REA 30% | UNP 100% | REA 50% / UNP 50% |
-| AR E | REA 80% / AGR 20% | UNP 100% | AGR 50% / UNP 50% |
-| AR H | UNP 100% | UNP 70% / AGR 30% | REA 50% / UNP 50% |
+**`PersonalityData.gd`** — 5 personality configs (Aggressive, Defensive, Precise, Balanced, Adaptive) with 3 phases each. They mirror `PERSONALITY_MAP` in `sim/velocity_shift/ai.py`, which is the source of truth for each phase's type, weights, behavior override and hand requirements; see the phase table in `design/04-difficulty-tuning.md`. Wild races use phase 0 only, Lieutenants phases 0–1, Bosses all three.
 
 **`TrackData.gd`** — predetermined 10-turn sequence per circuit:
 
@@ -1026,7 +1017,7 @@ scripts/
   AIQTE.gd                 — opponent QTE generation
   TurnTypeData.gd          — stance sequences + QTE type
   ArchetypeData.gd         — comfort/weak zones
-  PersonalityData.gd       — 6 personalities, 3 phases each
+  PersonalityData.gd       — 5 personalities, 3 phases each
   TrackData.gd             — circuit layouts
   TellGenerator.gd         — deception flow
   FaceController.gd        — face display + tell overlay
@@ -1217,12 +1208,12 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
 
 | File | Subject |
 |------|---------|
-| `face_scowling_atk.png`, `face_scowling_def.png`, `face_scowling_neu.png` | Bruiser expressions |
-| `face_grinning_atk.png`, `face_grinning_def.png`, `face_grinning_neu.png` | Endurance expressions |
-| `face_focused_atk.png`, `face_focused_def.png`, `face_focused_neu.png` | Swift expressions |
-| `tell_scowling_atk.png`, `tell_scowling_def.png`, `tell_scowling_neu.png` | Bruiser tells |
-| `tell_grinning_atk.png`, `tell_grinning_def.png`, `tell_grinning_neu.png` | Endurance tells |
-| `tell_focused_atk.png`, `tell_focused_def.png`, `tell_focused_neu.png` | Swift tells |
+| `face_scowling_atk.png`, `face_scowling_def.png`, `face_scowling_neu.png` | Aggressive expressions |
+| `face_grinning_atk.png`, `face_grinning_def.png`, `face_grinning_neu.png` | Defensive and Balanced expressions |
+| `face_focused_atk.png`, `face_focused_def.png`, `face_focused_neu.png` | Precise and Adaptive expressions |
+| `tell_scowling_atk.png`, `tell_scowling_def.png`, `tell_scowling_neu.png` | Aggressive tells |
+| `tell_grinning_atk.png`, `tell_grinning_def.png`, `tell_grinning_neu.png` | Defensive and Balanced tells |
+| `tell_focused_atk.png`, `tell_focused_def.png`, `tell_focused_neu.png` | Precise and Adaptive tells |
 
 ### UI Assets (human — Aseprite/Photoshop)
 
@@ -1290,7 +1281,7 @@ speed_multiplier = 1.0 + max(0, gap) × QTE_MASH_SPEED_PER_GAP
 For each corner, the opponent's 3 "true" stance picks come from the turn-type table per their archetype. TellGenerator may swap some based on deception.
 
 ```
-# TurnTypeData lookup for Bruiser on Hairpin:
+# TurnTypeData lookup for Aggressive on Hairpin:
 entry_stance = DEFEND
 apex_stance  = DEFEND
 exit_stance  = ATTACK
@@ -1301,7 +1292,7 @@ exit_stance  = ATTACK
 # 2: show ATTACK, tell if deceptive
 ```
 
-Tables in `06-pattern-read.md` — sections: Bruiser, Endurance, Swift. AR P / AR E / AR H share their base archetype's sequences.
+Tables in `06-pattern-read.md` — sections: Aggressive, Defensive, Precise. Balanced shares Defensive's sequences and Adaptive shares Precise's.
 
 ---
 
