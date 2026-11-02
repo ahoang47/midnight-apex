@@ -312,7 +312,7 @@ Use overheating or desperation language.
 
 These are major narrative events.
 
-**Purpose:** Define district climax, deliver iconic personalities, reward progression, create emotional stakes.
+**Purpose:** Mark each round’s climax in the district (the same crew boss returns stronger each round), deliver iconic personalities, reward progression, create emotional stakes.
 
 **Recommended Total Dialogue:** 8–15 pre-race lines, 10–20 mid-race lines, 4–8 finish lines.
 
@@ -334,7 +334,8 @@ Each boss should embody a racing ideology: precision over aggression, mechanical
 - "Machines reflect their drivers."
 
 ### Stakes
-- Pink slips
+- Big cash payout
+- Rare mods unlocked in the shop
 - Territory
 - Crew respect
 - District unlocks

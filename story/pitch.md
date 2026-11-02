@@ -70,6 +70,8 @@ without relying on simulator driving execution.
 
 # Progression Structure
 
+Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Each round, the player faces all three in Touge, then Wangan, then Street; the crews get stronger every round, and the player earns the street cred for the next rematch by winning in the other districts. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
+
 ---
 
 # District Structure
@@ -84,7 +86,7 @@ The city is divided into 3 core racing districts (in-world names `<TBD>`):
 - fog-heavy atmosphere and narrow visibility
 - home of Fushigi-Yama, the mountain where the story climaxes
 
-### Racer Archetypes
+### Racer Types
 - Delinquent
 - High Schooler
 - Drifter
@@ -99,7 +101,7 @@ The city is divided into 3 core racing districts (in-world names `<TBD>`):
 - drafting and momentum warfare
 - neon horizon visual identity
 
-### Racer Archetypes
+### Racer Types
 - Salaryman
 - Office Lady
 - Doctor
@@ -114,7 +116,7 @@ The city is divided into 3 core racing districts (in-world names `<TBD>`):
 - tactical sequencing and positioning
 - highly organized race culture
 
-### Racer Archetypes
+### Racer Types
 - Punk
 - Engineer
 - Mechanic
@@ -126,16 +128,16 @@ The city is divided into 3 core racing districts (in-world names `<TBD>`):
 Each district contains:
 
 - crews and subcultures
+- one main crew and its crew boss, re-faced and stronger each round
 - recurring rivals
 - race organizers
-- a district boss
 - unique tactical identities and AI behavior patterns
 
 ---
 
 # Boss Structure
 
-District bosses are not simple end-of-level encounters.
+Crew bosses are not simple end-of-level encounters.
 
 They are:
 
@@ -272,7 +274,7 @@ These racers:
 
 - are no longer active rulers of the scene
 - are considered washed-up or semi-retired legends
-- still command enormous respect from current district bosses
+- still command enormous respect from current crew bosses
 - are no longer friends with each other, and have not spoken since the breakup
 
 
@@ -293,7 +295,7 @@ Players gradually uncover fragmented and contradictory perspectives through:
 
 - crew member dialogue
 - district rival encounters
-- district boss exposition
+- crew boss exposition
 - Myth Driver encounters
 - mentor interactions
 - environmental storytelling
@@ -308,7 +310,7 @@ into:
 
 The player constantly pressures the mentor for answers throughout the game, but the mentor repeatedly deflects or avoids discussing the past. She genuinely believes she was ousted over the snitch rumor and does not know the real reasons.
 
-After defeating all three district bosses and racing all three Myth Drivers, the player directly confronts the mentor.
+After beating the crews in all three rounds, the player directly confronts the mentor `<PROPOSAL: placement — see plot.md, end of Round 3>`.
 
 The mentor finally admits:
 - the incident truly happened

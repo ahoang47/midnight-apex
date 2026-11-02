@@ -1,264 +1,194 @@
-Street Racing RPG — Full Story Outline
+# Street Racing RPG — Story Outline
+
+Beat outline only. Canon: [`canon.md`](canon.md) (wins on any conflict). Scripts: [`scripts/`](scripts/).
+Markers: `<TODO>` / `<TBD>` = open; `<PROPOSAL>` / `<CHECK>` = awaiting Austin.
+
+Structure (locked): Prologue → Rounds 1–3 → Finale.
 
 ---
 
-ACT 1 — INTRODUCTION
+# PROLOGUE
 
-1. Opening Sequence
+Script: [`scripts/prologue.md`](scripts/prologue.md)
 
-PC relocates to new city for work
-PC arrives at dusk; night from then on
-Nighttime exploration of city begins
-Exposure to underground racing culture
-First illegal race encounter occurs
-PC participates in initial race event
-Race ends in catastrophic engine failure 
+## 1. Opening Sequence
 
-Scene opens with PC driving a moving box truck towing a distinctively tuner styled car. It’s golden hour. 
-Moving truck pulls up to a small house with a large garage.
-fade to black 
-Garage is now open, car is parked in the garage. 
+- PC (mid-20s, any gender) moves to the city for work — really running from something: walked out on their own crew/family without explaining why
+- Arrives at dusk; night from then on
+- Nighttime exploration; first exposure to underground racing culture
+- Overworld tutorial on the drive home from work at dusk
+- On a back road, a car flashes its headlights: first race challenge (hazards to accept)
+- First race (battle tutorial); PC ignores a manifold warning and the engine blows
+- The challenger (Sabine) comes back; PC deflects her questions about where they’re from; she tows the car to her shop
 
-PC: “Home sweet home. Happy to have found a space like this.
-Better get moved in before I start work tomorrow.” 
+## 2. Garage Intro
 
-Scene transition to dusk the next day `<TODO: was daylight; canon is dusk opening, night from then on — confirm the commute-to-work tutorial still works at dusk>`
-Introduce overworld controls, allow player to drive to work. 
-Popup: <This is how you traverse the overworld. Use [controls] to move. Try it out!> 
-When driver arrives to work: 
-Popup: <Great job on arriving to your new company. Now get to work.> 
+- Sabine introduces her crew; the crew sizes up PC as an outsider
+- Tuner `<TODO: name>`: mods, installs a DAQ system — more races, more data, better tuning
+- Buyer `<TODO: name>`: parts at wholesale `<TODO: rest of Buyer’s line and the rest of the garage intro>`
 
-Scene transition to PC driving home from work, a winding back road on the edge of the city
-Car approaches PC’s car, starts flashing headlights. 
+## 3. The Debt
 
-PC: “Are they challenging me to a race?” 
-Popup: <When a car is approaching you with flashing headlights, they’re challenging you to a race. Try flashing your hazards using [control] to accept the race.> 
-
-After player flashes their hazards 
-PC: “This should be fun… why not.” 
-??? (Black silhouette of mentor): “...” 
-
-Popup: <As the game progresses, you can decline races by simply ignoring them. Note that not all races can be declined.> 
-
-Cue battle music and battle sequence, game changes from overworld view to battle sequence view. 
-Gameplay proceeds as required. 
-
-Popup: <Welcome to your first race! Here’s how you play: [show controls, UI, etc.]>
-
-The race proceeds and gives the player a feel of how the gameplay works. As player sees themselves winning, the dash flashes a danger to manifold warning that they ignore. PC’s car engine suddenly explodes. 
-fade to black
-Scene returns to overworld view, PC’s car is billowing smoke out the hood.
-
-PC: “AWWW MAAAN!!” 
-??? (Black silhouette of mentor): “...” 
-
-We see ???’s car pull back to the PC
-??? (No longer black silhouette): “Ouch.” 
-PC: “Happens I guess. I’m surprised you came back.” 
-???: “I guess I feel personally responsible for this. Where are you coming from? Not many people come around this road, and you don’t look like one of the usual suspects which is why I challenged you in the first place.” 
-PC: “I just moved to the area, I saw this road on the GPS and thought it looked fun.”
-???: “I see. Well let me personally introduce myself, I’m Sabine. Nice to meet you.” 
-PC: “I see, I’m <insert name field>” 
-Popup: <Tell Sabine your name: [text input field]> 
-Sabine: “Nice to meet you, <name>. I have a shop nearby, why don’t we tow the car over there and I can introduce you to some of my friends?” 
-PC: “That’d be great! I appreciate it. How do you know I’m not a serial killer though?” 
-Sabine: “How do you know I’m not one?” 
-
-Tow truck pulls up on screen.
-fade to black
-Scene transitions to Sabine’s garage.
----
-
-2. Garage Intro
-
-Mentor brings PC to crew location
-PC is introduced to mentor’s crew
-Crew evaluates PC as outsider entrant
-
-Sabine: “Welcome to the garage! Let me introduce you to the crew.”
-Pans to <Tuner> 
-Sabine: “This is <Tuner>, he’s your go to for any car modifications! He’ll be installing a data acquisition (DAQ) system to your car to get real race data and guide your engine, suspension, and chassis tuning. The more races you run, the more data he gets, and the better your car will be.” 
-Pans to <Buyer> 
-Sabine: “This is <Buyer>, she’s got people that can get you parts for wholesale prices. 
-`<TODO: rest of garage intro script>`
----
-
-## 3. Crew Introduction & Debt
-
-- Mentor explains financial obligation for repair/rebuild
-- Mentor assigns racing-based repayment condition
-- PC formally enters underground racing system
+- Sabine explains the rebuild debt `<TODO: debt amount>`
+- Sabine sets racing-based repayment `<TODO: repayment terms>`
+- PC formally enters the underground scene
 
 ---
 
-# ACT 2 — DISTRICT PROGRESSION & MYSTERY BUILDUP
+# DISTRICTS (REFERENCE)
+
+- One crew + one crew boss per district (3 + 3 total), re-faced each round and stronger every time
+- Racer types always use their archetype (pairing rules in `canon.md`)
+- Crew boss stakes: money, rep, rare shop mods, story progress; a loss = retry, never losing the car
+
+## Touge
+
+- Name `<TBD>`; mountain roads; home of Fushigi-Yama
+- Crew `<TBD>`; Crew Boss `<TBD>` — establishes ideological dominance
+
+| Racer Type | Archetype |
+|---|---|
+| Delinquent | Aggressive |
+| Gang Leader | Defensive |
+| Drifter | Precise |
+| High Schooler | Balanced |
+| Honor Student | Adaptive |
+
+## Wangan
+
+- Name `<TBD>`; highway racing
+- Crew `<TBD>`; Crew Boss `<TBD>` — presents a pragmatic interpretation of events
+
+| Racer Type | Archetype |
+|---|---|
+| Executive | Aggressive |
+| Office Lady | Defensive |
+| Doctor | Precise |
+| Salaryman | Balanced |
+| Consultant | Adaptive |
+
+## Street
+
+- Name `<TBD>`; street racing (circuit and street are the same scene here)
+- Crew `<TBD>`; Crew Boss `<TBD>` — frames the conflict as a cultural fracture
+
+| Racer Type | Archetype |
+|---|---|
+| Punk | Aggressive |
+| Mechanic | Defensive |
+| Engineer | Precise |
+| Skater | Balanced |
+| Influencer | Adaptive |
 
 ---
 
-# Shared District Structure (All Districts)
+# ROUNDS 1–3
 
-Each district contains:
+- Each round: Touge → Wangan → Street, one crew + crew boss each (Round 1 first meeting, Rounds 2–3 rematches, stronger each time)
+- Every crew defeat reveals another piece of the police sweep mystery
+- Round themes (locked): 1 = the incident, 2 = consequences across the scene, 3 = distortion (what people misremember)
+- Why the rotation (locked): a beaten crew won’t grant a rematch until PC has proven themselves in the other districts — not enough street cred yet (in-world flavor only, not a tracked stat)
+- Every round, in every district: random racer encounters (by racer type), rival chain `<TODO: rivals>`, reputation gating, crew boss build-up through rumor, the crew race, a story reveal
 
-- Entry into district racing scene
-- Introduction of local crews
-- Random racer encounters (archetype-based)
-- Rival progression chain
-- Reputation gating system
-- Boss build-up through rumor and influence
-- District Boss race
-- Myth Driver encounter
-- Story fragment exposition
+## 4. Round 1 — The Incident
 
----
+### Touge
+- Match 1 vs crew `<TBD>` / crew boss `<TBD>`
+- Reveal: PC enters the mountain scene; racers reference the touge scene’s collapse; the historical incident is introduced in a mythologized version; rumors about Sabine surface
 
-# 4. Touge District
+### Wangan
+- Match 1 vs crew `<TBD>` / crew boss `<TBD>`
+- Reveal: PC enters the highway scene; racers describe the old generation’s structure; the police sweep in detail `<TODO: sweep details — when, what triggered it, who was caught, why Sabine was present>`
 
-## Archetypes
-- Delinquent
-- High Schooler
-- Drifter
-- Gang Leader
-- Honor Student
+### Street
+- Match 1 vs crew `<TBD>` / crew boss `<TBD>`
+- Reveal: PC enters the street scene; `<TODO: reveal>`
 
-## Narrative Function
-- Introduce existence of historical incident
-- Establish emotional accusations toward mentor
-- Present mythologized version of past events
-- Introduce fractured early narrative truth
+## 5. Round 2 — Consequences
 
-## Key Beats
-- PC enters mountain racing scene
-- PC encounters archetype-based racers
-- racers reference past collapse of touge scene
-- rumors of mentor begin surfacing
-- Touge Boss establishes ideological dominance
-- PC defeats Touge Boss
-- Touge Myth Driver (#1) reveals first contradiction in history
+### Touge
+- Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; escalation `<TODO: how they’ve gotten stronger>`
+- Reveal: emotional accusations toward Sabine; `<TODO: reveal>`
 
----
+### Wangan
+- Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; escalation `<TODO: how they’ve gotten stronger>`
+- Reveal: the sweep’s aftermath and the scale of the collapse; systemic and organizational consequences; Sabine reframed through a professional lens, her reputation contested
 
-# 5. Wangan District
+### Street
+- Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; escalation `<TODO: how they’ve gotten stronger>`
+- Reveal: racers openly discuss the Sabine controversy; `<TODO: reveal>`
 
-## Archetypes
-- Salaryman
-- Office Lady
-- Doctor
-- Executive
-- Consultant
+## 6. Round 3 — Distortion
 
-## Narrative Function
-- Expand scale of underground racing ecosystem collapse
-- Introduce systemic and organizational consequences
-- Reframe mentor narrative through professional perspective
+### Touge
+- Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; escalation `<TODO: how they’ve gotten stronger>`
+- Reveal: fractured early narrative truth; `<TODO: reveal>`
 
-## Key Beats
-- PC enters highway racing environment
-- racers discuss structure of old racing generation
-- police sweep and aftermath described in detail
-- mentor reputation becomes contested
-- Wangan Boss presents pragmatic interpretation of events
-- PC defeats Wangan Boss
-- Wangan Myth Driver (#2) reframes mentor as scapegoat possibility
+### Wangan
+- Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; escalation `<TODO: how they’ve gotten stronger>`
+- Reveal: `<TODO: reveal>`
+
+### Street
+- Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; escalation `<TODO: how they’ve gotten stronger>`
+- Reveal: the mystery turns emotional and cultural; blame, identity and social fragmentation intensify; conflicting takes on Sabine escalate; PC keeps pressing Sabine, she deflects
+
+### Mentor Confrontation `<PROPOSAL — Austin to approve placement: end of Round 3, before the Finale>`
+- PC sees the contradictions across every account and confronts Sabine
+- Sabine confirms: the incident happened; she was present; she was not the informant
+- She still believes the snitch rumor got her ousted; she doesn’t know the real reasons
 
 ---
 
-# 6. Street District
+# FINALE
 
-## Archetypes
-- Punk
-- Engineer
-- Mechanic
-- Influencer
-- Skater
+Finishing Round 3 unlocks the three Myth Driver races, one per district.
 
-## Narrative Function
-- Shift mystery into emotional and cultural conflict
-- Intensify blame, identity, and social fragmentation
-- Increase pressure on mentor for answers
+## 7. Myth Drivers
 
-## Key Beats
-- PC enters street racing scene
-- racers openly discuss mentor controversy
-- conflicting interpretations of mentor escalate
-- PC repeatedly confronts mentor (mentor deflects)
-- Street Boss frames conflict as cultural fracture
-- PC defeats Street Boss
-- Street Myth Driver (#3) introduces emotional regret and fractured memory
+- Order `<TODO: order of the three encounters>`
+- **#1 Touge** (name `<TBD>`): reveals the first contradiction in the history `<TODO: what it is>`. Hidden motive (summit): distrust of Sabine’s uncle-dad, a detective
+- **#2 Wangan** (name `<TBD>`): reframes Sabine as a possible scapegoat `<CHECK: conflicts with canon — Austin to decide>`. Hidden motive (summit): she turned down his date
+- **#3 Street** (name `<TBD>`): emotional regret and fractured memory `<CHECK: conflicts with canon — Austin to decide>`. Hidden motive (summit): jealousy — wanted her out of the way, and wanted out himself to go pro in the circuit
 
----
+## 8. Summit Setup
 
-# ACT 3 — CONFRONTATION
-
-## 7. Mentor Confrontation
-
-- PC has encountered all three Myth Drivers
-- PC recognizes contradictions in all accounts
-- PC confronts mentor directly
-- Mentor confirms:
-  - incident occurred
-  - mentor was present
-  - mentor was not informant/snitch
-- Mentor still believes she was ousted over the snitch rumor; she does not know the real reasons
-
----
-
-## 8. Honor Restoration Arc
-
-- PC chooses to defend mentor’s reputation
-- PC tricks all three Myth Drivers and Sabine into meeting at the summit of Fushigi-Yama (the Touge district’s mountain)
+- PC chooses to defend Sabine’s reputation
+- PC tricks all three Myth Drivers and Sabine into meeting at the summit of Fushigi-Yama (Touge) `<TODO: how the PC tricks each of them>`
 - They each individually agree `<TODO: original line was cut off here — agree to what? Austin to decide>`
-- the summit is the first time the Myth Drivers have met since the breakup
+- First time the Myth Drivers have met since the breakup
+
+## 9. The Summit
+
+- All three Myth Drivers and Sabine at the summit
+- The truth comes out: no informant; the sweep was coincidental; the snitch story covered each Myth Driver’s personal reason
+- Sabine learns the real reasons for the first time; contradictions reconciled; closure between Sabine and the old generation
+- Sabine turns it back on PC: “And when are you calling them?” `<PROPOSAL>`
+
+## 10. Ending
+
+- The Myth Drivers invite Sabine back; she acknowledges the reconciliation and calmly declines
+- She stays loyal to her current crew (PC’s crew)
+- One cutting parting shot `<TODO: parting shot — Austin to approve>`
+- PC is fully part of the underground scene
 
 ---
 
-# ACT 4 — RESOLUTION
+# SUBSTORIES
 
-## 9. Final Meeting
-
-- All three Myth Drivers and Sabine meet at the summit of Fushigi-Yama
-- Full confrontation of historical truth occurs
-- the truth comes out: there was no informant; the police sweep was coincidental, and the snitch story covered each Myth Driver’s personal reason
-- Sabine learns the real reasons for the first time
-- Contradictions are reconciled
-- Emotional closure achieved between old generation and mentor
-
----
-
-## 10. Final Resolution
-
-- Myth Drivers invite mentor to return to old generation
-- Mentor acknowledges reconciliation
-- Mentor calmly declines return
-- Mentor declares loyalty to current crew (PC’s crew)
-- Mentor gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
-- PC fully integrated into underground racing world
+- Main plot stays grounded; JRPG weirdness and extra lore go in substories/side quests
+- `<TODO: substories>`
 
 ---
 
 # STRUCTURAL THEMES
 
-## Mystery Progression Model
-
-- Touge: incident introduced
-- Wangan: systemic consequences
-- Street: emotional distortion
-
----
-
 ## Mentor Arc
-
-- Entry point into underground world
+- Entry point into the underground world
 - Subject of rumor and accusation
 - Believes the snitch rumor was the reason; learns the real reasons only at the summit
 - Recontextualized rather than simply vindicated
 
----
-
 ## Player Arc
-
-- outsider → entrant
-- entrant → investigator
-- investigator → challenger
-- challenger → defender
-- defender → integrated member
-
+- outsider → entrant → investigator → challenger → defender → integrated member
+- Mirror of Sabine: PC walked out on their own crew/family without explaining; Sabine was pushed out of hers over a lie
+- Helping Sabine reconcile is PC working through their own guilt by proxy; at the summit Sabine may turn it back on them `<PROPOSAL>`

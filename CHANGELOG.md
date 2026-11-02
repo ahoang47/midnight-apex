@@ -45,6 +45,93 @@ The lead approved the character base pass. One male and one female base body is 
 - Every outfit shares the tee/jeans silhouette; skirts and shorts need an add-on or a body variant.
 - The hood/collar add-on and Hair_B are visible on import and must be toggled in-game.
 - Ears are flat quads.
+## 2026-11-01 — Story: lean `plot.md` beat outline, `scripts/prologue.md`, PC "running from something" framing [story] (Nathaniel, Narrative Lead)
+
+Lead approved. Not committed or pushed.
+
+**Changed:**
+- `story/plot.md` — rewritten as a lean beat outline (356 → 194 lines). Same sections (Prologue §1–3, Districts reference, Rounds 1–3 with Touge/Wangan/Street, Mentor Confrontation `<PROPOSAL>`, Finale §7–10, Substories, Structural Themes) and every `<TODO>`/`<TBD>`/`<PROPOSAL>`/`<CHECK>` marker and locked decision kept. The line-by-line script, popups and stage directions moved out. PC framing added to §1 beats, the summit (`<PROPOSAL>` line) and the Player Arc.
+- `story/canon.md` — decision 13 (first pass): the PC is mid-20s, moved for work but is running from something (walked out on their own crew/family without explaining); mirrors Sabine; helping her reconcile is guilt by proxy; the summit callback is a `<PROPOSAL>`. Open questions: PC backstory added.
+
+**New:**
+- `story/scripts/prologue.md` — the full §1 opening and §2 garage-intro scripts moved from `plot.md`, unchanged except for the lead-approved PC lines: arrival ("...Well. It's got a garage." / "Nobody here knows me. That's the point."), accepting the race ("...Why not. Not like anyone's waiting up."), the blowout ("...Figures."), "Around. I just moved here." with Sabine's "...Sure.", "...Yeah. Thanks." and the closing "...Fair." A §3 placeholder holds the debt-script TODO.
+
+**Reasoning:**
+- The lead wanted `plot.md` to stay outline-focused; scripts now live in `story/scripts/` so no dialogue is lost.
+- Follow-up (lead): the overworld tutorial now runs on the drive home from work at dusk, flowing into the back-road headlight challenge. The drive-to-work segment and its arrival popup are cut from `scripts/prologue.md`; the commute TODO is closed in `plot.md`, the script and `canon.md` (decision 11's Prologue line; open question removed). The quieter PC lines set up the new framing: a PC hiding their own walk-out makes Sabine's story personal to them.
+
+---
+
+## 2026-11-01 — Story: one crew per district (rematches), "street cred", round themes locked [story] (Nathaniel, Narrative Lead)
+
+Decided by the lead. Not committed or pushed.
+
+**Changed:**
+- `story/plot.md` — Districts reference: one crew `<TBD>` and one crew boss `<TBD>` per district (three of each in total); the old boss voices ("ideological dominance", "pragmatic interpretation", "cultural fracture") now belong to each district's crew boss, so their TODOs are closed. Round sections: "Match 1" in Round 1, "Rematch 2/3" with an escalation `<TODO>` in Rounds 2–3. Round themes (Incident / Consequences / Distortion) are no longer a proposal. Street cred now explains why a crew won't grant a rematch until the player has proven themselves in the other districts. The Mentor Confrontation stays a `<PROPOSAL>`.
+- `story/canon.md` — decision 11: one crew and crew boss per district, re-faced and stronger each round; round themes added. Decision 12: "street creed" → "street cred", rematch wording. Timeline step 5 and the open questions updated (the crew-count / nine-boss TBD is gone; crew escalation added).
+- `story/pitch.md` — Progression Structure and the district list describe one recurring crew per district; "street creed" → "street cred".
+- `story/barks.md` — boss purpose "Define district climax" → each round's climax with a returning crew boss.
+- `CHANGELOG.md` — "creed" → "cred" in my earlier entry today.
+
+**Reasoning:**
+- Re-facing one crew that keeps improving gives each district a single rivalry to build across the rounds, and it cuts the cast from nine crew bosses to three.
+
+---
+
+## 2026-11-01 — Story: Prologue / Rounds 1–3 / Finale act structure; street cred gating [story] (Nathaniel, Narrative Lead)
+
+Act structure and cred rule locked by the lead. Not committed or pushed.
+
+**Changed:**
+- `story/plot.md` — restructured into Prologue (§1–3, the old Act 1, unchanged), a Districts reference section (identity, racer type/archetype tables, stakes), Rounds 1–3 (§4–6; each with Touge → Wangan → Street, every district with Crew `<TBD>`, Crew Boss `<TBD>`, Story Reveal), Finale (§7 Myth Drivers, §8 Summit Setup, §9 The Summit, §10 Ending) and a Substories placeholder.
+  - Street cred explains the rotation as in-world flavor only (not a tracked stat).
+  - The old per-district mystery themes and key beats are redistributed as round-by-round reveals, marked `<PROPOSAL>` (Round 1 = the incident, Round 2 = consequences, Round 3 = distortion); empty slots are `<TODO: reveal>`.
+  - The old Mentor Confrontation sits at the end of Round 3 as a `<PROPOSAL>`.
+  - Myth Driver #2/#3 beats moved to the Finale, marked `<CHECK: conflicts with canon>`.
+  - The old district-boss voices are kept in the Districts reference with a TODO for which crew boss carries them.
+- `story/canon.md` — decisions 11 (act structure; main plot grounded, weirdness in substories) and 12 (street cred gates the rotation); stakes line says crew boss; timeline rewritten for rounds and the Finale; open questions updated (crew count `<TBD>`/nine crew bosses, substories).
+- `story/pitch.md` — the empty Progression Structure section now states the act structure; "district boss" → crew boss (district list, Boss Structure, Myth Drivers, mystery sources); the mentor confrontation now follows the three rounds and is marked `<PROPOSAL>`.
+
+**Reasoning:**
+- The lead replaced one boss + Myth Driver per district with three rounds of crews and a Myth Driver finale. Moving district identity into one reference section keeps the rounds from repeating it, and the same Crew / Crew Boss / Story Reveal layout in every slot shows exactly which reveals are still missing.
+
+---
+
+## 2026-11-01 — Story: `plot.md` outline cleanup [story] (Nathaniel, Narrative Lead)
+
+Tidy only — no new plot points. Lead asked for a clean outline. Not committed or pushed.
+
+**Changed:**
+- `story/plot.md` — restructured into Act 1 (§1 Opening, §2 Garage Intro, §3 The Debt), Act 2 (shared district structure, then §4 Touge, §5 Wangan, §6 Street, each with the same sub-headings: Racer Types, Mystery Theme, Key Beats, Boss, Myth Driver), Act 3 (§7 Mentor Confrontation, §8 Summit Setup) and Act 4 (§9 The Summit, §10 Ending).
+  - Racer Types are now tables with each type's archetype, matching `canon.md`.
+  - Boss stakes and the retry rule from `canon.md` added to the shared structure; each Myth Driver section lists his hidden motive from canon.
+  - The "Mystery Progression Model" theme section was folded into each district's Mystery Theme; the duplicate is gone.
+  - Grammar, punctuation and markdown fixed in the existing voice; "mentor" → Sabine where it means her.
+  - Every open item is an explicit `<TODO>`/`<TBD>`: names, crews/rivals, boss philosophies, Myth Driver contradiction, sweep details, how the PC tricks everyone, the cut-off "They each individually agree" line, garage script, debt terms, dusk commute, parting shot.
+
+**Reasoning:**
+- The outline mixed plain text and markdown, numbered sections unevenly and gave each district a different shape, so gaps were hard to see. Parallel district sections make missing pieces obvious and turn the TODOs into a question list for the lead.
+
+---
+
+## 2026-11-01 — Story: racer type ↔ archetype pairing, "racer types" wording, pink slips cut [story] (Nathaniel, Narrative Lead)
+
+Approved by the lead in the Narrative/Systems chat. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` — new "Racer Types and Archetypes" section: one racer type per archetype per district (table), named rivals may break it, boss stakes (money, rep, rare shop mods, story; a loss means retry).
+- `story/pitch.md`, `story/plot.md` — "Racer Archetypes"/"Archetypes" headings and "archetype-based" wording → "racer types", so "archetype" only means the sim's driving style.
+- `story/barks.md` — boss stakes: "Pink slips" → "Big cash payout" and "Rare mods unlocked in the shop".
+
+**Reasoning:**
+- The lead wants an even pairing: 15 racer types ÷ 3 districts = 5 per district, matching the 5 renamed archetypes (see Barry's entry below).
+- Pairings follow what each archetype shows in its first phase, since common racers only race Wild events. Adaptive racers (Honor Student, Consultant, Influencer) will read soft until Barry's phase fix lands.
+- Losing the car on a boss defeat was cut in the 2026-06-17 redesign; the design plan is retry on a loss, payout plus rare mods on a win.
+
+**Still open:** the barks "Personalities" list (Calm, Aggressive, ...) and mid-race tone headings will be rewritten as one voice per racer type.
+
+---
+
 ## 2026-10-31 — Sim tooling fixes: runner crash, gauntlet uses engine values, build-matrix format [sim] (Barry, Chief of Systems)
 
 Tooling only. No game constants, formulas or docs changed. Not committed or pushed.
