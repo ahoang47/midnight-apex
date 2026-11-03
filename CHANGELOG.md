@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-02 — Logo: approved one-line wordmark [art] (Arthur, Art Director)
+- Austin approved round-3 V3, now in `art/logo/`. It's a black-and-white one-line wordmark: solid MIDNIGHT with the chicane M, flares on the left, a heavily extruded APEX whose A traces an out-in-out racing line (kerb at the apex), and katakana underneath. He rejected round 1 as too soft and rounded, so everything is hard-edged. He picked W2's one-line layout, S1's APEX and H1's flares from round 2, in black and white.
+
 ## 2026-11-02 — .gitignore: keep licensed GR Corolla blueprint files local [art] (Arthur, Art Director)
 - Ignored the Dimensions.com SVG and the four renders that reproduce it (`art/vehicles/gr_corolla/...`). Their licence is non-commercial with no redistribution, and the repo is public. Desmond asked for this so a `git add -A` can't push them.
 
