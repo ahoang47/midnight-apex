@@ -68,13 +68,29 @@ Scene transitions to Sabine’s garage.
 ## §2 Garage Intro
 
 Sabine: “Welcome to the garage! Let me introduce you to the crew.”
-Pans to <Tuner> `<TODO: Tuner's name>`
-Sabine: “This is <Tuner>, he’s your go-to for any car modifications! He’ll be installing a data acquisition (DAQ) system in your car to get real race data and guide your engine, suspension, and chassis tuning. The more races you run, the more data he gets, and the better your car will be.”
-Pans to <Buyer> `<TODO: Buyer's name>`
-Sabine: “This is <Buyer>, she’s got people that can get you parts for wholesale prices. `<TODO: rest of Buyer's line and the rest of the garage intro script>`
+Pans to Jesse (the Tuner)
+Sabine: “This is Jesse, he’s your go-to for any car modifications! He’ll be installing a data acquisition (DAQ) system in your car to get real race data and guide your engine, suspension, and chassis tuning. The more races you run, the more data he gets, and the better your car will be.”
+Pans to Reiko (the Buyer)
+Sabine: “This is Reiko, she’s got people that can get you parts for wholesale prices... as long as you don’t ask where they come from.”
+Reiko: (doesn’t look up from her phone) “Wholesale is for crew. You’re not crew.”
+PC: “...Fair.”
+Reiko: “We’ll see.”
+Jesse: (sliding out from under a car, grinning, wiping his hands) “Don’t take it personal, she did me the same way. Took her a year to learn my name.”
+Reiko: “Still working on it.”
+Jesse: (laughs, offers a handshake, then thinks better of the grease and does a fist bump) “Jesse. Welcome in.” (eyes the wreck on the tow hook) “That your car? ...Or what’s left of it?”
+PC: “...Yeah.”
+Jesse: “Hey, good bones. Bad night. We’ve all had one. I’ll get her singing again.”
+Sabine: “Which brings us to the bill.”
 
 ---
 
 ## §3 The Debt
 
-`<TODO: script — debt amount and repayment terms are still open>`
+Sabine: (slaps an invoice on the hood; amount `<TBD: Barry>`) “Engine, labor, tow. I fronted all of it.”
+PC: (reads it, exhales) “...I don’t have this.”
+Sabine: “Didn’t think you did. So you drive it off. You race under my garage. Winnings come here first, until we’re even.”
+PC: “And if I lose?”
+Sabine: “Then you owe me longer.” (half a smile) “So don’t.”
+Jesse: “Translation: welcome to the team.”
+Reiko: “Translation: you’re on probation.”
+PC: (a beat, then a nod) “...Deal."

@@ -1,3 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Dimensions.com blueprint + derived overlays: non-commercial, no-redistribution licence. Keep local only.
+art/vehicles/gr_corolla/bp/gr_dimensions.svg
+art/vehicles/gr_corolla/renders/gr_corolla_bp_overlay_*
+art/vehicles/gr_corolla/renders/gr_corolla_line_classes_*
+art/vehicles/gr_corolla/detail/renders/gr_corolla_detail_orthos_*

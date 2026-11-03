@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-02 — .gitignore: keep licensed GR Corolla blueprint files local [art] (Arthur, Art Director)
+- Ignored the Dimensions.com SVG and the four renders that reproduce it (`art/vehicles/gr_corolla/...`). Their licence is non-commercial with no redistribution, and the repo is public. Desmond asked for this so a `git add -A` can't push them.
+
 ## 2026-11-02 — Female character base: chest height raised [art] (Arthur, Art Director)
 - Austin pointed out that the female bust sat too low (it showed on the poster draft). It was in the model: the apex was at 1.163 m, about 18 cm under the shoulders. He asked for +5 cm and then another +5 cm, so it's now at **1.256 m** (+9.3 cm), about 4 cm above the Spine2 joint. The fix lives in the build script (`art/characters/base/build/spec.py` `fem_trunk_z()` / `TRUNK_ZF` / `TRUNK_WZ`, plus the weight lookup in `build_char.py`), so rebuilds keep it.
 - Only female trunk heights move: the waist ring rises 3.7 cm, the bust ring 9.3 cm and the armpit ring 4.2 cm, so the upper chest isn't pinched. The hem and shoulders stay put. Ring widths and depths and the Slim/Bulky factors stay tied to each ring, so all three builds get the raised chest.
@@ -15,11 +18,32 @@
 - Tris (686 body), vertex count, UVs and textures are unchanged. Compromise: the texture follows the verts, so the tee stretches about 1.45× between the waist and the bust and compresses above it, and the jacket pockets sit about 2–3 cm higher. It's plain fabric with no print, so it isn't visible at game resolution. The male is untouched.
 - Rebuilt `char_base.blend` and `assets/characters/base/char_base_f.glb` and re-rendered the female turnarounds, deform check, swap sheet and lineups. Before/after (original vs new): `art/characters/base/renders/chest_fix_before_after.jpg`. Not committed.
 
+## 2026-11-02 — Nathaniel: why the PC left home
+- Austin locked the PC's real reason for leaving the hometown crew: they felt weak. The PC believed they were the weak link holding the crew back and left rather than say it. The crew never saw it that way. Recorded in canon decision 13, `plot.md` §1 and §11. "PC backstory" is off the open-questions list (renumbered).
+- Why: it's forgivable, so the fun epilogue race still works. It's a misread like the Myth Drivers', and the race shows the crew wanted the PC all along. An earlier tie to the blown engine in the opening was dropped as a stretch.
+
 ## 2026-11-02 — World notes: overworld camera reference [art] (Arthur, Art Director)
 - Updated `design/art/world_notes.md` with the overworld camera, based on Racing Lagoon free roam at 16:30 (Austin's reference). It's a high overhead perspective view at roughly 50–65°, rotatable, and not a chase cam or true isometric. Also added what that means for art: rooftops and ground carry the look, no one-sided cut-outs, and a lighter overworld car LOD.
 
 ## 2026-11-02 — World notes: OSM-based overworld, turn-based pregenerated tracks [art] (Arthur, Art Director)
 - Added `design/art/world_notes.md`, which records Austin's direction. The overworld uses OSM road layouts only, with no real buildings, and is stylized and remixed into the fictional city per canon decision 6. Races are turn-based on pregenerated tracks (Racing Lagoon), which means a corner-segment kit per district. The isometric overworld camera is flagged as an open question. These are notes only; nothing is built.
+
+## 2026-11-02 — Nathaniel: PC's hometown crew and the epilogue race
+- Austin chose who the PC walked out on: their hometown crew. The PC was its driver and left the week of a big race for a job in the city without telling anyone, so the crew thinks the PC ditched them. The PC's real reason stays `<TBD>`. Recorded in canon decision 13, `plot.md` §1 and Player Arc.
+- Austin added an epilogue (new `plot.md` §11, canon timeline step 9, `pitch.md`). After Sabine's parting shot she asks "And when are you calling them?" (the proposal is now locked and off the list). The PC calls the crew with "I was wrong. Be there.", they come to Fushigi-Yama, and after an awkward apology they run a low-stakes race for fun. Barry owns its tuning.
+- Why: Austin pointed out that the PC has to make the call, so the crew showing up because of the influencer's clips was dropped. A rescue by luck wouldn't resolve the PC's arc. The fun race gives the game a light ending after the summit.
+- Open questions: PC backstory narrowed to the real reason for leaving; "And when are you calling them?" removed (renumbered); "Epilogue details" added at the bottom.
+
+## 2026-11-02 — Nathaniel: Sabine's parting shot locked
+- Austin picked Sabine's parting shot to the Myth Drivers: "My uncle's doing fine, by the way. Since none of you ever asked." It's in canon decision 5, `plot.md` §10, `pitch.md` and `characters/sabine.md`, and is off the open-questions list (renumbered).
+- Why: it's quiet rather than cruel, and it lands the third reason she won't rejoin (nobody acknowledged her uncle's heart attack, decision 23) without spelling it out.
+
+## 2026-11-02 — Barry: economy spec, promoter's betting side game
+- `design/07-economy-and-mods.md` §7.5 (new): a proposal for the high-stakes betting side game the Wangan promoter opens after Round 2 (story: `story/canon.md` decision 21, from Austin via Nathaniel). The PC bets on their own non-boss races, with odds set by the expected win chance minus a house edge so pattern-reading skill beats the line. Stakes are capped, an optional handicap raises the odds, the debt share applies if the debt is somehow still open, and winnings are spent at Reiko's wholesale prices. All values are `TBD`. Added a metric (#13) and an open question (#15). Nothing was run, per Austin's rule.
+
+## 2026-11-02 — Barry: economy spec, repair debt no longer takes all winnings
+- `design/07-economy-and-mods.md` §7: Austin ruled that not all winnings go to the repair debt. The strict rule (A) is ruled out, and the allowance rule (B) is now the baseline, with a share `DEBT_SHARE` (TBD, under 1.0) going to the debt from the Prologue on, so the PC can buy some parts before the debt clears and feels Reiko's discount right away. This overrides the "all winnings" wording in `story/canon.md:40`; Nathaniel owns the story text.
+- Wholesale timing confirmed by Austin: Reiko's discount unlocks after Round 1, matching the spec and `story/plot.md:98`.
 
 ## 2026-11-02 — GR Corolla: lean car (clay + detail pass), game .glb + Godot scene [art] (Arthur, Art Director)
 
@@ -82,6 +106,229 @@ Austin signed off the clay shape ("Honestly great. Let's just go for a detail pa
 - The mirrors still read a little boxy.
 - Headless Godot import of the repo needs the Blender importer disabled or a Blender path set, because of the `.blend` sources. This is not new and not specific to this car.
 - Corrected a claim from the clay README: the flat 20/30 mm clearance entries are the liner inner-wall offsets, not a probe radius.
+
+---
+
+## 2026-11-02 — Economy and mod parts: draft sim spec [design] (Barry, Chief of Systems)
+
+Draft only, waiting on Austin's success criteria and approval. Nothing was run or simulated. No code, constants or story files changed. Not committed or pushed.
+
+**New:**
+- `design/07-economy-and-mods.md`: the spec for the headless sim's economy and mod parts. It covers the money and repair-debt ledger, Reiko's wholesale discount, race payouts by encounter type and round, a shop and part catalog that plugs into the existing POW/EN/HAN, clash and QTE terms (additive only, never HP), slots and level floors, opponent parts, and a season runner (Prologue → Rounds 1–3, Touge → Wangan → Street). It also lists candidate metrics and open questions. Every value not already in the repo is a named `TBD` constant.
+
+**Reasoning:**
+- Austin asked for the economy to be architected from the existing docs before anything runs. Desmond's repair-debt questions (amount, which race clears it, wholesale size and the overlap) depend on it.
+- It collects what the story and design docs already say (with file:line citations) and lists 12 conflicts between them. The main ones: whether rep is tracked, doc vs code encounter ratios, slot counts, and the retry fee.
+- Key finding: opponents scale off the player's level (`cli.py:305`), so in the current model only parts change the player's strength relative to opponents. The pending encounter-scaling fix has to come before any debt or payout number.
+
+---
+
+## 2026-11-02 — Story: the family emergency was the uncle's heart attack [story] (Nathaniel, Narrative Lead)
+
+Lead approved. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` timeline step 2 and decision 23, `story/characters/sabine.md`: the call the night of the sweep was her uncle-dad having a heart attack. He survived; she spent about two weeks with him through surgery and recovery, out of contact, which is when the Myth Drivers decided she'd run. FIFO item removed and the rest renumbered.
+
+**Reasoning:**
+- The lead wanted it serious enough to keep her out of contact for a week or two, but not a tragedy. It also stings because the man she was caring for is the uncle #1 distrusted.
+
+---
+
+## 2026-11-02 — Story: city-wide sweep; Sabine left for a family emergency [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` timeline step 2, decision 5 and new decision 23, plus `story/plot.md` Round 1 Wangan: the sweep was a large, coordinated crackdown across all three districts in one night (benign, routine enforcement). Sabine left minutes before because her uncle called about an unrelated family emergency, and she was the only one of the old generation who walked away clean. Nobody ever acknowledged what she went through, which becomes a third reason she won't rejoin.
+- FIFO item "Police sweep details" narrowed to what the family emergency was.
+
+**Reasoning:**
+- The lead wanted the sweep bigger, touching every district. The unrelated call keeps it benign while giving the Myth Drivers (and later the PC) a damning-looking coincidence, and it gives Sabine's refusal an emotional core.
+
+---
+
+## 2026-11-02 — Story: rival chain dropped [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/plot.md` Rounds intro: removed the per-district rival chain (and changed "reputation gating" to "street cred gating" to match decision 12).
+- `story/pitch.md`: removed "recurring rivals" and "district rival encounters"; "rival encounters" and "rival progression" became crew rematches and crew progression.
+- `story/canon.md`: "Rivals" removed from the FIFO stack and the rest renumbered. Myth Driver #2's "Resentful rival" role label is unchanged (it describes his relationship, not a rival chain).
+
+**Reasoning:**
+- The crews (run from their kids up to their boss each round) already carry the progression, so a separate rival chain was redundant.
+
+---
+
+## 2026-11-02 — Story: Street crew boss is a cocksure influencer [story] (Nathaniel, Narrative Lead)
+
+Lead approved. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` new decision 22 and `story/plot.md` Street district: the Street crew boss is a young-ish, cocksure influencer who built his following after the old generation broke up and isn't really about the old scene. First pass: he idolized #3 and felt abandoned when #3 left to "go pro".
+
+**Reasoning:**
+- It fits Street's "cultural fracture" role and, as the lead put it, reflects how a lot of car enthusiasts are now, which contrasts with the old generation.
+
+---
+
+## 2026-11-02 — Story: the promoter is Sabine's old flame [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` decision 21, `story/plot.md` Wangan district, `story/characters/sabine.md`, `story/characters/myth_driver_2.md`: the Wangan crew boss (the smooth, flashy promoter) was privately involved with Sabine back in the old generation's day. That's the real reason she turned down #2's date. It stays private, only hinted at, until the summit, when #2 learns why she said no.
+
+**Reasoning:**
+- It sells #2's date rejection, and it hits hard because #2 is the Wangan Myth Driver: he and the promoter share the same highway.
+
+---
+
+## 2026-11-02 — Story: Wangan crew boss is a promoter; betting side game after Round 2 [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` new decision 21 and `story/plot.md` Wangan district: the Wangan crew boss is a promoter who organizes the runs, takes bets and gets a cut. He's pragmatic about Sabine (her walking away was bad for business). After Round 2 he unlocks a high-stakes betting side game for extra money; mechanics handed to Barry.
+
+**Reasoning:**
+- It fits Wangan's "pragmatic interpretation" role, sets up the Round 2 Wangan reveal about what her leaving cost the scene, and gives the lead's betting side game an in-world owner.
+
+---
+
+## 2026-11-02 — Story: Sabine never vanished; Touge boss respects her [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` (decision 2, the PC's hook, timeline step 3, new decision 20), `story/pitch.md`, `story/characters/sabine.md`, `story/plot.md` (Round 1–2 reveals, Mentor Arc, Player Arc): Sabine didn't vanish. She walked away from the old generation without a word and still drives and runs her garage, but keeps clear of every crew. New decision 20: most of the scene respects her and is puzzled, not bitter; suspicion comes from a few voices.
+- `story/plot.md` Round 1 Touge: the crew boss line (first pass) is now respectful and puzzled; the "something to hide" line moves to a crew kid, and the boss shuts it down.
+
+**Reasoning:**
+- The lead felt it was unrealistic for every character to be bitter toward Sabine. Planting the clue through gossip keeps the bad data without making everyone hostile.
+
+---
+
+## 2026-11-02 — Story: only a share of winnings goes to the debt [story] (Nathaniel, Narrative Lead)
+
+Lead corrected. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` decision 19 and `story/plot.md` §3 and §5 intro: a share of each win goes to the debt until it clears in Round 2, not all winnings. The PC keeps the rest, which they spend on parts once Reiko's wholesale opens after Round 1 (confirmed). The share size is Barry's TBD.
+
+**Reasoning:**
+- The lead pointed out that "all winnings to the debt" doesn't fit wholesale unlocking while the debt is still open.
+
+---
+
+## 2026-11-02 — Story: each round runs the whole crew, kids to old heads to boss [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` decision 11 and timeline step 5, `story/plot.md` (Districts, Rounds intro, the six Round 2–3 slots), `story/pitch.md`: still one crew and one crew boss per district. Each round the player runs through the whole crew in rank order (its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the boss). The next round, the boss has leveled up the whole crew. Flavor text after every race reveals a little more.
+- FIFO stack: "Crew escalation" dropped (answered by this); "Crews and crew bosses" now also covers each crew's kids, mature members and old heads.
+
+**Reasoning:**
+- The lead wanted the crews' ranks to mirror the contradicting clues (myth, then doubt, then people who were there). He pointed out that the boss wouldn't race the PC right after they'd only beaten the kids, so every round goes through the full crew. Alternatives considered and dropped in the same session: a new crew each round, a stand-in "boss", and spreading the ranks across rounds.
+
+---
+
+## 2026-11-02 — Story: debt scene drafted [story] (Nathaniel, Narrative Lead)
+
+Lead approved ("Keep it for now"). Not committed or pushed.
+
+**Changed:**
+- `story/scripts/prologue.md` §3: first-pass debt scene. Sabine fronted the rebuild, and the PC races under her garage with winnings going there first until they're even. Jesse and Reiko each give their own "translation". The invoice amount stays `<TBD: Barry>`.
+- `story/canon.md`: the debt-scene question removed from the FIFO stack and the rest renumbered.
+
+**Reasoning:**
+- It closes the prologue, matches canon decision 19, and keeps Jesse warm and Reiko guarded.
+
+---
+
+## 2026-11-02 — Story: no mod money until the debt clears; Reiko gives wholesale after Round 1 [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` decision 19: winnings all go to the debt until it's cleared in Round 2, so the PC can't really afford mods before then. After Round 1 Reiko warms up and gives the PC wholesale prices (revised from "after Round 2" so the PC has plenty of access to parts by Round 3); the debt still clears in Round 2. The discount size joins the debt amount as Barry's TBD.
+- `story/plot.md` §2 (Reiko), §4 and §5 intros: updated to match, with a `<TODO: scene>` for Reiko's wholesale moment at the end of Round 1.
+
+**Reasoning:**
+- It ties Reiko's warming-up arc to the economy and pays off her garage-intro line, "Wholesale is for crew. You're not crew."
+
+---
+
+## 2026-11-02 — Story: debt terms set, paid off in Round 2 [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md`: new decision 19. Sabine fronted the rebuild; the PC drives for her garage until it's even (winnings to the garage first, wins rebuild her garage's standing). The debt is settled during Round 2, and the PC stays afterward for the fun and the mystery. The amount is a systems number handed to Barry via Desmond. FIFO item #1 narrowed to the debt scene script.
+- `story/plot.md` §3 and §5 intro, `story/scripts/prologue.md` §3: updated to match.
+
+**Reasoning:**
+- The lead put the amount in Barry's court and wanted the debt to end mid-game so the PC's reason to stay shifts from obligation to fun and curiosity.
+
+---
+
+## 2026-11-02 — Story: garage intro script drafted; Jesse warm, Reiko guarded [story] (Nathaniel, Narrative Lead)
+
+Lead approved the direction ("I dig it"). Not committed or pushed.
+
+**Changed:**
+- `story/scripts/prologue.md` §2: garage intro completed. Reiko is cool toward the PC ("Wholesale is for crew. You're not crew." / "We'll see."); Jesse is warm and welcoming and jokes that Reiko took a year to learn his name. Ends on Sabine's "Which brings us to the bill." to hand off to §3 The Debt.
+- `story/plot.md` §2: one-line personalities added for Jesse and Reiko.
+- `story/canon.md`: the garage-intro question removed from the FIFO stack and the rest renumbered (debt terms are now #1).
+
+**Reasoning:**
+- The lead wanted Jesse a little warmer and Reiko someone who has to warm up to the PC, which gives her a small arc across the rounds.
+
+---
+
+## 2026-11-02 — Story: the Tuner is Jesse, the Buyer is Reiko [story] (Nathaniel, Narrative Lead)
+
+Lead decided. Not committed or pushed.
+
+**Changed:**
+- `story/plot.md` §2 and `story/scripts/prologue.md` §2: the Tuner's and Buyer's `<TODO: name>` placeholders replaced with "Jesse" and "Reiko".
+- `story/canon.md`: "Tuner's name" and "Buyer's name" removed from the top of the FIFO open-questions stack; the remaining items were renumbered (the rest of the garage intro script is now #1).
+
+**Reasoning:**
+- The lead picked "Jesse" as a nod to *The Fast and the Furious* and "Reiko" as a nod to *Tokyo Drift*.
+
+---
+
+## 2026-11-02 — Story: open questions cleaned into one FIFO stack [story] (Nathaniel, Narrative Lead)
+
+Lead asked. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` — "Open Questions" replaced by a numbered "Open Questions (FIFO — oldest first)" list: 26 one-line items, each with the date it first appeared (from git history and this log; ties broken by outline order) and where it lives. Pull from the top; new questions go to the bottom. Every open `<TODO>`/`<TBD>`/`<CHECK>`/`<PROPOSAL>` in `story/` maps to an item. The old bundled bullets were split (crews/escalation/reveals, Tuner/Buyer, the rift).
+- Decision 18 wording fixed for the locked race order: #1 (first race) says Sabine "left"; the contradiction surfaces at #2's race, when his hints say "pushed". Updated in canon decision 18, `plot.md` §7 (#1 and #2) and `characters/myth_driver_1.md` / `myth_driver_2.md`.
+
+**Dropped as stale:** the decision-18 "first contradiction" snag (fixed above). No other live markers referred to tricks at the summit, a public rumor, jealousy, nine bosses, the daylight commute or Act 2 Myth Driver races; those were already closed in earlier passes.
+
+**Reasoning:**
+- The lead wants one ordered stack to work through, oldest first, without stale questions.
+
+---
+
+## 2026-11-02 — Story: Myth Driver first sightings in Round 1 [story] (Nathaniel, Narrative Lead)
+
+Lead approved. Not committed or pushed.
+
+**Changed:**
+- `story/canon.md` — decision 11: each Myth Driver makes a first sighting right after his district's Round 1 crew is cleared (#1 Touge, #2 Wangan, #3 Street). The races stay in the Finale. A sighting never reveals the private accusation and doesn't mention the other Myth Drivers. Timeline step 5 updated.
+- `story/plot.md` — a "Myth Driver sighting" bullet in Round 1 Touge, Wangan and Street (`<TODO: sighting beat>`); §7 notes the races follow those sightings.
+- `story/characters/myth_driver_1/2/3.md` — "First sighting" line added.
+
+**Reasoning:**
+- The lead expected this from the outline. The original `plot_points.md` had a "Myth Driver encounter" in each district's Act 2 section, right after the district boss. It moved wholesale into the Finale when the rounds structure replaced it, so no early appearance was left. Sightings put each legend on screen early without spending the race or the reveal.
+- Follow-up (lead): at each sighting the Myth Driver talks with the PC (no race yet), building the mythos around the fallout and driving the PC to dig further, without revealing the accusation. The Finale race order is locked as Touge (#1) → Wangan (#2) → Street (#3), following the sightings, which closes the order TODO in `plot.md` §7. Updated canon decision 11, the `plot.md` sighting bullets and §7, and each `myth_driver_N.md`.
 
 ---
 

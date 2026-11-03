@@ -62,7 +62,7 @@ without relying on simulator driving execution.
 4. Earn money, parts, and reputation
 5. Upgrade and tune vehicle builds
 6. Increase standing across multiple racing scenes
-7. Unlock higher-tier race invitations and rival encounters
+7. Unlock higher-tier race invitations and crew rematches
 8. Discover Myth Drivers and hidden story events
 9. Revisit districts as reputation opens new opportunities
 
@@ -70,7 +70,7 @@ without relying on simulator driving execution.
 
 # Progression Structure
 
-Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Each round, the player faces all three in Touge, then Wangan, then Street; the crews get stronger every round, and the player earns the street cred for the next rematch by winning in the other districts. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
+Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Each round, the player faces all three in Touge, then Wangan, then Street; each round the player runs through a whole crew (its kids, mature members, old heads, then the boss) and the boss levels up the whole crew before the next round, and the player earns the street cred for the next rematch by winning in the other districts. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
 
 ---
 
@@ -128,8 +128,7 @@ The city is divided into 3 core racing districts (in-world names `<TBD>`):
 Each district contains:
 
 - crews and subcultures
-- one main crew and its crew boss, re-faced and stronger each round
-- recurring rivals
+- one main crew and its crew boss, each round run from its kids to its mature members to its old heads to the boss, and leveled up for the next round
 - race organizers
 - unique tactical identities and AI behavior patterns
 
@@ -287,14 +286,13 @@ A major police sweep years earlier fractured the old underground racing generati
 
 The sweep itself was benign and coincidental — there was no informant. The snitch story was a convenient cover each Myth Driver used, privately, for his own personal reason to push the mentor out.
 
-The accusation never spread. The old generation froze the mentor out quietly; the wider scene only knows she vanished without a word around the time of the sweep.
+The accusation never spread. The old generation froze the mentor out quietly; the wider scene only knows she walked away without a word around the time of the sweep. She's still around, but she keeps clear of every crew.
 
 The truth is never presented directly.
 
 Players gradually uncover fragmented and contradictory perspectives through:
 
 - crew member dialogue
-- district rival encounters
 - crew boss exposition
 - Myth Driver encounters
 - mentor interactions
@@ -324,7 +322,9 @@ At the summit:
 After the player’s apology, the mentor calmly declines, declaring she already found a new crew:
 the one formed around the player during the game. She also won’t go back to a group the Street specialist let her be pushed out of, rather than face telling her he was leaving.
 
-She then gets in one cutting parting shot: `<TODO: parting shot — Austin to approve>`
+She then gets in one cutting parting shot: "My uncle's doing fine, by the way. Since none of you ever asked." Then she turns it back on the player: "And when are you calling them?"
+
+In the epilogue, the player finally calls the hometown crew they walked out on, with the same honest message ("I was wrong. Be there."). They come to Fushigi-Yama, and after an awkward apology they settle it the only way they know: a low-stakes race, just for fun.
 
 ---
 
@@ -355,6 +355,6 @@ A racing RPG where:
 - progression is built through underground reputation networks
 - districts interconnect socially rather than linearly
 - cinematic street racing is fused with RPG combat structure
-- mystery and mythology unfold through rival progression and social perspective
+- mystery and mythology unfold through crew progression and social perspective
 
 
