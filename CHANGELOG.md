@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-02 — Economy spec: open questions are now a FIFO queue [design] (Barry, Chief of Systems)
+- `design/07-economy-and-mods.md` §11 now lists open questions oldest first, with dates, following the queue Nathaniel keeps in `story/canon.md`. Austin asked for the same blind FIFO here: he gets one question at a time from the top, and new questions go to the bottom.
+- The encounter-scaling fix (open since 2026-11-01) and the success criteria for the sim are now at the top of the queue. Arthur's body-kit and wing question was added at the bottom.
+- Removed as resolved: rep is lore only (Austin via Nathaniel), and mods may show on the car within the car rules (Arthur). The overlap question now starts from canon decision 19 (a share of each win goes to the debt) and lists Desmond's trickle-from-bonuses idea as an alternative. Question references in the spec were renumbered.
+- Logged Austin's progression plan in §11: Round 1 uses skill points only, Reiko's mods come from Round 2, and capped betting from Round 3 pays for pricier mods. This brings skill points into v1, so the "deferred" status in `design/05-skill-trees.md` is now out of date. The docs have no skill-to-win-rate equation; the closest thing is the damage ratio S in `sim/scripts/design_opponent.py`.
+
 ## 2026-11-02 — Skill parity: play-quality sweep and fitted win-rate equation [sim] (Barry, Chief of Systems)
 - Austin approved fitting a skill parity equation, with his feel target as the first success criterion: at stat parity you should only win if you play about 90% right (q50 ≈ 0.9).
 - **Engine changes (opt-in; defaults unchanged, all 25 tests pass):**

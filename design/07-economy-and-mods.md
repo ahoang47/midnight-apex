@@ -21,7 +21,7 @@
 **Out of scope:**
 - Godot/UI, the overworld, dialogue, and part visuals (those go to Arthur, see §11).
 - Skill trees. They are deferred (`design/05-skill-trees.md:3`, `design/godot-build-guide.md:1313`).
-- The Finale (Myth Driver races and the summit). **OPEN QUESTION Q14** asks whether money still matters there.
+- The Finale (Myth Driver races and the summit). **OPEN QUESTION Q15** asks whether money still matters there.
 - Tells and bluffs. Porting them to the sim is on hold by Austin's call.
 - Changing combat formulas. Mods plug into terms that already exist (§6.3).
 
@@ -90,17 +90,17 @@
 
 | # | Conflict | Sources | Effect on this spec |
 |---|---|---|---|
-| C1 | **Rep: tracked or not?** Boss stakes include "rep", and crew barks have Low/Medium reputation tiers, but canon says street cred "is an in-world lore explanation only, not a tracked stat" | `story/canon.md:56`, `story/barks.md:220-228`, `story/plot.md:94` vs `story/canon.md:31`, `story/plot.md:93` | The sim tracks no rep by default (Q3) |
+| C1 | **Rep: tracked or not?** Boss stakes include "rep", and crew barks have Low/Medium reputation tiers, but canon says street cred "is an in-world lore explanation only, not a tracked stat" | `story/canon.md:56`, `story/barks.md:220-228`, `story/plot.md:94` vs `story/canon.md:31`, `story/plot.md:93` | The sim tracks no rep by default (resolved: lore only) |
 | C2 | **Encounter ratios.** Docs say 0.35 / 0.75 / 1.15. Code says 0.75 / 1.1 / 1.2 | `design/04-difficulty-tuning.md:58-62`, `design/01-system-overview.md:99-103` vs `sim/velocity_shift/ai.py:17-21` | Code is what runs. Both are superseded by the pending fix |
 | C3 | **Opponent QTE.** Doc says `4.0 + level × 0.025`. Code and Godot say 7.0 × ratio | `design/04-difficulty-tuning.md:148` vs `sim/velocity_shift/ai.py:36`, `scripts/AIQTE.gd:3-24` | Same pending fix |
-| C4 | **Slot counts.** About 3 slots growing to 8–10, versus 5 slots plus 1 car-specific slot | `design/notes/mod_notes.md:36` vs `design/notes/Notes.md:38-39` | Q6 |
+| C4 | **Slot counts.** About 3 slots growing to 8–10, versus 5 slots plus 1 car-specific slot | `design/notes/mod_notes.md:36` vs `design/notes/Notes.md:38-39` | Q7 |
 | C5 | **Stat ratio.** mod_notes says the ratio is fixed from L1 with "no convergence". Code and 04 say stats start 33/33/33 and converge to the target | `design/notes/mod_notes.md:19-21` vs `sim/velocity_shift/cars.py:13-29`, `design/04-difficulty-tuning.md:20-23` | The spec follows the code |
 | C6 | **Archetype count.** mod_notes says "2–3 archetypes". The code has 5. 04 refers to "6 personalities" | `design/notes/mod_notes.md:5`, `design/04-difficulty-tuning.md:117`, `:141-145` vs `sim/velocity_shift/ai.py:278-284` | The spec uses 5 |
 | C7 | **Pink slips / roguelite.** Notes.md has a "Pink Slip Races" heading, but canon and barks rule pink slips out | `design/notes/Notes.md:8` vs `story/canon.md:56`, `story/barks.md:336-342` | No pink slips |
-| C8 | **Retry cost.** mod_notes has an optional entry fee per retry, and Sabine says "Then you owe me longer". Canon only says "retry" | `design/notes/mod_notes.md:32`, `story/scripts/prologue.md:92-93` vs `story/canon.md:56` | Q8 |
-| C9 | **Farming.** Wild races are auto-generated (endless), yet "no random drops, no farming" | `design/notes/Notes.md:20` vs `design/notes/mod_notes.md:73` | Q7 |
+| C8 | **Retry cost.** mod_notes has an optional entry fee per retry, and Sabine says "Then you owe me longer". Canon only says "retry" | `design/notes/mod_notes.md:32`, `story/scripts/prologue.md:92-93` vs `story/canon.md:56` | Q9 |
+| C9 | **Farming.** Wild races are auto-generated (endless), yet "no random drops, no farming" | `design/notes/Notes.md:20` vs `design/notes/mod_notes.md:73` | Q8 |
 | C10 | **Constants location.** The rule says all constants live in equations.py, but encounter tables and turn limits live in ai.py and cli.py | `design/01-system-overview.md:133` vs `sim/velocity_shift/ai.py:17-34`, `sim/velocity_shift/cli.py:28-32` | The new economy constants follow the rule (§9.2) |
-| C11 | **Is money all or "first"?** Canon says winnings go "to the garage first" and also "all go to repaying it". Plot says "little money for mods" | `story/canon.md:40`, `story/plot.md:121` | The default reads it as 100%. Q2 |
+| C11 | **Is money all or "first"?** Canon says winnings go "to the garage first" and also "all go to repaying it". Plot says "little money for mods" | `story/canon.md:40`, `story/plot.md:121` | The default reads it as 100%. Q4 |
 | C12 | **Parts as rewards.** Pitch says "Earn money, parts". mod_notes says parts are shop-only with no drops | `story/pitch.md:62` vs `design/notes/mod_notes.md:42`, `:73` | Boss wins add stock to the shop and never hand out parts |
 
 ---
@@ -111,10 +111,10 @@
 |---|---|---|
 | **Money** (in-world currency name is TBD: `story/canon.md:19`, `:78`) | Exists in docs, not in code | One integer wallet. Everything in the sim is priced in it |
 | **Repair debt** | Story canon (`story/canon.md:40`) | A ledger separate from the wallet: `DEBT_AMOUNT`, paid down by winnings (§7) |
-| **Car level** | Exists in code (`models.py:54`) | Drives stats, HP, slot unlocks and part level floors. *How it grows is not defined anywhere* (Q4) |
+| **Car level** | Exists in code (`models.py:54`) | Drives stats, HP, slot unlocks and part level floors. *How it grows is not defined anywhere* (Q5) |
 | **Reiko standing** | Story (`story/plot.md:98`) | A boolean `wholesale_unlocked`, set by a story event, not a meter |
-| **Rep / street cred** | Conflicting (C1) | **PROPOSAL:** not tracked in v1. If Austin wants it, the sim adds a counter that gates crew races (Q3) |
-| **DAQ data** (Jesse) | Story flavor (`prologue.md:72`) | **PROPOSAL:** the in-world reason the car levels up. "More races, more data, better car" maps onto XP (Q4) |
+| **Rep / street cred** | Conflicting (C1) | **PROPOSAL:** not tracked in v1. If Austin wants it, the sim adds a counter that gates crew races (resolved: lore only) |
+| **DAQ data** (Jesse) | Story flavor (`prologue.md:72`) | **PROPOSAL:** the in-world reason the car levels up. "More races, more data, better car" maps onto XP (Q5) |
 
 ---
 
@@ -126,10 +126,10 @@ The sim has 3 encounter types (`ai.py:17-34`). The story has random racers, crew
 
 | Story | Sim type | Per district per round |
 |---|---|---|
-| Random racer (any of the district's 5 racer types) | `wild` | `WILD_RACES_PER_DISTRICT = TBD` (optional, capped, see Q7) |
+| Random racer (any of the district's 5 racer types) | `wild` | `WILD_RACES_PER_DISTRICT = TBD` (optional, capped, see Q8) |
 | Crew member / rival chain | `lieutenant` | `CREW_RACES_PER_DISTRICT = TBD` (required before the boss) |
 | Crew boss | `boss` | 1 (required, retried until won) |
-| Sabine (Prologue) | **OPEN QUESTION Q13** | 1, scripted loss (blowout, `canon.md:63`) |
+| Sabine (Prologue) | **OPEN QUESTION Q14** | 1, scripted loss (blowout, `canon.md:63`) |
 
 The opponent's archetype comes from the district's racer-type table (`canon.md:48-54`). The boss's archetype is TBD per crew (crews are TBD in `canon.md:75`).
 
@@ -148,19 +148,19 @@ payout = LOSS_PAYOUT_FRACTION × (the above)                                    
 
 | Constant | Value | Tune against |
 |---|---|---|
-| `BASE_PAYOUT_WILD` | TBD ("Small", `mod_notes.md:55`) | Must be too small to make farming worthwhile (Q7) |
+| `BASE_PAYOUT_WILD` | TBD ("Small", `mod_notes.md:55`) | Must be too small to make farming worthwhile (Q8) |
 | `BASE_PAYOUT_CREW` | TBD ("Moderate", `mod_notes.md:56`) | Main steady income |
 | `BASE_PAYOUT_BOSS` | TBD ("Large" / "Big cash payout", `mod_notes.md:57`, `barks.md:337`) | The race that clears the debt (§7.4) |
 | `ROUND_PAYOUT_MULT[1..3]` | TBD | Should track part prices per tier |
 | `DISTRICT_PAYOUT_MULT[touge, wangan, street]` | TBD, default 1.0 | Only if districts should differ |
 | `LOSS_PAYOUT_FRACTION` | TBD, default 0 | Nothing in the docs pays for a loss |
-| `RETRY_ENTRY_FEE[encounter]` | TBD, default 0 | mod_notes.md:32 "optional". See Q8 |
+| `RETRY_ENTRY_FEE[encounter]` | TBD, default 0 | mod_notes.md:32 "optional". See Q9 |
 
 ### 5.2 Boss rewards
 On a boss win: `BASE_PAYOUT_BOSS` cash, plus that boss's rare parts added to the shop (`mod_notes.md:48`, `:57`), plus story progress (the next district or round unlocks). The parts themselves are never given away (C12).
 
 ### 5.3 Other income
-None in the docs. **OPEN QUESTION Q9:** side jobs or garage work for Sabine?
+None in the docs. **OPEN QUESTION Q10:** side jobs or garage work for Sabine?
 
 ---
 
@@ -170,10 +170,10 @@ None in the docs. **OPEN QUESTION Q9:** side jobs or garage work for Sabine?
 - Parts are bought only in the shop, with money (`mod_notes.md:40-42`).
 - Each part has a level floor (`mod_notes.md:43`, `Notes.md:11`).
 - Boss wins add rare stock to the shop (`mod_notes.md:48`).
-- Swapping parts between races is free (`mod_notes.md:38`). Selling parts back is not mentioned anywhere (Q10).
+- Swapping parts between races is free (`mod_notes.md:38`). Selling parts back is not mentioned anywhere (Q11).
 
 ### 6.2 Slots
-**PROPOSAL** (resolves C4 as a constant, Q6): `SLOT_UNLOCK_LEVELS = TBD` (a list of car levels). `BASE_SLOTS = TBD` (3 per mod_notes or 5 per Notes). Plus 1 fixed car-specific slot (`Notes.md:39`), which the sim could fill with Jesse's DAQ as a starter part (story flag for Nathaniel).
+**PROPOSAL** (resolves C4 as a constant, Q7): `SLOT_UNLOCK_LEVELS = TBD` (a list of car levels). `BASE_SLOTS = TBD` (3 per mod_notes or 5 per Notes). Plus 1 fixed car-specific slot (`Notes.md:39`), which the sim could fill with Jesse's DAQ as a starter part (story flag for Nathaniel).
 
 ### 6.3 What a part can touch in the existing model
 Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). None touches HP (`05-skill-trees.md:53`).
@@ -186,7 +186,7 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 | Unique: clash | `+Δ` on CLASH_STAKES for certain clashes (e.g. "first clash each turn auto-wins", `mod_notes.md:46`) | `clash_mult` (`equations.py:38-45`). Needs a new hook |
 | Unique: QTE | `+Δ` to the QTE score or to mitigation floor terms (e.g. "QTE window +20% but max clash stakes reduced", `mod_notes.md:46`) | QTE pipeline (`match.py:130-136`). Needs a hook |
 
-**PROPOSAL, how stat parts apply:** `final_stat = build_stats(arch, level) + Σ part flat bonuses`. **OPEN QUESTION Q5:** should bonuses be flat or scale with level? Flat bonuses fade in value as levels rise, which the level floors and tiers would offset. Stat parts also shift the deck mix (`deck.py:29-44`), which is a feature, but it needs to be reported.
+**PROPOSAL, how stat parts apply:** `final_stat = build_stats(arch, level) + Σ part flat bonuses`. **OPEN QUESTION Q6:** should bonuses be flat or scale with level? Flat bonuses fade in value as levels rise, which the level floors and tiers would offset. Stat parts also shift the deck mix (`deck.py:29-44`), which is a feature, but it needs to be reported.
 
 **Phasing PROPOSAL:** v1 of the sim has stat parts only. Unique-effect parts come in v2, once the hooks are specified separately.
 
@@ -200,7 +200,7 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 | `TIER_UNLOCK[tier]` | TBD: round start / boss defeated / wholesale | Shop gating |
 | `RARE_PART_SOURCE[boss_id]` | TBD | Which boss adds which rare parts |
 
-The catalog itself (individual parts) lives in a data file (§9.2). **No part list is invented here.** It is authored after Q5/Q6 are answered.
+The catalog itself (individual parts) lives in a data file (§9.2). **No part list is invented here.** It is authored after Q6/Q7 are answered.
 
 ### 6.5 Opponent parts
 Opponents carry archetype-matched parts (`mod_notes.md:61`). **PROPOSAL:** `OPPONENT_PART_TIER[round][encounter] = TBD`. Because each round brings new crew members (`canon.md:26`), each round's crew can have its own level and part tier. The boss is the same person, but gets a stronger build each round (§8).
@@ -211,10 +211,10 @@ Opponents carry archetype-matched parts (`mod_notes.md:61`). **PROPOSAL:** `OPPO
 
 ### 7.1 Rules (from canon)
 - The debt starts at `DEBT_AMOUNT = TBD` after the Prologue (`canon.md:25`, `prologue.md:89`).
-- While the debt is open, a share of each win goes to the debt and the rest to the wallet: `DEBT_SHARE = TBD` (< 1.0). Austin ruled on 2026-11-02 that not all winnings go to the debt, which overrides the "all winnings" wording in `canon.md:40` (C11, Q2).
+- While the debt is open, a share of each win goes to the debt and the rest to the wallet: `DEBT_SHARE = TBD` (< 1.0). Austin ruled on 2026-11-02 that not all winnings go to the debt, which overrides the "all winnings" wording in `canon.md:40` (C11, Q4).
 - It must clear **during Round 2** (`canon.md:40`, `plot.md:121`).
 - Wholesale unlocks **at the end of Round 1** (`plot.md:98`): `WHOLESALE_DISCOUNT = TBD` (a fraction off part prices).
-- Losing doesn't add debt. It only delays payment ("owe me longer", `prologue.md:93`), unless the retry fee (Q8) is charged against the debt.
+- Losing doesn't add debt. It only delays payment ("owe me longer", `prologue.md:93`), unless the retry fee (Q9) is charged against the debt.
 
 ### 7.2 Timeline
 | Phase | Debt | Wholesale | Can buy? |
@@ -249,13 +249,13 @@ Story: the Wangan crew boss is a race promoter who opens a high-stakes betting s
 - **Risk:** a loss forfeits the whole stake. Boss races are excluded so a story retry can't be bet on and replayed.
 - **Debt share:** by canon, the debt clears during Round 2, before betting unlocks, so normally they never overlap. If a player reaches Round 3 with debt still open, `DEBT_SHARE` applies to net bet winnings the same way it applies to purses, so betting can't be used to dodge the debt.
 - **Reiko's discount:** no direct link. Bet winnings go to the wallet and are spent at the wholesale prices that unlocked after Round 1, which makes betting the main way to buy top-tier parts in Round 3.
-- **Farming guard:** betting is allowed only on races that pay a purse (and on capped wild races if Q7 caps them), so the game can't be farmed with endless low-risk bets.
+- **Farming guard:** betting is allowed only on races that pay a purse (and on capped wild races if Q8 caps them), so the game can't be farmed with endless low-risk bets.
 - **Sim side:** `shop_policy.py` gets a betting policy (never, flat stake, or a fraction of the wallet scaled by `p_line`), so the season run can compare income with and without betting.
 
 ## 8. Progression curve
 
 - **Key finding from the code:** opponent level is `round(player level × ratio)` (`cli.py:305`) and opponent QTE is fixed per encounter (`ai.py:292-308`). Raising the player's level therefore barely changes win rates, because opponents scale with the player. **Under the current model, parts are the only thing that moves the player relative to opponents**, and "crews get stronger every round" (`canon.md:26`) has nothing behind it.
-- **PROPOSAL:** in season mode, opponent level and parts come from a table, `OPPONENT_LEVEL[round][district][encounter] = TBD` and `OPPONENT_PART_TIER`, instead of from the player's level. The player's car level grows through `XP_PER_RACE[encounter] = TBD` (Jesse's DAQ, Q4). The pending encounter-scaling fix (`CHANGELOG.md:312`) should be designed for this mode.
+- **PROPOSAL:** in season mode, opponent level and parts come from a table, `OPPONENT_LEVEL[round][district][encounter] = TBD` and `OPPONENT_PART_TIER`, instead of from the player's level. The player's car level grows through `XP_PER_RACE[encounter] = TBD` (Jesse's DAQ, Q5). The pending encounter-scaling fix (`CHANGELOG.md:312`) should be designed for this mode.
 - **No-mods check (Desmond's ask):** under option A, the player has **no parts** in Round 1 and early Round 2, so those races must be winnable on stock stats plus levels alone. The team reports current win rates of about 100% for wild races and about 0–0.6% for lieutenant/boss races. **I have not verified that here, because nothing may run**. If it holds, the no-mods early game fails at crew and boss races until the scaling fix lands. **Flag: blocker for picking a debt number.**
 - Intended curve (**PROPOSAL**, targets come from Austin): win-rate bands per round and encounter type, with and without parts. The gap between "with parts" and "no parts" is how much parts matter.
 
@@ -300,7 +300,7 @@ season.json ──► campaign.py ──► for each race:
 
 ### 9.5 Test plan outline
 - `parts`: level floors enforced, slot limits enforced, trade-offs applied, HP unchanged, bonuses additive.
-- `economy`: the debt never goes negative, overpayment flows to the wallet, wholesale applies only after the flag, nothing can be bought while the debt is open under rule A, retry fee follows Q8.
+- `economy`: the debt never goes negative, overpayment flows to the wallet, wholesale applies only after the flag, nothing can be bought while the debt is open under rule A, retry fee follows Q9.
 - `campaign`: deterministic with a fixed seed, district order is Touge → Wangan → Street, a boss loss always retries, the season always terminates (retry cap as a safety stop).
 - Regression: with no parts and no economy, single-match results match today's `SimulationRunner`.
 
@@ -324,26 +324,33 @@ season.json ──► campaign.py ──► for each race:
 
 ---
 
-## 11. Open questions
+## 11. Open questions (FIFO — oldest first)
 
-**For Austin (via Desmond):**
-1. **Which Round 2 race should clear the debt?** For example, after the Round 2 Wangan boss.
-2. **Overlap rule:** Austin ruled out A (not all winnings go to the debt). Still open: the size of `DEBT_SHARE`, and whether C (boss money is free) or D (Reiko cuts the bill) layer on top of B.
-3. **Rep:** tracked stat or lore only? (C1)
-4. **How does the car level up?** XP per race, fixed levels per round, or Jesse's DAQ? Nothing exists today.
-5. **Part bonuses:** flat or scaled with level?
-6. **Slots:** about 3 growing to 8–10, or 5 plus 1 car-specific? (C4)
-7. **Wild races:** capped per district, low-paying, or uncapped? (C9)
-8. **Losing:** is there a retry fee, and does it add to the debt? (C8)
-9. Any income besides races?
-10. Can parts be sold back?
-11. Should crews getting stronger come from opponent levels, opponent parts, or both (§8)?
-12. Can the PC switch cars or archetypes, or is it one car for the whole game (`mod_notes.md:70`)?
-13. Is the Prologue race with Sabine simulated (scripted loss) or skipped?
-14. Does money matter in the Finale?
-15. **Betting (§7.5):** own races only? Handicap bets in or out of v1? Which beat unlocks it, the Round 2 Wangan boss win or the end of Round 2?
+Pull from the top, one at a time; new questions go to the bottom. Remove a question once Austin answers it and record the answer in the section it affects.
+
+1. (2026-11-01) **Encounter-scaling fix:** approve a proposal before any debt or payout numbers are set (§8)? Right now leveling barely moves win rates.
+2. (2026-11-02) **Success criteria** for the economy and mods sim. Nothing runs until these arrive and this spec is approved.
+3. (2026-11-02) **Which Round 2 race clears the debt?** For example, the Round 2 Wangan boss.
+4. (2026-11-02) **Overlap add-ons:** a share of each win goes to the debt (canon decision 19). Do C (boss money is free) or D (Reiko cuts the bill) layer on top? Desmond's alternative: purses go fully to the debt and bonus payouts trickle to the PC.
+5. (2026-11-02) **How does the car level up?** XP per race, fixed levels per round, or Jesse's DAQ? Nothing exists today.
+6. (2026-11-02) **Part bonuses:** flat or scaled with level?
+7. (2026-11-02) **Slots:** about 3 growing to 8–10, or 5 plus 1 car-specific? (C4)
+8. (2026-11-02) **Wild races:** capped per district, low-paying, or uncapped? (C9)
+9. (2026-11-02) **Losing:** is there a retry fee, and does it add to the debt? (C8)
+10. (2026-11-02) Any income besides races?
+11. (2026-11-02) Can parts be sold back?
+12. (2026-11-02) Should crews getting stronger come from opponent levels, opponent parts, or both (§8)?
+13. (2026-11-02) Can the PC switch cars or archetypes, or is it one car for the whole game (`mod_notes.md:70`)?
+14. (2026-11-02) Is the Prologue race with Sabine simulated (scripted loss) or skipped?
+15. (2026-11-02) Does money matter in the Finale?
+16. (2026-11-02) **Betting (§7.5):** own races only, and handicap bets in or out of v1? Unlock is end of Round 2 by default; Nathaniel is checking whether it should be the Round 2 Wangan boss win.
+17. (2026-11-02) **Body kits and wings:** Arthur says each needs a full alternate body mesh per car. In or out? Texture swaps and stance are cheap and already possible.
+
+Austin's progression plan (2026-11-02): Round 1 uses skill points only. From Round 2, Reiko is unlocked and the PC can buy mods. From Round 3, betting (with capped bets) pays for more expensive mods. This brings skill points into v1, which overrides "No skill trees in v1" (`design/godot-build-guide.md:1313`, `design/05-skill-trees.md:3`). Still to define: where points come from, how much a point is worth, and whether you can respec.
+
+Resolved: rep is lore only, with no tracked number (Austin via Nathaniel, 2026-11-02). Mods may show on the car within the car rules (Arthur, 2026-11-02).
 
 **Flags:**
-- **Desmond / Nathaniel (story):** the overlap rule (Q2) and option D are story changes. Rep is in conflict (Q3). Jesse's DAQ as the leveling reason, and as the fixed car-specific slot (Q4). The currency name is still TBD.
+- **Desmond / Nathaniel (story):** the overlap rule (Q4) and option D are story changes. Jesse's DAQ as the leveling reason, and as the fixed car-specific slot (Q5). The currency name is still TBD.
 - **Arthur (art):** `Notes.md:40` says perma mods change the car's look. Part categories (§6.3) will need visual variants if that holds. No art work is requested until the categories are approved.
 - **Blocker:** the encounter-scaling fix comes before any debt or payout numbers (§8).
