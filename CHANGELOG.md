@@ -8,11 +8,36 @@
 
 ---
 
-## 2026-11-02 — Economy spec: open questions are now a FIFO queue [design] (Barry, Chief of Systems)
-- `design/07-economy-and-mods.md` §11 now lists open questions oldest first, with dates, following the queue Nathaniel keeps in `story/canon.md`. Austin asked for the same blind FIFO here: he gets one question at a time from the top, and new questions go to the bottom.
-- The encounter-scaling fix (open since 2026-11-01) and the success criteria for the sim are now at the top of the queue. Arthur's body-kit and wing question was added at the bottom.
-- Removed as resolved: rep is lore only (Austin via Nathaniel), and mods may show on the car within the car rules (Arthur). The overlap question now starts from canon decision 19 (a share of each win goes to the debt) and lists Desmond's trickle-from-bonuses idea as an alternative. Question references in the spec were renumbered.
-- Logged Austin's progression plan in §11: Round 1 uses skill points only, Reiko's mods come from Round 2, and capped betting from Round 3 pays for pricier mods. This brings skill points into v1, so the "deferred" status in `design/05-skill-trees.md` is now out of date. The docs have no skill-to-win-rate equation; the closest thing is the damage ratio S in `sim/scripts/design_opponent.py`.
+## 2026-11-02 — Nathaniel: add the reverse-speakeasy barkeep; Jesse and Reiko aren't Sabine's employees
+- Austin added a new character, the owner and barkeep of a "reverse speakeasy," a bar that hides a secret wind tunnel. Reiko sells her parts there and Jesse tunes cars there. He's friendly with Sabine, doesn't care for the drama, and is just in it for the cars, like Jesse and Reiko. The wind tunnel runs on illegally snaked (stolen) power. Austin first made the bar the crew's hangout, then reversed it: the main hangout stays Sabine's garage, so the prologue garage intro stands. Canon decision 24, new sheet `characters/barkeep.md` (mechanical fields `<TODO: Barry via Desmond>`), and an entry in `characters/index.md`.
+- Sabine doesn't employ Jesse or Reiko. She isn't part of the scene, and they just hang out with her. `plot.md` §2 Garage Intro now says so. The bar's name, location and barkeep name are on hold as detail work (`<TODO>`).
+- Open questions added at the bottom before Substories: the bar's name and location, and when the PC first visits it (renumbered).
+- Not rewritten, flagged for Austin: the garage-intro script (`scripts/prologue.md`, where Jesse slides out from under a car in Sabine's garage and promises to fix the wreck), the rebuild debt (canon 19), Reiko's wholesale scene, "Sabine introduces her crew," and where the Round 2 Jesse beat takes place.
+
+## 2026-11-02 — Nathaniel: climax restructure, the PC races for the truth and the apology party
+- Austin locked a new climax. The wrongful accusation at the end of Round 3 stays ("Get out of my garage."). Because the PC knows they messed up, they race all three Myth Drivers in the Finale to find the truth, and the contradictions in their accounts unravel the snitch story. The PC goes to Sabine with "I know what really happened," and she blows up at them for digging into her past. The PC leaves, then convinces all three Myth Drivers to come and apologize too: "one big apology party." The climax is a final race between the PC and Sabine at the Fushigi-Yama summit. How the PC gets her there, and whether the apologies come before, during or after the race, are `<TODO>`. The ending, the parting shot, "And when are you calling them?" and the epilogue are unchanged.
+- Changed: canon decisions 4, 5, 15, 16 (plus the cross-references in 17 and 18), the Backstory Timeline (new step 7 "The blowup"; steps renumbered to 10), `plot.md` Mentor Confrontation, the FINALE intro, §7–§10 and the Mentor and Player Arc bullets, `pitch.md` climax, and the Resolution lines in `characters/sabine.md` and `myth_driver_1/2/3.md`. The PC now learns the truth during the Finale races, but Sabine still learns the real reasons only at the summit, from the Myth Drivers. "I was wrong. Be there." is gone from the summit and now appears only in the epilogue, sent to the hometown crew.
+- Removed the "Myth Drivers each catch wind and come on their own out of guilt" version. The open question about how word reaches them is answered (the PC convinces them) and is off the list. Added questions for how the PC gets Sabine to the race, the timing of the apologies, and how each Myth Driver's real reason comes out in the races. Substories stays last (renumbered).
+- Why: Austin felt the story had drifted from his original spine, the PC reconciling Sabine and her old crew, with Sabine angry he even tried, leading to a final race. A variant with no accusation was considered and dropped. The accusation stays because it's the PC's reason to race for the truth.
+
+## 2026-11-02 — Nathaniel: the PC's missed call and backstory beats
+- `story/plot.md` §5 Round 2 Touge: Austin locked it. As the racer says he texted Sabine for weeks and never heard back, the PC's phone buzzes with a hometown number and the PC lets it ring out. Nobody comments.
+- Why: Austin pointed out that Sabine's "And when are you calling them?" has no weight if the PC's past only comes out at the end. The PC's story has to build alongside Sabine's ("same same but different energy"). The other beats (the Prologue dodge, the Round 2 "Had one. Left.", the Round 3 slip, the full telling at the summit) are first passes added to the open questions. The PC's apology moved to the bottom of the list because it depends on those beats (renumbered).
+
+## 2026-11-02 — Nathaniel: Sabine's reaction to the accusation
+- Austin locked it: Sabine doesn't defend herself. She's been accused of this once already and doesn't want to waste the energy again, so it reads as tired, not proud. After a long silence she says "Get out of my garage." It's in canon decision 15 and timeline step 5, `plot.md` Mentor Confrontation and `pitch.md`. Jesse and Reiko staying quiet in the background is left as a `<PROPOSAL>`. The question is off the list (renumbered).
+- Why: it fits someone who never explained herself to the Myth Drivers either, and it keeps the uncle's heart attack hidden until the summit.
+
+## 2026-11-02 — Nathaniel: Round 2 Wangan reveal
+- `story/plot.md` §5: Austin rewrote Round 2 Wangan. Most people came to the Wangan runs for Sabine, so when she walked away, the betting went down. The bets recovered because the promoter is an excellent businessman, but it was never quite the same. The light personal losses from the sweep stay. The `<CHECK>` is cleared and the question is off the list (renumbered).
+- Why: it makes her cost to the scene concrete and ties it to the promoter's betting world (canon 21) without opening a new thread.
+
+## 2026-11-02 — Nathaniel: how #1 and #3 knew about #2's date
+- Austin locked this: Sabine never told anyone. #2 vented to #1 and #3 himself, they teased him for weeks, and he convinced himself the jokes started with her. At the summit he throws it at her ("You told everyone I asked you out."), and #1 or #3 answers, "Man, *you* told us." It's in canon timeline step 1, `plot.md` §9, `characters/myth_driver_2.md` and `characters/sabine.md`. The `<CHECK>` flags are cleared and the question is off the list (renumbered).
+- Why: it closes the gap in how they knew without anyone breaking Sabine's privacy. It's the same misread as the rest of the story, since #2 blames her for something he did, and it gives the summit a beat where his grudge falls apart before the old-flame truth lands.
+
+## 2026-11-02 — Nathaniel: two reveal lines cut
+- `story/plot.md`: Austin cut "ask her uncle lol" from the Round 2 Street group chat because it was too on the nose, and cut the old head's "couple weeks" line from Round 3 Touge. The missing two weeks now come up only through the Round 2 Touge texts. "Reveal checks" is off the open-questions list. Substories moved to the bottom at Austin's request ("save those for the end") (renumbered).
 
 ## 2026-11-02 — Skill parity: play-quality sweep and fitted win-rate equation [sim] (Barry, Chief of Systems)
 - Austin approved fitting a skill parity equation, with his feel target as the first success criterion: at stat parity you should only win if you play about 90% right (q50 ≈ 0.9).
@@ -27,6 +52,18 @@
   - Today's double-scaled ratios give Boss a q50 of about 0.82 and make Wild unlosable.
 - **No game constant was changed;** the lever results are proposals for Austin. Skill points (now in v1) are expressed as a shift in the stat ratio r.
 - Committed on Austin's go-ahead: only the write-up, `design/08-skill-parity.md`. The engine changes and `sim/scripts/parity_sweep.py` stay local for now, so the doc's pointers to them land with a later push.
+
+## 2026-11-02 — Nathaniel: the missing crew reveals filled in
+- `story/plot.md` §4–6: Austin approved the full reveal set after a read-through. Round 1 Street has the clip of Sabine leaving right before the sweep and #3 as "the one who went pro." Round 2 Touge has the unanswered texts. Round 2 Street has the group-chat theories and the influencer's interview offer ("Clean people talk"). Round 3 Touge has the old head who saw her on the phone. Round 3 Wangan has the promoter's "She had her reasons. Not my place." Round 3 Street gets the final straw: "I did sixty days. Lost my car. She didn't even get a ticket."
+- The sweep's cost builds lightly, through plain facts in Round 1 Wangan, personal losses in Round 2 Wangan and occasional crew flavor text, so "sixty days" lands. Austin picked this over a heavier version that would have given someone in every district a sweep injury, because it's less on the nose.
+- Rejected and why: the detective-uncle line in Round 2 Touge was too on the nose. The promoter's betting books were a throwaway that raises a question the story never answers. For Round 3 Street, a farewell party didn't fit canon (#3 never went pro), a deleted video would be hard to animate, and "she always knew when to leave" felt contrived.
+- Still flagged `<CHECK>`: "ask her uncle lol," and whether to keep or cut the "couple weeks" echo in Round 3 Touge. Open questions: "Missing story reveals" removed; "Clues" became "Reveal checks"; the Round 2 rewrite check is narrowed to Wangan (renumbered).
+
+## 2026-11-02 — Economy spec: open questions are now a FIFO queue [design] (Barry, Chief of Systems)
+- `design/07-economy-and-mods.md` §11 now lists open questions oldest first, with dates, following the queue Nathaniel keeps in `story/canon.md`. Austin asked for the same blind FIFO here: he gets one question at a time from the top, and new questions go to the bottom.
+- The encounter-scaling fix (open since 2026-11-01) and the success criteria for the sim are now at the top of the queue. Arthur's body-kit and wing question was added at the bottom.
+- Removed as resolved: rep is lore only (Austin via Nathaniel), and mods may show on the car within the car rules (Arthur). The overlap question now starts from canon decision 19 (a share of each win goes to the debt) and lists Desmond's trickle-from-bonuses idea as an alternative. Question references in the spec were renumbered.
+- Logged Austin's progression plan in §11: Round 1 uses skill points only, Reiko's mods come from Round 2, and capped betting from Round 3 pays for pricier mods. This brings skill points into v1, so the "deferred" status in `design/05-skill-trees.md` is now out of date. The docs have no skill-to-win-rate equation; the closest thing is the damage ratio S in `sim/scripts/design_opponent.py`.
 
 ## 2026-11-02 — Logo: approved one-line wordmark [art] (Arthur, Art Director)
 - Austin approved round-3 V3, now in `art/logo/`. It's a black-and-white one-line wordmark: solid MIDNIGHT with the chicane M, flares on the left, a heavily extruded APEX whose A traces an out-in-out racing line (kerb at the apex), and katakana underneath. He rejected round 1 as too soft and rounded, so everything is hard-edged. He picked W2's one-line layout, S1's APEX and H1's flares from round 2, in black and white.

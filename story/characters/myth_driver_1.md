@@ -8,7 +8,7 @@
 - **Conflict:** Sabine's connection to law enforcement (through her uncle) made him unable to trust her, despite her individual merit. He was instrumental in the decision to oust her, using the private snitch accusation from the police sweep as cover.
 - **First sighting:** after the PC clears Round 1 Touge. He talks with the PC (no race yet), building the mythos around the fallout and pushing the PC to dig further, without revealing the private accusation `<TODO: sighting beat>`.
 - **Finale race (first pass):** Insists Sabine left on her own the night of the sweep. His race comes first; the clash only surfaces at #2's race, when #2's hints say she was pushed — the first time two Myth Driver accounts can't both be true.
-- **Resolution:** The truth comes out at the summit of Fushigi-Yama; they reconcile but she ultimately leaves with her own crew.
+- **Resolution:** After the PC learns the truth in the Finale races, the PC convinces him to come to the summit of Fushigi-Yama and apologize to Sabine with the others (the apology party). She learns his real reason there; they reconcile but she ultimately leaves with her own crew.
 
 ## 2. Battle Identity
 

@@ -4,11 +4,11 @@
 
 - **Role:** Former friend / Resentful rival
 - **District:** Wangan
-- **Backstory:** Asked Sabine out on a date once; she politely rejected him and they remained friends. However, he secretly resents her because he believes she told people about it (she didn't, and it never got around) `<CHECK: rewritten for private-rumor canon — Austin to confirm>`. Before the breakup, Myth Drivers #1 and #3 kept bringing it up; none of them has spoken since.
+- **Backstory:** Asked Sabine out on a date once; she politely rejected him and they remained friends. However, he secretly resents her because he believes she told people about it. She didn't: #2 vented about it to #1 and #3 himself one night, they teased him for weeks, and he convinced himself the jokes started with her. At the summit, in the apology party, he throws it at her ("You told everyone I asked you out.") and #1 or #3 answers, "Man, *you* told us." Before the breakup, Myth Drivers #1 and #3 kept bringing it up; none of them has spoken since.
 - **Conflict:** His resentment festered — he took a personal vendetta against Sabine for something she didn't do rather than talking to her directly, and hid it behind the private snitch accusation from the police sweep.
 - **First sighting:** after the PC clears Round 1 Wangan. He talks with the PC (no race yet), building the mythos around the fallout and pushing the PC to dig further, without revealing the private accusation `<TODO: sighting beat>`.
 - **Finale race:** His guilt over ousting her leaks out as hints that she may have been a scapegoat — one of the first cracks in the PC's certainty. His "pushed" contradicts #1's "left" from the previous race.
-- **Resolution:** Hearing the PC is apologizing to Sabine, he comes to the summit of Fushigi-Yama on his own, likely to apologize too. The truth comes out; they reconcile but she leaves.
+- **Resolution:** After the PC learns the truth in the Finale races, the PC convinces him to come to the summit of Fushigi-Yama and apologize to Sabine with the others (the apology party). She learns his real reason there; they reconcile but she leaves.
 
 ## 2. Battle Identity
 

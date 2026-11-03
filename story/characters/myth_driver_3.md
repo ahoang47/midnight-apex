@@ -7,8 +7,8 @@
 - **Backstory:** Wanted out of the group to go pro in the circuit, and dreaded telling Sabine. Knew she wasn't an informant in the police sweep that triggered the ousting (there was no informant), but was glad she was gone — not because he didn't want her around, but because he didn't want her hurt by him leaving. He never actually went pro `<TBD: why his pro career fell through>`.
 - **Conflict:** Back then, he let her be pushed out, knowing full well she was innocent. It was easier on his feelings and harder on hers, and it was for a pro career that never happened. He mirrors the PC: leaving without facing the goodbye.
 - **First sighting:** after the PC clears Round 1 Street. He talks with the PC (no race yet), building the mythos around the fallout and pushing the PC to dig further, without revealing the private accusation `<TODO: sighting beat>`.
-- **Finale race:** Half-owns it: admits he was glad she was gone, without saying why. The full reason comes out at the summit.
-- **Resolution:** The truth comes out at the summit of Fushigi-Yama; they reconcile, but what he did is one of the reasons she won't rejoin.
+- **Finale race:** Half-owns it: admits he was glad she was gone, without saying why. The PC learns the full reason by the end of the Finale `<TODO: how, given he only half-owns it in his race>`; Sabine hears it at the summit.
+- **Resolution:** The PC convinces him to come to the summit of Fushigi-Yama and apologize to Sabine with the others (the apology party). She learns his real reason there; they reconcile, but what he did is one of the reasons she won't rejoin.
 
 ## 2. Battle Identity
 

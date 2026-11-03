@@ -308,14 +308,14 @@ into:
 
 The player constantly pressures the mentor for answers throughout the game, but the mentor repeatedly deflects or avoids discussing the past. She genuinely believes she was frozen out over the snitch accusation and does not know the real reasons.
 
-Nobody tells the player about the accusation; they piece it together from clues in the crew reveals — and the clues are bad data that point toward the mentor’s guilt. At the end of Round 3, the player accuses the mentor of being the snitch. She is hurt and refuses to defend herself or denies it (`<TODO: Sabine's reaction>`), and the relationship blows up going into the Finale.
+Nobody tells the player about the accusation; they piece it together from clues in the crew reveals — and the clues are bad data that point toward the mentor’s guilt. At the end of Round 3, the player accuses the mentor of being the snitch. She doesn’t defend herself; she’s been accused once already and won’t waste the energy again. After a long silence: “Get out of my garage.” and the relationship blows up going into the Finale.
 
-Estranged from her, the player races the Myth Drivers. Their accounts contradict each other, and doubt sets in; the rift also echoes what the player did back home, and guilt won't let it end the same way. So the player, honest for once, invites the mentor to the summit of Fushigi-Yama, the Touge district’s mountain, to apologize (“I was wrong. Be there.”). There is no trick. The three Myth Drivers each hear about it separately, feel guilty, and show up on their own, perhaps to apologize too. It is the first time they have met since the breakup.
+Knowing they messed up, the player races all three Myth Drivers to find the truth and settle the story once and for all. Their accounts contradict each other, and the snitch story unravels: the police sweep was benign; there was no informant, only each Myth Driver’s personal reason. The player goes to the mentor: “I know what really happened.” She blows up at them for digging into her past, a second wound after the accusation, and the player leaves. Then the player convinces all three Myth Drivers to come and apologize too: one big apology party. It is the first time they have met since the breakup.
 
-At the summit:
-- the truth comes out: the police sweep was benign; there was no informant, only each Myth Driver’s personal reason
-- the mentor learns the real reasons for the first time
-- the player realizes they made the same mistake the Myth Drivers did, and has to own it and apologize
+The climax is a final race between the player and the mentor at the summit of Fushigi-Yama, the Touge district’s mountain `<TODO: how the player gets her there>`. Around the race `<TODO: before, during or after>`:
+- the mentor learns the real reasons for the first time, from the Myth Drivers
+- the player owns that they made the same mistake the Myth Drivers did, and apologizes
+- the Myth Drivers apologize too
 - reconciliation occurs
 - the former generation offers the mentor a place beside them again
 
@@ -324,7 +324,7 @@ the one formed around the player during the game. She also won’t go back to a 
 
 She then gets in one cutting parting shot: "My uncle's doing fine, by the way. Since none of you ever asked." Then she turns it back on the player: "And when are you calling them?"
 
-In the epilogue, the player finally calls the hometown crew they walked out on, with the same honest message ("I was wrong. Be there."). They come to Fushigi-Yama, and after an awkward apology they settle it the only way they know: a low-stakes race, just for fun.
+In the epilogue, the player finally calls the hometown crew they walked out on, with a message: "I was wrong. Be there." They come to Fushigi-Yama, and after an awkward apology they settle it the only way they know: a low-stakes race, just for fun.
 
 ---
 
