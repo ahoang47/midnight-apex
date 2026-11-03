@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-11-02 — Skill parity: play-quality sweep and fitted win-rate equation [sim] (Barry, Chief of Systems)
+- Austin approved fitting a skill parity equation, with his feel target as the first success criterion: at stat parity you should only win if you play about 90% right (q50 ≈ 0.9).
+- **Engine changes (opt-in; defaults unchanged, all 25 tests pass):**
+  - `models.MatchConfig` gains `player_quality` (q in [0, 1]) and `opponent_qte_ratio`.
+  - `simulation.SimulationRunner` gains a q-player: it counters the AI's real pick with probability q and hits a perfect QTE with probability q, otherwise it plays like the old random player. To do that it makes the AI's pick first and caches it, which is safe because the AI's pick never depends on the player's card.
+  - `equations.py` gains `PLAYER_QTE_MIN`, `PLAYER_QTE_MAX` and `PERFECT_QTE`. The rubber-band 0.15 literal in `match.py` moved to `equations.RUBBER_BAND_FRACTION` with the same value, because all constants belong in `equations.py`. `balance_gauntlet.py` still hard-codes its own 0.15 copy.
+- New `sim/scripts/parity_sweep.py` (pure stdlib, multiprocessing) runs the sweeps, the fit and the lever prototypes. New `design/08-skill-parity.md` records the results and proposals; the script is the source of truth.
+- **Findings:**
+  - At parity, q50 is 0.21–0.27 at every level and encounter length (N=2000 per cell), far below 0.9. The fitted logistic is P = 1/(1+exp(-(a(q-q0) - b ln r))). For Lieutenant: a=10.49, q0=0.214, b=26.18, RMS error 2.0 pts.
+  - The best tested route to 0.9 is AI skill: AI QTE at the cap plus a prototype AI read rate of 0.40, which gives q50 0.874–0.916 everywhere. CLASH_STAKES, BATTLE_BONUS and the rubber band barely move q50.
+  - Today's double-scaled ratios give Boss a q50 of about 0.82 and make Wild unlosable.
+- **No game constant was changed;** the lever results are proposals for Austin. Skill points (now in v1) are expressed as a shift in the stat ratio r.
+- Committed on Austin's go-ahead: only the write-up, `design/08-skill-parity.md`. The engine changes and `sim/scripts/parity_sweep.py` stay local for now, so the doc's pointers to them land with a later push.
+
 ## 2026-11-02 — Logo: approved one-line wordmark [art] (Arthur, Art Director)
 - Austin approved round-3 V3, now in `art/logo/`. It's a black-and-white one-line wordmark: solid MIDNIGHT with the chicane M, flares on the left, a heavily extruded APEX whose A traces an out-in-out racing line (kerb at the apex), and katakana underneath. He rejected round 1 as too soft and rounded, so everything is hard-edged. He picked W2's one-line layout, S1's APEX and H1's flares from round 2, in black and white.
 
