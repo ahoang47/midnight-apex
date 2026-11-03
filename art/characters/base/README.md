@@ -134,6 +134,13 @@ See `renders/deform_check.jpg`.
 - **Bulky/Slim:** pushed further, see above.
 - **Clothes:** restructured from layered meshes to the painted atlas (user direction).
 
+## Female chest-height fix (2026-11-02)
+- The female bust apex sat at 1.163 m, about 18 cm under the shoulders. Austin had it raised twice (+5 cm, then another +5 cm), so it's now at **1.256 m** (+9.3 cm), about 4 cm above the Spine2 joint (1.218). `spec.fem_trunk_z()` remaps female trunk heights only, in male reference z: waist ring 1.12 → 1.16 (1.079 m), bust ring 1.25 → 1.3505 (1.256 m) and armpit ring 1.36 → 1.405 (1.307 m), so the upper chest isn't pinched against the bust. The hem and the shoulder ring and above don't move.
+- Ring widths and depths, and the Slim/Bulky factors, stay keyed to each ring's original height, so Basis, Slim and Bulky all carry the raised chest.
+- Weights follow the new heights (`TRUNK_WZ`). The apex ring is ~79 % Spine2 / 21 % Spine1 (13 % Shoulder at the sides). The armpit ring is weighted a little below its new height so it stays Spine2/Shoulder with only ~3 % UpperArm, which keeps the A-pose armpit clean.
+- Tris (686), vertex count and UVs are unchanged, and the textures were not repainted. The texture follows the vertices, so the tee stretches about 1.45× vertically between the waist and the bust and compresses about 0.5× from the bust to the armpit. The jacket's slash pockets sit about 2–3 cm higher and a little taller. It's plain fabric with no print, so it doesn't show at game resolution. The male geometry is exactly the same.
+- See `renders/chest_fix_before_after.jpg`.
+
 ## Renders
 | File | What |
 |---|---|
@@ -142,6 +149,7 @@ See `renders/deform_check.jpg`.
 | `renders/builds_lineup.jpg` | M slim/std/bulky + F slim/std/bulky, one row, same ortho scale |
 | `renders/tuneup_before_after.jpg` | Old vs new standard male and female (rebuilding it needs the old renders, `BEFORE_DIR`; they are not in the repo) |
 | `renders/lineup_mf.jpg` | Male and female at the same scale with height lines |
+| `renders/chest_fix_before_after.jpg` | Female chest-height fix: original (1.163) vs new (1.256), front + A-pose sides for standard/slim/bulky |
 | `renders/deform_check.jpg` | Deformation check |
 | `renders/uv_template_m.png`, `uv_template_f.png` | Paint templates |
 

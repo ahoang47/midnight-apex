@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-02 — Female character base: chest height raised [art] (Arthur, Art Director)
+- Austin pointed out that the female bust sat too low (it showed on the poster draft). It was in the model: the apex was at 1.163 m, about 18 cm under the shoulders. He asked for +5 cm and then another +5 cm, so it's now at **1.256 m** (+9.3 cm), about 4 cm above the Spine2 joint. The fix lives in the build script (`art/characters/base/build/spec.py` `fem_trunk_z()` / `TRUNK_ZF` / `TRUNK_WZ`, plus the weight lookup in `build_char.py`), so rebuilds keep it.
+- Only female trunk heights move: the waist ring rises 3.7 cm, the bust ring 9.3 cm and the armpit ring 4.2 cm, so the upper chest isn't pinched. The hem and shoulders stay put. Ring widths and depths and the Slim/Bulky factors stay tied to each ring, so all three builds get the raised chest.
+- The apex is now ~79 % Spine2 / 21 % Spine1 (was ~93 % Spine1). The armpit ring is weighted so it picks up only ~3 % UpperArm, and the A-pose and Bulky armpit checks are clean.
+- Tris (686 body), vertex count, UVs and textures are unchanged. Compromise: the texture follows the verts, so the tee stretches about 1.45× between the waist and the bust and compresses above it, and the jacket pockets sit about 2–3 cm higher. It's plain fabric with no print, so it isn't visible at game resolution. The male is untouched.
+- Rebuilt `char_base.blend` and `assets/characters/base/char_base_f.glb` and re-rendered the female turnarounds, deform check, swap sheet and lineups. Before/after (original vs new): `art/characters/base/renders/chest_fix_before_after.jpg`. Not committed.
+
 ## 2026-11-02 — World notes: overworld camera reference [art] (Arthur, Art Director)
 - Updated `design/art/world_notes.md` with the overworld camera, based on Racing Lagoon free roam at 16:30 (Austin's reference). It's a high overhead perspective view at roughly 50–65°, rotatable, and not a chase cam or true isometric. Also added what that means for art: rooftops and ground carry the look, no one-sided cut-outs, and a lighter overworld car LOD.
 

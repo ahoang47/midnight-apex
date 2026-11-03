@@ -109,6 +109,8 @@ def build_loft(pc, lf, sex):
             pm = ring_point(cM, e1M, e2M, ringsM[i][3], ringsM[i][4], ringsM[i][5], th)
             ps = ring_point(cS, e1S, e2S, ringsS[i][3], ringsS[i][4], ringsS[i][5], th)
             zM = ringsM[i][2]
+            if sex == "f" and lf["group"] == "trunk":      # weights follow the raised female chest (Spine1 -> Spine2 blend)
+                pm = Vector((pm.x, pm.y, spec.fem_trunk_z(pm.z, spec.TRUNK_WZ)))
             row.append(pc.vert(ps, wfn(pm), shape_pos(lf, ps, cS, e1S, e2S, "slim", zM), shape_pos(lf, ps, cS, e1S, e2S, "bulky", zM)))
         idx.append(row)
     faces = []

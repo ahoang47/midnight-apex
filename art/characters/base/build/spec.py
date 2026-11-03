@@ -191,6 +191,20 @@ def _interp(x, keys):
 TRUNK_RX = [(0.84, 1.05), (0.95, 1.04), (1.10, 0.84), (1.25, 0.90), (1.36, 0.85), (1.52, 0.86)]
 TRUNK_RY = [(0.84, 1.07), (0.95, 1.04), (1.10, 0.92), (1.25, 1.12), (1.36, 0.95), (1.52, 0.90)]
 TRUNK_DY = [(1.14, 0.0), (1.25, -0.013), (1.34, 0.0)]
+# Chest-height fix (2026-11-02, Austin: up ~5 cm, then another 5 cm): the bust ring (male-space z 1.25) mapped to 1.163 m.
+# Female trunk heights are remapped before the x H_F scale: bust ring 1.25 -> 1.3505 (apex 1.256 m, ~4 cm above the Spine2
+# joint at 1.218), waist ring 1.12 -> 1.16 (1.079 m) so the underside doesn't stretch, armpit ring 1.36 -> 1.405 (1.307 m)
+# so the upper chest isn't pinched against the bust. Hem (<= .965) and the shoulder ring (1.45) and above stay put.
+# Ring widths/depths and shape-key factors stay keyed to the ring's original z (zref), so only the height of the fullness
+# changes and Slim/Bulky follow. UVs are untouched (texture follows the verts). Male unaffected.
+TRUNK_ZF = [(0.965, 0.965), (1.12, 1.16), (1.25, 1.3505), (1.36, 1.405), (1.45, 1.45)]
+# Weights use their own remap: same as TRUNK_ZF except the armpit ring, which is weighted as if it sat only a little higher
+# (1.37), so it stays mostly Spine2/Shoulder and doesn't pick up UpperArm influence (keeps the A-pose armpit clean).
+TRUNK_WZ = [(0.965, 0.965), (1.12, 1.16), (1.25, 1.3505), (1.36, 1.37), (1.45, 1.45)]
+def fem_trunk_z(z, keys=None):
+    """female-only height remap of trunk points in male reference space (identity outside .965-1.45)"""
+    keys = keys or TRUNK_ZF
+    return _interp(z, keys) if keys[0][0] < z < keys[-1][0] else z
 
 def fem_point(x, y, z, group):
     """map a male-space point to female space (used for ring centres, cap centres and bones)"""
@@ -201,7 +215,8 @@ def fem_point(x, y, z, group):
         return (s * (abs(x) * 0.93 - 0.008), y * 0.95, z * H_F)
     if group in ("leg", "shoe", "foot"):
         return (x * 0.95, y * (0.9 if group in ("shoe", "foot") else 1.0), z * (H_F if group != "shoe" else 0.92))
-    return (x, y + (_interp(z, TRUNK_DY) if group == "trunk" else 0.0), z * H_F)
+    if group == "trunk": return (x, y + _interp(z, TRUNK_DY), fem_trunk_z(z) * H_F)
+    return (x, y, z * H_F)
 
 
 def fem_ring(lf, r, zref=None):
