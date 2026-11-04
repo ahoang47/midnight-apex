@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: aero unlock, betting timing, Jesse and Reiko back at the garage
+- Garage: Jesse and Reiko work out of Sabine's garage, not the speakeasy (canon 24, `plot.md` §2, `barkeep.md`). Austin corrected this; the speakeasy is just the barkeep and the wind tunnel. "Sabine doesn't employ them" stays.
+- Aero: unlocks when the debt hits zero mid Round 2 (canon 19, 24; `plot.md` §5). Parts are bought from Reiko at the garage and tuned at the wind tunnel (Austin, DM). Sabine takes the PC for drinks at the speakeasy to celebrate, the PC's first visit to the bar (`barkeep.md`). Numbers stay in Barry's `design/07`; the exact race comes from his season sim.
+- Betting: the promoter's side game opens at the end of Round 2 (canon 21, `plot.md` Wangan, §5), matching Barry's 07 fix in the Integration room.
+- Open questions: removed "Betting unlock timing" and "When the PC first visits the bar" as resolved; renumbered.
+
 ## 2026-11-04 — Nathaniel: core character and crew personalities
 - Added a Personality bullet to Narrative Identity on the Sabine, Myth Driver #1–#3 and barkeep sheets; a PC personality line in `story/plot.md` §1 (kept light so players can project); boss and crew personality lines under each district (Touge, Wangan, Street) in `plot.md`; and canon decision 25 pointing to them.
 - Why: Austin locked these to drive barks, pre- and post-race interactions and exposition.

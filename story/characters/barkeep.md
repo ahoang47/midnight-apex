@@ -10,10 +10,10 @@
   - Quiet rule-breaker: calm about the stolen power.
 - **The wind tunnel:** runs on illegally snaked (stolen) power.
 - **Not the hangout:** the crew's main hangout is still Sabine's garage.
-- **Who uses it:** Reiko sells her parts there; Jesse tunes cars there.
+- **Who uses it:** the PC tunes aero in the wind tunnel (parts bought from Reiko at the garage; canon 24). Jesse and Reiko work out of Sabine's garage, not here.
 - **With Sabine:** friendly with her, and doesn't care for the drama around the old generation.
 - **Motive:** just in it for the cars, like Jesse and Reiko.
-- **First visit by the PC:** `<TODO>`
+- **First visit by the PC:** mid Round 2, when the debt hits zero: Sabine takes the PC out for drinks to celebrate, which also unlocks aero tuning here (canon 19, 24).
 
 ## 2. Battle Identity
 

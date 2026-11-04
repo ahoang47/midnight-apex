@@ -26,8 +26,8 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 ## 2. Garage Intro
 
 - Sabine introduces her crew; the crew sizes up PC as an outsider (and as the driver the garage has been missing)
-- Tuner, Jesse (a nod to *The Fast and the Furious*): warm and easygoing, welcomes the PC right away; mods, installs a DAQ system — more races, more data, better tuning. Not Sabine's employee: he tunes cars at the reverse speakeasy and just hangs out with her (canon 24)
-- Buyer, Reiko (a nod to *Tokyo Drift*): sharp and businesslike, cool toward the PC at first ("Wholesale is for crew. You're not crew."); warms up and gives the PC wholesale after Round 1; parts at wholesale. Not Sabine's employee: she sells her parts at the reverse speakeasy and just hangs out with her (canon 24)
+- Tuner, Jesse (a nod to *The Fast and the Furious*): warm and easygoing, welcomes the PC right away; mods, installs a DAQ system — more races, more data, better tuning. Works out of Sabine's garage; not Sabine's employee, he just hangs out with her (canon 24)
+- Buyer, Reiko (a nod to *Tokyo Drift*): sharp and businesslike, cool toward the PC at first ("Wholesale is for crew. You're not crew."); warms up and gives the PC wholesale after Round 1; parts at wholesale. Works out of Sabine's garage; not Sabine's employee, she just hangs out with her (canon 24)
 
 ## 3. The Debt
 
@@ -65,7 +65,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 - Crew `<TBD>`; Crew Boss `<TBD: name>` — presents a pragmatic interpretation of events. **The promoter:** he organizes the Wangan runs, takes bets and gets a cut; every race is a show, and the PC is a new headliner he can sell. Pragmatic about Sabine, not emotional: her walking away was bad for business (the scene lost its best draw). Smooth, flashy talker, always selling. Secretly Sabine's old flame, the real reason she turned down #2's date; only hinted at until the summit (canon decision 21)
 - Boss personality (locked 2026-11-04): smooth, pragmatic, always selling; sees the PC as a headliner; talks about Sabine like a business loss, with a little too much care in his voice
 - Crew personality: grown-ups with day jobs racing for release; polite, measured, cliquey; treat the PC like a new hire who has to prove they belong; gossip comes out as dry, knowing remarks
-- High-stakes betting side game run by the promoter, unlocked after Round 2 (mechanics `<TBD: Barry>`)
+- High-stakes betting side game run by the promoter, unlocked at the end of Round 2 (mechanics `<TBD: Barry>`)
 
 | Racer Type | Archetype |
 |---|---|
@@ -128,7 +128,7 @@ Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing mat
 
 ## 5. Round 2 — Consequences
 
-The PC pays off Sabine's debt this round `<TBD: exact point>`; until then a share of each win goes to the debt (not all of it), so money for mods is tight early. From here they stay for the fun and to uncover her mystery.
+The PC pays off Sabine's debt mid-round (exact race set by Barry's season sim); until then a share of each win goes to the debt (not all of it), so money for mods is tight early. From here they stay for the fun and to uncover her mystery. Clearing the debt unlocks aero: parts are bought from Reiko at the garage and tuned at the speakeasy's wind tunnel (canon 24). To celebrate, Sabine takes the PC out for drinks at the speakeasy, the PC's first visit to the bar `<TODO: scene>`. End of round: the promoter opens his betting side game (canon 21).
 
 Reveals plant misleading clues toward Sabine’s guilt (her silence after the sweep; the theories)
 
