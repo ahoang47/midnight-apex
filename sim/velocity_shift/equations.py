@@ -20,6 +20,22 @@ MITIGATION_FLOOR = 0.1        # minimum damage fraction (10 % always gets throug
 HP_PER_LEVEL = 180            # max_hp = level × HP_PER_LEVEL
 QTE_NORMALIZER = 10.0         # qte_factor = score / QTE_NORMALIZER
 HAN_QTE_WEIGHT = 0.5         # shared modifier for both sides
+RUBBER_BAND_FRACTION = 0.15  # full rubber-band at a DP gap of this × average max HP
+
+# ── Simulated-player play quality (opt-in, MatchConfig.player_quality) ──
+# q in [0, 1] = the fraction of the race the player "plays right".
+#   * Card read: each clash, with probability q the player reads the
+#     opponent's real pick and plays its counter (else a tie card, else
+#     any card); otherwise the player picks a random card.
+#   * QTE: each turn, with probability q the player hits PERFECT_QTE;
+#     otherwise the score is uniform in [PLAYER_QTE_MIN, PLAYER_QTE_MAX].
+# q = 0 reproduces the old random player exactly (random card, uniform QTE).
+# The two parts are independent skills: MatchConfig.player_read (q_read,
+# card read) and MatchConfig.player_timing (q_time, QTE). player_quality=q
+# is shorthand for q_read = q_time = q.
+PLAYER_QTE_MIN = 1.0
+PLAYER_QTE_MAX = 10.0
+PERFECT_QTE = 10.0
 
 
 def qte_factor(qte_score: float) -> float:

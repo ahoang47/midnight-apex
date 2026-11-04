@@ -8,6 +8,29 @@
 
 ---
 
+## 2026-11-03 — Barry: aero parts and respec cost in the mods spec (proposal)
+- `design/07-economy-and-mods.md` §6.3: aero parts are stat parts with a fixed base boost plus a small free pool of points to put into POW, EN or HAN at the wind tunnel. Tunes lock, with a paid respec. Agreed with Austin and Nathaniel in the Integration room; no new stat layer, per Austin. Added Q18 (respec cost) to the bottom of §11. Follow-up the same day (Austin): aero unlocks when the debt reaches zero, mid Round 2 (first set to after Round 1, then moved by Austin to spread out unlocks; story: Sabine takes the PC out for drinks), parts are bought once and kept, a respec moves a capped number of points per visit at a price per point (same rule for skill points and aero), and betting is confirmed to unlock at the end of Round 2 (corrected from 'after the Wangan boss'), with Round 3 harder to push risky bets. No sims run (the economy/mods sim still waits for success criteria).
+
+
+## 2026-11-03 — Barry: two-axis play quality (q_read, q_time); target win-rate curves (PROPOSED) as 02 §0
+- Austin agreed to a clean-sheet equation redesign: targets first, then the minimal core equations (clash resolution, QTE, AI skill), each constant doing one job. `design/02-equations-reference.md` §0 "Target curves (PROPOSED)" is the draft spec, for Austin to mark up. Placement in 02 is Austin's call; nothing existing in 02 (or any other doc) was deleted, rewritten or renumbered. Cleanup and reconciling 02 §1–8, 03, 04 and 08 with §0 come later.
+- Per Austin, added a header "Stale; do not reference unless explicitly asked to" above the old 02 §1–8 (no text deleted), since the clean-sheet redesign will replace them.
+- Austin (t29u): play quality is split into two independent skills, and the targets must keep three play styles viable (strong reader / sloppy timing, sloppy reader / sharp timing, balanced). §0 rewritten in place for that; the single-q targets from earlier today (Boss a 22, q0 0.90) are superseded.
+- Sim (opt-in, defaults unchanged): `MatchConfig.player_read` (q_read, chance per clash of reading and countering the AI's real pick) and `player_timing` (q_time, chance per turn of a perfect-10 QTE). `player_quality = q` still works as shorthand for both (verified identical results); an unset axis falls back to `player_quality`, then to 0 (random). `SimulationRunner._play_quality` resolves them. `parity_sweep.py` gains a `grid2d` mode (q_read × q_time at stat parity, plus `fit_features`, a general logistic fitter). 25/25 tests and the gauntlet pass.
+- Measured (`parity_sweep.py grid2d --seeds 40`, Lieutenant and Boss length, N = 4000 per cell, raw output in `/workspace/parity/grid2d.*`): read and timing are **substitutes**. They add on the log-odds scale (Lt: a_r 4.94, a_t 5.92, interaction +0.21; Boss: a_r 5.38, a_t 6.22, interaction +0.68), and either alone wins today (1.0 / 0 wins 91.1% Lt, 88.1% Boss; 0 / 1.0 wins 97.0% and 95.5%). Timing is worth 1.16–1.20× reading per unit.
+- Proposed target form: s = (q_read + q_time) / 2, P = logistic(a(s − s0) − b ln r), equal weights so styles are balanced at equal total skill. Wild a 12, s0 0.58, b 12.59; Lieutenant a 14, s0 0.72, b 14.69; Boss a 16, s0 0.86, b 16.79. Boss at parity: 0.9 / 0.9 wins 65.5%, perfect 90.4%, a 1.0 / 0.6 specialist 27.7% (69.2% at r 0.9). +10% opponent stats ≈ +0.10 of s.
+- Acceptance test: 324-cell grid (3 tiers × 6 q_read × 6 q_time × r 0.9/1.0/1.1); max abs error ≤ 6 pts, RMS ≤ 3; perfect play at parity ≥ 85% in every tier; style balance ≤ 5 pts at equal total skill; a_t / a_r within 0.9–1.1; level stability ±0.03; monotonic. Six open questions for Austin in §0.9. Desmond flags in §0.10: the read axis depends on the tells, so the lie rates in `design/06-pattern-read.md` directly cap what q_read is worth.
+- Why: the parity sweep (08 §5) shows CLASH_STAKES, BATTLE_BONUS and the rubber band barely move q50, and ENCOUNTER_RATIOS scale both opponent level and AI QTE. Only measured figures from 08 and today's grid2d run are cited; everything else is labeled a target. No economy or mods sims run.
+
+
+## 2026-11-03 — Nathaniel: Myth Driver #1's sighting beat
+- Austin locked it: after Round 1 Touge, #1 spots Sabine's work on the PC's car and makes a snide comment about her bringing the cops. It works as bad data, since the PC reads it as a snitch hint, but it's really his distrust of her detective uncle (canon 2), which pays off in the Finale. Updated `plot.md` §4 and `characters/myth_driver_1.md`, and removed the open question.
+
+
+## 2026-11-03 — Nathaniel: Myth Driver race-lines question removed
+- Austin: beats are enough, and exact dialogue is unimportant for now. Removed the 'Myth Driver race lines' open question; the locked beats stay (canon 17–18: #1 insists she left on her own, #2's guilt hints she was a scapegoat). The dialogue gets written when the Finale is scripted. Renumbered the open questions.
+
+
 ## 2026-11-02 — Nathaniel: add the reverse-speakeasy barkeep; Jesse and Reiko aren't Sabine's employees
 - Austin added a new character, the owner and barkeep of a "reverse speakeasy," a bar that hides a secret wind tunnel. Reiko sells her parts there and Jesse tunes cars there. He's friendly with Sabine, doesn't care for the drama, and is just in it for the cars, like Jesse and Reiko. The wind tunnel runs on illegally snaked (stolen) power. Austin first made the bar the crew's hangout, then reversed it: the main hangout stays Sabine's garage, so the prologue garage intro stands. Canon decision 24, new sheet `characters/barkeep.md` (mechanical fields `<TODO: Barry via Desmond>`), and an entry in `characters/index.md`.
 - Sabine doesn't employ Jesse or Reiko. She isn't part of the scene, and they just hang out with her. `plot.md` §2 Garage Intro now says so. The bar's name, location and barkeep name are on hold as detail work (`<TODO>`).

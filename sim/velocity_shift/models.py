@@ -114,6 +114,21 @@ class MatchConfig:
     verbose: bool = False
     rival_personality: str = ""
     encounter_type: str = "wild"
+    # Opt-in (None keeps old behaviour): simulated-player play quality q in
+    # [0, 1], see equations.PERFECT_QTE and simulation.SimulationRunner.
+    player_quality: Optional[float] = None
+    # Opt-in split of play quality into two independent skills, each in
+    # [0, 1]. player_read: chance per clash of reading the AI's real pick
+    # and countering it. player_timing: chance per turn of a perfect QTE.
+    # Each one, if set, overrides player_quality for its own axis; an axis
+    # left unset falls back to player_quality (so player_quality=q is
+    # shorthand for read=timing=q), and to 0 (random) if that is unset too.
+    # All three None (the default) keeps the old random player exactly.
+    player_read: Optional[float] = None
+    player_timing: Optional[float] = None
+    # Opt-in (None = ENCOUNTER_RATIOS[encounter_type]): override the ratio
+    # that scales the AI's QTE, e.g. 1.0 for a pure stat-parity test.
+    opponent_qte_ratio: Optional[float] = None
 
 
 class PhaseType(Enum):

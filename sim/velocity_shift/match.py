@@ -15,7 +15,7 @@ from typing import Callable, Optional
 from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
     TurnResult, TurnState, ClashResult, PersonalityConfig
 from .combat import resolve_turn
-from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod
+from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod, RUBBER_BAND_FRACTION
 from .deck import Deck
 from .trace import TraceLogger
 from .ai import get_personality, get_phase, get_total_phases
@@ -62,7 +62,7 @@ def run_match(
     player_max_hp = player.level * HP_PER_LEVEL
     opponent_max_hp = opponent.level * HP_PER_LEVEL
     avg_max_hp = (player_max_hp + opponent_max_hp) / 2
-    rubber_band_threshold = avg_max_hp * 0.15
+    rubber_band_threshold = avg_max_hp * RUBBER_BAND_FRACTION
 
     result = MatchResult(
         player_name=player.name,

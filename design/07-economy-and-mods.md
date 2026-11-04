@@ -188,6 +188,12 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 
 **PROPOSAL, how stat parts apply:** `final_stat = build_stats(arch, level) + Σ part flat bonuses`. **OPEN QUESTION Q6:** should bonuses be flat or scale with level? Flat bonuses fade in value as levels rise, which the level floors and tiers would offset. Stat parts also shift the deck mix (`deck.py:29-44`), which is a feature, but it needs to be reported.
 
+**Aero parts and the wind tunnel (PROPOSAL, from the Integration room 2026-11-03; Austin agreed in principle, no numbers yet):**
+- An aero part is a stat part with a **fixed base boost** plus a **small free pool** of points the player assigns to POW, EN or HAN at the speakeasy's wind tunnel (bought from Reiko at Sabine's garage). No new stat layer.
+- The free pool makes an aero part worth more than a fixed part with the same total, so it needs a higher price or a slightly smaller total. `AERO_FREE_POINTS[tier] = TBD`, kept small relative to `TIER_STAT_BUDGET`.
+- **Tunes lock once set** (aero and regular skill/stat points alike), but a paid respec always exists so a bad build can't strand a player. Story reasons for the cost (Nathaniel): a second tunnel session burns more stolen power, Jesse has to cut and re-weld his own work, and Reiko doesn't take back fitted parts. `RESPEC_COST = TBD` (Q18).
+- **Update 2026-11-03 (Austin):** ~~aero unlocks after Round 1, along with mods~~ *(superseded the same day: Austin moved the aero unlock to **mid Round 2** so the PC doesn't get too many unlocks at once; the exact beat is TBD, and one candidate is when the debt clears)*. **Decided by Austin 2026-11-03:** aero unlocks when the debt reaches zero (`aero_unlocked` is set by `debt == 0`). Story: Sabine takes the PC out for drinks at the speakeasy to celebrate. Parts are bought once and kept, so only tunes relock. A respec, whether Jesse moving skill points or a tunnel retune for aero, moves at most `RESPEC_POINTS_PER_VISIT = TBD` points per visit, at `RESPEC_COST_PER_POINT = TBD` each. A small counter-tune before a boss stays affordable, and a full rebuild costs a lot or takes several visits. Retuning between races is allowed on purpose: you scout, then build a counter.
+
 **Phasing PROPOSAL:** v1 of the sim has stat parts only. Unique-effect parts come in v2, once the hooks are specified separately.
 
 ### 6.4 Tiers, rarity, prices
@@ -234,7 +240,7 @@ Opponents carry archetype-matched parts (`mod_notes.md:61`). **PROPOSAL:** `OPPO
 **Ruled out:** A. Austin said on 2026-11-02 that not all winnings go to the debt. **Recommendation:** run **B** as the baseline, with `DEBT_SHARE` applying from the Prologue (not only after wholesale), so the PC can buy a few parts at full price in Round 1 and the wholesale unlock is felt right away. Build `DEBT_SHARE` and a `DEBT_RULE` switch so B, C and D can be compared in the same season run before anyone decides.
 
 ### 7.4 How the clearing race gets picked (once numbers exist)
-The clearing race isn't chosen by hand. It falls out of the season run: `DEBT_AMOUNT` is solved for so that the **median** clearing race (over N seeds) lands at the target Round 2 race (Q1: which one). The sim reports the 10th–90th percentile spread across seeds, so Austin can see how much it moves with losses and retries.
+The clearing race isn't chosen by hand. It falls out of the season run: `DEBT_AMOUNT` is solved for so that the **median** clearing race (over N seeds) lands at the target Round 2 race (Q1: which one). The sim reports the 10th–90th percentile spread across seeds, so Austin can see how much it moves with losses and retries. **Since 2026-11-03 this is a hard target:** aero unlocks when the debt reaches zero, so tuning `DEBT_AMOUNT` also decides when the speakeasy opens (Austin: it must land mid Round 2).
 
 ---
 
@@ -242,7 +248,7 @@ The clearing race isn't chosen by hand. It falls out of the season run: `DEBT_AM
 Story: the Wangan crew boss is a race promoter who opens a high-stakes betting side game after Round 2 (`story/canon.md:46`, `story/plot.md:63`). Nothing about betting exists in the sim or design docs today, so everything below is a proposal with `TBD` values.
 
 - **What you bet on:** only the PC's own next race. The PC stakes wallet cash on winning before the race starts. No betting on other racers in v1.
-- **Unlock:** a story flag `betting_unlocked`, set after the Round 2 Wangan boss is beaten (exact beat to confirm with Nathaniel). It's available in Round 3 and after.
+- **Unlock:** a story flag `betting_unlocked`, set after the Round 2 Wangan boss is beaten (exact beat to confirm with Nathaniel). It's available in Round 3 and after. *Confirmed by Austin 2026-11-03: betting unlocks after Round 2, and Round 3 raises difficulty so risky bets are more tempting.* *Correction 2026-11-03: the unlock is at the **end of Round 2** (per Austin and story canon), not when the Wangan boss is beaten, so it stays separate from the aero unlock.*
 - **Odds:** the promoter offers a line based on how likely the PC is to win: `odds = (1 - HOUSE_EDGE) / p_line`, where `p_line` is the expected win chance for that encounter type at that level, taken from the season sim. The house edge means the average bettor loses a little, while a player who reads patterns better than the sim's AI picker can beat the line. That ties betting to skill, not luck.
 - **Stakes:** `BET_MIN` and `BET_MAX_FRACTION` (a cap as a fraction of the wallet), plus a hard cap per race `BET_MAX[round]`. The caps keep one lucky streak from breaking the shop curve.
 - **High-stakes option:** the PC can raise the odds by accepting a handicap the promoter asks for to make the race a better show, such as giving the opponent a level bump or starting behind. `HANDICAP_ODDS_BONUS` is TBD. This option is what makes it "high-stakes".
@@ -345,6 +351,7 @@ Pull from the top, one at a time; new questions go to the bottom. Remove a quest
 15. (2026-11-02) Does money matter in the Finale?
 16. (2026-11-02) **Betting (§7.5):** own races only, and handicap bets in or out of v1? Unlock is end of Round 2 by default; Nathaniel is checking whether it should be the Round 2 Wangan boss win.
 17. (2026-11-02) **Body kits and wings:** Arthur says each needs a full alternate body mesh per car. In or out? Texture swaps and stance are cheap and already possible.
+18. (2026-11-03) **Respec cost:** what are `RESPEC_POINTS_PER_VISIT` (points moved per visit) and `RESPEC_COST_PER_POINT`, for Jesse's skill points and for aero retunes? Should the two share values? Expensive but always possible.
 
 Austin's progression plan (2026-11-02): Round 1 uses skill points only. From Round 2, Reiko is unlocked and the PC can buy mods. From Round 3, betting (with capped bets) pays for more expensive mods. This brings skill points into v1, which overrides "No skill trees in v1" (`design/godot-build-guide.md:1313`, `design/05-skill-trees.md:3`). Still to define: where points come from, how much a point is worth, and whether you can respec.
 
