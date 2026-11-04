@@ -1,0 +1,93 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/cars/mx5/car_mx5.glb" id="1_glb"]
+[ext_resource type="Script" path="res://assets/cars/mx5/susp_follow.gd" id="2_susp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_body"]
+size = Vector3(1.70, 0.80, 3.85)
+
+[node name="car_mx5" instance=ExtResource("1_glb")]
+
+[node name="MX5" parent="." index="0"]
+mass = 1060.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0.0, 0.45, 0.0)
+
+[node name="MX5_FX_LampGlow" parent="MX5" index="1"]
+visible = false
+
+[node name="Hub_FL" parent="MX5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.746000, 0.406400, 1.156681)
+use_as_traction = false
+use_as_steering = true
+wheel_rest_length = 0.15
+wheel_radius = 0.3079
+wheel_friction_slip = 3.0
+suspension_travel = 0.085
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_FL" parent="MX5" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.746000, 0.406400, 1.156681)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_FL")
+steers = true
+
+[node name="Hub_FR" parent="MX5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.746000, 0.406400, 1.156681)
+use_as_traction = false
+use_as_steering = true
+wheel_rest_length = 0.15
+wheel_radius = 0.3079
+wheel_friction_slip = 3.0
+suspension_travel = 0.085
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_FR" parent="MX5" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.746000, 0.406400, 1.156681)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_FR")
+steers = true
+
+[node name="Hub_RL" parent="MX5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.746000, 0.406400, -1.156681)
+use_as_traction = true
+use_as_steering = false
+wheel_rest_length = 0.15
+wheel_radius = 0.3079
+wheel_friction_slip = 3.0
+suspension_travel = 0.085
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_RL" parent="MX5" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.746000, 0.406400, -1.156681)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_RL")
+steers = false
+
+[node name="Hub_RR" parent="MX5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.746000, 0.406400, -1.156681)
+use_as_traction = true
+use_as_steering = false
+wheel_rest_length = 0.15
+wheel_radius = 0.3079
+wheel_friction_slip = 3.0
+suspension_travel = 0.085
+suspension_stiffness = 80.0
+damping_compression = 1.6
+damping_relaxation = 2.2
+
+[node name="Susp_RR" parent="MX5" node_paths=PackedStringArray("wheel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.746000, 0.406400, -1.156681)
+script = ExtResource("2_susp")
+wheel = NodePath("../Hub_RR")
+steers = false
+
+[node name="BodyCollision" type="CollisionShape3D" parent="MX5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.70, 0)
+shape = SubResource("BoxShape3D_body")

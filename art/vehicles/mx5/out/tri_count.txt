@@ -1,0 +1,28 @@
+MX5_Body            1348
+MX5_Exhaust_RI        16
+MX5_Exhaust_RO        16
+MX5_FX_HeadGlow        4
+MX5_Liner_FL          14
+MX5_Liner_FR          14
+MX5_Liner_RL          14
+MX5_Liner_RR          14
+MX5_Mirror_L          20
+MX5_Mirror_R          20
+MX5_Susp_FL           16
+MX5_Susp_FR           16
+MX5_Susp_RL           16
+MX5_Susp_RR           16
+MX5_Under              2
+MX5_Wheel_FL          36
+MX5_Wheel_FR          36
+MX5_Wheel_RL          36
+MX5_Wheel_RR          36
+
+MONO MX5_Body 1478  (loft + pockets 1348 [loft before pockets 1272], mirrors 40, twin exhaust 32, liners 56, floor 2)
+wheels (4 x 10-sided) 144
+suspension (4 x strut + arm) 64
+FX head lamp glow quads (MX5_FX_HeadGlow, hidden) 4
+TOTAL rendered 1690  (cap 2000: OK)
+stations 39, half-section points 9
+shading QC (loft quads): {"body": {"faces": 608, "flipped": 0, "degenerate": 0, "nonplanar_gt5pct": 52, "worst_nonplanar_pct": 30.8, "worst_at": [[30.8, [0.33, 0.575, 0.909]], [30.5, [0.33, -0.575, 0.909]], [28.6, [-1.162, 0.667, 0.937]], [27.1, [-1.023, 0.684, 0.954]], [26.7, [-1.162, -0.667, 0.937]], [25.5, [-1.023, -0.684, 0.954]]]}}
+pockets: [{"name": "headlamp", "view": "front", "n": 8, "depth_m": 0.03, "step_mm": [48.0, 48.0, 48.0, 48.0, 34.5, 39.2, 39.2, 48.0, 48.0]}, {"name": "grille", "view": "front", "n": 8, "depth_m": 0.05, "step_mm": [51.3, 50.9, 51.7, 50.9, 51.3, 50.0, 51.7]}, {"name": "side_intake", "view": "front", "n": 6, "depth_m": 0.03, "step_mm": [38.8, 38.1, 38.1, 42.0, 42.0, 38.8, 38.1]}]

@@ -8,6 +8,23 @@
 
 ---
 
+## 2026-11-04 — MX-5 (ND, soft top): detail pass [art] (Arthur, Art Director)
+- Austin signed off the clay ("Great pass. Go for detail."). The detail pass is the GR Corolla's stage copied to `art/vehicles/mx5/`: `build_mx5_detail.py`, `bp/vectors.py`, `tex/make_body_mx5.py`, `tex/make_parts_mx5.py`, deliver, three-view and lineup scripts, and `godot/make_tscn.py`. Game files are in the new `assets/cars/mx5/` (`car_mx5.glb`, `car_mx5.tscn`, `susp_follow.gd` with its own uid). The night shot is in the new `art/mood/tokyo_mx5/`. Not committed.
+- Result: 1,692 tris (cap 2,000; +2 vs clay). The mirrors are now 5-point rings (+12 tris), the glow FX now covers head and tail lamps (+4), and the boolean re-cut came out 14 tris lower. Silhouette and rig are unchanged: IoU side .978, top .993, front .971, rear .953 (pass); 9-pose clearance all clear, tightest still 4.5 mm at front bump.
+- Clay weak spots are fixed in the texture, not the mesh, because the modelled hood dip read as dents. Form shading is driven by the drawing's DETAILS vectors: fender-peak crest, valley and centre dip on the hood; the door scoop under the rear-fender crest; arch-flare lips; a tucked rocker; and a rolled, creased tail. Ring tail lamps and the LED projector headlamp art (A.2.8 molding + painted lens) give the tail and nose their ND read.
+- Paint is made-up "Daybreak Yellow". Soul Red would put a second red roadster next to the S2000 (the lineup is blue / red / blue / white), and yellow is the period nod to the NA's 1992 Sunburst Yellow. It reads against the navy/mercury night palette.
+- Photo check (A.1.3), using public Wikimedia Commons ND photos kept in a scratch folder: windshield frame painted black, rear corner reflectors repainted as dark recesses, grille painted as horizontal slats. The fender peaks and the door concavity are stronger in the photos than the paint can give.
+- Paint spec is lower than the GR's (.26 in the detail build, .15 in the Tokyo scene). At GR values the key highlight on the faceted rear fender read as a white glyph on the yellow.
+- Godot 4.6.3 check in a scratch copy: imports, settles at body y 0.000, RWD drives, steers 22.9° at .40, and the struts follow.
+- `.gitignore`: `mx5_detail_orthos_*` (blueprint silhouette), the raw render folders, `.npy` and texel dumps, the geo blend and the raw lineup frame.
+
+## 2026-11-04 — MX-5 (ND, soft top): clay for shape sign-off [art] (Arthur, Art Director)
+- Austin asked for a Miata from the Dimensions.com "MX-5 Miata - Soft Top" SVG. New `art/vehicles/mx5/`, built the GR Corolla way (same SVG layer classification, faired curves, 9-point loft, one boolean for pockets, Workbench renders, IoU gate, clay three-view). It stops at clay for Austin's sign-off. Not committed.
+- Generation is **ND**, read from the drawing: slim fixed LED headlamps, trapezoid grille, round tail-lamp rings, and 3,915 length / 2,313 wheelbase / 1,237 height against the ND spec of 3,915 / 2,310 / 1,235. No pop-ups, so the headlamps get the usual A.2.8 light molding.
+- Result: 1,690 tris (cap 2,000). IoU side .978, top .993, front .971, rear .953 (pass). The rig is the GR/lean one (`MX5-vehicle`, `Hub_XX-wheel`, `Steer_FL/FR`, `Susp_XX`). 9-pose clearance is all clear with a tightest gap of 4.5 mm at front bump. Bump is 35 mm, because the drawn arch is only about 4.6 cm above the tyre.
+- `.gitignore`: the MX-5 SVG, its rasters and every render that reproduces the drawing stay local (same licence reason as the GR). Scratch render folders and `.npy` dumps are ignored too.
+- Why the hood is flat: a 2.5–3 cm centre dip for the ND fender peaks read as dents at this station density, so it's left to the texture pass. Other weak spots are in `art/vehicles/mx5/README.md`.
+
 ## 2026-11-03 — Desmond: audio direction doc started (music: jazz fusion, industrial house, drum and bass) [design]
 - New `design/09-audio-direction.md`. There was no audio section in the design docs, so this starts one.
 - Records Austin's working music direction: jazz fusion, industrial house and drum and bass. Passed on by Austin through Arthur; marked as a working direction, not final.
