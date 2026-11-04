@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-03 — Desmond: audio direction doc started (music: jazz fusion, industrial house, drum and bass) [design]
+- New `design/09-audio-direction.md`. There was no audio section in the design docs, so this starts one.
+- Records Austin's working music direction: jazz fusion, industrial house and drum and bass. Passed on by Austin through Arthur; marked as a working direction, not final.
+- Lists open questions (genre per context, district identity, adaptive race music, Ableton-to-Godot stem conventions) without deciding any of them.
+
+---
+
 ## 2026-11-03 — Barry: aero parts and respec cost in the mods spec (proposal)
 - `design/07-economy-and-mods.md` §6.3: aero parts are stat parts with a fixed base boost plus a small free pool of points to put into POW, EN or HAN at the wind tunnel. Tunes lock, with a paid respec. Agreed with Austin and Nathaniel in the Integration room; no new stat layer, per Austin. Added Q18 (respec cost) to the bottom of §11. Follow-up the same day (Austin): aero unlocks when the debt reaches zero, mid Round 2 (first set to after Round 1, then moved by Austin to spread out unlocks; story: Sabine takes the PC out for drinks), parts are bought once and kept, a respec moves a capped number of points per visit at a price per point (same rule for skill points and aero), and betting is confirmed to unlock at the end of Round 2 (corrected from 'after the Wangan boss'), with Round 3 harder to push risky bets. No sims run (the economy/mods sim still waits for success criteria).
 
