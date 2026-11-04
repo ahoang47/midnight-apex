@@ -106,7 +106,7 @@ Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing mat
 - Crew boss (first pass, Austin may rewrite): he respects Sabine and is puzzled, not bitter. “Sabine? Everybody knows Sabine. She still runs the mountain some nights, alone. Used to run with the best of them. Then one night she just... walked away. Never said why.”
 - Crew kid (overhearing): “People don’t walk away like that unless they’ve got something to hide.” / Boss: “Watch your mouth.” The clue is planted by gossip, not by the boss
 - PC’s hook: PC recognizes their own story in hers — the people PC left think PC betrayed them. Implied only; nobody calls Sabine a snitch
-- Myth Driver sighting: after the Touge crew is cleared, Myth Driver #1 makes his first sighting (he talks with PC, no race yet; the conversation builds the mythos around the fallout and pushes PC to dig further, without revealing the private accusation) `<TODO: sighting beat>`
+- Myth Driver sighting: after the Touge crew is cleared, Myth Driver #1 makes his first sighting (he talks with PC, no race yet; the conversation builds the mythos around the fallout and pushes PC to dig further, without revealing the private accusation) Locked 2026-11-03: he spots Sabine's work on the PC's car and makes a snide comment about her bringing the cops. The PC reads it as a snitch hint (bad data); it's really about her detective uncle-dad, which only lands in the Finale
 
 ### Wangan
 - Match 1 vs crew `<TBD>` / crew boss `<TBD>`
