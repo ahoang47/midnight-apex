@@ -14,6 +14,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 ## 1. Opening Sequence
 
 - PC (mid-20s, any gender) moves to the city for work — really running from something: walked out on their hometown crew without explaining why: the PC was its driver and left the week of a big race for a job in the city, so the crew thinks the PC ditched them for something better; really, the PC felt like the weak link holding them back
+- PC personality (locked 2026-11-04, kept light so players can project): deflects about themselves (dodges "where you from?"); quick to decide what other people think (assumed the crew saw them as the weak link, assumes Sabine is the snitch: the same mistake the Myth Drivers made); earnest and driven once locked on
 - Arrives at dusk; night from then on
 - Nighttime exploration; first exposure to underground racing culture
 - Overworld tutorial on the drive home from work at dusk
@@ -47,6 +48,8 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 - Name `<TBD>`; mountain roads; home of Fushigi-Yama
 - Crew `<TBD>`; Crew Boss `<TBD>` — establishes ideological dominance
+- Boss personality (locked 2026-11-04): the mountain's big brother; steady, fair, protective of his crew; respects skill above all; still puzzled about Sabine but guards her name
+- Crew personality: young and hungry with bravado; grew up on the legend and start the gossip; tight-knit, rough with outsiders, loyal once earned
 
 | Racer Type | Archetype |
 |---|---|
@@ -60,6 +63,8 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 - Name `<TBD>`; highway racing
 - Crew `<TBD>`; Crew Boss `<TBD: name>` — presents a pragmatic interpretation of events. **The promoter:** he organizes the Wangan runs, takes bets and gets a cut; every race is a show, and the PC is a new headliner he can sell. Pragmatic about Sabine, not emotional: her walking away was bad for business (the scene lost its best draw). Smooth, flashy talker, always selling. Secretly Sabine's old flame, the real reason she turned down #2's date; only hinted at until the summit (canon decision 21)
+- Boss personality (locked 2026-11-04): smooth, pragmatic, always selling; sees the PC as a headliner; talks about Sabine like a business loss, with a little too much care in his voice
+- Crew personality: grown-ups with day jobs racing for release; polite, measured, cliquey; treat the PC like a new hire who has to prove they belong; gossip comes out as dry, knowing remarks
 - High-stakes betting side game run by the promoter, unlocked after Round 2 (mechanics `<TBD: Barry>`)
 
 | Racer Type | Archetype |
@@ -74,6 +79,8 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 - Name `<TBD>`; street racing (circuit and street are the same scene here)
 - Crew `<TBD>`; Crew Boss `<TBD: name>` — frames the conflict as a cultural fracture. **The influencer:** young-ish, cocksure, built his following on the street scene after the old generation broke up. Not really about the old scene: Sabine and the Myth Drivers are relics to him, and the scene is his now. Reflects a lot of modern car culture (clout, builds made for the camera). First pass: idolized #3 growing up and felt abandoned when #3 left to "go pro"
+- Boss personality (locked 2026-11-04): young-ish, cocksure, always on camera; Sabine and the old generation are relics to him, but he's touchy about #3, the idol who left him
+- Crew personality: loud, online, clout-driven; builds for the camera over the old code; quick to turn and quick to forget; theories in the group chat instead of face to face
 
 | Racer Type | Archetype |
 |---|---|

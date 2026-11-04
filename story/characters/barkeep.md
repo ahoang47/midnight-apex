@@ -4,6 +4,10 @@
 
 - **Name:** `<TODO: name>`
 - **Role:** Owner and barkeep of the reverse speakeasy, a bar that hides a secret wind tunnel (canon decision 24). Bar name and location `<TODO>`.
+- **Personality (locked 2026-11-04):**
+  - Easygoing host: a good listener who remembers everyone's drink and car.
+  - Stays out of it on purpose: hears all the gossip, never passes it on (why Sabine trusts him).
+  - Quiet rule-breaker: calm about the stolen power.
 - **The wind tunnel:** runs on illegally snaked (stolen) power.
 - **Not the hangout:** the crew's main hangout is still Sabine's garage.
 - **Who uses it:** Reiko sells her parts there; Jesse tunes cars there.

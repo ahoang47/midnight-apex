@@ -4,6 +4,11 @@
 
 - **Role:** Former friend / Left without a goodbye
 - **District:** Street
+- **Personality (locked 2026-11-04):**
+  - Charming and restless: the scene's golden boy, always on to the next thing.
+  - Avoids hard conversations: lets things happen to him.
+  - Thin-skinned about failing: talks around the pro career that never happened and keeps up the act.
+  - Means well, acts selfishly: the closest mirror of the PC.
 - **Backstory:** Wanted out of the group to go pro in the circuit, and dreaded telling Sabine. Knew she wasn't an informant in the police sweep that triggered the ousting (there was no informant), but was glad she was gone — not because he didn't want her around, but because he didn't want her hurt by him leaving. He never actually went pro `<TBD: why his pro career fell through>`.
 - **Conflict:** Back then, he let her be pushed out, knowing full well she was innocent. It was easier on his feelings and harder on hers, and it was for a pro career that never happened. He mirrors the PC: leaving without facing the goodbye.
 - **First sighting:** after the PC clears Round 1 Street. He talks with the PC (no race yet), building the mythos around the fallout and pushing the PC to dig further, without revealing the private accusation `<TODO: sighting beat>`.

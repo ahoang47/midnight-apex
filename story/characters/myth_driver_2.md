@@ -4,6 +4,11 @@
 
 - **Role:** Former friend / Resentful rival
 - **District:** Wangan
+- **Personality (locked 2026-11-04):** a mature professional, like the Wangan crew.
+  - Composed and polished: measured, successful, hard to read.
+  - Proud, but hides it: the teasing hurt his image, and he quietly decided Sabine was to blame.
+  - Holds a cold, controlled grudge: never confronts anyone; the summit outburst is a crack in the polish.
+  - Guilt leaks through sideways, as hints.
 - **Backstory:** Asked Sabine out on a date once; she politely rejected him and they remained friends. However, he secretly resents her because he believes she told people about it. She didn't: #2 vented about it to #1 and #3 himself one night, they teased him for weeks, and he convinced himself the jokes started with her. At the summit, in the apology party, he throws it at her ("You told everyone I asked you out.") and #1 or #3 answers, "Man, *you* told us." Before the breakup, Myth Drivers #1 and #3 kept bringing it up; none of them has spoken since.
 - **Conflict:** His resentment festered — he took a personal vendetta against Sabine for something she didn't do rather than talking to her directly, and hid it behind the private snitch accusation from the police sweep.
 - **First sighting:** after the PC clears Round 1 Wangan. He talks with the PC (no race yet), building the mythos around the fallout and pushing the PC to dig further, without revealing the private accusation `<TODO: sighting beat>`.

@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: core character and crew personalities
+- Added a Personality bullet to Narrative Identity on the Sabine, Myth Driver #1–#3 and barkeep sheets; a PC personality line in `story/plot.md` §1 (kept light so players can project); boss and crew personality lines under each district (Touge, Wangan, Street) in `plot.md`; and canon decision 25 pointing to them.
+- Why: Austin locked these to drive barks, pre- and post-race interactions and exposition.
+- Sabine's pitched "cutting" trait was dropped as out of character; her uncle parting line stays as a rare moment of anger.
+- #2 and #3's personalities were fitted to their districts (Wangan professionals, Street younger crowd). Their backstories stay put, because the promoter old flame (decision 21) and #3's pro career depend on them.
+
 ## 2026-11-04 — MX-5 (ND, soft top): detail pass [art] (Arthur, Art Director)
 - Austin signed off the clay ("Great pass. Go for detail."). The detail pass is the GR Corolla's stage copied to `art/vehicles/mx5/`: `build_mx5_detail.py`, `bp/vectors.py`, `tex/make_body_mx5.py`, `tex/make_parts_mx5.py`, deliver, three-view and lineup scripts, and `godot/make_tscn.py`. Game files are in the new `assets/cars/mx5/` (`car_mx5.glb`, `car_mx5.tscn`, `susp_follow.gd` with its own uid). The night shot is in the new `art/mood/tokyo_mx5/`. Not committed.
 - Result: 1,692 tris (cap 2,000; +2 vs clay). The mirrors are now 5-point rings (+12 tris), the glow FX now covers head and tail lamps (+4), and the boolean re-cut came out 14 tris lower. Silhouette and rig are unchanged: IoU side .978, top .993, front .971, rear .953 (pass); 9-pose clearance all clear, tightest still 4.5 mm at front bump.
