@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-04 — Barry: Wild ramp proposal added to the decision sheet
+- Added top decision 9 and an item 11 row in `design/02-equations-reference.md`: Wild races in each district ramp up in AI skill and race length as the PC beats that district's lieutenants. Wild vs lieutenant is separated by AI skill (read, QTE, tell lie rate, deck lean), not stats. Open: whether lieutenants remember the PC's stance habits, and whether that applies after losses or only after wins. No sims run; no constants changed. Why: Austin flagged in the Integration room that small crews make it hard to climb to lieutenants and bosses on Wild alone, and that short Wild races may feel thin. He chose a Wild ramp over a new tier and asked for it to be queued for his sign-off.
+
 ## 2026-11-04 — Nathaniel: two items pending Austin's sign-off
 - Open question 12 (Jesse and Reiko) now notes Austin's "Sabine's crew" idea: a counter-counter-culture group, there only for the cars, that Jesse and Reiko introduce the PC to. Why: it opens their backstories and explains how Sabine stays known while isolated after the sweep. Not locked.
 - New open question 17: the story framing for Barry's Wild ramp (reputation draws out better local drivers; tells follow the crew ladder). Substories is now 18 and stays last. Why: Austin asked both of us to queue our ramp work for his sign-off. Not locked; numbers stay with Barry.

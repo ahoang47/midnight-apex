@@ -18,6 +18,7 @@ Every formula in the combat engine. All are pure functions in `sim/velocity_shif
 6. **Straight window**: 8s (06) vs 12s (Godot guide). Pick one for Godot.
 7. **Economy numbers** (debt race, DEBT_SHARE, wholesale, respec, betting stakes/odds/shell rate): list only; **no season runs** until you give success criteria.
 8. Accept or mark up the **§0 target curves** (q_read / q_time form, equal weights, coefficients).
+9. **Wild ramp (proposed 2026-11-04, Integration room):** in each district, Wild races get harder and longer as the PC beats that district's lieutenants. Early Wild races stay short pushovers for EXP; later ones approach lieutenant AI skill and race length, so the climb to lieutenants isn't a cliff. Wild and lieutenant races differ by AI skill (read, QTE timing, tell lie rate, deck lean), not stats; both stay near stat parity. Story reason: reputation (each lieutenant beaten spreads the PC's name and draws better locals). Open: should lieutenants also read the PC's past stance habits against them (makes post-loss retries harder, which conflicts with the same-difficulty-retry rule), or only after wins? Lie rates go through Desmond and Nathaniel. Next step after sign-off: sim AI skill × race length along the ramp so each step is a small, real jump.
 
 ### Yardstick (your meta) vs today's sim
 
@@ -157,6 +158,7 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 | Tell / lie rates (06) | Cap what q_read is worth in-game | Set with Desmond alongside AI read |
 | Archetype matchup spread | q50 0.01–0.48 at parity | Separate pass after AI lever |
 | Skill-point value / 0.8× boss cap | Not in sim | Needs format before economy runs |
+| Wild ramp (top decision 9) | Proposed, awaiting sign-off | Sim AI skill × race length per ramp step |
 | Constants location (C10) | Ratios/turns live in ai.py/cli.py | Move into `equations.py` with the scaling fix |
 
 ---
