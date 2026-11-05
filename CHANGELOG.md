@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: Myth Driver #3's sighting beat
+- Replaced the `<TODO: sighting beat>` for #3's Round 1 sighting in `story/plot.md` §4 (Street) and `characters/myth_driver_3.md`. He traces the PC's parts to Reiko and through her to Sabine, asks "She doing alright?", then peels off with the crew before the PC can answer. Removed the matching open question from `canon.md` and renumbered (Substories stays last).
+- Why: it fits his locked personality (charming, and avoids hard conversations). He reaches Sabine through her people, not her work, so it doesn't repeat #1's and #2's beats.
+- Per Austin, the hint at #3's failed pro career moved from the sighting to the Round 2 Street reveal (`plot.md` §5), likely through the influencer `<TODO: beat>`.
+
+## 2026-11-04 — Nathaniel: Myth Driver #2's sighting beat
+- Replaced the `<TODO: sighting beat>` for #2's Round 1 sighting in `story/plot.md` §4 (Wangan) and `characters/myth_driver_2.md`. He spots Sabine's work on the PC's car, slips into the past tense ("Everyone did"), then deflects with a dig at the promoter about chasing the crowds she drew. Removed the matching open question from `canon.md` and renumbered.
+- Why: it fits his locked personality (composed and polished, with guilt leaking out sideways). Austin chose a Sabine-related exchange with a dig at the promoter, which sets up the Round 2 Wangan reveal that betting dropped when she walked away. A betting-themed headliner line was set aside because betting doesn't unlock until the end of Round 2.
+- Added open question 14, flesh out Jesse's and Reiko's stories (Austin's note), before Substories, which moves to 15.
+
 ## 2026-11-04 — Nathaniel: car bodies (shells) and betting races
 - Added canon decision 26 (shells and betting-race rules), with cross-references in decision 21 and the `plot.md` Wangan district.
 - Why: Austin wanted a simple in-world reason for changing car bodies, since there will be many cars. Body swaps are everyday work at Sabine's garage, and Reiko sources the shells.

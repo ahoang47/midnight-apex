@@ -118,13 +118,13 @@ Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing mat
 ### Wangan
 - Match 1 vs crew `<TBD>` / crew boss `<TBD>`
 - Reveal: PC enters the highway scene; racers describe the old generation’s structure; the police sweep in detail: a city-wide crackdown across all three districts in one night; lots of tickets and impounds, a few arrests, stated as plain facts; Sabine left minutes before and walked away clean (canon decision 23)
-- Myth Driver sighting: after the Wangan crew is cleared, Myth Driver #2 makes his first sighting (he talks with PC, no race yet; the conversation builds the mythos around the fallout and pushes PC to dig further, without revealing the private accusation) `<TODO: sighting beat>`
+- Myth Driver sighting: after the Wangan crew is cleared, Myth Driver #2 makes his first sighting (he talks with PC, no race yet; the conversation builds the mythos around the fallout and pushes PC to dig further, without revealing the private accusation) Locked 2026-11-04: he notices Sabine's work on the PC's car ("Her work?"). The PC asks if he knows Sabine; "Everyone did. Clean as ever..." The PC catches the past tense ("Did?"), and he changes the subject with a slight dig at the Wangan crew boss: "The crowds used to come out for her. `<promoter's name>` has been trying to chase that high ever since." Rough wording; exact dialogue comes at scripting. The slip on "did" is the hint of his guilt; the dig ties to the Round 2 Wangan reveal (betting dropped when she walked away).
 
 ### Street
 - Match 1 vs crew `<TBD>` / crew boss `<TBD>`
 - Reveal: PC enters the street scene. The influencer’s crew knows the old generation only from grainy clips; one shows Sabine’s car leaving a meet right before the sweep footage starts. Kid: “She bounced right before the cops showed. Legend.” (timing clue, played as clout)
 - #3’s old fans in the crew call him the one who “went pro” and Sabine the one who “stayed behind,” with pity, not suspicion
-- Myth Driver sighting: after the Street crew is cleared, Myth Driver #3 makes his first sighting (he talks with PC, no race yet; the conversation builds the mythos around the fallout and pushes PC to dig further, without revealing the private accusation) `<TODO: sighting beat>`
+- Myth Driver sighting: after the Street crew is cleared, Myth Driver #3 makes his first sighting (he talks with PC, no race yet; the conversation builds the mythos around the fallout and pushes PC to dig further, without revealing the private accusation) Locked 2026-11-04: he notices the PC's parts and asks where they got them. The PC says Reiko. He thinks about it ("Reiko, huh...") and remembers she still hangs around Sabine. PC: "You know Sabine?" #3: "Everybody knew everybody back then. Different time." A beat, then lightly: "She doing alright?" Before the PC can answer, a Street crew kid asks him to run one, and he grins back into golden-boy mode and peels off with the crew, leaving the question hanging. Rough wording; exact dialogue at scripting. Jesse and Reiko are off the scene like Sabine, so he connects the parts to her himself.
 
 ## 5. Round 2 — Consequences
 
@@ -145,6 +145,7 @@ Reveals plant misleading clues toward Sabine’s guilt (her silence after the sw
 - Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
 - Reveal: racers openly trade theories about why Sabine walked away. PC reads the crew’s group chat: she got scared, she got paid, she got a deal
 - The influencer boss offers to “settle it” with a content-style interview with Sabine, for views. PC refuses. Boss: “Means she’s hiding something. Clean people talk.”
+- Also plants #3's failed pro career (moved from his sighting), likely through the influencer, who felt abandoned when #3 left to go pro `<TODO: beat>`
 
 ## 6. Round 3 — Distortion
 

@@ -94,15 +94,14 @@ Pull from the top; new questions go to the bottom.
 1. (2026-07-07) **Crew and crew boss names** (identities set: Touge boss respects Sabine, decision 20; Wangan promoter, 21; Street influencer, 22) — `plot.md` Districts and Rounds
 2. (2026-07-07) **Myth Driver names** (#1, #2, #3) — `plot.md` §7; `characters/myth_driver_*.md`
 3. (2026-10-31) **Setting names:** city name, in-world district names, currency — canon decision 6; `pitch.md`; `plot.md` Districts; `barks.md` (`<currency>`)
-4. (2026-11-02) **Sighting conversation: Myth Driver #2** (after Round 1 Wangan, `<TODO: sighting beat>`) — `plot.md` §4; `characters/myth_driver_2.md`
-5. (2026-11-02) **Sighting conversation: Myth Driver #3** (after Round 1 Street, `<TODO: sighting beat>`) — `plot.md` §4; `characters/myth_driver_3.md`
-6. (2026-11-02) **Why #3's pro career fell through** (`<TBD>`) — canon decision 9; `plot.md` §7; `pitch.md`; `characters/myth_driver_3.md`
-7. (2026-11-02) **Reiko's wholesale scene** at the end of Round 1 (decision 19) — `plot.md` §4
-8. (2026-11-02) **Epilogue details:** the hometown crew's members and the PC's apology lines (names stay on hold) — canon decision 13; `plot.md` §11
-9. (2026-11-02) **PC backstory beats across the game** (same-but-different with Sabine; first pass): Prologue, PC dodges "where you from?" and Sabine doesn't push; Round 2, Jesse asks about the PC's old crew, "Had one. Left." (Sabine overhears); Round 3, PC slips "I left the week of a big race" while digging into Sabine; Summit, PC tells all of it. Locked so far: the missed hometown call during the Round 2 Touge texts reveal — canon decision 13; `plot.md` §1–6, §9
-10. (2026-11-02) **The PC's apology/repair** (depends on the PC backstory beats; first pass: "I didn't ask. I just decided. Same as them." then "I did the same thing back home.") — `plot.md` §9; canon decision 5
-11. (2026-11-02) **How the PC gets Sabine to the final race** after the blowup (`<TODO>`) — canon decision 4; `plot.md` §8–9
-12. (2026-11-02) **Apology timing:** do the PC's and the Myth Drivers' apologies come before, during or after the final race? — canon decision 4; `plot.md` §9
-13. (2026-11-02) **How each Myth Driver's real reason comes out to the PC in the Finale races** (includes #3, who only half-owns it in his race) — canon decision 16; `plot.md` §7; `characters/myth_driver_*.md`
-14. (2026-11-02) **The reverse speakeasy's name and location** (and the barkeep's name; on hold as detail work) — canon decision 24; `characters/barkeep.md`
-15. (2026-11-01) **Substories:** none written yet — `plot.md` Substories
+4. (2026-11-02) **Why #3's pro career fell through** (`<TBD>`) — canon decision 9; `plot.md` §7; `pitch.md`; `characters/myth_driver_3.md`
+5. (2026-11-02) **Reiko's wholesale scene** at the end of Round 1 (decision 19) — `plot.md` §4
+6. (2026-11-02) **Epilogue details:** the hometown crew's members and the PC's apology lines (names stay on hold) — canon decision 13; `plot.md` §11
+7. (2026-11-02) **PC backstory beats across the game** (same-but-different with Sabine; first pass): Prologue, PC dodges "where you from?" and Sabine doesn't push; Round 2, Jesse asks about the PC's old crew, "Had one. Left." (Sabine overhears); Round 3, PC slips "I left the week of a big race" while digging into Sabine; Summit, PC tells all of it. Locked so far: the missed hometown call during the Round 2 Touge texts reveal — canon decision 13; `plot.md` §1–6, §9
+8. (2026-11-02) **The PC's apology/repair** (depends on the PC backstory beats; first pass: "I didn't ask. I just decided. Same as them." then "I did the same thing back home.") — `plot.md` §9; canon decision 5
+9. (2026-11-02) **How the PC gets Sabine to the final race** after the blowup (`<TODO>`) — canon decision 4; `plot.md` §8–9
+10. (2026-11-02) **Apology timing:** do the PC's and the Myth Drivers' apologies come before, during or after the final race? — canon decision 4; `plot.md` §9
+11. (2026-11-02) **How each Myth Driver's real reason comes out to the PC in the Finale races** (includes #3, who only half-owns it in his race) — canon decision 16; `plot.md` §7; `characters/myth_driver_*.md`
+12. (2026-11-02) **The reverse speakeasy's name and location** (and the barkeep's name; on hold as detail work) — canon decision 24; `characters/barkeep.md`
+13. (2026-11-04) **Flesh out Jesse's and Reiko's stories** (backstories beyond their garage roles; Austin's note) — `plot.md` §2; canon decision 24
+14. (2026-11-01) **Substories:** none written yet — `plot.md` Substories
