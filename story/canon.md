@@ -116,7 +116,7 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
     - **Timing:** betting unlocks at the end of Round 2 (21). Mechanics, stakes and odds `<TBD: Barry>`.
     - **No conflict** with "losing a crew boss race means a retry, never losing the car" (rules below): the PC never stakes their shell or car.
 
-27. **Persistent results (2026-11-04).** Apart from the Myth Driver races, race results are canon: if the PC loses a race, that driver remembers it, and it carries into later barks and encounters. Example: winning race 3 is what makes Reiko take the PC seriously and open parts sales (19). How losses are tracked and whether races can be retried is `<TBD: Barry>`.
+27. **Persistent results (2026-11-04; narrowed 2026-11-05).** Loss persistence applies only to crew members (lieutenants) and crew bosses: if the PC loses to one of them, that driver remembers it, and it carries into later barks and rematches. Wild races and Myth Driver races do not have loss persistence (wild racers are anonymous locals). Separate win gate: winning scripted race 3 is what makes Reiko take the PC seriously and open parts sales (19). How losses are tracked and whether races can be retried is `<TBD: Barry>`.
 
 ## Vocabulary
 

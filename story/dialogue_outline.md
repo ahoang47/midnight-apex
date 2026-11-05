@@ -21,7 +21,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - Round themes: 1 = the incident, 2 = consequences, 3 = distortion.
 - Sweep information comes from crew reveals and post-race crew dialogue. Myth Driver sightings never lay out the sweep. Detailed sweep hints per race are still `<OPEN: post-race crew dialogue that hints at the sweep (Q13)>`; the post-race lines below are first examples only.
 - Nobody says "snitch" out loud. Keep it subtle.
-- **Persistent results (canon 27):** apart from the Myth Driver races, a driver who beats the PC remembers it. Rematch taunt examples (draft): "Back for another one? Last time wasn't close." / "I remember your car. Mostly the back of mine." How losses are tracked is `<OPEN: Barry, canon 27>`.
+- **Persistent results (canon 27):** loss persistence applies only to crew members (lieutenants) and crew bosses—wild races and Myth Driver races don't track losses. If a crew member or crew boss beats the PC, they remember it. Rematch taunt examples (draft): "Back for another one? Last time wasn't close." / "I remember your car. Mostly the back of mine." How losses are tracked is `<OPEN: Barry, canon 27>`.
 
 ---
 
@@ -76,7 +76,6 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 
 ### Wild races (any district)
 - Opponent starts it (draft): "You're the one driving for Sabine's garage? Prove it."
-- After a loss to them (persistent results, draft): "Same car as last time. Same result?"
 
 ### Touge, Round 1
 **Crew pre/post-race lines** (the legend as the kids heard it)
@@ -151,7 +150,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 
 ## Round 2 — Consequences
 
-### Wild races and rematches
+### Lieutenant rematches
 - A lieutenant who beat the PC last round (persistent results, draft): "Leveled up since last time. Have you?"
 
 ### Touge, Round 2
@@ -301,7 +300,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 
 ## Finale — Myth Driver races
 
-Order (locked): Touge #1 → Wangan #2 → Street #3. These are the only races whose results don't persist. How each real reason comes out to the PC is `<OPEN: Q10>`.
+Order (locked): Touge #1 → Wangan #2 → Street #3. Like wild races, Myth Driver race results don't persist (canon 27). How each real reason comes out to the PC is `<OPEN: Q10>`.
 
 ### Myth Driver #1 race (Touge)
 - **Beat:** he insists Sabine left on her own the night of the sweep (first pass). It sounds settled until #2's race.

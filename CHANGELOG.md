@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-05 — Nathaniel: narrow loss persistence to crew members and crew bosses (canon 27)
+- `story/canon.md` (decision 27) and `story/dialogue_outline.md`: narrowed loss persistence to crew members (lieutenants) and crew bosses only; wild races no longer have loss persistence (alongside Myth Driver races). Cut the Round 1 wild-race loss bark, renamed Round 2 `Wild races and rematches` to `Lieutenant rematches`, and updated the Finale note. Prologue race 3's win gate (decision 19) stays unchanged. Why: Austin clarified that wild races don't have loss persistence, only crew members and the crew boss.
+
 ## 2026-11-04 — Barry: Wild ramp proposal added to the decision sheet
 - Added top decision 9 and an item 11 row in `design/02-equations-reference.md`: Wild races in each district ramp up in AI skill and race length as the PC beats that district's lieutenants. Wild vs lieutenant is separated by AI skill (read, QTE, tell lie rate, deck lean), not stats. Open: whether lieutenants remember the PC's stance habits, and whether that applies after losses or only after wins. No sims run; no constants changed. Why: Austin flagged in the Integration room that small crews make it hard to climb to lieutenants and bosses on Wild alone, and that short Wild races may feel thin. He chose a Wild ramp over a new tier and asked for it to be queued for his sign-off.
 
