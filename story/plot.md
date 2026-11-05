@@ -65,7 +65,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 - Crew `<TBD>`; Crew Boss `<TBD: name>` — presents a pragmatic interpretation of events. **The promoter:** he organizes the Wangan runs, takes bets and gets a cut; every race is a show, and the PC is a new headliner he can sell. Pragmatic about Sabine, not emotional: her walking away was bad for business (the scene lost its best draw). Smooth, flashy talker, always selling. Secretly Sabine's old flame, the real reason she turned down #2's date; only hinted at until the summit (canon decision 21)
 - Boss personality (locked 2026-11-04): smooth, pragmatic, always selling; sees the PC as a headliner; talks about Sabine like a business loss, with a little too much care in his voice
 - Crew personality: grown-ups with day jobs racing for release; polite, measured, cliquey; treat the PC like a new hire who has to prove they belong; gossip comes out as dry, knowing remarks
-- High-stakes betting side game run by the promoter, unlocked at the end of Round 2 (mechanics `<TBD: Barry>`)
+- High-stakes betting side game run by the promoter, unlocked at the end of Round 2 (mechanics `<TBD: Barry>`). Winning a betting race against a crew boss here is the only way to win shells (cosmetic car bodies); wild-encounter betting races award no shells (canon 26)
 
 | Racer Type | Archetype |
 |---|---|

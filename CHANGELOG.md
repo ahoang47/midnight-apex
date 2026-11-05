@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: car bodies (shells) and betting races
+- Added canon decision 26 (shells and betting-race rules), with cross-references in decision 21 and the `plot.md` Wangan district.
+- Why: Austin wanted a simple in-world reason for changing car bodies, since there will be many cars. Body swaps are everyday work at Sabine's garage, and Reiko sources the shells.
+- It's inspired by Racing Lagoon's looting, but a one-sided pink slip needed too much suspension of disbelief. So shells became a bonus prize for winning a betting race against a crew boss at the promoter's base. The PC never stakes their own shell, which keeps the "a loss = retry, never losing the car" rule intact.
+
 ## 2026-11-04 — Nathaniel: aero unlock, betting timing, Jesse and Reiko back at the garage
 - Garage: Jesse and Reiko work out of Sabine's garage, not the speakeasy (canon 24, `plot.md` §2, `barkeep.md`). Austin corrected this; the speakeasy is just the barkeep and the wind tunnel. "Sabine doesn't employ them" stays.
 - Aero: unlocks when the debt hits zero mid Round 2 (canon 19, 24; `plot.md` §5). Parts are bought from Reiko at the garage and tuned at the wind tunnel (Austin, DM). Sabine takes the PC for drinks at the speakeasy to celebrate, the PC's first visit to the bar (`barkeep.md`). Numbers stay in Barry's `design/07`; the exact race comes from his season sim.
