@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-05 — Barry: narrow loss persistence in design/ to crew members and crew bosses (canon 27)
+- `design/01-system-overview.md` (Vocabulary: race tiers and persistence) and `design/07-economy-and-mods.md` (§11 Q19 and Progression note): updated canon 27 references so loss persistence applies only to crew members (lieutenants) and crew bosses; wild races and Myth Driver races don't have loss persistence, while scripted race 3's win gate (canon 19) stays unchanged. Why: Austin narrowed canon 27 (`b90dd15`) and cleared `design/` to match and push.
+
 ## 2026-11-05 — Nathaniel: narrow loss persistence to crew members and crew bosses (canon 27)
 - `story/canon.md` (decision 27) and `story/dialogue_outline.md`: narrowed loss persistence to crew members (lieutenants) and crew bosses only; wild races no longer have loss persistence (alongside Myth Driver races). Cut the Round 1 wild-race loss bark, renamed Round 2 `Wild races and rematches` to `Lieutenant rematches`, and updated the Finale note. Prologue race 3's win gate (decision 19) stays unchanged. Why: Austin clarified that wild races don't have loss persistence, only crew members and the crew boss.
 
