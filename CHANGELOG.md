@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: two items pending Austin's sign-off
+- Open question 12 (Jesse and Reiko) now notes Austin's "Sabine's crew" idea: a counter-counter-culture group, there only for the cars, that Jesse and Reiko introduce the PC to. Why: it opens their backstories and explains how Sabine stays known while isolated after the sweep. Not locked.
+- New open question 17: the story framing for Barry's Wild ramp (reputation draws out better local drivers; tells follow the crew ladder). Substories is now 18 and stays last. Why: Austin asked both of us to queue our ramp work for his sign-off. Not locked; numbers stay with Barry.
+
 ## 2026-11-04 — Nathaniel: #3's pro career (Q4 locked), Round 3 sightings for #1 and #3, open-question cleanup
 - Q4 locked: the sweep cost #3 his pro career. He was impounded and charged that night, and the team courting him wouldn't touch a street racer with a record, so the offer died. This also gives him a second reason to push Sabine away, on top of avoiding the goodbye: she walked away clean while he lost everything. It's written into canon 9 and timeline item 3, `plot.md` §7, `pitch.md` and `characters/myth_driver_3.md`, and every `<TBD: why his pro career fell through>` is replaced. His Round 2 sighting (the scrap rebuild, "Lost the good one a while back.") now pays it off. In the summit lines, "a pro career that never happened" is now "a pro career that the sweep took from him". Why: Austin locked it, and it ties #3's bitterness to the sweep's cost.
 - #1's Round 3 sighting (locked for now, rough wording): after the Touge old head's phone-call reveal, #1 says "Told everyone back then. Nobody listened." and then "Now you're the one asking questions." He never spells out the accusation. Written into `plot.md` §6 and `myth_driver_1.md`.
