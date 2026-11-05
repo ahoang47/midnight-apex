@@ -26,7 +26,7 @@ Encounter:
 
 ---
 
-# 1. Wild Encounter (Opponent Initiates)
+# 1. Wild Race (Opponent Initiates)
 
 These should be short and highly repeatable.
 
@@ -182,13 +182,13 @@ Opponent notices player.
 
 ---
 
-# 2. Wild Encounter (Player Initiates)
+# 2. Wild Race (Player Initiates)
 
 These should feel slightly more predatory/confident.
 
 **Purpose:** Reinforce player agency, let player feel like the hunter.
 
-**Recommended Total Dialogue:** Similar length to opponent-initiated encounters.
+**Recommended Total Dialogue:** Similar length to opponent-initiated wild races.
 
 ## Pre-Battle Dialogue
 
@@ -207,7 +207,7 @@ Opponent reacts to being challenged.
 
 ---
 
-# 3. Crew Encounter
+# 3. Lieutenant Race (crew members)
 
 These are mini-bosses.
 
@@ -219,20 +219,20 @@ Crew members should reference their crew, reference district politics, reference
 
 ## Initial Interaction
 
-Crew member acknowledges player reputation.
+Crew member acknowledges where the PC is in the story. Reputation is lore only (canon 12), so these tiers are keyed to story progress, not a stat.
 
-### Low Reputation
+### Round 1
 - "You haven't earned the right to challenge us."
 - "Beat more street runners first."
 - "Your name hasn't reached this crew."
 - "Come back when the district talks about you."
 
-### Medium Reputation
+### Round 2
 - "Heard about you."
 - "You're moving up faster than expected."
 - "You've been causing problems."
 
-### High Reputation
+### Round 3
 - "So you're the one everyone's talking about."
 - "I was wondering when you'd show up."
 - "About time."
@@ -308,7 +308,7 @@ Use overheating or desperation language.
 
 ---
 
-# 4. Boss Encounter (Blacklist Equivalent)
+# 4. Crew Boss Race (Blacklist equivalent)
 
 These are major narrative events.
 

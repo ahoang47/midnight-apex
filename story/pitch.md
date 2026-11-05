@@ -70,7 +70,7 @@ without relying on simulator driving execution.
 
 # Progression Structure
 
-Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Each round, the player faces all three in Touge, then Wangan, then Street; each round the player runs through a whole crew (its kids, mature members, old heads, then the boss) and the boss levels up the whole crew before the next round, and the player earns the street cred for the next rematch by winning in the other districts. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
+Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Each round, the player faces all three in Touge, then Wangan, then Street; each round the player runs through a whole crew (its kids, mature members, old heads, then the boss) and the boss levels up the whole crew before the next round, and the player earns the reputation for the next rematch by winning in the other districts. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
 
 ---
 

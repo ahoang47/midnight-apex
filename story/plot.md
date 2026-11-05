@@ -42,7 +42,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 - One crew + one crew boss per district (3 + 3 total), re-faced every round. Each round the PC runs through the whole crew in rank order: its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the crew boss. Next round the boss has leveled up the whole crew. Flavor text after every race reveals a little more
 - Racer types always use their archetype (pairing rules in `canon.md`)
-- Crew boss stakes: money, rep, rare shop mods, story progress; a loss = retry, never losing the car
+- Crew boss stakes: money, reputation (lore only), rare shop mods, story progress; a loss = retry, never losing the car
 
 ## Touge
 
@@ -99,12 +99,12 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 - Sightings only establish that each Myth Driver knew Sabine; sweep information comes from crew reveals and post-race crew dialogue (canon decision 11)
 - Nobody tells PC about the snitch accusation; PC puts it together from these reveals — and the clues are bad data that genuinely point toward Sabine’s guilt (canon decision 15)
 - Round themes (locked): 1 = the incident, 2 = consequences across the scene, 3 = distortion (what people misremember)
-- Why the rotation (locked): a beaten crew won’t grant a rematch until PC has proven themselves in the other districts — not enough street cred yet (in-world flavor only, not a tracked stat)
-- Every round, in every district: random racer encounters (by racer type), street cred gating, crew boss build-up through rumor, the crew race, a story reveal
+- Why the rotation (locked): a beaten crew won’t grant a rematch until PC has proven themselves in the other districts — not enough reputation yet (in-world flavor only, not a tracked stat)
+- Every round, in every district: wild races (random racers by racer type), reputation gating, crew boss build-up through rumor, the crew race, a story reveal
 
 ## 4. Round 1 — The Incident
 
-Mods unlock after the PC's first 2–3 races, at full price (canon 19; exact count `<TBD: Barry>`). End of round: Reiko warms up and gives the PC wholesale prices ("Wholesale is for crew." payoff), though the debt isn't cleared until Round 2 `<TODO: scene>`.
+Mods unlock once the PC wins race 3: Reiko sees they're serious and finally lets them buy parts through her, at full price (canon 19). End of round: Reiko warms up and gives the PC wholesale prices ("Wholesale is for crew." payoff), though the debt isn't cleared until Round 2 `<TODO: scene>`.
 
 Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing matching when she walked away). Across the rounds, crew flavor text lightly mentions people caught in the sweep (a brother, an old friend) so its cost builds quietly toward Round 3 Street
 
@@ -120,7 +120,7 @@ Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing mat
 - Match 1 vs crew `<TBD>` / crew boss `<TBD>`
 - Reveal: PC enters the highway scene; racers describe the old generation’s structure; the police sweep in detail: a city-wide crackdown across all three districts in one night; lots of tickets and impounds, a few arrests, stated as plain facts; Sabine left minutes before and walked away clean (canon decision 23)
 - The PC arrives in Wangan digging because of #1's comment; the Wangan crew, being mature, lays the sweep out straight
-- Myth Driver sighting: after the Wangan crew is cleared, Myth Driver #2 makes his first sighting (he talks with PC, no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices Sabine's work on the PC's car ("Her work?"). The PC asks if he knows Sabine; "Everyone did. Clean as ever..." The PC catches the past tense ("Did?"),, and he closes with "Long time ago." and leaves `<PROPOSAL>` (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting). The slip on "did" is the hint of his guilt. The crowds line moved to his Round 2 sighting.
+- Myth Driver sighting: after the Wangan crew is cleared, Myth Driver #2 makes his first sighting (he talks with PC, no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices Sabine's work on the PC's car ("Her work?"). The PC asks if he knows Sabine; "Everyone did. Clean as ever..." The PC catches the past tense ("Did?"), and he closes with "Long time ago." and leaves `<PROPOSAL>` (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting). The slip on "did" is the hint of his guilt. The crowds line moved to his Round 2 sighting.
 
 ### Street
 - Match 1 vs crew `<TBD>` / crew boss `<TBD>`
@@ -138,7 +138,7 @@ Reveals plant misleading clues toward Sabine’s guilt (her silence after the sw
 - Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
 - Reveal: it turns personal. A mature racer who was a kid back then: “I texted her for weeks after. Never wrote back. Figured she didn’t want anything to do with us.” (She was at the hospital with her uncle; the missing two weeks seen from the other side)
 - As he says it, PC’s phone buzzes: a hometown number. PC lets it ring out. Nobody comments; the player sees both sides of the same silence (locked 2026-11-02)
-- Myth Driver sighting (#1) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): the fracture, shown through how thin the crew has gotten (Austin picked this over a cop dig). "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew chief>`." He looks up the road: "I ran this mountain once. Half of them never came back after that night." Blunt; the cops stay implied by "that night," and it hints he used to lead the Touge crew
+- Myth Driver sighting (#1) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): the fracture, shown through how thin the crew has gotten (Austin picked this over a cop dig). "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew boss name>`." He looks up the road: "I ran this mountain once. Half of them never came back after that night." Blunt; the cops stay implied by "that night," and it hints he used to lead the Touge crew
 
 ### Wangan
 - Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round

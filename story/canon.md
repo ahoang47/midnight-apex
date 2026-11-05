@@ -54,7 +54,7 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
     - **Finale:** finishing Round 3 unlocks the three Myth Driver races, in the same order (Touge #1 → Wangan #2 → Street #3), then the Fushigi-Yama summit and the ending.
     - The main plot stays grounded; JRPG weirdness and extra lore go in substories and side quests.
 
-12. **Street cred gates the rotation.** A beaten crew won't grant a rematch until the PC has proven themselves in the other districts. Cred comes from beating the other districts' crews, which is why each round rotates Touge → Wangan → Street. Lore only, not a tracked stat.
+12. **Reputation gates the rotation.** A beaten crew won't grant a rematch until the PC has proven themselves in the other districts. Reputation comes from beating the other districts' crews, which is why each round rotates Touge → Wangan → Street. Lore only, not a tracked stat.
 
 13. **Player character.**
     - Mid-20s, any gender. Moved to the city for work, but is really running from something: the PC was their hometown crew's driver and left the week of a big race for a city job without telling anyone. The crew believes the PC ditched them for something better.
@@ -79,7 +79,8 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
 19. **The debt.**
     - Sabine fronted the engine rebuild, so the PC drives for her garage until it's paid off. Every crew the PC beats also gives her garage the standing it hasn't had since the breakup (14).
     - Until it's cleared, a share of each win (not all of it) goes to the debt, so money for mods is tight in Round 1. Share size, debt amount and Reiko's wholesale discount are Barry's `<TBD: Barry>`.
-    - **Mods (2026-11-04):** regular mods unlock after the PC's first 2–3 races, at full retail price. Exact race count `<TBD: Barry>`.
+    - **Opening (2026-11-04):** the first three races are more or less scripted. Once mods unlock, the whole world opens up: the PC can take wild races or search out lieutenants (the crew members; "lieutenant" is the sim's encounter tier between wild races and the boss).
+    - **Mods (2026-11-04):** mods unlock after the PC wins race 3. Reiko sees the PC is serious and finally lets them buy parts through her, at full price. Wholesale follows at the end of Round 1 as she warms up.
     - **Wholesale:** at the end of Round 1 Reiko warms up and gives the PC wholesale prices, even though the debt isn't cleared yet (payoff of "Wholesale is for crew. You're not crew."). By Round 3 the PC has plenty of access to parts.
     - **Cleared mid Round 2.** The exact race comes from Barry's season sim (`design/07-economy-and-mods.md`). Clearing it triggers aero mods and Sabine's drinks at the speakeasy (24). After that the PC stays for the fun and to uncover Sabine's mystery.
 
@@ -111,9 +112,21 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
     - **Why bodies change:** body swaps (dropping the engine and chassis into a new shell) are everyday work at Sabine's garage, and Reiko sources shells from impounds, wrecks and dealers. With so many bodies in the game, nobody finds swapping strange.
     - **Cosmetic only** (no stats).
     - **Winning shells:** only by winning a betting race, as a bonus prize, and only at the promoter's home base (Wangan, 21). Only crew bosses put up shells, never named rivals or regular crew racers. The PC never puts up their own shell. Every shell won is kept forever in the PC's collection at the garage and can be swapped on anytime.
-    - **Wild encounters:** any can turn into a betting race via a prompt, but those don't award shells.
+    - **Wild races:** any can turn into a betting race via a prompt, but those don't award shells.
     - **Timing:** betting unlocks at the end of Round 2 (21). Mechanics, stakes and odds `<TBD: Barry>`.
     - **No conflict** with "losing a crew boss race means a retry, never losing the car" (rules below): the PC never stakes their shell or car.
+
+27. **Persistent results (2026-11-04).** Apart from the Myth Driver races, race results are canon: if the PC loses a race, that driver remembers it, and it carries into later barks and encounters. Example: winning race 3 is what makes Reiko take the PC seriously and open parts sales (19). How losses are tracked and whether races can be retried is `<TBD: Barry>`.
+
+## Vocabulary
+
+System terms (race tiers, crew ladder, persistence, stats, unlock order, respec, who works where) are locked in `design/01-system-overview.md` (Vocabulary, top of file). That list is the source of truth for mechanics; this section only maps it to story wording.
+
+- **Race tiers:** wild race → betting race → lieutenant → crew boss, plus the **Myth Driver races** in the Finale. Story calls lieutenants **crew members** (kids, mature members, old heads; 11). Use **crew boss**, not "crew chief"; "wild encounter" and "encounter" are informal only.
+- **Reputation:** lore only, not a tracked stat (12). Story docs use "reputation" (not "street cred" or "rep").
+- **No pink slips:** shells replaced them (26). **Named rivals** may break the racer-type pattern (rules below) and never put up shells.
+- **Story-only terms:** the **police sweep** (never "sting operation", 23); **sightings** (talk-only Myth Driver scenes after every round, 11); **the promoter** (Wangan crew boss, 21); **the influencer** (Street crew boss, 22); **the reverse speakeasy** and **the barkeep** (24).
+- **Unlock order** (opening, mods, wholesale, aero, the debt, betting, shells): see design 01; story beats are in 19, 21, 24 and 26.
 
 ## Racer Types and Archetypes
 
@@ -127,7 +140,7 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
 | **Balanced**: follows a set rhythm | High Schooler | Salaryman | Skater |
 | **Adaptive**: cautious early, sharper later | Honor Student | Consultant | Influencer |
 
-Never reuse archetype names as character or racer-type names. Crew boss stakes are money, rep, rare shop mods and story progress; losing a crew boss race means a retry, never losing the car.
+Never reuse archetype names as character or racer-type names. Crew boss stakes are money, reputation (lore only, 12), rare shop mods and story progress; losing a crew boss race means a retry, never losing the car.
 
 ## Backstory Timeline
 
@@ -135,7 +148,7 @@ Never reuse archetype names as character or racer-type names. Crew boss stakes a
 2. **The police sweep.** A large, coordinated sweep hits all three districts (Touge, Wangan, Street) in one night: lots of tickets and impounds, maybe a few arrests, but routine enforcement, not a tip-off. Minutes before it starts, Sabine gets a call from her uncle-dad about an unrelated family emergency (he's had a heart attack) and leaves; she's the only one of the old generation who walks away clean. The scene goes quiet for months afterward (the "collapse"). Privately, the three Myth Drivers accuse Sabine of being the snitch, each using it as cover for his own reason, and freeze her out quietly. The accusation never leaves the four of them.
 3. **The breakup.** The old generation fractures. To the wider scene, Sabine simply walked away from the old generation without a word around the time of the sweep. She stays on the scene but keeps clear of every crew. The Myth Drivers stop speaking to each other and fade into semi-retired legend. #3's pro career never happens `<TBD: why his pro career fell through>`. Sabine builds her own garage crew, still believing the accusation was the reason.
 4. **The player arrives.** The player moves to the city at dusk. A first race with Sabine ends in a blown engine; she tows the car to her garage and the player enters the scene owing a repair debt. She needs a real driver; she also sees herself in the PC (unspoken).
-5. **Rounds 1–3.** Each round the player beats the same three crews and their crew bosses (running through each whole crew from its kids to its mature members to its old heads to the boss, and each crew leveled up since last time) in Touge, then Wangan, then Street, earning the street cred for the next rematch; every crew defeat reveals another piece of the mystery of her disappearance, and in Round 1 the PC recognizes their own story in hers. After each round's crew in his district is cleared, that district's Myth Driver makes a sighting (first sighting in Round 1; talk only, no race; never lays out the sweep). Sabine deflects. The PC pieces together the accusation from misleading clues in the crew reveals and, at the end of Round 3, accuses Sabine of being the snitch. She doesn't defend herself ("Get out of my garage."), and the relationship blows up.
+5. **Rounds 1–3.** Each round the player beats the same three crews and their crew bosses (running through each whole crew from its kids to its mature members to its old heads to the boss, and each crew leveled up since last time) in Touge, then Wangan, then Street, earning the reputation for the next rematch; every crew defeat reveals another piece of the mystery of her disappearance, and in Round 1 the PC recognizes their own story in hers. After each round's crew in his district is cleared, that district's Myth Driver makes a sighting (first sighting in Round 1; talk only, no race; never lays out the sweep). Sabine deflects. The PC pieces together the accusation from misleading clues in the crew reveals and, at the end of Round 3, accuses Sabine of being the snitch. She doesn't defend herself ("Get out of my garage."), and the relationship blows up.
 6. **The Myth Drivers.** Finishing Round 3 unlocks a race with each Myth Driver: Touge (#1), Wangan (#2), Street (#3). Knowing they messed up, the player races them while estranged from Sabine to find the truth. Their accounts contradict each other, the snitch story unravels, and the PC learns the sweep was benign and each Myth Driver's real reason.
 7. **The blowup.** The PC goes to Sabine: "I know what really happened." She blows up at the PC for digging into her past, and the PC leaves. The PC convinces all three Myth Drivers to come and apologize too: one big apology party.
 8. **The summit.** The PC and Sabine race at the summit of Fushigi-Yama `<TODO: how the PC gets Sabine to the final race>`. The PC and the three Myth Drivers apologize around the race `<TODO: before, during or after the race>`. Sabine learns the real reasons for the first time, from them.
