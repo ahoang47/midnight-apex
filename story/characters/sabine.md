@@ -14,7 +14,7 @@
   - **Myth Driver #1** — upset because it's not her fault her uncle-dad is a cop
   - **Myth Driver #2** — upset because she was nothing but kind to him and he took a personal vendetta over something they should've just talked about
   - **Myth Driver #3** — upset because he's a little punk bitch: he let her be pushed out rather than tell her he was leaving to go pro (and never even went)
-- **Resolution:** After the final race with the PC and the apology party, reconciles with them, then calmly declines their offer to rejoin — she has her own crew now, she won't go back to a group #3 let her be pushed out of, and none of them ever acknowledged her uncle's emergency (canon 5, 23). Gets in one cutting parting shot: "My uncle's doing fine, by the way. Since none of you ever asked."
+- **Resolution:** After the final race with the PC and the apology party, reconciles with them, then calmly declines their offer to rejoin — she has her own crew now, she won't go back to a group #3 let her be pushed out of, and none of them ever acknowledged her uncle's emergency (canon 5, 23). Gets in one angry parting shot: "My uncle's doing fine, by the way. Since none of you ever asked."
 
 ## 2. Battle Identity
 

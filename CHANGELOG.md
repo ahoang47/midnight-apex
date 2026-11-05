@@ -14,7 +14,7 @@
 - Cleaned up `canon.md` for readability, per Austin. Each decision has a bold summary and short bullets; duplicate text is replaced by pointers (2→9 for #3, 2→21 for the date); redundant "locked 2026-11-02" tags are removed. Decision numbers are unchanged, and no facts or numbers were changed. 107 → 164 lines (bullets instead of paragraphs).
 - Contradictions fixed:
   - A stray `---` split the decisions list between 19 and 20.
-  - Canon 5, `plot.md` §10 and `pitch.md` called the uncle line "cutting", which contradicts Sabine's locked personality (not cutting; a rare moment of anger). They now say "angry".
+  - Canon 5, `plot.md` §10, `pitch.md` and `characters/sabine.md` called the uncle line "cutting", which contradicts Sabine's locked personality (not cutting; a rare moment of anger). They now say "angry".
   - Timeline 9 and `characters/sabine.md` listed only two of her three reasons not to rejoin; both now include the uncle's emergency (23).
   - Canon 11 and the sighting text in `plot.md` §4 and the Myth Driver sheets said sightings "build the mythos around the fallout". They now say sightings only establish that he knew Sabine.
   - Canon 19's facts were out of order: wholesale is now dated to the end of Round 1 (matching `plot.md` §4), and the debt clearing mid Round 2 sits together with its aero trigger.
