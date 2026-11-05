@@ -267,7 +267,7 @@ Three legendary former racers exist within the city’s history:
 
 - Touge specialist (Myth Driver #1)
 - Wangan specialist (Myth Driver #2)
-- Street specialist (Myth Driver #3) — in this universe, circuit and street racing are the same scene; he wanted out to go pro, but it never happened `<TBD: why his pro career fell through>`
+- Street specialist (Myth Driver #3) — in this universe, circuit and street racing are the same scene; he wanted out to go pro, but the sweep cost him the offer (impounded and charged that night)
 
 These racers:
 

@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: #3's pro career (Q4 locked), Round 3 sightings for #1 and #3, open-question cleanup
+- Q4 locked: the sweep cost #3 his pro career. He was impounded and charged that night, and the team courting him wouldn't touch a street racer with a record, so the offer died. This also gives him a second reason to push Sabine away, on top of avoiding the goodbye: she walked away clean while he lost everything. It's written into canon 9 and timeline item 3, `plot.md` §7, `pitch.md` and `characters/myth_driver_3.md`, and every `<TBD: why his pro career fell through>` is replaced. His Round 2 sighting (the scrap rebuild, "Lost the good one a while back.") now pays it off. In the summit lines, "a pro career that never happened" is now "a pro career that the sweep took from him". Why: Austin locked it, and it ties #3's bitterness to the sweep's cost.
+- #1's Round 3 sighting (locked for now, rough wording): after the Touge old head's phone-call reveal, #1 says "Told everyone back then. Nobody listened." and then "Now you're the one asking questions." He never spells out the accusation. Written into `plot.md` §6 and `myth_driver_1.md`.
+- #3's Round 3 sighting (locked for now, rough wording): when the PC brings up "She didn't even get a ticket.", #3 says "Some of us paid for that night. Some of us didn't." He's bitter, not lying, and to the PC it sounds like confirmation. Written into `plot.md` §6 and `myth_driver_3.md`.
+- Open questions: Q4 removed and the list renumbered. The Round 3 sightings question (now 14) is narrowed to #2's Round 3 sighting plus another pass on Rounds 1–2. New 15 (who the PC races in opening races 2–3) and 16 (the speakeasy drinks scene). Substories stays last (17) and is noted as a separate thread, per Austin.
+- `dialogue_outline.md`: updated for all of the above, with open-question references renumbered. The Round 3 Street kid line "she held him back" is flagged to cut or replace (`<OPEN>`), because it no longer leads anywhere. The outline is repo-only now; the Page mirror was dropped.
+- Also: `<Touge crew chief>` → `<Touge crew boss name>` in `myth_driver_1.md`, and a double comma fixed in `myth_driver_2.md`.
+
+## 2026-11-04 — Nathaniel: dialogue outline (first pass)
+- New `story/dialogue_outline.md`: every scene's dialogue in play order, from the Prologue (including the scripted opening and Reiko opening parts sales after race 3) through Rounds 1–3 by district, the Finale races, the summit, the ending and the epilogue. It covers crew pre- and post-race lines per round for kids, mature members, old heads and the crew boss; all nine sighting slots (the Round 3 ones are listed as open-question drafts); and persistent-results rematch taunts.
+- Each line is labelled (locked) for canon lines and the approved prologue script, (draft) for rough new example lines, or `<OPEN: … (Q#)>` pointing to the canon open question. No plot points were invented. It uses canon vocabulary ("reputation", crew boss, lieutenants, wild races).
+- Why: Austin asked for an outline of all the dialogue so he can work on it from his phone without pulling the repo.
+- Also fixed the `<Touge crew chief>` placeholder (now `<Touge crew boss name>`) and a double comma in `plot.md` §4–5.
+
 ## 2026-11-04 — Nathaniel: story vocabulary pass
 - Why: Austin asked to update docs across the board to match vocabulary. Scope is `story/` only; `design/` and `sim/` are Barry's, so they're read-only here.
 - `canon.md`: new short **Vocabulary** section (after Decisions). It points to Barry's locked-terms list in `design/01-system-overview.md` as the source of truth for system terms and only maps story wording to it (crew members = lieutenants, crew boss not "crew chief", street cred is lore only, no pink slips, story-only terms). Steady vs Neutral is left open. Decision 26 now says "wild races"; the stakes rule says "street cred (lore only)" instead of "rep".

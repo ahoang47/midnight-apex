@@ -149,8 +149,8 @@ Reveals plant misleading clues toward Sabine’s guilt (her silence after the sw
 - Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
 - Reveal: racers openly trade theories about why Sabine walked away. PC reads the crew’s group chat: she got scared, she got paid, she got a deal
 - The influencer boss offers to “settle it” with a content-style interview with Sabine, for views. PC refuses. Boss: “Means she’s hiding something. Clean people talk.”
-- Also plants #3's failed pro career (moved from his sighting), likely through the influencer, who felt abandoned when #3 left to go pro `<TODO: beat>`
-- Myth Driver sighting (#3) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): his car is a scrap rebuild, nothing like what a pro would drive. He catches the PC looking: "Lost the good one a while back." Hints it was impounded in the sweep; ties to the Round 3 Street reveal ("I did sixty days. Lost my car.") and open question 4 (his pro career; leans toward "the sweep cost him", not locked)
+- Also plants that #3's pro career never happened, likely through the influencer, who felt abandoned when #3 left to go pro `<TODO: beat>` (why it died is locked: the sweep, canon 9)
+- Myth Driver sighting (#3) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): his car is a scrap rebuild, nothing like what a pro would drive. He catches the PC looking: "Lost the good one a while back." Hints it was impounded in the sweep; ties to the Round 3 Street reveal ("I did sixty days. Lost my car.") and pays off the locked reason his pro career died: impounded and charged in the sweep (canon 9)
 
 ## 6. Round 3 — Distortion
 
@@ -159,6 +159,7 @@ Reveals plant misleading clues toward Sabine’s guilt (the old generation going
 ### Touge
 - Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up again
 - Reveal: an old head who was there that night saw Sabine on the phone right before she left and is sure she was tipping off the cops. He’s sincere and wrong: it was her uncle’s call about his heart attack
+- Myth Driver sighting (#1) (locked for now 2026-11-04, rough wording; beats only, dialogue at scripting): after the old head's phone-call reveal, the PC brings up the phone call. #1, blunt: "Told everyone back then. Nobody listened." Then the jab: "Now you're the one asking questions." He's sure he's right, the crew retells his distrust as foresight, and he never spells out the accusation. Underneath: he distrusted her detective uncle (lands in the Finale)
 
 ### Wangan
 - Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up again
@@ -168,6 +169,7 @@ Reveals plant misleading clues toward Sabine’s guilt (the old generation going
 - Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up again
 - Reveal: the mystery turns emotional and cultural; blame, identity and social fragmentation intensify; conflicting, misremembered takes on why Sabine left escalate; PC keeps pressing Sabine, she deflects
 - The final straw: an old head arrested in the sweep, flat, not accusing: “I did sixty days. Lost my car. She didn’t even get a ticket.” It lands because the PC has heard the sweep’s cost all game; Sabine is the one person who paid nothing
+- Myth Driver sighting (#3) (locked for now 2026-11-04, rough wording; beats only, dialogue at scripting): the PC brings up the crew's "She didn't even get a ticket." #3 goes cold for a second, then back to charm: "Some of us paid for that night. Some of us didn't." Bitter, not lying (the sweep took his pro career, canon 9); to the PC it sounds like confirmation
 
 ### Mentor Confrontation (locked: end of Round 3, before the Finale)
 - PC has put the (misleading) clues together and accuses Sabine of being the snitch
@@ -189,7 +191,7 @@ Finishing Round 3 unlocks the three Myth Driver races, one per district. PC goes
 - Order (locked): Touge (#1) → Wangan (#2) → Street (#3), following the sightings
 - **#1 Touge** (name `<TBD>`): insists Sabine *left* on her own the night of the sweep (first pass). It sounds settled until #2’s race (canon 18). Real reason (comes out to PC in the Finale `<TODO: how>`; Sabine hears it at the summit): distrust of Sabine’s uncle-dad, a detective
 - **#2 Wangan** (name `<TBD>`): his guilt over ousting her leaks out as hints that she may have been a scapegoat — one of the first cracks in PC’s certainty (starts the truth unraveling, canon 16) and a foreshadow of him coming to the summit to apologize. His “pushed” clashes with #1’s “left”: the first time two Myth Driver accounts can’t both be true, canon 18. Real reason (comes out to PC in the Finale `<TODO: how>`; Sabine hears it at the summit): she turned down his date
-- **#3 Street** (name `<TBD>`): half-owns it in his race — admits he was glad she was gone, without saying why. Full reason (comes out to PC in the Finale `<TODO: how, given he only half-owns it in his race>`; Sabine hears it at the summit): he wanted out to go pro and didn’t want her hurt by him leaving, so letting her be pushed out was easier on him and harder on her. He never went pro `<TBD: why his pro career fell through>`
+- **#3 Street** (name `<TBD>`): half-owns it in his race — admits he was glad she was gone, without saying why. Full reason (comes out to PC in the Finale `<TODO: how, given he only half-owns it in his race>`; Sabine hears it at the summit): he wanted out to go pro and didn’t want her hurt by him leaving, so letting her be pushed out was easier on him and harder on her. He never went pro: the sweep cost him: he was impounded and charged that night, and the team courting him wouldn't touch a street racer with a record, so the offer died (canon 9). That also gave him a reason to push her away: she walked away clean while he lost everything
 - By the end of the three races PC knows the true story: no informant; the sweep was benign and coincidental; the snitch story covered each Myth Driver’s personal reason
 
 ## 8. Summit Setup: the Blowup
@@ -207,7 +209,7 @@ Finishing Round 3 unlocks the three Myth Driver races, one per district. PC goes
 - Sabine learns the Myth Drivers’ real reasons for the first time, from them; contradictions reconciled; closure between Sabine and the old generation
 - PC owns that they made the same mistake the Myth Drivers did
 - #2 finally throws the date at Sabine (“You told everyone I asked you out.”); before she can answer, #1 or #3: “Man, *you* told us.” His grudge collapses on him, then the promoter truth lands on top (canon 21)
-- #3 gives his full reason: he let her be pushed out to avoid the goodbye, for a pro career that never happened
+- #3 gives his full reason: he let her be pushed out to avoid the goodbye, for a pro career that the sweep took from him
 - PC apologizes to Sabine `<TODO: PC's apology/repair; depends on the PC backstory beats — Sabine has to know about the hometown crew before "And when are you calling them?">`
 
 ## 10. Ending
