@@ -8,6 +8,18 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: Myth Driver #1 sighting tweak, sweep-hint question, canon cleanup
+- #1's sighting: his snide cop comment now points at a past night with the police ("Hope she doesn't bring the cops again.", rough wording), which sends the PC into Wangan asking. The Wangan crew, being mature, lays out the sweep straight (`plot.md` §4, `characters/myth_driver_1.md`). The uncle-dad payoff note is kept. Why: Austin wants sightings to only establish that each Myth Driver knew Sabine, with sweep information coming from crew reveals and post-race dialogue. That rule is now in canon 11, `plot.md` Rounds 1–3 and each Myth Driver's sighting text.
+- New open question 14: post-race crew dialogue that hints at the sweep. Substories is now 15.
+- Cleaned up `canon.md` for readability, per Austin. Each decision has a bold summary and short bullets; duplicate text is replaced by pointers (2→9 for #3, 2→21 for the date); redundant "locked 2026-11-02" tags are removed. Decision numbers are unchanged, and no facts or numbers were changed. 107 → 164 lines (bullets instead of paragraphs).
+- Contradictions fixed:
+  - A stray `---` split the decisions list between 19 and 20.
+  - Canon 5, `plot.md` §10 and `pitch.md` called the uncle line "cutting", which contradicts Sabine's locked personality (not cutting; a rare moment of anger). They now say "angry".
+  - Timeline 9 and `characters/sabine.md` listed only two of her three reasons not to rejoin; both now include the uncle's emergency (23).
+  - Canon 11 and the sighting text in `plot.md` §4 and the Myth Driver sheets said sightings "build the mythos around the fallout". They now say sightings only establish that he knew Sabine.
+  - Canon 19's facts were out of order: wholesale is now dated to the end of Round 1 (matching `plot.md` §4), and the debt clearing mid Round 2 sits together with its aero trigger.
+  - `plot.md` and the #2/#3 sheets were missing a full stop before "Locked 2026-11-0x".
+
 ## 2026-11-04 — Nathaniel: Myth Driver #3's sighting beat
 - Replaced the `<TODO: sighting beat>` for #3's Round 1 sighting in `story/plot.md` §4 (Street) and `characters/myth_driver_3.md`. He traces the PC's parts to Reiko and through her to Sabine, asks "She doing alright?", then peels off with the crew before the PC can answer. Removed the matching open question from `canon.md` and renumbered (Substories stays last).
 - Why: it fits his locked personality (charming, and avoids hard conversations). He reaches Sabine through her people, not her work, so it doesn't repeat #1's and #2's beats.

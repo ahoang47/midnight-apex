@@ -322,7 +322,7 @@ The climax is a final race between the player and the mentor at the summit of Fu
 After the player’s apology, the mentor calmly declines, declaring she already found a new crew:
 the one formed around the player during the game. She also won’t go back to a group the Street specialist let her be pushed out of, rather than face telling her he was leaving.
 
-She then gets in one cutting parting shot: "My uncle's doing fine, by the way. Since none of you ever asked." Then she turns it back on the player: "And when are you calling them?"
+She then gets in one angry parting shot: "My uncle's doing fine, by the way. Since none of you ever asked." Then she turns it back on the player: "And when are you calling them?"
 
 In the epilogue, the player finally calls the hometown crew they walked out on, with a message: "I was wrong. Be there." They come to Fushigi-Yama, and after an awkward apology they settle it the only way they know: a low-stakes race, just for fun.
 
