@@ -8,6 +8,18 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: Myth Driver sightings after every round (rough pass)
+- Austin clarified that there's a Myth Driver sighting after every round, not just Round 1. Each appears after his district's crew is cleared in Rounds 1–3 (nine in total, talk only, no race until the Finale), and each fits its round theme (1 incident, 2 consequences, 3 distortion). Sightings never lay out the sweep. Updated canon 11 and timeline item 5.
+- Rough pass, marked "needs more work": the Round 2 sightings in `plot.md` §5 and on the Myth Driver sheets. #1 makes a cop dig at the emptied mountain. #2's crowds line moved from Round 1 to right after the Round 2 betting reveal (Austin: "fits, mostly already written"); his Round 1 sighting now closes with "Long time ago." `<PROPOSAL>`. #3 has a scrap-rebuild car and says "Lost the good one a while back.", tying to the Round 3 "sixty days" reveal.
+- Open questions: #4 (pro career) notes the lean toward "the sweep cost him" (not locked). Reworded #14 to "sightings never lay out the sweep". New #15 holds the Round 3 sighting drafts and also covers another pass on Rounds 1–2, folded in so there's no separate question. Substories is now #16.
+- Fixed the stray double full stops on the #2 and #3 sighting bullets.
+
+- Update: #1's Round 2 sighting swapped from the cop dig to "You ran through this crew pretty fast. Used to be a lot harder to reach <Touge crew chief>." / "I ran this mountain once. Half of them never came back after that night." Reason: Austin wanted something deeper about the fracture and how #1 used to run the mountain.
+
+## 2026-11-04 — Nathaniel: mod unlock timing
+
+- `story/canon.md` decision 19 and `story/plot.md` §4: regular mods unlock after the PC's first 2–3 races at full price; Reiko's wholesale prices still unlock only at the end of Round 1. Reason: Austin requested this timing (wholesale stays the end-of-Round-1 payoff). Exact race count is Barry's call.
+
 ## 2026-11-04 — Nathaniel: Myth Driver #1 sighting tweak, sweep-hint question, canon cleanup
 - #1's sighting: his snide cop comment now points at a past night with the police ("Hope she doesn't bring the cops again.", rough wording), which sends the PC into Wangan asking. The Wangan crew, being mature, lays out the sweep straight (`plot.md` §4, `characters/myth_driver_1.md`). The uncle-dad payoff note is kept. Why: Austin wants sightings to only establish that each Myth Driver knew Sabine, with sweep information coming from crew reveals and post-race dialogue. That rule is now in canon 11, `plot.md` Rounds 1–3 and each Myth Driver's sighting text.
 - New open question 14: post-race crew dialogue that hints at the sweep. Substories is now 15.

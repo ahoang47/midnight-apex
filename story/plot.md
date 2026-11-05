@@ -104,7 +104,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 ## 4. Round 1 — The Incident
 
-End of round: Reiko warms up and gives the PC wholesale prices ("Wholesale is for crew." payoff), though the debt isn't cleared until Round 2 `<TODO: scene>`.
+Mods unlock after the PC's first 2–3 races, at full price (canon 19; exact count `<TBD: Barry>`). End of round: Reiko warms up and gives the PC wholesale prices ("Wholesale is for crew." payoff), though the debt isn't cleared until Round 2 `<TODO: scene>`.
 
 Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing matching when she walked away). Across the rounds, crew flavor text lightly mentions people caught in the sweep (a brother, an old friend) so its cost builds quietly toward Round 3 Street
 
@@ -120,7 +120,7 @@ Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing mat
 - Match 1 vs crew `<TBD>` / crew boss `<TBD>`
 - Reveal: PC enters the highway scene; racers describe the old generation’s structure; the police sweep in detail: a city-wide crackdown across all three districts in one night; lots of tickets and impounds, a few arrests, stated as plain facts; Sabine left minutes before and walked away clean (canon decision 23)
 - The PC arrives in Wangan digging because of #1's comment; the Wangan crew, being mature, lays the sweep out straight
-- Myth Driver sighting: after the Wangan crew is cleared, Myth Driver #2 makes his first sighting (he talks with PC, no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices Sabine's work on the PC's car ("Her work?"). The PC asks if he knows Sabine; "Everyone did. Clean as ever..." The PC catches the past tense ("Did?"), and he changes the subject with a slight dig at the Wangan crew boss: "The crowds used to come out for her. `<promoter's name>` has been trying to chase that high ever since." Rough wording; exact dialogue comes at scripting. The slip on "did" is the hint of his guilt; the dig ties to the Round 2 Wangan reveal (betting dropped when she walked away).
+- Myth Driver sighting: after the Wangan crew is cleared, Myth Driver #2 makes his first sighting (he talks with PC, no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices Sabine's work on the PC's car ("Her work?"). The PC asks if he knows Sabine; "Everyone did. Clean as ever..." The PC catches the past tense ("Did?"),, and he closes with "Long time ago." and leaves `<PROPOSAL>` (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting). The slip on "did" is the hint of his guilt. The crowds line moved to his Round 2 sighting.
 
 ### Street
 - Match 1 vs crew `<TBD>` / crew boss `<TBD>`
@@ -138,16 +138,19 @@ Reveals plant misleading clues toward Sabine’s guilt (her silence after the sw
 - Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
 - Reveal: it turns personal. A mature racer who was a kid back then: “I texted her for weeks after. Never wrote back. Figured she didn’t want anything to do with us.” (She was at the hospital with her uncle; the missing two weeks seen from the other side)
 - As he says it, PC’s phone buzzes: a hometown number. PC lets it ring out. Nobody comments; the player sees both sides of the same silence (locked 2026-11-02)
+- Myth Driver sighting (#1) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): the fracture, shown through how thin the crew has gotten (Austin picked this over a cop dig). "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew chief>`." He looks up the road: "I ran this mountain once. Half of them never came back after that night." Blunt; the cops stay implied by "that night," and it hints he used to lead the Touge crew
 
 ### Wangan
 - Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
 - Reveal: what Sabine walking away cost the highway. Most people came to the Wangan runs for her, so when she walked away, the betting went down with her. The bets recovered because the current boss, the promoter, is an excellent businessman, but it was never quite the same. Personal losses from the sweep come up lightly (someone lost a car, someone quit for good)
+- Myth Driver sighting (#2) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting), right after the betting reveal: "The crowds used to come out for her. `<promoter's name>` has been chasing that high ever since." (Austin: fits, mostly already written; moved from Round 1)
 
 ### Street
 - Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
 - Reveal: racers openly trade theories about why Sabine walked away. PC reads the crew’s group chat: she got scared, she got paid, she got a deal
 - The influencer boss offers to “settle it” with a content-style interview with Sabine, for views. PC refuses. Boss: “Means she’s hiding something. Clean people talk.”
 - Also plants #3's failed pro career (moved from his sighting), likely through the influencer, who felt abandoned when #3 left to go pro `<TODO: beat>`
+- Myth Driver sighting (#3) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): his car is a scrap rebuild, nothing like what a pro would drive. He catches the PC looking: "Lost the good one a while back." Hints it was impounded in the sweep; ties to the Round 3 Street reveal ("I did sixty days. Lost my car.") and open question 4 (his pro career; leans toward "the sweep cost him", not locked)
 
 ## 6. Round 3 — Distortion
 
