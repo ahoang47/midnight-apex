@@ -1,4 +1,17 @@
-# Velocity Shift — System Overview
+# Midnight Apex — System Overview
+
+> **Vocabulary (locked terms, 2026-11-04; use these everywhere in design/).** The game is **Midnight Apex**; the sim lives in `sim/` (Python package `sim/velocity_shift/`, named after the engine's old working title).
+> - **Race tiers:** **wild race** (open-world pushover for EXP farming; code `wild`), **betting race** (any wild race turned into a bet through a prompt, harder than wild and a bit easier than lieutenants; never awards shells), **lieutenant** (crew members; code `lieutenant`), **crew boss** (the crew's chief; code `boss`), **Myth Driver race** (the only races whose results don't persist). "Lackey", "crew chief", "Lieutenant Challenge" and "encounter" are informal synonyms; prefer the terms above.
+> - **Crew ladder:** every round the PC runs each whole crew in order: kids, then mature members, then old heads (all lieutenants), then the crew boss. Between rounds the boss levels up the whole crew. Rounds 1–3 run Touge, then Wangan, then Street.
+> - **Reputation:** the in-world reason crews take you on. It's lore only, not a tracked stat, and it's never called "street cred" or "rep".
+> - **Persistence:** outside Myth Driver races, every result counts; a driver who beats you remembers it (canon 27). Losing to a crew boss means a retry.
+> - **Stats:** **POW** (Attack), **EN** (Defend), **HAN** (the third stance). The third stance is `NEUTRAL` in code; the player-facing name ("Steady" vs "Neutral") is still open (decision sheet, 02).
+> - **Play quality:** two skills, **read** (`q_read`, countering the AI's real pick) and **timing** (`q_time`, hitting a perfect-10 **QTE**, the 1–10 timing input). `player_quality` sets both.
+> - **Stat parity:** the ratio of opponent stats to player stats; 0.8–1.2 counts as parity. The story caps the player at 0.8 of the top unlocked crew boss's stats.
+> - **Progression unlocks:** the first 3 races are scripted. **Mods** (parts bought once from Reiko at full price) unlock when the PC **wins race 3**, which also opens the world. **Wholesale** (Reiko's discount) unlocks at the end of Round 1. **Aero** (base boost plus a free point pool, tuned at the speakeasy's **wind tunnel**) unlocks when the **debt** to Sabine hits zero, mid Round 2. **Betting** unlocks at the end of Round 2. **Shells** (car bodies) are cosmetic only and come only from crew boss betting races at the promoter's home base.
+> - **Respec:** moving locked skill points (Jesse) or retuning aero (the tunnel) costs money and is capped per visit.
+> - **Places:** Jesse (the Tuner) and Reiko (parts) work out of **Sabine's garage**; the **speakeasy** is the barkeep's bar with the hidden wind tunnel.
+> - **Level bands** in 04 (Starter … Legend) are stat-budget labels, not race tiers.
 
 A turn-based racing combat engine. Two combatants race. Each turn they select cards from a stat-proportional deck, resolve 3 rock-paper-scissors clashes, compute damage from a pure multiplicative formula, and track cumulative damage for position.
 
@@ -12,7 +25,7 @@ sim/main.py
         ├─> cli.py          — Interactive match setup, prompts, display, run_cli
         ├─> models.py       — Data classes: Stance, CombatantStats, TurnState, MatchConfig, etc.
         ├─> equations.py    — Pure math: qte, clash, damage, mitigation, stance resolution
-        ├─> deck.py         — Deck construction, draw/reset (36-card stat-proportional)
+        ├─> deck.py         — Deck construction, draw/reset (192-card stat-proportional)
         ├─> combat.py       — resolve_turn, resolve_battle, battle_winner
         ├─> match.py        — run_match, multi-turn loop, position decision
         ├─> ai.py           — Opponent card selection strategies + QTE generation
@@ -106,7 +119,7 @@ There are no encounter tuning parameters.
 
 ## Deck System
 
-- **36 cards** per combatant, built proportionally from POW, EN, HAN
+- **192 cards** per combatant, built proportionally from POW, EN, HAN
 - POW → Attack card weight, EN → Defend card weight, HAN → Neutral card weight
 - Smoothing term (`alpha=0.85`) prevents any single stance from overwhelming the deck
 - **Draw 6** per turn, pick 3, discard 3

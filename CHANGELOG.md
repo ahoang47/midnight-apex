@@ -8,6 +8,39 @@
 
 ---
 
+## 2026-11-04 — Nathaniel: story vocabulary pass
+- Why: Austin asked to update docs across the board to match vocabulary. Scope is `story/` only; `design/` and `sim/` are Barry's, so they're read-only here.
+- `canon.md`: new short **Vocabulary** section (after Decisions). It points to Barry's locked-terms list in `design/01-system-overview.md` as the source of truth for system terms and only maps story wording to it (crew members = lieutenants, crew boss not "crew chief", street cred is lore only, no pink slips, story-only terms). Steady vs Neutral is left open. Decision 26 now says "wild races"; the stakes rule says "street cred (lore only)" instead of "rep".
+- `plot.md`: "rep" → "street cred (lore only)"; "random racer encounters" → "wild races".
+- `pitch.md`: four "reputation" → "street cred" (terminology only).
+- `barks.md`: "Wild Encounter" → "Wild Race"; "Crew Encounter" → "Lieutenant Race (crew members)"; "Boss Encounter" → "Crew Boss Race", matching design 01's race tiers. The Low/Medium/High Reputation tiers are re-keyed to Round 1/2/3, because street cred is lore only. The "Reputation Gate" heading is now "Street Cred Gate". All bark lines are unchanged.
+- Follow-up per Austin: "street cred" was renamed to "reputation" (still lore only, not a tracked stat).
+- There was no "crew chief" or pink-slip wording in `story/`. Conflicts with `design/` are flagged for Barry, not edited.
+
+## 2026-11-04 — Barry: vocabulary pass across design/
+- Austin asked for docs across the board to match the locked vocabulary. Added a locked-terms block at the top of `design/01-system-overview.md` covering race tiers (wild, betting, lieutenant, crew boss, Myth Driver), the crew ladder, persistence, stats, play quality (read/timing, QTE), stat parity, unlock order, respec and places. The Steady vs Neutral name is marked open, pending the decision sheet.
+- Austin then waived the no-delete rule for this pass (rewording only, no canon changes), so the stale markers became plain current wording: doc titles now say Midnight Apex, the deck is 192 cards in 01, progression/unlock text is current in 05, 07, 08 and the Godot build guide, and superseded rows in 07 were replaced. Original first pass: marked stale lines in place rather than deleting them: the 36-card deck in 01, and the old "mods from Round 2" and "no skill trees" claims in 08, 05 and godot-build-guide. Also marked Round 1 as no longer mods-free in the 02 decision sheet and 07 §7. Added notes that 04's level bands aren't race tiers and that "Velocity Shift" is the old engine name (03).
+- Follow-up from Nathaniel's conflict list: fixed the round/unlock line in 02; closed the betting-unlock question in 07 §7.5 and Q16 (end of Round 2) and added the shell rules (canon 26); updated the 07 §2 story citations to the current story wording (street cred, lieutenant race, round-keyed barks, crew ladder); resolved C1 (street cred is lore only); renamed the 'rival chain' row to lieutenant race; renamed the Notes.md 'Pink Slip Races' heading.
+- Austin: "street cred" is called **reputation**. Renamed it across design/ (still lore only, not a tracked stat).
+- `story/` was not touched (Nathaniel's files). No code changes.
+
+
+## 2026-11-04 — Nathaniel: mods unlock on winning race 3, persistent race results
+
+- `story/canon.md` decision 19 and `story/plot.md` §4: mods now unlock when the PC wins race 3 (Reiko sees they're serious and lets them buy parts through her, at full price); wholesale still unlocks at the end of Round 1. Replaces the earlier "first 2–3 races" note. Reason: Austin's narrative call in the Narrative/systems chat.
+- New canon decision 27: apart from the Myth Driver races, race results are persistent canon, so a driver remembers beating the PC. Reason: Austin decided the canon is persistent. Tracking and retry mechanics are Barry's call.
+- `story/canon.md` decision 19: the first three races are more or less scripted, and unlocking mods opens the whole world (wild races, searching out lieutenants). Reason: Austin's call in the Narrative/systems chat.
+
+## 2026-11-04 — Barry: early mod unlock reflected in 07
+- Austin (canon 19, via Nathaniel): regular mods unlock after the first 2–3 races at full price. Prepended a note to the 07 progression plan (nothing deleted) and added Q19 (exact race, and whether the Round 1 boss assumes mods). This replaces the 'Round 1 has no mods' assumption behind my Round 1 difficulty proposal. Same day: Austin locked mods to unlock after the PC *wins* race 3 (Reiko sees they're serious), and made canon persistent outside Myth Driver races (drivers remember losses). Also in 07 §2: fixed the crew structure to match canon (every round runs each whole crew from kids to mature members to old heads to boss, and the crew levels up between rounds), which makes the lieutenant tier a three-step ladder inside each round; the old row is kept and marked superseded. The old Q19 was answered and replaced with a new Q19: what happens when the player loses the race-3 gate, and whether a remembered loss changes difficulty.
+
+
+## 2026-11-04 — Barry: decision sheet prepended to design/02 (uncommitted)
+- Prepended `## Decision sheet (2026-11-04, for Austin to lock)` to `design/02-equations-reference.md` (after the intro, before §0). Austin wants core equations locked before more Godot work; standing rule is edit existing docs rather than add `design/notes/decision-sheet.md`.
+- Covers open core rules (clash, damage/HP incl. HP_PER_LEVEL 180 vs stale 120, EN, deck 192, straight window 8 vs 12, gauntlet PASS, Neutral vs Steady, encounter ratios/QTE double-count, rubber band, q_read/q_time + §0 targets) plus economy TBDs from 07 (debt, share, clear race, wholesale, respec, betting/shell numbers). No economy/season sims.
+- Evidence cited from existing 08 / §0 / `/workspace/parity/grid2d.txt`, plus new runs under `/workspace/parity/decision-sheet/` (pytest 25 passed; validate AI read 0.40 + QTE 10; spot_check current vs that lever at key q_read/q_time). Recommendation: keep clash/HP math; push difficulty through AI skill (read 0.40 + QTE 10 ≈ 50–53% at 0.9/0.9 vs today's 100%).
+- Not committed or pushed (Austin locks first).
+
 ## 2026-11-04 — Nathaniel: Myth Driver sightings after every round (rough pass)
 - Austin clarified that there's a Myth Driver sighting after every round, not just Round 1. Each appears after his district's crew is cleared in Rounds 1–3 (nine in total, talk only, no race until the Finale), and each fits its round theme (1 incident, 2 consequences, 3 distortion). Sightings never lay out the sweep. Updated canon 11 and timeline item 5.
 - Rough pass, marked "needs more work": the Round 2 sightings in `plot.md` §5 and on the Myth Driver sheets. #1 makes a cop dig at the emptied mountain. #2's crowds line moved from Round 1 to right after the Round 2 betting reveal (Austin: "fits, mostly already written"); his Round 1 sighting now closes with "Long time ago." `<PROPOSAL>`. #3 has a scrap-rebuild car and says "Lost the good one a while back.", tying to the Round 3 "sixty days" reveal.

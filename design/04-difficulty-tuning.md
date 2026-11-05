@@ -1,4 +1,4 @@
-# Velocity Shift — Difficulty & Tuning
+# Midnight Apex — Difficulty & Tuning
 
 There are no tuning knobs. Difficulty is driven entirely by the **level gap** between combatants.
 
@@ -28,6 +28,8 @@ With `p=1.5`, identity develops slowly at low levels (fair matchups) and locks i
 total_budget = level × 30
 POW_abs = total_budget × pow_pct / 100
 ```
+
+*(These are level bands for stat budgets, not race tiers. Race tiers: wild, betting, lieutenant, crew boss; see 01.)*
 
 | Tier | Level | Budget |
 |------|-------|--------|

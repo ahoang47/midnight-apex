@@ -5,7 +5,7 @@
 
 #### Resolved
 
-### Pink Slip Races 
+### Mod level floors (originally under "Pink Slip Races"; pink slips are out, and shells replace them per canon 26)
 - how am I going to handle the rougelite portion? I don't want players to use a high level car -> get rarer mods -> install them on low level cheap cars -> cheese the fuck out of low level races. 
 - The intent for wild races is to have an algorithm generate evenly matched opponents to create skill up races, but if players farm rare mods and install them on the low level cars, now they'll be OP
 - easiest way to resolve this would be to have a level floor for each mod, so you cna't install it on low level cars. 

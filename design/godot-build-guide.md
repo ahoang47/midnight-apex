@@ -1,4 +1,4 @@
-# Velocity Shift — Godot Prototype
+# Midnight Apex — Godot Prototype
 
 > Build a playable Godot prototype using only colored cubes. Tune gameplay constants,
 > then replace cubes with real art — gameplay comes first.
@@ -1310,5 +1310,5 @@ Tables in `06-pattern-read.md` — sections: Aggressive, Defensive, Precise. Bal
 - **Face crossfade:** 3 stacked TextureRects with alpha driven by same blend schedule as the car. 4th overlay layer for bluff tell.
 - **Meta-archetypes:** 3 face types (Scowling/Grinning/Focused) shared by hard+soft pairs. 9 face textures + 9 tell overlays total.
 - **Future screens:** Menu → Isometric Overworld → Race → Battle → Results → Overworld. Design scene loading (StageManager) with this in mind.
-- **No skill trees** in v1 (deferred). Mods system design is separate.
+- **Skill points are in v1** (see 08); the tree layout is still undecided. Mods system design is separate.
 - **Sound/music:** deferred. Design signal hooks for future audio integration.

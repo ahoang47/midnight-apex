@@ -1,4 +1,6 @@
-# Velocity Shift — Deckbuilding & Clash Mechanics
+# Midnight Apex — Deckbuilding & Clash Mechanics
+
+> Vocabulary follows the locked terms in 01.
 
 ---
 

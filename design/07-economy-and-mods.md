@@ -35,10 +35,10 @@
 |---|---|
 | Core loop: "Earn money, parts, and reputation" and "Upgrade and tune vehicle builds" | `story/pitch.md:62-63` |
 | Act structure is Prologue → Rounds 1–3 → Finale. Each district has one crew and one crew boss, faced every round in Touge → Wangan → Street order and stronger each time | `story/canon.md:24-29`, `story/pitch.md:73` |
-| Same crew boss every round, but the boss brings in new members each round: Round 1 kids, Round 2 mature racers, Round 3 old heads. "So the crew gets stronger every time" | `story/canon.md:26` |
-| Street cred explains the rotation in-world only. **It is not a tracked stat** | `story/canon.md:31`, `story/plot.md:93` |
-| Crew boss stakes are money, rep, rare shop mods and story progress. Losing means a retry and never losing the car | `story/canon.md:56`, `story/plot.md:44` |
-| Boss stakes in the barks: "Big cash payout" and "Rare mods unlocked in the shop" (also territory, crew respect, district unlocks, narrative reveals). No pink slips | `story/barks.md:336-342` |
+| Every round the PC runs each whole crew in order: kids, then mature members, then old heads, then the crew boss. Between rounds the boss levels up the whole crew. The lieutenant tier is the kids, mature members and old heads, rising in difficulty within each round, and the whole ladder moves up each round. | `story/canon.md:50`, `:141` |
+| Reputation explains the rotation in-world only. **It is not a tracked stat** | `story/canon.md:31`, `story/plot.md:93` |
+| Crew boss stakes are money, reputation (lore only), rare shop mods and story progress. Losing means a retry and never losing the car | `story/canon.md:56`, `story/plot.md:44` |
+| Boss stakes in the barks: "Big cash payout" and "Rare mods unlocked in the shop" (also territory, crew respect, district unlocks, narrative reveals). No pink slips; shells come only from crew boss betting races (canon 26) | `story/barks.md:336-342` |
 | Debt (decision 19): Sabine fronted the engine rebuild, and winnings go to the garage first. The debt is settled during Round 2 (exact point TBD). Until then all winnings repay it. Reiko gives wholesale after Round 1. The PC should have plenty of parts access by Round 3. Debt amount and discount size are Barry's TBDs | `story/canon.md:40` |
 | Round 2: until the debt clears, "winnings all go to the debt, so there's little money for mods" | `story/plot.md:121` |
 | End of Round 1: Reiko gives wholesale "though the debt isn't cleared until Round 2" | `story/plot.md:98`, `story/canon.md:96` |
@@ -46,8 +46,8 @@
 | Reiko: "Wholesale is for crew. You're not crew." / "We'll see." | `story/scripts/prologue.md:74-77` |
 | Jesse (the Tuner) does mods and installs a DAQ system: "The more races you run, the more data he gets, and the better your car will be." | `story/scripts/prologue.md:72`, `story/plot.md:28` |
 | Each district has exactly one racer type per archetype (15 racer types in total) | `story/canon.md:46-54` |
-| Each round, every district has random racer encounters, a rival chain, "reputation gating", crew boss build-up, the crew race and a reveal | `story/plot.md:94` |
-| Barks come in four encounter tiers: Wild (opponent starts it), Wild (player starts it), Crew Encounter ("These are mini-bosses") with Low/Medium reputation lines, and Boss | `story/barks.md:29`, `:185`, `:210-228`, `:311` |
+| Each round runs Touge, then Wangan, then Street, one crew and crew boss each. The PC runs the whole crew (kids, mature members, old heads, then the boss), the crew levels up for the next round, and flavor text follows every race | `story/plot.md:43`, `:97` |
+| Barks come in four race tiers: wild (opponent starts it), wild (player starts it), lieutenant race (crew members, "These are mini-bosses") with lines keyed to Rounds 1–3, and crew boss. Reputation is lore only | `story/barks.md:29`, `:185`, `:210-228`, `:311` |
 
 ### 2.2 Design docs
 
@@ -90,7 +90,7 @@
 
 | # | Conflict | Sources | Effect on this spec |
 |---|---|---|---|
-| C1 | **Rep: tracked or not?** Boss stakes include "rep", and crew barks have Low/Medium reputation tiers, but canon says street cred "is an in-world lore explanation only, not a tracked stat" | `story/canon.md:56`, `story/barks.md:220-228`, `story/plot.md:94` vs `story/canon.md:31`, `story/plot.md:93` | The sim tracks no rep by default (resolved: lore only) |
+| C1 | **Rep: tracked or not?** Resolved: reputation is lore only. Barks are keyed to rounds, not a rep stat | `story/canon.md:31`, `story/barks.md:222` | The sim tracks no rep |
 | C2 | **Encounter ratios.** Docs say 0.35 / 0.75 / 1.15. Code says 0.75 / 1.1 / 1.2 | `design/04-difficulty-tuning.md:58-62`, `design/01-system-overview.md:99-103` vs `sim/velocity_shift/ai.py:17-21` | Code is what runs. Both are superseded by the pending fix |
 | C3 | **Opponent QTE.** Doc says `4.0 + level × 0.025`. Code and Godot say 7.0 × ratio | `design/04-difficulty-tuning.md:148` vs `sim/velocity_shift/ai.py:36`, `scripts/AIQTE.gd:3-24` | Same pending fix |
 | C4 | **Slot counts.** About 3 slots growing to 8–10, versus 5 slots plus 1 car-specific slot | `design/notes/mod_notes.md:36` vs `design/notes/Notes.md:38-39` | Q7 |
@@ -113,7 +113,7 @@
 | **Repair debt** | Story canon (`story/canon.md:40`) | A ledger separate from the wallet: `DEBT_AMOUNT`, paid down by winnings (§7) |
 | **Car level** | Exists in code (`models.py:54`) | Drives stats, HP, slot unlocks and part level floors. *How it grows is not defined anywhere* (Q5) |
 | **Reiko standing** | Story (`story/plot.md:98`) | A boolean `wholesale_unlocked`, set by a story event, not a meter |
-| **Rep / street cred** | Conflicting (C1) | **PROPOSAL:** not tracked in v1. If Austin wants it, the sim adds a counter that gates crew races (resolved: lore only) |
+| **Rep / reputation** | Conflicting (C1) | **PROPOSAL:** not tracked in v1. If Austin wants it, the sim adds a counter that gates crew races (resolved: lore only) |
 | **DAQ data** (Jesse) | Story flavor (`prologue.md:72`) | **PROPOSAL:** the in-world reason the car levels up. "More races, more data, better car" maps onto XP (Q5) |
 
 ---
@@ -127,7 +127,7 @@ The sim has 3 encounter types (`ai.py:17-34`). The story has random racers, crew
 | Story | Sim type | Per district per round |
 |---|---|---|
 | Random racer (any of the district's 5 racer types) | `wild` | `WILD_RACES_PER_DISTRICT = TBD` (optional, capped, see Q8) |
-| Crew member / rival chain | `lieutenant` | `CREW_RACES_PER_DISTRICT = TBD` (required before the boss) |
+| Lieutenant race (crew members: kids, mature members, old heads) | `lieutenant` | `CREW_RACES_PER_DISTRICT = TBD` (required before the boss) |
 | Crew boss | `boss` | 1 (required, retried until won) |
 | Sabine (Prologue) | **OPEN QUESTION Q14** | 1, scripted loss (blowout, `canon.md:63`) |
 
@@ -192,7 +192,7 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 - An aero part is a stat part with a **fixed base boost** plus a **small free pool** of points the player assigns to POW, EN or HAN at the speakeasy's wind tunnel (bought from Reiko at Sabine's garage). No new stat layer.
 - The free pool makes an aero part worth more than a fixed part with the same total, so it needs a higher price or a slightly smaller total. `AERO_FREE_POINTS[tier] = TBD`, kept small relative to `TIER_STAT_BUDGET`.
 - **Tunes lock once set** (aero and regular skill/stat points alike), but a paid respec always exists so a bad build can't strand a player. Story reasons for the cost (Nathaniel): a second tunnel session burns more stolen power, Jesse has to cut and re-weld his own work, and Reiko doesn't take back fitted parts. `RESPEC_COST = TBD` (Q18).
-- **Update 2026-11-03 (Austin):** ~~aero unlocks after Round 1, along with mods~~ *(superseded the same day: Austin moved the aero unlock to **mid Round 2** so the PC doesn't get too many unlocks at once; the exact beat is TBD, and one candidate is when the debt clears)*. **Decided by Austin 2026-11-03:** aero unlocks when the debt reaches zero (`aero_unlocked` is set by `debt == 0`). Story: Sabine takes the PC out for drinks at the speakeasy to celebrate. Parts are bought once and kept, so only tunes relock. A respec, whether Jesse moving skill points or a tunnel retune for aero, moves at most `RESPEC_POINTS_PER_VISIT = TBD` points per visit, at `RESPEC_COST_PER_POINT = TBD` each. A small counter-tune before a boss stays affordable, and a full rebuild costs a lot or takes several visits. Retuning between races is allowed on purpose: you scout, then build a counter.
+- **Unlock and respec (Austin, 2026-11-03):** aero unlocks when the debt reaches zero, mid Round 2 (`aero_unlocked` is set by `debt == 0`). In the story, Sabine takes the PC out for drinks at the speakeasy to celebrate. Parts are bought once and kept, so only tunes relock. A respec, whether Jesse moving skill points or a tunnel retune for aero, moves at most `RESPEC_POINTS_PER_VISIT = TBD` points per visit, at `RESPEC_COST_PER_POINT = TBD` each. A small counter-tune before a boss stays affordable, and a full rebuild costs a lot or takes several visits. Retuning between races is allowed on purpose: you scout, then build a counter.
 
 **Phasing PROPOSAL:** v1 of the sim has stat parts only. Unique-effect parts come in v2, once the hooks are specified separately.
 
@@ -248,7 +248,7 @@ The clearing race isn't chosen by hand. It falls out of the season run: `DEBT_AM
 Story: the Wangan crew boss is a race promoter who opens a high-stakes betting side game after Round 2 (`story/canon.md:46`, `story/plot.md:63`). Nothing about betting exists in the sim or design docs today, so everything below is a proposal with `TBD` values.
 
 - **What you bet on:** only the PC's own next race. The PC stakes wallet cash on winning before the race starts. No betting on other racers in v1.
-- **Unlock:** a story flag `betting_unlocked`, set after the Round 2 Wangan boss is beaten (exact beat to confirm with Nathaniel). It's available in Round 3 and after. *Confirmed by Austin 2026-11-03: betting unlocks after Round 2, and Round 3 raises difficulty so risky bets are more tempting.* *Correction 2026-11-03: the unlock is at the **end of Round 2** (per Austin and story canon), not when the Wangan boss is beaten, so it stays separate from the aero unlock.*
+- **Unlock:** a story flag `betting_unlocked`, set at the **end of Round 2** (Austin and canon, 2026-11-03), separate from the aero unlock. It's available in Round 3 and after, and Round 3's difficulty jump makes risky bets more tempting. Shells (cosmetic car bodies) are a bonus prize only in crew boss betting races at the promoter's home base, and the PC never stakes their own. Any wild race can become a betting race through a prompt, but those never award shells (canon 26).
 - **Odds:** the promoter offers a line based on how likely the PC is to win: `odds = (1 - HOUSE_EDGE) / p_line`, where `p_line` is the expected win chance for that encounter type at that level, taken from the season sim. The house edge means the average bettor loses a little, while a player who reads patterns better than the sim's AI picker can beat the line. That ties betting to skill, not luck.
 - **Stakes:** `BET_MIN` and `BET_MAX_FRACTION` (a cap as a fraction of the wallet), plus a hard cap per race `BET_MAX[round]`. The caps keep one lucky streak from breaking the shop curve.
 - **High-stakes option:** the PC can raise the odds by accepting a handicap the promoter asks for to make the race a better show, such as giving the opponent a level bump or starting behind. `HANDICAP_ODDS_BONUS` is TBD. This option is what makes it "high-stakes".
@@ -262,7 +262,7 @@ Story: the Wangan crew boss is a race promoter who opens a high-stakes betting s
 
 - **Key finding from the code:** opponent level is `round(player level × ratio)` (`cli.py:305`) and opponent QTE is fixed per encounter (`ai.py:292-308`). Raising the player's level therefore barely changes win rates, because opponents scale with the player. **Under the current model, parts are the only thing that moves the player relative to opponents**, and "crews get stronger every round" (`canon.md:26`) has nothing behind it.
 - **PROPOSAL:** in season mode, opponent level and parts come from a table, `OPPONENT_LEVEL[round][district][encounter] = TBD` and `OPPONENT_PART_TIER`, instead of from the player's level. The player's car level grows through `XP_PER_RACE[encounter] = TBD` (Jesse's DAQ, Q5). The pending encounter-scaling fix (`CHANGELOG.md:312`) should be designed for this mode.
-- **No-mods check (Desmond's ask):** under option A, the player has **no parts** in Round 1 and early Round 2, so those races must be winnable on stock stats plus levels alone. The team reports current win rates of about 100% for wild races and about 0–0.6% for lieutenant/boss races. **I have not verified that here, because nothing may run**. If it holds, the no-mods early game fails at crew and boss races until the scaling fix lands. **Flag: blocker for picking a debt number.**
+- **No-mods check (Desmond's ask):** the player has **no parts** in scripted races 1–3 (mods unlock when the PC wins race 3), so those races must be winnable on stock stats plus levels alone. The team reports current win rates of about 100% for wild races and about 0–0.6% for lieutenant/boss races. **I have not verified that here, because nothing may run**. If it holds, the no-mods early game fails at crew and boss races until the scaling fix lands. **Flag: blocker for picking a debt number.**
 - Intended curve (**PROPOSAL**, targets come from Austin): win-rate bands per round and encounter type, with and without parts. The gap between "with parts" and "no parts" is how much parts matter.
 
 ---
@@ -349,11 +349,12 @@ Pull from the top, one at a time; new questions go to the bottom. Remove a quest
 13. (2026-11-02) Can the PC switch cars or archetypes, or is it one car for the whole game (`mod_notes.md:70`)?
 14. (2026-11-02) Is the Prologue race with Sabine simulated (scripted loss) or skipped?
 15. (2026-11-02) Does money matter in the Finale?
-16. (2026-11-02) **Betting (§7.5):** own races only, and handicap bets in or out of v1? Unlock is end of Round 2 by default; Nathaniel is checking whether it should be the Round 2 Wangan boss win.
+16. (2026-11-02) **Betting (§7.5):** own races only, and handicap bets in or out of v1? The unlock is settled: end of Round 2.
 17. (2026-11-02) **Body kits and wings:** Arthur says each needs a full alternate body mesh per car. In or out? Texture swaps and stance are cheap and already possible.
 18. (2026-11-03) **Respec cost:** what are `RESPEC_POINTS_PER_VISIT` (points moved per visit) and `RESPEC_COST_PER_POINT`, for Jesse's skill points and for aero retunes? Should the two share values? Expensive but always possible.
+19. (2026-11-04) **Losing the race-3 gate:** mods need a *win* at race 3 and canon persists, so what happens when the player loses race 3: an immediate rematch with the same driver, or more races until they win one? Should a remembered loss change the rival's difficulty or only their dialogue?
 
-Austin's progression plan (2026-11-02): Round 1 uses skill points only. From Round 2, Reiko is unlocked and the PC can buy mods. From Round 3, betting (with capped bets) pays for more expensive mods. This brings skill points into v1, which overrides "No skill trees in v1" (`design/godot-build-guide.md:1313`, `design/05-skill-trees.md:3`). Still to define: where points come from, how much a point is worth, and whether you can respec.
+**Progression (Austin, 2026-11-04, canon 19 and 27):** races 1–3 are scripted and use skill points only. Regular mods (bought once from Reiko at full price) unlock when the PC **wins** race 3, because Reiko sees the PC is serious (`MOD_UNLOCK_RACE = 3`, win required), and the open world (wild races, searching out lieutenants) opens with them. Wholesale unlocks at the end of Round 1, aero when the debt hits zero (mid Round 2), and betting at the end of Round 2, which pays for pricier mods in Round 3. Canon persists outside Myth Driver races: a driver remembers a loss. There's no grinding before race 3, so it has to be winnable at starting stats with tutorial-level play, and a rematch happens at the same stats. Skill points in v1 override "No skill trees in v1" in the old build guide and 05. Still to define: where points come from, how much a point is worth, and respec limits (Q18).
 
 Resolved: rep is lore only, with no tracked number (Austin via Nathaniel, 2026-11-02). Mods may show on the car within the car rules (Arthur, 2026-11-02).
 

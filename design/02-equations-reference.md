@@ -1,6 +1,187 @@
-# Velocity Shift — Equations Reference
+# Midnight Apex — Equations Reference
 
 Every formula in the combat engine. All are pure functions in `sim/velocity_shift/equations.py`. All game-rule constants are module-level names — tunable in one place, never per-encounter.
+
+---
+
+## Decision sheet (2026-11-04, for Austin to lock)
+
+> Author: Barry (Chief of Systems). Status: **decision list**, not applied. Prefixed here so you can lock math before more Godot work. Nothing committed. Raw runs: `/workspace/parity/decision-sheet/`. Economy sims still wait on your criteria.
+
+### Top decisions (in order)
+
+1. **How hard should parity feel?** Today 0.9/0.9 wins **100%** vs Lt/Boss. Your yardstick is ~**60%** in Round 2+ on raw stats. Only **AI skill** moves that (not clash stakes / battle bonus / rubber band).
+2. **Lock the AI-skill lever** that hits ~60% at 0.9/0.9: recommend **AI read 0.40 + AI QTE 10**. Needs a real engine hook + matching tells (Desmond).
+3. **Fix encounter scaling** (doc vs code mismatch; double-count today). Tiers should set **AI skill** (and maybe a small r), not double-scale level × QTE.
+4. **HP_PER_LEVEL**: code **180**, stale §1 says **120**. Recommend keep **180** and fix the doc.
+5. **Neutral vs Steady** naming (UI already Steady; code Neutral; stat label HAN).
+6. **Straight window**: 8s (06) vs 12s (Godot guide). Pick one for Godot.
+7. **Economy numbers** (debt race, DEBT_SHARE, wholesale, respec, betting stakes/odds/shell rate): list only; **no season runs** until you give success criteria.
+8. Accept or mark up the **§0 target curves** (q_read / q_time form, equal weights, coefficients).
+
+### Yardstick (your meta) vs today's sim
+
+| Your feel | Today's parity sim | What moves it |
+|---|---|---|
+| Every race scales with player level | Opponent level = `round(player × ENCOUNTER_RATIOS)`; leveling barely changes relative power | Pending scaling fix: season opponents from a table, not player×ratio |
+| Skill/leveling capped at **0.8×** top unlocked boss | Not in sim yet | Skill-point / season systems (07) |
+| Wild = pushovers (EXP farm) | **game_wild** unlosable (q50 0, 99.9% at q=0); **parity_wild** still easy (0.9/0.9 = 100%) | Keep wild AI skill low; do **not** give wild the same AI read/QTE as bosses |
+| Betting > wild, slightly < lieutenant | No betting in sim | 07 §7.5 + canon 26 |
+| Lt/Boss at r 0.8–1.2, **0.9/0.9 → ~60%** raw in R2+ | **0.9/0.9 → 100%** (Lt & Boss) | AI read + AI QTE (below) |
+| Races 1–3 are scripted raw-stat tutorials that a new player can win; mods unlock when the PC wins race 3, and the rest of R1 is still a challenge (proposal: at 0.8 cap, ~0.8 play ≈ 50% vs Lt, ~0.9 vs R1 boss) | No R1/cap sim yet | After AI lever + skill-point format |
+
+**Spot-check just run** (L50, parity, N=1000/cell → `/workspace/parity/decision-sheet/spot_check.txt`):
+
+| Config | Lt 0.9/0.9 | Boss 0.9/0.9 | Lt 0.25/0.25 | Boss 0.25/0.25 | Lt 1.0/0.6 |
+|---|---|---|---|---|---|
+| Current (AI QTE 7, no AI read) | **100%** | **100%** | 54.7% | 48.3% | 100% |
+| **AI read 0.40 + QTE 10** | **53.3%** | **49.7%** | 0.0% | 0.1% | 24.7% |
+
+Grid2d (existing, `/workspace/parity/grid2d.txt`, N=4000): current 0.9/0.9 = 100% Lt & Boss; 0.25/0.25 = 56.9% Lt / 45.2% Boss. Matches the "far too easy" read.
+
+Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 + QTE 10 → q50 **0.874–0.916** across Wild/Lt/Boss × L10–80; at q=0.9 win% ≈ **48–59%**. Closest cheap hit to your ~60%.
+
+**Levers that barely move q50** (08 §5, parity_lieutenant L50): CLASH_STAKES 0.20/0.60 → 0.264/0.195; BATTLE_BONUS 0.20 → 0.224; RUBBER_BAND 0.05/0.50 → 0.231/0.228. **Do not use these to fix difficulty.**
+
+---
+
+### Core equations / rules
+
+#### 1. Clash resolution (RPS + stakes)
+
+| | |
+|---|---|
+| **Current sim** | `resolve_stance`: Attack > Neutral > Defend > Attack; same → NEUTRAL (`equations.py:87-100`). `clash_mult = 1 + CLASH_STAKES × outcome`, **CLASH_STAKES = 0.35** (`equations.py:16`, `:54-61`). Battle margin: `battle_mult = 1 + BATTLE_BONUS × \|sum\|`, **BATTLE_BONUS = 0.05** (`equations.py:17`; applied in `combat.py`). |
+| **Recommend** | Keep RPS and **0.35 / 0.05**. They don't set difficulty (08 §5). Difficulty goes through AI skill. |
+| **Alts** | Raise stakes (0.45–0.60) for spicier swings (q50 moves ~0.03). Cut stakes for flatter races. |
+| **Evidence** | 08 §5: stakes/bonus barely move q50. |
+| **Decision needed:** | Keep clash math as-is and push difficulty into AI skill? Y/N |
+
+#### 2. Damage / HP (incl. HP per level)
+
+| | |
+|---|---|
+| **Current sim** | `DP = POW × qte_factor × clash_mult × battle_mult` (`equations.py:64-74`). Mitigation: `max(MITIGATION_FLOOR, 1 − (EN/1000)×MITIGATION_PER_1000×qte_factor)` with **MITIGATION_PER_1000=0.4**, **FLOOR=0.1** (`equations.py:18-19`, `:77-84`). **HP_PER_LEVEL = 180** (`equations.py:20`). Stale §1 still says 120. |
+| **Recommend** | Keep **180**; fix §1 to match. Keep damage/mitigation chain. |
+| **Alts** | HP 120 (old doc) shortens races; 200+ lengthens. Touching mitigation changes EN's value a lot. |
+| **Evidence** | Code/Godot use 180 (`04:58` text already says 180). No HP-sweep this turn. |
+| **Decision needed:** | Lock HP_PER_LEVEL = **180**? Y/N |
+
+#### 3. Energy (EN / Endurance)
+
+| | |
+|---|---|
+| **Current sim** | EN only mitigates incoming DP (formula above) and weights Defend cards in the deck. UI label **EN**. No separate "energy resource" / mana. |
+| **Recommend** | Keep EN as mitigation + Defend weight. No new resource meter in v1. |
+| **Alts** | A spent resource (per-turn energy) would be a new system — out of scope for this lock. |
+| **Evidence** | `01-system-overview.md:83`; no energy pool in `sim/`. |
+| **Decision needed:** | Confirm EN stays mitigation-only (no AP/mana) for v1? Y/N |
+
+#### 4. Deck size / composition
+
+| | |
+|---|---|
+| **Current sim** | **DECK_SIZE = 192** (`deck.py:19`). Draw 6/turn. Weights: α=0.85 blend of POW/EN/HAN → Attack/Defend/Neutral (`deck.py:29-44`; `03:7-24`). Player: no reshuffle (discard grows). Opponent: reshuffle every turn. Boss max 30 turns → at most 180 cards used → **player deck never empties**. |
+| **Recommend** | Keep 192 / draw 6. Note the "never empties" property is intentional for bosses. |
+| **Alts** | Smaller deck (e.g. 96) would force late-race thinning; needs a design reason. |
+| **Evidence** | 08 §7 known limitation; 03 §deck management. |
+| **Decision needed:** | Keep 192 / no player reshuffle? Y/N |
+
+#### 5. Straight window (pick timer)
+
+| | |
+|---|---|
+| **Current** | **Conflict.** `06-pattern-read.md:204` = **8 seconds**. `godot-build-guide.md:64,271` = **STRAIGHT_DURATION 12.0** (tunable 8–12 at `:956`). Sim has no real-time timer. |
+| **Recommend** | Lock **10s** as a middle ground for first Godot pass, or pick 8 if you want sharper reads. |
+| **Alts** | 8 (doc 06) / 12 (guide default). |
+| **Evidence** | Docs only; no playtest timing data. |
+| **Decision needed:** | Straight window = 8 / 10 / 12 s? |
+
+#### 6. Gauntlet PASS rule
+
+| | |
+|---|---|
+| **Current** | `balance_gauntlet.py`: (a) algebraic predict vs measured winner must match (ties auto-pass); (b) **archetype balance = each arch has ≥1 win and ≥1 loss** across the matrix (`:401-407`). Header warns: read win/loss counts, not just PASS (`:7-8`). Rubber band in gauntlet uses a **hard-coded 0.15** (`:96`, `:146`), not `RUBBER_BAND_FRACTION`. |
+| **Recommend** | Keep the soft archetype rule for now, but treat it as a **smoke test**, not balance proof. Import `RUBBER_BAND_FRACTION` instead of 0.15. |
+| **Alts** | Stricter band (e.g. win rate 30–70% per arch); or drop archetype PASS entirely until matchups are reworked (08 §6.3). |
+| **Evidence** | Parity pair spread q50 **0.01–0.48** (08 §3.1) — Aggressive is over-tuned; gauntlet PASS can still light green. |
+| **Decision needed:** | Keep "≥1 win and ≥1 loss" as the only archetype gate, or raise the bar? |
+
+#### 7. Neutral vs Steady naming
+
+| | |
+|---|---|
+| **Current** | Code/docs: stance **NEUTRAL** (`equations.py`, `models.py`). UI sample + guide buttons: **Steady** (`sample_battle_screen.html`, `godot-build-guide.md:178,303`). Stat: **HAN**. Art Q6 open (`art_direction.md:254`). |
+| **Recommend** | **Player-facing: Steady.** Code enum can stay NEUTRAL with a UI alias, or rename to STEADY in one pass. Stat stays **HAN**. Attack→**POW**, Defend→**EN**. |
+| **Alts** | Keep Neutral everywhere (simpler code, worse racing voice). |
+| **Evidence** | Naming only. |
+| **Decision needed:** | Lock player-facing third stance as **Steady**? Y/N |
+
+#### 8. Encounter ratios + opponent QTE
+
+| | |
+|---|---|
+| **Current code** | `ENCOUNTER_RATIOS`: wild **0.75**, lieutenant **1.1**, boss **1.2** (`ai.py:17-21`). Opp level = `round(player × ratio)` (`cli.py:305`). Opp QTE = `TYPICAL_QTE(7.0) × same ratio` (`ai.py:36`, `:301-305`) → **double-counted**. |
+| **Current docs** | `04:58-62`: **0.35 / 0.75 / 1.15**. Opp QTE doc: `4.0 + level × 0.025` (`04:148`). |
+| **Recommend** | **One job each:** tier → AI skill (read rate + QTE skill); stats/r from a season table (or small level gap). Retire double-scale. Sync 04 to code after the fix. Proposed AI skill from §0 / 08: Boss ≈ read 0.40 + QTE 10; Lt a step down; Wild much lower so it stays a farm. |
+| **Alts** | Keep code ratios but stop multiplying QTE; or adopt doc 0.35/0.75/1.15 as level-only. |
+| **Evidence** | 08 §3.2: game_wild unlosable; game_boss q50 ≈ 0.81–0.83 from the double scale. 02 §0.1. |
+| **Decision needed:** | Approve "tiers = AI skill (+ small r), no double-scale"? Y/N |
+
+#### 9. RUBBER_BAND_FRACTION
+
+| | |
+|---|---|
+| **Current** | **0.15** in `equations.py:23`; used in `match.py:65`. Gauntlet duplicates **0.15** (`balance_gauntlet.py:96,146`). |
+| **Recommend** | Keep **0.15**. Point gauntlet at the constant. |
+| **Alts** | 0.10 / 0.25 (guide tunable range). |
+| **Evidence** | 08 §5: 0.05→0.50 changes q50 by ~0.003. Cosmetic for parity feel. |
+| **Decision needed:** | Keep 0.15? Y/N |
+
+#### 10. Play quality model (q_read / q_time) + §0 targets
+
+| | |
+|---|---|
+| **Current sim** | Opt-in `player_read` / `player_timing` (or `player_quality` for both). q_read = P(counter AI pick); q_time = P(perfect-10 QTE) (`equations.py:25-38`; `simulation.py`). |
+| **§0 proposed targets** | `s = (q_read+q_time)/2`; logistic with equal weights; Boss s0 **0.86**, a **16** → 0.9/0.9 ≈ **65%**, perfect ≈ **90%** at parity. |
+| **Recommend** | Keep the two-axis model. Use **AI read 0.40 + QTE 10** as the first candidate to chase §0 (spot-check ≈ 50–53% at 0.9/0.9 — a bit under 65%; fine-tune read 0.35–0.38 or soften QTE after). Equal style weights stay the goal (today timing is worth ~1.16–1.20× reading on the current easy curve). |
+| **Alts** | Single-q only; specialist-bonus interaction (§0 Q2); different s0 (0.9 → 50% instead of 65%). |
+| **Evidence** | grid2d + spot_check + val_r40q10; §0.3–0.6. |
+| **Decision needed:** | (a) Keep two-axis q_read/q_time? (b) Boss at 0.9/0.9 → ~60–65% OK? (c) Approve AI read 0.40 + QTE 10 as first candidate? |
+
+#### 11. Other unlocked / TBD
+
+| Item | Status | Recommend |
+|---|---|---|
+| Corner lockout table (03 chicane Steady exits) | TODO cells | Narrative/Desmond; not a sim constant |
+| Tell / lie rates (06) | Cap what q_read is worth in-game | Set with Desmond alongside AI read |
+| Archetype matchup spread | q50 0.01–0.48 at parity | Separate pass after AI lever |
+| Skill-point value / 0.8× boss cap | Not in sim | Needs format before economy runs |
+| Constants location (C10) | Ratios/turns live in ai.py/cli.py | Move into `equations.py` with the scaling fix |
+
+---
+
+### Economy (from 07 — numbers only; **no season runs**)
+
+Evidence for all rows: **no run (awaiting criteria)**.
+
+| Item | Current proposal | Alternatives | Decision needed |
+|---|---|---|---|
+| **DEBT_AMOUNT** | Solved by season sim so median clear = target R2 race | Hand-picked flat number | After Q1 + criteria |
+| **DEBT_SHARE** | **B Allowance** `< 1.0` from Prologue (A Strict ruled out) | C boss-money-free; D Reiko cuts remaining debt; Desmond trickle-from-bonuses | Pick B vs C/D layer? |
+| **Which R2 race clears debt (Q1)** | **Hard target** (aero unlocks at debt = 0). Still open which race | Mid-R2 Wangan crew / Wangan boss / debt=0 floating | Name the race |
+| **WHOLESALE_DISCOUNT** | TBD fraction off after end of R1 | — | Pick a fraction (e.g. 0.15–0.25)? |
+| **RESPEC_POINTS_PER_VISIT** + **RESPEC_COST_PER_POINT** (Q18) | Cap points moved per Jesse/tunnel visit; cost per point; same values for skill + aero? | Separate aero vs skill prices | Set both numbers |
+| **Betting unlock** | **Locked:** end of Round 2 (canon 21/26) | — | No decision (done) |
+| **Betting stakes / odds / prompt / shell win rate** | Canon 26 locked *rules*: shells cosmetic; bonus from betting race at promoter home; only crew bosses stake shells; PC never stakes own; shells kept forever at garage; any wild can prompt into a betting race (no shells); unlock end R2. **Numbers TBD:** `BET_MIN`, `BET_MAX_FRACTION`, `BET_MAX[round]`, `HOUSE_EDGE`, handicap bonus, shell drop rate, wild-prompt chance | Flat odds vs sim-derived line | After criteria: set stakes, house edge, shell rate, prompt rate |
+
+**Blocker (07):** encounter-scaling fix before any debt/payout numbers.
+
+---
+
+### Tests
+
+`cd sim && uv run --with pytest pytest -q` → **25 passed** (2026-11-04, `/workspace/parity/decision-sheet/pytest.txt`). No `equations.py` changes this turn.
 
 ---
 
@@ -35,7 +216,7 @@ Play quality is split into two independent skills, both 0–1 (sim: `MatchConfig
 - **q_read**: each clash, the chance the player reads the AI's real pick and plays its counter (else a tie card, else any card). Otherwise the pick is random from hand.
 - **q_time**: each turn, the chance of a perfect-10 QTE. Otherwise the QTE is uniform 1–10.
 - **r** = opponent level / player level (later: opponent stat total / player effective stat total, including skill points and mods).
-- **Tier**: wild, lieutenant, boss. **Round**: R1 skill points only; R2 Reiko unlocks, mods for sale; R3 capped betting, expensive mods.
+- **Tier**: wild, lieutenant, boss. **Round**: scripted races 1–3 on skill points only; mods unlock when the PC wins race 3; wholesale at the end of R1; aero when the debt hits zero (mid R2); betting at the end of R2, so R3 is capped betting and expensive mods.
 
 Three play styles the targets must keep viable:
 - **(A) Reader:** strong q_read, sloppy q_time (e.g. 1.0 / 0.6).

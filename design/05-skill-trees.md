@@ -1,6 +1,6 @@
-# Velocity Shift — Skill Trees (Design Reference)
+# Midnight Apex — Skill Trees (Design Reference)
 
-> **Status:** Deferred. Mods (shop-bought equipment with trade-offs/unique effects) serve as the player's stat expression layer. Skill tree categories and mechanics are not yet decided. See `design/notes/mod_notes.md` for current design.
+> **Status:** Skill points are in v1 (see 08); the tree layout is still undecided. Mods unlock when the PC wins race 3 (see 01 and 07). Earlier note: deferred. Mods (shop-bought equipment with trade-offs/unique effects) serve as the player's stat expression layer. Skill tree categories and mechanics are not yet decided. See `design/notes/mod_notes.md` for current design.
 
 ---
 
