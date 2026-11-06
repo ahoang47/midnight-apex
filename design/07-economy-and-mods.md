@@ -37,9 +37,9 @@
 | Act structure is Prologue → Rounds 1–3 → Finale. Each district has one crew and one crew boss, faced every round in Touge → Wangan → Street order and stronger each time | `story/canon.md:24-29`, `story/pitch.md:73` |
 | Every round the PC runs each whole crew in order: kids, then mature members, then old heads, then the crew boss. Between rounds the boss levels up the whole crew. The lieutenant tier is the kids, mature members and old heads, rising in difficulty within each round, and the whole ladder moves up each round. | `story/canon.md:50`, `:141` |
 | Reputation explains the rotation in-world only. **It is not a tracked stat** | `story/canon.md:31`, `story/plot.md:93` |
-| Crew boss stakes are money, reputation (lore only), rare shop mods and story progress. Losing means a retry and never losing the car | `story/canon.md:56`, `story/plot.md:44` |
-| Boss stakes in the barks: "Big cash payout" and "Rare mods unlocked in the shop" (also territory, crew respect, district unlocks, narrative reveals). No pink slips; shells come only from crew boss betting races (canon 26) | `story/barks.md:336-342` |
-| Debt (decision 19): Sabine fronted the engine rebuild, and winnings go to the garage first. The debt is settled during Round 2 (exact point TBD). Until then all winnings repay it. Reiko gives wholesale after Round 1. The PC should have plenty of parts access by Round 3. Debt amount and discount size are Barry's TBDs | `story/canon.md:40` |
+| Beating crew members (lieutenants) expands Reiko's paid shop stock; crew boss stakes are money, reputation (lore only), rare shop mods and story progress. Losing means a retry and never losing the car | `story/canon.md`, `story/plot.md:42` (canon 28) |
+| Boss stakes in the barks: "Big cash payout" and "Rare mods unlocked in the shop" (also territory, crew respect, district unlocks, narrative reveals). No pink slips; crew bosses' signature shells come from crew boss betting races at the promoter's subsea parking-area home base, and standout substories award a small pool of oddball shells (canon 26, 28) | `story/barks.md:336-342`, `story/canon.md` |
+| Debt (decision 19): Sabine fronted the engine rebuild, labor and tow on a personal repair tab after feeling responsible for the blowout (she stepped away from the scene and isn't building a crew or garage name). A share of winnings repays it until it clears mid Round 2 (exact point TBD). Reiko gives wholesale after Round 1, and by Round 3 the PC has plenty of parts access. Debt amount, share and discount size are Barry's TBDs | `story/canon.md` (14, 19, 24) |
 | Round 2: until the debt clears, "winnings all go to the debt, so there's little money for mods" | `story/plot.md:121` |
 | End of Round 1: Reiko gives wholesale "though the debt isn't cleared until Round 2" | `story/plot.md:98`, `story/canon.md:96` |
 | Invoice covers "Engine, labor, tow" (amount TBD). "Winnings come here first, until we're even." On losing: "Then you owe me longer" | `story/scripts/prologue.md:89-93` |
@@ -101,7 +101,7 @@
 | C9 | **Farming.** Wild races are auto-generated (endless), yet "no random drops, no farming" | `design/notes/Notes.md:20` vs `design/notes/mod_notes.md:73` | Q8 |
 | C10 | **Constants location.** The rule says all constants live in equations.py, but encounter tables and turn limits live in ai.py and cli.py | `design/01-system-overview.md:133` vs `sim/velocity_shift/ai.py:17-34`, `sim/velocity_shift/cli.py:28-32` | The new economy constants follow the rule (§9.2) |
 | C11 | **Is money all or "first"?** Canon says winnings go "to the garage first" and also "all go to repaying it". Plot says "little money for mods" | `story/canon.md:40`, `story/plot.md:121` | The default reads it as 100%. Q4 |
-| C12 | **Parts as rewards.** Pitch says "Earn money, parts". mod_notes says parts are shop-only with no drops | `story/pitch.md:62` vs `design/notes/mod_notes.md:42`, `:73` | Boss wins add stock to the shop and never hand out parts |
+| C12 | **Parts as rewards.** Pitch says "Earn money, parts". mod_notes says parts are shop-only with no drops | `story/pitch.md:62` vs `design/notes/mod_notes.md:42`, `:73`; canon 28 | Story races (lieutenants and crew bosses) add paid stock to Reiko's shop and never hand out free parts; substories can award one-off skewed-sidegrade parts straight to the garage stash (canon 28) |
 
 ---
 
@@ -156,20 +156,28 @@ payout = LOSS_PAYOUT_FRACTION × (the above)                                    
 | `LOSS_PAYOUT_FRACTION` | TBD, default 0 | Nothing in the docs pays for a loss |
 | `RETRY_ENTRY_FEE[encounter]` | TBD, default 0 | mod_notes.md:32 "optional". See Q9 |
 
-### 5.2 Boss rewards
-On a boss win: `BASE_PAYOUT_BOSS` cash, plus that boss's rare parts added to the shop (`mod_notes.md:48`, `:57`), plus story progress (the next district or round unlocks). The parts themselves are never given away (C12).
+### 5.2 Story-race rewards and shop unlocks (canon 19, 28)
+- **Lieutenant win:** `BASE_PAYOUT_CREW` cash, plus horizontal part options at that round's stat budget added to Reiko's paid shop stock as her suppliers open up (`LIEUTENANT_SHOP_UNLOCKS = TBD`).
+- **Crew boss win:** `BASE_PAYOUT_BOSS` cash, plus that boss's rare tier-jump parts added to Reiko's shop (`mod_notes.md:48`, `:57`), plus story progress (the next district or round unlocks).
+- Story races never give parts away for free (C12).
 
-### 5.3 Other income
-None in the docs. **OPEN QUESTION Q10:** side jobs or garage work for Sabine?
+### 5.3 Substory rewards and other income (canon 26, 28)
+Substories unlock alongside mods and the open city after the PC wins scripted race 3 (canon 19, 28). Each substory is one-time and awards one prize straight to the player:
+- **Cash** (`SUBSTORY_CASH_PAYOUT[round] = TBD`, proposed around one wild-to-lieutenant purse for that round): runs through Sabine's normal `DEBT_SHARE` repair-tab cut while the debt is open. Keeping one cut rule avoids exceptions, and keeping pre-clear cash substories few means skipping vs clearing them nudges the mid-Round-2 debt clear by at most a race or two (inside the existing wild-race spread).
+- **Free mod part** straight to the garage stash: capped by existing slot limits and level floors, paced (`SUBSTORY_FREE_PARTS_MAX[round] = TBD`, proposed 1–2 in Round 1 across non-overlapping slots), **never aero** (aero stays gated on `debt == 0`), and built as a **skewed sidegrade**—bigger upside in one stat paid for by a real penalty in another, at the same or slightly lower net stat total than that round's shop parts (`≤ TIER_STAT_BUDGET[tier]`). Skipping substories costs weird specialist builds, never raw power, and Reiko's clean upgrades stay worth buying.
+- **Shell-specific graphic/livery** (cosmetic only, zero combat or economy impact): UV-baked per shell (`design/art/art_direction.md` A.3). Unlocking a livery before owning its shell sits in the garage as a breadcrumb to hunt that shell down; Round 1–2 livery substories target the starter shell (or a substory shell already earned) so early rewards never sit unusable for two rounds before betting opens.
+- **Cosmetic shell** (zero combat or economy impact): a small pool of oddball/capstone shells (`SUBSTORY_SHELL_COUNT = TBD`, mesh scope flagged to Desmond and Arthur), while crew bosses keep their signature shells exclusive to Round 3+ betting races at the promoter's subsea Wangan home base.
+
+Other repeatable non-race income (e.g. garage work) is still **OPEN QUESTION Q10**.
 
 ---
 
 ## 6. Spending: the shop and mod parts
 
 ### 6.1 Shop rules (from the docs)
-- Parts are bought only in the shop, with money (`mod_notes.md:40-42`).
+- Shop catalog parts are bought with money from Reiko (`mod_notes.md:40-42`); one-off skewed-sidegrade parts can also come directly from substories into the garage stash (§5.3, canon 28).
 - Each part has a level floor (`mod_notes.md:43`, `Notes.md:11`).
-- Boss wins add rare stock to the shop (`mod_notes.md:48`).
+- Lieutenant wins expand horizontal shop stock and crew boss wins add rare tier-jump stock (`mod_notes.md:48`, canon 28).
 - Swapping parts between races is free (`mod_notes.md:38`). Selling parts back is not mentioned anywhere (Q11).
 
 ### 6.2 Slots
@@ -203,8 +211,9 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 | `TIER_LEVEL_FLOOR[tier]` | TBD | `mod_notes.md:43` example: L25+ |
 | `TIER_BASE_PRICE[tier]` | TBD | Tune so one tier ≈ `PARTS_PER_ROUND_TARGET` purchases per round |
 | `TIER_STAT_BUDGET[tier]` | TBD | Net bonus (upside minus trade-off) |
-| `TIER_UNLOCK[tier]` | TBD: round start / boss defeated / wholesale | Shop gating |
-| `RARE_PART_SOURCE[boss_id]` | TBD | Which boss adds which rare parts |
+| `TIER_UNLOCK[tier]` | TBD: round start / lieutenant ladder / boss defeated / wholesale | Shop gating (canon 28) |
+| `LIEUTENANT_PART_SOURCE[round][crew_step]` | TBD | Horizontal shop options unlocked by beating kids / mature / old heads |
+| `RARE_PART_SOURCE[boss_id]` | TBD | Which crew boss adds which rare tier-jump parts |
 
 The catalog itself (individual parts) lives in a data file (§9.2). **No part list is invented here.** It is authored after Q6/Q7 are answered.
 
@@ -248,7 +257,7 @@ The clearing race isn't chosen by hand. It falls out of the season run: `DEBT_AM
 Story: the Wangan crew boss is a race promoter who opens a high-stakes betting side game after Round 2 (`story/canon.md:46`, `story/plot.md:63`). Nothing about betting exists in the sim or design docs today, so everything below is a proposal with `TBD` values.
 
 - **What you bet on:** only the PC's own next race. The PC stakes wallet cash on winning before the race starts. No betting on other racers in v1.
-- **Unlock:** a story flag `betting_unlocked`, set at the **end of Round 2** (Austin and canon, 2026-11-03), separate from the aero unlock. It's available in Round 3 and after, and Round 3's difficulty jump makes risky bets more tempting. Shells (cosmetic car bodies) are a bonus prize only in crew boss betting races at the promoter's home base, and the PC never stakes their own. Any wild race can become a betting race through a prompt, but those never award shells (canon 26).
+- **Unlock:** a story flag `betting_unlocked`, set at the **end of Round 2** (Austin and canon, 2026-11-03), separate from the aero unlock. It's available in Round 3 and after, and Round 3's difficulty jump makes risky bets more tempting. Crew bosses' signature shells (cosmetic car bodies) are a bonus prize only in crew boss betting races at the promoter's subsea Wangan parking-area home base—any wild race can become a betting race through a prompt, which never awards shells—while a few standout substories award oddball shells (canon 26, 28). The PC never stakes their own shell.
 - **Odds:** the promoter offers a line based on how likely the PC is to win: `odds = (1 - HOUSE_EDGE) / p_line`, where `p_line` is the expected win chance for that encounter type at that level, taken from the season sim. The house edge means the average bettor loses a little, while a player who reads patterns better than the sim's AI picker can beat the line. That ties betting to skill, not luck.
 - **Stakes:** `BET_MIN` and `BET_MAX_FRACTION` (a cap as a fraction of the wallet), plus a hard cap per race `BET_MAX[round]`. The caps keep one lucky streak from breaking the shop curve.
 - **High-stakes option:** the PC can raise the odds by accepting a handicap the promoter asks for to make the race a better show, such as giving the opponent a level bump or starting behind. `HANDICAP_ODDS_BONUS` is TBD. This option is what makes it "high-stakes".
@@ -327,6 +336,7 @@ season.json ──► campaign.py ──► for each race:
 11. How often each part is bought or equipped (dead or overpowered parts).
 12. Deck-mix shift caused by parts (Attack/Defend/Neutral share).
 13. Betting: share of Round 3 income from bets, the bettor's average return against the house edge, and the chance of going broke under each betting policy.
+14. Substories: share of wallet cash and debt repayment from substories, how much clearing zero vs all substories shifts the Round 2 debt-clearing race, and equip rate of free substory sidegrades vs Reiko's paid shop parts.
 
 ---
 
@@ -343,7 +353,7 @@ Pull from the top, one at a time; new questions go to the bottom. Remove a quest
 7. (2026-11-02) **Slots:** about 3 growing to 8–10, or 5 plus 1 car-specific? (C4)
 8. (2026-11-02) **Wild races:** capped per district, low-paying, or uncapped? (C9)
 9. (2026-11-02) **Losing:** is there a retry fee, and does it add to the debt? (C8)
-10. (2026-11-02) Any income besides races?
+10. (2026-11-02) Any *repeatable* income besides races (e.g. garage work)? One-time substory cash rewards are locked in canon 28 (§5.3).
 11. (2026-11-02) Can parts be sold back?
 12. (2026-11-02) Should crews getting stronger come from opponent levels, opponent parts, or both (§8)?
 13. (2026-11-02) Can the PC switch cars or archetypes, or is it one car for the whole game (`mod_notes.md:70`)?
@@ -354,11 +364,11 @@ Pull from the top, one at a time; new questions go to the bottom. Remove a quest
 18. (2026-11-03) **Respec cost:** what are `RESPEC_POINTS_PER_VISIT` (points moved per visit) and `RESPEC_COST_PER_POINT`, for Jesse's skill points and for aero retunes? Should the two share values? Expensive but always possible.
 19. (2026-11-04) **Losing the race-3 gate:** mods need a *win* at scripted race 3 (canon 19), so what happens when the player loses race 3: an immediate rematch with the same driver, or more races until they win one? And for crew members and crew bosses (who remember losses per canon 27), should a remembered loss change the rival's difficulty or only their dialogue?
 
-**Progression (Austin, 2026-11-04, canon 19 and 27; canon 27 narrowed 2026-11-05):** races 1–3 are scripted and use skill points only. Regular mods (bought once from Reiko at full price) unlock when the PC **wins** race 3, because Reiko sees the PC is serious (`MOD_UNLOCK_RACE = 3`, win required), and the open world (wild races, searching out lieutenants) opens with them. Wholesale unlocks at the end of Round 1, aero when the debt hits zero (mid Round 2), and betting at the end of Round 2, which pays for pricier mods in Round 3. Loss persistence applies only to crew members (lieutenants) and crew bosses—a driver who beats the PC remembers it—while wild races and Myth Driver races don't have loss persistence. There's no grinding before race 3, so it has to be winnable at starting stats with tutorial-level play, and a rematch happens at the same stats. Skill points in v1 override "No skill trees in v1" in the old build guide and 05. Still to define: where points come from, how much a point is worth, and respec limits (Q18).
+**Progression (Austin, 2026-11-04, canon 19 and 27; canon 27 narrowed 2026-11-05):** races 1–3 are scripted and use skill points only. Regular mods (bought once from Reiko at full price) unlock when the PC **wins** race 3, because Reiko sees the PC is serious (`MOD_UNLOCK_RACE = 3`, win required), and the open world (wild races, searching out lieutenants, substories) opens with them. Beating lieutenants expands Reiko's horizontal shop stock while crew bosses unlock rare mods; substories award cash (through the open repair-tab cut), free skewed-sidegrade mods (never aero), shell-specific liveries, or rare oddball shells (canon 26, 28). Wholesale unlocks at the end of Round 1, aero when the debt hits zero (mid Round 2), and betting at the end of Round 2, which pays for pricier mods in Round 3. Loss persistence applies only to crew members (lieutenants) and crew bosses—a driver who beats the PC remembers it—while wild races and Myth Driver races don't have loss persistence. There's no grinding before race 3, so it has to be winnable at starting stats with tutorial-level play, and a rematch happens at the same stats. Skill points in v1 override "No skill trees in v1" in the old build guide and 05. Still to define: where points come from, how much a point is worth, and respec limits (Q18).
 
 Resolved: rep is lore only, with no tracked number (Austin via Nathaniel, 2026-11-02). Mods may show on the car within the car rules (Arthur, 2026-11-02).
 
 **Flags:**
 - **Desmond / Nathaniel (story):** the overlap rule (Q4) and option D are story changes. Jesse's DAQ as the leveling reason, and as the fixed car-specific slot (Q5). The currency name is still TBD.
-- **Arthur (art):** `Notes.md:40` says perma mods change the car's look. Part categories (§6.3) will need visual variants if that holds. No art work is requested until the categories are approved.
+- **Arthur / Desmond (art & scope):** `Notes.md:40` says perma mods change the car's look; part categories (§6.3) will need visual variants if that holds. Canon 26/28 also adds a small pool of standout substory shells (`SUBSTORY_SHELL_COUNT = TBD`, full body meshes) alongside cheap per-shell UV livery swaps (`art_direction.md` A.3); confirm mesh budget before locking shell count. No art work is requested until approved.
 - **Blocker:** the encounter-scaling fix comes before any debt or payout numbers (§8).

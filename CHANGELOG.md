@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-05 — Barry: bake substory rewards, story-race shop unlocks, and shells/liveries into design/ (canon 26, 28)
+- `design/01-system-overview.md` (Vocabulary: progression unlocks), `design/02-equations-reference.md` (Economy decision table), and `design/07-economy-and-mods.md` (§2.1, §2.4 C12, §5.2–5.3, §6.1, §6.4, §7.5, §10 metric 14, §11 Q10/Progression/Flags): synced `design/` with canon 26 and 28 (`44d9caf`) and Sabine's personal repair-tab framing (`25b98e8`).
+- **Systems rules recorded:** substories (post-race-3) award cash through Sabine's normal `DEBT_SHARE` cut, a free skewed-sidegrade mod to the garage stash (`≤ TIER_STAT_BUDGET`, real stat penalty, slot/level-gated, never aero), a shell-specific livery (Round 1–2 targeting the starter or an already earned substory shell; later ones allowed to tease locked shells), or a standout shell (`SUBSTORY_SHELL_COUNT` flagged to Desmond and Arthur). Lieutenant wins expand horizontal paid shop stock while crew bosses gate rare tier-jump mods. No sims run and no constants changed (still awaiting economy success criteria). Why: Austin locked the substory/shop/shell-and-livery rules in the Integration room and asked to bake and push.
+
 ## 2026-11-05 — Nathaniel: lock substory rewards, story-race shop unlocks, and substory shells/liveries (canon 26, 28)
 - `story/canon.md` (decisions 19, 26, new 28; Vocabulary; Racer Types stakes; Open Question 18), `story/plot.md` (Districts, Wangan, Substories), and `story/dialogue_outline.md` (End of Round 2): locked substory incentives and story-race shop progression per Austin.
 - **Substories (canon 28):** gated until after scripted race 3; each awards cash (through Sabine's normal repair-tab cut while open), a free skewed-sidegrade mod straight to the stash (never free aero; budgets and pacing are Barry's in `design/07-economy-and-mods.md`), a shell-specific graphic/livery, or—for a few standout substories—a cosmetic shell (mesh count `<TBD: Arthur / Desmond>`).
