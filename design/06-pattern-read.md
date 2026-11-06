@@ -1,16 +1,44 @@
 # Opponent pattern telegraphing 
 
 **General rules:**
-- Opponent face displayed in one corner, upcoming turn in another
-- Each turn, opponent makes a face intended to telegraph their next choice
-- Faces also correlate to **turn type**. Each archetype has a **3-stance sequence** (entry/apex/exit) for each turn type, representing the racing line through that corner. The face for clash position 0 shows the **entry** stance, position 1 shows the **apex** stance, and position 2 shows the **exit** stance. Whether any given face is truthful depends on deception mechanics. A bluff tell (betrayal signal in the expression) indicates that face is lying.
-- **Track layouts are fixed per circuit** — authored, not randomized. Each archetype's cornering habits (the 3-stance sequences per turn type) remain consistent, but **bluffing behavior is per-character**, driven by lie rate and personality. Players learn archetype-wide driving lines, but must read each opponent's individual deception patterns.
-- **Car motion telegraphs stance across two simultaneous channels** — track position (advance warning of entry stance) and suspension loading (advance warning of apex stance). Both are visible on the straightaway approach before corner entry. The face provides a secondary cross-reference with its own bluff mechanics.
+- **Lane Entry is the car tell** (locked 2026-11-06; full rule in the next section). Relative to the next corner, outside = Attack, center = Steady, inside = Defend. Entry can bluff by sitting in the wrong lane. Apex and Exit are inferred, not shown.
+- An earlier draft put the opponent's face in one corner and the upcoming turn in another, and had the face telegraph the next choice. That face is not the live tell.
+- **Track layouts are fixed per circuit** — authored, not randomized. The archetype tables later in this doc are the shared specialization habits used when inferring Apex and Exit. They are not a second tell and not an extra bluff layer.
+- The face palettes, lie-rate table, weaving channel, and suspension channel below are an earlier draft. They are not the live read. A face does not telegraph Apex or Exit, and there is no separate Apex/Exit bluff.
+---
+
+## Lane Entry and visual gap (locked 2026-11-06)
+
+Austin locked this. It is how the rival is drawn and how Entry is read. It does not change combat math.
+
+**Line lock.** The player locks all 3 cards, the line, up front, before corner playback.
+
+**Lane Entry**, relative to the next corner:
+
+| Lane | Stance |
+|------|--------|
+| Outside | Attack |
+| Center | Steady |
+| Inside | Defend |
+
+Entry can bluff by improper placement: the car is shown in a lane that is not the stance it will play. No probability for that bluff was set here.
+
+**Apex and Exit** have no explicit tell and no extra bluff layer. The player infers them from the Entry read, the shared specialization habits already in this doc, the corner's geometry, and the real lead/gap at the start of selection. Those habits are not restated here and no new habit table is added.
+
+**Asymmetric visual gap.** Cumulative DP, position, and the win condition stay on the real gap. The spacing below is only how far apart the cars are drawn. It is not a cap on the real gap, not an AI change, not a damage change, and not a change to the mathematical rubber band (`RUBBER_BAND_FRACTION` in `sim/velocity_shift/equations.py`).
+
+- When the **player is behind**, cap how far ahead the rival is drawn so the rival's lane and Entry stay readable from the fixed rear third-person camera on the player. No distance number is approved. Readability tests set it later. Because that drawn lead is capped, visible spacing does not show the exact size of a large real lead.
+- When the **player is ahead**, the trailing rival recedes in the top-center rear-view mirror. Distance makes the headlights and the lane harder to read, so the leader gets less Entry information. That is an intentional, in-world catch-up in information. It is not a readability bug. Do not undo it with a HUD lane marker, by enlarging the lamps, or with a cap on how far behind the rival is drawn.
+
+The race camera stays on the player. It does not sit behind whichever car is leading, and it does not zoom out to keep an uncapped leader in frame.
+
 ---
 
 ## Deception mechanics
 
-Four systems govern how reliable the opponent's face is. Each scales independently by tier and encounter type.
+> **Earlier face draft, not the live Entry bluff.** The live bluff is improper lane placement, in the locked section above. Nothing below sets a probability for that. Clash-position lie rates that spread onto Apex and Exit are not an Apex/Exit tell or a second bluff layer.
+
+Four systems govern how reliable the opponent's face is in this earlier draft. Each scales independently by tier and encounter type.
 
 ### 1. Lie rate
 The probability that any given face does **not** match the AI's actual pick for that clash slot. Ranges from 0% (always truthful) to 100% (always lying).
@@ -21,6 +49,8 @@ Deception is not uniform across all 3 clashes. At lower levels it only affects t
 ---
 
 ## Turn type system
+
+> **Shared habits, not a tell layer.** These tables stay as the specialization habits Apex and Exit are inferred from. The Entry/Bluff, Apex/Bluff, and Exit/Bluff columns are the earlier face draft. They are not the live Entry bluff (improper lane placement) and not an Apex/Exit tell. No cell was added or changed.
 
 All turn types have left and right variants. No turn type may repeat more than twice consecutively in the track layout, regardless of direction.
 
@@ -101,7 +131,9 @@ Each archetype has **2 comfortable** turn types (double the normal bluff rate) a
 
 ### Car motion types
 
-Each stance has a 2-channel visual language, both playing simultaneously on the straightaway approach before corner entry. Opponents also have a **bluff** variant — the car looks like one stance but the opponent is actually playing another. All archetypes share this.
+> **Not the current tell.** The live car read is lane Entry (outside / center / inside) under the visual-gap rule above. The weaving patterns, suspension poses, and apex bluffs in this section are the earlier draft. Do not implement them as tells, and do not treat them as the bluff layer for Entry.
+
+Each stance has a 2-channel visual language in that earlier draft, both playing simultaneously on the straightaway approach before corner entry. Opponents also have a **bluff** variant — the car looks like one stance but the opponent is actually playing another. All archetypes share this.
 
 #### Channel 1 — Track position (entry / pos 0 tell)
 
@@ -152,15 +184,17 @@ The opponent constantly maneuvers left and right on the straightaway. The **bias
 - Attack: micro rear squat under apparent calm — tiny pitch change betrays power loading
 - Defend: micro front dive — a brake pulse masked as a gear shift
 
-Exit (pos 2) reflects **position**, not stance. By exit, QTE is done and the DP gap is resolved. The leading car powers away with a clean exit; the trailing car struggles or defends. If the lead changed this turn, a short overtake animation plays after exit (car moves from behind to ahead).
+Exit (pos 2) in this earlier draft reflects **position**, not stance. By exit, QTE is done and the DP gap is resolved. The leading car powers away with a clean exit; the trailing car struggles or defends. If the lead changed this turn, a short overtake animation plays after exit (car moves from behind to ahead). That playback is not an Exit tell. Drawn spacing still follows the locked visual-gap rule: a rival ahead of the player is not left so far up the road that lane and Entry cannot be read, and a rival behind is not held at a matching distance. The on-screen gap is not the real DP lead.
 
-Exit also feeds forward: the exit stance plus the next turn's type determines which entry stances are locked out next turn (see the lockout tables in `03-deckbuilding-clash.md`).
+Exit also feeds forward: the exit stance plus the next turn's type determines which entry stances are locked out next turn (see the lockout tables in `03-deckbuilding-clash.md`). That lockout is a play rule, not a visual tell.
 
 ---
 
 ## Tell generation flow
 
-For each turn and clash position, the opponent's face is determined as follows:
+> **Earlier face draft.** The live tell is lane Entry, read under the visual-gap rule. This flow does not show Apex or Exit, and it is not a second bluff layer.
+
+For each turn and clash position, the opponent's face in this earlier draft is determined as follows:
 
 1. **Look up turn type** from the track layout: `layout[turn_num % len(layout)]`
 2. **Look up the 3-stance sequence** from the turn type table. Select the stance for the current clash position:
@@ -178,18 +212,15 @@ For each turn and clash position, the opponent's face is determined as follows:
 6. **If deceptive**: the face shows the phase stance, but the bluff tell is active
 7. **Intensity** determines how exaggerated all of the above is
 
-The player sees 3 faces per turn, revealed sequentially during the straight approach:
-- **0–4s:** Entry face shown and held
-- **4–8s:** Face crossfades to the apex expression
-- **8–12s:** Face crossfades to the exit expression
+This earlier draft showed 3 faces per turn, revealed sequentially during the straight approach (entry, then apex, then exit). That sequence is not the live tell. The player does not get an explicit Apex face or Exit face. Entry is the rival's lane, read from the player camera under the visual-gap rule, and it can bluff by improper placement.
 
-Each face shows the expression matching the archetype's entry, apex, or exit phase for this turn type — plus a bluff tell if that phase's pick is deceptive. The observable hand provides a secondary cross-reference — impossible tells (stance not in hand) confirm deception at lower tiers.
-
-Faces use a crossfade blend in the Godot version: 3 stacked TextureRects (ATK/DEF/NEU expression) with alpha crossfade driven by the phase schedule. A 4th overlay layer handles the bluff tell texture. This produces smooth transitions rather than hard cuts between stances.
+The same earlier draft crossfades three face textures (ATK/DEF/NEU) on the phase schedule, with a fourth overlay for a bluff. That crossfade is not the live tell and does not show Apex or Exit.
 
 ---
 
 ### Deception by tier
+
+> Earlier face-draft rates. Not probabilities for an Entry bluff by improper placement, and not an Apex/Exit bluff layer. Cells unchanged.
 
 | Tier | Wild | Lieutenant | Boss |
 |------|------|------------|------|
@@ -201,9 +232,11 @@ Faces use a crossfade blend in the Godot version: 3 stacked TextureRects (ATK/DE
 
 ## Decision window
 
-As the cars approach the straightaway section leading into the corner, the player has **8 seconds** to observe the opponent's car animation (track position + suspension loading), read the track context, and select all 3 stance cards (entry, apex, exit) before the corner. Any position unselected when the timer expires is auto-selected (semi-random).
+The player locks all 3 cards, the line, up front, before corner playback. While choosing, the car tell they can read is lane Entry, under the visual-gap rule above. Apex and Exit are inferred from that Entry, the shared habits in this doc, the corner's geometry, and the real lead/gap at the start of selection. They are not revealed as the approach plays.
 
-Once all 3 cards are locked in, the turn renders as a cinematic corner play-through. Camera motion is attached to the turn type, and the cars animate through the scene with their behavior driven by the selected stances.
+The corner then plays back as a cinematic. Authored per-corner camera motion does not replace the fixed rear third-person player camera as the view Entry is read from, and it does not change the spacing rule. Playback does not change cumulative DP.
+
+This decision does not set the selection timer. An older sentence in this section said 8 seconds of watching track position and suspension. `design/godot-build-guide.md` still builds a 12-second straight split into entry, apex, and exit picks, matching the prototype scripts. Those two durations are an open mismatch, not a number approved here.
 
 ---
 

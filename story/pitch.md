@@ -208,8 +208,11 @@ Inspired by Racing Lagoon and PS1-era Final Fantasy environments:
 
 ## Racing View
 
-- third-person cinematic race framing
-- readable tactical presentation
+- third-person cinematic race framing, fixed behind the player
+- the rival's lane reads as Entry when that rival is ahead; the drawn lead is capped so it stays readable, and that spacing is not the real gap
+- when the player is ahead, the trailer falls back into the top-center mirror and is harder to read on purpose
+
+The spacing and Entry rule is `design/06-pattern-read.md` (Lane Entry and visual gap). Do not add a marker, enlarge the lamps, or cap the trailer to make that mirror as easy to read as the view ahead.
 
 ## QTE Moments
 
