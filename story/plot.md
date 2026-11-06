@@ -191,6 +191,7 @@ Finishing Round 3 unlocks the three Myth Driver races, one per district. PC goes
 
 ## 7. Myth Drivers
 
+- Tone note: the scene mythologizes the Myth Drivers similarly to how SpaceX employees are in the books by Eric Berger (canon 1)
 - Each Myth Driver was first sighted in Round 1, right after his district’s crew was cleared; these are the actual races
 - Order (locked): Touge (#1) → Wangan (#2) → Street (#3), following the sightings
 - **#1 Touge** (name `<TBD>`): insists Sabine *left* on her own the night of the sweep (first pass). It sounds settled until #2’s race (canon 18). Real reason (comes out to PC in the Finale `<TODO: how>`; Sabine hears it at the summit): distrust of Sabine’s uncle-dad, a detective

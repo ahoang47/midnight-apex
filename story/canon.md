@@ -7,6 +7,7 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
 ## Decisions
 
 1. **Three Myth Drivers, one per district.** #1 Touge, #2 Wangan, #3 Street. There is no #4.
+   - **Mythologizing tone (2026-11-06):** the scene mythologizes the Myth Drivers similarly to how SpaceX employees get mythologized in the books by Eric Berger.
 
 2. **No informant.** The police sweep was benign and coincidental (23). The snitch accusation was a convenient story each Myth Driver used, privately, to cover his own reason for pushing Sabine out:
    - #1: distrust of her uncle-dad, a detective. All three knew about the uncle (no secret), but only #1 held it against her.

@@ -276,6 +276,7 @@ These racers:
 - are considered washed-up or semi-retired legends
 - still command enormous respect from current crew bosses
 - are no longer friends with each other, and have not spoken since the breakup
+- get mythologized by the scene similarly to how SpaceX employees are in the books by Eric Berger
 
 
 

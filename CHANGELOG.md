@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-06 — Nathaniel: add Eric Berger SpaceX mythologizing note for Myth Drivers
+- `story/canon.md` (decision 1), `story/pitch.md` (Myth Drivers), `story/plot.md` (§7 Myth Drivers), and `story/characters/index.md`: added Austin's tone reference that the scene mythologizes the Myth Drivers similarly to how SpaceX employees get mythologized in the books by Eric Berger.
+
 ## 2026-11-05 — Barry: bake substory rewards, story-race shop unlocks, and shells/liveries into design/ (canon 26, 28)
 - `design/01-system-overview.md` (Vocabulary: progression unlocks), `design/02-equations-reference.md` (Economy decision table), and `design/07-economy-and-mods.md` (§2.1, §2.4 C12, §5.2–5.3, §6.1, §6.4, §7.5, §10 metric 14, §11 Q10/Progression/Flags): synced `design/` with canon 26 and 28 (`44d9caf`) and Sabine's personal repair-tab framing (`25b98e8`).
 - **Systems rules recorded:** substories (post-race-3) award cash through Sabine's normal `DEBT_SHARE` cut, a free skewed-sidegrade mod to the garage stash (`≤ TIER_STAT_BUDGET`, real stat penalty, slot/level-gated, never aero), a shell-specific livery (Round 1–2 targeting the starter or an already earned substory shell; later ones allowed to tease locked shells), or a standout shell (`SUBSTORY_SHELL_COUNT` flagged to Desmond and Arthur). Lieutenant wins expand horizontal paid shop stock while crew bosses gate rare tier-jump mods. No sims run and no constants changed (still awaiting economy success criteria). Why: Austin locked the substory/shop/shell-and-livery rules in the Integration room and asked to bake and push.

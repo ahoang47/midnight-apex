@@ -8,6 +8,8 @@
 - [Myth Driver #3](myth_driver_3.md) — Former friend / Left without a goodbye (Street)
 - [The Barkeep](barkeep.md) — Owner of the reverse speakeasy (name `<TODO>`)
 
+Myth Drivers tone note: the scene mythologizes them similarly to how SpaceX employees are in the books by Eric Berger (canon 1).
+
 ---
 
 Each sheet follows the same structure: **Narrative Identity**, **Battle Identity** (archetype, face type, comfortable/weak turn types), **Deception Profile** (lie rate, clash-position weighting, intensity, reverse psychology), **Progression / Tier**, and **Stance Preferences**.
