@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-05 — Nathaniel: strip leftover "race under Sabine's garage / garage standing" framing
+- `story/canon.md` (decisions 14, 19; Backstory Timeline 3–4), `story/characters/sabine.md`, `story/plot.md` (§1–3, Mentor Arc), `story/scripts/prologue.md` (§3), and `story/dialogue_outline.md` (Prologue §5, Round 1 wild bark, Round 2 Street kid bark): removed older framing where the PC raced under Sabine's garage to rebuild its standing with the crews. Sabine's surface reason for taking the PC in is now strictly feeling responsible for the back-road blowout and fronting the rebuild on a personal repair tab (with her unspoken reason—seeing herself in the PC—unchanged). Why: Austin flagged in the Integration room that Sabine stepped away from the scene, doesn't run a racing crew, and isn't trying to make a name for herself (matching canon 24 and her locked personality), and asked to strip the leftover framing.
+
 ## 2026-11-05 — Nathaniel: subsea Wangan parking area as promoter home base ("water level" music)
 - `story/canon.md` (decisions 21, 26), `story/plot.md` (Wangan), and `story/pitch.md` (Wangan District): set the promoter's home base in Wangan as a subsea parking area under the bay (in-world name `<TBD>`, Open Question 3). Why: Austin wanted a grounded narrative home for "water level" music, and tying it to the Wangan parking area / promoter's home base fits the bayshore highway setting and gives the track recurring mileage across meets and crew-boss shell bets.
 

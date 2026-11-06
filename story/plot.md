@@ -21,18 +21,18 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 - On a back road, a car flashes its headlights: first race challenge (hazards to accept)
 - First race (battle tutorial); PC ignores a manifold warning and the engine blows
 - The challenger (Sabine) comes back; PC deflects her questions about where they’re from; she tows the car to her shop
-- Why she takes PC in: on the surface, her garage hasn’t had a real driver since the breakup and crews won’t take her seriously without one; underneath, she sees herself in PC — someone who showed up alone and won’t say why (she never admits it)
+- Why she takes PC in: on the surface, she challenged PC on the back road, feels personally responsible for the blown motor, and fronts the rebuild on a repair tab; underneath, she sees herself in PC — someone who showed up alone and won’t say why (she never admits it)
 
 ## 2. Garage Intro
 
-- Sabine introduces her crew; the crew sizes up PC as an outsider (and as the driver the garage has been missing)
+- Sabine introduces Jesse and Reiko at the garage; they size up PC as an outsider
 - Tuner, Jesse (a nod to *The Fast and the Furious*): warm and easygoing, welcomes the PC right away; mods, installs a DAQ system — more races, more data, better tuning. Works out of Sabine's garage; not Sabine's employee, he just hangs out with her (canon 24). **Arc (first pass 2026-11-05, needs more passes):** conflict-averse peacekeeper who has to stop smoothing things over. Burned out on crew ego elsewhere; waited a year for Sabine and Reiko to warm up to him; welcomes the PC on night one because he hates friction (see Structural Themes; Open Question 12)
 - Buyer, Reiko (a nod to *Tokyo Drift*): sharp and businesslike, cool toward the PC at first ("Wholesale is for crew. You're not crew."); warms up and gives the PC wholesale after Round 1; parts at wholesale. Works out of Sabine's garage; not Sabine's employee, she just hangs out with her (canon 24). **Arc (first pass 2026-11-05, needs more passes):** protective gatekeeper who gets burned after vouching for the PC. Saw crew politics firsthand back in the day (ties to #3 recognizing her name in Round 1) and left the cliques on purpose (see Structural Themes; Open Question 12)
 
 ## 3. The Debt
 
-- Sabine explains the rebuild debt: she fronted the rebuild, so the PC drives for her garage until it's even (amount `<TBD: Barry>`)
-- Repayment: a share of race winnings goes to the garage (share size `<TBD: Barry>`); every crew beaten gives her garage standing again
+- Sabine explains the rebuild debt: she fronted the engine, labor, and tow, so the PC races to pay her back until they're even (amount `<TBD: Barry>`)
+- Repayment: a share of race winnings goes toward the tab (share size `<TBD: Barry>`) — a personal repair bill, not a crew sponsorship (she stepped away from the scene, canon 14, 24)
 - Debt is settled during Round 2; after that the PC stays for the fun and the mystery (canon decision 19)
 - PC formally enters the underground scene
 
@@ -245,7 +245,7 @@ Finishing Round 3 unlocks the three Myth Driver races, one per district. PC goes
 ## Mentor Arc
 - Entry point into the underground world
 - Walked away from the old generation without a word; still on the scene but keeps clear of every crew; privately accused by the old generation, never publicly
-- Took PC in for a driver; really because she sees herself in PC (never admits it)
+- Took PC in on the surface because she felt responsible for the blown motor and fronted the rebuild; really because she sees herself in PC (never admits it)
 - Believes the snitch accusation was the reason; learns the real reasons only at the summit
 - Accused a second time, by PC, at the end of Round 3; blows up again when PC digs into her past (“I know what really happened”); the rift stands until the final race at the summit
 - Recontextualized rather than simply vindicated

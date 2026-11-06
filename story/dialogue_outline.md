@@ -57,7 +57,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 ### 5. The debt
 - **Who:** Sabine, Jesse, Reiko, PC.
 - Sabine: "Engine, labor, tow. I fronted all of it." (locked; amount `<OPEN: debt amount, Barry>`)
-- Sabine: "So you drive it off. You race under my garage. Winnings come here first, until we're even." (locked)
+- Sabine: "So you drive it off. Winnings come here first, until we're even." (locked)
 - PC: "And if I lose?" / Sabine: "Then you owe me longer. So don't." (locked)
 - Jesse: "Translation: welcome to the team." / Reiko: "Translation: you're on probation." / PC: "...Deal." (locked)
 
@@ -75,7 +75,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 ## Round 1 — The Incident
 
 ### Wild races (any district)
-- Opponent starts it (draft): "You're the one driving for Sabine's garage? Prove it."
+- Opponent starts it (draft): "Haven't seen that car out here before. Let's see what it's got."
 
 ### Touge, Round 1
 **Crew pre/post-race lines** (the legend as the kids heard it)
@@ -204,7 +204,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 
 ### Street, Round 2
 **Crew pre/post-race lines** (theories in the group chat)
-- Kids, pre (draft): "Group chat says you're Sabine's driver. True?"
+- Kids, pre (draft): "Group chat says Sabine built your motor. True?"
 - Kids, post (draft): "She got scared. She got paid. She got a deal. Pick one."
 - Mature members, pre (draft): "Everyone's got a theory. You got one?"
 - Mature members, post (draft): "My cousin got impounded that night. Still mad about it."

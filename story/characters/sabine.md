@@ -9,7 +9,7 @@
   - Tired, not proud: done fighting for people's opinion of her; same energy as her silence when accused.
   - Not cutting. Her uncle parting line is a rare moment of anger breaking through.
 - **Backstory:** Raised by her uncle, a detective (inspiration: Makoto Date from *Yakuza*). Quietly turned down a date request from Myth Driver #2 because she valued his friendship, never told anybody. #2 told #1 and #3 himself, then blamed her for the teasing.
-- **Why she takes the PC in:** on the surface, her garage hasn't had a real driver since the breakup and crews won't take her seriously without one; underneath, she sees herself in the PC (someone who showed up alone and won't say why). She never admits the second.
+- **Why she takes the PC in:** on the surface, she challenged the PC on the back road, feels personally responsible for the blown motor, and fronts the tow and rebuild so they can pay her back; underneath, she sees herself in the PC (someone who showed up alone and won't say why). She never admits the second.
 - **Conflict:** Until the end she believes she was frozen out over the snitch accusation from the police sweep, which only she and the Myth Drivers know about; to everyone else she just walked away from the old generation without a word. She's still on the scene but keeps clear of every crew. When she discovers the true reasons at the summit of Fushigi-Yama:
   - **Myth Driver #1** — upset because it's not her fault her uncle-dad is a cop
   - **Myth Driver #2** — upset because she was nothing but kind to him and he took a personal vendetta over something they should've just talked about

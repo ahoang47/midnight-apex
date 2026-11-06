@@ -88,7 +88,7 @@ Sabine: “Which brings us to the bill.”
 
 Sabine: (slaps an invoice on the hood; amount `<TBD: Barry>`) “Engine, labor, tow. I fronted all of it.”
 PC: (reads it, exhales) “...I don’t have this.”
-Sabine: “Didn’t think you did. So you drive it off. You race under my garage. Winnings come here first, until we’re even.”
+Sabine: “Didn’t think you did. So you drive it off. Winnings come here first, until we’re even.”
 PC: “And if I lose?”
 Sabine: “Then you owe me longer.” (half a smile) “So don’t.”
 Jesse: “Translation: welcome to the team.”
