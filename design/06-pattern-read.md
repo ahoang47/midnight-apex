@@ -3,7 +3,7 @@
 **General rules:**
 - **Lane Entry is the car tell** (locked 2026-11-06; full rule in the next section). Relative to the next corner, outside = Attack, center = Steady, inside = Defend. Entry can bluff by sitting in the wrong lane. Apex and Exit are inferred, not shown.
 - An earlier draft put the opponent's face in one corner and the upcoming turn in another, and had the face telegraph the next choice. That face is not the live tell.
-- **Track layouts are fixed per circuit** — authored, not randomized. The archetype tables later in this doc are the shared specialization habits used when inferring Apex and Exit. They are not a second tell and not an extra bluff layer.
+- **Track layouts are fixed per circuit** — authored, not randomized. Shared Touge, Wangan, and Street tendencies are the intended specialization habits for inferring Apex and Exit. The precise habits, and any race-state-dependent Apex/Exit mapping, are still TBD. The Aggressive, Defensive, and Precise rows later in this doc are a historical draft, not that source.
 - The face palettes, lie-rate table, weaving channel, and suspension channel below are an earlier draft. They are not the live read. A face does not telegraph Apex or Exit, and there is no separate Apex/Exit bluff.
 ---
 
@@ -23,7 +23,7 @@ Austin locked this. It is how the rival is drawn and how Entry is read. It does 
 
 Entry can bluff by improper placement: the car is shown in a lane that is not the stance it will play. No probability for that bluff was set here.
 
-**Apex and Exit** have no explicit tell and no extra bluff layer. The player infers them from the Entry read, the shared specialization habits already in this doc, the corner's geometry, and the real lead/gap at the start of selection. Those habits are not restated here and no new habit table is added.
+**Apex and Exit** have no explicit tell and no extra bluff layer. They are inferred, not shown. The intended inputs are the Entry read, shared Touge, Wangan, and Street tendencies, the corner's geometry, and the real lead/gap at the start of selection. Those district tendencies, and the race-state-dependent Apex/Exit mapping, are not defined yet. No habit table and no probability is added here. The Aggressive, Defensive, and Precise rows below are an older unreconciled draft. They are not those specializations and not the adopted source of actual Apex or Exit. Corner-description notes in those rows (late braking, a long single apex, a delayed apex, an early apex, and the other turn writeups) are illustrative earlier examples, not an approved stance map.
 
 **Asymmetric visual gap.** Cumulative DP, position, and the win condition stay on the real gap. The spacing below is only how far apart the cars are drawn. It is not a cap on the real gap, not an AI change, not a damage change, and not a change to the mathematical rubber band (`RUBBER_BAND_FRACTION` in `sim/velocity_shift/equations.py`).
 
@@ -50,11 +50,11 @@ Deception is not uniform across all 3 clashes. At lower levels it only affects t
 
 ## Turn type system
 
-> **Shared habits, not a tell layer.** These tables stay as the specialization habits Apex and Exit are inferred from. The Entry/Bluff, Apex/Bluff, and Exit/Bluff columns are the earlier face draft. They are not the live Entry bluff (improper lane placement) and not an Apex/Exit tell. No cell was added or changed.
+> **Historical draft, not the district map.** These Aggressive, Defensive, and Precise rows are an older unreconciled draft. They are not the adopted source of actual Apex or Exit. Shared Touge, Wangan, and Street tendencies are intended, and the precise mapping is still TBD. The description notes (late braking, a long single apex, a delayed apex, an early apex, and the other turn writeups) are illustrative earlier examples, not an approved stance map. The Entry/Bluff, Apex/Bluff, and Exit/Bluff columns are the earlier face draft, not the live Entry bluff (improper lane placement) and not an Apex/Exit tell. No cell was added or changed.
 
 All turn types have left and right variants. No turn type may repeat more than twice consecutively in the track layout, regardless of direction.
 
-Each turn type defines a 3-stance sequence per archetype representing the racing line through that corner:
+In this historical draft, each turn type lists a 3-stance sequence per archetype. That listing is not the approved Touge, Wangan, or Street mapping:
 
 - **Entry (pos 0):** braking/turn-in phase 
 - **Apex (pos 1):** the defining moment of the corner 
@@ -118,6 +118,8 @@ Each face type is a cohesive expression palette — one expression per stance. E
 | F — Focused (HAN) | Intense stare, sharp focus | Intense gaze loses focus, drifts | Cocky smirk, raised brow | Raised brow drops flat | Relaxed half-smile | Half-smile vanishes |
 
 ### Archetype reference
+
+> Same historical draft as the stance rows above. Not the Touge, Wangan, or Street tendencies, and not an approved bluff map.
 
 Each archetype has **2 comfortable** turn types (double the normal bluff rate) and **2 weak** turn types (never bluff here).
 
@@ -232,7 +234,7 @@ The same earlier draft crossfades three face textures (ATK/DEF/NEU) on the phase
 
 ## Decision window
 
-The player locks all 3 cards, the line, up front, before corner playback. While choosing, the car tell they can read is lane Entry, under the visual-gap rule above. Apex and Exit are inferred from that Entry, the shared habits in this doc, the corner's geometry, and the real lead/gap at the start of selection. They are not revealed as the approach plays.
+The player locks all 3 cards, the line, up front, before corner playback. While choosing, the car tell they can read is lane Entry, under the visual-gap rule above. Apex and Exit are inferred, not revealed as the approach plays. The intended inputs are that Entry, shared Touge, Wangan, and Street tendencies, the corner's geometry, and the real lead/gap at the start of selection. The precise district habits and the race-state-dependent Apex/Exit map are still TBD. The archetype rows in this doc are not that map.
 
 The corner then plays back as a cinematic. Authored per-corner camera motion does not replace the fixed rear third-person player camera as the view Entry is read from, and it does not change the spacing rule. Playback does not change cumulative DP.
 

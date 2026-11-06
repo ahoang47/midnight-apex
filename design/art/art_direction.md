@@ -214,8 +214,10 @@ were lost with the box and are **re-proposed** here.
 - **Race (locked 2026-11-06; the rest of Part B is still proposal):** fixed rear third-person camera on the player.
   The player locks the 3-card line before corner playback. The rival's lane is Entry, relative to the next corner:
   outside = Attack, center = Steady, inside = Defend. Entry can bluff by improper placement. Apex and Exit are
-  inferred, not drawn as tells. When the player is behind, draw the rival no farther ahead than keeps that lane
-  readable from this camera. No distance number is approved; readability tests set it later. That cap is drawn
+  inferred, not drawn as tells. Shared Touge, Wangan, and Street tendencies are the intended inference; the precise
+  mapping is still TBD, and the older Aggressive, Defensive, and Precise rows are not that map. When the player is
+  behind, draw the rival no farther ahead than keeps that lane readable from this camera. No distance number is
+  approved; readability tests set it later. That cap is drawn
   spacing only. Cumulative DP, position, and the win condition stay on the real gap, and visible spacing does not
   show the exact size of a large lead. When the player is ahead, the trailer recedes in the top-center rear-view
   mirror. Distance makes headlights and lane harder to read, so the leader gets less Entry information. That is

@@ -261,7 +261,7 @@ w_neu = (han / total) × (1 - ALPHA) + ALPHA / 3
 
 **Goal:** 12s countdown, 3 sequential phases (entry/apex/exit), auto-pick on timeout. Exit→Entry lockout enforced on phase 0.
 
-> **Prototype timer, not the locked tell.** Austin locked the read on 2026-11-06 in `design/06-pattern-read.md`: the player locks all 3 cards up front, before corner playback, and the car tell is lane Entry (outside = Attack, center = Steady, inside = Defend), which can bluff by improper placement. Apex and Exit are inferred, with no explicit tell and no extra bluff layer. The steps below match the scripts that are already in the repo. They were not rewritten, and this decision did not pick 12s over the old 8s sentence in that doc.
+> **Prototype timer, not the locked tell.** Austin locked the read on 2026-11-06 in `design/06-pattern-read.md`: the player locks all 3 cards up front, before corner playback, and the car tell is lane Entry (outside = Attack, center = Steady, inside = Defend), which can bluff by improper placement. Apex and Exit are inferred, with no explicit tell and no extra bluff layer. Shared Touge, Wangan, and Street tendencies are the intended inference, and the precise mapping is still TBD. The Aggressive, Defensive, and Precise rows in that doc are not that map. The steps below match the scripts that are already in the repo. They were not rewritten, and this decision did not pick 12s over the old 8s sentence in that doc.
 
 ### 4.1 `StraightTimer.gd`
 
@@ -568,7 +568,7 @@ static func generate_qte(level: int, encounter_type: String,
 
 **Goal:** Opponent face display with deception and bluff tells, crossfade schedule.
 
-> **Prototype face draft, not the locked tell.** The locked car tell is lane Entry under the visual-gap rule in `design/06-pattern-read.md`. Apex and Exit are inferred. This section documents the face scripts already in the repo. It does not add an Apex/Exit tell, an extra bluff layer, or a probability for bluffing Entry by improper placement.
+> **Prototype face draft, not the locked tell.** The locked car tell is lane Entry under the visual-gap rule in `design/06-pattern-read.md`. Apex and Exit are inferred, and the Touge, Wangan, and Street mapping for that inference is still TBD. This section documents the face scripts already in the repo. It does not adopt the Aggressive, Defensive, and Precise rows as that mapping, and it does not add an Apex/Exit tell, an extra bluff layer, or a probability for bluffing Entry by improper placement.
 
 ### 9.1 `TellGenerator.gd`
 
@@ -1068,7 +1068,8 @@ Total: **24 script files + 1 scene file**
 [STRAIGHT — 12s REAL TIME]
   Prototype flow (scripts unchanged). Locked tell is lane Entry under the
   visual-gap rule in design/06-pattern-read.md: 3 cards lock up front,
-  Apex/Exit are inferred, and a rival ahead of the player is drawn only as
+  Apex/Exit are inferred (Touge/Wangan/Street map still TBD; the old
+  archetype rows are not that map), and a rival ahead of the player is drawn only as
   far as that lane stays readable. A rival behind recedes in the mirror.
   Car drives toward the corner. The rival shows lane Entry (not a separate Apex or Exit tell).
   Three opponent faces reveal SEQUENTIALLY with smooth crossfade
@@ -1306,9 +1307,9 @@ speed_multiplier = 1.0 + max(0, gap) × QTE_MASH_SPEED_PER_GAP
 
 ## Appendix G: AI Stance Lookup
 
-For each corner, the opponent's 3 "true" stance picks come from the turn-type table per their archetype. TellGenerator may swap some based on deception.
+For each corner, the prototype reads 3 stance picks from the turn-type table per archetype. That table is the historical Aggressive, Defensive, and Precise draft, not an approved Touge, Wangan, or Street Apex/Exit map. TellGenerator may swap some based on deception in that same draft.
 
-> The per-position face tells in the comment below are the earlier face draft. The locked car tell is lane Entry only (`design/06-pattern-read.md`). Apex and Exit are inferred from Entry, those shared habits, corner geometry, and the real lead/gap when selection starts. There is no explicit Apex/Exit tell and no extra bluff layer. This appendix does not add lie probabilities for the lane bluff.
+> The per-position face tells in the comment below are the earlier face draft. The locked car tell is lane Entry only (`design/06-pattern-read.md`). Apex and Exit have no explicit tell. Shared Touge, Wangan, and Street tendencies are the intended inference, together with Entry, corner geometry, and the real lead/gap at selection start, and that mapping is still TBD. The rows and the lookup below are not the adopted source. The corner-description technique notes are illustrative earlier examples, not an approved stance map. This appendix does not add lie probabilities for the lane bluff.
 
 ```
 # TurnTypeData lookup for Aggressive on Hairpin:
