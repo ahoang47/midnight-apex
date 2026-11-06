@@ -1,6 +1,7 @@
 # Midnight Apex — Art Direction (v2 draft)
 
-> **Status:** draft v2, owner Arthur (Art Director). Not yet signed off by the lead.
+> **Status:** draft v2, owner Arthur (Art Director). Not yet signed off by the lead, except the race-camera
+> gap and lane Entry bullets in B.4, which Austin locked on 2026-11-06. Part A and the rest of Part B are unchanged.
 > **Restore note (2026-10-31):** the original v2 file was never committed and was lost when the art box was wiped
 > (Oct 31 2026, ~11:31 AM PT). This file is a **reconstruction** from the approved skill text, the chat record,
 > the surviving style-reference sheet and the S2000 build files. Structure (Parts A/B/C, Q1–Q9, K1–K7, Appendix W)
@@ -17,7 +18,8 @@
 
 **Scope.** Only Part A is binding, and it covers **cars only** (lead's call, 2026-10-31: "The key rules are for the cars only.
 The scene will likely not make it to the game."). The Tokyo v2 street scene was a vibe check to see a car in context;
-everything about environments, districts, cameras, portraits and UI is in Part B as [VIBE] or [PROPOSAL].
+everything about environments, districts, cameras, portraits and UI is in Part B as [VIBE] or [PROPOSAL], except the
+race-camera gap and lane Entry bullets in B.4, which Austin locked on 2026-11-06.
 
 **The look in one paragraph.** A PSX-leaning, early-PS2-era street racer at night: cheap geometry, rich hand-painted
 textures, lighting and shine faked the way the hardware faked them, hard jaggy edges, banded 16-bit colour with ordered
@@ -208,9 +210,24 @@ were lost with the box and are **re-proposed** here.
 
 ### B.4 Cameras [PROPOSAL]
 - **Overworld:** angled semi-isometric (Racing Lagoon / PS1 Final Fantasy). Perspective with a long lens vs true
-  orthographic is open (Q8).
-- **Race:** third-person cinematic chase framing; car readable at 640×480.
-- **QTE:** dramatic close-ups and perspective shifts; same frame rules.
+  orthographic is open (Q8). This overworld note is not the race camera.
+- **Race (locked 2026-11-06; the rest of Part B is still proposal):** fixed rear third-person camera on the player.
+  The player locks the 3-card line before corner playback. The rival's lane is Entry, relative to the next corner:
+  outside = Attack, center = Steady, inside = Defend. Entry can bluff by improper placement. Apex and Exit are
+  inferred, not drawn as tells. Shared Touge, Wangan, and Street tendencies are the intended inference; the precise
+  mapping is still TBD, and the older Aggressive, Defensive, and Precise rows are not that map. When the player is
+  behind, draw the rival no farther ahead than keeps that lane readable from this camera. No distance number is
+  approved; readability tests set it later. That cap is drawn
+  spacing only. Cumulative DP, position, and the win condition stay on the real gap, and visible spacing does not
+  show the exact size of a large lead. When the player is ahead, the trailer recedes in the top-center rear-view
+  mirror. Distance makes headlights and lane harder to read, so the leader gets less Entry information. That is
+  intentional. Do not "fix" it with a HUD lane marker, bigger lamps, or a cap on how far behind the rival is drawn.
+  The mirror is the car's rear-view mirror, not a wet-road or screen-space reflection. B.1's dry-road rule still stands.
+  Full rule: `design/06-pattern-read.md` (Lane Entry and visual gap). This lock does not change the project
+  display (640×480, viewport stretch, keep aspect, in `project.godot`) and does not settle Q3 (that setting vs the
+  640×448 vibe-check frames). A higher-resolution / CRT trial was an experiment only.
+- **QTE:** dramatic close-ups and perspective shifts; same frame rules. QTE close-ups are not a reason to enlarge
+  the mirror's lamps or to mark the trailer's lane.
 
 ### B.5 Characters, portraits, UI [PROPOSAL]
 - Characters never appear in-world. JoJo-style 2D portraits/overlays use the same low-res, limited-palette treatment

@@ -261,6 +261,8 @@ w_neu = (han / total) × (1 - ALPHA) + ALPHA / 3
 
 **Goal:** 12s countdown, 3 sequential phases (entry/apex/exit), auto-pick on timeout. Exit→Entry lockout enforced on phase 0.
 
+> **Prototype timer, not the locked tell.** Austin locked the read on 2026-11-06 in `design/06-pattern-read.md`: the player locks all 3 cards up front, before corner playback, and the car tell is lane Entry (outside = Attack, center = Steady, inside = Defend), which can bluff by improper placement. Apex and Exit are inferred, with no explicit tell and no extra bluff layer. Shared Touge, Wangan, and Street tendencies are the intended inference, and the precise mapping is still TBD. The Aggressive, Defensive, and Precise rows in that doc are not that map. The steps below match the scripts that are already in the repo. They were not rewritten, and this decision did not pick 12s over the old 8s sentence in that doc.
+
 ### 4.1 `StraightTimer.gd`
 
 **🤖 MCP creates** `scripts/StraightTimer.gd`:
@@ -566,6 +568,8 @@ static func generate_qte(level: int, encounter_type: String,
 
 **Goal:** Opponent face display with deception and bluff tells, crossfade schedule.
 
+> **Prototype face draft, not the locked tell.** The locked car tell is lane Entry under the visual-gap rule in `design/06-pattern-read.md`. Apex and Exit are inferred, and the Touge, Wangan, and Street mapping for that inference is still TBD. This section documents the face scripts already in the repo. It does not adopt the Aggressive, Defensive, and Precise rows as that mapping, and it does not add an Apex/Exit tell, an extra bluff layer, or a probability for bluffing Entry by improper placement.
+
 ### 9.1 `TellGenerator.gd`
 
 **🤖 MCP creates** `scripts/TellGenerator.gd` — implements the deception flow from `06-pattern-read.md`:
@@ -697,7 +701,9 @@ func announce_lap(phase: int, total: int)
 
 ## 11. Car Animation
 
-**Goal:** Each car has straight Z-offset (DP gap) and corner path traversal. AnimationTree blends stance body language.
+**Goal:** Each car has a straight Z-offset and corner path traversal. AnimationTree blends stance body language.
+
+> **Drawn spacing is not the DP gap.** `snap_to_gap` in `scripts/CarAnimator.gd` still lerps a symmetric Z range from the DP fraction (`lerp(-5.0, 5.0, …)`). That script was not changed. The locked presentation rule is in `design/06-pattern-read.md`: when the player is behind, the rival is drawn only as far ahead as keeps lane and Entry readable from the fixed rear third-person player camera (no distance number approved); when the player is ahead, the trailer recedes in the top-center mirror with no matching rear cap. Actual cumulative DP is unchanged. Do not read a large lead's exact size off the visible spacing.
 
 ### 11.1 `CarAnimator.gd`
 
@@ -709,6 +715,9 @@ func announce_lap(phase: int, total: int)
 var straight_base_z: float = 0.0
 
 func snap_to_gap(gap: float, max_gap: float)
+    # PROTOTYPE ONLY (still what CarAnimator.gd does). Not the locked visual gap.
+    # The symmetric ±5 range caps the trailer the same way as the leader; the
+    # locked rule caps only how far ahead of the player the rival is drawn.
     # global_position.z = straight_base_z + lerp(-5.0, 5.0, clamp(gap / max_gap, -1.0, 1.0))
     # Tween over 0.5s
 
@@ -726,6 +735,8 @@ var progress_offset: float = 0.0
 
 func begin_corner_traversal(path: Curve3D, duration: float = 3.5)
     # Store Path3D curve from CornerRoad
+    # PROTOTYPE ONLY. The 10% path offset is not an approved draw distance.
+    # Locked spacing is the visual-gap rule in design/06-pattern-read.md (no number).
     # Read current DP gap from PositionTracker
     # Set progress_offset = dp_gap / max_gap × 0.1 (10% path offset per full gap)
     # Tween corner_progress from 0.0 → 1.0 over duration
@@ -763,6 +774,8 @@ AnimationTree
 ```gdscript
 func start_blend_cycle(entry_stance: Stance, apex_stance: Stance,
                        exit_stance: Stance, corner_direction: String)
+    # PROTOTYPE face/stance crossfade. Not an explicit Apex/Exit tell.
+    # Locked tell is lane Entry (design/06-pattern-read.md).
     # Set corner_blend on both car AnimationTrees (left=0.0, right=1.0)
     # Begin 12s stance_blend schedule:
     #   0s-4s:   stance_blend → entry_stance weight 1.0
@@ -790,15 +803,25 @@ func set_tell_alpha(intensity: float, is_deceptive: bool)
 
 ## 12. Camera
 
-**Goal:** Chase cam that follows the cars through straight and corner phases.
+**Goal:** Fixed rear third-person camera on the player. The rival's drawn gap is asymmetric so Entry stays readable when the player is behind, and gets harder to read in the mirror when the player is ahead. Rule: `design/06-pattern-read.md` (Lane Entry and visual gap). Actual DP, position, and the win condition do not follow the drawn spacing.
 
-### 12.1 `BattleCamera.gd`
+### 12.1 Locked view (2026-11-06)
 
-**🤖 MCP creates** `scripts/BattleCamera.gd` — attached to Camera3D:
+- The race view used to read Entry is a fixed rear third-person camera on the **player**. It is not placed behind both cars, and it does not pull back to keep an uncapped leader in shot.
+- **Player behind:** cap how far ahead the rival is drawn so that rival's lane and Entry (outside = Attack, center = Steady, inside = Defend, relative to the next corner) stay readable. No distance number is approved. The cap is draw distance only. It is not `RUBBER_BAND_FRACTION`, not a real-gap cap, and not a damage or AI change. Visible spacing does not show the exact size of a large real lead.
+- **Player ahead:** the trailing rival recedes in the top-center rear-view mirror. Do not cap that recession to match the forward cap. Headlights and lane get harder to read with distance. That loss of Entry information is intentional. Do not add a HUD lane marker or enlarge the lamps to undo it.
+- Corner-playback camera paths later in this guide are the cinematic after the line is locked. They do not replace this view as the one Entry is read from, and they do not authorize a symmetrical rear cap.
+- Display settings are unchanged: 640×480, viewport stretch, keep aspect, as in §1.1 and `project.godot`. A higher-resolution / CRT trial was an experiment only.
+
+### 12.2 `BattleCamera.gd`
+
+**🤖 MCP creates** `scripts/BattleCamera.gd` — attached to Camera3D.
+
+The sketch below is the prototype chase cam. "Behind both cars" is not the locked view; §12.1 is.
 
 ```gdscript
-# During STRAIGHT:
-#   - Behind both cars, looking down the straight road
+# During STRAIGHT (prototype sketch — locked view is §12.1, fixed on the player):
+#   - Rear third-person on the player, looking down the straight
 #   - FOV ~65°, slight vertical tilt for speed feel
 # During CORNER_PLAYBACK:
 #   - Rotate ~15° around Y axis into corner direction
@@ -832,7 +855,7 @@ No continuous track. Each turn is a self-contained straight approach + corner se
 | Game state | Visible road | Car positioning | Camera |
 |---|---|---|---|
 | LOAD_SEGMENT | (loading) | — | — |
-| STRAIGHT | StraightRoad | Static Z-offset for DP gap | Chase cam behind |
+| STRAIGHT | StraightRoad | Drawn spacing follows the visual-gap rule in 06 (not a 1:1 DP offset; prototype `snap_to_gap` is still symmetric) | Fixed rear third-person on the player |
 | CORNER_PLAYBACK | CornerRoad | Pathing along Curve3D | Authored camera path |
 | DAMAGE_BATCH | CornerRoad | Static at corner exit | Same as corner |
 | END_TURN | (unload) | Snap back to straight Z | Swing back to chase cam |
@@ -1043,8 +1066,14 @@ Total: **24 script files + 1 scene file**
 
 ```
 [STRAIGHT — 12s REAL TIME]
-  Car drives toward the corner. Opponent car projects the racing line.
-  Three opponent faces reveal SEQUENTIALLY with smooth crossfade:
+  Prototype flow (scripts unchanged). Locked tell is lane Entry under the
+  visual-gap rule in design/06-pattern-read.md: 3 cards lock up front,
+  Apex/Exit are inferred (Touge/Wangan/Street map still TBD; the old
+  archetype rows are not that map), and a rival ahead of the player is drawn only as
+  far as that lane stays readable. A rival behind recedes in the mirror.
+  Car drives toward the corner. The rival shows lane Entry (not a separate Apex or Exit tell).
+  Three opponent faces reveal SEQUENTIALLY with smooth crossfade
+  (earlier face draft, not an Apex/Exit tell):
     0s-4s:   ENTRY face shown + tell (if deceptive)
              Player picks entry stance (lockout applied)
     4s-8s:   Face crossfades to APEX expression
@@ -1067,7 +1096,7 @@ Total: **24 script files + 1 scene file**
     - If changed → overtake animation (0.5-1s) + camera swing
     - If unchanged → skip
   DP bars update → position label updates
-  Car positions tween to reflect new gap
+  Car positions tween. Drawn spacing follows the visual-gap rule, not the raw DP magnitude
   → Unload corner segment
   → DECK DISCARD / DRAW for next turn
   → Load next corner segment
@@ -1278,7 +1307,9 @@ speed_multiplier = 1.0 + max(0, gap) × QTE_MASH_SPEED_PER_GAP
 
 ## Appendix G: AI Stance Lookup
 
-For each corner, the opponent's 3 "true" stance picks come from the turn-type table per their archetype. TellGenerator may swap some based on deception.
+For each corner, the prototype reads 3 stance picks from the turn-type table per archetype. That table is the historical Aggressive, Defensive, and Precise draft, not an approved Touge, Wangan, or Street Apex/Exit map. TellGenerator may swap some based on deception in that same draft.
+
+> The per-position face tells in the comment below are the earlier face draft. The locked car tell is lane Entry only (`design/06-pattern-read.md`). Apex and Exit have no explicit tell. Shared Touge, Wangan, and Street tendencies are the intended inference, together with Entry, corner geometry, and the real lead/gap at selection start, and that mapping is still TBD. The rows and the lookup below are not the adopted source. The corner-description technique notes are illustrative earlier examples, not an approved stance map. This appendix does not add lie probabilities for the lane bluff.
 
 ```
 # TurnTypeData lookup for Aggressive on Hairpin:
@@ -1305,7 +1336,7 @@ Tables in `06-pattern-read.md` — sections: Aggressive, Defensive, Precise. Bal
 - **No DNF / knockout** — match always runs to max_turns, then position decides.
 - **Tiebreaker:** opponent wins on equal position.
 - **Rubber-band threshold:** 15% of average max HP.
-- **Car position in 3D:** purely a visualization of DP gap. DP = position.
+- **Car position in 3D:** drawn spacing only. Cumulative DP, position, and the win condition stay on the real gap (`design/06-pattern-read.md`, Lane Entry and visual gap). A capped lead ahead of the player is not the exact large-lead magnitude. The trailer is not given a matching cap. `CarAnimator.gd` still uses a symmetric Z lerp; that code was not updated with the rule.
 - **AnimationTree blend:** 7 animations + 3-way blend node = smooth stance transitions for any 3-stance sequence. No per-combination baking.
 - **Face crossfade:** 3 stacked TextureRects with alpha driven by same blend schedule as the car. 4th overlay layer for bluff tell.
 - **Meta-archetypes:** 3 face types (Scowling/Grinning/Focused) shared by hard+soft pairs. 9 face textures + 9 tell overlays total.
