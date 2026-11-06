@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-05 — Nathaniel: lock substory rewards, story-race shop unlocks, and substory shells/liveries (canon 26, 28)
+- `story/canon.md` (decisions 19, 26, new 28; Vocabulary; Racer Types stakes; Open Question 18), `story/plot.md` (Districts, Wangan, Substories), and `story/dialogue_outline.md` (End of Round 2): locked substory incentives and story-race shop progression per Austin.
+- **Substories (canon 28):** gated until after scripted race 3; each awards cash (through Sabine's normal repair-tab cut while open), a free skewed-sidegrade mod straight to the stash (never free aero; budgets and pacing are Barry's in `design/07-economy-and-mods.md`), a shell-specific graphic/livery, or—for a few standout substories—a cosmetic shell (mesh count `<TBD: Arthur / Desmond>`).
+- **Shells and liveries (canon 26):** crew bosses keep their signature shells exclusive to betting races at the promoter's subsea Wangan home base, while standout substories add a small pool of oddball shells. Unlocking a livery before owning its shell sits in the garage as a breadcrumb to hunt that shell down; Round 1–2 livery substories target the starter shell (or a substory shell already earned) so early rewards are usable before betting opens.
+- **Story-race shop unlocks (canon 19, 28):** beating crew members (lieutenants) as well as crew bosses expands Reiko's paid shop stock, with crew bosses gating rare shop mods. Why: Austin locked the four-reward substory menu plus lieutenant shop unlocks in the Integration room and asked to bake and push.
+
 ## 2026-11-05 — Nathaniel: strip leftover "race under Sabine's garage / garage standing" framing
 - `story/canon.md` (decisions 14, 19; Backstory Timeline 3–4), `story/characters/sabine.md`, `story/plot.md` (§1–3, Mentor Arc), `story/scripts/prologue.md` (§3), and `story/dialogue_outline.md` (Prologue §5, Round 1 wild bark, Round 2 Street kid bark): removed older framing where the PC raced under Sabine's garage to rebuild its standing with the crews. Sabine's surface reason for taking the PC in is now strictly feeling responsible for the back-road blowout and fronting the rebuild on a personal repair tab (with her unspoken reason—seeing herself in the PC—unchanged). Why: Austin flagged in the Integration room that Sabine stepped away from the scene, doesn't run a racing crew, and isn't trying to make a name for herself (matching canon 24 and her locked personality), and asked to strip the leftover framing.
 

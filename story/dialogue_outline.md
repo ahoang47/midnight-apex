@@ -225,7 +225,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 
 ### End of Round 2: betting opens
 - **Who:** the promoter, PC.
-- **Beat:** the promoter opens his betting side game. Shells come only from crew boss betting races at his home base (canon 26).
+- **Beat:** the promoter opens his betting side game. Crew bosses' signature shells come only from crew boss betting races at his subsea parking-area home base, while a few standout substories award oddball shells (canon 26, 28).
 - Promoter (draft): "You draw a crowd now. Let's put some money on it."
 - Mechanics, stakes and odds: `<OPEN: Barry, canon 26>`.
 

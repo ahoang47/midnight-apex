@@ -81,7 +81,7 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
     - Sabine fronted the engine rebuild, labor and tow after feeling responsible for the blowout (14), so the PC races to pay off the repair tab until they're even. It's a personal debt, not a crew sponsorship: Sabine stepped away from the scene and isn't trying to make a name for her garage (24).
     - Until it's cleared, a share of each win (not all of it) goes to the debt, so money for mods is tight in Round 1. Share size, debt amount and Reiko's wholesale discount are Barry's `<TBD: Barry>`.
     - **Opening (2026-11-04):** the first three races are more or less scripted. Once mods unlock, the whole world opens up: the PC can take wild races or search out lieutenants (the crew members; "lieutenant" is the sim's encounter tier between wild races and the boss).
-    - **Mods (2026-11-04):** mods unlock after the PC wins race 3. Reiko sees the PC is serious and finally lets them buy parts through her, at full price. Wholesale follows at the end of Round 1 as she warms up.
+    - **Mods (2026-11-04; updated 2026-11-05):** mods unlock after the PC wins race 3. Reiko sees the PC is serious and finally lets them buy parts through her, at full price. Beating story races up each crew's ladder (crew members/lieutenants as well as crew bosses) expands her paid shop stock, with crew bosses gating rare shop mods (28; tier/catalog rules are Barry's). Wholesale follows at the end of Round 1 as she warms up.
     - **Wholesale:** at the end of Round 1 Reiko warms up and gives the PC wholesale prices, even though the debt isn't cleared yet (payoff of "Wholesale is for crew. You're not crew."). By Round 3 the PC has plenty of access to parts.
     - **Cleared mid Round 2.** The exact race comes from Barry's season sim (`design/07-economy-and-mods.md`). Clearing it triggers aero mods and Sabine's drinks at the speakeasy (24). After that the PC stays for the fun and to uncover Sabine's mystery.
 
@@ -111,15 +111,20 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
 
 25. **Core personalities (2026-11-04).** Sabine, the Myth Drivers and the barkeep: their sheets in `characters/`. The PC (kept light): `plot.md` §1. Jesse and Reiko: `plot.md` §2 (arcs first-passed 2026-11-05 under Open Question 12; needs more passes). Crews and crew bosses: their districts in `plot.md`. They drive barks, pre- and post-race lines and exposition.
 
-26. **Car bodies (shells) and betting (2026-11-04).**
+26. **Car bodies (shells), liveries, and betting (2026-11-04; updated 2026-11-05).**
     - **Why bodies change:** body swaps (dropping the engine and chassis into a new shell) are everyday work at Sabine's garage, and Reiko sources shells from impounds, wrecks and dealers. With so many bodies in the game, nobody finds swapping strange.
-    - **Cosmetic only** (no stats).
-    - **Winning shells:** only by winning a betting race, as a bonus prize, and only at the promoter's home base (the subsea Wangan parking area, 21). Only crew bosses put up shells, never named rivals or regular crew racers. The PC never puts up their own shell. Every shell won is kept forever in the PC's collection at the garage and can be swapped on anytime.
+    - **Cosmetic only** (no stats) for both shells and graphics/liveries.
+    - **Winning shells:** two sources only — crew bosses' signature shells, won as a bonus prize in betting races against crew bosses at the promoter's home base (the subsea Wangan parking area, 21; never named rivals or regular crew racers), and a small number of oddball/capstone shells from standout substories (28; exact count `<TBD: Arthur / Desmond>`). The PC never puts up their own shell. Every shell won is kept forever in the PC's collection at the garage and can be swapped on anytime.
+    - **Graphics / liveries (2026-11-05):** shell-specific paint and decal liveries awarded by substories (28). Unlocking a livery before owning its shell is fine—it sits in the garage and gives the player a breadcrumb to hunt down that shell; early Round 1–2 livery substories target the starter shell (or a shell already earned from a substory) so early rewards are usable before betting opens.
     - **Wild races:** any can turn into a betting race via a prompt, but those don't award shells.
     - **Timing:** betting unlocks at the end of Round 2 (21). Mechanics, stakes and odds `<TBD: Barry>`.
     - **No conflict** with "losing a crew boss race means a retry, never losing the car" (rules below): the PC never stakes their shell or car.
 
 27. **Persistent results (2026-11-04; narrowed 2026-11-05).** Loss persistence applies only to crew members (lieutenants) and crew bosses: if the PC loses to one of them, that driver remembers it, and it carries into later barks and rematches. Wild races and Myth Driver races do not have loss persistence (wild racers are anonymous locals). Separate win gate: winning scripted race 3 is what makes Reiko take the PC seriously and open parts sales (19). How losses are tracked and whether races can be retried is `<TBD: Barry>`.
+
+28. **Substory rewards and story-race shop unlocks (2026-11-05).**
+    - **Substory rewards:** gated until mods and the open city unlock after scripted race 3 (19). Each substory awards one simple prize straight to the player: **cash** (runs through Sabine's normal repair-tab cut while the debt is open, 19), a **free mod part** straight to the garage stash (skewed sidegrades with real trade-offs so Reiko's clean upgrades stay worth buying, and never free aero; stat budgets and pacing are Barry's in `design/07-economy-and-mods.md`), a **shell-specific graphic/livery** (26), or—for a few standout substories—a **cosmetic shell** (26; mesh count `<TBD: Arthur / Desmond>`).
+    - **Story-race shop unlocks:** beating crew members (lieutenants) as well as crew bosses expands Reiko's paid shop catalog as her suppliers open up more options, while crew bosses gate rare tier-jump shop mods (catalog and tier rules are Barry's).
 
 ## Vocabulary
 
@@ -129,7 +134,7 @@ System terms (race tiers, crew ladder, persistence, stats, unlock order, respec,
 - **Reputation:** lore only, not a tracked stat (12). Story docs use "reputation" (not "street cred" or "rep").
 - **No pink slips:** shells replaced them (26). **Named rivals** may break the racer-type pattern (rules below) and never put up shells.
 - **Story-only terms:** the **police sweep** (never "sting operation", 23); **sightings** (talk-only Myth Driver scenes after every round, 11); **the promoter** (Wangan crew boss, 21); **the influencer** (Street crew boss, 22); **the reverse speakeasy** and **the barkeep** (24).
-- **Unlock order** (opening, mods, wholesale, aero, the debt, betting, shells): see design 01; story beats are in 19, 21, 24 and 26.
+- **Unlock order** (opening, mods, wholesale, aero, the debt, betting, shells, substory rewards): see design 01 and 07; story beats are in 19, 21, 24, 26 and 28.
 
 ## Racer Types and Archetypes
 
@@ -143,7 +148,7 @@ System terms (race tiers, crew ladder, persistence, stats, unlock order, respec,
 | **Balanced**: follows a set rhythm | High Schooler | Salaryman | Skater |
 | **Adaptive**: cautious early, sharper later | Honor Student | Consultant | Influencer |
 
-Never reuse archetype names as character or racer-type names. Crew boss stakes are money, reputation (lore only, 12), rare shop mods and story progress; losing a crew boss race means a retry, never losing the car.
+Never reuse archetype names as character or racer-type names. Beating crew members expands Reiko's paid shop stock (28); crew boss stakes are money, reputation (lore only, 12), rare shop mods and story progress; losing a crew boss race means a retry, never losing the car.
 
 ## Backstory Timeline
 
@@ -181,4 +186,4 @@ Pull from the top; new questions go to the bottom.
 15. (2026-11-04) **Who the PC races in opening races 2–3** (the first three races are more or less scripted; race 1 is Sabine) — canon decision 19; `dialogue_outline.md` Prologue
 16. (2026-11-04) **The speakeasy drinks scene (mid Round 2)** (Sabine takes the PC out when the debt clears; the PC's first visit) — canon decisions 19, 24; `plot.md` §5
 17. (2026-11-04) **Story framing for the Wild ramp, pending Austin's sign-off** (systems side is Barry's: Wild difficulty and race length step up in a district as its lieutenants fall). Framing: each lieutenant win spreads the PC's reputation, so better local drivers come out to test them. Tells follow the crew ladder: kids are cocky and mostly honest, mature members bluff more, and old heads have the best-hidden habits. Lie rates and numbers stay with Barry — `design/` (Barry); canon decision 27
-18. (2026-11-01) **Substories:** none written yet; handled as a separate thread (Austin) — `plot.md` Substories
+18. (2026-11-01) **Substories:** individual substories not written yet (reward rules locked in canon 28); handled as a separate thread (Austin) — `plot.md` Substories

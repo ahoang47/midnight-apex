@@ -42,7 +42,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 - One crew + one crew boss per district (3 + 3 total), re-faced every round. Each round the PC runs through the whole crew in rank order: its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the crew boss. Next round the boss has leveled up the whole crew. Flavor text after every race reveals a little more
 - Racer types always use their archetype (pairing rules in `canon.md`)
-- Crew boss stakes: money, reputation (lore only), rare shop mods, story progress; a loss = retry, never losing the car
+- Story-race part unlocks: beating crew members (lieutenants) expands Reiko's paid shop stock; crew boss stakes are money, reputation (lore only), rare shop mods, and story progress; a loss = retry, never losing the car (canon 28)
 
 ## Touge
 
@@ -66,7 +66,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 - Boss personality (locked 2026-11-04): smooth, pragmatic, always selling; sees the PC as a headliner; talks about Sabine like a business loss, with a little too much care in his voice
 - Crew personality: grown-ups with day jobs racing for release; polite, measured, cliquey; treat the PC like a new hire who has to prove they belong; gossip comes out as dry, knowing remarks
 - **Promoter's home base (2026-11-05):** a subsea Wangan parking area under the bay (name `<TBD>`), the narrative home for the game's "water level" music (canon 21)
-- High-stakes betting side game run by the promoter, unlocked at the end of Round 2 (mechanics `<TBD: Barry>`). Winning a betting race against a crew boss at his subsea parking-area home base is the only way to win shells (cosmetic car bodies); wild-race betting races award no shells (canon 26)
+- High-stakes betting side game run by the promoter, unlocked at the end of Round 2 (mechanics `<TBD: Barry>`). Crew bosses' signature shells (cosmetic car bodies) are won only in betting races at his subsea parking-area home base—wild-race betting races award no shells—while a few standout substories also award oddball shells (canon 26, 28)
 
 | Racer Type | Archetype |
 |---|---|
@@ -236,6 +236,7 @@ Finishing Round 3 unlocks the three Myth Driver races, one per district. PC goes
 # SUBSTORIES
 
 - Main plot stays grounded; JRPG weirdness and extra lore go in substories/side quests
+- Rewards (locked 2026-11-05, canon 28): gated until after scripted race 3; each substory awards cash (runs through Sabine's normal repair-tab cut while open), a free skewed-sidegrade mod straight to the garage stash (never aero; budgets/pacing in Barry's economy spec), a shell-specific graphic/livery, or—for a few standout substories—a cosmetic shell (canon 26; mesh count `<TBD: Arthur / Desmond>`). Early Round 1–2 livery rewards target the starter shell (or a substory shell already earned); later ones can tease locked shells as a breadcrumb
 - `<TODO: substories>`
 
 ---
