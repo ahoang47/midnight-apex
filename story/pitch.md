@@ -100,6 +100,7 @@ The city is divided into 3 core racing districts (in-world names `<TBD>`):
 - high-speed highway endurance racing
 - drafting and momentum warfare
 - neon horizon visual identity
+- subsea bay parking area (the promoter's home base; "water level" music atmosphere)
 
 ### Racer Types
 - Salaryman

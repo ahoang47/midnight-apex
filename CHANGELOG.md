@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-05 — Nathaniel: subsea Wangan parking area as promoter home base ("water level" music)
+- `story/canon.md` (decisions 21, 26), `story/plot.md` (Wangan), and `story/pitch.md` (Wangan District): set the promoter's home base in Wangan as a subsea parking area under the bay (in-world name `<TBD>`, Open Question 3). Why: Austin wanted a grounded narrative home for "water level" music, and tying it to the Wangan parking area / promoter's home base fits the bayshore highway setting and gives the track recurring mileage across meets and crew-boss shell bets.
+
 ## 2026-11-05 — Nathaniel: Jesse and Reiko arcs + "Sabine's crew" (first pass, needs more passes)
 - Austin approved a first pass on Jesse's and Reiko's arcs and asked to commit them for now (needs more passes; not final-locked). Open Questions 8 and 12 stay in place and record the first pass the same way 6 and 7 do.
 - **"Sabine's crew" (canon 24):** Jesse, Reiko and the barkeep are part of an informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars. That's how Sabine stays isolated from the crews after the sweep yet is still known across the city. Round 2 (around the speakeasy / mid-round): Jesse and Reiko introduce the PC to this circle.

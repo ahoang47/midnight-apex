@@ -89,6 +89,7 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
 
 21. **The Wangan crew boss is a promoter.**
     - He organizes the highway runs, takes bets and gets a cut, and sees the PC as a headliner he can sell. Pragmatic about Sabine, not bitter: her walking away cost the scene its best draw.
+    - **Home base (2026-11-05):** a subsea Wangan parking area under the bay (in-world name `<TBD>`, Open Question 3), which serves as the narrative home for the game's "water level" music and where crew-boss shell betting races take place (26).
     - **Betting:** at the end of Round 2 he opens a high-stakes betting side game for extra money. Mechanics are Barry's `<TBD>`; shells and betting-race rules are in 26.
     - **Old flame (private, first pass):** he and Sabine had a thing in the old generation's day, the real reason she turned down #2's date. It hits hard because the man she chose and the man she turned down share the same highway, and #2 has watched the promoter run his old turf for years without knowing. Neither talks about it; the PC only picks up hints (the way he talks about her). The truth comes out at the summit, when #2 finally learns why she said no.
 
@@ -113,7 +114,7 @@ Decisions made by the lead (Austin). If any other story file disagrees with this
 26. **Car bodies (shells) and betting (2026-11-04).**
     - **Why bodies change:** body swaps (dropping the engine and chassis into a new shell) are everyday work at Sabine's garage, and Reiko sources shells from impounds, wrecks and dealers. With so many bodies in the game, nobody finds swapping strange.
     - **Cosmetic only** (no stats).
-    - **Winning shells:** only by winning a betting race, as a bonus prize, and only at the promoter's home base (Wangan, 21). Only crew bosses put up shells, never named rivals or regular crew racers. The PC never puts up their own shell. Every shell won is kept forever in the PC's collection at the garage and can be swapped on anytime.
+    - **Winning shells:** only by winning a betting race, as a bonus prize, and only at the promoter's home base (the subsea Wangan parking area, 21). Only crew bosses put up shells, never named rivals or regular crew racers. The PC never puts up their own shell. Every shell won is kept forever in the PC's collection at the garage and can be swapped on anytime.
     - **Wild races:** any can turn into a betting race via a prompt, but those don't award shells.
     - **Timing:** betting unlocks at the end of Round 2 (21). Mechanics, stakes and odds `<TBD: Barry>`.
     - **No conflict** with "losing a crew boss race means a retry, never losing the car" (rules below): the PC never stakes their shell or car.
