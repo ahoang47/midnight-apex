@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-05 — Nathaniel: Jesse and Reiko arcs + "Sabine's crew" (first pass, needs more passes)
+- Austin approved a first pass on Jesse's and Reiko's arcs and asked to commit them for now (needs more passes; not final-locked). Open Questions 8 and 12 stay in place and record the first pass the same way 6 and 7 do.
+- **"Sabine's crew" (canon 24):** Jesse, Reiko and the barkeep are part of an informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars. That's how Sabine stays isolated from the crews after the sweep yet is still known across the city. Round 2 (around the speakeasy / mid-round): Jesse and Reiko introduce the PC to this circle.
+- **Reiko:** protective gatekeeper who gets burned after vouching. Cool → full-price after race 3 → wholesale at the end of Round 1; brings the PC into "Sabine's crew" in Round 2; warns the PC off digging in Round 3; stung at the Mentor Confrontation; strictly business in the Finale (parts stay open); once she sees the PC rounding up the Myth Drivers, she points them to where Sabine runs the mountain alone (first pass for Open Question 8).
+- **Jesse:** conflict-averse peacekeeper who has to stop smoothing things over. Welcomes the PC on night one; makes the garage feel like home in Rounds 1–2; at the Mentor Confrontation he refuses to cover for the PC and quietly points out they decided without asking (subverting the Prologue beat); quiet/strained in the Finale (tuning stays open); earning his warmth back by the epilogue makes the garage feel whole again.
+- Updated: `canon.md` decisions 4, 15, 24, 25 and Open Questions 8 and 12; `plot.md` §2, §5, §6, §8 and a new Structural Themes section; `dialogue_outline.md` (Round 2 intro, Round 3 warning, Mentor Confrontation, Summit Setup). Beats marked first pass; example lines marked (draft). No push — Austin said commit for now.
+
 ## 2026-11-05 — Barry: narrow loss persistence in design/ to crew members and crew bosses (canon 27)
 - `design/01-system-overview.md` (Vocabulary: race tiers and persistence) and `design/07-economy-and-mods.md` (§11 Q19 and Progression note): updated canon 27 references so loss persistence applies only to crew members (lieutenants) and crew bosses; wild races and Myth Driver races don't have loss persistence, while scripted race 3's win gate (canon 19) stays unchanged. Why: Austin narrowed canon 27 (`b90dd15`) and cleared `design/` to match and push.
 

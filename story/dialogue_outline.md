@@ -180,6 +180,9 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - Barkeep (draft): "Sabine brought someone. That's new." / "What are you drinking? I'll remember."
 - Reiko (draft, about aero): "Aero parts are in. Tuning happens at the tunnel, not here."
 - Speakeasy name and barkeep name: `<OPEN: Q11>`.
+- **"Sabine's crew" intro (first pass 2026-11-05, needs more passes):** around the speakeasy / mid-round, Jesse and Reiko introduce the PC to the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24).
+- Jesse (draft): "These people don't run crews. They run cars. You're in."
+- Reiko (draft): "Don't make me regret bringing you."
 - **PC backstory:** Jesse asks about the PC's old crew, "Had one. Left." (Sabine overhears). This is a first pass under `<OPEN: Q6>`, not locked.
 
 ### Wangan, Round 2
@@ -289,12 +292,20 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 
 **PC backstory:** the PC slips "I left the week of a big race" while digging into Sabine. First pass under `<OPEN: Q6>`.
 
+### Round 3: Reiko warns the PC off digging (first pass 2026-11-05, needs more passes)
+- **Who:** Reiko, PC.
+- **Beat:** before the Mentor Confrontation, Reiko warns the PC to stop digging into the sweep. Protective gatekeeper energy: she let the PC into the garage and into "Sabine's crew".
+- Reiko (draft): "Leave it. You don't know what you're asking."
+
 ### Mentor Confrontation (end of Round 3)
-- **Who:** PC, Sabine; Jesse and Reiko in the background (`<PROPOSAL>`).
+- **Who:** PC, Sabine; Jesse and Reiko in the background.
 - **Beat:** the PC accuses Sabine of being the snitch. She doesn't defend herself: tired, not proud.
 - PC (draft): "You left right before the sweep. You were on the phone. You never got a ticket. Tell me I'm wrong."
 - Sabine (after a long silence): "Get out of my garage." (locked)
-- **Beat:** Jesse and Reiko say nothing (`<PROPOSAL>`). The rift stands.
+- **Jesse and Reiko at the rift (first pass 2026-11-05, needs more passes):** Reiko is stung — she let the PC in. Jesse refuses to smooth it over (subverting the Prologue beat where he softened Reiko's edge) and quietly points out that the PC decided without asking.
+- Jesse (draft): "You decided. You didn't ask."
+- Reiko (draft): "We're done talking."
+- **Finale rift:** Reiko goes strictly business (parts/shop stay open); Jesse stays quiet/strained (tuning/respec stay open). The warmth is gone.
 
 ---
 
@@ -329,7 +340,8 @@ Order (locked): Touge #1 → Wangan #2 → Street #3. Like wild races, Myth Driv
 - **Beat:** Sabine blows up at the PC for digging into her past, a second wound. The PC leaves.
 - Sabine (draft): "You went through my life like it was yours to read. Leave."
 - **Beat:** the PC convinces all three Myth Drivers to come and apologize too.
-- `<OPEN: how the PC gets Sabine to the final race (Q8)>`
+- **How the PC gets Sabine to the final race (first pass 2026-11-05, needs more passes; `<OPEN: Q8>`):** once Reiko sees the PC rounding up the Myth Drivers to fix what they broke, she points the PC to where Sabine runs the mountain alone.
+- Reiko (draft): "She runs the mountain alone some nights. You know where."
 
 ### The summit: the final race and the apology party (Fushigi-Yama)
 - **Who:** PC, Sabine, the three Myth Drivers; the promoter's truth lands too. It's the Myth Drivers' first meeting since the breakup.
