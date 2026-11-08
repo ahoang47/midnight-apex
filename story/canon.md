@@ -151,6 +151,8 @@ System terms (race tiers, crew ladder, persistence, stats, unlock order, respec,
 
 Never reuse archetype names as character or racer-type names. Beating crew members expands Reiko's paid shop stock (28); crew boss stakes are money, reputation (lore only, 12), rare shop mods and story progress; losing a crew boss race means a retry, never losing the car.
 
+- **Must-have wild-race characters (2026-11-06):** tourist groups like the ones that visit Daikoku PA in real life (real-world inspiration only—no real-world place names in-game per 6; district placement and how they map onto or sit alongside the 5-per-district racer-type table are `<TBD>`).
+
 ## Backstory Timeline
 
 1. **The old generation.** Sabine races alongside the three Myth Drivers. Pressure builds privately: everyone in the group knows her uncle-dad is a detective, and #1 never trusts her because of it; #2 resents the turned-down date. Sabine never told anyone; #2 vented about it to #1 and #3 himself one night, they teased him for weeks, and he convinced himself the jokes started with her; #3 wants out to go pro and dreads telling her he's leaving.

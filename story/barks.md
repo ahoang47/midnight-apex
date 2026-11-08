@@ -34,6 +34,8 @@ These should be short and highly repeatable.
 
 **Recommended Total Dialogue:** 1–2 pre-race lines, 1–3 mid-race lines, 1 win/loss line.
 
+**Must-have Wild Race Characters (2026-11-06):** Tourist groups like the ones that go to Daikoku PA in real life (in-world equivalents only; district/archetype mapping `<TBD>`).
+
 ## Pre-Battle Dialogue
 
 Opponent notices player.

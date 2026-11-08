@@ -75,6 +75,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 ## Round 1 — The Incident
 
 ### Wild races (any district)
+- **Must-have wild-race characters (2026-11-06):** tourist groups like the ones that go to Daikoku PA in real life (`<OPEN: barks and district/archetype mapping>`).
 - Opponent starts it (draft): "Haven't seen that car out here before. Let's see what it's got."
 
 ### Touge, Round 1

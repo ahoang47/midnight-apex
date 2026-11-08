@@ -42,6 +42,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 - One crew + one crew boss per district (3 + 3 total), re-faced every round. Each round the PC runs through the whole crew in rank order: its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the crew boss. Next round the boss has leveled up the whole crew. Flavor text after every race reveals a little more
 - Racer types always use their archetype (pairing rules in `canon.md`)
+- Must-have wild-race characters (2026-11-06): tourist groups like the ones that go to Daikoku PA in real life (district placement and racer-type/archetype mapping `<TBD>`; see `canon.md`)
 - Story-race part unlocks: beating crew members (lieutenants) expands Reiko's paid shop stock; crew boss stakes are money, reputation (lore only), rare shop mods, and story progress; a loss = retry, never losing the car (canon 28)
 
 ## Touge
