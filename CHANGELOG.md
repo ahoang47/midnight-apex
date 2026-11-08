@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-11-08 — Barry: delete the Exit→Entry lockout rule [design]
+- `design/03-deckbuilding-clash.md`: removed the whole "Exit → Entry lockout" section under Per-Turn Card Flow, including the turn-type-pair tables (Exit: Attack, Exit: Defend, Exit: Steady), the TODO to fill cells, the greyed-out entry description, and the chicane→hairpin narrative.
+- `design/01-system-overview.md`: removed Key Design Properties item 9, "Exit→Entry lockout". It was the last item, so the list was not renumbered.
+- `design/06-pattern-read.md`: removed the paragraph saying the exit stance feeds forward to determine next-turn entry lockouts (the cross-reference to the lockout tables in `03-deckbuilding-clash.md`).
+- `design/02-equations-reference.md`: removed the "Corner lockout table (03 chicane Steady exits)" TODO row under §11 Other unlocked / TBD.
+- Searched the rest of `design/` (`04`–`09`, `design/notes/`, `design/sample_battle_screen.html`, `design/art/`). No other descriptions of the rule. The only leftover design mention is `design/art/art_direction.md` K2, which names "lockout tables" and was left unedited.
+- **Why:** Austin decided on 2026-11-08 to drop the exit-to-entry model entirely (never filled in, not in the Python sim).
+- **Not done:** `design/godot-build-guide.md` (the `EXIT_LOCKOUT_ENABLED` toggle, lockout lookup, and UI/flow notes) and any `scripts/` code are handled separately by Gordon (Godot owner). `design/art/art_direction.md` K2 still names "lockout tables" and was left unedited. No sims run and no constants changed.
+
 ## 2026-11-06 — Desmond: district Apex/Exit habits are not the old archetype rows [design]
 - Correction to the visual-gap entry below. The first write called the Aggressive, Defensive, and Precise rows in `design/06-pattern-read.md` the approved shared specialization habits. That was wrong. Austin meant Touge, Wangan, and Street specializations. Their tendencies are intended, and the precise habits and race-state-dependent Apex/Exit mappings are not defined or approved. Those old rows stay as a historical unreconciled draft, not the adopted source of actual Apex or Exit. The corner-description notes (late braking, a long single apex, a delayed apex, an early apex, and the other turn writeups) stay illustrative earlier examples, not an approved stance map. No new table and no probability. Updated the same claim in `design/06-pattern-read.md`, `design/godot-build-guide.md` (§4, §9, Appendix G), and `design/art/art_direction.md` B.4. `proto-build` was not changed.
 

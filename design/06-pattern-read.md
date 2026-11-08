@@ -188,8 +188,6 @@ The opponent constantly maneuvers left and right on the straightaway. The **bias
 
 Exit (pos 2) in this earlier draft reflects **position**, not stance. By exit, QTE is done and the DP gap is resolved. The leading car powers away with a clean exit; the trailing car struggles or defends. If the lead changed this turn, a short overtake animation plays after exit (car moves from behind to ahead). That playback is not an Exit tell. Drawn spacing still follows the locked visual-gap rule: a rival ahead of the player is not left so far up the road that lane and Entry cannot be read, and a rival behind is not held at a matching distance. The on-screen gap is not the real DP lead.
 
-Exit also feeds forward: the exit stance plus the next turn's type determines which entry stances are locked out next turn (see the lockout tables in `03-deckbuilding-clash.md`). That lockout is a play rule, not a visual tell.
-
 ---
 
 ## Tell generation flow
