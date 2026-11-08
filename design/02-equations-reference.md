@@ -154,7 +154,6 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 
 | Item | Status | Recommend |
 |---|---|---|
-| Corner lockout table (03 chicane Steady exits) | TODO cells | Narrative/Desmond; not a sim constant |
 | Tell / lie rates (06) | Cap what q_read is worth in-game | Set with Desmond alongside AI read |
 | Archetype matchup spread | q50 0.01–0.48 at parity | Separate pass after AI lever |
 | Skill-point value / 0.8× boss cap | Not in sim | Needs format before economy runs |

@@ -144,4 +144,3 @@ There are no encounter tuning parameters.
 6. **Deterministic core** — seeded RNG, reproducible results
 7. **Stat-to-stance mapping** — POW/EN/HAN directly drive deck card type proportions
 8. **Global knobs** — all game constants are named module-level values in equations.py, never per-encounter
-9. **Exit→Entry lockout** — The exit stance in turn N can block specific entry stances in turn N+1 based on the turn-type pair. Both sides are affected cross-turn only.

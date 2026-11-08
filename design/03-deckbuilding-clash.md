@@ -95,57 +95,6 @@ The opponent's AI picks use a phase-based personality (`sim/velocity_shift/ai.py
 
 After all 3 clashes resolve, damage is computed for the turn.
 
-### Exit → Entry lockout
-
-The stance you play at **exit (pos 2)** this turn can block specific stances at **entry (pos 0)** next turn. The lockout depends on the **turn-type pair** — the geometry of the corner you're leaving and the corner you're entering. If the transition makes a given entry stance physically impossible to set up from the previous exit, that stance is greyed out.
-
-Applies to **both sides** (player and opponent). Cross-turn only — exit → next turn's entry. The same turn's entry → apex → exit is unaffected.
-
-Each row shows: when exiting `Current turn` with a given stance, which entry stance is blocked when the next turn is `Next turn`.
-
-**Exit: Attack**
-
-| Current \ Next | Chicane | Esses | 90° | Hairpin | Straight | Constant R | Dec R | Inc R |
-|---|---|---|---|---|---|---|---|---|
-| Chicane | TBD | TBD | TBD | Steady | TBD | TBD | TBD | TBD |
-| Esses | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| 90° | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Hairpin | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Straight | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Constant R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Dec R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Inc R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-
-**Exit: Defend**
-
-| Current \ Next | Chicane | Esses | 90° | Hairpin | Straight | Constant R | Dec R | Inc R |
-|---|---|---|---|---|---|---|---|---|
-| Chicane | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Esses | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| 90° | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Hairpin | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Straight | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Constant R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Dec R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Inc R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-
-**Exit: Steady**
-
-| Current \ Next | Chicane | Esses | 90° | Hairpin | Straight | Constant R | Dec R | Inc R |
-|---|---|---|---|---|---|---|---|---|
-| Chicane | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Esses | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| 90° | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Hairpin | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Straight | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Constant R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Dec R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| Inc R | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-
-> **TODO:** Fill all cells. Each cell names the entry stance blocked (Attack / Defend / Steady / None). An empty cell means no lockout for that transition.
-
-**Narrative:** A chicane is a quick left-right flick — you exit scrubbing speed, the car unsettled. If you push an Attack exit (power-on early), the car is still rotating as you approach the hairpin — you can't hold a clean Steady line through the hairpin entry without washing wide. An Attack exit from a chicane forces you into either a defensive or attacking entry at the next hairpin, because the car simply isn't settled enough for a neutral, wait-and-see approach.
-
 ### Played cards → discard
 
 - **Player deck:** The 3 played cards + 3 unpicked cards → discard pile at turn end
