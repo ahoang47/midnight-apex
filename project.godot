@@ -14,10 +14,6 @@ config/name="Midnight Apex"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
-[autoload]
-
-Globals="*res://scripts/globals.gd"
-SignalBus="*res://scripts/SignalBus.gd"
 
 [display]
 
