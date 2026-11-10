@@ -125,13 +125,15 @@ LINE_ALT_WEIGHTS = {"alt1": 0.6, "alt2": 0.4}
 # Line set C: per district, per corner type -> [main, alt1, alt2] lines, each "Entry Apex Exit"
 # (D = Defend, S = Steady, A = Attack). Alternatives share main's Entry (unreadable at lock):
 # alt1 switches Apex+Exit, alt2 switches Exit only. Mechanical stand-in.
+# 2026-11-10 (lines-v1 S-A + W-A, Austin): Street N90 DDA -> SSA; Wangan SW and IR AAA -> AAD.
+# Touge unchanged. In-world feel of the new lines pending Nathaniel's review.
 LINE_SET_C = {
     "touge": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SSA", "SDS", "SSS"], "DR": ["SDS", "SAD", "SDD"], "IR": ["SSA", "SDS", "SSS"],
               "N90": ["DSA", "DDS", "DSS"], "CH": ["SDA", "SAS", "SDS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["SSA", "SDS", "SSS"]},
-    "wangan": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SAA", "SSS", "SAS"], "DR": ["DDS", "DAD", "DDD"], "IR": ["AAA", "ASS", "AAS"],
-               "N90": ["DSA", "DDS", "DSS"], "CH": ["DSA", "DDS", "DSS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["AAA", "ASS", "AAS"]},
+    "wangan": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SAA", "SSS", "SAS"], "DR": ["DDS", "DAD", "DDD"], "IR": ["AAD", "ASA", "AAA"],
+               "N90": ["DSA", "DDS", "DSS"], "CH": ["DSA", "DDS", "DSS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["AAD", "ASA", "AAA"]},
     "street": {"HP": ["DDA", "DAS", "DDS"], "CR": ["DSD", "DDA", "DSA"], "DR": ["DDS", "DAD", "DDD"], "IR": ["SSA", "SDS", "SSS"],
-               "N90": ["DDA", "DAS", "DDS"], "CH": ["DAA", "DSS", "DAS"], "ES": ["ASA", "ADS", "ASS"], "SW": ["DDD", "DAA", "DDA"]},
+               "N90": ["SSA", "SDS", "SSS"], "CH": ["DAA", "DSS", "DAS"], "ES": ["ASA", "ADS", "ASS"], "SW": ["DDD", "DAA", "DDA"]},
 }
 BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total
 BUILD_STAT_MAX_SHARE = 0.50
@@ -155,9 +157,17 @@ SABINE_BUDGET = 300.0                                   # Option A base (scripte
 # ── Option A budget steps: by round POSITION, not district ──
 OPTION_A_CREW_STEP = 1.10      # every crew after the previous one
 OPTION_A_ROUND_STEP = 1.30     # whichever crew OPENS Round 2 / Round 3
-DISTRICT_ORDER = {1: ("Touge", "Wangan", "Street"),
-                  2: ("Wangan", "Street", "Touge"),
-                  3: ("Street", "Touge", "Wangan")}     # Austin, 2026-11-09 (v8c)
+# Crew order is FREE within a round (Austin, 2026-11-10): the player picks any crew, is locked into its
+# ladder until its boss falls, and rounds stay gated. Everything above (budget step, caps, story XP,
+# taper) is keyed by PLAY POSITION in the round, never by district.
+DISTRICTS = ("Touge", "Wangan", "Street")
+DEFAULT_CREW_ORDER = {1: ("Touge", "Wangan", "Street"),
+                      2: ("Wangan", "Street", "Touge"),
+                      3: ("Street", "Touge", "Wangan")}   # one example play order, used for reports/tests only
+# Unlock markers by (round, crews beaten in that round):
+DEBT_CLEAR_AFTER = (2, 1)      # debt hits zero + aero unlocks after the first Round 2 crew's boss
+BETTING_UNLOCK_AFTER = (2, 3)  # betting unlocks at the end of Round 2
+FINALE_UNLOCK_AFTER = (3, 3)   # finale (and its big mods) unlocks after Round 3
 FINALE = (("Myth #1", "Touge", 1086.8), ("Myth #2", "Wangan", 1195.5),
           ("Myth #3", "Street", 1315.0), ("Summit", "Touge", 1446.5))   # finale budgets (×1.10 steps)
 
@@ -169,7 +179,8 @@ XP_SP_EXPONENT = 1.5           # x(L) = XP_BASE · (SP(L-1)/240)^1.5 · s(L)/s(1
 
 # ── Level-cap raises per win (front-loaded integer allocation of a crew's levels) ──
 CAP_ALLOC_CREW = (2, 2, 3, 3, 1, 0, 1)          # ordinary crew (12 levels)
-CAP_ALLOC_ROUND_OPEN = (12, 3, 3, 3, 0.5, 0.5, 0.5)   # round-opening crew (weights; ~[18,4,4,4,1,1,1] of 33)
+CAP_ALLOC_ROUND_OPEN = (12, 3, 3, 3, 1, 0, 0.5)   # first crew of R2/R3 (weights; [18,4,4,4,2,0,1] of 33). 2026-11-10: was
+                                                 # (12,3,3,3,.5,.5,.5); lifts the opener's old head #2 skip-grind dip
 
 # ── Story XP per win ──
 STORY_XP_LT = 0.2              # lieutenant win = 0.2 × XP of the levels it unlocks (ordinary crew)

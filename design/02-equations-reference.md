@@ -168,10 +168,11 @@ All values live in `sim/velocity_shift/equations.py` (section "Story race-balanc
 
 | Item | Constant(s) | Rule |
 |---|---|---|
-| Race-balance combat settings (final-v1) | `KNOT_WINDOW_105`, `KAPPA_BY_LENGTH`, `LINE_SET_C`, `LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`, `OPPONENT_QTE` | Player QTE window by stat ratio r, stat-gap leverage by race length, district line set C, uniform opponent QTE. The turn-by-turn HP/DP engine (`combat.py`) does not read these yet. |
+| Race-balance combat settings (final-v1) | `KNOT_WINDOW_105`, `KAPPA_BY_LENGTH`, `LINE_SET_C`, `LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`, `OPPONENT_QTE` | Player QTE window by stat ratio r, stat-gap leverage by race length, district line set C (2026-11-10: Street N90 and Wangan IR/SW mains revised, lines-v1), uniform opponent QTE. The turn-by-turn HP/DP engine (`combat.py`) does not read these yet. |
 | Caps and mods | `SP_CAP_FRACTION`, `MOD_CAP_FRACTION`, `MOD_SHARE_OF_REF`, `REFERENCE_RULE`, `MOD_TIMING` | SP cap 80 % of reference (= level cap); SP + mods to 105 %; mods bought only, unlocked progressively (timing c). |
 | Ladder | `LADDER_RUNGS`, `LADDER_R`, `SCRIPTED_BUDGETS`, `SABINE_BUDGET` | Target r per rung at its level cap. |
-| Budgets | `OPTION_A_CREW_STEP`, `OPTION_A_ROUND_STEP`, `DISTRICT_ORDER`, `FINALE` | Step by round position; the round-opening crew gets the round step. |
+| Budgets | `OPTION_A_CREW_STEP`, `OPTION_A_ROUND_STEP`, `DISTRICTS`, `DEFAULT_CREW_ORDER`, `FINALE` | Step by play position (free crew order); the first crew challenged in R2/R3 gets the round step. `DEFAULT_CREW_ORDER` is an example order for reports/tests. |
+| Unlock points | `DEBT_CLEAR_AFTER`, `BETTING_UNLOCK_AFTER`, `FINALE_UNLOCK_AFTER` | (round, crews beaten in that round): debt/aero after the first R2 crew, betting after R2, finale after R3. |
 | Level curve | `SP_START`, `SP_GROWTH_PER_12_LEVELS`, `XP_BASE`, `XP_SP_EXPONENT` | `sp_per_level(L)`, `xp_to_next(L)`: SP per level grows, XP per level grows faster. |
 | Cap raises | `CAP_ALLOC_CREW`, `CAP_ALLOC_ROUND_OPEN` | Front-loaded levels per win. |
 | Story XP | `STORY_XP_LT`, `STORY_XP_LT_ROUND_OPEN`, `STORY_XP_LT_FLOOR`, `STORY_XP_BOSS` | Every win pays visible XP; boss pays the levels it unlocks, immediately. |

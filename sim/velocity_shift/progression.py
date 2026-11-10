@@ -1,7 +1,8 @@
 from __future__ import annotations
 """Story XP / level / skill-point progression model (grind v8c, Barry 2026-11-09).
 
-Walks Prologue → R1–R3 (district order DISTRICT_ORDER, 9 crews × 7 rungs) → Finale and
+Walks Prologue → R1–R3 (a play order: any permutation of DISTRICTS per round, default
+DEFAULT_CREW_ORDER; 9 crews × 7 rungs) → Finale and
 reports, per rung, the level cap, the level a player who skips grinding would have,
 the grind races needed to reach the cap, and average/good win rates at the cap
 ("target") and with the grind skipped.
@@ -91,9 +92,34 @@ def alloc_levels(n, weights):
 
 
 # ── Ladder ────────────────────────────────────────────────────────────
+def check_order(order):
+    """A play order must give each round a permutation of DISTRICTS (free choice, locked per crew, rounds gated)."""
+    for rnd in (1, 2, 3):
+        if sorted(order[rnd]) != sorted(E.DISTRICTS):
+            raise ValueError(f"round {rnd} order {order[rnd]} is not a permutation of {E.DISTRICTS}")
+    return order
+
+
+def all_orders():
+    """Every legal play order (6 per round, 216 in all)."""
+    import itertools
+    P = list(itertools.permutations(E.DISTRICTS))
+    for o1, o2, o3 in itertools.product(P, P, P):
+        yield {1: o1, 2: o2, 3: o3}
+
+
+def unlocks_after(rnd: int, pos: int):
+    """Unlock markers triggered by beating the boss of the crew played at 0-based position `pos` of round `rnd`."""
+    done = (rnd, pos + 1); out = []
+    if done == E.DEBT_CLEAR_AFTER: out.append("debt clears, aero unlocks")
+    if done == E.BETTING_UNLOCK_AFTER: out.append("betting unlocks")
+    if done == E.FINALE_UNLOCK_AFTER: out.append("finale + big finale mods unlock")
+    return out
+
+
 def ladder(order=None):
     """Story races with budgets, mods and level caps. Returns (rungs, finale_caps, finale_story_level, budgets)."""
-    order = order or E.DISTRICT_ORDER
+    order = check_order(order or E.DEFAULT_CREW_ORDER)
     SP, XC, X = curves(); R = []; Bp = E.SABINE_BUDGET; Lp = 0; budgets = []
     for k in (2, 3):
         R.append(dict(k=k, crew="Prologue", district="", rung=f"scripted {k}", j=-1, B=E.SCRIPTED_BUDGETS[k], mods=0.0, L=0, kind="scripted", ro=False))
@@ -110,7 +136,8 @@ def ladder(order=None):
                 L += a[j]; ref = SP[L] / E.SP_CAP_FRACTION
                 B = Bc if j == 6 else E.MOD_CAP_FRACTION * ref / E.LADDER_R[j]
                 R.append(dict(k=k, crew=f"R{rnd} {d}", district=d, rung=E.LADDER_RUNGS[j], j=j, B=B, mods=E.MOD_SHARE_OF_REF * ref, L=L,
-                              kind="boss" if j == 6 else "lt", ro=ro, rnd=rnd)); k += 1
+                              kind="boss" if j == 6 else "lt", ro=ro, rnd=rnd, pos=pos,
+                              unlocks=unlocks_after(rnd, pos) if j == 6 else [])); k += 1
             Lp = Lc; Bp = BcA
     Lstep = Lp + alloc_levels(12, E.CAP_ALLOC_CREW)[0]       # finale story step, paid by the last crew boss
     Lf = []; spt = SP[Lstep]; Bq = Bp
@@ -164,7 +191,8 @@ def run(policy: str = "forced", order=None):
         g = n if (policy == "forced" and not clear) else 0
         if g:
             grind += v2 - xp; xp = v2
-        row = dict(k=x["k"], crew=x["crew"], district=x["district"], rung=x["rung"], j=x["j"], round_open=x["ro"], B=round(x["B"], 1),
+        row = dict(k=x["k"], crew=x["crew"], district=x["district"], rung=x["rung"], j=x["j"], round_open=x["ro"], pos=x.get("pos"),
+                   unlocks=x.get("unlocks", []), B=round(x["B"], 1),
                    level_cap=cap, story_level=L, races_to_cap=n, grind_races=g, clear=clear, **pooled)
         if x["district"]:
             row["district_rates"] = _rates(r_tgt, r_skip, x["district"])

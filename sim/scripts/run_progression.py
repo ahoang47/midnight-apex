@@ -1,6 +1,7 @@
 """Story XP / level progression report (grind v8c model, Barry 2026-11-09).
 
-Usage (from sim/):  python scripts/run_progression.py [--never] [--rows]
+Usage (from sim/):  python scripts/run_progression.py [--never] [--rows] [--all-orders]
+--all-orders runs all 216 legal play orders (free crew choice per round) and prints the per-slot worst cases.
 Prints walls (mature #2 / boss grind races) in game order, the skip-grind pattern, totals,
 and the per-district split (each crew scored on its own district's tracks).
 All constants: velocity_shift/equations.py. Win rates: config/winrate_n4000.json.
@@ -12,7 +13,36 @@ from velocity_shift import progression as P
 F = lambda t: f"{t[0]:.0f}-{t[1]:.0f}"
 
 
+def all_orders_report():
+    import json
+    totals = set(); walls = set(); slots = {}
+    for order in P.all_orders():
+        rows, tot = P.run("forced", order)
+        w, fin = P.walls(rows)
+        totals.add((tot["grind_races"], tot["levels"], tot["story_xp"], tot["grind_xp"], tot["lost_xp"]))
+        walls.add(tuple((m, b) for _, m, b in w) + (tuple(fin),))
+        for rnd in (1, 2, 3):
+            for pos, d in enumerate(order[rnd]):
+                ds = [r for r in rows if r["crew"] == f"R{rnd} {d}"]
+                cl = [r for r in ds if not r["grind_races"]]
+                weak = min(cl, key=lambda r: P.mid(r["district_rates"]["avg_skip"]))
+                rec = (ds[3]["grind_races"], ds[6]["grind_races"], tuple(ds[3]["district_rates"]["avg_skip"]), tuple(ds[6]["district_rates"]["avg_skip"]),
+                       tuple(ds[6]["district_rates"]["avg_target"]), weak["rung"], tuple(weak["district_rates"]["avg_skip"]),
+                       "".join("W" if r["grind_races"] else "c" for r in ds))
+                slots.setdefault((d, rnd, pos), set()).add(rec)
+    print("orders: 216 | distinct totals:", sorted(totals), "| distinct wall layouts by position:", len(walls))
+    print("slot           | m2 races skip | boss races skip | boss target | weakest cleared skip | pattern")
+    for d in ("Touge", "Wangan", "Street"):
+        for rnd in (1, 2, 3):
+            for pos in range(3):
+                recs = slots[(d, rnd, pos)]
+                for m, b, ms, bs, bt, wr, ws, pat in sorted(recs):
+                    print(f"{d:6s} R{rnd} pos{pos + 1} | {m:2d} {F(ms)} | {b:2d} {F(bs)} | {F(bt)} | {wr} {F(ws)} | {pat}" + ("" if len(recs) == 1 else "  (varies by order)"))
+
+
 def main(argv):
+    if "--all-orders" in argv:
+        all_orders_report(); return
     policy = "never" if "--never" in argv else "forced"
     rows, tot = P.run(policy)
     w, fin = P.walls(rows)
