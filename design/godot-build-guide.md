@@ -719,14 +719,15 @@ One continuous QTE per corner. Type determined by `(turn_type × stance)`:
 
 **🤖 MCP creates** static data classes:
 
-**`TurnTypeData.gd`** — per-district line tables. Mirrors `LINE_SET_C` in `sim/velocity_shift/equations.py` exactly (copied into `scripts/globals.gd` like every other sim constant, never retuned here): district (`touge`, `wangan`, `street`) → corner code (`HP`, `CR`, `DR`, `IR`, `N90`, `CH`, `ES`, `SW`) → `[main, alt1, alt2]`, each an Entry/Apex/Exit string of `D` (Defend), `S` (Steady = `Stance.NEUTRAL`) and `A` (Attack). The alternates share main's Entry: `alt1` switches Apex+Exit, `alt2` switches Exit only. The opponent follows main with probability `LINE_ADHERENCE` and otherwise takes an alternate weighted by `LINE_ALT_WEIGHTS`. When `equations.py` changes a line (for example the 6fc87d5 Street `N90` and Wangan `IR`/`SW` edits), only the mirrored table changes:
+**`TurnTypeData.gd`** — per-district line tables. Mirrors `LINE_SET_C` in `sim/velocity_shift/equations.py` exactly (copied into `scripts/globals.gd` like every other sim constant, never retuned here): district (`touge`, `wangan`, `street`) → corner code (`HP`, `CR`, `DR`, `IR`, `N90`, `CH`, `ES`, `SW`) → `[main, alt1, alt2]`, each an Entry/Apex/Exit string of `D` (Defend), `S` (Steady = `Stance.NEUTRAL`) and `A` (Attack). The alternates share main's Entry: `alt1` switches Apex+Exit, `alt2` switches Exit only. Once per corner (each turn), the opponent draws one whole line with a single weighted pick over `[main, alt1, alt2]` with weights `[LINE_ADHERENCE, (1 - LINE_ADHERENCE) × LINE_ALT_WEIGHTS["alt1"], (1 - LINE_ADHERENCE) × LINE_ALT_WEIGHTS["alt2"]]`. It's one draw, not an adherence roll followed by an alternate roll. It plays the chosen line exactly, and its hand never blocks it. When `equations.py` changes a line (for example the 6fc87d5 Street `N90` and Wangan `IR`/`SW` edits), only the mirrored table changes:
 
 ```gdscript
 static func get_lines(district: String, corner: String) -> Array[String]
     # Returns LINE_SET_C[district][corner] = [main, alt1, alt2]
 
 static func pick_line(district: String, corner: String, rng: RandomNumberGenerator) -> Array[Stance]
-    # main with p = LINE_ADHERENCE, else alt1/alt2 by LINE_ALT_WEIGHTS
+    # One weighted pick over [main, alt1, alt2] (weights above), once per corner;
+    # one rng draw (rng.rand_weighted(weights)); hand never blocks the line
     # Returns [entry_stance, apex_stance, exit_stance]
 
 static func get_qte_type(turn_type: String, stance: Stance) -> QteType
@@ -1527,12 +1528,13 @@ For each corner, the opponent's 3 stances come from the district line table, `LI
 ```
 # Street race, corner N90:
 lines  = LINE_SET_C["street"]["N90"]      # [main, alt1, alt2]
-roll   = rng.randf()
-line   = main if roll < LINE_ADHERENCE else alt1/alt2 by LINE_ALT_WEIGHTS
+a       = LINE_ADHERENCE
+weights = [a, (1 - a) * LINE_ALT_WEIGHTS["alt1"], (1 - a) * LINE_ALT_WEIGHTS["alt2"]]
+line    = lines[rng.rand_weighted(weights)]   # one draw per corner, played exactly
 stances = [line[0], line[1], line[2]]     # Entry, Apex, Exit (D/S/A)
 ```
 
-Draw the roll from the match `RandomNumberGenerator` so a playtest dump's Block C seed and RNG state reproduce the opponent's picks in Godot. Godot's generator isn't Python's, so this matches the sim's line rates, not its exact rolls.
+Make the draw from the match `RandomNumberGenerator` so a playtest dump's Block C seed and RNG state reproduce the opponent's picks in Godot. Godot's generator isn't Python's, so this matches the sim's line rates, not its exact rolls.
 
 ## Appendix H: Notes / Gotchas
 
