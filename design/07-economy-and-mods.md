@@ -84,7 +84,7 @@
 | Turn limits: wild 10, lieutenant 20, boss 30 (in `cli.py`) | `sim/velocity_shift/cli.py:28-32` |
 | Simulated player picks cards at random and rolls QTE uniformly from 1 to 10 | `sim/velocity_shift/simulation.py:52-57` |
 | The ratio counts twice (in opponent level and in QTE). A fix is pending | `CHANGELOG.md:312` |
-| **There is no money, part, XP or player-leveling code anywhere in `sim/`.** Levels are picked from presets | `sim/config/sample_builds.json`, `sim/velocity_shift/cli.py:267-284` |
+| **No money or part code in `sim/` yet.** XP/level/SP progression exists since 2026-11-09 as a story-ladder model (`sim/velocity_shift/progression.py`); the interactive CLI still picks levels from presets | `sim/config/sample_builds.json`, `sim/velocity_shift/cli.py:267-284`, `sim/velocity_shift/progression.py` |
 
 ### 2.4 Conflicts between sources
 
@@ -111,7 +111,7 @@
 |---|---|---|
 | **Money** (in-world currency name is TBD: `story/canon.md:19`, `:78`) | Exists in docs, not in code | One integer wallet. Everything in the sim is priced in it |
 | **Repair debt** | Story canon (`story/canon.md:40`) | A ledger separate from the wallet: `DEBT_AMOUNT`, paid down by winnings (§7) |
-| **Car level** | Exists in code (`models.py:54`) | Drives stats, HP, slot unlocks and part level floors. *How it grows is not defined anywhere* (Q5) |
+| **Car level** | Exists in code (`models.py:54`) | Drives stats, HP, slot unlocks and part level floors. Grows from XP since 2026-11-09 (§8.0, `sim/velocity_shift/progression.py`); slot unlocks and part floors still TBD (Q5 answered) |
 | **Reiko standing** | Story (`story/plot.md:98`) | A boolean `wholesale_unlocked`, set by a story event, not a meter |
 | **Rep / reputation** | Conflicting (C1) | **PROPOSAL:** not tracked in v1. If Austin wants it, the sim adds a counter that gates crew races (resolved: lore only) |
 | **DAQ data** (Jesse) | Story flavor (`prologue.md:72`) | **PROPOSAL:** the in-world reason the car levels up. "More races, more data, better car" maps onto XP (Q5) |
@@ -158,7 +158,8 @@ payout = LOSS_PAYOUT_FRACTION × (the above)                                    
 
 ### 5.2 Story-race rewards and shop unlocks (canon 19, 28)
 - **Lieutenant win:** `BASE_PAYOUT_CREW` cash, plus horizontal part options at that round's stat budget added to Reiko's paid shop stock as her suppliers open up (`LIEUTENANT_SHOP_UNLOCKS = TBD`).
-- **Crew boss win:** `BASE_PAYOUT_BOSS` cash, plus that boss's rare tier-jump parts added to Reiko's shop (`mod_notes.md:48`, `:57`), plus story progress (the next district or round unlocks).
+- **Crew boss win (Austin, 2026-11-09):** XP (levels, so some skill points, paid immediately: `STORY_XP_BOSS`), `BASE_PAYOUT_BOSS` cash, a shell and a graphic, plus story progress (the next district or round unlocks). Mods are **bought only**.
+- **⚠ CONFLICT, pending Desmond's rewording:** canon 28 (and `mod_notes.md:48`, `:57`) still say crew boss wins add rare tier-jump parts to Reiko's shop, and canon 26 says crew bosses' signature shells come only from betting races. Canon is not rewritten here; Desmond owns the rewording.
 - Story races never give parts away for free (C12).
 
 ### 5.3 Substory rewards and other income (canon 26, 28)
@@ -269,6 +270,19 @@ Story: the Wangan crew boss is a race promoter who opens a high-stakes betting s
 
 ## 8. Progression curve
 
+### 8.0 XP → levels → skill points (locked by Austin 2026-11-09; all numbers stand-ins pending playtest)
+Code: `sim/velocity_shift/progression.py`; constants: `sim/velocity_shift/equations.py` (story race-balance + XP/level section); report: `python scripts/run_progression.py` from `sim/`.
+- **Loop.** Story wins and grind races pay XP; XP fills car levels; each level pays skill points (`sp_per_level`). Skill points come only from levels. SP per level grows with level, and XP per level grows faster (`xp_to_next`), so leveling gets harder.
+- **XP cap.** The level cap is the SP cap (`SP_CAP_FRACTION` of the reference). Each story win raises the cap by a front-loaded number of levels (`CAP_ALLOC_CREW`, `CAP_ALLOC_ROUND_OPEN`). XP earned past the cap is lost, so over-grinding can't break the curve.
+- **Grind between story characters.** Story XP alone leaves the player short of the cap at two rungs per crew: the mature #2 member and the crew boss. Those are the **walls**; the player grinds there to reach the cap. Skipping the grind gives the pattern **3 clear rungs (kid, kid, mature #1) → wall (mature #2) → 2 clear rungs (old heads) → wall (boss)**. Average play at a skipped wall wins roughly 40–55 %.
+- **Story XP.** Every story win pays visible XP, at least `STORY_XP_LT_FLOOR` of a level. Crew boss wins pay more than any lieutenant win of the crew, immediately (normally 2 levels; the boss before a round-opening crew pays its large opening step).
+- **Per-crew taper.** A grind race pays a fraction of the XP needed for the current level (`grind_payout_fraction`). The fraction falls with the rung inside a crew and slowly with level across the game, so walls grow gently: about 6–7 races in Round 1 to 8–10 in Round 3. It resets when the next crew starts.
+- **Budgets.** Opponent budgets step by round position (`OPTION_A_CREW_STEP`, `OPTION_A_ROUND_STEP`) in the district order `DISTRICT_ORDER`, and follow the level curve (a boss's cap is the nearest whole level).
+- **Round 3 → finale.** Completing Round 3 unlocks the big finale mods. The finale is exempt from the caps: each finale stat rise is split `FINALE_MOD_SHARE` mods / `FINALE_GRIND_SHARE` levels.
+- **Rewards.** Boss wins pay XP (some SP via levels), money, a shell and a graphic; mods are bought only (see the canon 28 conflict in §5.2).
+- **Open items:** (1) every XP number is a stand-in until playtest; (2) Street is the thinnest district on its own tracks (Round 3 old head #2 clears at only 55–57 % with the grind skipped); (3) skipped walls dip on Wangan's tracks (to 33–37 %) and at Finale Myth #2 (36–46 % pooled); (4) aero has no rule yet against the SP/mod caps; (5) the finale window is extrapolated above r 1.05 (`KNOT_WINDOW_105` ends at 1.05).
+
+
 - **Key finding from the code:** opponent level is `round(player level × ratio)` (`cli.py:305`) and opponent QTE is fixed per encounter (`ai.py:292-308`). Raising the player's level therefore barely changes win rates, because opponents scale with the player. **Under the current model, parts are the only thing that moves the player relative to opponents**, and "crews get stronger every round" (`canon.md:26`) has nothing behind it.
 - **PROPOSAL:** in season mode, opponent level and parts come from a table, `OPPONENT_LEVEL[round][district][encounter] = TBD` and `OPPONENT_PART_TIER`, instead of from the player's level. The player's car level grows through `XP_PER_RACE[encounter] = TBD` (Jesse's DAQ, Q5). The pending encounter-scaling fix (`CHANGELOG.md:312`) should be designed for this mode.
 - **No-mods check (Desmond's ask):** the player has **no parts** in scripted races 1–3 (mods unlock when the PC wins race 3), so those races must be winnable on stock stats plus levels alone. The team reports current win rates of about 100% for wild races and about 0–0.6% for lieutenant/boss races. **I have not verified that here, because nothing may run**. If it holds, the no-mods early game fails at crew and boss races until the scaling fix lands. **Flag: blocker for picking a debt number.**
@@ -348,7 +362,7 @@ Pull from the top, one at a time; new questions go to the bottom. Remove a quest
 2. (2026-11-02) **Success criteria** for the economy and mods sim. Nothing runs until these arrive and this spec is approved.
 3. (2026-11-02) **Which Round 2 race clears the debt?** For example, the Round 2 Wangan boss.
 4. (2026-11-02) **Overlap add-ons:** a share of each win goes to the debt (canon decision 19). Do C (boss money is free) or D (Reiko cuts the bill) layer on top? Desmond's alternative: purses go fully to the debt and bonus payouts trickle to the PC.
-5. (2026-11-02) **How does the car level up?** XP per race, fixed levels per round, or Jesse's DAQ? Nothing exists today.
+5. (2026-11-02) **How does the car level up?** **Answered (Austin, 2026-11-09):** XP from story wins and grind races fills levels, and levels pay skill points (§8.0). Number kept so Q6+ references stay valid.
 6. (2026-11-02) **Part bonuses:** flat or scaled with level?
 7. (2026-11-02) **Slots:** about 3 growing to 8–10, or 5 plus 1 car-specific? (C4)
 8. (2026-11-02) **Wild races:** capped per district, low-paying, or uncapped? (C9)

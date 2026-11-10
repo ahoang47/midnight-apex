@@ -9,6 +9,8 @@ per-encounter configurable parameters. To tune the game, change
 these values and re-run.
 """
 
+import math
+
 from .models import Stance, StanceOutcome
 
 # ── Game-rule constants (global knobs, not per-encounter) ──────────────
@@ -98,3 +100,118 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
        (a == Stance.DEFEND and b == Stance.ATTACK):
         return StanceOutcome.WIN
     return StanceOutcome.LOSS
+
+
+# ══════════════════════════════════════════════════════════════════════
+# Story race-balance + XP/level progression model (Barry, 2026-11-09)
+# ══════════════════════════════════════════════════════════════════════
+# Final settings from the final-v1 combat sweep and the grind-v1 v8c
+# progression study (Austin's decisions of 2026-11-09). These drive the
+# story ladder model in `progression.py` and its win-rate oracle
+# (`config/winrate_n4000.json`, real N=4000 sim output). The turn-by-turn
+# HP/DP combat in combat.py / match.py does NOT read these yet.
+# All XP numbers are stand-ins pending playtest.
+
+# ── Combat race-balance settings (final-v1) ──
+# r = (player SP + mods) / opponent budget. Player-only QTE window:
+# fraction of timing skill that lands, piecewise-linear in r (capped at 1).
+KNOT_WINDOW_105 = ((0.80, 0.41), (0.85, 0.41), (0.90, 0.41), (0.95, 0.43), (1.00, 0.68), (1.05, 1.00))
+KAPPA_BY_LENGTH = {10: 1.55, 20: 1.35, 30: 1.20}   # stat-gap leverage V = r**kappa, by race length (turns)
+RACE_LENGTHS = (10, 20, 30)
+SIM_SEEDS = (20261113, 20261114, 20261115)
+OPPONENT_QTE = 1.0             # story-rung opponents time perfectly (uniform across rungs)
+LINE_ADHERENCE = 0.65          # boss follows its district line with prob a; 1-a = bluff/deviation
+LINE_ALT_WEIGHTS = {"alt1": 0.6, "alt2": 0.4}
+# Line set C: per district, per corner type -> [main, alt1, alt2] lines, each "Entry Apex Exit"
+# (D = Defend, S = Steady, A = Attack). Alternatives share main's Entry (unreadable at lock):
+# alt1 switches Apex+Exit, alt2 switches Exit only. Mechanical stand-in.
+LINE_SET_C = {
+    "touge": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SSA", "SDS", "SSS"], "DR": ["SDS", "SAD", "SDD"], "IR": ["SSA", "SDS", "SSS"],
+              "N90": ["DSA", "DDS", "DSS"], "CH": ["SDA", "SAS", "SDS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["SSA", "SDS", "SSS"]},
+    "wangan": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SAA", "SSS", "SAS"], "DR": ["DDS", "DAD", "DDD"], "IR": ["AAA", "ASS", "AAS"],
+               "N90": ["DSA", "DDS", "DSS"], "CH": ["DSA", "DDS", "DSS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["AAA", "ASS", "AAS"]},
+    "street": {"HP": ["DDA", "DAS", "DDS"], "CR": ["DSD", "DDA", "DSA"], "DR": ["DDS", "DAD", "DDD"], "IR": ["SSA", "SDS", "SSS"],
+               "N90": ["DDA", "DAS", "DDS"], "CH": ["DAA", "DSS", "DAS"], "ES": ["ASA", "ADS", "ASS"], "SW": ["DDD", "DAA", "DDA"]},
+}
+BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total
+BUILD_STAT_MAX_SHARE = 0.50
+
+# ── Stat caps, reference rule, mods ──
+SP_CAP_FRACTION = 0.80         # skill points cap at 80 % of the reference budget (= level cap)
+MOD_CAP_FRACTION = 1.05        # SP + mods cap at 105 % of the reference budget before the finale
+MOD_SHARE_OF_REF = 0.25        # mods available at a rung = 0.25 × reference (bought only, never earned)
+REFERENCE_RULE = "V2"          # reference rises with each lieutenant win; crew boss = crew budget
+MOD_TIMING = "c"               # mods unlock progressively with lieutenant wins
+CLEAR_THRESHOLD = 50.0         # a rung is "clear" when average play (q 0.6) wins >= 50 % (midpoint of seed/length range)
+AVERAGE_PLAY_Q = 0.6
+GOOD_PLAY_Q = 0.8
+
+# ── Story ladder (per crew: kid, kid, mature, mature, old head, old head, crew boss) ──
+LADDER_RUNGS = ("kid", "kid", "mature", "mature", "old head", "old head", "crew boss")
+LADDER_R = (1.13, 1.11, 1.10, 1.08, 1.07, 1.06, 1.05)   # target r at each rung's level cap
+SCRIPTED_BUDGETS = {2: 218.2, 3: 224.3}                 # scripted races 2/3 (r 1.10 / 1.07 vs 240 SP)
+SABINE_BUDGET = 300.0                                   # Option A base (scripted race 1 opponent)
+
+# ── Option A budget steps: by round POSITION, not district ──
+OPTION_A_CREW_STEP = 1.10      # every crew after the previous one
+OPTION_A_ROUND_STEP = 1.30     # whichever crew OPENS Round 2 / Round 3
+DISTRICT_ORDER = {1: ("Touge", "Wangan", "Street"),
+                  2: ("Wangan", "Street", "Touge"),
+                  3: ("Street", "Touge", "Wangan")}     # Austin, 2026-11-09 (v8c)
+FINALE = (("Myth #1", "Touge", 1086.8), ("Myth #2", "Wangan", 1195.5),
+          ("Myth #3", "Street", 1315.0), ("Summit", "Touge", 1446.5))   # finale budgets (×1.10 steps)
+
+# ── Level curve (GEO): SP(L) = 240 · 1.1^(L/12) ──
+SP_START = 240.0
+SP_GROWTH_PER_12_LEVELS = 1.10
+XP_BASE = 100.0                # XP to go from level 0 to 1
+XP_SP_EXPONENT = 1.5           # x(L) = XP_BASE · (SP(L-1)/240)^1.5 · s(L)/s(1): leveling gets harder
+
+# ── Level-cap raises per win (front-loaded integer allocation of a crew's levels) ──
+CAP_ALLOC_CREW = (2, 2, 3, 3, 1, 0, 1)          # ordinary crew (12 levels)
+CAP_ALLOC_ROUND_OPEN = (12, 3, 3, 3, 0.5, 0.5, 0.5)   # round-opening crew (weights; ~[18,4,4,4,1,1,1] of 33)
+
+# ── Story XP per win ──
+STORY_XP_LT = 0.2              # lieutenant win = 0.2 × XP of the levels it unlocks (ordinary crew)
+STORY_XP_LT_ROUND_OPEN = 0.4   # ... 0.4 × in a round-opening crew
+STORY_XP_LT_FLOOR = 0.25       # every lieutenant win pays at least 0.25 level
+STORY_XP_BOSS = 1.0            # crew boss (and scripted race 3) pays 1.0 × the levels it unlocks, immediately
+                               # (2 levels normally; 18 levels when it unlocks a round-opening kid #1)
+
+# ── Grind race XP: per-crew taper T2 ──
+# grind race XP = f(L, j) · x(L); L = level being filled, j = rung index 0..6 (finale rungs j = 4)
+TAPER_F0 = 1.9
+TAPER_RUNG = 0.88
+TAPER_LEVEL_TAU = 550.0
+TAPER_FINALE_RUNG = 4
+
+# ── Finale exemption (caps lifted) ──
+FINALE_MOD_SHARE = 0.86        # finale stat rise split: 86 % mods, 14 % grind (levels)
+FINALE_GRIND_SHARE = 0.14
+
+
+def knot_window(r: float) -> float:
+    """Player QTE window W(r) from KNOT_WINDOW_105 (flat below/above the ends, capped at 1)."""
+    xs = [k[0] for k in KNOT_WINDOW_105]; ys = [k[1] for k in KNOT_WINDOW_105]
+    if r <= xs[0]:
+        return ys[0]
+    for (x0, y0), (x1, y1) in zip(KNOT_WINDOW_105, KNOT_WINDOW_105[1:]):
+        if r <= x1:
+            return min(1.0, y0 + (y1 - y0) * (r - x0) / (x1 - x0))
+    return min(1.0, ys[-1])
+
+
+def sp_per_level(level: int) -> float:
+    """s(L): skill points gained on reaching `level` (GEO curve)."""
+    g = SP_GROWTH_PER_12_LEVELS ** (1 / 12)
+    return SP_START * (g - 1) * g ** (level - 1)
+
+
+def xp_to_next(level: int, sp_before: float) -> float:
+    """x(L): XP to fill `level`, given total SP at level-1."""
+    return XP_BASE * (sp_before / SP_START) ** XP_SP_EXPONENT * sp_per_level(level) / sp_per_level(1)
+
+
+def grind_payout_fraction(level: int, rung: int) -> float:
+    """T2 taper: grind race XP as a fraction of x(level). Falls with rung inside a crew and with level."""
+    return TAPER_F0 * (1 - TAPER_RUNG * rung / 6) * math.exp(-level / TAPER_LEVEL_TAU)

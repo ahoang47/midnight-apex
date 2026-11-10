@@ -156,11 +156,30 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 |---|---|---|
 | Tell / lie rates (06) | Cap what q_read is worth in-game | Set with Desmond alongside AI read |
 | Archetype matchup spread | q50 0.01–0.48 at parity | Separate pass after AI lever |
-| Skill-point value / 0.8× boss cap | Not in sim | Needs format before economy runs |
+| Skill-point value / 0.8× boss cap | **In sim (2026-11-09):** `SP_CAP_FRACTION`, level curve and level cap in `equations.py`; model in `progression.py` | See "Story ladder + XP progression" below |
 | Wild ramp (top decision 9) | Proposed, awaiting sign-off | Sim AI skill × race length per ramp step |
 | Constants location (C10) | Ratios/turns live in ai.py/cli.py | Move into `equations.py` with the scaling fix |
 
 ---
+
+### Story ladder + XP progression (locked by Austin 2026-11-09; numbers are stand-ins pending playtest)
+
+All values live in `sim/velocity_shift/equations.py` (section "Story race-balance + XP/level progression model"); the model is `sim/velocity_shift/progression.py`; run `python scripts/run_progression.py` from `sim/` (checked by `sim/tests/test_progression.py`).
+
+| Item | Constant(s) | Rule |
+|---|---|---|
+| Race-balance combat settings (final-v1) | `KNOT_WINDOW_105`, `KAPPA_BY_LENGTH`, `LINE_SET_C`, `LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`, `OPPONENT_QTE` | Player QTE window by stat ratio r, stat-gap leverage by race length, district line set C, uniform opponent QTE. The turn-by-turn HP/DP engine (`combat.py`) does not read these yet. |
+| Caps and mods | `SP_CAP_FRACTION`, `MOD_CAP_FRACTION`, `MOD_SHARE_OF_REF`, `REFERENCE_RULE`, `MOD_TIMING` | SP cap 80 % of reference (= level cap); SP + mods to 105 %; mods bought only, unlocked progressively (timing c). |
+| Ladder | `LADDER_RUNGS`, `LADDER_R`, `SCRIPTED_BUDGETS`, `SABINE_BUDGET` | Target r per rung at its level cap. |
+| Budgets | `OPTION_A_CREW_STEP`, `OPTION_A_ROUND_STEP`, `DISTRICT_ORDER`, `FINALE` | Step by round position; the round-opening crew gets the round step. |
+| Level curve | `SP_START`, `SP_GROWTH_PER_12_LEVELS`, `XP_BASE`, `XP_SP_EXPONENT` | `sp_per_level(L)`, `xp_to_next(L)`: SP per level grows, XP per level grows faster. |
+| Cap raises | `CAP_ALLOC_CREW`, `CAP_ALLOC_ROUND_OPEN` | Front-loaded levels per win. |
+| Story XP | `STORY_XP_LT`, `STORY_XP_LT_ROUND_OPEN`, `STORY_XP_LT_FLOOR`, `STORY_XP_BOSS` | Every win pays visible XP; boss pays the levels it unlocks, immediately. |
+| Grind taper | `TAPER_F0`, `TAPER_RUNG`, `TAPER_LEVEL_TAU`, `TAPER_FINALE_RUNG` | `grind_payout_fraction(L, j)`: per-crew taper T2. |
+| Finale | `FINALE_MOD_SHARE`, `FINALE_GRIND_SHARE` | Caps lifted; finale stat rise mostly mods. |
+| Build bounds | `BUILD_STAT_MIN_SHARE`, `BUILD_STAT_MAX_SHARE` | Each stat 25–50 % of total. |
+
+Open items: see 07 §8.
 
 ### Economy (from 07 — numbers only; **no season runs**)
 
