@@ -137,8 +137,9 @@ Types: `u8/u16/u32/u64`, `i8/i16/i32`, `f32/f64`. `q16(x, k)` is `i16(round(x ×
 |---|---|---|
 | `act` | `u8` | `PROLOGUE, ROUND_1, ROUND_2, ROUND_3, FINALE` |
 | `prologue_races_done` | `u8` | 0–3 scripted races completed (races 1–3 are scripted) |
-| `unlock_bits` | `u8` | bit0 `race_3_won` (canon 19 gate), bit1 `mods_unlocked` (set by race-3 win), bit2 `substories_open` (race-3 win), bit3 `wholesale_unlocked` (end of Round 1), bit4 `aero_unlocked` (set when `sabine_repair_debt == 0`, mid Round 2), bit5 `betting_unlocked` (end of Round 2). The derived flags are stored explicitly on purpose so the decoder can flag contradictions (§0.3 lints) |
+| `unlock_bits` | `u8` | bit0 `race_3_won` (canon 19 gate), bit1 `mods_unlocked` (set by race-3 win), bit2 `substories_open` (race-3 win), bit3 `wholesale_unlocked` (end of Round 1), bit4 `aero_unlocked` (early Round 2: set when the first Round 2 crew's boss falls, whichever crew that is, per `DEBT_CLEAR_AFTER` in `sim/velocity_shift/equations.py`; `sabine_repair_debt` hits 0 at the same point), bit5 `betting_unlocked` (end of Round 2, `BETTING_UNLOCK_AFTER`). The derived flags are stored explicitly on purpose so the decoder can flag contradictions (§0.3 lints) |
 | `ladder[3]` | `u8×3` | Per district `TOUGE, WANGAN, STREET` in the current round: `NONE, KIDS_CLEARED, MATURE_CLEARED, OLD_HEADS_CLEARED, BOSS_CLEARED` |
+| `crew_order[3][3]` | `u8×9` | **Free crew order.** For each round R1–R3, the district the PC picked in play positions 1–3 (`TOUGE, WANGAN, STREET, NONE` = not picked yet). Each round must be a permutation of `DISTRICTS`, and the PC is locked into a crew until its boss falls. Difficulty steps and unlock points are keyed by play position, not district (`OPTION_A_ROUND_STEP` goes to the first crew played in R2/R3; `DEBT_CLEAR_AFTER` / `BETTING_UNLOCK_AFTER` / `FINALE_UNLOCK_AFTER` are `(round, crews beaten in that round)`), so a repro needs this field. There is no fixed district order (`DEFAULT_CREW_ORDER` is a sim example only) |
 | `beat_pc_bits` | `bits[n]` | **Loss persistence (canon 27).** Indexed by `RivalId`; a set bit means "this lieutenant/crew boss has beaten the PC and remembers it". Only lieutenant (kids, mature members, old heads) and crew-boss `RivalId`s may ever be set. Wild races and Myth Driver races have no loss persistence, so they have no bits or always-zero bits. Race 3's win gate lives in `unlock_bits`, not here |
 | `wild_ramp[3]` | `u8×3` | Per district: number of that district's lieutenants cleared that drives the Wild ramp (`02` decision sheet item 9 / item 11 row; proposed, not locked) |
 | `defeated_bits` | `bits[n]` | Same `RivalId` index: lieutenants and crew bosses the PC has beaten. Reiko's horizontal shop stock is derived from it (canon 28) |
@@ -218,7 +219,9 @@ There is no reputation field (reputation is lore only), and Sabine's debt is onl
 - **Lints** printed on every decode, each a bug class caught for free:
   - `mods_unlocked`/`substories_open` ≠ `race_3_won`
   - `aero_unlocked` with `sabine_repair_debt > 0`, or a non-zero aero split while aero is locked
-  - `betting_unlocked` before the end of Round 2
+  - `aero_unlocked` before `DEBT_CLEAR_AFTER` is reached (fewer than one crew boss beaten in Round 2 per `crew_order` + `ladder`), or still locked after it
+  - `betting_unlocked` before `BETTING_UNLOCK_AFTER` (end of Round 2)
+  - a `crew_order` round that repeats a district, a picked crew whose boss isn't beaten while a later position in that round is set (lock-in broken), or a round opened before the previous one finished
   - `wholesale_unlocked` in `PROLOGUE`/`ROUND_1` before its end-of-round event
   - any `beat_pc_bits` set for a non-lieutenant/non-boss `RivalId`
   - a ladder step past a rival not in `defeated_bits`
@@ -716,10 +719,14 @@ One continuous QTE per corner. Type determined by `(turn_type × stance)`:
 
 **🤖 MCP creates** static data classes:
 
-**`TurnTypeData.gd`** — 8 turn types × 3 meta-archetype stance sequences (matching `06-pattern-read.md` tables):
+**`TurnTypeData.gd`** — per-district line tables. Mirrors `LINE_SET_C` in `sim/velocity_shift/equations.py` exactly (copied into `scripts/globals.gd` like every other sim constant, never retuned here): district (`touge`, `wangan`, `street`) → corner code (`HP`, `CR`, `DR`, `IR`, `N90`, `CH`, `ES`, `SW`) → `[main, alt1, alt2]`, each an Entry/Apex/Exit string of `D` (Defend), `S` (Steady = `Stance.NEUTRAL`) and `A` (Attack). The alternates share main's Entry: `alt1` switches Apex+Exit, `alt2` switches Exit only. The opponent follows main with probability `LINE_ADHERENCE` and otherwise takes an alternate weighted by `LINE_ALT_WEIGHTS`. When `equations.py` changes a line (for example the 6fc87d5 Street `N90` and Wangan `IR`/`SW` edits), only the mirrored table changes:
 
 ```gdscript
-static func get_stance_sequence(turn_type: String, archetype: String) -> Array[Stance]
+static func get_lines(district: String, corner: String) -> Array[String]
+    # Returns LINE_SET_C[district][corner] = [main, alt1, alt2]
+
+static func pick_line(district: String, corner: String, rng: RandomNumberGenerator) -> Array[Stance]
+    # main with p = LINE_ADHERENCE, else alt1/alt2 by LINE_ALT_WEIGHTS
     # Returns [entry_stance, apex_stance, exit_stance]
 
 static func get_qte_type(turn_type: String, stance: Stance) -> QteType
@@ -1515,25 +1522,17 @@ speed_multiplier = 1.0 + max(0, gap) × QTE_MASH_SPEED_PER_GAP
 
 ## Appendix G: AI Stance Lookup
 
-For each corner, the prototype reads 3 stance picks from the turn-type table per archetype. That table is the historical Aggressive, Defensive, and Precise draft, not an approved Touge, Wangan, or Street Apex/Exit map. TellGenerator may swap some based on deception in that same draft.
-
-> The per-position face tells in the comment below are the earlier face draft. The locked car tell is lane Entry only (`design/06-pattern-read.md`). Apex and Exit have no explicit tell. Shared Touge, Wangan, and Street tendencies are the intended inference, together with Entry, corner geometry, and the real lead/gap at selection start, and that mapping is still TBD. The rows and the lookup below are not the adopted source. The corner-description technique notes are illustrative earlier examples, not an approved stance map. This appendix does not add lie probabilities for the lane bluff.
+For each corner, the opponent's 3 stances come from the district line table, `LINE_SET_C[district][corner]` in `sim/velocity_shift/equations.py` (mirrored in `scripts/globals.gd`, read through `TurnTypeData.pick_line()`). The district is the race's `district_id`, and the corner code comes from `TrackData`. The locked car tell is lane Entry only (`design/06-pattern-read.md`), which is why every alternate shares main's Entry.
 
 ```
-# TurnTypeData lookup for Aggressive on Hairpin:
-entry_stance = DEFEND
-apex_stance  = DEFEND
-exit_stance  = ATTACK
-
-# Deception check per position:
-# 0: show DEFEND, tell if deceptive
-# 1: show DEFEND, tell if deceptive
-# 2: show ATTACK, tell if deceptive
+# Street race, corner N90:
+lines  = LINE_SET_C["street"]["N90"]      # [main, alt1, alt2]
+roll   = rng.randf()
+line   = main if roll < LINE_ADHERENCE else alt1/alt2 by LINE_ALT_WEIGHTS
+stances = [line[0], line[1], line[2]]     # Entry, Apex, Exit (D/S/A)
 ```
 
-Tables in `06-pattern-read.md` — sections: Aggressive, Defensive, Precise. Balanced shares Defensive's sequences and Adaptive shares Precise's.
-
----
+Draw the roll from the match `RandomNumberGenerator` so a playtest dump's Block C seed and RNG state reproduce the opponent's picks in Godot. Godot's generator isn't Python's, so this matches the sim's line rates, not its exact rolls.
 
 ## Appendix H: Notes / Gotchas
 
