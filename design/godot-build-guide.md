@@ -18,7 +18,7 @@
 
 > **Status: PROPOSED, spec only, uncommitted.** Drafted by Gordon (Godot) on 2026-11-06 at Austin's go-ahead, routed through Barry. Nothing in `project.godot`, `scenes/` or `scripts/` has been created or changed for it yet. Implementation starts after Austin locks §0.4.
 > **Goal:** one keypress in a playtest gives any Midnight Apex bot (Gordon, Barry, Arthur, Nathaniel) an exact, copy-pasteable picture of *where* the game was (scene, coordinates, camera) and *what state* it was in (progression, economy, build, mid-race combat). With that, a bot can decode the moment, reproduce it in Godot, and debug it without guessing from a screenshot.
-> **Number rule (`AGENTS.md`):** this section contains no balance values. Gameplay quantities are referenced by constant name and file (`HP_PER_LEVEL` and `RUBBER_BAND_PCT` in `sim/velocity_shift/equations.py` / `scripts/globals.gd`, `DECK_SIZE` in `sim/velocity_shift/deck.py`, `DEBT_SHARE` and `TIER_STAT_BUDGET` in `design/07-economy-and-mods.md`). The only literal numbers here are encoding sizes, pixel/viewport geometry and hotkeys.
+> **Number rule (`AGENTS.md`):** this section contains no balance values. Gameplay quantities are referenced by constant name and file (`KAPPA_BY_LENGTH` and `KNOT_WINDOW_105` in `sim/velocity_shift/equations.py` / `scripts/globals.gd`, `DECK_SIZE` in `sim/velocity_shift/deck.py`, `DEBT_SHARE` and `TIER_STAT_BUDGET` in `design/07-economy-and-mods.md`). The only literal numbers here are encoding sizes, pixel/viewport geometry and hotkeys.
 > **Vocabulary:** follows the locked block in `design/01-system-overview.md`. The state token has **no reputation field** (reputation is lore only). Sabine's debt is her personal repair tab (`sabine_repair_debt`). The third stance is `Stance.NEUTRAL` in code, and debug output prints the code name `NEU`. The player-facing "Steady" vs "Neutral" name is still open on the `02` decision sheet (item 5).
 
 ### 0.1 Coordinate & Camera Reference System
@@ -30,14 +30,14 @@
 
 **3D Battle: two frames**
 - *Track-relative (Frenet) frame `(seg, s, d, h, yaw_slip)`*, used in every bug report about car placement:
-  - `seg` is the active segment: `STRAIGHT`, `ENTRY`, `APEX` or `EXIT`. It is derived from `TurnManager.State` (`STRAIGHT` → `STRAIGHT`; `CORNER_PLAYBACK` / `DAMAGE_BATCH` → the clash index 0/1/2 → `ENTRY`/`APEX`/`EXIT`).
+  - `seg` is the active segment: `STRAIGHT`, `ENTRY`, `APEX` or `EXIT`. It is derived from `TurnManager.State` (`STRAIGHT` → `STRAIGHT`; `CORNER_PLAYBACK` / `PROGRESS_BATCH` → the clash index 0/1/2 → `ENTRY`/`APEX`/`EXIT`).
   - `s ∈ [0.000, 1.000]` is normalized progress along that segment. On `StraightRoad` it is distance along `-Z` divided by the mesh length. On a corner it is `curve.get_closest_offset(local_pos) / curve.get_baked_length()` on the segment's `Curve3D` (§13.1 `Path3D`).
   - `d` is the signed lateral offset in metres from the road centreline (`-` left, `+` right). Here `right = tangent.cross(Vector3.UP)` at the closest baked point, so on today's straight (centreline at `x = 0` along `-Z`) `d == x`.
   - `h` is the height in metres above the road surface.
   - `yaw_slip` is the car's heading minus the road tangent's heading in degrees (drift angle, `+` = nose left).
-- *Visual lead/trail from DP.* Car `s`/Z placement is purely a visualization of the DP gap (Appendix H). It must use the exact expressions in `TurnManager._determine_winner()`, so the picture can never disagree with the result:
-  - `pos_p = player_cum_dp / opponent_max_hp`, `pos_o = opponent_cum_dp / player_max_hp`, with `*_max_hp = level × HP_PER_LEVEL` (`scripts/globals.gd`, ported from `sim/velocity_shift/equations.py`).
-  - `lead = pos_p - pos_o`. A tie counts as the opponent leading (Appendix H tiebreaker). `CarAnimator.snap_to_gap(gap, max_gap)` stays the single place that maps the gap to Z offset. The HUD prints `lead` signed to 3 decimals.
+- *Visual lead/trail from progress.* Car `s`/Z placement is purely a visualization of the progress gap (Appendix H). It must use the exact expressions in `TurnManager._determine_winner()`, so the picture can never disagree with the result:
+  - `pos_p = player_cum_progress / (player_cum_progress + opponent_cum_progress)` and `pos_o = 1 - pos_p`, both `0.5` while the total is 0. These are the same shares as `MatchResult.player_position` / `opponent_position` in `sim/velocity_shift/match.py`.
+  - `lead = pos_p - pos_o` (`PositionTracker.get_lead()`, §10.1). Equal totals are a tie (`lead = 0`), with no opponent tiebreaker. `CarAnimator.snap_to_gap(gap, max_gap)` stays the single place that maps the lead to Z offset. The HUD prints `lead` signed to 3 decimals.
 - *World frame `(x, y, z)`* is `Node3D.global_position` inside `Battle/World3D` (a `SubViewport` in `scenes/Battle.tscn`). `World3D` holds world-origin children, so local `position` equals `global_position` today, but the token always stores `global_position`.
 - *Named rig modes on top of today's camera.* `scripts/BattleCamera.gd` currently tweens `position` between `_default_pos`, `_default_pos + _corner_offset_left` and `_default_pos + _corner_offset_right`, plus a short `swing_overtake()` nudge. Each of those becomes a `CamRigMode` value (below), and the camera sets `rig_mode` when a transition starts, so a dump taken mid-tween still names its target mode. `CarAnimator.gd` exposes `get_frenet() -> Dictionary` for its car. Current gaps found while grounding this spec (not fixed, spec only): `BattleCamera.gd` is not attached to `World3D/Camera3D` in `Battle.tscn` (the camera sits at a hard transform that matches `_default_pos`), and `PlayerCarAnimator`/`OpponentCarAnimator` are children of a plain `Node` (`World3D/CarAnimators`), so their `get_parent().position` tweens don't reach the cubes. Nothing calls `snap_to_gap` or `transition_to_corner` yet.
 
@@ -81,7 +81,7 @@ f5b9114 OW_TOUGE c(112,-48) h270 | ISO (120.0,18.0,-36.0) y45 p-35 o24.0
 R1 lad T:MAT W:KID S:--- | ramp 2/1/0 | unl R3.M.S.W.-.- | debt>0 | sh00 lv03
 ```
 
-- Field key: `f5b9114` is the short git SHA, with `*` meaning a dirty working tree. Then come scene, turn, `TurnManager.State` (`STA`/`STR`/`CRN`/`DMG`/`END`/`FIN`), `seg` and corner type (`TrackData.TURN_TYPES` name). The camera block is rig-mode code (`BCH`/`BCL`/`BCR`/`BOV`/`HUB`/`ISO`/`DBG`), `(x,y,z)`, yaw, pitch, and `f`=FOV or `o`=ortho size. Next are the cars' `(s, d)`, `lead`, the tier code (`WD`/`BT`/`LT`/`BS`/`MY`), the low 32 bits of the RNG seed in hex, and the shown face sequence. Hub line 2 shows act, the per-district ladder, the wild ramp, unlock initials (race-3 win, Mods, Substories, Wholesale, Aero, Betting) and debt open/closed, with no amount on the HUD. The active shell/livery IDs end the line.
+- Field key: `f5b9114` is the short git SHA, with `*` meaning a dirty working tree. Then come scene, turn, `TurnManager.State` (`STA`/`STR`/`CRN`/`PRG`/`END`/`FIN`), `seg` and corner type (`TrackData.TURN_TYPES` name). The camera block is rig-mode code (`BCH`/`BCL`/`BCR`/`BOV`/`HUB`/`ISO`/`DBG`), `(x,y,z)`, yaw, pitch, and `f`=FOV or `o`=ortho size. Next are the cars' `(s, d)`, `lead`, the tier code (`WD`/`BT`/`LT`/`BS`/`MY`), the low 32 bits of the RNG seed in hex, and the shown face sequence. Hub line 2 shows act, the per-district ladder, the wild ramp, unlock initials (race-3 win, Mods, Substories, Wholesale, Aero, Betting) and debt open/closed, with no amount on the HUD. The active shell/livery IDs end the line.
 
 ### 0.2 Compact State Token ("Mini Save File" — `MX1`)
 
@@ -181,15 +181,15 @@ There is no reputation field (reputation is lore only), and Sabine's debt is onl
 | `turn_state` | `u8` | `TurnManager.State` (`START … MATCH_COMPLETE`) |
 | `seg` | `u8` | `STRAIGHT, ENTRY, APEX, EXIT` |
 | `current_turn_type` | `u8` | Index into `TrackData.TURN_TYPES` |
-| `player_cum_dp`, `opponent_cum_dp` | `f64, f64` | GDScript `float` is 64-bit; `f64` keeps a resume bit-exact |
+| `player_cum_progress`, `opponent_cum_progress` | `f64, f64` | Cumulative race progress (`PositionTracker`, mirrors `MatchResult.player_total_progress` / `opponent_total_progress`). GDScript `float` is 64-bit; `f64` keeps a resume bit-exact |
 | `cars[2] (s, d, h, yaw_slip)` | `u16 + q16(d,100) + q16(h,100) + q16(yaw,10)` each | Player, then opponent |
 | `player_hand`, `opponent_hand` | `u8 count` + 2-bit stances | Up to `DECK_HAND_SIZE` |
 | `player_picks`, `opponent_picks` | `u8 count` + 2-bit stances | Up to `PICKS_PER_TURN` |
 | `straight_timer_ms_left` | `u16` | From `StraightTimer` (`total_time - _elapsed`) |
 | `face_sequence` + `bluff_flags` | `u8` (3×2-bit) + `u8` (3 bits) | Shown sequence from `FaceController.set_face_sequence()` / `TellGenerator.generate_tells()` and which positions are bluffs |
-| `p_qte_score`, `o_qte_score` | `u8, u8` | Current/last QTE score ×10. Note: `_compute_damage()` still uses fixed placeholder QTE values instead of `QTEController` output, so these record whatever was actually used |
+| `p_q_time`, `o_q_time` | `u8, u8` | Current/last turn's timing skill ×100, as passed to `CombatResolver.resolve_turn()` (before the knot window and HAN, which `clash_progress` applies): player = `QTEController` score / `QTE_NORMALIZER`, opponent = `OPPONENT_QTE` |
 | `pick_history` | `u8 turns` + 6 bits/turn | Player picks for each completed turn (opponent picks are re-derived by `AIPicker` from the RNG) |
-| `qte_history` | 2 B/turn | `p_qte`, `o_qte` per completed turn |
+| `qte_history` | 2 B/turn | `p_q_time`, `o_q_time` per completed turn (same encoding) |
 | deck piles (iff `DECK_FULL`) | `u8 count` + 2-bit stances, ×2 | Player and opponent draw piles in order, plus `u8×3` player discard counts (the player deck never reshuffles, so discard order doesn't affect future draws) |
 
 ### 0.3 End-to-End Playtest → Bot Reproduction Loop
@@ -204,7 +204,7 @@ There is no reputation field (reputation is lore only), and Sabine's debt is onl
 | Bot | Reads | Typical use |
 |---|---|---|
 | **Gordon** (Godot) | Everything | Decode, boot Godot into the exact state, step `TurnManager`, fix in `scripts/`/`scenes/` |
-| **Barry** (Systems) | Block B (economy, unlocks, ladder, build) + Block C (stats, DP, hands, tier) | Check the state against `design/07` and the `02` decision sheet; feed the stats/tier into `sim/velocity_shift/` to see whether the sim agrees. Godot's `RandomNumberGenerator` (PCG32) is not Python's `random`, so a sim run reproduces the *state and math*, not the exact draws |
+| **Barry** (Systems) | Block B (economy, unlocks, ladder, build) + Block C (stats, progress, hands, tier) | Check the state against `design/07` and the `02` decision sheet; feed the stats/tier into `sim/velocity_shift/` to see whether the sim agrees. Godot's `RandomNumberGenerator` (PCG32) is not Python's `random`, so a sim run reproduces the *state and math*, not the exact draws |
 | **Arthur** (Art) | Block A (scene, camera, rig, projection) + shell/livery IDs + `.png` | Framing, 640×480 readability, shell/livery/UV issues; re-render the exact frame with `--dump-frame` |
 | **Nathaniel** (Narrative) | Block B (act, ladder, `beat_pc_bits`, substories, race-3 gate) | Which barks/dialogue should have fired (e.g. a loss-persistence rematch line) |
 
@@ -231,7 +231,7 @@ There is no reputation field (reputation is lore only), and Sabine's debt is onl
 **Direct Godot reproduction and hot-load**
 - CLI boot: `godot --path /workspace/midnight-apex -- --playtest-state "MX1:..." [--resume] [--dump-frame <path.png>]`. The value may also be `@<path>.json` to load a saved dump. `PlaytestState` (autoload) reads `OS.get_cmdline_user_args()`, validates version + CRC and warns on a `git7` mismatch. It then changes to the scene for `scene_id` (only `BATTLE` → `res://scenes/Battle.tscn` exists today; other IDs report "scene not built yet" instead of guessing). Next it applies Block B to the progression state (a future `GameState` autoload) and Block C through `TurnManager.restore_snapshot()`. Camera Block A is applied last via `BattleCamera.apply_rig_state()`, which kills running tweens. Finally it sets `get_tree().paused = true` unless `--resume` is passed.
 - Battle restore has two modes (§0.4 decision 4):
-  - **Direct resume** (`DECK_FULL`): set seed + state, restore piles, hands, picks, DP, timer, faces.
+  - **Direct resume** (`DECK_FULL`): set seed + state, restore piles, hands, picks, progress totals, timer, faces.
   - **Replay**: rebuild decks from `rng_seed` (same `Deck.build` order: player, then opponent), then run turns `1..turn_number-1` headlessly from `pick_history` + `qte_history`. Afterwards the live RNG state must equal the stored `rng_state`; if not, the decoder reports **"replay desync"**, which is itself a determinism bug. That requires every gameplay random draw to go through `TurnManager._rng` (no bare `randf()`; `Deck.build()` must never hit its own `rng == null` fallback in a match).
 - `--dump-frame <path.png>`: after the warp, wait 2 rendered frames, save the root viewport (plus `_3d.png`) and quit. Don't use `--headless` for this, because the headless dummy renderer draws nothing. On the box, run it on the box desktop display. The box has no GPU for the Mobile (Vulkan) renderer, so a `--rendering-method gl_compatibility` capture is fine for placement and framing but not final PSX shading, which Arthur judges on Austin's Windows D3D12 build.
 - In-game hot-load (`F10`, `debug_load_clipboard_state`): reads `DisplayServer.clipboard_get()`, trims it, and runs the same validate → warp path in a running debug session. A bot can then send Austin a modified token ("try this exact moment with the opponent one level higher") and he warps with one key.
@@ -295,22 +295,29 @@ enum PhaseType { AGGRESSIVE, REACTIVE, UNPREDICTABLE }
 enum QteType { MASH, TIMING }
 ```
 
-**Balance constants** (match `sim/velocity_shift/equations.py` exactly):
+**Combat constants** (copied from `sim/velocity_shift/equations.py` by name and never retuned in Godot; the values live only in the sim, Barry's source of truth):
+
+| Name | Notes |
+|------|-------|
+| `KNOT_WINDOW_105` | `(r, W)` knots for `knot_window(r)`, the player-only QTE window |
+| `KAPPA_BY_LENGTH` | Stat-gap leverage `V = r^kappa`, keyed by race length in turns |
+| `RACE_LENGTHS` | Race lengths that have a `KAPPA_BY_LENGTH` entry |
+| `OPPONENT_QTE` | Opponent timing skill (`q_time`), window off |
+| `W0`, `T_MAX`, `L_MAX` | Phi payoff: win at q = 0, tie at q = 1, loss at q = 1 |
+| `TAU_BETA`, `TAU_P_TOP`, `TAU_GAMMA` | tau(q): top-bonus share, top-bonus sharpness, body shape |
+| `MU` | POW share raises the win payoff; EN share raises the tie/loss payoff |
+| `ETA` | HAN share raises effective timing (both sides) |
+| `QTE_NORMALIZER` | QTE score (1–10) → `q_time`, the same conversion as `qte_factor()` |
+| `DECK_ALPHA` | Deck-weight smoothing |
+| `DECK_HAND_SIZE` | Cards drawn per turn (mirrors `HAND_SIZE`) |
+| `DECK_SIZE` | Cards per deck (mirrors `sim/velocity_shift/deck.py`) |
+| `LINE_SET_C`, `LINE_ADHERENCE`, `LINE_ALT_WEIGHTS` | Opponent line tables and line-pick weights (§8.1) |
+
+**Godot-only constants** (prototype UX, tuned in Godot):
 
 | Name | Value | Notes |
 |------|-------|-------|
-| `CLASH_STAKES` | 0.35 | clash_mult = 1 ± CLASH_STAKES |
-| `BATTLE_BONUS` | 0.05 | battle_mult bonus per win-margin point |
-| `MITIGATION_PER_1000` | 0.40 | EN reduction per 1000 EN |
-| `MITIGATION_FLOOR` | 0.10 | minimum damage fraction |
-| `HP_PER_LEVEL` | 180 | max_hp = level × HP_PER_LEVEL |
-| `QTE_NORMALIZER` | 10.0 | qte_factor = score / QTE_NORMALIZER |
-| `HAN_QTE_WEIGHT` | 0.50 | HAN modifier for both sides |
-| `DECK_SIZE` | 192 | cards per deck |
-| `DECK_ALPHA` | 0.85 | smoothing term for deck weights |
-| `DECK_HAND_SIZE` | 6 | cards drawn per turn |
 | `PICKS_PER_TURN` | 3 | stances selected per turn |
-| `RUBBER_BAND_PCT` | 0.15 | % of avg max HP for full rubber-band |
 | `STRAIGHT_DURATION` | 12.0 | seconds for all 3 picks |
 | `PHASE_DURATION` | 4.0 | seconds per individual pick |
 | `QTE_TIMING_WINDOW_BASE_MS` | 800 | base width of timing target zone |
@@ -331,10 +338,10 @@ signal phase_pick_timeout(phase_index)
 signal corner_started(player_stances, opponent_stances)
 signal clash_resolved(position, player_stance, opponent_stance, outcome)
 signal corner_ended(qte_score)
-signal damage_batch_done(player_dp, opponent_dp, cum_p, cum_o, battle_mult)
+signal progress_batch_done(player_progress, opponent_progress, cum_p, cum_o)
 signal turn_ended(turn)
 signal lap_began(phase, total)
-signal match_ended(winner, player_name, opponent_name)
+signal match_ended(winner, player_name, opponent_name)   # winner may be "Tie"
 ```
 
 ### 1.4 Resource scripts
@@ -356,7 +363,7 @@ extends Resource; class_name CombatantStats
 extends Resource; class_name MatchConfig
 @export var player_stats: CombatantStats
 @export var opponent_stats: CombatantStats
-@export var max_turns: int = 99
+@export var max_turns: int = 99         # race length; sets kappa via kappa_for_length(), so use a value in RACE_LENGTHS
 @export var seed: int
 @export var deterministic: bool = true
 @export var rival_personality: String
@@ -391,7 +398,8 @@ Battle (Node)                                   ← TurnManager.gd attached
 │
 ├── CanvasLayer (2D UI — 640×480)
 │   ├── TopBar (HBoxContainer)
-│   │   ├── PositionLabel (Label)             ← "1st" / "2nd"
+│   │   ├── PositionLabel (Label)             ← "1st" / "2nd" / "TIE"
+│   │   ├── ProgressGapMeter (Control)        ← race progress gap (§10.2)
 │   │   ├── PhaseLabel (Label)                ← "LAP 1/3"
 │   │   ├── TurnTypeLabel (Label)             ← "Hairpin L"
 │   │   └── CornerTimerBar (TextureProgress)  ← 12s countdown
@@ -403,8 +411,7 @@ Battle (Node)                                   ← TurnManager.gd attached
 │   │   │   │   ├── FaceDEF (TextureRect)
 │   │   │   │   ├── FaceNEU (TextureRect)
 │   │   │   │   └── TellOverlay (TextureRect)
-│   │   │   ├── OpponentNameLabel (Label)
-│   │   │   └── DPBarOpponent (TextureProgress)
+│   │   │   └── OpponentNameLabel (Label)
 │   │   │
 │   │   ├── CenterGap (Control)               ← 3D viewport shows through
 │   │   │
@@ -427,14 +434,13 @@ Battle (Node)                                   ← TurnManager.gd attached
 │   │   │   │   └── P2Label (Label, stance name)
 │   │   │   └── P3Panel (Panel)               ← colored bg per stance
 │   │   │       └── P3Label (Label, stance name)
-│   │   ├── OpponentColumn (VBox)
-│   │   │   ├── O1Panel (Panel)               ← colored bg per stance
-│   │   │   │   └── O1Label (Label, stance name)
-│   │   │   ├── O2Panel (Panel)               ← colored bg per stance
-│   │   │   │   └── O2Label (Label, stance name)
-│   │   │   └── O3Panel (Panel)               ← colored bg per stance
-│   │   │       └── O3Label (Label, stance name)
-│   │   └── DPBarPlayer (TextureProgress)
+│   │   └── OpponentColumn (VBox)
+│   │       ├── O1Panel (Panel)               ← colored bg per stance
+│   │       │   └── O1Label (Label, stance name)
+│   │       ├── O2Panel (Panel)               ← colored bg per stance
+│   │       │   └── O2Label (Label, stance name)
+│   │       └── O3Panel (Panel)               ← colored bg per stance
+│   │           └── O3Label (Label, stance name)
 │   │
 │   └── QTEOverlay (CenterContainer, hidden)
 │       ├── QTEPromptLabel (Label)
@@ -562,7 +568,7 @@ func on_pick_timeout(phase_index):
 
 ## 5. Combat Math
 
-**Goal:** Pure functions, 1:1 port from `sim/velocity_shift/equations.py` + `combat.py`.
+**Goal:** Pure functions, a 1:1 port of the playable engine in `sim/velocity_shift/combat.py` (`resolve_turn`) and the Phi/tau functions in `sim/velocity_shift/equations.py` (0dd376a). A race is scored by progress: every clash adds progress to both cars, and the higher total at the end of the race wins. There are no HP or DP bars, knockouts, EN mitigation, rubber-banding or battle bonus.
 
 ### 5.1 `CombatResolver.gd`
 
@@ -572,33 +578,67 @@ func on_pick_timeout(phase_index):
 static func resolve_stance(a: Stance, b: Stance) -> StanceOutcome
     # Attack > Neutral > Defend > Attack
 
-static func clash_mult(outcome: StanceOutcome) -> float
-    # WIN → 1.35, LOSS → 0.65, NEUTRAL → 1.0
-
-static func compute_damage(pow: float, qte_factor: float, clash_mult: float, battle_mult: float) -> float
-    # pow × qte_factor × clash_mult × battle_mult
-
-static func damage_mitigation(en: float, qte_factor: float) -> float
-    # max(MITIGATION_FLOOR, 1 - (en/1000) × MITIGATION_PER_1000 × qte_factor)
-
-static func qte_factor(score: float) -> float
-    # score / QTE_NORMALIZER
-
-static func apply_han_qte_mod(score: float, han_pct: float) -> float
-    # score × (1 + HAN_QTE_WEIGHT × (han_pct - 1/3))
-
 static func battle_winner(outcomes: Array) -> String
     # sum(outcome.values) — positive → "Player", negative → "Opponent", zero → "Tie"
+    # Display only (ClashDisplay, turn log). It does not feed progress.
 
-static func battle_multiplier(outcome_sum: int) -> float
-    # 1 + BATTLE_BONUS × abs(outcome_sum)
+static func stat_shares(pow: float, en: float, han: float) -> Array
+    # [total, pow / total, en / total, han / total]; [0, 1/3, 1/3, 1/3] when total <= 0
 
-static func qte_rubber_band(player_gap: float, threshold: float, p_qte: float, o_qte: float) -> Dictionary
-    # Returns { p_damage_qte, p_mitigation_qte, o_damage_qte, o_mitigation_qte }
-    # Proportional blend: leader's disadvantaged stat erodes toward 1.0 as gap widens
+static func knot_window(r: float) -> float
+    # W(r): piecewise-linear through the KNOT_WINDOW_105 knots,
+    # flat below the first knot and above the last, capped at 1
+
+static func kappa_for_length(race_length: int) -> float
+    # KAPPA_BY_LENGTH[race_length]; any other length uses the closest key (no interpolation)
+
+static func timing_value(q: float) -> float
+    # tau(q), q clamped to [0, 1]:
+    #   body = 1 - (1 - q)^2 if TAU_GAMMA <= 0 else q^TAU_GAMMA
+    #   tau  = (1 - TAU_BETA) × body + TAU_BETA × q^TAU_P_TOP
+
+static func clash_payoff(outcome: StanceOutcome, q: float) -> float
+    # Phi(outcome, q), with t = timing_value(q):
+    #   WIN     → W0 + (1 - W0) × t
+    #   NEUTRAL → T_MAX × t
+    #   LOSS    → L_MAX × t
+
+static func clash_progress(outcome: StanceOutcome, q_time: float,
+                           pow: float, en: float, han: float,
+                           boss_total: float, kappa: float, scale_window: bool) -> float
+    # [total, pow_s, en_s, han_s] = stat_shares(pow, en, han)
+    # r     = total / boss_total            (1.0 if boss_total == 0)
+    # V     = r^kappa
+    # w     = knot_window(r) if scale_window else 1.0
+    # q_eff = clamp(q_time × w × (1 + ETA × (han_s - 1/3)), 0, 1)
+    # M     = 1 + MU × (pow_s - 1/3) on a WIN, else 1 + MU × (en_s - 1/3)
+    # return V × clash_payoff(outcome, q_eff) × M
+
+static func resolve_turn(player_stances: Array, opponent_stances: Array,
+                         player: CombatantStats, opponent: CombatantStats,
+                         player_q_time: float, opponent_q_time: float,
+                         race_length: int) -> Dictionary
+    # outcomes   = resolve_stance(p, o) per position (player's view); opponent's outcome = -outcome
+    # boss_total = opponent.pow + opponent.en + opponent.han  → opponent V = 1, player V = r^kappa
+    # kappa      = kappa_for_length(race_length)              (race_length = MatchConfig.max_turns)
+    # per clash i:
+    #   player_clash_progress[i]   = clash_progress(outcome,  player_q_time,   player stats,   boss_total, kappa, true)
+    #   opponent_clash_progress[i] = clash_progress(-outcome, opponent_q_time, opponent stats, boss_total, kappa, false)
+    # player_progress / opponent_progress = sum of the 3 clashes (not an average)
+    # Returns { outcomes, battle_winner, player_clash_progress, opponent_clash_progress,
+    #           player_progress, opponent_progress }
 ```
 
-Reference: `sim/velocity_shift/equations.py` — every formula is there.
+**Inputs, as `match.py` feeds them:**
+- `player_q_time` is the turn's single corner-long QTE score from `QTEController.stop()` divided by `QTE_NORMALIZER` (the same conversion as `cli.prompt_qte()` → `qte_factor()`), so it lies in [0, 1]. The same value is used for all 3 clashes. Don't pre-apply HAN or the window; `clash_progress` applies both.
+- `opponent_q_time` is always `OPPONENT_QTE` (`AIQTE.opponent_q_time()`, §8.3). The knot window is off for the opponent (`scale_window = false`), but the HAN term still applies to it inside `clash_progress`.
+- Every clash pays both cars: a win pays at least `W0`, while a tie and a loss pay `T_MAX` and `L_MAX` scaled by timing.
+
+**Result** (`TurnManager._determine_winner()`, after `max_turns`): the higher of `player_cum_progress` and `opponent_cum_progress` wins, and equal totals are a `"Tie"`. Display shares are `pos_p = cum_p / (cum_p + cum_o)` (0.5 when both are 0), as `MatchResult.player_position` in `match.py`.
+
+Reference: `sim/velocity_shift/equations.py` (`stat_shares`, `knot_window`, `kappa_for_length`, `timing_value`, `clash_payoff`, `clash_progress`) and `combat.py` `resolve_turn`. The sim keeps the old HP/DP path as `resolve_turn_legacy` behind `MatchConfig.legacy_hp_dp` for frozen checks; Godot does not port it.
+
+> **Open question for Austin:** §7's level-gap QTE difficulty (`qte_difficulty()`) shrinks the timing zone and speeds up the mash when the opponent is stronger, while `knot_window(r)` already scales the player's timing by the stat ratio in the math. Keeping both would count the stat gap twice. §7 stays as written until you decide.
 
 ---
 
@@ -625,7 +665,7 @@ States:
 │       │             + QTE runs simultaneously                        │
 │       ↓ (QTE captured + all outcomes known)                         │
 │                                                                      │
-│  DAMAGE_BATCH   → compute DP, update bars, tween car positions      │
+│  PROGRESS_BATCH → add progress, update gap meter, tween cars        │
 │       ↓ (tweens done)                                               │
 │                                                                      │
 │  END_TURN       → deck cycle, lap check                             │
@@ -641,9 +681,9 @@ States:
 | START | Scene loaded | Setup complete |
 | STRAIGHT | Previous END_TURN (or START) | All 3 picks stored |
 | CORNER_PLAYBACK | All 3 picks locked | QTE complete + 3 clashes resolved |
-| DAMAGE_BATCH | Corner end | Tween animations done |
-| END_TURN | Damage displayed | Deck cycled |
-| MATCH_COMPLETE | Max turns reached | — |
+| PROGRESS_BATCH | Corner end | Tween animations done |
+| END_TURN | Progress displayed | Deck cycled |
+| MATCH_COMPLETE | Max turns reached (higher progress total wins; equal = Tie) | — |
 
 ---
 
@@ -693,6 +733,8 @@ static func qte_difficulty(player_level: int, opponent_level: int) -> Dictionary
 | +3 | 650 | 1.30 | Opponent fav — tighter timing |
 | +6 | 500 | 1.60 | Tough — zone shrinks, mash races |
 | +10 | 300 | 2.00 | Max before soft floor at 200ms |
+
+> **Open question for Austin:** this level-gap difficulty and `knot_window(r)` both penalize a stat gap (see §5.1).
 
 ### 7.2 QTE Type lookup
 
@@ -773,13 +815,10 @@ static func pick_card(hand: Array, opponent_hand: Array,
 **🤖 MCP creates** `scripts/AIQTE.gd`:
 
 ```gdscript
-static func generate_qte(level: int, encounter_type: String,
-                          rng: RandomNumberGenerator,
-                          deterministic: bool,
-                          han_pct: float) -> float
-    # Baseline = 7.0 × level_ratio (Wild=0.35, Lieutenant=0.75, Boss=1.15)
-    # Modified by HAN proportion via apply_han_qte_mod
-    # Noise range shrinks as opponent level increases
+static func opponent_q_time() -> float
+    # Returns OPPONENT_QTE (match.py). Fixed, not rolled: no level ratio, no noise,
+    # no knot window, and no RNG draw. HAN is applied later inside
+    # CombatResolver.clash_progress(), the same as for the player.
 ```
 
 ---
@@ -853,41 +892,44 @@ At any moment exactly one face texture has `a = 1.0` during a phase, with smooth
 
 ---
 
-## 10. Position & Damage Display
+## 10. Position & Progress Display
 
-**Goal:** Track cumulative damage, update DP bars, show clash results.
+**Goal:** Track cumulative race progress, show the progress gap on the race HUD, and show clash results. Austin, 2026-11-10: the race HUD shows the progress gap instead of HP bars.
 
 ### 10.1 `PositionTracker.gd`
 
 **🤖 MCP creates** `scripts/PositionTracker.gd`:
 
 ```gdscript
-var player_total_dp: float = 0.0
-var opponent_total_dp: float = 0.0
+var player_total_progress: float = 0.0
+var opponent_total_progress: float = 0.0
 
-func add_turn_damage(player_dp: float, opponent_dp: float)
-    # Accumulate
-    # Update DPBarPlayer.value and DPBarOpponent.value
-    # Compute and emit position label (1st/2nd)
+func add_turn_progress(player_progress: float, opponent_progress: float)
+    # Accumulate (match.py: result.player_total_progress += turn progress)
+    # Emit position label: "1st" / "2nd", or "TIE" on equal totals
 
-func get_player_gap() -> float
-    # return player_total_dp - opponent_total_dp
+func get_progress_gap() -> float
+    # return player_total_progress - opponent_total_progress
 
-func get_rubber_band_threshold(avg_max_hp: float) -> float
-    # return avg_max_hp * RUBBER_BAND_PCT
+func get_lead() -> float
+    # total = player_total_progress + opponent_total_progress
+    # return 0.0 if total == 0 else (player_total_progress - opponent_total_progress) / total
+    # = pos_p - pos_o (§0.1), always in [-1, 1]
 ```
 
-### 10.2 `DamageDisplay.gd`
+### 10.2 `ProgressGapDisplay.gd`
 
-**🤖 MCP creates** `scripts/DamageDisplay.gd`:
+**🤖 MCP creates** `scripts/ProgressGapDisplay.gd`, driving `TopBar/ProgressGapMeter`:
 
 ```gdscript
-func animate_bars(player_new_total: float, opponent_new_total: float,
-                  player_max_hp: float, opponent_max_hp: float)
-    # Tween DPBarPlayer.value and DPBarOpponent.value from current to new
+func animate_gap(new_lead: float)
+    # Tween ProgressGapMeter from the previous lead to new_lead (PositionTracker.get_lead())
+    # Centre = level; the fill grows toward the player's side when ahead, the rival's side when behind
     # Duration: 0.8s
-    # Flash "1st" / "2nd" label update
+    # Flash the "1st" / "2nd" / "TIE" label update
 ```
+
+> **Open question for Austin:** what the meter is scaled to. This guide uses the normalized lead `(cum_p - cum_o) / (cum_p + cum_o)`, the same shares as `MatchResult.player_position` in `match.py`, so the meter needs no full-scale value and can't overflow. The alternative is the raw gap `cum_p - cum_o`, which needs a full-scale value nobody has set. Also open: whether the race HUD prints a number (the debug HUD prints `lead`) and how a tie reads. The drawn car spacing (§11) takes the same `lead`.
 
 ### 10.3 `ClashDisplay.gd`
 
@@ -923,7 +965,7 @@ func announce_lap(phase: int, total: int)
 
 **Goal:** Each car has a straight Z-offset and corner path traversal. AnimationTree blends stance body language.
 
-> **Drawn spacing is not the DP gap.** `snap_to_gap` in `scripts/CarAnimator.gd` still lerps a symmetric Z range from the DP fraction (`lerp(-5.0, 5.0, …)`). That script was not changed. The locked presentation rule is in `design/06-pattern-read.md`: when the player is behind, the rival is drawn only as far ahead as keeps lane and Entry readable from the fixed rear third-person player camera (no distance number approved); when the player is ahead, the trailer recedes in the top-center mirror with no matching rear cap. Actual cumulative DP is unchanged. Do not read a large lead's exact size off the visible spacing.
+> **Drawn spacing is not the progress gap.** `snap_to_gap` in `scripts/CarAnimator.gd` still lerps a symmetric Z range from the gap fraction (`lerp(-5.0, 5.0, …)`). That script was not changed. The locked presentation rule is in `design/06-pattern-read.md`: when the player is behind, the rival is drawn only as far ahead as keeps lane and Entry readable from the fixed rear third-person player camera (no distance number approved); when the player is ahead, the trailer recedes in the top-center mirror with no matching rear cap. Actual cumulative progress is unchanged. Do not read a large lead's exact size off the visible spacing.
 
 ### 11.1 `CarAnimator.gd`
 
@@ -935,6 +977,7 @@ func announce_lap(phase: int, total: int)
 var straight_base_z: float = 0.0
 
 func snap_to_gap(gap: float, max_gap: float)
+    # Input: gap = PositionTracker.get_lead(), max_gap = 1.0 (the lead is already normalized; §10.2 open question)
     # PROTOTYPE ONLY (still what CarAnimator.gd does). Not the locked visual gap.
     # The symmetric ±5 range caps the trailer the same way as the leader; the
     # locked rule caps only how far ahead of the player the rival is drawn.
@@ -957,8 +1000,8 @@ func begin_corner_traversal(path: Curve3D, duration: float = 3.5)
     # Store Path3D curve from CornerRoad
     # PROTOTYPE ONLY. The 10% path offset is not an approved draw distance.
     # Locked spacing is the visual-gap rule in design/06-pattern-read.md (no number).
-    # Read current DP gap from PositionTracker
-    # Set progress_offset = dp_gap / max_gap × 0.1 (10% path offset per full gap)
+    # Read the current lead from PositionTracker.get_lead()
+    # Set progress_offset = lead × 0.1 (10% path offset per full lead)
     # Tween corner_progress from 0.0 → 1.0 over duration
 
 func _on_corner_progress_updated(progress: float)
@@ -1013,22 +1056,22 @@ func set_tell_alpha(intensity: float, is_deceptive: bool)
 
 ### 11.4 Connected signals
 
-- `turn_state_changed(STRAIGHT)`: `snap_to_gap(...)` with current DP
+- `turn_state_changed(STRAIGHT)`: `snap_to_gap(...)` with `PositionTracker.get_lead()`
 - `turn_state_changed(CORNER_PLAYBACK)`: `begin_corner_traversal(...)`
 - `clash_resolved(position, ...)`: `play_surge()` on winner / `play_drop()` on loser
 - `lead_changed`: `play_overtake()` on overtaking car
-- `turn_state_changed(DAMAGE_BATCH)`: `end_corner_traversal()`
+- `turn_state_changed(PROGRESS_BATCH)`: `end_corner_traversal()`
 
 ---
 
 ## 12. Camera
 
-**Goal:** Fixed rear third-person camera on the player. The rival's drawn gap is asymmetric so Entry stays readable when the player is behind, and gets harder to read in the mirror when the player is ahead. Rule: `design/06-pattern-read.md` (Lane Entry and visual gap). Actual DP, position, and the win condition do not follow the drawn spacing.
+**Goal:** Fixed rear third-person camera on the player. The rival's drawn gap is asymmetric so Entry stays readable when the player is behind, and gets harder to read in the mirror when the player is ahead. Rule: `design/06-pattern-read.md` (Lane Entry and visual gap). Actual progress, position, and the win condition do not follow the drawn spacing.
 
 ### 12.1 Locked view (2026-11-06)
 
 - The race view used to read Entry is a fixed rear third-person camera on the **player**. It is not placed behind both cars, and it does not pull back to keep an uncapped leader in shot.
-- **Player behind:** cap how far ahead the rival is drawn so that rival's lane and Entry (outside = Attack, center = Steady, inside = Defend, relative to the next corner) stay readable. No distance number is approved. The cap is draw distance only. It is not `RUBBER_BAND_FRACTION`, not a real-gap cap, and not a damage or AI change. Visible spacing does not show the exact size of a large real lead.
+- **Player behind:** cap how far ahead the rival is drawn so that rival's lane and Entry (outside = Attack, center = Steady, inside = Defend, relative to the next corner) stay readable. No distance number is approved. The cap is draw distance only. It is not a real-gap cap, and not a scoring or AI change. Visible spacing does not show the exact size of a large real lead.
 - **Player ahead:** the trailing rival recedes in the top-center rear-view mirror. Do not cap that recession to match the forward cap. Headlights and lane get harder to read with distance. That loss of Entry information is intentional. Do not add a HUD lane marker or enlarge the lamps to undo it.
 - Corner-playback camera paths later in this guide are the cinematic after the line is locked. They do not replace this view as the one Entry is read from, and they do not authorize a symmetrical rear cap.
 - Display settings are unchanged: 640×480, viewport stretch, keep aspect, as in §1.1 and `project.godot`. A higher-resolution / CRT trial was an experiment only.
@@ -1047,7 +1090,7 @@ The sketch below is the prototype chase cam. "Behind both cars" is not the locke
 #   - Rotate ~15° around Y axis into corner direction
 #   - FOV ~55°, closer to cars
 #   - Subtle X roll to follow road camber
-# During DAMAGE_BATCH:
+# During PROGRESS_BATCH:
 #   - Hold same position as corner
 
 func transition_to_corner(corner_direction: String)
@@ -1075,9 +1118,9 @@ No continuous track. Each turn is a self-contained straight approach + corner se
 | Game state | Visible road | Car positioning | Camera |
 |---|---|---|---|
 | LOAD_SEGMENT | (loading) | — | — |
-| STRAIGHT | StraightRoad | Drawn spacing follows the visual-gap rule in 06 (not a 1:1 DP offset; prototype `snap_to_gap` is still symmetric) | Fixed rear third-person on the player |
+| STRAIGHT | StraightRoad | Drawn spacing follows the visual-gap rule in 06 (not a 1:1 progress offset; prototype `snap_to_gap` is still symmetric) | Fixed rear third-person on the player |
 | CORNER_PLAYBACK | CornerRoad | Pathing along Curve3D | Authored camera path |
-| DAMAGE_BATCH | CornerRoad | Static at corner exit | Same as corner |
+| PROGRESS_BATCH | CornerRoad | Static at corner exit | Same as corner |
 | END_TURN | (unload) | Snap back to straight Z | Swing back to chase cam |
 
 ### 13.2 Corner playback flow
@@ -1090,7 +1133,7 @@ No continuous track. Each turn is a self-contained straight approach + corner se
 5. RESOLVE_APEX  → clash anim (~1.5s, QTE active) + CarAnimator.surge/drop
 6. RESOLVE_EXIT  → position-based exit anim (~1.5s, QTE active) + CarAnimator.surge/drop
 7. QTEController.stop() → qte_score
-8. Damage computed from all 3 phases → DP gap resolved
+8. Progress computed for all 3 clashes (both cars) → progress gap updated
 9. Lead change check:
    a. If leader changed → play overtake animation (0.5-1s) + camera.swing_overtake()
    b. If unchanged → skip
@@ -1167,7 +1210,7 @@ Applied as `ShaderMaterial` on both road segments. The same UV-offset drives bot
 2. Load next corner segment (straight + corner + cam path + car path)
 3. STRAIGHT: show straight mesh, cars at starting Z positions
 4. CORNER_PLAYBACK: hide straight, show corner mesh, cars traverse Path3D
-5. All 3 phases resolve → damage computed → overtake if applicable
+5. All 3 phases resolve → progress added → overtake if applicable
 6. Unload corner segment, loop
 ```
 
@@ -1183,30 +1226,38 @@ Applied as `ShaderMaterial` on both road segments. The same UV-offset drives bot
 2. Match starts automatically (uses a default `MatchConfig`)
 3. Pick 3 stances across 3 phases (entry → apex → exit)
 4. Complete the QTE (mash or timing)
-5. Watch DP bars + cubes update
+5. Watch the progress gap meter + cubes update
 6. Match ends at `max_turns` → winner displayed
-7. Edit constants in `globals.gd` → **F5** to rerun
+7. Edit Godot-only constants in `globals.gd` → **F5** to rerun. Combat constants are mirrored from `sim/velocity_shift/equations.py` and change only there (§15.2)
 
 ### 15.2 Quick-tune constants
 
+Combat constants are tuned in Barry's sim, not in Godot. Austin and Barry sign off on the numbers there, and Godot copies them into `globals.gd` by name:
+
+| Constant (`equations.py`) | Effect |
+|----------|--------|
+| `KNOT_WINDOW_105` | How much of the player's timing lands at each stat ratio `r` |
+| `KAPPA_BY_LENGTH` | How strongly the stat ratio scales progress, per race length |
+| `OPPONENT_QTE` | How well the opponent times |
+| `W0`, `T_MAX`, `L_MAX` | Progress for a win, tie and loss relative to a perfect win |
+| `TAU_BETA`, `TAU_P_TOP`, `TAU_GAMMA` | Shape of the timing curve tau(q) |
+| `MU` | How much POW share boosts wins and EN share boosts ties/losses |
+| `ETA` | How much HAN share boosts effective timing |
+| `DECK_ALPHA` | Deck smoothing (higher = more even) |
+
+Godot-only feel constants, tuned here:
+
 | Constant | Effect | Recommended range |
 |----------|--------|-------------------|
-| `CLASH_STAKES` | How much each clash win/loss matters | 0.25 – 0.45 |
-| `BATTLE_BONUS` | How much winning the battle amplifies damage | 0.03 – 0.10 |
-| `MITIGATION_PER_1000` | How effective EN is per 1000 | 0.30 – 0.50 |
-| `MITIGATION_FLOOR` | Minimum damage always dealt | 0.05 – 0.20 |
-| `HP_PER_LEVEL` | HP per level (turns length) | 150 – 200 |
 | `STRAIGHT_DURATION` | Seconds to pick 3 stances | 8.0 – 12.0 |
 | `QTE_TIMING_WINDOW_BASE_MS` | Base timing target width | 600 – 1000 |
-| `DECK_ALPHA` | Deck smoothing (higher = more even) | 0.70 – 0.95 |
-| `RUBBER_BAND_PCT` | QTE comeback threshold | 0.10 – 0.25 |
 
 ### 15.3 Tuning flow
 
 1. **Run vs Wild** (level gap favors you) — should feel dominant but not boring
 2. **Run vs Lieutenant** (near parity) — should feel tense, each pick matters
 3. **Run vs Boss** (level gap favors them) — should feel like an uphill fight
-4. **Adjust** any constant that makes a matchup feel wrong
+4. **Adjust** a Godot-only constant, or report a combat number that feels wrong to Barry
 5. **Rerun** — no restart needed, just F5
 
 ### 15.4 Adding real art later
@@ -1215,14 +1266,14 @@ When gameplay is tuned to your liking:
 
 1. Replace `PlayerCube` / `OpponentCube` BoxMesh with imported car `.glb`
 2. Replace ground plane with road meshes (straight + corner variants)
-3. Replace `TextureProgress` bars and `Button` textures with styled assets
+3. Replace the progress gap meter, timer bars and `Button` textures with styled assets
 4. Add corner cinematic (Path3D traversal, camera choreography)
 5. Import face textures and wire into FaceStack TextureRects
 6. The gameplay scripts (`Deck.gd`, `CombatResolver.gd`, `TurnManager.gd`, etc.) need zero changes
 
 ### 15.5 Edge cases
 
-- **Tiebreaker:** opponent wins on equal position (enforced in TurnManager)
+- **Ties:** equal progress totals are a tie (`"Tie"`), as in `match.py`; there is no opponent tiebreaker
 - **Empty deck:** player deck runs out of cards mid-match → draw returns fewer
 - **Rapid clicking:** CardHandUI disables buttons between phases
 - **Timer precision:** StraightTimer uses `delta` accumulation, not frame count
@@ -1252,19 +1303,19 @@ scripts/
   Deck.gd                  — 192-card stat-proportional
   StraightTimer.gd         — 12s, 3 phases
   CardHandUI.gd            — 3 buttons + counts
-  CombatResolver.gd        — pure math
+  CombatResolver.gd        — Phi/tau progress math
   TurnManager.gd           — state machine
   QTEController.gd         — mash + timing
   AIPicker.gd              — EV scoring
-  AIQTE.gd                 — opponent QTE generation
+  AIQTE.gd                 — opponent q_time (OPPONENT_QTE)
   TurnTypeData.gd          — stance sequences + QTE type
   ArchetypeData.gd         — comfort/weak zones
   PersonalityData.gd       — 5 personalities, 3 phases each
   TrackData.gd             — circuit layouts
   TellGenerator.gd         — deception flow
   FaceController.gd        — face display + tell overlay
-  PositionTracker.gd       — cumulative DP
-  DamageDisplay.gd         — DP bar tweens
+  PositionTracker.gd       — cumulative progress + lead
+  ProgressGapDisplay.gd    — progress gap meter tween
   ClashDisplay.gd          — 2×3 stance grid
   PhaseAnnouncer.gd        — lap boundaries
   CarAnimator.gd           — Z-offset + path traversal
@@ -1310,12 +1361,12 @@ Total: **24 script files + 1 scene file**
   [CONTINUOUS QTE runs through all 3 phases]
 
 [CORNER EXIT]
-  QTE stops. Damage computed from all 3 phases → DP gap resolved
+  QTE stops. Progress computed for all 3 clashes (both cars) → progress gap updated
   Lead change check:
     - If changed → overtake animation (0.5-1s) + camera swing
     - If unchanged → skip
-  DP bars update → position label updates
-  Car positions tween. Drawn spacing follows the visual-gap rule, not the raw DP magnitude
+  Progress gap meter updates → position label updates
+  Car positions tween. Drawn spacing follows the visual-gap rule, not the raw progress magnitude
   → Unload corner segment
   → DECK DISCARD / DRAW for next turn
   → Load next corner segment
@@ -1329,8 +1380,8 @@ Total: **24 script files + 1 scene file**
 | Straight (12s) | No equivalent — pure Godot UX |
 | 3× CARD_PICK | `match.py` sequential pick loop (on straight) |
 | 3× CLASH resolve | `equations.resolve_stance()` (in corner, batched) |
-| 1× QTE (corner-long) | `cli.prompt_qte()` → `combat.py` QTE split |
-| DAMAGE batch | `combat.resolve_turn()` (all 3 averaged) |
+| 1× QTE (corner-long) | `cli.prompt_qte()` (score / `QTE_NORMALIZER` = player `q_time`); opponent uses `OPPONENT_QTE` |
+| PROGRESS batch | `combat.resolve_turn()` (Phi/tau progress per clash, 3 summed) + `match.py` running totals |
 | DECK draw/discard | `deck.py` draw + end_turn |
 
 ---
@@ -1349,10 +1400,10 @@ All signals on `SignalBus` autoload singleton.
 | `corner_started(player_stances, opponent_stances)` | `Array[int]×2` | TurnManager | Corner playback begins, QTE starts |
 | `clash_resolved(position, player_stance, opponent_stance, outcome)` | `int×4` | TurnManager | Per-clash resolution done |
 | `corner_ended(qte_score)` | `float` | TurnManager | All 3 clashes + QTE complete |
-| `damage_batch_done(player_dp, opponent_dp, cum_player, cum_opponent, battle_mult)` | `float×5` | TurnManager | Damage computed, bars start animating |
+| `progress_batch_done(player_progress, opponent_progress, cum_player, cum_opponent)` | `float×4` | TurnManager | Turn progress computed, gap meter starts animating |
 | `turn_ended(turn)` | `int` | TurnManager | Deck cycled, ready for next straight |
 | `lap_began(phase, total)` | `int, int` | TurnManager | Phase boundary crossed |
-| `match_ended(winner, player_name, opponent_name)` | `String×3` | TurnManager | Max turns reached |
+| `match_ended(winner, player_name, opponent_name)` | `String×3` | TurnManager | Max turns reached; `winner` has the higher progress total, or is `"Tie"` |
 
 ---
 
@@ -1404,20 +1455,20 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
      → QTEController.stop() → qte_score
      → emit corner_ended(qte_score)
 
-7. TurnManager: state = DAMAGE_BATCH
-     → CombatResolver: compute 3× DP, average, mitigate, battle_mult
-     → HAN modifier applied to QTE scores
-     → Rubber-band QTE split applied
-     → PositionTracker: accumulate
-     → CarAnimator: tween Z offsets to new gap
-     → DamageDisplay: animate bars
-     → emit damage_batch_done(...)
+7. TurnManager: state = PROGRESS_BATCH
+     → player_q_time = qte_score / QTE_NORMALIZER; opponent_q_time = AIQTE.opponent_q_time()
+     → CombatResolver.resolve_turn(...): clash_progress for each car on all 3 clashes, summed
+       (player: knot_window(r) + HAN; opponent: window off, HAN only; kappa from max_turns)
+     → PositionTracker: accumulate progress
+     → CarAnimator: tween Z offsets to the new lead
+     → ProgressGapDisplay: animate gap meter
+     → emit progress_batch_done(...)
 
 8. TurnManager: state = END_TURN
      → Deck.end_turn(played, unpicked)
      → Check lap boundary → emit lap_began(...)
      → If turns < max_turns → STRAIGHT
-     → If turns >= max_turns → emit match_ended(...)
+     → If turns >= max_turns → emit match_ended(...) (higher progress total wins; equal = "Tie")
 ```
 
 ---
@@ -1470,7 +1521,7 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
 | QTE indicator (timing marker, timing target) | 2 |
 | Outcome icons (WIN, LOSS, TIE) | 3 |
 | Position icons (1st, 2nd) | 2 |
-| DP bar fills (player, opponent) | 2 |
+| Progress gap meter (frame, fill) | 2 |
 | Font | 1 `.ttf`/`.otf` |
 
 ---
@@ -1541,11 +1592,10 @@ Make the draw from the match `RandomNumberGenerator` so a playtest dump's Block 
 - **Stance naming:** UI displays "STEADY" but the enum is `Stance.NEUTRAL`. Button label and all UI text uses "STEADY"; all logic uses NEUTRAL.
 - **Deck size:** 192 cards. Draw 6, pick 3, discard 3.
 - **Opponent deck:** reshuffles each turn (player deck uses discard pile).
-- **HP_PER_LEVEL = 180**, not 120.
-- **No DNF / knockout** — match always runs to max_turns, then position decides.
-- **Tiebreaker:** opponent wins on equal position.
-- **Rubber-band threshold:** 15% of average max HP.
-- **Car position in 3D:** drawn spacing only. Cumulative DP, position, and the win condition stay on the real gap (`design/06-pattern-read.md`, Lane Entry and visual gap). A capped lead ahead of the player is not the exact large-lead magnitude. The trailer is not given a matching cap. `CarAnimator.gd` still uses a symmetric Z lerp; that code was not updated with the rule.
+- **No DNF / knockout** — match always runs to max_turns, then the higher progress total wins.
+- **Race length sets kappa:** use a `max_turns` in `RACE_LENGTHS`; `kappa_for_length()` snaps any other length to the nearest `KAPPA_BY_LENGTH` key.
+- **Ties:** equal progress totals are a tie; no opponent tiebreaker.
+- **Car position in 3D:** drawn spacing only. Cumulative progress, position, and the win condition stay on the real gap (`design/06-pattern-read.md`, Lane Entry and visual gap). A capped lead ahead of the player is not the exact large-lead magnitude. The trailer is not given a matching cap. `CarAnimator.gd` still uses a symmetric Z lerp; that code was not updated with the rule.
 - **AnimationTree blend:** 7 animations + 3-way blend node = smooth stance transitions for any 3-stance sequence. No per-combination baking.
 - **Face crossfade:** 3 stacked TextureRects with alpha driven by same blend schedule as the car. 4th overlay layer for bluff tell.
 - **Meta-archetypes:** 3 face types (Scowling/Grinning/Focused) shared by hard+soft pairs. 9 face textures + 9 tell overlays total.
