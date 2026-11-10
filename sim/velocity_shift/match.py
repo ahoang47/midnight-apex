@@ -1,11 +1,11 @@
 from __future__ import annotations
 """Multi-turn match loop — draw, play, resolve, repeat.
 
-Each turn consists of 3 sequential clashes.  After each card is played
-the player sees the result before picking the next card.  Phases (laps)
-dictate opponent behaviour patterns and are announced at boundaries.
+Each turn consists of 3 sequential clashes. After each card is played
+the player sees the result before picking the next card.
 
-Difficulty is driven entirely by the level gap between combatants.
+The default engine is final-v1 Phi/tau progress (knot window, kappa,
+LINE_SET_C). Set MatchConfig.legacy_hp_dp to use the older HP/DP path.
 """
 
 import copy
@@ -14,8 +14,8 @@ from typing import Callable, Optional
 
 from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
     TurnResult, TurnState, ClashResult, PersonalityConfig
-from .combat import resolve_turn
-from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod, RUBBER_BAND_FRACTION
+from .combat import resolve_turn, resolve_turn_legacy, pick_line, stances_to_cards, corner_at_turn, draw_weighted_hand, plan_player_cards
+from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod, RUBBER_BAND_FRACTION, OPPONENT_QTE
 from .deck import Deck
 from .trace import TraceLogger
 from .ai import get_personality, get_phase, get_total_phases
@@ -36,6 +36,7 @@ def run_match(
     on_turn_complete: Optional[Callable[[int, TurnResult, float, float], None]] = None,
     on_lap_complete: Optional[Callable[[int, int], None]] = None,
     on_clashes_complete: Optional[Callable[[int, list[ClashResult]], None]] = None,
+    on_line_picked: Optional[Callable[[int, str, list[Stance]], None]] = None,
 ) -> MatchResult:
     """Run a full match between two combatants.
 
@@ -45,24 +46,27 @@ def run_match(
           a. Player picks 1 card from their remaining hand.
           b. Opponent picks 1 card from their remaining hand.
           c. The clash is resolved and the result is broadcast.
-      3. Damage is computed for all 3 clashes (battle_mult, mitigation).
+      3. Default: each clash adds Phi/tau progress (higher total wins, ties allowed).
+         legacy_hp_dp: damage is computed for all 3 clashes (battle_mult, mitigation).
 
-    The match ends after *max_turns*.  The higher position wins.
+    The match ends after *max_turns*.
 
     Callbacks:
         on_deal(turn, player_hand, opponent_hand)
         on_clash_resolved(turn, clash_index, player_card, opponent_card, outcome)
-        on_turn_complete(turn, turn_result, cum_player_dp, cum_opponent_dp)
+        on_turn_complete(turn, turn_result, cum_player_progress, cum_opponent_progress)
         on_lap_complete(phase_index, total_phases)
+        on_line_picked(turn, corner_type, line) — when district line tables are in use
     """
     player = copy.copy(cfg.player_stats)
     opponent = copy.copy(cfg.opponent_stats)
     personality = get_personality(cfg.rival_personality) if cfg.rival_personality else None
+    legacy = cfg.legacy_hp_dp
 
     player_max_hp = player.level * HP_PER_LEVEL
     opponent_max_hp = opponent.level * HP_PER_LEVEL
     avg_max_hp = (player_max_hp + opponent_max_hp) / 2
-    rubber_band_threshold = avg_max_hp * RUBBER_BAND_FRACTION
+    rubber_band_threshold = avg_max_hp * RUBBER_BAND_FRACTION if legacy else 0.0
 
     result = MatchResult(
         player_name=player.name,
@@ -74,8 +78,14 @@ def run_match(
     main_trace = trace or TraceLogger()
 
     rng = Random(cfg.seed) if cfg.seed is not None else Random()
-    p_deck = Deck.build(player.pow, player.en, player.han, rng)
-    o_deck = Deck.build(opponent.pow, opponent.en, opponent.han, rng, reshuffle_on_end=True)
+    p_deck = o_deck = None
+    if legacy:
+        p_deck = Deck.build(player.pow, player.en, player.han, rng)
+        o_deck = Deck.build(opponent.pow, opponent.en, opponent.han, rng, reshuffle_on_end=True)
+
+    # District line tables: a whole line is drawn once per corner/turn from
+    # this same match RNG. Personality/archetype hand requirements are skipped.
+    use_lines = bool(cfg.district and cfg.corners)
 
     player_stance_history: list[Stance] = []
     prev_phase: int = -1
@@ -89,11 +99,37 @@ def run_match(
                 on_lap_complete(phase_index, total_phases)
             prev_phase = phase_index
 
-        p_hand = p_deck.draw(6)
+        planned_line: list[Stance] | None = None
+        corner: str | None = None
+        if use_lines:
+            corner = corner_at_turn(cfg.corners, turn_num)
+            planned_line = pick_line(cfg.district, corner, rng)
+            if on_line_picked:
+                on_line_picked(turn_num, corner, planned_line)
 
-        phase = personality.phases[phase_index] if personality and phase_index < len(personality.phases) else None
-        reqs = phase.hand_requirements if phase else None
-        o_hand = o_deck.prepare_turn_hand(reqs)
+        planned_player: list[Card] | None = None
+        if legacy:
+            p_hand = p_deck.draw(6)
+            if use_lines:
+                o_hand = stances_to_cards(planned_line)
+            else:
+                phase = personality.phases[phase_index] if personality and phase_index < len(personality.phases) else None
+                reqs = phase.hand_requirements if phase else None
+                o_hand = o_deck.prepare_turn_hand(reqs)
+        else:
+            # Oracle-style: 6 cards i.i.d. from stat-weighted deck, no persistent shoe.
+            # When q_read is set, the v4 read + assign also runs on this same match RNG
+            # (line already drawn; then hand; then read rolls and assign_hand).
+            p_hand = draw_weighted_hand(player.pow, player.en, player.han, rng)
+            if use_lines:
+                o_hand = stances_to_cards(planned_line)
+                q_read = cfg.player_read if cfg.player_read is not None else cfg.player_quality
+                if q_read is not None:
+                    planned_player = plan_player_cards(
+                        cfg.district, corner, planned_line, p_hand, q_read, rng,
+                    )
+            else:
+                o_hand = draw_weighted_hand(opponent.pow, opponent.en, opponent.han, rng)
 
         if on_deal:
             on_deal(turn_num, p_hand, o_hand)
@@ -105,11 +141,17 @@ def run_match(
         clash_history: list[ClashResult] = []
 
         for clash_pos in range(3):
-            p_card = get_player_card(turn_num, clash_pos, p_remaining, o_remaining, clash_history)
-            o_card = get_opponent_card(
-                turn_num, clash_pos, o_remaining, p_remaining,
-                phase_index, personality, clash_history, player_stance_history,
-            )
+            if planned_player is not None:
+                p_card = planned_player[clash_pos]
+            else:
+                p_card = get_player_card(turn_num, clash_pos, p_remaining, o_remaining, clash_history)
+            if use_lines:
+                o_card = o_remaining[0]
+            else:
+                o_card = get_opponent_card(
+                    turn_num, clash_pos, o_remaining, p_remaining,
+                    phase_index, personality, clash_history, player_stance_history,
+                )
 
             p_remaining.remove(p_card)
             o_remaining.remove(o_card)
@@ -127,13 +169,18 @@ def run_match(
         if on_clashes_complete:
             on_clashes_complete(turn_num, clash_history)
 
-        p_qte = get_player_qte(turn_num)
-        p_han_pct = player.han / (player.pow + player.en + player.han) if (player.pow + player.en + player.han) > 0 else 1 / 3
-        p_qte = apply_han_qte_mod(p_qte, p_han_pct)
-
-        o_qte = get_opponent_qte(turn_num)
-        o_han_pct = opponent.han / (opponent.pow + opponent.en + opponent.han) if (opponent.pow + opponent.en + opponent.han) > 0 else 1 / 3
-        o_qte = apply_han_qte_mod(o_qte, o_han_pct)
+        if legacy:
+            p_qte = get_player_qte(turn_num)
+            p_han_pct = player.han / (player.pow + player.en + player.han) if (player.pow + player.en + player.han) > 0 else 1 / 3
+            p_qte = apply_han_qte_mod(p_qte, p_han_pct)
+            o_qte = get_opponent_qte(turn_num)
+            o_han_pct = opponent.han / (opponent.pow + opponent.en + opponent.han) if (opponent.pow + opponent.en + opponent.han) > 0 else 1 / 3
+            o_qte = apply_han_qte_mod(o_qte, o_han_pct)
+        else:
+            # Playable engine: q_time in [0, 1]. HAN and the knot window are
+            # applied inside clash_progress. Opponent timing is OPPONENT_QTE.
+            p_qte = get_player_qte(turn_num)
+            o_qte = OPPONENT_QTE
 
         turn_state = TurnState(
             turn_number=turn_num,
@@ -143,34 +190,65 @@ def run_match(
             opponent_qte=o_qte,
         )
 
-        player_gap = result.player_total_dp - result.opponent_total_dp
-
-        turn_result = resolve_turn(
-            turn_state, player, opponent,
-            main_trace, player_gap=player_gap,
-            rubber_band_threshold=rubber_band_threshold,
-        )
+        if legacy:
+            player_gap = result.player_total_dp - result.opponent_total_dp
+            turn_result = resolve_turn_legacy(
+                turn_state, player, opponent,
+                main_trace, player_gap=player_gap,
+                rubber_band_threshold=rubber_band_threshold,
+            )
+        else:
+            turn_result = resolve_turn(
+                turn_state, player, opponent,
+                main_trace, race_length=cfg.max_turns,
+            )
         turn_result.player_hand = list(p_hand)
         turn_result.opponent_hand = list(o_hand)
+        if use_lines:
+            turn_result.corner_type = corner
+            turn_result.opponent_line = list(planned_line)
 
-        result.player_total_dp += turn_result.player_dp
-        result.opponent_total_dp += turn_result.opponent_dp
+        if legacy:
+            result.player_total_dp += turn_result.player_dp
+            result.opponent_total_dp += turn_result.opponent_dp
+        else:
+            result.player_total_progress += turn_result.player_progress
+            result.opponent_total_progress += turn_result.opponent_progress
+            result.player_total_dp = result.player_total_progress
+            result.opponent_total_dp = result.opponent_total_progress
         result.turn_results.append(turn_result)
 
         if on_turn_complete:
-            on_turn_complete(turn_num, turn_result, result.player_total_dp, result.opponent_total_dp)
+            on_turn_complete(
+                turn_num, turn_result,
+                result.player_total_progress if not legacy else result.player_total_dp,
+                result.opponent_total_progress if not legacy else result.opponent_total_dp,
+            )
 
         result.turns_played = turn_num
 
-        p_deck.end_turn(p_cards, p_remaining)
-        o_deck.end_turn(o_cards, o_remaining)
+        if legacy:
+            p_deck.end_turn(p_cards, p_remaining)
+            o_deck.end_turn(o_cards, o_remaining)
 
-    result.player_position = result.player_total_dp / result.opponent_max_hp
-    result.opponent_position = result.opponent_total_dp / result.player_max_hp
-
-    if result.player_position > result.opponent_position:
-        result.winner = result.player_name
+    if legacy:
+        result.player_position = result.player_total_dp / result.opponent_max_hp if result.opponent_max_hp else 0.0
+        result.opponent_position = result.opponent_total_dp / result.player_max_hp if result.player_max_hp else 0.0
+        if result.player_position > result.opponent_position:
+            result.winner = result.player_name
+        else:
+            result.winner = result.opponent_name
     else:
-        result.winner = result.opponent_name
+        gp = result.player_total_progress
+        go = result.opponent_total_progress
+        total = gp + go
+        result.player_position = gp / total if total else 0.5
+        result.opponent_position = go / total if total else 0.5
+        if gp > go:
+            result.winner = result.player_name
+        elif go > gp:
+            result.winner = result.opponent_name
+        else:
+            result.winner = "Tie"
 
     return result

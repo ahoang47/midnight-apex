@@ -1,0 +1,191 @@
+{
+  "_comment": "Stand-in 10-corner laps used by lines-v1 and sim/config/winrate_n4000.json (Barry, 2026-11-08; same layouts as barry-drafts/final-v1/tracks_v1.json). 10/20/30-turn races run 1/2/3 laps of the same lap. Corner codes: HP hairpin, CR constant radius, DR decreasing radius, IR increasing radius, N90 90-degree, CH chicane, ES esses, SW sweeper. Opponent lines come from equations.LINE_SET_C, not from this file.",
+  "tracks": {
+    "touge": {
+      "T1_Akina_Switchbacks": [
+        "HP",
+        "ES",
+        "HP",
+        "DR",
+        "ES",
+        "HP",
+        "N90",
+        "HP",
+        "DR",
+        "CH"
+      ],
+      "T2_Irohazaka_Ladder": [
+        "HP",
+        "HP",
+        "ES",
+        "DR",
+        "HP",
+        "HP",
+        "ES",
+        "DR",
+        "CR",
+        "ES"
+      ],
+      "T3_Usui_Esses": [
+        "ES",
+        "ES",
+        "DR",
+        "HP",
+        "CH",
+        "ES",
+        "HP",
+        "DR",
+        "DR",
+        "N90"
+      ],
+      "T4_Myogi_Descent": [
+        "DR",
+        "HP",
+        "ES",
+        "DR",
+        "SW",
+        "HP",
+        "DR",
+        "ES",
+        "HP",
+        "CH"
+      ],
+      "T5_Hakone_Ridge": [
+        "CH",
+        "HP",
+        "DR",
+        "ES",
+        "HP",
+        "CR",
+        "DR",
+        "HP",
+        "ES",
+        "IR"
+      ]
+    },
+    "wangan": {
+      "W1_Bayshore_Run": [
+        "SW",
+        "IR",
+        "CR",
+        "SW",
+        "SW",
+        "IR",
+        "CR",
+        "CH",
+        "SW",
+        "IR"
+      ],
+      "W2_Daikoku_Loop": [
+        "IR",
+        "SW",
+        "SW",
+        "CR",
+        "IR",
+        "DR",
+        "SW",
+        "CR",
+        "SW",
+        "IR"
+      ],
+      "W3_C1_Outer": [
+        "CR",
+        "SW",
+        "IR",
+        "IR",
+        "SW",
+        "N90",
+        "SW",
+        "CR",
+        "IR",
+        "SW"
+      ],
+      "W4_Tatsumi_Sprint": [
+        "SW",
+        "CR",
+        "CR",
+        "IR",
+        "SW",
+        "IR",
+        "HP",
+        "SW",
+        "SW",
+        "CR"
+      ],
+      "W5_Aqualine_Flyer": [
+        "IR",
+        "IR",
+        "SW",
+        "CR",
+        "SW",
+        "CH",
+        "IR",
+        "SW",
+        "CR",
+        "SW"
+      ]
+    },
+    "street": {
+      "S1_Shibuya_Grid": [
+        "N90",
+        "CH",
+        "N90",
+        "CR",
+        "CH",
+        "N90",
+        "IR",
+        "DR",
+        "N90",
+        "ES"
+      ],
+      "S2_Ginza_Blocks": [
+        "N90",
+        "N90",
+        "CH",
+        "SW",
+        "N90",
+        "HP",
+        "CH",
+        "N90",
+        "CR",
+        "IR"
+      ],
+      "S3_Shinjuku_Underpass": [
+        "CH",
+        "N90",
+        "DR",
+        "N90",
+        "CH",
+        "ES",
+        "N90",
+        "IR",
+        "CH",
+        "CR"
+      ],
+      "S4_Roppongi_Hill": [
+        "N90",
+        "CR",
+        "CH",
+        "N90",
+        "DR",
+        "CH",
+        "N90",
+        "SW",
+        "N90",
+        "ES"
+      ],
+      "S5_Harbor_Warehouses": [
+        "CH",
+        "N90",
+        "IR",
+        "CH",
+        "N90",
+        "CR",
+        "HP",
+        "N90",
+        "CH",
+        "DR"
+      ]
+    }
+  }
+}

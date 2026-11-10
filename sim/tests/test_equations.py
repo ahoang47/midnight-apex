@@ -80,3 +80,50 @@ def test_damage_mitigation():
     assert abs(damage_mitigation(1000, 1.0) - 0.6) < 1e-6
     assert abs(damage_mitigation(500, 0.5) - 0.9) < 1e-6
     assert damage_mitigation(10000, 1.0) == 0.1
+
+
+from velocity_shift.equations import (
+    timing_value, clash_payoff, clash_progress, kappa_for_length, knot_window,
+    W0, T_MAX, L_MAX, KAPPA_BY_LENGTH,
+)
+from velocity_shift.models import StanceOutcome
+
+
+def test_timing_value_endpoints():
+    assert timing_value(0.0) == 0.0
+    assert abs(timing_value(1.0) - 1.0) < 1e-12
+    assert 0.0 < timing_value(0.5) < 1.0
+
+
+def test_clash_payoff_at_perfect_timing():
+    assert abs(clash_payoff(StanceOutcome.WIN, 1.0) - 1.0) < 1e-12
+    assert abs(clash_payoff(StanceOutcome.NEUTRAL, 1.0) - T_MAX) < 1e-12
+    assert abs(clash_payoff(StanceOutcome.LOSS, 1.0) - L_MAX) < 1e-12
+    assert abs(clash_payoff(StanceOutcome.WIN, 0.0) - W0) < 1e-12
+    assert clash_payoff(StanceOutcome.NEUTRAL, 0.0) == 0.0
+    assert clash_payoff(StanceOutcome.LOSS, 0.0) == 0.0
+
+
+def test_clash_progress_balanced_at_parity():
+    """Balanced stats, r=1, q=1, window off (or r=1.05 with window on): V=1, M=1, g=Phi."""
+    kap = kappa_for_length(20)
+    for outcome, expected in (
+        (StanceOutcome.WIN, 1.0),
+        (StanceOutcome.NEUTRAL, T_MAX),
+        (StanceOutcome.LOSS, L_MAX),
+    ):
+        g = clash_progress(outcome, 1.0, 100, 100, 100, 300, kap, scale_window=False)
+        assert abs(g - expected) < 1e-12, (outcome, g, expected)
+        # Official window is 1.0 at r=1.05; 105+105+105 vs 300.
+        g2 = clash_progress(outcome, 1.0, 105, 105, 105, 300, kap, scale_window=True)
+        V = (315 / 300) ** kap
+        assert abs(g2 - V * expected) < 1e-12, (outcome, g2, V * expected)
+
+
+def test_kappa_for_length_official_and_nearest():
+    assert kappa_for_length(10) == KAPPA_BY_LENGTH[10]
+    assert kappa_for_length(20) == KAPPA_BY_LENGTH[20]
+    assert kappa_for_length(30) == KAPPA_BY_LENGTH[30]
+    assert kappa_for_length(11) == KAPPA_BY_LENGTH[10]
+    assert knot_window(1.05) == 1.0
+    assert knot_window(0.80) == 0.41

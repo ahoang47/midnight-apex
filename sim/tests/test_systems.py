@@ -30,7 +30,7 @@ def _o_pick(stance: Stance):
 
 def make_default_turn_state(turn=1,
                             p_cards=None, o_cards=None,
-                            p_qte=8.0, o_qte=5.0):
+                            p_qte=0.8, o_qte=0.5):
     """Build a TurnState with sensible defaults (P: ATK/NEU/DEF, O: DEF/NEU/ATK)."""
     if p_cards is None:
         p_cards = [Stance.ATTACK, Stance.NEUTRAL, Stance.DEFEND]
@@ -57,14 +57,14 @@ def test_resolve_turn_basic():
     turn = make_default_turn_state()
     result = resolve_turn(turn, player, opponent)
 
-    assert result.player_dp > 0
-    assert result.opponent_dp > 0
+    assert result.player_progress > 0
+    assert result.opponent_progress > 0
     assert result.turn_number == 1
     assert len(result.trace) > 10
 
 
 def test_resolve_turn_battle_bonus():
-    """A 3-0 win gives higher battle_mult and DP than a tie."""
+    """A 3-0 clash win gives more Phi progress than a three-clash tie."""
     player = CombatantStats(name="P", pow=500, en=200, han=300)
     opponent = CombatantStats(name="O", pow=400, en=300, han=200)
 
@@ -80,9 +80,7 @@ def test_resolve_turn_battle_bonus():
     )
     r2 = resolve_turn(turn_tie, player, opponent)
 
-    assert r1.player_dp > r2.player_dp, "Winning 3-0 should yield more DP than a tie"
-    assert r1.battle_mult == 1.15, "3-0 win should give 1.15 battle_mult"
-    assert r2.battle_mult == 1.0, "Tie should give 1.0 battle_mult"
+    assert r1.player_progress > r2.player_progress, "Winning 3-0 should yield more progress than a tie"
 
 
 def test_run_match_full_race():
@@ -101,9 +99,9 @@ def test_run_match_full_race():
     result = run_match(
         cfg,
         _p_pick(Stance.ATTACK),
-        lambda t: 7.0,
+        lambda t: 0.7,
         _o_pick(Stance.NEUTRAL),
-        lambda t: 5.0,
+        lambda t: 0.5,
     )
 
     assert result.turns_played == result.total_turns, "Should run all turns"
@@ -113,7 +111,7 @@ def test_run_match_full_race():
 
 
 def test_positions_computed():
-    """Positions are computed from cumulative DP vs max_hp after full race."""
+    """Positions are the share of combined Phi progress after a full race."""
     player = CombatantStats(name="P", pow=100, en=100, han=100, level=500)
     opponent = CombatantStats(name="O", pow=100, en=100, han=100, level=500)
 
@@ -128,9 +126,9 @@ def test_positions_computed():
     result = run_match(
         cfg,
         _p_pick(Stance.NEUTRAL),
-        lambda t: 5.0,
+        lambda t: 0.5,
         _o_pick(Stance.NEUTRAL),
-        lambda t: 5.0,
+        lambda t: 0.5,
     )
 
     assert result.player_position >= 0
@@ -139,26 +137,19 @@ def test_positions_computed():
     assert len(result.turn_results) == result.total_turns
 
 
-def test_equal_race():
-    """Identical combatants and identical QTE produce race to decision."""
-    player = CombatantStats(name="P", pow=500, en=100, han=100, level=500)
-    opponent = CombatantStats(name="O", pow=500, en=100, han=100, level=500)
-
-    cfg = MatchConfig(
-        player_stats=player,
-        opponent_stats=opponent,
-        max_turns=5,
-        seed=42,
-        deterministic=True,
+def test_r105_same_stances_player_leads_on_v():
+    """At r=1.05 (full window) with identical stances and perfect timing, V = r**kappa
+    gives the player more progress than the opponent (whose V is 1)."""
+    from velocity_shift.equations import kappa_for_length, T_MAX
+    player = CombatantStats(name="P", pow=105, en=105, han=105, level=50)
+    opponent = CombatantStats(name="O", pow=100, en=100, han=100, level=50)
+    turn = make_default_turn_state(
+        p_cards=[Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL],
+        o_cards=[Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL],
+        p_qte=1.0, o_qte=1.0,
     )
-
-    result = run_match(
-        cfg,
-        _p_pick(Stance.NEUTRAL),
-        lambda t: 5.0,
-        _o_pick(Stance.NEUTRAL),
-        lambda t: 5.0,
-    )
-
-    assert result.winner is not None
-    assert result.turns_played == result.total_turns
+    result = resolve_turn(turn, player, opponent, race_length=10)
+    V = 1.05 ** kappa_for_length(10)
+    assert abs(result.player_progress - 3 * V * T_MAX) < 1e-12
+    assert abs(result.opponent_progress - 3 * T_MAX) < 1e-12
+    assert result.player_progress > result.opponent_progress

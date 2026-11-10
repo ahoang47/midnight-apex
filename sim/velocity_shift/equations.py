@@ -13,7 +13,7 @@ import math
 
 from .models import Stance, StanceOutcome
 
-# ── Game-rule constants (global knobs, not per-encounter) ──────────────
+# ── Legacy HP/DP constants (resolve_turn_legacy only; not the playable engine) ──
 
 CLASH_STAKES = 0.35           # clash_mult = 1 ± CLASH_STAKES
 BATTLE_BONUS = 0.05           # battle_mult bonus per win-margin point
@@ -108,8 +108,10 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
 # Final settings from the final-v1 combat sweep and the grind-v1 v8c
 # progression study (Austin's decisions of 2026-11-09). These drive the
 # story ladder model in `progression.py` and its win-rate oracle
-# (`config/winrate_n4000.json`, real N=4000 sim output). The turn-by-turn
-# HP/DP combat in combat.py / match.py does NOT read these yet.
+# (`config/winrate_n4000.json`, real N=4000 sim output). The playable engine
+# in combat.py / match.py uses this same model: LINE_SET_C line picks,
+# KNOT_WINDOW_105, KAPPA_BY_LENGTH, OPPONENT_QTE, and the Phi/tau clash
+# payoff (2026-11-10). The older HP/DP resolve path is resolve_turn_legacy.
 # All XP numbers are stand-ins pending playtest.
 
 # ── Combat race-balance settings (final-v1) ──
@@ -120,13 +122,26 @@ KAPPA_BY_LENGTH = {10: 1.55, 20: 1.35, 30: 1.20}   # stat-gap leverage V = r**ka
 RACE_LENGTHS = (10, 20, 30)
 SIM_SEEDS = (20261113, 20261114, 20261115)
 OPPONENT_QTE = 1.0             # story-rung opponents time perfectly (uniform across rungs)
+# Phi/tau clash payoff (final-v1 / equations_v1 K, unchanged). Per clash:
+#   g = V * Phi(outcome, q_eff) * M,  V = r**kappa,  q_eff = q_time * W(r) * han_mod
+# (player window only; opponent uses OPPONENT_QTE unscaled).
+W0 = 0.10                      # win payoff at q=0
+T_MAX = 0.75                   # tie payoff at q=1, as a fraction of a perfect win
+L_MAX = 0.25                   # loss payoff at q=1
+TAU_BETA = 0.10                # share of timing value held back as the top bonus
+TAU_P_TOP = 8.0                # sharpness of the top bonus (only bites near q=1)
+TAU_GAMMA = 0.0                # 0 = concave body 1-(1-q)**2; >0 = q**GAMMA
+MU = 0.5                       # POW share raises win payoff; EN share raises tie/loss payoff
+ETA = 0.5                      # HAN share raises effective timing (same value as HAN_QTE_WEIGHT)
+DECK_ALPHA = 0.85              # deck-weight mix: ALPHA * stat share + (1-ALPHA)/3
+HAND_SIZE = 6                  # cards drawn per turn; 3 are played (Entry/Apex/Exit)
 LINE_ADHERENCE = 0.65          # boss follows its district line with prob a; 1-a = bluff/deviation
 LINE_ALT_WEIGHTS = {"alt1": 0.6, "alt2": 0.4}
 # Line set C: per district, per corner type -> [main, alt1, alt2] lines, each "Entry Apex Exit"
 # (D = Defend, S = Steady, A = Attack). Alternatives share main's Entry (unreadable at lock):
 # alt1 switches Apex+Exit, alt2 switches Exit only. Mechanical stand-in.
 # 2026-11-10 (lines-v1 S-A + W-A, Austin): Street N90 DDA -> SSA; Wangan SW and IR AAA -> AAD.
-# Touge unchanged. In-world feel of the new lines pending Nathaniel's review.
+# Touge unchanged. In-world feel approved by Austin (Nathaniel, 2026-11-10; story/corner_lines.md).
 LINE_SET_C = {
     "touge": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SSA", "SDS", "SSS"], "DR": ["SDS", "SAD", "SDD"], "IR": ["SSA", "SDS", "SSS"],
               "N90": ["DSA", "DDS", "DSS"], "CH": ["SDA", "SAS", "SDS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["SSA", "SDS", "SSS"]},
@@ -210,6 +225,132 @@ def knot_window(r: float) -> float:
         if r <= x1:
             return min(1.0, y0 + (y1 - y0) * (r - x0) / (x1 - x0))
     return min(1.0, ys[-1])
+
+
+def kappa_for_length(race_length: int) -> float:
+    """Stat-gap leverage for a race of `race_length` turns.
+
+    Official table is 10/20/30 only. Any other length uses the closest key
+    (no interpolated kappa — we do not invent values).
+    """
+    if race_length in KAPPA_BY_LENGTH:
+        return KAPPA_BY_LENGTH[race_length]
+    return KAPPA_BY_LENGTH[min(KAPPA_BY_LENGTH, key=lambda L: abs(L - race_length))]
+
+
+def timing_value(q: float) -> float:
+    """tau(q) in [0, 1]: concave body + top bonus. tau(0)=0, tau(1)=1."""
+    q = 0.0 if q < 0.0 else 1.0 if q > 1.0 else q
+    body = (1 - (1 - q) ** 2) if TAU_GAMMA <= 0 else q ** TAU_GAMMA
+    return (1 - TAU_BETA) * body + TAU_BETA * q ** TAU_P_TOP
+
+
+def clash_payoff(outcome: StanceOutcome, q: float) -> float:
+    """Phi(outcome, q): progress fraction of a perfect win, before stats."""
+    t = timing_value(q)
+    if outcome == StanceOutcome.WIN:
+        return W0 + (1 - W0) * t
+    if outcome == StanceOutcome.NEUTRAL:
+        return T_MAX * t
+    return L_MAX * t
+
+
+def stat_shares(pow_stat: float, en_stat: float, han_stat: float) -> tuple[float, float, float, float]:
+    """(total, pow_share, en_share, han_share)."""
+    tot = pow_stat + en_stat + han_stat
+    if tot <= 0:
+        return 0.0, 1 / 3, 1 / 3, 1 / 3
+    return tot, pow_stat / tot, en_stat / tot, han_stat / tot
+
+
+def clash_progress(
+    outcome: StanceOutcome,
+    q_time: float,
+    pow_stat: float,
+    en_stat: float,
+    han_stat: float,
+    boss_total: float,
+    kappa: float,
+    scale_window: bool,
+) -> float:
+    """g = V * Phi(o, q_eff) * M. Player uses the knot window; opponent does not."""
+    tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
+    r = tot / boss_total if boss_total else 1.0
+    V = r ** kappa
+    w = knot_window(r) if scale_window else 1.0
+    qe = q_time * w * (1.0 + ETA * (han_s - 1 / 3))
+    qe = 0.0 if qe < 0.0 else 1.0 if qe > 1.0 else qe
+    if outcome == StanceOutcome.WIN:
+        M = 1.0 + MU * (pow_s - 1 / 3)
+    else:
+        M = 1.0 + MU * (en_s - 1 / 3)
+    return V * clash_payoff(outcome, qe) * M
+
+
+def deck_weights(pow_stat: float, en_stat: float, han_stat: float) -> tuple[float, float, float]:
+    """Multinomial weights for (Attack, Steady, Defend) = (POW, HAN, EN)."""
+    tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
+    raw = (
+        pow_s * DECK_ALPHA + (1 - DECK_ALPHA) / 3,
+        han_s * DECK_ALPHA + (1 - DECK_ALPHA) / 3,
+        en_s * DECK_ALPHA + (1 - DECK_ALPHA) / 3,
+    )
+    s = sum(raw)
+    return (raw[0] / s, raw[1] / s, raw[2] / s)
+
+
+def counter_stance(s: Stance) -> Stance:
+    """The stance that beats `s` (Defend > Attack > Neutral > Defend)."""
+    if s == Stance.ATTACK:
+        return Stance.DEFEND
+    if s == Stance.NEUTRAL:
+        return Stance.ATTACK
+    return Stance.NEUTRAL
+
+
+def loser_to_stance(s: Stance) -> Stance:
+    """The stance that loses to `s`."""
+    if s == Stance.ATTACK:
+        return Stance.NEUTRAL
+    if s == Stance.NEUTRAL:
+        return Stance.DEFEND
+    return Stance.ATTACK
+
+
+# Stance index order used by assign_hand / deck_weights: Attack, Steady, Defend.
+_STANCE_INDEX = {Stance.ATTACK: 0, Stance.NEUTRAL: 1, Stance.DEFEND: 2}
+_INDEX_STANCE = (Stance.ATTACK, Stance.NEUTRAL, Stance.DEFEND)
+
+
+def assign_hand(
+    hand_counts: list[int],
+    wanted: list[Stance],
+    fallback: list[Stance | None],
+    rng,
+) -> list[Stance]:
+    """Greedy assign from a 6-card hand: lock wanted stances, then fallbacks, then any leftover.
+
+    Same rule as final-v1 / equations_v1._assign. `hand_counts` is [Attack, Steady, Defend].
+    """
+    c = list(hand_counts)
+    out = [-1, -1, -1]
+    want_i = [_STANCE_INDEX[s] for s in wanted]
+    fb_i = [None if s is None else _STANCE_INDEX[s] for s in fallback]
+    for i in range(3):
+        if c[want_i[i]] > 0:
+            out[i] = want_i[i]
+            c[want_i[i]] -= 1
+    for i in range(3):
+        if out[i] < 0 and fb_i[i] is not None and c[fb_i[i]] > 0:
+            out[i] = fb_i[i]
+            c[fb_i[i]] -= 1
+    for i in range(3):
+        if out[i] < 0:
+            left = [s for s in range(3) for _ in range(c[s])]
+            s = left[rng.randrange(len(left))]
+            out[i] = s
+            c[s] -= 1
+    return [_INDEX_STANCE[i] for i in out]
 
 
 def sp_per_level(level: int) -> float:

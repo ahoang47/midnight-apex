@@ -20,7 +20,7 @@ from collections import defaultdict
 sys.path.insert(0, ".")
 
 from velocity_shift.models import Stance, StanceOutcome, CombatantStats, TurnState
-from velocity_shift.combat import resolve_turn
+from velocity_shift.combat import resolve_turn_legacy as resolve_turn
 from velocity_shift.equations import CLASH_STAKES, BATTLE_BONUS, HP_PER_LEVEL, qte_factor, resolve_stance, clash_mult, damage_mitigation
 
 BASE_LEVEL = 50

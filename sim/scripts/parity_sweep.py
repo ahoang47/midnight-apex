@@ -122,7 +122,7 @@ def _cell(task):
                 opponent_stats=CombatantStats("Opponent", *o, level=o_level),
                 max_turns=ENCOUNTER_MAX_TURNS[enc], seed=seed,
                 encounter_type=enc, rival_personality=oa,
-                opponent_qte_ratio=qte_ratio, **_quality_kwargs(q),
+                opponent_qte_ratio=qte_ratio, legacy_hp_dp=True, **_quality_kwargs(q),
             )
             r = _ReadingAIRunner(cfg, ai_read) if ai_read else SimulationRunner(cfg)
             wins += r.run().match.winner == "Player"
@@ -143,7 +143,7 @@ def _pair_cell(task):
                           CombatantStats("Opponent", *o, level=level),
                           max_turns=ENCOUNTER_MAX_TURNS[enc], seed=7_000_000 + s,
                           encounter_type=enc, rival_personality=oa,
-                          player_quality=q, opponent_qte_ratio=1.0)
+                          player_quality=q, opponent_qte_ratio=1.0, legacy_hp_dp=True)
         wins += SimulationRunner(cfg).run().match.winner == "Player"
     return {"enc": enc, "level": level, "q": q, "pa": pa, "oa": oa, "wins": wins, "n": seeds}
 

@@ -72,6 +72,10 @@ class TurnResult:
     opponent_cards: list = field(default_factory=list)
     player_dp: float = 0.0
     opponent_dp: float = 0.0
+    player_progress: float = 0.0
+    opponent_progress: float = 0.0
+    player_clash_progress: list[float] = field(default_factory=list)
+    opponent_clash_progress: list[float] = field(default_factory=list)
     battle_outcomes: list[StanceOutcome] = field(default_factory=list)
     battle_winner: Optional[str] = None
     battle_mult: float = 1.0
@@ -80,6 +84,9 @@ class TurnResult:
     player_hand: list = field(default_factory=list)
     opponent_hand: list = field(default_factory=list)
     trace: list[dict] = field(default_factory=list)
+    # Set when the match is using district line tables (LINE_SET_C).
+    corner_type: Optional[str] = None
+    opponent_line: list = field(default_factory=list)
 
 
 @dataclass
@@ -91,6 +98,8 @@ class MatchResult:
     turns_played: int = 0
     player_total_dp: float = 0.0
     opponent_total_dp: float = 0.0
+    player_total_progress: float = 0.0
+    opponent_total_progress: float = 0.0
     player_max_hp: float = 0.0
     opponent_max_hp: float = 0.0
     turn_results: list[TurnResult] = field(default_factory=list)
@@ -129,6 +138,16 @@ class MatchConfig:
     # Opt-in (None = ENCOUNTER_RATIOS[encounter_type]): override the ratio
     # that scales the AI's QTE, e.g. 1.0 for a pure stat-parity test.
     opponent_qte_ratio: Optional[float] = None
+    # Opt-in district line tables (LINE_SET_C). When both are set, match.py
+    # picks the opponent's whole line once per corner/turn from the match
+    # RNG and plays those three stances; personality/archetype hand
+    # requirements are not used. `corners` is a lap of corner codes (typically
+    # 10) and repeats for longer races. District may be title case or lowercase.
+    district: Optional[str] = None
+    corners: Optional[list[str]] = None
+    # Default (False) is the final-v1 Phi/tau playable engine. True restores
+    # the older HP/DP + rubber-band path (resolve_turn_legacy, persistent decks).
+    legacy_hp_dp: bool = False
 
 
 class PhaseType(Enum):

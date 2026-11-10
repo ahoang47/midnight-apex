@@ -11,7 +11,8 @@ import random
 import datetime
 
 from .cars import build_stats, ARCHETYPES
-from .equations import HP_PER_LEVEL
+from .equations import HP_PER_LEVEL, qte_factor, DISTRICTS
+from .combat import official_tracks
 from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
     TurnResult, ClashResult, PersonalityConfig
 from .match import run_match
@@ -87,7 +88,7 @@ def _write_log(result: MatchResult, cfg: MatchConfig) -> None:
         f.write(f"  Result: {result.winner} (Decision)\n")
         f.write(f"  Position: {result.player_name} {result.player_position*100:.0f}% | "
                 f"{result.opponent_name} {result.opponent_position*100:.0f}%\n")
-        f.write(f"  Final DP: {result.player_name} {fmt(result.player_total_dp,1)} | "
+        f.write(f"  Final progress: {result.player_name} {fmt(result.player_total_dp,1)} | "
                 f"{result.opponent_name} {fmt(result.opponent_total_dp,1)}\n")
         f.write("=" * 72 + "\n\n")
         f.write(f"  {'T':>2} {'P-Picks':>12} {'O-Picks':<12} {'Battle':>14}  {'P_QTE':>5} {'O_QTE':>5}  "
@@ -118,7 +119,7 @@ def print_turn_condensed(t: TurnResult, player_name: str = "P", opponent_name: s
     battle = _battle_icon(t.battle_winner, player_name)
     outcomes = _outcome_icon(t.battle_outcomes) if t.battle_outcomes else ""
     print(f"  T{t.turn_number:>2} | {p_s:>12} vs {o_s:<12} | {battle:>15} | "
-          f"{outcomes} | DP {fmt(t.player_dp,1)}-{fmt(t.opponent_dp,1)}")
+          f"{outcomes} | Prog {fmt(t.player_progress or t.player_dp,1)}-{fmt(t.opponent_progress or t.opponent_dp,1)}")
 
 
 def print_turn_verbose(t: TurnResult, player_name: str = "P", opponent_name: str = "O") -> None:
@@ -127,8 +128,7 @@ def print_turn_verbose(t: TurnResult, player_name: str = "P", opponent_name: str
     battle = _battle_icon(t.battle_winner, player_name)
     outcomes = _outcome_icon(t.battle_outcomes) if t.battle_outcomes else ""
     print(f"\n  \u2500\u2500 Turn {t.turn_number}  {p_s} vs {o_s}  |  Battle: {battle} ({outcomes}) \u2500\u2500")
-    print(f"  DP dealt:     {player_name}={fmt(t.player_dp, 4)}  {opponent_name}={fmt(t.opponent_dp, 4)}")
-    print(f"  Battle Mult:  {fmt(t.battle_mult, 4)}")
+    print(f"  Progress:     {player_name}={fmt(t.player_progress or t.player_dp, 4)}  {opponent_name}={fmt(t.opponent_progress or t.opponent_dp, 4)}")
     for entry in t.trace:
         cat = entry["category"]
         label = entry["label"]
@@ -149,8 +149,8 @@ def print_result(result: MatchResult, verbose: bool = False) -> None:
     print(f"  Result: {result.winner} (Decision)")
     print(f"  Position: {result.player_name}={result.player_position*100:.0f}%  "
           f"{result.opponent_name}={result.opponent_position*100:.0f}%")
-    print(f"  DP:  {result.player_name}={fmt(result.player_total_dp, 1)}  "
-          f"{result.opponent_name}={fmt(result.opponent_total_dp, 1)}")
+    print(f"  Progress:  {result.player_name}={fmt(result.player_total_progress or result.player_total_dp, 1)}  "
+          f"{result.opponent_name}={fmt(result.opponent_total_progress or result.opponent_total_dp, 1)}")
     print("\n  \u2500\u2500 Turn Breakdown \u2500\u2500")
     print(f"  {'T':>2} {'P-Picks':>12} {'O-Picks':<12} {'Battle':>15}  {'P_DP':>7} {'O_DP':>7}  "
           f"{'Cum_P':>7} {'Cum_O':>7}")
@@ -325,7 +325,6 @@ def setup_match() -> MatchConfig:
     verbchoice = _choose("Debug verbosity:", ["Condensed", "Verbose (full trace)"], 1)
     verbose = verbchoice == 2
 
-    print(f"  \u2192 Opponent AI: {opponent_archetype} personality (auto-selected)")
 
     player_stats = CombatantStats(
         name=player_name, pow=pow_p, en=en_p, han=han_p,
@@ -336,6 +335,17 @@ def setup_match() -> MatchConfig:
         level=opp_level,
     )
 
+    # ── 5. District and track (line tables) ──
+    dist_list = list(DISTRICTS)
+    d_choice = _choose("Select district", dist_list, 1)
+    district = dist_list[d_choice - 1]
+    tracks = official_tracks()[district.lower()]
+    track_names = list(tracks)
+    t_choice = _choose(f"Select {district} track", track_names, 1)
+    track_name = track_names[t_choice - 1]
+    corners = list(tracks[track_name])
+    print(f"  → {district} / {track_name}: {'-'.join(corners)}")
+
     return MatchConfig(
         player_stats=player_stats,
         opponent_stats=opponent_stats,
@@ -345,6 +355,8 @@ def setup_match() -> MatchConfig:
         verbose=verbose,
         rival_personality=opponent_archetype,
         encounter_type=encounter_type,
+        district=district,
+        corners=corners,
     )
 
 
@@ -402,7 +414,7 @@ def prompt_qte(turn: int, who: str) -> float:
         try:
             val = float(raw)
             if 1.0 <= val <= 10.0:
-                return val
+                return qte_factor(val)
             print("  Must be between 1 and 10.")
         except ValueError:
             print("  Invalid number.")
@@ -468,10 +480,11 @@ def run_cli() -> None:
             print_turn_verbose(t, pn, on)
         else:
             print_turn_condensed(t, pn, on)
-        p_pos = min(1.0, cum_p / opponent_max_hp)
-        o_pos = min(1.0, cum_o / player_max_hp)
-        print(f"         Position: {pn}={p_pos*100:.0f}%  {on}={o_pos*100:.0f}%  |  "
-              f"DP: {pn}={fmt(cum_p,1)}  {on}={fmt(cum_o,1)}")
+        total = cum_p + cum_o
+        p_pos = cum_p / total if total else 0.5
+        o_pos = cum_o / total if total else 0.5
+        print(f"         Share: {pn}={p_pos*100:.0f}%  {on}={o_pos*100:.0f}%  |  "
+              f"Progress: {pn}={fmt(cum_p,1)}  {on}={fmt(cum_o,1)}")
 
     def _on_lap_complete(phase_index: int, total_phases: int) -> None:
         remaining = cfg.max_turns - (phase_index * _lap_turns(cfg.encounter_type))

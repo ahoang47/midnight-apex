@@ -24,7 +24,7 @@ def _cfg(encounter: str = "wild", seed: int = 1) -> MatchConfig:
 def test_runner_completes_a_match():
     result = SimulationRunner(_cfg()).run()
     assert result.match.turns_played == 10
-    assert result.match.winner in ("Player", "Opponent")
+    assert result.match.winner in ("Player", "Opponent", "Tie")
 
 
 def test_runner_is_reproducible_with_seed():
