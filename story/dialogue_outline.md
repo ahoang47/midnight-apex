@@ -1,6 +1,6 @@
 # Midnight Apex — Dialogue Outline (first pass, 2026-11-04)
 
-All dialogue in play order, scene by scene: beats plus rough lines. Exact wording comes at scripting. Canon ([`canon.md`](canon.md)) wins on any conflict; beats come from [`plot.md`](plot.md), the prologue script from [`scripts/prologue.md`](scripts/prologue.md), and personalities from [`characters/`](characters/) and the `plot.md` districts.
+All dialogue in play order, scene by scene: beats plus rough lines. Within each round the district sections play in whichever order the player picks (canon 11, 12); scenes tied to a point in the round (end of Round 1, after the first Round 2 crew, end of Round 2, end of Round 3) have their own sections. Exact wording comes at scripting. Canon ([`canon.md`](canon.md)) wins on any conflict; beats come from [`plot.md`](plot.md), the prologue script from [`scripts/prologue.md`](scripts/prologue.md), and personalities from [`characters/`](characters/) and the `plot.md` districts.
 
 **Legend**
 - **(locked)**: a line or beat Austin locked, or in the approved prologue script.
@@ -17,7 +17,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - **Touge:** a big-brother boss; a young, gossipy crew. **Wangan:** the promoter (always selling); a polite, cliquey crew of professionals. **Street:** the influencer (on camera); a loud, online crew.
 
 **Rules for every crew line**
-- Crew ladder each round: kids → mature members → old heads (lieutenants) → crew boss. Kids believe the legend as told; mature members know not everything is what it seems; old heads were there.
+- Crew ladder each round: kids → mature members → old heads (lieutenants) → crew boss. The player picks which crew to take on and is locked into its ladder until its boss falls (canon 12). Kids believe the legend as told; mature members know not everything is what it seems; old heads were there.
 - Round themes: 1 = the incident, 2 = consequences, 3 = distortion.
 - Sweep information comes from crew reveals and post-race crew dialogue. Myth Driver sightings never lay out the sweep. Detailed sweep hints per race are still `<OPEN: post-race crew dialogue that hints at the sweep (Q13)>`; the post-race lines below are first examples only.
 - Nobody says "snitch" out loud. Keep it subtle.
@@ -142,6 +142,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - **Beat:** a crew kid asks him to run one; he grins and peels off with the crew, leaving the question hanging.
 
 ### End of Round 1: wholesale
+- **Trigger:** all three Round 1 crew bosses beaten.
 - **Who:** Reiko, PC.
 - **Beat:** Reiko warms up and gives the PC wholesale prices (payoff of "Wholesale is for crew.").
 - Reiko (draft): "Crew prices. Don't make me regret it."
@@ -173,18 +174,6 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - #1: "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew boss name>`." (rough pass)
 - #1: "I ran this mountain once. Half of them never came back after that night." (rough pass)
 - **Underneath:** the cops stay implied by "that night"; it hints he used to lead the Touge crew.
-
-### Mid Round 2: the debt clears (the speakeasy)
-- **Trigger:** the debt hits zero; the exact race comes from Barry's season sim.
-- **Beat:** aero unlocks (bought from Reiko, tuned at the wind tunnel). Sabine takes the PC out for drinks at the speakeasy, the PC's first visit. `<OPEN: the speakeasy drinks scene (Q16)>`
-- Sabine (draft): "We're even. Come on. First round's on me."
-- Barkeep (draft): "Sabine brought someone. That's new." / "What are you drinking? I'll remember."
-- Reiko (draft, about aero): "Aero parts are in. Tuning happens at the tunnel, not here."
-- Speakeasy name and barkeep name: `<OPEN: Q11>`.
-- **"Sabine's crew" intro (first pass 2026-11-05, needs more passes):** around the speakeasy / mid-round, Jesse and Reiko introduce the PC to the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24).
-- Jesse (draft): "These people don't run crews. They run cars. You're in."
-- Reiko (draft): "Don't make me regret bringing you."
-- **PC backstory:** Jesse asks about the PC's old crew, "Had one. Left." (Sabine overhears). This is a first pass under `<OPEN: Q6>`, not locked.
 
 ### Wangan, Round 2
 **Crew pre/post-race lines** (what she cost the highway)
@@ -224,10 +213,24 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - #3: "Lost the good one a while back." (rough pass)
 - **Underneath:** it hints the sweep impounded it; it ties to Round 3's "sixty days". This pays off the locked reason (canon 9): he was impounded and charged that night, and the team courting him dropped him.
 
+### After the first Round 2 crew: the debt clears (the speakeasy)
+- **Trigger:** early in Round 2, after the first crew rematch (whichever crew the PC takes on first), the debt hits zero; the exact race comes from Barry's season sim.
+- **Beat:** aero unlocks (bought from Reiko, tuned at the wind tunnel). Sabine takes the PC out for drinks at the speakeasy, the PC's first visit. `<OPEN: the speakeasy drinks scene (Q16)>`
+- Sabine (draft): "We're even. Come on. First round's on me."
+- Barkeep (draft): "Sabine brought someone. That's new." / "What are you drinking? I'll remember."
+- Reiko (draft, about aero): "Aero parts are in. Tuning happens at the tunnel, not here."
+- Speakeasy name and barkeep name: `<OPEN: Q11>`.
+- **"Sabine's crew" intro (first pass 2026-11-05, needs more passes):** around the speakeasy, Jesse and Reiko introduce the PC to the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24).
+- Jesse (draft): "These people don't run crews. They run cars. You're in."
+- Reiko (draft): "Don't make me regret bringing you."
+- **PC backstory:** Jesse asks about the PC's old crew, "Had one. Left." (Sabine overhears). This is a first pass under `<OPEN: Q6>`, not locked.
+
 ### End of Round 2: betting opens
+- **Trigger:** all three Round 2 crew bosses beaten.
 - **Who:** the promoter, PC.
 - **Beat:** the promoter opens his betting side game. Crew bosses' signature shells come only from crew boss betting races at his subsea parking-area home base, while a few standout substories award oddball shells (canon 26, 28).
 - Promoter (draft): "You draw a crowd now. Let's put some money on it."
+- Promoter (draft, optional handoff): "Heard you cleaned up the mountain. Come down to the bay. Let's put some money on it." ("the mountain" is the example; it swaps to the last district the PC beat.)
 - Mechanics, stakes and odds: `<OPEN: Barry, canon 26>`.
 
 ---
@@ -242,7 +245,6 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - Mature members, post (draft): "Depends who you ask. Everyone remembers that night different."
 - Old heads, pre (draft): "I was there. You want to hear it or not?"
 - Old heads, post: see the reveal.
-- Crew boss, pre (draft): "Last time this round. Give it everything."
 - Crew boss, post (draft): "You've got the mountain's respect. Do something good with it."
 
 **Reveal**
@@ -298,7 +300,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - **Beat:** before the Mentor Confrontation, Reiko warns the PC to stop digging into the sweep. Protective gatekeeper energy: she let the PC into the garage and into "Sabine's crew".
 - Reiko (draft): "Leave it. You don't know what you're asking."
 
-### Mentor Confrontation (end of Round 3)
+### End of Round 3: Mentor Confrontation
 - **Who:** PC, Sabine; Jesse and Reiko in the background.
 - **Beat:** the PC accuses Sabine of being the snitch. She doesn't defend herself: tired, not proud.
 - PC (draft): "You left right before the sweep. You were on the phone. You never got a ticket. Tell me I'm wrong."
@@ -307,6 +309,12 @@ All dialogue in play order, scene by scene: beats plus rough lines. Exact wordin
 - Jesse (draft): "You decided. You didn't ask."
 - Reiko (draft): "We're done talking."
 - **Finale rift:** Reiko goes strictly business (parts/shop stay open); Jesse stays quiet/strained (tuning/respec stay open). The warmth is gone.
+- **Reiko keeps the door open (Austin, 2026-11-10):** Because the PC and Reiko warmed up to each other over time (from "Wholesale is for crew. You're not crew." to wholesale to "Sabine's crew"), she's still willing to sell the PC parts after the confrontation: strictly business, but the door stays open. That's why the shop and the big Round 3 mods stay available during the Finale.
+
+### After the Mentor Confrontation: big finale mods (Round 3 complete)
+- **Trigger:** all three Round 3 crew bosses beaten (Round 3 complete).
+- **Beat:** the big finale mods unlock, bought from Reiko. Strictly business, but she still sells to the PC.
+- Reiko (draft): "New stock's in. Prices are on the tag."
 
 ---
 

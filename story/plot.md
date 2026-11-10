@@ -40,7 +40,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 # DISTRICTS (REFERENCE)
 
-- One crew + one crew boss per district (3 + 3 total), re-faced every round. Each round the PC runs through the whole crew in rank order: its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the crew boss. Next round the boss has leveled up the whole crew. Flavor text after every race reveals a little more
+- One crew + one crew boss per district (3 + 3 total), re-faced every round. Each round the PC chooses which crew to take on and runs through the whole crew in rank order, locked in until its boss falls (canon 12): its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the crew boss. Next round the boss has leveled up the whole crew. Flavor text after every race reveals a little more
 - Racer types always use their archetype (pairing rules in `canon.md`)
 - Must-have wild-race characters (2026-11-06): tourist groups like the ones that go to Daikoku PA in real life (district placement and racer-type/archetype mapping `<TBD>`; see `canon.md`)
 - Story-race part unlocks: beating crew members (lieutenants) expands Reiko's paid shop stock; crew boss stakes are money, reputation (lore only), rare shop mods, and story progress; a loss = retry, never losing the car (canon 28)
@@ -96,12 +96,12 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 # ROUNDS 1–3
 
-- Each round: Touge → Wangan → Street, one crew + crew boss each (Round 1 first meeting, Rounds 2–3 rematches, each round runs the whole crew: kids → mature members → old heads → boss; the crew is leveled up next round; flavor text after every race)
+- Rounds play in order (1 → 2 → 3); within each round the PC freely chooses which crew to challenge, one crew + crew boss each (Round 1 first meeting, Rounds 2–3 rematches, each round runs the whole crew: kids → mature members → old heads → boss; the crew is leveled up next round; flavor text after every race)
 - Every crew defeat reveals another piece of the police sweep mystery
 - Sightings only establish that each Myth Driver knew Sabine; sweep information comes from crew reveals and post-race crew dialogue (canon decision 11)
 - Nobody tells PC about the snitch accusation; PC puts it together from these reveals — and the clues are bad data that genuinely point toward Sabine’s guilt (canon decision 15)
 - Round themes (locked): 1 = the incident, 2 = consequences across the scene, 3 = distortion (what people misremember)
-- Why the rotation (locked): a beaten crew won’t grant a rematch until PC has proven themselves in the other districts — not enough reputation yet (in-world flavor only, not a tracked stat)
+- Why the lock-in (Austin, 2026-11-10): once PC starts a crew's ladder, they're locked in until they beat that crew's boss, because the other crews won't take on PC while PC is already in a feud with another crew. Between rounds, reputation still gates rematches: a beaten crew won’t grant a rematch until PC has proven themselves against the other districts' crews — not enough reputation yet (in-world flavor only, not a tracked stat)
 - Every round, in every district: wild races (random racers by racer type), reputation gating, crew boss build-up through rumor, the crew race, a story reveal
 
 ## 4. Round 1 — The Incident
@@ -132,7 +132,7 @@ Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing mat
 
 ## 5. Round 2 — Consequences
 
-The PC pays off Sabine's debt mid-round (exact race set by Barry's season sim); until then a share of each win goes to the debt (not all of it), so money for mods is tight early. From here they stay for the fun and to uncover her mystery. Clearing the debt unlocks aero: parts are bought from Reiko at the garage and tuned at the speakeasy's wind tunnel (canon 24). To celebrate, Sabine takes the PC out for drinks at the speakeasy, the PC's first visit to the bar `<TODO: scene>`. Around the speakeasy / mid-round (first pass 2026-11-05, needs more passes): Jesse and Reiko introduce the PC to **"Sabine's crew"** — the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24). End of round: the promoter opens his betting side game (canon 21).
+The PC pays off Sabine's debt early in Round 2, after the first crew rematch (whichever crew they take on first; exact race set by Barry's season sim); until then a share of each win goes to the debt (not all of it), so money for mods is tight early. From here they stay for the fun and to uncover her mystery. Clearing the debt unlocks aero: parts are bought from Reiko at the garage and tuned at the speakeasy's wind tunnel (canon 24). To celebrate, Sabine takes the PC out for drinks at the speakeasy, the PC's first visit to the bar `<TODO: scene>`. Around the speakeasy (first pass 2026-11-05, needs more passes): Jesse and Reiko introduce the PC to **"Sabine's crew"** — the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24). End of round (after all three crew bosses): the promoter opens his betting side game (canon 21).
 
 Reveals plant misleading clues toward Sabine’s guilt (her silence after the sweep; the theories)
 
@@ -180,15 +180,19 @@ Reveals plant misleading clues toward Sabine’s guilt (the old generation going
 - PC has put the (misleading) clues together and accuses Sabine of being the snitch
 - Sabine doesn’t defend herself. She’s been accused once already and won’t waste the energy again; it’s tired, not proud. After a long silence: “Get out of my garage.”
 - **Jesse and Reiko at the rift (first pass 2026-11-05, needs more passes):** Reiko is stung personally — she let the PC in, and the accusation burns her for vouching. Jesse refuses to smooth it over (subverting the Prologue beat where he softened Reiko's edge) and quietly points out that the PC decided without asking. During the Finale, Reiko goes strictly business (parts/shop stay open) and Jesse stays quiet/strained (tuning/respec stay open); the warmth is gone
+- **Reiko keeps the door open (Austin, 2026-11-10):** Because the PC and Reiko warmed up to each other over time (from "Wholesale is for crew. You're not crew." to wholesale to "Sabine's crew"), she's still willing to sell the PC parts after the confrontation: strictly business, but the door stays open. That's why the shop and the big Round 3 mods stay available during the Finale.
 - The relationship blows up; the rift stands going into the Finale
 - She still believes the snitch accusation got her frozen out; she doesn’t know the real reasons
 - PC knows they messed up, which drives the Finale (canon 16)
+
+### Round 3 complete: big finale mods (after the Mentor Confrontation)
+- Completing Round 3 unlocks the big finale mods, bought from Reiko (strictly business; she still sells to the PC, see above)
 
 ---
 
 # FINALE
 
-Finishing Round 3 unlocks the three Myth Driver races, one per district. PC goes into them estranged from Sabine, knowing they messed up and wanting the truth: PC races all three to settle the story once and for all (canon decision 16). The contradictions between their accounts unravel the snitch story.
+Finishing Round 3 unlocks the three Myth Driver races, one per district, and the big finale mods (bought from Reiko; the shop stays open through the Finale). PC goes into them estranged from Sabine, knowing they messed up and wanting the truth: PC races all three to settle the story once and for all (canon decision 16). The contradictions between their accounts unravel the snitch story.
 
 ## 7. Myth Drivers
 
@@ -267,14 +271,14 @@ Finishing Round 3 unlocks the three Myth Driver races, one per district. PC goes
 ### "Sabine's crew"
 - Jesse, Reiko and the barkeep are part of an informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24)
 - That's how Sabine stays isolated from the crews after the sweep yet is still known across the city
-- Round 2 (around the speakeasy / mid-round): Jesse and Reiko introduce the PC to this circle
+- Round 2 (around the speakeasy, early in the round): Jesse and Reiko introduce the PC to this circle
 
 ### Reiko — protective gatekeeper who gets burned after vouching
 - Saw crew politics firsthand back in the day (ties to #3 recognizing her name in Round 1) and left the cliques on purpose
 - Prologue → Round 1: cool at first ("Wholesale is for crew"), opens full-price parts after the race 3 win, warms up and gives wholesale at the end of Round 1
 - Round 2: with Jesse, brings the PC into "Sabine's crew"
 - Round 3: warns the PC off digging into the sweep. When the PC accuses Sabine anyway, it stings her personally because she let the PC in
-- Finale rift: goes strictly business so parts/shop access stays open mechanically without breaking the rift
+- Finale rift: goes strictly business so parts/shop access stays open mechanically without breaking the rift. Because she and the PC warmed up to each other over time (closed, then wholesale, then "Sabine's crew"), she's still willing to sell the PC parts after the confrontation, including the big Round 3 mods: the door stays open (Austin, 2026-11-10)
 - Once she sees the PC rounding up the Myth Drivers to fix what they broke, she's the one who points the PC to where Sabine runs the mountain alone (first pass for Open Question 8)
 
 ### Jesse — conflict-averse peacekeeper who has to stop smoothing things over

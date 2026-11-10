@@ -13,7 +13,7 @@
 - **Who uses it:** the PC tunes aero in the wind tunnel (parts bought from Reiko at the garage; canon 24). Jesse and Reiko work out of Sabine's garage, not here.
 - **With Sabine:** friendly with her, and doesn't care for the drama around the old generation.
 - **Motive:** just in it for the cars, like Jesse and Reiko.
-- **First visit by the PC:** mid Round 2, when the debt hits zero: Sabine takes the PC out for drinks to celebrate, which also unlocks aero tuning here (canon 19, 24).
+- **First visit by the PC:** early in Round 2, after the first crew rematch, when the debt hits zero: Sabine takes the PC out for drinks to celebrate, which also unlocks aero tuning here (canon 19, 24).
 
 ## 2. Battle Identity
 
