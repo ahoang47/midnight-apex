@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-10 — Nathaniel [story]: in-world reasons for the corner lines (story/corner_lines.md)
+- **New `story/corner_lines.md`:** narrative reasons for every main and alternative line in `LINE_SET_C`, by district and rung, matching Barry's `6fc87d5` table. No numbers; the letters stay Barry's.
+- **Rewritten for 6fc87d5:** Street 90-degree (SSA, alts SDS/SSS): intersections, so hold your lane through the cross street and punch out. Wangan increasing radius and sweeper (AAD, alts ASA/AAA): flat out, then shut the door on the exit so the car behind can't draft past on the straight. Touge unchanged.
+- **Dropped from the earlier off-repo draft:** the two optional Street-only swaps (Barry's call, not pursued) and the fixed-order note that Street opens Round 3.
+- **Why:** Austin approved the feel of Barry's lines-v1 change, said the flavor doesn't need to go to Barry, and asked me to update the notes and push.
+
 ## 2026-11-10 — Barry: free crew order (position-keyed), line-table fixes for Street N90 / Wangan IR+SW, round-opening cap tweak [sim][design]
 - **`sim/velocity_shift/equations.py`:** `LINE_SET_C` main lines changed (lines-v1 options S-A + W-A): Street `N90` DDA → **SSA** (alts SDS/SSS); Wangan `IR` and `SW` AAA → **AAD** (alts ASA/AAA). Touge unchanged. `DISTRICT_ORDER` replaced by `DISTRICTS` + `DEFAULT_CREW_ORDER` (example order only, for reports/tests) and unlock points `DEBT_CLEAR_AFTER = (2, 1)`, `BETTING_UNLOCK_AFTER = (2, 3)`, `FINALE_UNLOCK_AFTER = (3, 3)` (round, crews beaten in that round). `CAP_ALLOC_ROUND_OPEN` (12,3,3,3,.5,.5,.5) → **(12,3,3,3,1,0,0.5)**.
 - **`sim/velocity_shift/progression.py`:** `ladder(order)` takes any per-round permutation of `DISTRICTS` (`check_order` rejects others), `all_orders()` lists the 216 legal orders, the round step / round-opening cap raise go to the first crew *played* in R2/R3, and boss rows carry unlock markers (`unlocks_after`).
