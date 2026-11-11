@@ -1,6 +1,6 @@
 # Unapproved mockups (Art)
 
-Concept and UI mockups for review. Not approved by Austin. Proposals only; anything approved moves out of `art/unapproved/` into the docs or assets. Exception: the `tones/` blend50 values are approved as art_direction B.2a. Build scripts are included. Blender scenes, raw passes, full-size CRT renders and logs are left out to keep the repo small.
+Concept and UI mockups for review. Not approved by Austin. Proposals only; anything approved moves out of `unapproved/arthur/` into the docs or assets. Exception: the `tones/` blend50 values are approved as art_direction B.2a. Build scripts are included. Blender scenes, raw passes, full-size CRT renders and logs are left out to keep the repo small.
 
 - `lane_chain/`: race HUD mockups (v4, v5 entry plan and apex replay)
 - `overworld/`: Harbor Flats overworld mockup

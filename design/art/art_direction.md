@@ -191,7 +191,7 @@ from the right place.
 ### B.2a Night palette: navy/teal + pale sodium [APPROVED 2026-11-11]
 Approved by the lead (2026-11-11). This is the world palette for night scenes and **supersedes the warm sodium,
 fog, sky and ambient values in B.2** (warm orange washes read as PS3/360). Source preset: `blend50` ("B HALF TEAL")
-in `art/unapproved/mockups/tones/work/tones.py` (the rest of that study is unapproved).
+in `unapproved/arthur/mockups/tones/work/tones.py` (the rest of that study is unapproved).
 | Group | Value |
 |---|---|
 | Sky/fog | fog `#0B172B`, zenith `#010408`, no city-glow band |
