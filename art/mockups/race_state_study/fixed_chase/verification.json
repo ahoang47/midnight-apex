@@ -1,0 +1,154 @@
+{
+  "01_ahead_pressure": {
+    "gap_m_staging_only": 6,
+    "forward_visible": true,
+    "forward_mesh_bbox_native": [
+      77.01115131378174,
+      173.3140754699707,
+      237.18841552734375,
+      287.3810005187988
+    ],
+    "mirror_rival_visible": false,
+    "reference_FX_attachment_centres_flipped_mirror": [
+      [
+        131.72677784475943,
+        15.566102069905977,
+        -7.949148716857612
+      ],
+      [
+        120.26727021868062,
+        15.566100955371656,
+        -7.949148598456706
+      ]
+    ],
+    "reference_FX_spacing_px_not_measured_lamp_centroids": null,
+    "rival_mirror_mesh_extent_native_px": null,
+    "exact_2x_nearest": true,
+    "RGB555": true
+  },
+  "02_ahead_room": {
+    "gap_m_staging_only": 18,
+    "forward_visible": true,
+    "forward_mesh_bbox_native": [
+      182.6900291442871,
+      223.04954528808594,
+      210.30447006225586,
+      234.6998691558838
+    ],
+    "mirror_rival_visible": false,
+    "reference_FX_attachment_centres_flipped_mirror": [
+      [
+        109.69621518620207,
+        20.1053025940557,
+        -19.86542364474046
+      ],
+      [
+        105.11069343920754,
+        20.10530217512914,
+        -19.865423526339555
+      ]
+    ],
+    "reference_FX_spacing_px_not_measured_lamp_centroids": null,
+    "rival_mirror_mesh_extent_native_px": null,
+    "exact_2x_nearest": true,
+    "RGB555": true
+  },
+  "03_close_behind": {
+    "gap_m_staging_only": 6,
+    "forward_visible": false,
+    "forward_mesh_bbox_native": [
+      -23069.07958984375,
+      -232.76500701904297,
+      478.72792549431324,
+      11738.73779296875
+    ],
+    "mirror_rival_visible": true,
+    "reference_FX_attachment_centres_flipped_mirror": [
+      [
+        21.408517959818994,
+        38.29619348218762,
+        3.967126211025241
+      ],
+      [
+        44.370565165360546,
+        38.29619503705001,
+        3.9671263294261467
+      ]
+    ],
+    "reference_FX_spacing_px_not_measured_lamp_centroids": 22.962047205541552,
+    "rival_mirror_mesh_extent_native_px": [
+      45.43147659301758,
+      20.945194244384766
+    ],
+    "exact_2x_nearest": true,
+    "RGB555": true
+  },
+  "04_far_behind": {
+    "gap_m_staging_only": 18,
+    "forward_visible": false,
+    "forward_mesh_bbox_native": null,
+    "mirror_rival_visible": true,
+    "reference_FX_attachment_centres_flipped_mirror": [
+      [
+        76.6193790556953,
+        26.920489034266332,
+        15.883401138908088
+      ],
+      [
+        82.3545068179368,
+        26.9204895074162,
+        15.883401257308993
+      ]
+    ],
+    "reference_FX_spacing_px_not_measured_lamp_centroids": 5.73512776224149,
+    "rival_mirror_mesh_extent_native_px": [
+      9.448997497558594,
+      5.726406097412109
+    ],
+    "exact_2x_nearest": true,
+    "RGB555": true
+  },
+  "camera": {
+    "player_world": [
+      0,
+      -28,
+      0.16
+    ],
+    "forward_world": [
+      1.4,
+      -35.6,
+      3.1
+    ],
+    "offset_from_player_root_world_axes": [
+      1.4,
+      -7.6,
+      2.94
+    ],
+    "target_world": [
+      3.6,
+      -6,
+      -0.9
+    ],
+    "lens_mm": 25,
+    "horizontal_FOV_deg": 71.5077745088735,
+    "vertical_FOV_deg": 56.738092586557165,
+    "euler_XYZ_deg": [
+      82.32487795299981,
+      8.101264618024333e-07,
+      -4.250654678062484
+    ],
+    "identical_all_four": true,
+    "mirror_world": [
+      0,
+      -28,
+      1.6
+    ],
+    "mirror_lens_mm": 14,
+    "mirror_horizontal_FOV_deg": 104.2500326978036,
+    "mirror_render": [
+      192,
+      64
+    ],
+    "mirror_horizontal_flip": true
+  }
+}

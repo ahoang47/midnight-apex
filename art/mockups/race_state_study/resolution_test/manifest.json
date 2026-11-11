@@ -1,0 +1,132 @@
+[
+  {
+    "case": "03_close_behind_center",
+    "comparison": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/03_close_behind_center_resolution_comparison.png",
+    "frames": {
+      "640_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/03_close_behind_center_640_clean.png",
+      "640_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/03_close_behind_center_640_crt.png",
+      "960_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/03_close_behind_center_960_clean.png",
+      "960_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/03_close_behind_center_960_crt.png"
+    },
+    "native": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/03_close_behind_center_640_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/03_close_behind_center_960_native.png"
+    },
+    "mirror_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/03_close_behind_center_mirror_1to1_stack.png",
+    "main_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/03_close_behind_center_main_1to1_stack.png",
+    "native_mirrors": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/03_close_behind_center_640_mirror_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/03_close_behind_center_960_mirror_native.png"
+    },
+    "exact_source_renders": {
+      "640_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/03_close_behind_center_640_forward_base.png",
+      "640_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/03_close_behind_center_640_rear_base.png",
+      "960_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/03_close_behind_center_960_forward_base.png",
+      "960_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/03_close_behind_center_960_rear_base.png"
+    }
+  },
+  {
+    "case": "04_far_behind_outside",
+    "comparison": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_outside_resolution_comparison.png",
+    "frames": {
+      "640_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_outside_640_clean.png",
+      "640_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_outside_640_crt.png",
+      "960_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_outside_960_clean.png",
+      "960_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_outside_960_crt.png"
+    },
+    "native": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_outside_640_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_outside_960_native.png"
+    },
+    "mirror_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_outside_mirror_1to1_stack.png",
+    "main_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_outside_main_1to1_stack.png",
+    "native_mirrors": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_outside_640_mirror_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_outside_960_mirror_native.png"
+    },
+    "exact_source_renders": {
+      "640_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_outside_640_forward_base.png",
+      "640_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_outside_640_rear_base.png",
+      "960_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_outside_960_forward_base.png",
+      "960_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_outside_960_rear_base.png"
+    }
+  },
+  {
+    "case": "04_far_behind_center",
+    "comparison": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_center_resolution_comparison.png",
+    "frames": {
+      "640_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_center_640_clean.png",
+      "640_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_center_640_crt.png",
+      "960_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_center_960_clean.png",
+      "960_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_center_960_crt.png"
+    },
+    "native": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_center_640_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_center_960_native.png"
+    },
+    "mirror_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_center_mirror_1to1_stack.png",
+    "main_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_center_main_1to1_stack.png",
+    "native_mirrors": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_center_640_mirror_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_center_960_mirror_native.png"
+    },
+    "exact_source_renders": {
+      "640_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_center_640_forward_base.png",
+      "640_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_center_640_rear_base.png",
+      "960_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_center_960_forward_base.png",
+      "960_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_center_960_rear_base.png"
+    }
+  },
+  {
+    "case": "04_far_behind_inside",
+    "comparison": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_inside_resolution_comparison.png",
+    "frames": {
+      "640_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_inside_640_clean.png",
+      "640_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_inside_640_crt.png",
+      "960_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_inside_960_clean.png",
+      "960_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/04_far_behind_inside_960_crt.png"
+    },
+    "native": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_inside_640_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_inside_960_native.png"
+    },
+    "mirror_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_inside_mirror_1to1_stack.png",
+    "main_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/04_far_behind_inside_main_1to1_stack.png",
+    "native_mirrors": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_inside_640_mirror_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/04_far_behind_inside_960_mirror_native.png"
+    },
+    "exact_source_renders": {
+      "640_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_inside_640_forward_base.png",
+      "640_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_inside_640_rear_base.png",
+      "960_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_inside_960_forward_base.png",
+      "960_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/04_far_behind_inside_960_rear_base.png"
+    }
+  },
+  {
+    "case": "02_ahead_room_center",
+    "comparison": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/02_ahead_room_center_resolution_comparison.png",
+    "frames": {
+      "640_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/02_ahead_room_center_640_clean.png",
+      "640_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/02_ahead_room_center_640_crt.png",
+      "960_clean": "file:///workspace/mockups/race_state_study/resolution_test/display/02_ahead_room_center_960_clean.png",
+      "960_crt": "file:///workspace/mockups/race_state_study/resolution_test/display/02_ahead_room_center_960_crt.png"
+    },
+    "native": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/02_ahead_room_center_640_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/02_ahead_room_center_960_native.png"
+    },
+    "mirror_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/02_ahead_room_center_mirror_1to1_stack.png",
+    "main_1to1_stack": "file:///workspace/mockups/race_state_study/resolution_test/comparisons/02_ahead_room_center_main_1to1_stack.png",
+    "native_mirrors": {
+      "640": "file:///workspace/mockups/race_state_study/resolution_test/native/02_ahead_room_center_640_mirror_native.png",
+      "960": "file:///workspace/mockups/race_state_study/resolution_test/native/02_ahead_room_center_960_mirror_native.png"
+    },
+    "exact_source_renders": {
+      "640_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/02_ahead_room_center_640_forward_base.png",
+      "640_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/02_ahead_room_center_640_rear_base.png",
+      "960_forward": "file:///workspace/mockups/race_state_study/resolution_test/raw/02_ahead_room_center_960_forward_base.png",
+      "960_rear": "file:///workspace/mockups/race_state_study/resolution_test/raw/02_ahead_room_center_960_rear_base.png"
+    }
+  }
+]

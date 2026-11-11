@@ -1,0 +1,10 @@
+{
+  "native_composites_reviewed_with_Read": 10,
+  "full_final_gameplay_files_reviewed_with_Read": 20,
+  "annotated_final_case_sheets_reviewed_with_Read": 5,
+  "all_twenty_display_space_mirror_crops_reviewed_via_five_1to1_stacks": true,
+  "higher_resolution_source_detail_proof_reviewed_with_Read": true,
+  "verification": "logs/verification.log",
+  "observations": "visual_findings.json",
+  "limitations": "README.md; still images only; no animated readability validation; no reference-resolution approval"
+}

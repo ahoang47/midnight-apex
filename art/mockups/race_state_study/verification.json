@@ -1,0 +1,82 @@
+{
+  "01_ahead_pressure": {
+    "native": [
+      640,
+      480
+    ],
+    "upscaled": [
+      1280,
+      960
+    ],
+    "exact_2x_nearest": true,
+    "rgb555_levels": [
+      31,
+      30,
+      26
+    ],
+    "rival_y": -26,
+    "player_y": -32,
+    "staging_separation_m": 6,
+    "both_cars_on_screen": true
+  },
+  "02_ahead_room": {
+    "native": [
+      640,
+      480
+    ],
+    "upscaled": [
+      1280,
+      960
+    ],
+    "exact_2x_nearest": true,
+    "rgb555_levels": [
+      32,
+      30,
+      26
+    ],
+    "rival_y": -26,
+    "player_y": -44,
+    "staging_separation_m": 18,
+    "both_cars_on_screen": true
+  },
+  "03_close_behind": {
+    "native": [
+      640,
+      480
+    ],
+    "upscaled": [
+      1280,
+      960
+    ],
+    "exact_2x_nearest": true,
+    "rgb555_levels": [
+      31,
+      29,
+      26
+    ],
+    "rival_y": -26,
+    "player_y": -20,
+    "staging_separation_m": 6,
+    "both_cars_on_screen": true
+  },
+  "04_far_behind": {
+    "native": [
+      640,
+      480
+    ],
+    "upscaled": [
+      1280,
+      960
+    ],
+    "exact_2x_nearest": true,
+    "rgb555_levels": [
+      31,
+      28,
+      26
+    ],
+    "rival_y": -26,
+    "player_y": -8,
+    "staging_separation_m": 18,
+    "both_cars_on_screen": true
+  }
+}
