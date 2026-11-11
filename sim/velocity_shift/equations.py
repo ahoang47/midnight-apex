@@ -123,8 +123,12 @@ RACE_LENGTHS = (10, 20, 30)
 SIM_SEEDS = (20261113, 20261114, 20261115)
 OPPONENT_QTE = 1.0             # story-rung opponents time perfectly (uniform across rungs)
 # Phi/tau clash payoff (final-v1 / equations_v1 K, unchanged). Per clash:
-#   g = V * Phi(outcome, q_eff) * M,  V = r**kappa,  q_eff = q_time * W(r) * han_mod
-# (player window only; opponent uses OPPONENT_QTE unscaled).
+#   g = V * Phi(outcome, q_eff) * M,  V = r**kappa,
+#   q_eff = clip(q_time * W * (1 + ETA * (han_share - 1/3)), 0, 1)
+# W is knot_window(r) for the player and 1.0 for the opponent (window off).
+# HAN still scales both sides — same as equations_v2.clash_progress. The
+# winrate_n4000 shortcut omitted the HAN term only because those cells
+# used balanced builds (han_share = 1/3, so the modifier is 1).
 W0 = 0.10                      # win payoff at q=0
 T_MAX = 0.75                   # tie payoff at q=1, as a fraction of a perfect win
 L_MAX = 0.25                   # loss payoff at q=1
@@ -273,7 +277,12 @@ def clash_progress(
     kappa: float,
     scale_window: bool,
 ) -> float:
-    """g = V * Phi(o, q_eff) * M. Player uses the knot window; opponent does not."""
+    """g = V * Phi(o, q_eff) * M.
+
+    HAN always scales q_eff. The knot window applies only when
+    scale_window is True (the player). The opponent is called with
+    scale_window=False so W=1, matching equations_v2.race_progress.
+    """
     tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
     r = tot / boss_total if boss_total else 1.0
     V = r ** kappa

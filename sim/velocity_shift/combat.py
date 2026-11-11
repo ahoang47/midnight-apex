@@ -69,8 +69,9 @@ def resolve_turn(
     """Resolve one turn with the final-v1 Phi/tau progress model.
 
     `turn_state.player_qte` / `opponent_qte` are timing skills in [0, 1]
-    (q_time), not 1–10 scores. The player's skill is then scaled by
-    knot_window(r) and HAN; the opponent's is not (window off).
+    (q_time), not 1–10 scores. Both sides then get the HAN timing
+    modifier. Only the player's q_time is also scaled by knot_window(r);
+    the opponent's window is off (W=1), matching equations_v2.
     `race_length` selects kappa. `boss_total` defaults to the opponent's
     stat sum, so the opponent's V is 1 and the player's V is r**kappa.
     """

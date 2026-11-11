@@ -168,7 +168,7 @@ All values live in `sim/velocity_shift/equations.py` (section "Story race-balanc
 
 | Item | Constant(s) | Rule |
 |---|---|---|
-| Race-balance combat settings (final-v1) | `KNOT_WINDOW_105`, `KAPPA_BY_LENGTH`, `LINE_SET_C`, `LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`, `OPPONENT_QTE` | Player QTE window by stat ratio r, stat-gap leverage by race length, district line set C (2026-11-10: Street N90 and Wangan IR/SW mains revised, lines-v1), uniform opponent QTE, and the Phi/tau clash payoff (`W0`, `T_MAX`, `L_MAX`, `TAU_BETA`, `TAU_P_TOP`, `MU`, `ETA`, `DECK_ALPHA`, `HAND_SIZE`). The playable engine in `combat.py` / `match.py` uses this model: one categorical line pick per corner, v4 read + `assign_hand` when `q_read` is set, progress `g = V · Φ(outcome, q_eff) · M` with `V = r**kappa`, player window on, opponent `OPPONENT_QTE` unscaled. The older HP/DP path is `resolve_turn_legacy` (`MatchConfig.legacy_hp_dp`). |
+| Race-balance combat settings (final-v1) | `KNOT_WINDOW_105`, `KAPPA_BY_LENGTH`, `LINE_SET_C`, `LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`, `OPPONENT_QTE` | Player QTE window by stat ratio r, stat-gap leverage by race length, district line set C (2026-11-10: Street N90 and Wangan IR/SW mains revised, lines-v1), uniform opponent QTE, and the Phi/tau clash payoff (`W0`, `T_MAX`, `L_MAX`, `TAU_BETA`, `TAU_P_TOP`, `MU`, `ETA`, `DECK_ALPHA`, `HAND_SIZE`). The playable engine in `combat.py` / `match.py` uses this model: one categorical line pick per corner, v4 read + `assign_hand` when `q_read` is set, progress `g = V · Φ(outcome, q_eff) · M` with `V = r**kappa`, player window on, opponent window off (`W=1`); HAN scales `q_eff` on both sides. The older HP/DP path is `resolve_turn_legacy` (`MatchConfig.legacy_hp_dp`). |
 | Caps and mods | `SP_CAP_FRACTION`, `MOD_CAP_FRACTION`, `MOD_SHARE_OF_REF`, `REFERENCE_RULE`, `MOD_TIMING` | SP cap 80 % of reference (= level cap); SP + mods to 105 %; mods bought only, unlocked progressively (timing c). |
 | Ladder | `LADDER_RUNGS`, `LADDER_R`, `SCRIPTED_BUDGETS`, `SABINE_BUDGET` | Target r per rung at its level cap. |
 | Budgets | `OPTION_A_CREW_STEP`, `OPTION_A_ROUND_STEP`, `DISTRICTS`, `DEFAULT_CREW_ORDER`, `FINALE` | Step by play position (free crew order); the first crew challenged in R2/R3 gets the round step. `DEFAULT_CREW_ORDER` is an example order for reports/tests. |
@@ -446,11 +446,12 @@ The playable match no longer uses HP or DP. Each clash adds progress
 
 ```
 g = V × Phi(outcome, q_eff) × M
-V = r ** kappa                  # kappa from KAPPA_BY_LENGTH for the race's turn count
-q_eff = clip(q_time × W(r) × (1 + ETA × (HAN_share − 1/3)), 0, 1)   # player only
+V = r ** kappa                  # kappa from KAPPA_BY_LENGTH for MatchConfig.max_turns (the planned race length, not the lap)
+q_eff = clip(q_time × W × (1 + ETA × (HAN_share − 1/3)), 0, 1)
+W = knot_window(r) for the player, 1.0 for the opponent
 ```
 
-`W(r)` is `knot_window(r)` from `KNOT_WINDOW_105`. The opponent uses `q_time = OPPONENT_QTE` (1.0) with the window off. `Phi` is the tau-shaped payoff (`W0`, `T_MAX`, `L_MAX`, `TAU_BETA`, `TAU_P_TOP`). `M` raises a win by POW share and a tie/loss by EN share (`MU`). The race is the sum of all clash progress; the higher total wins, ties allowed. There is no knockout, rubber-band, battle bonus, or mitigation.
+`knot_window` is from `KNOT_WINDOW_105` and is player-only. HAN still scales `q_eff` on both sides (same as `equations_v2.clash_progress`). The opponent's `q_time` is `OPPONENT_QTE` (1.0). `Phi` is the tau-shaped payoff (`W0`, `T_MAX`, `L_MAX`, `TAU_BETA`, `TAU_P_TOP`). `M` raises a win by POW share and a tie/loss by EN share (`MU`). The race is the sum of all clash progress; the higher total wins, ties allowed. There is no knockout, rubber-band, battle bonus, or mitigation.
 
 The player's `q_time` is a skill in [0, 1] (CLI still asks for a 1–10 QTE and divides by 10). `q_read` drives the equations_v4 line-read model (correct Entry tell commits to the most likely same-Entry line; a misread aims at a tie vs the actual card with probability `q_read`, else a loss), then `assign_hand` from a 6-card stat-weighted draw.
 

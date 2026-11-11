@@ -117,7 +117,11 @@ class MatchConfig:
     """
     player_stats: CombatantStats
     opponent_stats: CombatantStats
-    max_turns: int = 99
+    # Official races are 10-corner laps × 1/2/3 = 10/20/30 turns. kappa
+    # is selected from this planned length via kappa_for_length, not from
+    # len(corners) (the lap). Default is one lap (kappa for 10). A leftover
+    # default of 99 would silently snap to the 30-turn kappa.
+    max_turns: int = 10
     seed: Optional[int] = None
     deterministic: bool = True
     verbose: bool = False
