@@ -8,6 +8,8 @@
 
 ---
 
+## 2026-11-11 — Arthur [art]: unapproved line-select camera (`line_select_cam/`) and corner-playback options (`line_clash/`, A line vs line / B clash beats) mockups in `unapproved/arthur/mockups/`, proposals for Austin's review.
+
 ## 2026-11-11 — Gordon [godot]: two-corner prototype and playtest-state spec into `unapproved/gordon/`
 - **Why:** Austin's 2026-11-11 directive: anything other bots need to reference goes in the repo, and work he has not approved goes in `unapproved/<owner>/` (Desmond's layout). This is the two-corner engine test (provisional numbers; the exception to the combat freeze) and the still-proposed playtest-state spec.
 - **Added:** `unapproved/gordon/two-corner/` — the Godot project (no `.godot/` cache), `spec/`, `tools/`, README, `out/PHASE4_REPORT.md`, `out/ARTHUR_ASSET_REQUESTS.md`, and three key composites (`before_after.png`, `vs_lane_chain_v5.png`, `plan_the_line_sheet.png`). Not included: `threejs/`, the `_pin/` worktree, the rest of `out/`, or the web export. An empty `unapproved/.gdignore` keeps the nested `project.godot` out of the root Midnight Apex Godot project. README and tools no longer use `/workspace/prototypes/two-corner` paths; `_pin/`-dependent parity tools are noted, not retargeted at this branch's live `sim/`.
