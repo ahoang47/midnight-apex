@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-11 — Nathaniel [story]: add story/unapproved/ for proposals awaiting Austin
+- **Why:** Austin's directive (2026-11-11): anything other bots need to reference goes in the repo, and anything he hasn't approved goes in an unapproved folder. My open proposals only lived in local drafts on the box.
+- **Added:** `story/unapproved/README.md` (what the folder is, nothing in it is canon, 3-day follow-up rule) and `story/unapproved/open_proposals.md` with the two items still waiting on Austin: the Finale order's in-world reason and Reiko's warning trigger under free crew order. No canon files changed and no numbers added.
+- **Not moved:** the local drafts in `/workspace/nathaniel_drafts/` are superseded; everything approved in them already landed in 8d05f70 and ff8bbbb.
+
 ## 2026-11-10 — Gordon [godot]: build guide combat sections follow 0dd376a progress scoring
 - **Why:** Austin's direction, relayed by Barry on 2026-11-10: update the guide's combat sections to the new progress scoring now, with the race HUD showing the progress gap instead of HP bars. Everything matches Barry's playable engine in `0dd376a` (`combat.py` `resolve_turn`, `match.py`, and the Phi/tau constants and functions in `equations.py`). Constants are referenced by name, and no balance values were copied. Spec only: no GDScript, scenes or `sim/` touched.
 - **§5 Combat Math:** `CombatResolver.gd` is now a port of `stat_shares`, `knot_window`, `kappa_for_length`, `timing_value`, `clash_payoff`, `clash_progress` and `resolve_turn`. Each clash adds `g = V × Phi(outcome, q_eff) × M` to both cars, with `V = r^kappa` (`KAPPA_BY_LENGTH` via `max_turns`). The player's `q_time` (QTE score / `QTE_NORMALIZER`) is scaled by `knot_window(r)` and HAN (`ETA`). The opponent uses `OPPONENT_QTE` with the window off, and HAN still applies. `M` uses the POW share on a win and the EN share otherwise (`MU`). Turn progress is the sum of the 3 clashes. The higher race total wins, and ties are allowed. Deleted: `clash_mult`, `compute_damage`, `damage_mitigation`, `battle_multiplier` and `qte_rubber_band`. Added an open question for Austin: §7's level-gap QTE difficulty and `knot_window(r)` both penalize a stat gap.
