@@ -249,7 +249,7 @@ were lost with the box and are **re-proposed** here.
   (palette size open, Q7). Whether painted silhouettes behind shop windows count as "characters in-world" is open (Q5).
 - Faces follow `face_{scowling|grinning|focused}_{atk|def|neu}.png` and `tell_*` overlays (Appendix E).
 - Stance colours (Attack / Defend / **Neutral**) should be reserved for UI and not used for world neon
-  *(proposal)*. The third stance is **Neutral** (`neu`) in all art/UI files (Q6, resolved 2026-11-11).
+  *(proposal)*. Attack/POW is `#2CB84A` (green) and Defend/EN is `#E8282C` (red); Neutral/HAN stays `#F0C828` (yellow, dark text). Austin swapped Attack and Defend on 2026-11-11 (they were Attack `#E8282C` and Defend `#2CB84A`). The third stance is **Neutral** (`neu`) in all art/UI files (Q6, resolved 2026-11-11).
 - Bitmap-style font, 9-slice panels drawn at native resolution.
 
 ### B.5b Line select: camera stops [APPROVED 2026-11-11]

@@ -1,9 +1,10 @@
 ## Native-resolution HUD (640x480 under viewport stretch). Plan the Line layout from Arthur's /workspace/mockups/lane_chain/v5/post_v5.py (1-bit NimbusSansNarrow,
 ## PS1 50/50 semi panels); debug boxes, menu and gap meter keep the 6x9 bitmap font + 9-slice stand-ins from spec/gen_art.py.
 extends Control
-## Stance UI colours (Austin 2026-11-11; Arthur's mockups lane_chain/v5/post_v5.py:14): ATK red, DEF green, NEU yellow with dark text.
+## Stance UI colours (Austin 2026-11-11, swapped the same day): ATK/POW green #2CB84A, DEF/EN red #E8282C, NEU/HAN yellow #F0C828 with dark text.
 ## Letter 'S' is the sim's internal code for Neutral (race_core.gd / combat.gd are unchanged).
-const STANCE := {"A": Color8(232, 40, 44), "S": Color8(240, 200, 40), "D": Color8(44, 184, 74)}
+const STANCE := {"A": Color8(44, 184, 74), "S": Color8(240, 200, 40), "D": Color8(232, 40, 44)}
+const CHECK_GREEN := Color8(44, 184, 74)  # breadcrumb tick; not a stance colour (stays green after the DEF/EN swap to red)
 const NAME := {"A": "ATK", "S": "NEU", "D": "DEF"}
 const FULL := {"A": "Attack", "S": "Neutral", "D": "Defend"}   # option names: '<Stance> <phase>' (Austin's final call, 07:34)
 const TAG := {"A": "POW", "S": "HAN", "D": "EN"}               # stat-tag chips (lane_chain/v5/post_v5.py:59)
@@ -338,7 +339,7 @@ func _plan_panel() -> void:
 		if i == ph:
 			solid(P([x - 3, y - 1, x + w + 5, y - 1, x + w + 2, y + 12, x - 6, y + 12]), AMBER); t2(x, y, lab, 11, INK, true, "l", false); x += w + 6
 		elif i < ph:
-			t2(x, y, lab, 11, EDGE, true); check(x + w + 3, y + 3, STANCE.D); x += w + 12
+			t2(x, y, lab, 11, EDGE, true); check(x + w + 3, y + 3, CHECK_GREEN); x += w + 12
 		else:
 			t2(x, y, lab, 11, TODO, true); x += w
 		if i < 2: t2(x + 4, y, ">", 11, TODO, true); x += 15

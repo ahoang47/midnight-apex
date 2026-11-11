@@ -687,8 +687,8 @@ The meter is scaled to the normalized lead `(cum_p - cum_o) / (cum_p + cum_o)`, 
 
 ```gdscript
 const COLORS = {
-    ATTACK:  Color("#dc2626"),
-    DEFEND:  Color("#16a34a"),
+    ATTACK:  Color("#16a34a"),
+    DEFEND:  Color("#dc2626"),
     NEUTRAL: Color("#d97706"),
 }
 

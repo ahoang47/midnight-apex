@@ -57,6 +57,6 @@ The pipeline is the same as line_select_cam:
 - the HUD is drawn at native resolution with 1-bit text and PS1 50/50 panels
 - RGB555 + 4x4 Bayer, then a 2x nearest upscale
 
-Stance chips are ATK #E8282C, DEF #2CB84A and NEU #F0C828.
+Stance chips are ATK #2CB84A, DEF #E8282C and NEU #F0C828.
 
 To rebuild, run `./run.sh`. The .blend file and raw passes stay on the box only.

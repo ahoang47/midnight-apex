@@ -23,7 +23,7 @@ Sim pin is unchanged at 212eaab. Display, art and UI only. Scoring, RNG and pari
 | Touge fog #2A3236, 8-55 m | Touge | art_direction.md@55b9063:220 (B.3, Q2 still open) | B.2a fog is the general palette; B.3 is the only Touge value, so it is kept |
 | neon #FF3C8C/#3CC8FF/#C85AFF | Street signs | B.2 :213 (still applies per B.2a :203) | hues close to the stance colours dropped (B.5 reserves them for UI) |
 | facades/windows | Street | B.1 pre-lit + B.2 (B.2a :203) | lit by B.2a ambient |
-| ATK #E8282C, DEF #2CB84A, NEU #F0C828, dark text on yellow | HUD | Austin 2026-11-11; lane_chain/v5/post_v5.py:14; tones/work/lane/post_v5.py:14; pattern_read/compose_mockups.py:10 | supersedes godot-build-guide.md@55b9063:940-942 (#dc2626/#16a34a/#d97706) |
+| ATK #2CB84A, DEF #E8282C, NEU #F0C828, dark text on yellow (Austin swapped Attack/Defend 2026-11-11) | HUD | Austin 2026-11-11; lane_chain/v5/post_v5.py:14; tones/work/lane/post_v5.py:14; pattern_read/compose_mockups.py:10 | supersedes godot-build-guide.md@55b9063:940-942 (#dc2626/#16a34a/#d97706) |
 | AMBER/AMBER_D/EDGE/EDGE_D/INK/PANEL | HUD | lane_chain/v5/post_v5.py:15-17 | |
 | segmented timer, 16 segs, off (69,49,38), "04.8s" | HUD | pattern_read/compose_mockups.py:47-53 | |
 | PS1 50/50 semi panels | HUD | lane_chain/v5/post_v5.py:149-153 | |

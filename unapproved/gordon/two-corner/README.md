@@ -91,7 +91,7 @@ Sources (pin 212eaab): `design/art/art_direction.md` (Part A binding for cars, P
   `/workspace/mockups/tones/work/tones.py` preset `blend50` into `spec/display.json` `palette` (fog #0B172B, zenith #010408, no city glow,
   ambient #5575A0 x0.8, every lamp #F0C894 x0.85, 3-step pools x0.09, bloom 0.22 / threshold 0 as a glow-only pass, saturation 1.05).
   `palette.calib` holds display calibration gains (not doc values) that scale the mockup light terms onto our stand-in textures.
-- Stance UI colours (Austin): ATK #E8282C, DEF #2CB84A, NEU #F0C828 with dark text on yellow (`display.json` `stance_ui`).
+- Stance UI colours (Austin, swapped 2026-11-11): ATK/POW #2CB84A (green), DEF/EN #E8282C (red), NEU/HAN #F0C828 (yellow) with dark text on yellow (`display.json` `stance_ui`).
 - Third stance is **Neutral / NEU** everywhere player-facing (Q6, Austin). The sim keeps the internal letter `S` (combat.gd, race_core.gd unchanged).
 - Filtering (Q4): world textures smooth (linear; the car albedo uses mipmaps per the A.8 shader sketch), no other mips. HUD stays crisp:
   NimbusSansNarrow Bold / BoldOblique at 1-bit (the mockups' fonts, `godot/fonts/README.md`), 640x480 nearest upscale (A.5).
