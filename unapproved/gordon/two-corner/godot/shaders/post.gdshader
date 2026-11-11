@@ -7,7 +7,8 @@ uniform sampler2D glow_tex : filter_linear;   // glow-only pass (glow sprites), 
 uniform float bloom_k = 0.22;   // art_direction.md@55b9063 B.2a: bloom 0.22, 0 threshold
 uniform float sat = 1.05;       // B.2a: saturation 1.05 (before quantise, as tones post_v5.py:26-27)
 uniform vec2 res = vec2(640.0, 480.0);
-uniform vec4 mirror_rect = vec4(240.0, 6.0, 160.0, 44.0);
+uniform vec4 mirror_rect = vec4(224.0, 16.0, 192.0, 64.0);
+uniform float mirror_on = 1.0;  // chase-camera views only (B.5b frames 1/4); frame drawn by the HUD (post_lsc.py:46-48)
 const float B[16] = float[](0.,8.,2.,10.,12.,4.,14.,6.,3.,11.,1.,9.,15.,7.,13.,5.);
 void fragment() {
 	vec2 uv = UV;
@@ -22,10 +23,9 @@ void fragment() {
 	}
 	c += bloom_k * bl / ws;
 	float lum = dot(c, vec3(0.299, 0.587, 0.114)); c = vec3(lum) + (c - vec3(lum)) * sat;
-	if (base.x >= mirror_rect.x && base.x < mirror_rect.x + mirror_rect.z && base.y >= mirror_rect.y && base.y < mirror_rect.y + mirror_rect.w) {
+	if (mirror_on > 0.5 && base.x >= mirror_rect.x && base.x < mirror_rect.x + mirror_rect.z && base.y >= mirror_rect.y && base.y < mirror_rect.y + mirror_rect.w) {
 		vec2 m = (base - mirror_rect.xy) / mirror_rect.zw;
-		if (m.x < 0.02 || m.x > 0.98 || m.y < 0.06 || m.y > 0.94) c = vec3(0.08);
-		else c = texture(mirror_tex, vec2(1.0 - m.x, m.y)).rgb;
+		c = texture(mirror_tex, vec2(1.0 - m.x, m.y)).rgb;
 	}
 	int bi = int(mod(px.x, 4.0)) + int(mod(px.y, 4.0)) * 4;
 	float b = B[bi] / 16.0 - 0.5;

@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-11 — Gordon [godot]: two-corner test rebuilt to the approved B.5b camera stops and B.5a line-vs-line playback (`unapproved/gordon/two-corner/`)
+- **Why:** Austin approved B.5a (corner playback: line vs line) and B.5b (line select: camera stops) in `design/art/art_direction.md` at `ab1c4a1`, and asked for the two-corner Godot test to be rebuilt to them. Display, UI and camera only. Scoring, RNG and the 212eaab sim pin are unchanged; parity (5 sets incl. fuzz300), dump/load, the 4-race restart test and the 200-seed key test all pass with max_abs_diff 0.0.
+- **Selection (B.5b):** Entry is picked on the fixed chase camera (frame values from `art/ui/line_select_cam/build_lsc.py`), rival visible in its lane. The camera then moves to an apex stop and an exit stop with no cars, no mirror and the straight frozen. At lock it returns to Entry with the LINE LOCKED banner, then playback runs. Added: the 17-segment B.5b timer and the E / A / X corner plate. Scrolling is kept at the Entry stop. The Phase 4 Plan the Line panel (labels, chips, 'none drawn' greying) is kept.
+- **Playback (B.5a):** the line-vs-line panel (YOU/RIVAL face up from the start, amber outline on the phase being played, WIN/LOSS/TIE filled in per phase, no pause or clash beats) replaces the Phase 4 LINE LOCKED strip. Results come from the sim's pure `resolve_stance`, and the key test checks they match.
+- **Touge dressing:** fog, road paint, guardrail, cedars, ridge and lamps now follow the approved B.5b frames (fog #0B172B 9-78 m for this test; B.3 itself is not edited). Fixed a Phase 4 bug that left the lamp-glow node creation inside a comment.
+- **Files:** `godot/`, `spec/`, `tools/` (new `phase5_composites.py`; live check now uses relative paths), README Phase 5 section, `out/PHASE5_REPORT.md` (source table with file:line, placeholders, conflicts with earlier steers). The Phase 4 composites are replaced by `out/shots5/composites/` (`vs_line_select_cam.png`, `vs_line_vs_line.png`, `before_after_phase4.png`). Placeholders flagged for Arthur: stop move/lock-hold timing, mirror near plane, inside guardrail, N90 and Street stop poses, gap meter/debug positions.
+
 ## 2026-11-11 — Arthur [art]: unapproved line-select camera (`line_select_cam/`) and corner-playback options (`line_clash/`, A line vs line / B clash beats) mockups in `unapproved/arthur/mockups/`, proposals for Austin's review.
 
 ## 2026-11-11 — Gordon [godot]: two-corner prototype and playtest-state spec into `unapproved/gordon/`

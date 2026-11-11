@@ -2,7 +2,7 @@
  "_doc": "DISPLAY-ONLY placeholders for the two-corner test. None of these touch scoring. Values marked PLACEHOLDER have no approved number (06-pattern-read: 'No distance number is approved; readability tests set it later').",
  "base_w": 640,
  "base_h": 480,
- "lane_width_m": 3.0,
+ "lane_width_m": 3.3,
  "visual_gap": {
   "gap_scale_m_per_lead": 60.0,
   "lead_cap_ahead_m": 14.0,
@@ -30,17 +30,33 @@
   "_doc": "PROVISIONAL UX: needle pos = sin(2*pi*t/period); score = clamp(round(10 - 9*|pos|), 1, 10); no press before playback ends -> PLAYER_QTE_MIN"
  },
  "camera": {
-  "height": 2.1,
-  "back": 6.0,
-  "look_ahead": 12.0,
-  "fov": 65.0
+  "_source": "B.5b fixed chase camera (design/art/art_direction.md@ab1c4a1:256) = art/ui/line_select_cam/build_lsc.py@ab1c4a1:245 'fixed chase (entry_matrix exact)': camera at player root + (1.4 right, 7.6 back, 2.94 up), target (3.6, -6, -0.9) with the root at (0, -28, 0.16) -> 22 m ahead, 3.6 m right, 1.06 m below the root; lens 25 mm on a 36 mm horizontal sensor at 4:3 -> vertical fov 2*atan(13.5/25) = 56.7 deg. Used exactly as given ('fixed' chase camera, B.5b:256): offsets are NOT mirrored for left corners.",
+  "side": 1.4,
+  "back": 7.6,
+  "height": 3.1,
+  "look_ahead": 22.0,
+  "look_side": 3.6,
+  "look_y": -0.9,
+  "fov": 56.74,
+  "_prev": {
+   "height": 2.1,
+   "back": 6.0,
+   "look_ahead": 12.0,
+   "fov": 65.0
+  }
  },
  "mirror": {
-  "x": 240,
-  "y": 6,
-  "w": 160,
-  "h": 44,
-  "fov": 40.0
+  "_source": "art/ui/line_select_cam/post_lsc.py@ab1c4a1:46-48 (mirror 224..416 x 16..80, frame rects (221,13,418,82) #6E7F97 and (222,14,417,81) #0F141E, 'REAR VIEW' 9 px at (291,84)); camera art/ui/line_select_cam/build_lsc.py@ab1c4a1:246 at root +1.60 m looking at 32 m back, 2.2 m below ground, lens 14 mm on 192x64 -> vertical fov 2*atan(18*64/192/14) = 46.4 deg. Shown only on chase-camera views (frames 1 and 4; B.5a frames have none)",
+  "x": 224,
+  "y": 16,
+  "w": 192,
+  "h": 64,
+  "fov": 46.4,
+  "cam_up": 1.6,
+  "look_back": 32.0,
+  "look_y": -2.2,
+  "near": 3.2,
+  "_near": "PLACEHOLDER near plane so the camera (inside the player car's roofline) does not see its own car"
  },
  "road_scroller": {
   "_doc": "guide \u00a714.2 RoadScroller + \u00a713.1. GUIDE constants: scroll_speed (UV/s), corner burst factor 1.5 for 0.5 s then 0.6. Everything else here is a DISPLAY PLACEHOLDER (guide gives no value).",
@@ -132,12 +148,12 @@
  "districts": {
   "touge": {
    "_source": "design/art/art_direction.md@55b9063 B.3 Touge [PROPOSAL, Q2 still open] + B.2a palette for everything B.3 does not give",
-   "fog": "#2A3236",
-   "fog_near": 8,
-   "fog_far": 55,
-   "_fog": "design/art/art_direction.md@55b9063:220 (B.3 Touge, re-proposed, Q2 open). Conflict: B.2a fog #0B172B is the general night palette; B.3 is the only Touge-specific value, kept",
+   "fog": "#0B172B",
+   "fog_near": 9,
+   "fog_far": 78,
+   "_fog": "Touge fog #0B172B, 9-78 m = the approved B.5b Touge frames: art/ui/line_select_cam/README.md@ab1c4a1:27 (blend50 fog #0B172B, 'closer than in the city scenes') + build_lsc.py@ab1c4a1:21 (FOG_NEAR/FAR 9/78, 'B.3 Touge ~8-55 m, pushed out so the corner reads'). Supersedes B.3 #2A3236 8-55 m (art_direction.md:220, PROPOSAL, Q2 open): newest approved wins. Phase 4 value kept in out/display_before_phase5.json",
    "sky_zenith": "#010408",
-   "sky_horizon": "#2A3236",
+   "sky_horizon": "#0B172B",
    "_sky": "zenith = B.2a design/art/art_direction.md@55b9063:197 (no Touge zenith anywhere); horizon = Touge fog (fog meets the sky, B.7)",
    "asphalt": [
     46,
@@ -151,26 +167,55 @@
    "lamps": [
     [
      0,
-     -1
-    ],
-    [
-     24,
      1
     ]
    ],
-   "_lamps": "PLACEHOLDER spacing: B.3 says only 'sparse'; no Touge spacing in design/, art/, assets/, guide, mockups",
-   "edge_line": "#B8B8B0",
-   "_edge_line": "PLACEHOLDER: no Touge marking colour in design/, art/, assets/, guide, mockups",
-   "verge": "#2E3A33",
-   "_verge": "PLACEHOLDER cold green-grey (B.3 'cold desaturated greens/blue-greys', no hex)",
+   "_lamps": "sparse lamps on the corner's OUTSIDE at 7.3 m from centre, head 1.7 m toward the road and 6.35 m up (art/ui/line_select_cam/build_lsc.py@ab1c4a1:213-217: approach lamps at s -62 and -13 = 49 m apart). Period 48 m = 49 m rounded to the 6 m lane-dash cycle so the road texture tiles (DERIVED, flagged)",
+   "edge_line": "#BDBDA8",
+   "_edge_line": "3 x 3.3 m lanes, asphalt half-width 5.0 m (art/ui/line_select_cam/build_lsc.py@ab1c4a1:31-32,136); LanePaint (.74,.74,.66) = #BDBDA8 (art/ui/line_select_cam/build_lsc.py@ab1c4a1:138); solid edges at +-4.72 m, 0.13 m wide; dashed lane dividers at +-1.65 m, 0.11 m, 3 m on / 3 m off (art/ui/line_select_cam/build_lsc.py@ab1c4a1:152-153); concrete shoulder (150,150,146) (art/ui/line_select_cam/make_tex.py@ab1c4a1 concrete, art/ui/line_select_cam/build_lsc.py@ab1c4a1:154-155). Replaces the Phase 4 PLACEHOLDER #B8B8B0",
+   "verge": "#46543A",
+   "_verge": "mossy cut-bank slope base (70,84,58) (art/ui/line_select_cam/make_tex.py@ab1c4a1 slope); replaces the Phase 4 PLACEHOLDER #2E3A33",
    "wall": "guardrail",
-   "wall_h_m": 1.0,
-   "wall_d_m": 0.3,
-   "_wall": "B.3 guardrails; height PLACEHOLDER",
-   "cedar_spacing_m": 7,
-   "cedar_h_m": 11,
-   "_cedar": "B.3 cedar cards; density/height PLACEHOLDER (no source anywhere)",
-   "verge_w_m": 8
+   "wall_h_m": 0.8,
+   "wall_d_m": 0.0,
+   "_wall": "W-beam profile 0.42-0.80 m high at 5.95 m from centre (= our road strip half-width 3.3*1.5+1, so wall_d_m 0), steel posts 0.76 m every 2 m (art/ui/line_select_cam/build_lsc.py@ab1c4a1:167-179); galvanised beam (176,182,186) / top (206,212,214) / crease (110,116,122) / bottom (140,146,150), post (.55,.57,.58) (art/ui/line_select_cam/make_tex.py@ab1c4a1 guardrail, art/ui/line_select_cam/build_lsc.py@ab1c4a1:170). Outside only in the frames; this build keeps rails on both sides (corner road is one strip per side; PLACEHOLDER inside rail)",
+   "cedar_spacing_m": 4.5,
+   "cedar_h_m": [
+    11,
+    16
+   ],
+   "_cedar": "per step: 2 outside cedars 9-34 m from centre, 11-16 m tall, plus an inside cedar (p .8) 7.2-12 m out, 9-14 m tall; card width h/3; steps 4.5 m on straights (3.2 m on the arc, not used: one spacing per district strip) (art/ui/line_select_cam/build_lsc.py@ab1c4a1:221-234). Colours from art/ui/line_select_cam/make_tex.py@ab1c4a1 cedar card",
+   "verge_w_m": 8,
+   "outside_side": 1,
+   "_outside_side": "the only Touge corner in this test is HP L, so its outside is +1 (right); lamps and the outside cedar drop follow the frames' outside-of-corner layout",
+   "lamp_post_d_m": 7.3,
+   "lamp_head_d_m": 5.6,
+   "road_half_m": 5.0,
+   "edge_d_m": 4.72,
+   "edge_w_m": 0.13,
+   "lane_div_d_m": 1.65,
+   "lane_div_w_m": 0.11,
+   "lane_div_dash_m": [
+    3.0,
+    3.0
+   ],
+   "shoulder": "#969692",
+   "cedar_in_h_m": [
+    9,
+    14
+   ],
+   "cedar_out_d_m": [
+    9.0,
+    34.0
+   ],
+   "cedar_in_d_m": [
+    7.2,
+    12.0
+   ],
+   "cedar_in_p": 0.8,
+   "cedar_w_ratio": 0.3333,
+   "ridge": "#101E32",
+   "_ridge": "far ridge silhouette (16,30,50), 'just off the blend50 fog' (art/ui/line_select_cam/make_tex.py@ab1c4a1 ridge_far); replaces the Phase 4 PLACEHOLDER"
   },
   "street": {
    "_source": "design/art/art_direction.md@55b9063 B.3 Urban Street (Q1 resolved: Tokyo Drift style import scene on Japanese streets) + B.2a palette",
@@ -332,5 +377,35 @@
   "amber": "#FFB028",
   "amber_d": "#96500E",
   "_hud": "lane_chain/v5/post_v5.py:14-17 (RED/GRN/YEL/AMBER/EDGE/INK/PANEL), 50/50 PS1 semi-transparent panels (post_v5.py:149-153)"
+ },
+ "_lane_width": "art/ui/line_select_cam/build_lsc.py@ab1c4a1:31 LANE OUT/MID/IN = -3.3/0/+3.3 m (was a 3.0 placeholder)",
+ "select_cam": {
+  "_source": "B.5b camera stops (design/art/art_direction.md@ab1c4a1:255-263); poses from art/ui/line_select_cam/build_lsc.py@ab1c4a1:247-252 (right hairpin, centre-lane radius 12 m: CX,CY,RAD build_lsc.py:29). Mapped onto our corner path by arc fraction (DERIVED: the mockup only has a 180 deg hairpin)",
+  "apex": {
+   "cam_arc": 0.4222,
+   "cam_out_m": 10.5,
+   "cam_h": 8.0,
+   "tgt_arc": 0.5333,
+   "tgt_in_m": 2.5,
+   "tgt_y": -0.8,
+   "fov": 70.79,
+   "_src": "AP_PHI 104 deg, AP_R 22.5, AP_Z 8.0, target phi 84 deg at r 9.5, z -0.8, lens 19 mm (build_lsc.py:247-249); arc runs phi 180->0 so cam = 76/180, target = 96/180 of the arc; 22.5-12 = 10.5 m outside, 12-9.5 = 2.5 m inside"
+  },
+  "exit": {
+   "cam_arc": 0.75,
+   "cam_out_m": 7.5,
+   "cam_h": 7.5,
+   "tgt_after_m": 24.0,
+   "tgt_in_m": 1.0,
+   "tgt_y": -1.2,
+   "fov": 70.79,
+   "_src": "EX_F .75, EX_OFF -7.5 (outside), EX_Z 7.5, target 24 m down the exit straight at +1.0 (inside), z -1.2, lens 19 mm (build_lsc.py:250-252)"
+  },
+  "move_s": 0.8,
+  "_move_s": "PLACEHOLDER: camera move time between stops (no doc/frame value)",
+  "lock_hold_s": 1.2,
+  "_lock_hold_s": "PLACEHOLDER: LINE LOCKED hold on the Entry chase camera before playback runs (B.5b 'the camera returns to Entry, and playback runs'; frame 4 shows the banner; no duration given)",
+  "hide_cars_at_stops": true,
+  "_hide": "B.5b:258-259 'without the rival'; frames 2_apex_pick / 3_exit_pick show no cars at all, so the player car is hidden too"
  }
 }

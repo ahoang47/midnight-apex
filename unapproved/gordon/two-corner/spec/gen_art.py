@@ -44,10 +44,21 @@ def road(dk, cfg):
         x, y = R.randrange(W), R.randrange(H); pts = [(x, y)]
         for _ in range(R.randrange(3, 8)): x += R.randint(-10, 10); y += R.randint(-8, 8); pts.append((x, y))
         d.line(pts, fill=(22, 22, 26), width=1)
-    cl = W // 2; dash = int(4 * PXV)
-    for v in range(0, H, dash * 2): d.rectangle([cl - 2, v, cl + 2, v + dash], fill=(168, 168, 164))   # centre dashes
     edge = tuple(int(c) for c in hx(cfg['edge_line']))
-    e0 = int(0.4 * PXU); d.rectangle([e0, 0, e0 + 2, H], fill=edge); d.rectangle([W - e0 - 3, 0, W - e0 - 1, H], fill=edge)
+    if dk == 'touge':   # B.5b frame road (line_select_cam/build_lsc.py:136-155): 3 lanes, dashed dividers, solid edges, concrete shoulder
+        cx = W / 2; X = lambda m: int(round(cx + m * PXU))
+        sh = tuple(int(c) for c in hx(cfg['shoulder']))
+        d.rectangle([0, 0, X(-cfg['road_half_m']) - 1, H], fill=sh); d.rectangle([X(cfg['road_half_m']), 0, W, H], fill=sh)
+        on, off = cfg['lane_div_dash_m']
+        for sgn in (-1, 1):
+            e = sgn * cfg['edge_d_m']; hw = cfg['edge_w_m'] / 2
+            d.rectangle([X(e - hw), 0, max(X(e - hw), X(e + hw) - 1), H], fill=edge)
+            l = sgn * cfg['lane_div_d_m']; hw = cfg['lane_div_w_m'] / 2
+            for v in np.arange(0, tile, on + off): d.rectangle([X(l - hw), int(v * PXV), max(X(l - hw), X(l + hw) - 1), int((v + on) * PXV) - 1], fill=edge)
+    else:
+        cl = W // 2; dash = int(4 * PXV)
+        for v in range(0, H, dash * 2): d.rectangle([cl - 2, v, cl + 2, v + dash], fill=(168, 168, 164))   # centre dashes
+        e0 = int(0.4 * PXU); d.rectangle([e0, 0, e0 + 2, H], fill=edge); d.rectangle([W - e0 - 3, 0, W - e0 - 1, H], fill=edge)
     a = np.asarray(im).astype(np.float32) / 255
     # B.2a lighting, structured like the blend50 mockup (tones/work/lane/build_v5.py:219-228, 268-275):
     #   texture x (ambient x amb_k + 3-step vertex pools r 13 m x lamp_k x lane_ground_lamp) + additive 3-step pool decal (13 m square)
@@ -56,7 +67,7 @@ def road(dk, cfg):
     vv, uu = np.mgrid[0:H, 0:W]; sod = hx(cfg['lamp_colour']) / 255; n = PAL['pool_steps']
     for lamp in cfg['lamps']:                      # [s within tile, side]
         for rep in (-1, 0, 1):                     # wrap so pools tile seamlessly
-            cv = (lamp[0] + rep * tile) * PXV; cu = (W_m + lamp[1] * (W_m - 0.8)) * PXU
+            cv = (lamp[0] + rep * tile) * PXV; cu = (W_m + lamp[1] * cfg.get('lamp_head_d_m', W_m - 0.8)) * PXU
             dv = (vv - cv) / PXV; du = (uu - cu) / PXU; dd = np.sqrt(dv ** 2 + du ** 2)
             lv = np.floor(np.clip(1 - np.sqrt(dd ** 2 + 6.35 ** 2) / 13.0, 0, 1) * PAL['vertex_steps']) / PAL['vertex_steps']   # 3D distance to a head 6.35 m up (build_v5.py:115,225)
             light += lv[..., None] * sod * PAL['lamp_k'] * PAL['lane_ground_lamp'] * CAL['road_vertex_lamp_gain']
@@ -68,25 +79,35 @@ def verge(cfg):      # flat shoulder strip, 30 m wide, tile 6 m
     W, H = 240, 48; a = np.tile(hx(cfg['verge']), (H, W, 1)) + noise(W, H, 2, 18, 5)[..., None] + noise(W, H, 12, 14, 6)[..., None]
     return prelit(Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)), 1.0)
 
-def guardrail():     # W-beam on posts, 1.0 m high wall strip, tile 4 m; x = height (0 bottom), y = along; alpha cut-out
-    PX = 32; W, H = 32, 4 * PX
+def guardrail(h_m):  # W-beam on posts, h_m high wall strip, tile 4 m; x = height (0 bottom), y = along; alpha cut-out
+    # B.5b frames: beam 0.42-0.80 m, posts 0.76 m every 2 m (line_select_cam/build_lsc.py:167-179); colours make_tex.py guardrail + post (.55,.57,.58)
+    PX = 40; W, H = PX, 4 * PX; X = lambda m: int(round(m / h_m * PX))
     im = Image.new('RGBA', (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     for y in (0, 2 * PX):
-        d.rectangle([0, y, int(0.62 * PX), y + 3], fill=(92, 98, 100, 255))                      # post (x = up)
-    beam = [(int(0.42 * PX), (150, 158, 160)), (int(0.50 * PX), (186, 192, 192)), (int(0.58 * PX), (120, 126, 128))]
-    for i, (x, c) in enumerate(beam): d.rectangle([x, 0, x + 2, H], fill=c + (255,))
-    for y in range(0, H, 2 * PX): d.rectangle([int(0.42 * PX), y + PX - 1, int(0.60 * PX), y + PX + 1], fill=(70, 74, 76, 255))  # splice
+        d.rectangle([0, y, X(0.76), y + 4], fill=(140, 145, 148, 255))                           # post (x = up)
+    b0, b1 = X(0.42), min(W - 1, X(0.80))
+    d.rectangle([b0, 0, b1, H], fill=(176, 182, 186, 255))                                       # galvanised beam
+    d.rectangle([b1 - 2, 0, b1, H], fill=(206, 212, 214, 255)); d.rectangle([b0, 0, b0 + 2, H], fill=(140, 146, 150, 255))
+    m = (b0 + b1) // 2; d.rectangle([m - 1, 0, m, H], fill=(110, 116, 122, 255))                 # crease
+    for y in (14, 46, 94, 126): d.rectangle([m - 2, int(y / 160 * H), m + 1, int(y / 160 * H) + 3], fill=(240, 208, 120, 255))  # reflector dots
     return prelit(im)
 
-def cedar(seed):     # cut-out card, 128x256 (2:1); layered dark cone, cold green (B.3 "cedar cards")
-    rs = random.Random(seed); W, H = 128, 256
+def cedar(seed):     # cut-out card 64x192 (1:3), the B.5b frame cedar recipe (line_select_cam/make_tex.py: tiers, needle clumps, trunk)
+    rs = random.Random(seed); W, H = 64, 192
     im = Image.new('RGBA', (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
-    d.rectangle([60, 200, 68, H], fill=(38, 30, 26, 255))
-    for k in range(9):
-        y = 12 + k * 22; hw = 10 + k * 6
-        c = (int(28 + rs.randint(0, 10)), int(44 + rs.randint(0, 12)), int(40 + rs.randint(0, 10)), 255)
-        d.polygon([(64, y - 4), (64 + hw, y + 30), (64 - hw, y + 30)], fill=c)
-        d.line([(64 - hw + 4, y + 29), (64 + hw - 4, y + 29)], fill=(20, 30, 28, 255), width=2)
+    d.rectangle((30, 150, 33, 191), fill=(74, 52, 40, 255)); d.line((31, 150, 31, 191), fill=(98, 72, 52, 255))
+    for i in range(9):
+        top = 4 + i * 17; hw = 6 + i * 3.1; bot = top + 26; pts = [(32, top)]
+        for k in range(7):
+            t = (k + 1) / 7; pts.append((32 + hw * t + rs.uniform(-1.5, 1.5), top + (bot - top) * t ** .7 + rs.uniform(-2, 2)))
+        for k in range(7):
+            t = 1 - k / 7; pts.append((32 - hw * t + rs.uniform(-1.5, 1.5), top + (bot - top) * t ** .7 + rs.uniform(-2, 2)))
+        d.polygon(pts, fill=(34, 70, 58, 255))
+        for k in range(int(hw * 2)):
+            x = 32 + rs.uniform(-hw, hw) * .9; y = top + 6 + abs(x - 32) / max(hw, 1) * 14 + rs.uniform(-3, 3)
+            for dx, c in ((0, (58, 104, 82, 255)), (1, (48, 92, 72, 255))):
+                if 0 <= x + dx < W and 0 <= y < H and im.getpixel((int(x + dx), int(y)))[3]: d.point((x + dx, y), fill=c)
+        d.line([(32 - hw * .9, bot - 3), (32 + hw * .9, bot - 3)], fill=(20, 44, 38, 255))
     return prelit(im, 1.0)
 
 def sidewalk():      # 4.5 m wide strip (x across), tile 4 m (y along)
@@ -181,7 +202,7 @@ def ridge(seed, W=512, H=64):        # Touge: far ridge silhouette, a shade dark
     rs = random.Random(seed); im = Image.new('RGBA', (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     pts = [(0, H)]; y = H * .5
     for x in range(0, W + 16, 16): y = min(H - 6, max(8, y + rs.randint(-6, 6))); pts.append((x, y))
-    pts.append((W, H)); d.polygon(pts, fill=(30, 36, 40, 255)); return im   # PLACEHOLDER colour: a shade darker than the Touge fog
+    pts.append((W, H)); d.polygon(pts, fill=tuple(int(c) for c in hx(D['districts']['touge']['ridge'])) + (255,)); return im   # far ridge (16,30,50): line_select_cam/make_tex.py ridge_far
 def glow(col, size=64):
     yy, xx = np.mgrid[0:size, 0:size]; r = np.sqrt((xx - size / 2 + .5) ** 2 + (yy - size / 2 + .5) ** 2) / (size / 2)
     a = np.clip(1 - r, 0, 1) ** 2.2; c = hx(col)
@@ -224,7 +245,7 @@ def logo(w=384):        # approved V3 wordmark (art/logo/final, Austin 2026-11-0
 if __name__ == '__main__':
     for dk, cfg in DIST.items():
         save(road(dk, cfg), f'{dk}_road.png'); save(verge(cfg), f'{dk}_verge.png'); save(sky(cfg), f'{dk}_sky.png')
-    save(guardrail(), 'touge_rail.png'); save(cedar(1), 'touge_cedar_a.png'); save(cedar(2), 'touge_cedar_b.png'); save(ridge(3), 'touge_ridge.png')
+    save(guardrail(D['districts']['touge']['wall_h_m']), 'touge_rail.png'); save(cedar(1), 'touge_cedar_a.png'); save(cedar(2), 'touge_cedar_b.png'); save(ridge(3), 'touge_ridge.png')
     save(sidewalk(), 'street_walk.png'); save(facade_strip(), 'street_facade.png'); save(skyline(1), 'street_skyline.png')
     for i, c in enumerate(DIST['street']['neon']): save(neon_blank(c), f'street_neon_{i}.png')
     for k in ('cone', 'bike', 'plant', 'vending'): save(cutout(k), f'street_cut_{k}.png')

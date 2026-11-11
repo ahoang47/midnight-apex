@@ -1,11 +1,11 @@
 # Two-corner engine test (Godot 4.6.3)
 
-> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. It is the one exception to the combat freeze. The sim is pinned at **212eaab** (`212eaab99282fbc1c6fd5a9fc50048445ae01716`). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
+> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. Phase 5 UI/camera follows AD B.5a/B.5b at **ab1c4a1**. It is the one exception to the combat freeze. The sim is pinned at **212eaab** (`212eaab99282fbc1c6fd5a9fc50048445ae01716`). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
 
 > **2026-11-11: Three.js dropped (Austin).** The Godot build is the only one worked on and tested; parity is Godot vs the pinned sim.
 > Notes below that mention `threejs/` are historical; that tree is not in this copy.
 
-This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at 212eaab), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots4/composites/`.
+This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at 212eaab), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
 
 Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `212eaab` — do not use this branch's live `sim/`, which has moved on. `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` still writes a Three.js constants file if `threejs/src/core/` exists.
 
@@ -24,8 +24,8 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
 ## Run
 - Parity (Godot vs sim, dump/load, restart test, Plan the Line key test): `tools/run_parity.sh`
 - Restart test (Godot game loop): `tools/run_restart_test.sh`
-- Screenshots + frame sequences (Godot): `tools/run_shots.sh [inputs-name] [outroot=out/shots4]`
-- Live check of the web export on :5176: `node tools/live_check_godot.mjs` (writes `out/shots4/live/` relative to this directory). The web export and the Playwright install from `threejs/node_modules` are not in this copy, so this script is noted only.
+- Screenshots + frame sequences (Godot): `tools/run_shots.sh [inputs-name] [outroot=out/shots5]`
+- Live check of the web export on :5176: `node tools/live_check_godot.mjs` (writes `out/shots5/live/` relative to this directory). The web export and the Playwright install from `threejs/node_modules` are not in this copy, so this script is noted only.
 - Godot, play (from this directory): `/workspace/tools/godot --path godot`
   - from the repo root: `/workspace/tools/godot --path unapproved/gordon/two-corner/godot`
   - add `--rendering-driver opengl3` on the box
@@ -39,7 +39,7 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
 - Keys:
   - Main menu: Up/Down select, Enter confirm; on SEED, 0-9 type and Backspace delete (empty = random seed). QUIT is Godot desktop only
   - Finish screen: 1 restart same seed, 2 new race (random seed), 3 main menu (or Left/Right + Enter)
-  - Plan the Line (selection): Up/Down choose the option for the current phase (Left/Right also work on ENTRY), Enter sets it and moves to
+  - Plan the Line (selection, at the B.5b camera stops): Up/Down choose the option for the current phase (Left/Right also work on ENTRY), Enter sets it and moves to
     the next phase (Enter on EXIT locks the line), Backspace goes back one phase. Enter on the result = next corner / finish.
     (Hidden legacy: 1-6 still pick a hand index directly.)
   - Space stops the timing needle
@@ -100,4 +100,22 @@ Sources (pin 212eaab): `design/art/art_direction.md` (Part A binding for cars, P
   ENTRY strip (OUT = Attack, MID = Neutral, IN = Defend, same lane rule as the tell), turn-in plate + 16-segment timer under the mirror,
   player lane chevrons over the road, 'Line locks at turn-in'. Corner playback: LINE LOCKED strip with the current phase in amber,
   then per-clash results in the same strip. Gap meter moved to the top right. Scripted inputs are unchanged (`pick` = hand indices).
-- Shots: `out/shots4/`; composites (`python3 tools/phase4_composites.py`, paths are relative to this directory): `out/shots4/composites/`. This copy keeps only `before_after.png`, `vs_lane_chain_v5.png` and `plan_the_line_sheet.png`; regenerating them still needs the full `out/shots3` and `out/shots4` frame sets, which are not included.
+- Shots: `out/shots4/`; composites (`python3 tools/phase4_composites.py`, paths are relative to this directory): `out/shots4/composites/`. Those Phase 4 composites were removed from this copy in Phase 5 (superseded; see git history).
+
+## Phase 5 (2026-11-11, display/UI/camera only, parity unchanged): B.5b camera stops + B.5a line vs line
+Sources: `design/art/art_direction.md` at **ab1c4a1** (`ab1c4a12f69b23ccd74cd8982629b73a4865a127`) B.5b (lines 255-263) and B.5a (265-270), both approved by Austin
+2026-11-11; reference frames `art/ui/line_select_cam/` (with `build_lsc.py`, `post_lsc.py`, `make_tex.py`) and `art/ui/line_vs_line/` (built by
+`unapproved/arthur/mockups/line_clash/post_clash.py`, option A). Full source table: `out/PHASE5_REPORT.md`.
+- **Selection walks the corner (B.5b).** Entry: the fixed chase camera (frame values, build_lsc.py:245) on the scrolling straight, rival in its Entry lane,
+  rear-view mirror on. Apex: the camera moves to a raised view from the corner's outside (build_lsc.py:247-249). Exit: the camera moves to the exit
+  (build_lsc.py:250-252). At the Apex and Exit stops the corner is shown with no cars and no mirror, and the straight stops scrolling. Backspace walks
+  back a stop. When the line locks (Enter on Exit, or the 12 s timer auto-fills), the camera returns to Entry with the LINE LOCKED banner (frame 4),
+  then playback runs. The B.5b timer (17 segments) sits top left; the corner plate (top right) marks the stop E / A / X.
+- **Playback (B.5a).** The Phase 4 LINE LOCKED strip is replaced by the line-vs-line panel: YOU and RIVAL rows, both full lines face up from the start
+  (no flips), amber outline on the column being played, RESULT (WIN / LOSS / TIE) filling in per phase. No pause or clash beats. The corner plate shows
+  the phase being played. RESULT is computed with the sim's own pure `resolve_stance` (no RNG), and the key test checks it equals the sim's outcomes.
+- **Kept:** Plan the Line option labels ('<Stance> <phase>'), POW/EN/HAN chips, 'none drawn' greying, the navy/teal palette, 640x480 without CRT,
+  menu and restart, the overtake rule (cars hold through the corner camera and snap when it returns to rear chase), the provisional W=1 hook, the sim pin
+  and the parity harness. The playback camera is still the guide §13.3 authored path.
+- **Touge dressing** now comes from the approved B.5b Touge frames (road paint, guardrail, cedars, ridge, lamps, fog 9-78 m); see the report.
+- Shots: `out/shots5/` on the box prototype (GIFs `corner1_touge_HP_full.gif`, `corner2_street_N90_full.gif`). This copy keeps only `out/shots5/composites/` (`vs_line_select_cam.png`, `vs_line_vs_line.png`, `before_after_phase4.png`, palette-quantised to fit the size budget); `python3 tools/phase5_composites.py` needs the full frame sets.

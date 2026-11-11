@@ -6,6 +6,7 @@ extends Control
 const RaceCore = preload("res://scripts/race_core.gd")
 const Track = preload("res://scripts/track.gd")
 const C = preload("res://scripts/sim_constants.gd")
+const Combat = preload("res://scripts/combat.gd")  # display uses the pure resolve_stance only (no RNG)
 const CAR_SH = preload("res://shaders/car.gdshader")
 const ENV_SH = preload("res://shaders/env.gdshader")
 const POST_SH = preload("res://shaders/post.gdshader")
@@ -61,6 +62,7 @@ var clock := 0.0
 var rig := "BCH"
 var cam_pos := Vector3.ZERO
 var cam_look := Vector3.ZERO
+var cam_fov := 56.7
 var cam_path: Path3D
 var cam_follow: PathFollow3D
 var cam_curve_built := false
@@ -81,6 +83,13 @@ var shot_pre := ""
 # ── PLAN THE LINE selection (display/input only; every pick still goes through core.pick(hand index)) ──
 const PLAN_ORDER := ["A", "S", "D"]   # rows: Attack / Neutral / Defend = OUT / MID / IN
 var plan_sel := 0
+# ── B.5b camera stops (display only): stop 0 = Entry (chase, rival visible), 1 = Apex, 2 = Exit (corner geometry, no cars) ──
+var SC: Dictionary
+var last_stop := 0
+var stop_t := 99.0
+var stop_from = null
+var lock_hold_t := 99.0
+var lock_from = null
 
 func _arg(k: String, def = null):
 	var a := OS.get_cmdline_user_args()
@@ -93,7 +102,7 @@ func _json(p: String) -> Dictionary:
 func _ready() -> void:
 	cfg = _json("res://spec/race_config.json")
 	disp = _json("res://spec/display.json")
-	RS = disp.road_scroller; CC = disp.corner_cams
+	RS = disp.road_scroller; CC = disp.corner_cams; SC = disp.select_cam
 	scroller = RoadScroller.new(RS)
 	road_W = float(disp.lane_width_m) * 1.5 + 1.0
 	if _arg("--script-inputs") != null:
@@ -130,6 +139,7 @@ func _plan_key_test() -> void:
 		for step in 60:
 			if core.phase != "SELECT": break
 			assert(int(_plan_avail()[PLAN_ORDER[plan_sel]]) > 0)
+			if _sel_stop() != mini(core.picks.size(), 2): push_error("seed %d: camera stop %d != picks %d" % [sd, _sel_stop(), core.picks.size()]); get_tree().quit(1); return
 			var k: int = keys[rng.randi() % keys.size()]
 			var before: Array = core.picks.duplicate(); var want: String = PLAN_ORDER[plan_sel]
 			handle_key(k)
@@ -145,7 +155,11 @@ func _plan_key_test() -> void:
 		if core.phase == "TIMING":
 			n_lock += 1
 			if core.player_line() != chosen or core.autofilled: push_error("seed %d: locked %s, chose %s" % [sd, core.player_line(), chosen]); get_tree().quit(1); return
-	print("PLAN KEY TEST PASS: 200 seeds, %d locked by keys" % n_lock)
+			var shown := []   # B.5a panel results (shown during playback) must equal the sim's outcomes
+			for i in 3: shown.append(Combat.resolve_stance(core.player_line()[i], core.line[i]))
+			core.submit_timing(5.0)
+			if str(shown) != str(core.result.outcomes): push_error("seed %d: panel %s != sim %s" % [sd, str(shown), str(core.result.outcomes)]); get_tree().quit(1); return
+	print("PLAN KEY TEST PASS: 200 seeds, %d locked by keys; camera stop == picks every step; B.5a panel results == sim outcomes" % n_lock)
 	get_tree().quit(0)
 
 # ── viewports, post, HUD ──
@@ -166,7 +180,7 @@ func _build_viewports() -> void:
 	mirror_vp.world_3d = world_vp.world_3d
 	mirror_vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	add_child(mirror_vp)
-	mirror_cam = Camera3D.new(); mirror_cam.fov = disp.mirror.fov; mirror_cam.far = 300.0
+	mirror_cam = Camera3D.new(); mirror_cam.fov = disp.mirror.fov; mirror_cam.near = float(disp.mirror.near); mirror_cam.far = 300.0
 	mirror_vp.add_child(mirror_cam); mirror_cam.current = true
 	env_mat = ShaderMaterial.new(); env_mat.shader = ENV_SH
 	cam_path = Path3D.new(); world_vp.add_child(cam_path)  # authored corner camera path (§13.3)
@@ -393,19 +407,23 @@ func _build_district(pth, s0: float, s1: float, dk: String) -> Dictionary:
 			var side: float = L[1]
 			var lamp := Node3D.new()
 			var post := MeshInstance3D.new(); post.mesh = _lamp_mesh(); post.material_override = env_mat; post.extra_cull_margin = 16384.0; lamp.add_child(post)
-			var gl := _glow_sprite("glow_lamp", Color(1, 1, 1), 1.5, 0.9)  # tinted texture (make_tone_tex.py per-lamp), 1.5 m billboard at 0.9 (build_v5.py:276); gl.position = Vector3(-1.3, 6.3, 0); lamp.add_child(gl)
+			var gl := _glow_sprite("glow_lamp", Color(1, 1, 1), 1.5, 0.9)  # tinted texture (make_tone_tex.py per-lamp), 1.5 m billboard at 0.9 (build_v5.py:276)
+			gl.position = Vector3(-1.3, 6.3, 0); lamp.add_child(gl)   # (Phase 5 fix: Phase 4 had this line swallowed by the comment above, so lamp heads had no glow)
 			lamp.scale.x = side  # arm reaches over the road on either side
-			add.call(lamp, a0 + n * per + float(L[0]), side * (W + 1.2 if dk == "touge" else W + 0.6))
+			add.call(lamp, a0 + n * per + float(L[0]), side * (float(D.lamp_post_d_m) if D.has("lamp_post_d_m") else W + 0.6))
 	if dk == "touge":
 		for sd in [-1.0, 1.0]:
 			g.add_child(_strip(pth, a0, a0 + rng, sd * W, sd * (W + float(D.verge_w_m)), _strip_mat("touge_verge", 6.0)))
 			g.add_child(_strip(pth, a0, a0 + rng, sd * (W + float(D.wall_d_m)), 0.0, _strip_mat("touge_rail", 4.0), float(D.wall_h_m)))
-		var k := 0
-		while k * float(D.cedar_spacing_m) < rng:
-			for sd in [-1, 1]:
-				var h: float = D.cedar_h_m * (0.8 + 0.4 * _hash(k * 2 + sd))
-				var c := _cross_card("touge_cedar_a" if _hash(k + sd * 7) < 0.5 else "touge_cedar_b", h * 0.5, h)
-				add.call(c, a0 + k * float(D.cedar_spacing_m) + _hash(k * 3 + sd) * float(D.cedar_spacing_m) * 0.6, sd * (W + 2.5 + _hash(k * 5 + sd) * 9.0))
+		var k := 0; var sp: float = D.cedar_spacing_m; var out: float = D.outside_side
+		while k * sp < rng:   # B.5b frames (build_lsc.py:221-234): 2 outside cedars + an inside one (p .8) per step
+			var trees := []
+			for j in 2: trees.append([out * lerpf(D.cedar_out_d_m[0], D.cedar_out_d_m[1], _hash(k * 5 + j)), lerpf(D.cedar_h_m[0], D.cedar_h_m[1], _hash(k * 2 + j + 0.5))])
+			if _hash(k * 7 + 0.3) < float(D.cedar_in_p): trees.append([-out * lerpf(D.cedar_in_d_m[0], D.cedar_in_d_m[1], _hash(k * 9 + 0.7)), lerpf(D.cedar_in_h_m[0], D.cedar_in_h_m[1], _hash(k * 4 + 0.9))])
+			for ti in trees.size():
+				var tr: Array = trees[ti]; var h: float = tr[1]
+				var c := _cross_card("touge_cedar_a" if _hash(k + ti * 7) < 0.5 else "touge_cedar_b", h * float(D.cedar_w_ratio), h)
+				add.call(c, a0 + k * sp + (_hash(k * 3 + ti) - 0.5) * 4.0, tr[0])
 			k += 1
 	else:
 		var sw: float = D.sidewalk_w_m
@@ -497,6 +515,7 @@ func _setup_corner() -> void:
 	_build_road(c.district)
 	s_player = 8.0; phase_t = 0.0; qte_t = 0.0; qte_stopped = null; reveal = 0; cam_curve_built = false; leader_changed = false
 	plan_sel = 0; _plan_fix_sel(0)
+	last_stop = 0; stop_t = 99.0; stop_from = null; lock_hold_t = 99.0; lock_from = null
 	rival_lane_d = Track.lane_offset(core.entry_tell().lane, c.dir, disp.lane_width_m)
 	rival_offset_target = Track.rival_draw_offset(core.lead(), disp.visual_gap)
 	scroller.transition_to_straight()
@@ -560,12 +579,28 @@ func handle_key(k: int) -> void:
 					core.pick(idx)
 					if core.picks.size() >= 3: _do_lock()   # Enter on EXIT locks the line
 					else: _plan_fix_sel(0)
-	elif core.phase == "TIMING" and k == KEY_SPACE and qte_stopped == null:
+	elif core.phase == "TIMING" and k == KEY_SPACE and qte_stopped == null and lock_hold_t >= float(SC.lock_hold_s):
 		qte_stopped = sin(TAU * qte_t / float(disp.qte.period_s))
 	elif core.phase == "RESULT" and (k == KEY_ENTER or k == KEY_KP_ENTER) and reveal >= 3:
 		core.next()
 		if core.phase != "FINISHED": _setup_corner()
 		else: _return_to_chase()
+
+## corner plate title: turn type + direction (frames: 'HAIRPIN R'; N90 label from display.json corner_cams / guide §13.3)
+func _corner_name(c: Dictionary) -> String:
+	var n := {"HP": "HAIRPIN", "N90": "90-DEGREE"}
+	return "%s %s" % [n.get(String(c.corner), String(c.corner)), c.dir]
+
+## corner plate map: the corner path squeezed into the plate (forward = up), with the E / A / X stop marks
+func _plate_icon() -> Dictionary:
+	var pts := []; var arc: float = path.R * path.A
+	var s0: float = path.S - 14.0; var s1: float = path.S + arc + 14.0
+	for i in 25:
+		var q: Dictionary = path.point(lerpf(s0, s1, i / 24.0), 0.0); pts.append(Vector2(q.x, q.z))
+	var st := []
+	for sv in [path.S - 6.0, path.S + arc * 0.5, path.S + arc + 6.0]:
+		var q: Dictionary = path.point(sv, 0.0); st.append(Vector2(q.x, q.z))
+	return {"pts": pts, "stops": st}
 
 ## stance availability = copies in the hand minus picks already used
 func _plan_avail(skip_first := false) -> Dictionary:
@@ -598,7 +633,7 @@ func _maybe_snap() -> void:
 	if pending_snap and back_t >= float(CC.transition_to_straight_s):
 		rival_offset = rival_offset_target; pending_snap = false
 
-func _in_straight() -> bool: return core.phase == "SELECT"
+func _in_straight() -> bool: return core.phase == "SELECT" and _sel_stop() == 0  # Apex/Exit stops show the corner geometry (B.5b)
 
 func _place(car: Node3D, pth, s: float, d: float) -> Dictionary:
 	var p: Dictionary = pth.point(s, d)
@@ -612,6 +647,7 @@ func _qte_score(pos: float) -> float:
 	return clampf(roundf(10.0 - 9.0 * absf(pos)), 1.0, 10.0)
 
 func _do_lock() -> void:
+	lock_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}; lock_hold_t = 0.0
 	core.lock(); phase_t = 0.0; scroller.transition_to_corner()  # §13.2/§14.2 transition_to_corner
 	await _shot("%slock%d" % [shot_pre, core.corner_index])
 
@@ -705,10 +741,20 @@ func _run_one_race(race: Dictionary, pre: String) -> void:
 				await _shot("seq_select%d_%d" % [ci, i])
 		var pk: Array = inp.get("pick", [])
 		for j in pk.size():
-			if seqs and j > 0:   # Plan the Line shots: apex / exit phase (picks are the scripted hand indices, unchanged)
-				_plan_fix_sel(0); await _shot("plan_%s%d" % ["apex" if j == 1 else "exit", ci])
+			if seqs and j > 0:   # B.5b camera stops: Apex / Exit pick shots once the camera has arrived (picks are the scripted hand indices, unchanged)
+				_plan_fix_sel(0)
+				await _wait_game(func(): return stop_t >= float(SC.move_s) + 0.1)
+				await _shot("plan_%s%d" % ["apex" if j == 1 else "exit", ci])
 			core.pick(int(pk[j]))
+			if seqs and j < 2 and j + 1 < pk.size():
+				for m in 3:   # camera-move frames between stops
+					await _wait_game(func(): return stop_t >= (m + 1) * float(SC.move_s) / 4.0)
+					await _shot("seq_move%d_%d_%d" % [ci, j, m])
 		await _do_lock()
+		if seqs:
+			for m in 3:   # camera back to Entry + LINE LOCKED banner (B.5b frame 4)
+				await _wait_game(func(): return lock_hold_t >= (m + 1) * float(SC.lock_hold_s) / 3.2)
+				await _shot("seq_lock%d_%d" % [ci, m])
 		script_timing = float(inp.timing); qte_stopped = 0.0
 		for i in (SEQ_CORNER_N if seqs else 0):
 			await _wait_game(func(): return core.phase != "TIMING" or qte_t >= (i + 0.5) / SEQ_CORNER_N * float(disp.playback_s))
@@ -730,13 +776,19 @@ func _run_one_race(race: Dictionary, pre: String) -> void:
 func _process(dt: float) -> void:
 	dt = minf(dt, 0.05)
 	if busy: return
-	phase_t += dt; clock += dt; back_t += dt
-	scroller.update(dt)
+	phase_t += dt; clock += dt; back_t += dt; stop_t += dt
+	if core.phase == "SELECT":
+		var stp := _sel_stop()
+		if stp != last_stop:
+			stop_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}; stop_t = 0.0; last_stop = stp
+	if core.phase == "TIMING": lock_hold_t += dt
+	if not (core.phase == "SELECT" and _sel_stop() > 0):   # the straight keeps scrolling at the Entry stop; Apex/Exit stops are still frames of the corner
+		scroller.update(dt)
 	var v: float = scroller.speed_ms()
 	if mode == "MENU": phase_t = 0.0  # backdrop: the straight scrolls, the selection timer never runs
 	if core.phase == "SELECT" and phase_t >= RaceCore.STRAIGHT_DURATION and script_in == null:
 		_do_lock()  # timer expiry -> auto-fill (guide §4.2)
-	if core.phase == "TIMING":
+	if core.phase == "TIMING" and lock_hold_t >= float(SC.lock_hold_s):
 		qte_t += dt
 		var travel: float = path.S + path.R * path.A + 10.0 - 8.0
 		s_player = 8.0 + travel * minf(1.0, qte_t / float(disp.playback_s)); v += travel / float(disp.playback_s)
@@ -753,15 +805,51 @@ func _process(dt: float) -> void:
 	wheel_angle += minf(float(RS.wheel_spin_cap_rad_s), v / 0.31) * dt
 	_render_hud(); _update_scene()
 
+## fixed chase camera (B.5b frames: build_lsc.py:245, see display.json camera)
 func _chase_pose(pp: Dictionary) -> Array:
-	var t := Vector3(pp.tx, 0, pp.tz); var p := Vector3(pp.x, 0, pp.z)
-	return [p - t * float(disp.camera.back) + Vector3(0, disp.camera.height, 0), p + t * float(disp.camera.look_ahead) + Vector3(0, 0.8, 0)]
+	var t := Vector3(pp.tx, 0, pp.tz); var p := Vector3(pp.x, 0, pp.z); var rt := Vector3(-pp.tz, 0, pp.tx)
+	var k := 1.0; var cm: Dictionary = disp.camera   # 'fixed' chase camera: frame offsets as given, not mirrored per corner
+	return [p - t * float(cm.back) + rt * (k * float(cm.side)) + Vector3(0, cm.height, 0),
+		p + t * float(cm.look_ahead) + rt * (k * float(cm.look_side)) + Vector3(0, cm.look_y, 0)]
+
+func _sel_stop() -> int: return mini(core.picks.size(), 2) if core.phase == "SELECT" and mode == "RACE" else 0
+
+## B.5b Apex / Exit stop poses on the corner path: [pos, look, fov]
+func _stop_pose(stop: int) -> Array:
+	var c: Dictionary = core.corner(); var k: float = Track.inside_sign(String(c.dir)); var arc: float = path.R * path.A
+	var q: Dictionary = SC.apex if stop == 1 else SC.exit
+	var out_m: float = float(q.cam_out_m)
+	var D: Dictionary = DIST[String(c.district)]
+	if D.has("sidewalk_w_m"): out_m = minf(out_m, road_W + float(D.sidewalk_w_m) - 0.5)   # Street: stay in front of the facade wall (no Street frame exists; DERIVED)
+	var cp: Dictionary = path.point(path.S + arc * float(q.cam_arc), -k * out_m)
+	var ts: float = path.S + arc * float(q.tgt_arc) if stop == 1 else path.S + arc + float(q.tgt_after_m)
+	var tp: Dictionary = path.point(ts, k * float(q.tgt_in_m))
+	return [Vector3(cp.x, q.cam_h, cp.z), Vector3(tp.x, q.tgt_y, tp.z), float(q.fov)]
 
 ## camera rig: chase (BCH) / authored corner Path3D (BCL/BCR, §13.3) / swing back to chase. No swing_overtake (Austin override).
 func _update_camera(pp: Dictionary) -> void:
 	var ch := _chase_pose(pp)
 	var c: Dictionary = core.corner()
 	var cc = CC.get(c.corner)
+	cam_fov = float(disp.camera.fov)
+	var stp := _sel_stop()
+	if core.phase == "SELECT" and (stp > 0 or (stop_from != null and stop_t < float(SC.move_s))):
+		var tgt: Array = _stop_pose(stp) if stp > 0 else [ch[0], ch[1], float(disp.camera.fov)]
+		rig = ["BCH", "STA", "STX"][stp]
+		if stop_from != null and stop_t < float(SC.move_s):
+			var kk := Track.smooth(stop_t / float(SC.move_s))
+			cam_pos = (stop_from.pos as Vector3).lerp(tgt[0], kk); cam_look = (stop_from.look as Vector3).lerp(tgt[1], kk); cam_fov = lerpf(float(stop_from.fov), tgt[2], kk)
+		else:
+			cam_pos = tgt[0]; cam_look = tgt[1]; cam_fov = tgt[2]
+		return
+	if core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s):   # B.5b: camera returns to Entry, LINE LOCKED, then playback
+		rig = "BCH"
+		if lock_from != null and lock_hold_t < float(SC.move_s):
+			var kk := Track.smooth(lock_hold_t / float(SC.move_s))
+			cam_pos = (lock_from.pos as Vector3).lerp(ch[0], kk); cam_look = (lock_from.look as Vector3).lerp(ch[1], kk); cam_fov = lerpf(float(lock_from.fov), cam_fov, kk)
+		else:
+			cam_pos = ch[0]; cam_look = ch[1]
+		return
 	if _in_straight() or core.phase == "FINISHED":
 		rig = "BCH"
 		if back_from != null and back_t < float(CC.transition_to_straight_s):
@@ -805,17 +893,32 @@ func _update_scene() -> void:
 	for m in scroll_mats:
 		if m.has_meta("scrolls"): m.set_shader_parameter("scroll_m", scroller.scroll_m())
 	_stream_district(straight_d if st else corner_d, scroller.scroll_m())
+	var at_stop: bool = core.phase == "SELECT" and mode == "RACE" and _sel_stop() > 0
+	for it in corner_d.items:   # keep props out of the stop lens (build_lsc.py:254 drops cedars within 5.5 m of a camera)
+		var o: Node3D = it.obj
+		o.visible = not (at_stop and Vector2(o.position.x - cam_pos.x, o.position.z - cam_pos.z).length() < 5.5)
 	var pth = straight_path if st else path
 	var pp := _place(player_car, pth, s_player, 0.0)
 	_place(rival_car, pth, s_player + rival_offset, rival_lane_d)
 	_update_camera(pp)
 	cam.position = cam_pos
 	cam.look_at(cam_look)
+	cam.fov = cam_fov; glow_cam.fov = cam_fov
 	glow_cam.global_transform = cam.global_transform
+	var cars_on: bool = not (core.phase == "SELECT" and mode == "RACE" and _sel_stop() > 0 and bool(SC.hide_cars_at_stops))
+	player_car.visible = cars_on; rival_car.visible = cars_on
+	post_mat.set_shader_parameter("mirror_on", 1.0 if _mirror_on() else 0.0)
 	sky_root.position = cam_pos  # painted sky follows the camera
 	var t := Vector3(pp.tx, 0, pp.tz); var p := Vector3(pp.x, 0, pp.z)
-	mirror_cam.position = p - t * 2.6 + Vector3(0, 1.15, 0)  # just behind the rear bumper
-	mirror_cam.look_at(p - t * 30.0 + Vector3(0, 0.9, 0))
+	mirror_cam.position = p + Vector3(0, float(disp.mirror.cam_up), 0)  # build_lsc.py:246
+	mirror_cam.look_at(p - t * float(disp.mirror.look_back) + Vector3(0, float(disp.mirror.look_y), 0))
+
+## rear-view mirror only on the chase camera (B.5b frames 1 and 4); none during corner playback (B.5a frames) or at the Apex/Exit stops
+func _mirror_on() -> bool:
+	if mode == "MENU": return false   # the menu logo sits where the mirror goes
+	if core.phase == "SELECT": return _sel_stop() == 0 and not (stop_from != null and stop_t < float(SC.move_s))
+	if core.phase == "TIMING": return lock_hold_t < float(SC.lock_hold_s)
+	return core.phase == "FINISHED" and back_t >= float(CC.transition_to_straight_s)
 
 func _render_hud() -> void:
 	if mode == "MENU":
@@ -839,9 +942,18 @@ func _render_hud() -> void:
 			lanes[k] = null if cam.is_position_behind(wp) else cam.unproject_position(wp)
 	var pline: String = core.player_line() if core.phase == "TIMING" else (String((r as Dictionary).get("player_line", "")) if core.phase != "SELECT" else "")
 	var play_phase: int = mini(2, int(floor(3.0 * qte_t / float(disp.playback_s))))
+	# B.5a: both full lines face up from the start of playback; RESULT per phase from the sim's own resolve_stance (pure, no RNG)
+	var rline: String = core.line if core.phase == "TIMING" else (String((r as Dictionary).get("line", "")) if core.phase != "SELECT" else "")
+	var outs := []
+	if pline.length() == 3 and rline.length() == 3:
+		for i in 3: outs.append(Combat.resolve_stance(pline[i], rline[i]))
+	var plate := {"name": _corner_name(c), "icon": _plate_icon(), "mode": "VIEW", "stop": _sel_stop(), "done": core.picks.size()}
+	if core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s): plate.mode = "LOCK"
+	elif core.phase == "TIMING": plate.mode = "PLAY"; plate.stop = play_phase
+	elif core.phase != "SELECT": plate.mode = "DONE"
 	hud.show_state({"phase": core.phase, "title": "CORNER %d/%d %s %s (%s)" % [core.corner_index + 1, cfg.corners.size(), String(c.district).to_upper(), c.corner, c.dir],
 		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "lead": core.lead(), "gap": core.gap(),
 		"left": left, "total": RaceCore.STRAIGHT_DURATION, "slots": slots, "hand": core.hand, "used": core.picks,
-		"needle": qte_stopped if qte_stopped != null else sin(TAU * qte_t / float(disp.qte.period_s)), "line": pline, "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
+		"needle": qte_stopped if qte_stopped != null else sin(TAU * qte_t / float(disp.qte.period_s)), "line": pline, "rline": rline, "outs": outs, "plate": plate, "locked_hold": core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s), "mirror": _mirror_on(), "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
 		"result": r, "reveal": reveal, "leader_changed": leader_changed, "winner": core.winner() if core.phase == "FINISHED" else "", "cum_p": core.cum_p, "cum_o": core.cum_o,
 		"last_corner": core.corner_index + 1 >= cfg.corners.size(), "fin": fin if core.phase == "FINISHED" else null})

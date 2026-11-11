@@ -130,17 +130,138 @@ func _draw() -> void:
 	if st.is_empty(): return
 	if st.has("menu"):
 		_draw_menu(st.menu); return
-	box(4, 4, 196, 26); text(9, 8, st.title); text(9, 18, st.sub)
-	box(500, 4, 136, 26); text(505, 8, "640x480 RGB555"); text(505, 18, "F9 dump F10 load")
-	_gap_meter(436, 34)
+	if st.mirror: _mirror_frame()
+	_corner_plate()
+	_gap_meter(203, 428)
 	if st.phase == "SELECT":
-		_turn_in(); _lanes(); _entry_strip(); _plan_panel()
+		_timer_panel(false); _debug(14, 64)
+		if int(st.plate.stop) == 0: _lanes()
+		_entry_strip(); _plan_panel()
+	elif st.phase == "TIMING" and st.locked_hold:
+		_timer_panel(true); _debug(14, 64); _lock_banner()
 	elif st.phase == "TIMING":
-		_timing_panel(); _replay_strip(-1)
+		_line_vs_line(int(st.play_phase)); _debug(14, 106); _timing_panel()
 	else:
-		_replay_strip(mini(3, int(st.reveal)))
+		_line_vs_line(-1); _debug(14, 106)
 		if st.phase == "FINISHED": _finish_panel()
 		else: _result_line()
+
+# ── B.5a / B.5b frame palette (art/ui/line_select_cam/post_lsc.py:15-17, unapproved/arthur/mockups/line_clash/post_clash.py:15-17) ──
+const L_WHITE := Color8(220, 230, 242); const L_DIM := Color8(140, 159, 180); const L_DIMMER := Color8(96, 108, 132)
+const L_EDGE := Color8(71, 94, 127); const L_EDGE_L := Color8(150, 172, 205); const L_AMBER := Color8(255, 184, 56); const L_AMBER_D := Color8(150, 90, 20)
+const L_INK := Color8(8, 10, 16); const SOD := Color8(240, 200, 148); const L_SEG_OFF := Color8(68, 52, 40); const L_TODO := Color8(40, 46, 64)
+const PHN := ["ENTRY", "APEX", "EXIT"]
+
+func lpanel(x0: float, y0: float, x1: float, y1: float, col: Color = L_EDGE, c := 5.0) -> void:
+	var p := cut_panel(x0, y0, x1, y1, c); semi(p, PANEL); outline(p, col)
+## stance chip (post_clash.py:39-42): 49 x 14 slanted, label = ATK / DEF / NEU
+func lchip(x: float, y: float, k: String, w := 49.0) -> void:
+	var p := P([x + 4, y, x + w, y, x + w - 4, y + 14, x, y + 14]); solid(p, STANCE[k]); outline(p, L_INK)
+	t2(x + w / 2, y + 7, NAME[k], 11, L_INK if k == "S" else Color.WHITE, false, "m", false, true)
+## RESULT chip (post_clash.py:43-47)
+func lres(cx: float, y: float, o: int) -> void:
+	var w := 49.0; var x := cx - floorf(w / 2); var p := P([x + 4, y, x + w, y, x + w - 4, y + 14, x, y + 14])
+	if o == 1: solid(p, L_AMBER); t2(cx, y + 7, "WIN", 11, L_INK, false, "m", false, true)
+	elif o == -1: solid(p, Color8(40, 44, 60)); outline(p, L_EDGE_L); t2(cx, y + 7, "LOSS", 11, L_WHITE, false, "m", false, true)
+	else: solid(p, L_EDGE); t2(cx, y + 7, "TIE", 11, L_WHITE, false, "m", false, true)
+
+## rear-view mirror frame (post_lsc.py:46-48); the image itself is composited by the post shader
+func _mirror_frame() -> void:
+	draw_rect(Rect2(221.5, 13.5, 197, 69), Color8(110, 127, 151), false, 1.0); draw_rect(Rect2(222.5, 14.5, 195, 67), Color8(15, 20, 30), false, 1.0)
+	t2(291, 84, "REAR VIEW", 9, L_DIM)
+
+## B.5b line-lock timer, top left (post_lsc.py:50-58): 17 segments; after the lock 'SET' with every segment lit pale
+func _timer_panel(locked: bool) -> void:
+	lpanel(14, 12, 192, 57); t2(23, 18, "LINE LOCK", 12, L_WHITE)
+	var on := 17 if locked else ceili(17.0 * float(st.left) / float(st.total))
+	if locked: t2(183, 18, "SET", 19, L_WHITE, false, "r")
+	else: t2(183, 18, "%04.1fs" % float(st.left), 19, L_AMBER, false, "r")
+	for j in 17:
+		solid(P([24 + j * 9, 43, 30 + j * 9, 43, 28 + j * 9, 50, 22 + j * 9, 50]), L_EDGE_L if locked else (L_AMBER if j < on else L_SEG_OFF))
+
+## corner plate, top right (B.5b:261-262 / B.5a:269; post_lsc.py:60-73, post_clash.py:48-55): corner map + E / A / X stops
+func _corner_plate() -> void:
+	var pl: Dictionary = st.plate
+	lpanel(476, 12, 628, 96); t2(534, 18, String(pl.name), 16, L_WHITE)
+	var md: String = pl.mode; var k: int = int(pl.stop)
+	var cur := -1; var ndone := 0
+	match md:
+		"VIEW": cur = k; ndone = k
+		"LOCK": cur = 0; ndone = 3
+		"PLAY": cur = k; ndone = k
+		_: cur = -1; ndone = 3
+	var lab := "PLAY" if md in ["PLAY", "DONE"] else "VIEW"
+	t2(534, 40, lab, 9, L_DIM)
+	t2(560, 38, "RESULT" if md == "DONE" else PHN[cur], 13, L_AMBER)
+	if md in ["VIEW", "LOCK"]:
+		var lt := ["E", "A", "X"]
+		for i in 3:
+			var on_cur := i == cur; var dn := (md == "LOCK" and i > 0) or (md == "VIEW" and i < cur)
+			t2(534 + i * 14, 58, lt[i], 10, L_AMBER if on_cur else (L_WHITE if dn else L_DIMMER))
+	t2(534, 74, "PLAYBACK" if lab == "PLAY" else "CAMERA STOP", 9, L_DIM)
+	# map: fit the path into x 486..526, y 28..90, forward = up
+	var ic: Dictionary = pl.icon; var pts: Array = ic.pts
+	var mn := Vector2(1e9, 1e9); var mx := Vector2(-1e9, -1e9)
+	for v in pts: mn = Vector2(minf(mn.x, v.x), minf(mn.y, v.y)); mx = Vector2(maxf(mx.x, v.x), maxf(mx.y, v.y))
+	var sc := minf(40.0 / maxf(mx.x - mn.x, 1.0), 58.0 / maxf(mx.y - mn.y, 1.0))
+	var ctr := (mn + mx) / 2.0
+	var f := func(v: Vector2) -> Vector2: return Vector2(506, 60) + (v - ctr) * sc
+	var line := PackedVector2Array()
+	for v in pts: line.append(f.call(v))
+	draw_polyline(line, SOD, 3.0)
+	var e: Vector2 = line[line.size() - 1]; var dvec: Vector2 = (e - line[line.size() - 2]).normalized(); var nv := Vector2(-dvec.y, dvec.x)
+	solid(PackedVector2Array([e + dvec * 6, e - dvec * 4 + nv * 6, e - dvec * 4 - nv * 6]), SOD)
+	for i in 3:
+		var c: Vector2 = f.call(ic.stops[i])
+		var dn := i < ndone and i != cur
+		var dia := P([c.x, c.y - 5, c.x + 5, c.y, c.x, c.y + 5, c.x - 5, c.y])
+		solid(dia, L_AMBER if i == cur else (L_WHITE if dn else L_TODO)); outline(dia, L_INK)
+
+## debug readout (seed / pin / rig / keys), kept small and out of the approved panels
+func _debug(x: float, y: float) -> void:
+	box(x, y, 178, 36); text(x + 5, y + 4, st.title); text(x + 5, y + 14, st.sub); text(x + 5, y + 24, "F9 dump  F10 load", Color("#ADADC8"))
+
+## B.5b frame 4 (post_lsc.py:120-130): LINE LOCKED banner over the Entry chase camera, then playback runs
+func _lock_banner() -> void:
+	var x0 := 176.0; var y0 := 112.0; var x1 := 404.0; var y1 := 150.0
+	semi(cut_panel(x0 - 6, y0 - 4, x1 + 6, y1 + 22, 9), PANEL)
+	var slab := P([x0 + 10, y0, x1, y0, x1 - 10, y1, x0, y1])
+	var sh := PackedVector2Array()
+	for v in slab: sh.append(v + Vector2(2, 3))
+	solid(sh, L_AMBER_D); solid(slab, L_AMBER); outline(slab, L_INK)
+	draw_line(Vector2(x0 + 12, y0 + 3), Vector2(x1 - 4, y0 + 3), Color8(255, 236, 170))
+	t2((x0 + x1) / 2.0, (y0 + y1) / 2.0 + 1, "LINE LOCKED", 26, L_INK, true, "m", false, true)
+	var ln: String = st.line if String(st.line).length() == 3 else ""
+	for k in ln.length():
+		var cx := x0 + 22 + k * 70; lchip(cx, y1 + 5, ln[k])
+		if k < 2: t2(cx + 57, y1 + 5, ">", 12, L_DIM)
+
+## B.5a LINE LOCKED panel (post_clash.py:62-85): YOU and RIVAL rows face up from the start, amber outline on the column
+## being played, RESULT fills in as each phase plays. k = phase being played (-1 = playback over: every result shown).
+func _line_vs_line(k: int) -> void:
+	var you: String = st.line; var riv: String = st.rline; var outs: Array = st.outs
+	if you.length() < 3 or riv.length() < 3: return
+	var x0 := 120.0; var y0 := 12.0; var x1 := 466.0; var y1 := 100.0
+	lpanel(x0, y0, x1, y1, L_EDGE_L, 8)
+	t2(x0 + 8, y0 + 6, "LINE LOCKED", 12, L_AMBER, true)
+	var cols := [241.0, 331.0, 421.0]
+	for i in 3:
+		var cx: float = cols[i]; var cur := i == k
+		if cur:
+			outline(cut_panel(cx - 42, y0 + 3, cx + 42, y1 - 3, 5), L_AMBER)
+			solid(P([cx - 30, y0 + 9, cx - 25, y0 + 13, cx - 30, y0 + 17]), L_AMBER)
+		t2(cx, y0 + 13, PHN[i], 11, L_AMBER if cur else (L_WHITE if (k < 0 or i < k) else L_DIM), false, "m", true, true)
+	var rows := [["YOU", you, 30.0], ["RIVAL", riv, 50.0]]
+	for rw in rows:
+		var dy: float = rw[2]
+		t2(x0 + 8, y0 + dy + 1, rw[0], 11, L_WHITE if rw[0] == "YOU" else L_DIM)
+		for i in 3: lchip(cols[i] - 24, y0 + dy, String(rw[1])[i])
+		for i in 2: t2(cols[i] + 45, y0 + dy + 7, ">", 10, L_DIMMER, false, "m", true, true)
+	t2(x0 + 8, y0 + 71, "RESULT", 11, L_DIM)
+	for i in 3:
+		if (k < 0 or i <= k) and outs.size() == 3: lres(cols[i], y0 + 70, int(outs[i]))
+		else: t2(cols[i], y0 + 77, "- -", 11, L_DIMMER, false, "m", true, true)
+	draw_line(Vector2(x0 + 6, y0 + 25), Vector2(x1 - 8, y0 + 25), L_EDGE)
 
 ## gap / lead meter, moved to the top right (the mirror owns top centre, the turn-in plate sits under it)
 func _gap_meter(x: float, y: float) -> void:
@@ -153,25 +274,6 @@ func _gap_meter(x: float, y: float) -> void:
 	if lead > 0: rect(cx, y + 16, w, 4, Color("#3CC8FF"))
 	elif lead < 0: rect(cx - w, y + 16, w, 4, Color("#FF3C8C"))
 	rect(cx, y + 13, 1, 10, Color.WHITE); text(cx - 90, y + 26, "RIVAL"); text(cx + 90 - tw("YOU"), y + 26, "YOU")
-
-## corner-warning plate (post_v5.py:91-96), moved below the rear-view mirror; segmented line-lock timer (pattern_read 16 segments + 04.8s readout)
-func _turn_in() -> void:
-	var px := 296.0; var py := 56.0
-	var pl := cut_panel(px, py, px + 48, py + 34, 7); semi(pl, PANEL); outline(pl, EDGE)
-	var ar := [12, 29, 12, 13, 28, 13, 28, 7, 38, 16, 28, 25, 28, 19, 18, 19, 18, 29]
-	if st.dir == "L":
-		for i in range(0, ar.size(), 2): ar[i] = 48 - ar[i]
-	var a := PackedVector2Array(); var sh := PackedVector2Array()
-	for i in range(0, ar.size(), 2):
-		a.append(Vector2(px + ar[i], py + ar[i + 1])); sh.append(Vector2(px + ar[i] + 1, py + ar[i + 1] + 2))
-	solid(sh, AMBER_D); solid(a, AMBER); outline(a, INK)
-	t2(px + 24, py + 38, "TURN-IN %dm" % roundi(float(st.turn_m)), 11, EDGE, true, "m")
-	var n := 16; var on := ceili(16.0 * float(st.left) / float(st.total))
-	var x0 := 320.0 - (n * 9) / 2.0 - 18.0; var y0 := py + 54
-	for j in n:
-		var x := x0 + j * 9
-		solid(P([x + 2, y0, x + 8, y0, x + 6, y0 + 12, x, y0 + 12]), AMBER if j < on else SEG_OFF)
-	t2(x0 + n * 9 + 40, y0 - 2, "%04.1fs" % float(st.left), 15, AMBER, false, "r")
 
 ## lane markers over the turn-in point (post_v5.py:66-88): chosen = amber chevron, available = faint tick, none drawn = dark tick crossed out
 func _lanes() -> void:
@@ -260,38 +362,6 @@ func _plan_panel() -> void:
 	t2(x0 + 9, y1 - 16, "Line locks at turn-in", 10, SUB, true)
 	t2(x1 - 10, y1 - 16, "Enter SET  Bksp BACK", 10, SUB, false, "r")
 
-## LINE LOCKED strip (post_v5.py:132-148). During playback the current phase is the amber band; in RESULT each clash fills in as it is revealed.
-func _replay_strip(reveal: int) -> void:
-	var line: String = st.line
-	if line.length() < 3: return
-	var r: Dictionary = st.result
-	var x0 := 12.0; var y0 := 432.0; var x1 := 628.0; var y1 := 468.0
-	semi(cut_panel(x0, y0, x1, y1, 8), PANEL); outline(cut_panel(x0, y0, x1, y1, 8), EDGE)
-	var tab := P([x0, y0 - 14, x0 + 92, y0 - 14, x0 + 102, y0, x0, y0]); solid(tab, EDGE); outline(tab, INK)
-	t2(x0 + 7, y0 - 13, "LINE LOCKED", 12, INK, true, "l", false)
-	t2(x1 - 10, y0 - 12, "REPLAY" if reveal < 0 else "RESULT", 10, SUB, true, "r")
-	var cur: int = int(st.play_phase) if reveal < 0 else -1
-	var x := x0 + 4; var w := 200.0
-	for i in 3:
-		var k: String = line[i]
-		var state := "cur" if i == cur else ("done" if (reveal < 0 and i < cur) or (reveal >= 0 and i < reveal) else "todo")
-		if state == "cur":
-			var band := P([x + 2, y0 + 4, x + w, y0 + 4, x + w - 5, y1 - 4, x - 3, y1 - 4]); semi(band, AMBER, 190 / 255.0); outline(band, AMBER)
-		t2(x + 6, y0 + 5, PH[i], 10, INK if state == "cur" else SUB, true, "l", state != "cur")
-		var call: String = "%s %s" % [FULL[k], PHL[i]]
-		t2(x + 6, y0 + 16, call, 13, Color.WHITE if state == "cur" else (Color8(225, 232, 250) if state == "done" else Color8(125, 135, 165)), false)
-		if reveal >= 0 and i < reveal and not r.is_empty():
-			var o: int = int(r.outcomes[i]); var ok := {1: "WIN", 0: "TIE", -1: "LOSS"}[o] as String
-			var ox := x + 6 + sw(PH[i], 10, true) + 8
-			t2(ox, y0 + 5, "%s vs %s  +%.2f/+%.2f" % [ok, NAME[r.line[i]], float(r.player_clash[i]), float(r.opponent_clash[i])], 10, AMBER if o == 1 else (EDGE if o == 0 else Color8(150, 150, 170)), true)
-			chip(x + w - 8, y0 + 18, TAG[r.line[i]], STANCE[r.line[i]], false, false, 9, 11.0)
-			chip(x + w - 8 - sw(TAG[r.line[i]], 9) - 16, y0 + 18, TAG[k], STANCE[k], false, false, 9, 11.0)
-		else:
-			if state == "done" and reveal < 0: check(x + 6 + sw(call, 13) + 5, y0 + 20, STANCE.D)
-			chip(x + w - 8, y0 + 12, TAG[k], STANCE[k], false, state == "todo")
-		x += w + 2
-		if i < 2: draw_line(Vector2(x - 1, y0 + 6), Vector2(x - 5, y1 - 6), EDGE_D)
-
 ## compact timing needle (SPACE), kept from the earlier build, above the strip
 func _timing_panel() -> void:
 	box(232, 372, 176, 40); center(320, 376, [["TIMING - SPACE", WHITE]])
@@ -303,8 +373,8 @@ func _result_line() -> void:
 	if r.is_empty(): return
 	var tm := ("%d" % int(r.timing)) if float(r.timing) == floorf(float(r.timing)) else str(r.timing)
 	var s := "timing %s (q %.2f)%s%s" % [tm, r.q_time, " [auto]" if r.autofilled else "", "  LEAD CHANGE" if st.leader_changed else ""]
-	t2(120, 419, s, 10, SUB, true)
-	if int(st.reveal) >= 3: t2(618, 404, "Enter: finish" if st.last_corner else "Enter: next corner", 11, EDGE, true, "r")
+	t2(200, 104, s, 10, SUB, true)
+	if int(st.reveal) >= 3: t2(200, 117, "Enter: finish" if st.last_corner else "Enter: next corner", 11, EDGE, true)
 
 ## finish: winner + options (keys 1-3, or arrows + Enter), centre panel above the strip
 func _finish_panel() -> void:
