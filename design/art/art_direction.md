@@ -183,12 +183,27 @@ from the right place.
   pre-lit, sidewalks lit by vertex colour.
 - **Facades:** pre-lit night textures × vertex light; lit and dark windows, window lettering, AC units.
 - **Car in scene:** fake env-map shine + Blinn spec, emissive lamps + glow sprites, blob shadow, headlight-throw decal.
-- **Frame:** native 640×448, 1 sample, no AA (filter size 0), Standard view transform (no filmic), **bloom on neon
+- **Frame:** native 640×448 *(vibe check; the game standard is now 640×480, Q3 resolved)*, 1 sample, no AA (filter size 0), Standard view transform (no filmic), **bloom on neon
   only**, then RGB555 + 4×4 Bayer, then 2× nearest upscale (1280×896).
 - **Composition:** storefronts never brighter than the car; avoid big flat cartoony panels in the hero shot.
 - Scene budget was ~12k triangles including the car.
 
+### B.2a Night palette: navy/teal + pale sodium [APPROVED 2026-11-11]
+Approved by the lead (2026-11-11). This is the world palette for night scenes and **supersedes the warm sodium,
+fog, sky and ambient values in B.2** (warm orange washes read as PS3/360). Source preset: `blend50` ("B HALF TEAL")
+in the tone study script (`mockups/tones/work/tones.py`, outside the repo).
+| Group | Value |
+|---|---|
+| Sky/fog | fog `#0B172B`, zenith `#010408`, no city-glow band |
+| Ambient | ambient `#5575A0` at 0.8 strength |
+| Lamps | **every** street lamp is one pale cream sodium `#F0C894` (no alternating lamp colours); lamp strength 0.85 |
+| Pools | hard painted pools, **3 steps**, pool strength 0.09 |
+| Post | bloom 0.22 strength, 0 threshold; saturation 1.05 |
+Orange stays on lamps and highlights only, over the cool navy/teal base with dark blue-black shadows.
+B.2's car, window, wall, neon and signage colours still apply until re-checked against this base.
+
 ### B.2 Tokyo v2 palette [VIBE] (from the style-reference sheet)
+*Sodium, sky/fog and ambient rows superseded by B.2a.*
 | Group | Hex |
 |---|---|
 | Car | body paint `#C70D0F`, panel line `#2C0406`, soft top `#1E1E20`, head glow `#FFF2CC`, tail glow `#FF1F14` |
@@ -205,8 +220,8 @@ were lost with the box and are **re-proposed** here.
   lamps, guardrails and cedar cards. Fog colour ≈ `#2A3236`, near/far ≈ 8–55 m *(re-proposed)*.
 - **Wangan** (highway, neon horizon): deep navy sky with a magenta/orange horizon band, long sodium lamp rows, concrete
   barriers, distant lit skyline cards. Fog ≈ `#1C1A30`, near/far ≈ 30–220 m *(re-proposed)*.
-- **Urban Street** (structured loops, "Americanized scene" — meaning open, Q1): Tokyo v2 palette is the starting point if
-  it's an import scene on Japanese streets; fog ≈ `#30263F`, 14–105 m (as v2).
+- **Urban Street** (structured loops): a Tokyo Drift style import scene on **Japanese streets** (Q1, resolved
+  2026-11-11). Uses the B.2a palette (fog `#0B172B`); fog distances 14–105 m as v2.
 
 ### B.4 Cameras [PROPOSAL]
 - **Overworld:** angled semi-isometric (Racing Lagoon / PS1 Final Fantasy). Perspective with a long lens vs true
@@ -233,8 +248,8 @@ were lost with the box and are **re-proposed** here.
 - Characters never appear in-world. JoJo-style 2D portraits/overlays use the same low-res, limited-palette treatment
   (palette size open, Q7). Whether painted silhouettes behind shop windows count as "characters in-world" is open (Q5).
 - Faces follow `face_{scowling|grinning|focused}_{atk|def|neu}.png` and `tell_*` overlays (Appendix E).
-- Stance colours (Attack / Defend / Neutral-or-Steady) should be reserved for UI and not used for world neon
-  *(proposal; stance name is Q6)*.
+- Stance colours (Attack / Defend / **Neutral**) should be reserved for UI and not used for world neon
+  *(proposal)*. The third stance is **Neutral** (`neu`) in all art/UI files (Q6, resolved 2026-11-11).
 - Bitmap-style font, 9-slice panels drawn at native resolution.
 
 ### B.6 Engine-side environment notes [PROPOSAL]
@@ -262,13 +277,13 @@ were lost with the box and are **re-proposed** here.
   when the game imports them *(proposal)*.
 
 ### C.2 Open questions for the lead
-- **Q1** Urban Street "Americanized": a Tokyo-Drift-style import scene on Japanese streets, or actual American streets?
+- ~~Q1~~ **Resolved 2026-11-11:** Urban Street is a Tokyo Drift style import scene on Japanese streets.
 - **Q2** Approve the Touge and Wangan palettes and fog distances (B.3).
-- **Q3** Resolution: 640×480 (project setting, current default) or 640×448 (approved shots)? And should **car review**
-  keep the low-res reference frame (A.5) now that running the whole game at it is only a proposal?
-- **Q4** Texture filtering: smooth (as in the approved shots) or sharp/unfiltered (harder PS1 feel)?
+- ~~Q3~~ **Resolved 2026-11-11:** game resolution is **640×480**. (Whether car review keeps the low-res frame in A.5
+  is still worth confirming.)
+- ~~Q4~~ **Resolved 2026-11-11:** textures use **smooth filtering**.
 - **Q5** Do customer silhouettes painted into shop windows break "characters never rendered in-world"?
-- **Q6** Third stance name for art/UI files: **Neutral** or **Steady**?
+- ~~Q6~~ **Resolved 2026-11-11:** the third stance is **Neutral**.
 - **Q7** Portrait palette limit (e.g. 32 or 64 colours per portrait)?
 - **Q8** Overworld camera: perspective (long lens) or orthographic?
 - **Q9** Mod attach points: which parts are swappable (wing, hood, bumpers, wheels) and where they attach?
@@ -279,13 +294,13 @@ Also pending: confirm the IoU bar (A.1.2), reserving stance colours for UI (B.5)
 - **K1** `design/godot-build-guide.md` says "Low-poly PS1-style" car body; the car budget is now ≤ 2,000 tris per car
   (A.2.1, 2026-10-31; the first reference builds were ~4.4k). Proposal: reword to "low-poly PSX/early-PS2 style,
   ≤ 2k tris per car incl. wheels".
-- **K2** Third stance called "Neutral" in some docs and "Steady" in lockout tables/UI asset list (Q6).
+- **K2** *(resolved by Q6: Neutral)* Third stance called "Neutral" in some docs and "Steady" in lockout tables/UI asset list (Q6).
 - **K3** Pitch says three Myth Drivers; plot outline and Sabine's sheet mention a fourth.
-- **K4** Project display is 640×480; the approved vibe-check frames were 640×448 (Q3).
+- **K4** *(resolved by Q3: 640×480)* Project display is 640×480; the approved vibe-check frames were 640×448 (Q3).
 - **K5** "Night-only city" vs the story opening that establishes normal daytime life (needs a daytime look or a cut).
 - **K6** Appendix E lists one car body shared by both cars; the art pipeline now has multiple models (S2000, BRZ) —
   shared-body-plus-livery still holds per model.
-- **K7** Urban Street is "an Americanized scene" while inspirations and the vibe check are Japanese (Q1).
+- **K7** *(resolved by Q1: Japanese streets)* Urban Street is "an Americanized scene" while inspirations and the vibe check are Japanese (Q1).
 
 ---
 
