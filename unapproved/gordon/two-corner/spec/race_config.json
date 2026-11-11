@@ -1,0 +1,18 @@
+{
+  "_doc": "Two-corner engine test. Shared by Godot, Three.js and tools/sim_parity.py. No balance numbers here: stats come from sim constants by name.",
+  "pin_commit": "212eaab99282fbc1c6fd5a9fc50048445ae01716",
+  "max_turns": 2,
+  "_max_turns_doc": "race length in turns = corners; kappa = kappa_for_length(2) -> nearest key 10 (sim rule, no interpolation)",
+  "stats": {
+    "_doc": "simulation.simulate_win_rate convention: Balanced builds, opp_total = SABINE_BUDGET (300.0, same value as simulate_win_rate's default), player total = r * opp_total, r = LADDER_R[rung]. Each stat = total / 3.0.",
+    "opp_total_const": "SABINE_BUDGET",
+    "ladder_rung": 6
+  },
+  "corners": [
+    {"district": "touge",  "corner": "HP",  "dir": "L", "_doc": "first corner of tracks_v1 T1_Akina_Switchbacks"},
+    {"district": "street", "corner": "N90", "dir": "R", "_doc": "first corner of tracks_v1 S1_Shibuya_Grid"}
+  ],
+  "_dir_doc": "corner direction is display-only (lane tell side). LINE_SET_C / tracks_v1 carry no L/R; PLACEHOLDER.",
+  "player": {"name": "Player", "car": "mx5"},
+  "opponent": {"name": "Crew Boss", "car": "s2000"}
+}

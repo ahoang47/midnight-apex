@@ -1,0 +1,85 @@
+{
+ "_doc": "Restart test (Austin 2026-11-10): race 1, then restart via each finish option. same = RESTART SAME SEED (key 1), new = NEW RACE (key 2, the random seed is preset by the harness), menu = MAIN MENU (key 3) -> type the seed -> START RACE. Every race must match the pinned sim.",
+ "races": [
+  {
+   "seed": 20261113,
+   "corners": [
+    {
+     "pick": [
+      0,
+      1,
+      2
+     ],
+     "timing": 7
+    },
+    {
+     "pick": [
+      5,
+      4,
+      3
+     ],
+     "timing": 10
+    }
+   ]
+  },
+  {
+   "seed": 20261113,
+   "corners": [
+    {
+     "pick": [
+      0,
+      1,
+      2
+     ],
+     "timing": 7
+    },
+    {
+     "pick": [
+      5,
+      4,
+      3
+     ],
+     "timing": 10
+    }
+   ]
+  },
+  {
+   "seed": 42,
+   "corners": [
+    {
+     "pick": [
+      3
+     ],
+     "timing": 1,
+     "_doc": "only 1 card picked -> timer expiry auto-fills"
+    },
+    {
+     "pick": [],
+     "timing": 5
+    }
+   ]
+  },
+  {
+   "seed": 21273,
+   "corners": [
+    {
+     "pick": [],
+     "timing": 7
+    },
+    {
+     "pick": [
+      1,
+      0,
+      5
+     ],
+     "timing": 8
+    }
+   ]
+  }
+ ],
+ "restart": [
+  "same",
+  "new",
+  "menu"
+ ]
+}

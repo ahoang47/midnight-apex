@@ -1,0 +1,251 @@
+{
+ "_source": "sim/velocity_shift/equations.py @ 212eaab99282fbc1c6fd5a9fc50048445ae01716",
+ "commit": "212eaab99282fbc1c6fd5a9fc50048445ae01716",
+ "values": {
+  "W0": 0.1,
+  "T_MAX": 0.75,
+  "L_MAX": 0.25,
+  "TAU_BETA": 0.1,
+  "TAU_P_TOP": 8.0,
+  "TAU_GAMMA": 0.0,
+  "MU": 0.5,
+  "ETA": 0.5,
+  "DECK_ALPHA": 0.85,
+  "HAND_SIZE": 6,
+  "LINE_ADHERENCE": 0.65,
+  "OPPONENT_QTE": 1.0,
+  "QTE_NORMALIZER": 10.0,
+  "PLAYER_QTE_MIN": 1.0,
+  "PLAYER_QTE_MAX": 10.0,
+  "PERFECT_QTE": 10.0,
+  "SABINE_BUDGET": 300.0,
+  "KNOT_WINDOW_105": [
+   [
+    0.8,
+    0.41
+   ],
+   [
+    0.85,
+    0.41
+   ],
+   [
+    0.9,
+    0.41
+   ],
+   [
+    0.95,
+    0.43
+   ],
+   [
+    1.0,
+    0.68
+   ],
+   [
+    1.05,
+    1.0
+   ]
+  ],
+  "KAPPA_BY_LENGTH": {
+   "10": 1.55,
+   "20": 1.35,
+   "30": 1.2
+  },
+  "RACE_LENGTHS": [
+   10,
+   20,
+   30
+  ],
+  "LINE_ALT_WEIGHTS": {
+   "alt1": 0.6,
+   "alt2": 0.4
+  },
+  "LINE_SET_C": {
+   "touge": {
+    "HP": [
+     "DSA",
+     "DDS",
+     "DSS"
+    ],
+    "CR": [
+     "SSA",
+     "SDS",
+     "SSS"
+    ],
+    "DR": [
+     "SDS",
+     "SAD",
+     "SDD"
+    ],
+    "IR": [
+     "SSA",
+     "SDS",
+     "SSS"
+    ],
+    "N90": [
+     "DSA",
+     "DDS",
+     "DSS"
+    ],
+    "CH": [
+     "SDA",
+     "SAS",
+     "SDS"
+    ],
+    "ES": [
+     "SSS",
+     "SDD",
+     "SSD"
+    ],
+    "SW": [
+     "SSA",
+     "SDS",
+     "SSS"
+    ]
+   },
+   "wangan": {
+    "HP": [
+     "DSA",
+     "DDS",
+     "DSS"
+    ],
+    "CR": [
+     "SAA",
+     "SSS",
+     "SAS"
+    ],
+    "DR": [
+     "DDS",
+     "DAD",
+     "DDD"
+    ],
+    "IR": [
+     "AAD",
+     "ASA",
+     "AAA"
+    ],
+    "N90": [
+     "DSA",
+     "DDS",
+     "DSS"
+    ],
+    "CH": [
+     "DSA",
+     "DDS",
+     "DSS"
+    ],
+    "ES": [
+     "SSS",
+     "SDD",
+     "SSD"
+    ],
+    "SW": [
+     "AAD",
+     "ASA",
+     "AAA"
+    ]
+   },
+   "street": {
+    "HP": [
+     "DDA",
+     "DAS",
+     "DDS"
+    ],
+    "CR": [
+     "DSD",
+     "DDA",
+     "DSA"
+    ],
+    "DR": [
+     "DDS",
+     "DAD",
+     "DDD"
+    ],
+    "IR": [
+     "SSA",
+     "SDS",
+     "SSS"
+    ],
+    "N90": [
+     "SSA",
+     "SDS",
+     "SSS"
+    ],
+    "CH": [
+     "DAA",
+     "DSS",
+     "DAS"
+    ],
+    "ES": [
+     "ASA",
+     "ADS",
+     "ASS"
+    ],
+    "SW": [
+     "DDD",
+     "DAA",
+     "DDA"
+    ]
+   }
+  },
+  "LADDER_R": [
+   1.13,
+   1.11,
+   1.1,
+   1.08,
+   1.07,
+   1.06,
+   1.05
+  ],
+  "LADDER_RUNGS": [
+   "kid",
+   "kid",
+   "mature",
+   "mature",
+   "old head",
+   "old head",
+   "crew boss"
+  ]
+ },
+ "float_bits": {
+  "W0": 4591870180066957722,
+  "T_MAX": 4604930618986332160,
+  "L_MAX": 4598175219545276416,
+  "TAU_BETA": 4591870180066957722,
+  "TAU_P_TOP": 4620693217682128896,
+  "TAU_GAMMA": 0,
+  "MU": 4602678819172646912,
+  "ETA": 4602678819172646912,
+  "DECK_ALPHA": 4605831338911806259,
+  "LINE_ADHERENCE": 4604029899060858061,
+  "OPPONENT_QTE": 4607182418800017408,
+  "QTE_NORMALIZER": 4621819117588971520,
+  "PLAYER_QTE_MIN": 4607182418800017408,
+  "PLAYER_QTE_MAX": 4621819117588971520,
+  "PERFECT_QTE": 4621819117588971520,
+  "SABINE_BUDGET": 4643985272004935680,
+  "KNOT_WINDOW_105[0][0]": 4605380978949069210,
+  "KNOT_WINDOW_105[0][1]": 4601057523306793533,
+  "KNOT_WINDOW_105[1][0]": 4605831338911806259,
+  "KNOT_WINDOW_105[1][1]": 4601057523306793533,
+  "KNOT_WINDOW_105[2][0]": 4606281698874543309,
+  "KNOT_WINDOW_105[2][1]": 4601057523306793533,
+  "KNOT_WINDOW_105[3][0]": 4606732058837280358,
+  "KNOT_WINDOW_105[3][1]": 4601417811276983173,
+  "KNOT_WINDOW_105[4][0]": 4607182418800017408,
+  "KNOT_WINDOW_105[4][1]": 4604300115038500291,
+  "KNOT_WINDOW_105[5][0]": 4607407598781385933,
+  "KNOT_WINDOW_105[5][1]": 4607182418800017408,
+  "KAPPA_BY_LENGTH[10]": 4609659398595071181,
+  "KAPPA_BY_LENGTH[20]": 4608758678669597082,
+  "KAPPA_BY_LENGTH[30]": 4608083138725491507,
+  "LINE_ALT_WEIGHTS[alt1]": 4603579539098121011,
+  "LINE_ALT_WEIGHTS[alt2]": 4600877379321698714,
+  "LADDER_R[0]": 4607767886751575572,
+  "LADDER_R[1]": 4607677814759028163,
+  "LADDER_R[2]": 4607632778762754458,
+  "LADDER_R[3]": 4607542706770207048,
+  "LADDER_R[4]": 4607497670773933343,
+  "LADDER_R[5]": 4607452634777659638,
+  "LADDER_R[6]": 4607407598781385933
+ }
+}

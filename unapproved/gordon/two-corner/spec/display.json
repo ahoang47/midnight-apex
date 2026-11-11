@@ -1,0 +1,336 @@
+{
+ "_doc": "DISPLAY-ONLY placeholders for the two-corner test. None of these touch scoring. Values marked PLACEHOLDER have no approved number (06-pattern-read: 'No distance number is approved; readability tests set it later').",
+ "base_w": 640,
+ "base_h": 480,
+ "lane_width_m": 3.0,
+ "visual_gap": {
+  "gap_scale_m_per_lead": 60.0,
+  "lead_cap_ahead_m": 14.0,
+  "min_spacing_m": 9.0,
+  "_doc": "PLACEHOLDER. drawn rival offset: lead<=0 -> ahead by min(max(min_spacing, -lead*scale), cap) [tie draws rival min_spacing ahead]; lead>0 -> behind by max(min_spacing, lead*scale), UNCAPPED (recedes in mirror)."
+ },
+ "road": {
+  "straight_m": 45.0,
+  "exit_m": 30.0,
+  "_doc": "PLACEHOLDER display geometry",
+  "by_code": {
+   "HP": {
+    "corner_radius_m": 14.0,
+    "corner_angle_deg": 180.0
+   },
+   "N90": {
+    "corner_radius_m": 10.0,
+    "corner_angle_deg": 90.0
+   }
+  }
+ },
+ "playback_s": 3.6,
+ "qte": {
+  "period_s": 1.2,
+  "_doc": "PROVISIONAL UX: needle pos = sin(2*pi*t/period); score = clamp(round(10 - 9*|pos|), 1, 10); no press before playback ends -> PLAYER_QTE_MIN"
+ },
+ "camera": {
+  "height": 2.1,
+  "back": 6.0,
+  "look_ahead": 12.0,
+  "fov": 65.0
+ },
+ "mirror": {
+  "x": 240,
+  "y": 6,
+  "w": 160,
+  "h": 44,
+  "fov": 40.0
+ },
+ "road_scroller": {
+  "_doc": "guide \u00a714.2 RoadScroller + \u00a713.1. GUIDE constants: scroll_speed (UV/s), corner burst factor 1.5 for 0.5 s then 0.6. Everything else here is a DISPLAY PLACEHOLDER (guide gives no value).",
+  "scroll_speed": 0.05,
+  "corner_burst_factor": 1.5,
+  "corner_burst_s": 0.5,
+  "corner_factor": 0.6,
+  "straight_factor": 1.0,
+  "_straight_factor_doc": "PLACEHOLDER: guide says 'faster during straight' but gives no value; 1.0 = baseline scroll_speed",
+  "road_uv_length_m": 500.0,
+  "_road_uv_length_doc": "PLACEHOLDER: metres of road per 1.0 of uv_offset (guide gives no texture scale) -> 0.05*1.0*500 = 25 m/s on the straight",
+  "road_tex_tile_m": 8.0,
+  "verge_tex_tile_m": 6.0,
+  "barrier_tex_tile_m": 4.0,
+  "straight_from_m": -96,
+  "straight_to_m": 288,
+  "lamp_spacing_m": 16.0,
+  "wheel_spin_cap_rad_s": 12.0,
+  "_wheel_doc": "PLACEHOLDER: true v/r (~80 rad/s) aliases at 60 fps on a 10-sided wheel",
+  "bob_amp_m": 0.012,
+  "bob_hz": 6.0,
+  "_bob_doc": "PLACEHOLDER: identical vertical bob on both cars, no pitch/roll (not a suspension tell, per 06)",
+  "_straight_range": "PLACEHOLDER; 384 m = multiple of every lamp period (24, 48) so streamed lamps stay on the painted pools"
+ },
+ "corner_cams": {
+  "_doc": "guide \u00a713.1/\u00a713.3 authored corner camera per turn type; \u00a712.2 transition_to_corner offsets/tween. ALL KEYFRAMES ARE DISPLAY PLACEHOLDERS. Points are path-relative: a = fraction along the arc (negative = metres before the arc via s_m), d_in = metres toward the INSIDE of the corner (negative = outside), h = height. Camera looks at the player car.",
+  "transition_to_corner_offset": [
+   3.0,
+   0.5,
+   1.0
+  ],
+  "_offset_doc": "guide \u00a712.2: left -> origin+(-3,0.5,1), right -> origin+(3,0.5,1) (x mirrored by direction), tween 1.0 s ease-in-out",
+  "transition_s": 1.0,
+  "transition_to_straight_s": 1.0,
+  "_swing_doc": "\u00a713.2 overtake 0.5-1 s (guide \u00a712.2 says a 0.3 s camera shift: open mismatch); amplitude PLACEHOLDER",
+  "HP": {
+   "label": "Hairpin: tight inside-line view",
+   "start_t": 0.3,
+   "cut": false,
+   "points": [
+    {
+     "a": 0.05,
+     "d_in": 4.5,
+     "h": 1.6
+    },
+    {
+     "a": 0.35,
+     "d_in": 3.5,
+     "h": 1.2
+    },
+    {
+     "a": 0.65,
+     "d_in": 3.5,
+     "h": 1.2
+    },
+    {
+     "a": 0.95,
+     "d_in": 4.5,
+     "h": 1.6
+    }
+   ]
+  },
+  "N90": {
+   "label": "90-Degree: sharp cut to apex",
+   "start_t": 0.38,
+   "cut": true,
+   "points": [
+    {
+     "a": 0.45,
+     "d_in": -9.0,
+     "h": 3.4
+    },
+    {
+     "a": 0.55,
+     "d_in": -8.0,
+     "h": 2.6
+    }
+   ]
+  },
+  "overtake_rule": "AUSTIN OVERRIDE of guide 13.2 step 9a: no swing_overtake animation; on a leader change the cars hold position through the corner camera and snap to the new visual-gap positions when the camera reaches the rear chase lock"
+ },
+ "render": {
+  "internal_w": 640,
+  "internal_h": 480,
+  "window_w": 1280,
+  "window_h": 960,
+  "_source": "640x480 = project display (art doc B.4/A.5); Austin 2026-11-10: single look, no CRT, no low-res mode. RGB555 + 4x4 Bayer post (A.5/B.1)."
+ },
+ "districts": {
+  "touge": {
+   "_source": "design/art/art_direction.md@55b9063 B.3 Touge [PROPOSAL, Q2 still open] + B.2a palette for everything B.3 does not give",
+   "fog": "#2A3236",
+   "fog_near": 8,
+   "fog_far": 55,
+   "_fog": "design/art/art_direction.md@55b9063:220 (B.3 Touge, re-proposed, Q2 open). Conflict: B.2a fog #0B172B is the general night palette; B.3 is the only Touge-specific value, kept",
+   "sky_zenith": "#010408",
+   "sky_horizon": "#2A3236",
+   "_sky": "zenith = B.2a design/art/art_direction.md@55b9063:197 (no Touge zenith anywhere); horizon = Touge fog (fog meets the sky, B.7)",
+   "asphalt": [
+    46,
+    46,
+    54
+   ],
+   "_asphalt": "art/mood/tokyo_v2/make_tex_v2.py:38 (the only road recipe in the repo; no Touge road source)",
+   "lamp_colour": "#F0C894",
+   "_lamp": "design/art/art_direction.md@55b9063:199 every street lamp #F0C894. Conflict: B.3 says 'sparse sodium/white lamps'; B.2a (newer) says one colour, no alternating",
+   "lamp_period_m": 48,
+   "lamps": [
+    [
+     0,
+     -1
+    ],
+    [
+     24,
+     1
+    ]
+   ],
+   "_lamps": "PLACEHOLDER spacing: B.3 says only 'sparse'; no Touge spacing in design/, art/, assets/, guide, mockups",
+   "edge_line": "#B8B8B0",
+   "_edge_line": "PLACEHOLDER: no Touge marking colour in design/, art/, assets/, guide, mockups",
+   "verge": "#2E3A33",
+   "_verge": "PLACEHOLDER cold green-grey (B.3 'cold desaturated greens/blue-greys', no hex)",
+   "wall": "guardrail",
+   "wall_h_m": 1.0,
+   "wall_d_m": 0.3,
+   "_wall": "B.3 guardrails; height PLACEHOLDER",
+   "cedar_spacing_m": 7,
+   "cedar_h_m": 11,
+   "_cedar": "B.3 cedar cards; density/height PLACEHOLDER (no source anywhere)",
+   "verge_w_m": 8
+  },
+  "street": {
+   "_source": "design/art/art_direction.md@55b9063 B.3 Urban Street (Q1 resolved: Tokyo Drift style import scene on Japanese streets) + B.2a palette",
+   "fog": "#0B172B",
+   "fog_near": 14,
+   "fog_far": 105,
+   "_fog": "design/art/art_direction.md@55b9063:224 (B.2a fog, 14-105 m as v2). Note: the blend50 mockup scene itself used 16-150 m (tones/work/lane/build_v5.py:22); doc value used",
+   "sky_zenith": "#010408",
+   "sky_horizon": "#0B172B",
+   "_sky": "design/art/art_direction.md@55b9063:197 zenith #010408, no city-glow band; horizon = fog (make_tone_tex.py:16-19)",
+   "asphalt": [
+    46,
+    46,
+    54
+   ],
+   "_asphalt": "art/mood/tokyo_v2/make_tex_v2.py:38",
+   "lamp_colour": "#F0C894",
+   "_lamp": "design/art/art_direction.md@55b9063:199",
+   "lamp_period_m": 24,
+   "lamps": [
+    [
+     0,
+     -1
+    ],
+    [
+     12,
+     1
+    ]
+   ],
+   "_lamps": "blend50 mockup scene: one side every 24 m, other side offset 12 m (tones/work/lane/build_v5.py:117-120, 2026-11-10). Conflict: tokyo_v2 scene_v2.py:25 used 16 m alternating (2026-10-31); newest wins",
+   "edge_line": "#C4AA46",
+   "_edge_line": "art/mood/tokyo_v2/make_tex_v2.py:51 (196,170,70)",
+   "verge": "#202024",
+   "wall": "facade",
+   "sidewalk_w_m": 4.5,
+   "_sidewalk_w": "PLACEHOLDER width",
+   "facade_h_m": 24,
+   "facade_tile_m": 48,
+   "_facade": "B.1 pre-lit facades x vertex light; walls/windows from B.2 (still apply per B.2a:203), lit by B.2a ambient",
+   "neon": [
+    "#FF3C8C",
+    "#3CC8FF",
+    "#C85AFF"
+   ],
+   "_neon": "B.2 neon design/art/art_direction.md@55b9063:213 minus hues close to the UI stance colours (B.5: stance colours reserved for UI). Panels blank: B.1 'made-up shop names only' but no names exist in any file",
+   "prop_spacing_m": 6,
+   "_props": "PLACEHOLDER density; cut-outs per B.1"
+  }
+ },
+ "car_shading": {
+  "_source": "A.4/A.8 formula; per-car values from assets/cars/<car>/README.md + art/mood READMEs",
+  "mx5": {
+   "paint": {
+    "env": 0.22,
+    "spec": 0.15,
+    "env_tint": [
+     0.75,
+     0.85,
+     1.0
+    ]
+   },
+   "softtop": {
+    "env": 0.03,
+    "spec": 0.05
+   },
+   "glass": {
+    "env": 0.45,
+    "spec": 1.0,
+    "tint": [
+     0.45,
+     0.6,
+     0.75
+    ]
+   },
+   "default": {
+    "env": 0.45,
+    "spec": 1.0
+   },
+   "glow_node": "MX5_FX_LampGlow"
+  },
+  "s2000": {
+   "paint": {
+    "env": 0.45,
+    "spec": 1.0,
+    "env_tint": [
+     0.75,
+     0.85,
+     1.0
+    ]
+   },
+   "glass": {
+    "env": 0.45,
+    "spec": 1.0,
+    "tint": [
+     0.45,
+     0.6,
+     0.75
+    ]
+   },
+   "default": {
+    "env": 0.45,
+    "spec": 1.0
+   },
+   "glow_node": null,
+   "_note": "S2000 lean has no glow FX in the .glb (README): head/tail glow sprites are a stand-in; spec 1.0 = A.8 sketch default (README gives no value)"
+  },
+  "ambient": 0.55,
+  "key_dir": [
+   0.4,
+   0.8,
+   0.3
+  ],
+  "spec_power": 48,
+  "headlight_throw_strength": 0.5
+ },
+ "palette": {
+  "_source": "design/art/art_direction.md@55b9063 B.2a [APPROVED 2026-11-11] (supersedes B.2 sodium/sky/fog/ambient) = blend50 preset in /workspace/mockups/tones/work/tones.py:19-21 (values copied programmatically)",
+  "fog": "#0B172B",
+  "zenith": "#010408",
+  "city_glow": null,
+  "ambient": "#5575A0",
+  "ambient_k": 0.8,
+  "lamp": "#F0C894",
+  "lamp_k": 0.85,
+  "pool_k": 0.09,
+  "pool_steps": 3,
+  "vertex_steps": 3,
+  "glow_tex": "per-lamp",
+  "bloom": [
+   0.22,
+   0
+  ],
+  "sat": 1.05,
+  "stars": [
+   90,
+   100,
+   150
+  ],
+  "lane_ground_lamp": 0.55,
+  "lane_pool_mul": 1.8,
+  "_mockup_scene": "pool decal 13x13 m (half 6.5 m) with alpha floor((1-r)^1.1*3)/3 and vertex pools radius 13 m: tones/work/lane/build_v5.py:225,273-275, make_tone_tex.py:25-26; glow sprite: make_tone_tex.py:31-38, billboard 1.5 m (build_v5.py:276); bloom = glow-only pass, Gaussian radius 3 (post_v5.py:22-25 in tones/work/lane)",
+  "calib": {
+   "_doc": "DISPLAY CALIBRATION (not doc values): scale the mockup's light terms onto our stand-in asphalt so the off-pool road and top pool band match the entry_blend50.png render (road ~(30,34,37), pool ~(100,87,70))",
+   "road_amb_gain": 1.7,
+   "road_vertex_lamp_gain": 2.6,
+   "road_decal_gain": 2.2,
+   "facade_amb_gain": 0.35
+  }
+ },
+ "stance_ui": {
+  "_source": "UI stance colours approved by Austin 2026-11-11 (parent message); used in every mockup: /workspace/mockups/tones/work/lane/post_v5.py:14, lane_chain/v5/post_v5.py:14, pattern_read/compose_mockups.py:10. Supersedes design/godot-build-guide.md@55b9063:940-942 (#dc2626/#16a34a/#d97706, 2026-10-31). Third stance = Neutral/NEU (art_direction.md@55b9063 Q6)",
+  "A": "#E8282C",
+  "D": "#2CB84A",
+  "S": "#F0C828",
+  "ink": "#08080E",
+  "panel": "#0A0E24",
+  "edge": "#D2E6FF",
+  "edge_d": "#465A96",
+  "amber": "#FFB028",
+  "amber_d": "#96500E",
+  "_hud": "lane_chain/v5/post_v5.py:14-17 (RED/GRN/YEL/AMBER/EDGE/INK/PANEL), 50/50 PS1 semi-transparent panels (post_v5.py:149-153)"
+ }
+}
