@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-11 — Barry [sim]: qte-v1 visible-QTE draft added to `design/unapproved/` (NOT approved)
+- **What:** the qte-v1 draft (`design/unapproved/qte-v1/`: `RESULTS.md`, `results.json`, `run.py`, `qte_model.py`, `wr_shortcut.py`) is now in the repo. It models the stat gap as a visible QTE zone width (replacing the hidden `knot_window(r)` multiplier), plus window-only mods. The σ values and the press model are placeholders until there is playtest data. Nothing in `sim/velocity_shift/` or `design/01`–`06` changed. `knot_window(r)` is still live until Austin approves.
+- **Why:** Austin's 2026-11-11 directive says anything other bots need to reference goes in the repo, and unapproved work goes in an unapproved folder. Gordon's guide §7 and the knot_window text depend on this draft.
+- **Status:** awaiting Austin's approval since 2026-11-10. Still open: whether the slot sim (window mods compete with stat mods for slots, and available stat mods only just reach 105% with every slot filled) replaces the 1.15×w0 width cap recommended in RESULTS.md.
+
 ## 2026-11-11 — Nathaniel [story]: add story/unapproved/ for proposals awaiting Austin
 - **Why:** Austin's directive (2026-11-11): anything other bots need to reference goes in the repo, and anything he hasn't approved goes in an unapproved folder. My open proposals only lived in local drafts on the box.
 - **Added:** `story/unapproved/README.md` (what the folder is, nothing in it is canon, 3-day follow-up rule) and `story/unapproved/open_proposals.md` with the two items still waiting on Austin: the Finale order's in-world reason and Reiko's warning trigger under free crew order. No canon files changed and no numbers added.
