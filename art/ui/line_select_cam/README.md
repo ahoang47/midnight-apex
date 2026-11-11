@@ -1,4 +1,4 @@
-# Line select camera: Entry / Apex / Exit (UNAPPROVED PROPOSAL)
+# Line select camera: Entry / Apex / Exit (approved 2026-11-11 (art_direction B.5b))
 
 Proposal only. Austin has not approved this, so nothing here is final UI, camera spec or mechanics.
 

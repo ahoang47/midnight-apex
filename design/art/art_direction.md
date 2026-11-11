@@ -252,12 +252,22 @@ were lost with the box and are **re-proposed** here.
   *(proposal)*. The third stance is **Neutral** (`neu`) in all art/UI files (Q6, resolved 2026-11-11).
 - Bitmap-style font, 9-slice panels drawn at native resolution.
 
+### B.5b Line select: camera stops [APPROVED 2026-11-11]
+Selection walks the corner before the line locks. **Entry:** the fixed chase camera, rival visible in its Entry lane
+(the only tell). The player picks their Entry card. **Apex:** the camera moves to the corner apex and the player picks their
+Apex card. **Exit:** the camera moves to the exit and the player picks their Exit card. At the Apex and Exit stops the
+corner is shown **without the rival**: those stops show geometry only. The player gleans the rival's Apex/Exit from its
+Entry, district tendencies, corner geometry and the lead/gap, never from an on-screen tell. Once all three are set the line
+locks, the camera returns to Entry, and playback runs with the B.5a line-vs-line panel. Corner plate (top right)
+marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (lane/stance labels on the Apex and
+Exit picks there are placeholders).
+
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
 lines face-up from the start (no hidden cards, no flips) so the player can learn rival patterns. Columns are ENTRY /
 APEX / EXIT; the column being played gets the amber outline, and the RESULT row (WIN / LOSS / TIE) fills in as each
 phase plays. The corner plate (top right) shows the current phase. No pause or clash card beats. Reference frames:
-`art/ui/line_vs_line/`. (The line-select camera flow itself is still unapproved: `unapproved/arthur/mockups/line_select_cam/`.)
+`art/ui/line_vs_line/`. (Selection flow: B.5b.)
 
 ### B.6 Engine-side environment notes [PROPOSAL]
 - Unlit + vertex-colour environment shader with linear fog uniform; no dynamic lights or shadows on art.
