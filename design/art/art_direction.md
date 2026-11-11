@@ -252,6 +252,13 @@ were lost with the box and are **re-proposed** here.
   *(proposal)*. The third stance is **Neutral** (`neu`) in all art/UI files (Q6, resolved 2026-11-11).
 - Bitmap-style font, 9-slice panels drawn at native resolution.
 
+### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
+During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
+lines face-up from the start (no hidden cards, no flips) so the player can learn rival patterns. Columns are ENTRY /
+APEX / EXIT; the column being played gets the amber outline, and the RESULT row (WIN / LOSS / TIE) fills in as each
+phase plays. The corner plate (top right) shows the current phase. No pause or clash card beats. Reference frames:
+`art/ui/line_vs_line/`. (The line-select camera flow itself is still unapproved: `unapproved/arthur/mockups/line_select_cam/`.)
+
 ### B.6 Engine-side environment notes [PROPOSAL]
 - Unlit + vertex-colour environment shader with linear fog uniform; no dynamic lights or shadows on art.
 - Glow sprites as additive billboards; blob shadows as decals/quads.

@@ -1,5 +1,7 @@
 # Corner playback: line vs line (A) and clash beats (B) (UNAPPROVED PROPOSAL)
 
+> Option A (line vs line) was approved 2026-11-11; see `design/art/art_direction.md` B.5a and `art/ui/line_vs_line/`. Option B stays unapproved.
+
 This is a proposal only. Austin has not approved it. It shows two options for the corner playback after the line is locked, so they can be compared. It uses the same Touge hairpin scene and pipeline as `../line_select_cam/`.
 
 The sample lines are:
