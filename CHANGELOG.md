@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-12 — Gordon [godot]: pass only after the Exit QTE (two-corner, UNAPPROVED); 01 canon QTE averaging final
+
+- **Pass timing (Austin 2026-11-12: "Order only changes after exit QTE"; follow-up: no early pass for either car).** Before, `_update_pass_target` re-projected the post-turn gap after every phase QTE (unplayed = 0), so a pass could start on a partial projection and reverse after a later QTE. Now `main.gd` holds the gap at the pre-turn value until all three QTEs are done, computes the post-turn gap once from the final scores (same `Combat.resolve_turn` / `mean_phase_qte` path the core resolves with, so no snap at RESULT), and eases the pass over `pass_after_exit_s` = 2.5 s (PLACEHOLDER, `spec/display.json`), running into RESULT; Enter waits for it. Reason for 2.5 s: only ~0.16–0.23 s of playback is left after the Exit QTE, too short to read; 2.5 s matches the old readable pass window. `pass_u0/pass_u1` now unused. Barry's check (/workspace/barry-drafts/pass-v1/) showed a player at QTE 0 can never take the lead, so Austin's early-pass idea never triggers; Austin then chose no early pass at all.
+- Tests: qte-v1 functions, seeds + fuzz300, save/load, restart, 200-seed key test all 0.0 vs sim; new assertions: no order change before the Exit QTE, final gap equals the resolved lead. Build id `1a53e712e4`, sim pin still f0efecf. Shots: `unapproved/gordon/two-corner/out/shots12/`.
+- `design/01-system-overview.md` Build bullet: QTE averaging marked final (Austin 2026-11-11, confirmed by Barry/Desmond today), "Open" flag removed; pass-timing rule added.
+
 ## 2026-11-12 — Arthur [art]: art_direction uses POW/EN/HAN for choices; IN/MID/OUT is visual only
 
 - **Ask:** Austin in Exec Team (2026-11-12): backend and logic always refer to the stats (POW / EN / HAN). IN / MID / OUT is a visual reference only. Canon follow-up: `design/01-system-overview.md` 4cdd1bc.

@@ -62,9 +62,10 @@ Stance letters in `line`, `hand` and `player_line`: `A` = Attack, `S` = **Neutra
   Metres-per-UV (road_uv_length_m 500 → 25 m/s), tiles, lamp spacing, wheel cap, bob are PLACEHOLDERS. Lamps stream past; wheels spin; identical body bob.
 - Corner: same scroller on the CornerRoad. Camera: §12.2 side-offset transition, then an authored path per turn type (Godot Path3D/PathFollow3D,
   Three.js CatmullRomCurve3): HP tight inside line, N90 hard cut to the apex. Rig modes BCH / BCL / BCR shown in the HUD. Keyframes are PLACEHOLDERS (display.json corner_cams).
-- Overtakes (since shots9, Austin 2026-11-11 ~10 PM PT, replaces the hold-then-snap rule): "if a pass occurs, it is visually shown during the
-  dynamic play... if the exit lane is the same for both cars and one goes for a pass, then the passing car should go to an open lane for the
-  pass animation, and then move into the position it needs to play for the next turn." See the shots9 section below.
+- Overtakes (since shots9, Austin 2026-11-11 ~10 PM PT, replaces the hold-then-snap rule; timing updated shots12, Austin 2026-11-12:
+  "Order only changes after exit QTE"): "if a pass occurs, it is visually shown during the dynamic play... if the exit lane is the same for
+  both cars and one goes for a pass, then the passing car should go to an open lane for the pass animation, and then move into the position
+  it needs to play for the next turn." The gap holds until the Exit QTE finishes, then eases over `pass_after_exit_s`. See the shots9 section below.
 - Frame sequences: scripted runs write seq_select*/seq_corner*/seq_snap* PNGs + frames_640.json; `python3 tools/frame_compare.py out/shots3` makes GIFs and numbers.
 - Live check: `URL=... TAG=... node threejs/headless/live_check.mjs`.
 
@@ -138,10 +139,14 @@ Sources: `design/art/art_direction.md` at **ab1c4a1** (`ab1c4a12f69b23ccd74cd898
   The chase camera stays on the road centre line (B.5b framing), so the car visibly moves across lanes.
 - **Infinite scroll at every stop:** the road also scrolls at the Apex and Exit stops (Phase 5 kept it to Entry only). `hold_stop` in main.gd is a
   hook to hold the Apex stop pose with the road scrolling while a QTE plays later (not used by the flow yet).
-- **Passes during playback:** the visual gap moves from the pre-turn value to the post-turn value across `pass_u0..pass_u1` of the playback
-  (lead/gap still from the sim: `_preview_lead` calls the same pure `Combat.resolve_turn` the core uses, for the score in play). If the drawn order flips
-  and the lines share a lane while the cars overlap, the passer takes the open lane, overtakes, and settles back onto its line. No-clip check: the
-  scripted run prints `MIN_SEP_OVERLAP` (lateral gap while the cars are within `car_len_m` along the road).
+- **Passes after the Exit QTE (shots12, Austin 2026-11-12: "Order only changes after exit QTE"):** the visual gap holds the pre-turn value
+  until the Exit QTE finishes, then moves to the post-turn value over `playback_flow.pass_after_exit_s` (PLACEHOLDER 2.5 s, the same length as the
+  old `pass_u0..pass_u1` window). Leftover playback after the Exit hold is only ~0.16 s (HP) / ~0.23 s (N90), too short to read, so the animation
+  continues into the RESULT / Enter-to-continue phase (Enter and auto-continue wait until the lerp finishes). `pass_u0` / `pass_u1` are unused.
+  Lead/gap still from the sim: `_preview_lead` calls the same pure `Combat.resolve_turn` the core uses, and that value equals `core.submit_qte`.
+  If the drawn order flips and the lines share a lane while the cars overlap, the passer takes the open lane, overtakes, and settles back onto its
+  line (the open-lane plan is sampled on this same post-Exit window). No-clip check: the scripted run prints `MIN_SEP_OVERLAP` (lateral gap while
+  the cars are within `car_len_m` along the road).
 - **One continuous Touge road:** straight 45, corner 1 (HP L), join 47 (= 10 + 45 - 8, so corner 1's playback ends exactly where corner 2's selection
   starts), corner 2 (N90 R), exit 30 (`scripts/course.gd`). Radius/angle stay the `road.by_code` PLACEHOLDERS. Corner 2 now uses the sim's Touge N90
   line set (`LINE_SET_C.touge.N90` DSA/DDS/DSS instead of Street's SSA/SDS/SSS), so the rival's corner-2 lines differ from before for the same seed.
@@ -152,7 +157,7 @@ Sources: `design/art/art_direction.md` at **ab1c4a1** (`ab1c4a12f69b23ccd74cd898
   the window fits 1280x960 or more, everything scales by a whole number of that (HUD nearest, world 640x480 at twice that). Below 1280x960 the
   scale is fractional and the HUD layer is shown linear. **Departs from art_direction.md:115/:141/:242 (integer nearest upscale of one 640x480 frame,
   viewport stretch) and the mockups' 1-bit 640x480 text (post_lsc.py:34) for the UI only, at Austin's request; flag for Arthur.**
-- Placeholders: all of display.json `playback_flow` (continue_s 6, lane_ease_s 0.35, blend 6/8 m, pass window 0.2-0.9, overlap 5.5/9 m, min_sep 2.6 m).
+- Placeholders: all of display.json `playback_flow` (continue_s 6, lane_ease_s 0.35, blend 6/8 m, pass_after_exit_s 2.5, overlap 5.5/9 m, min_sep 2.6 m; pass_u0/pass_u1 unused since shots12).
 - Demo input `spec/inputs/shots9_pass.json` (seed 3): both corners share the Exit lane and the drawn order flips in both. Shots in `out/shots9/`.
 
 

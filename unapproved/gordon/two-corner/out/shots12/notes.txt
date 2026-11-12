@@ -1,0 +1,76 @@
+shots12: order only changes after the Exit QTE (UNAPPROVED)
+==========================================================
+Austin 2026-11-12: "Order only changes after exit QTE."
+
+What changed
+------------
+Until the Exit QTE finishes (qte_i < 3), rival_offset holds the pre-turn gap
+(off0) exactly and there is no pass_plan. Once qte_i >= 3, off1 is computed
+once from the final phase scores via the same Combat.resolve_turn /
+Combat.mean_phase_qte path that core.submit_qte uses, the open-lane plan is
+sampled on the new post-Exit window, and the gap eases from off0 to off1 over
+playback_flow.pass_after_exit_s (smoothstep). core.submit_qte still runs at
+the end of playback; RESULT does not snap the gap.
+
+Timing
+------
+disp.playback_s is 3.6 s of driving clock (qte_t does not advance during a
+QTE hold). The Exit hold is at arc end + 6 m, and playback ends at arc end
++ 10 m, so leftover driving after the Exit QTE is only:
+
+  HP  (corner 1): _hold_t(2) = 3.4417 s, remaining 0.1583 s (4.0 m)
+  N90 (corner 2): _hold_t(2) = 3.3704 s, remaining 0.2296 s (4.0 m)
+
+That is too short to read a pass (the old window was (pass_u1-pass_u0) *
+playback_s = 2.52 s). pass_after_exit_s = 2.5 s (PLACEHOLDER) is that same
+readable length, starting when the Exit QTE ends. Because only ~0.16-0.23 s
+of playback is left, the lerp continues into the RESULT / Enter-to-continue
+phase. Enter and auto-continue wait until the lerp finishes, so the next
+turn never starts mid-pass.
+
+s_player still caps at the end of playback, so the cars do not drive off the
+exit road and the Exit camera (authored path, u clamped at 1 after playback)
+is unchanged. The planned fixed camera hold after the Exit QTE, watching the
+car pull away, is not built.
+
+pass_u0 / pass_u1 are unused. The open-lane sampler uses the same
+pass_after_exit_s window, with s at 8 + travel * min(1, (_hold_t(2)+t) /
+playback_s), so the plan is taken on the exit, which is where the overlap
+now happens.
+
+Build / inputs
+--------------
+build 1a53e712e4, sim pin f0efecf. Demo input: spec/inputs/shots10_qte.json
+(seed 3; same picks as shots9/shots11; corner 1 QTE 0.92 / unplayed / 0.55,
+corner 2 0.6 / 0.9 / 0.75). Player passes in corner 1, rival re-passes in
+corner 2. Scripted run vs sim: max_abs_diff 0.0 (parity.txt).
+MIN_SEP_OVERLAP 3.300 m (lateral gap while the cars are within car_len_m
+along the road; min_sep_m is 2.6).
+
+Tests (tools/run_parity.sh + run_restart_test.sh)
+-------------------------------------------------
+- qte-v1 function bits: 5757 values, bit mismatches=0, max_abs_diff=0 -> PASS
+- seed20261113_idx, seed20261114_idx, seed42_timeout, seed21273_overtake,
+  fuzz300: all max_abs_diff=0.0 -> PASS
+- dump after corner 1 / load in a fresh process / finish (three seeds): 0.0
+- restart test (game loop, four races via finish options): 0.0 -> PASS
+- 200-seed Plan the Line + QTE key test: 162 locked turns, 125 unplayed QTEs,
+  Godot vs sim max_abs_diff=0.0. New assertions on every locked seed: the
+  gap/order never changes while qte_i < 3 (held at off0 exactly); preview
+  off1 equals the resolved lead; after the pass lerp, rival_offset equals
+  the resolved lead (no snap at RESULT). No flips or snaps found.
+
+Shots
+-----
+- turn1_pass_after_exit.gif (local, 640 px, 10 fps, 281 frames): all of
+  turn 1, from Entry select through the static Apex/Exit stops, LINE LOCKED,
+  playback with the three QTE holds (rival stays ahead through Entry / Apex
+  / Exit QTEs), then the pass after the Exit QTE into RESULT and the
+  continue countdown.
+- turn1_pass_after_exit_400.gif (repo copy, 400x300, 5 fps, 141 frames):
+  the same turn-1 cut.
+- pass_before_exit_qte.png / pass_mid.png / pass_after.png: stills from the
+  gif at the Exit QTE (rival still ahead), mid-pass (open-lane overlap), and
+  after the lerp (player ahead, RESULT).
+- run/: scripted stills (select / lock / QTE / corner / result).
+- gif_frames/: 563 raw 1280x960 frames for the whole two-corner run.

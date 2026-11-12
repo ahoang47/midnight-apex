@@ -96,7 +96,9 @@ var views: Array = []         # per-corner local view of the course (local 0 = 4
 var straights: Array = []     # per-corner infinite-scroll straight, anchored where that corner's approach starts
 var lat_p := 0.0; var lat_r := 0.0; var err_p := 0.0; var err_r := 0.0; var tgt_p = null; var tgt_r = null
 var off0 := 0.0; var off1 := 0.0; var off1_score = null; var pass_plan := {}
+var pass_t := 0.0             # seconds since the Exit QTE finished; the pass eases over PB.pass_after_exit_s
 var cont_t := 0.0             # after-turn pause (RESULT), auto-continues at PB.continue_s
+var cont_pending := false     # Enter / auto-continue waited until the pass lerp finished
 # ── shots10: three timing QTEs per turn (Entry / Apex / Exit camera stops), sim pin f0efecf (Austin approved 10:56 PM PT) ──
 var QS: Dictionary            # display.json "qte_sweep" (PLACEHOLDERS)
 # shots11 (Austin 2026-11-12): the three QTEs play DURING playback. The car drives the corner, holds at the Entry / Apex / Exit
@@ -205,7 +207,18 @@ func _plan_key_test() -> void:
 				guard += 1
 				if qte_i <= 2 and qte_seg == "sweep" and float(want_ms[qte_i]) >= 0.0 and _qte_ms() >= float(want_ms[qte_i]): handle_key(KEY_SPACE)
 				_step_play(1.0 / 60.0)
+				_ease_gap(1.0 / 60.0)
+				if qte_i < 3 and (rival_offset != off0 or (off0 != 0.0 and rival_offset != 0.0 and signf(rival_offset) != signf(off0))):
+					push_error("seed %d: order/gap changed before Exit QTE (qte_i=%d off0=%s off=%s)" % [sd, qte_i, str(off0), str(rival_offset)]); get_tree().quit(1); return
 			if core.phase == "TIMING" or qte_i != 3: push_error("seed %d: playback never ended" % sd); get_tree().quit(1); return
+			# finish the pass into RESULT and confirm the drawn gap equals the resolved lead (no snap)
+			var want_off: float = Track.rival_draw_offset(core.lead(), disp.visual_gap)
+			if absf(off1 - want_off) > 0.001:
+				push_error("seed %d: preview off1 %s != resolved %s" % [sd, str(off1), str(want_off)]); get_tree().quit(1); return
+			while pass_t < float(PB.pass_after_exit_s) and guard < 8000:
+				guard += 1; _ease_gap(1.0 / 60.0)
+			if absf(rival_offset - want_off) > 0.001:
+				push_error("seed %d: RESULT gap %s != resolved %s (snap?)" % [sd, str(rival_offset), str(want_off)]); get_tree().quit(1); return
 			for i in 3:
 				var z := _qte_zone()
 				var ok: bool = qte_res[i] == null if float(want_ms[i]) < 0.0 else (qte_res[i] != null and float(qte_res[i]) == Combat.hit_quality(float(qte_press_ms[i]) - (z.x + z.y) / 2.0, zone_ms) and float(qte_res[i]) >= 0.0 and float(qte_res[i]) <= 1.0)
@@ -331,7 +344,7 @@ func _setup_corner() -> void:
 	path = views[core.corner_index]; straight_path = straights[core.corner_index]
 	_build_road(c.district)
 	s_player = 8.0; phase_t = 0.0; qte_t = 0.0; reveal = 0; cam_curve_built = false; leader_changed = false
-	cont_t = 0.0; pass_plan = {}; off1_score = null
+	cont_t = 0.0; pass_plan = {}; off1_score = null; pass_t = 0.0; cont_pending = false
 	qte_i = 0; qte_seg = ""; qte_seg_t = 0.0; qte_show_t = 0.0; pb_started = false; qte_res = [null, null, null]; qte_press_ms = [null, null, null]; qte_from = null
 	zone_ms = core.zone_ms()
 	plan_sel = 0; _plan_fix_sel(0)
@@ -408,6 +421,9 @@ func handle_key(k: int) -> void:
 
 ## after-turn pause ends (Enter, or the countdown runs out): next corner, or the finish
 func _continue() -> void:
+	if pb_started and pass_t < float(PB.pass_after_exit_s):
+		cont_pending = true; return
+	cont_pending = false
 	core.next()
 	if core.phase != "FINISHED": _setup_corner()
 	else: _return_to_chase()
@@ -461,8 +477,8 @@ func _plan_fix_sel(dir: int) -> void:
 		if n > 0 or dir != 0: plan_sel = (plan_sel + (dir if dir != 0 else 1) + 3) % 3
 		if int(a[PLAN_ORDER[plan_sel]]) > 0: return
 
-## END_TURN: swing back to the chase cam (§12.2 transition_to_straight). Passes are now shown during playback (Austin 2026-11-11
-## ~10 PM PT, replaces the hold-then-snap rule), so nothing snaps here.
+## END_TURN: swing back to the chase cam (§12.2 transition_to_straight). The pass is animated after the Exit QTE
+## (Austin 2026-11-12: 'Order only changes after exit QTE'), into RESULT if needed, so nothing snaps here.
 func _return_to_chase() -> void:
 	back_from = {"pos": cam_pos, "look": cam_look}; back_t = 0.0; pending_snap = false
 
@@ -517,7 +533,7 @@ func _hold_t(i: int) -> float:
 ## at the end submit the three scores (resolve_turn averages them). Returns the extra speed for the wheels.
 func _step_play(dt: float) -> float:
 	if not pb_started:
-		pb_started = true; qte_t = 0.0; off0 = rival_offset; off1_score = null; pass_plan = {}
+		pb_started = true; qte_t = 0.0; off0 = rival_offset; off1_score = null; pass_plan = {}; pass_t = 0.0
 	var dv := 0.0
 	if qte_seg != "":
 		_step_qte(dt)
@@ -532,14 +548,14 @@ func _step_play(dt: float) -> float:
 		core.submit_qte(qte_res.duplicate()); reveal = 0; phase_t = 0.0; result_t = 0.0
 		var after: float = core.lead()
 		leader_changed = before != 0.0 and after != 0.0 and signf(before) != signf(after)
-		rival_offset_target = Track.rival_draw_offset(after, disp.visual_gap)  # = off1: the pass already played out (sim lead, same score)
+		rival_offset_target = Track.rival_draw_offset(after, disp.visual_gap)  # = off1 (same resolve_turn); the pass may still be easing into RESULT
 		cont_t = 0.0
 	return dv
 
 func _do_lock() -> void:
 	lock_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}; lock_hold_t = 0.0
 	core.lock(); phase_t = 0.0; scroller.transition_to_corner()  # §13.2/§14.2 transition_to_corner
-	off0 = rival_offset; off1_score = null; pass_plan = {}
+	off0 = rival_offset; off1_score = null; pass_plan = {}; pass_t = 0.0
 	await _shot("%slock%d" % [shot_pre, core.corner_index])
 
 func _shot(name: String) -> void:
@@ -679,6 +695,7 @@ func _run_one_race(race: Dictionary, pre: String) -> void:
 		if bool(script_in.get("demo", {}).get("auto_continue", false)):   # let the after-turn countdown run out on its own
 			await _wait_game(func(): return core.phase == "FINISHED" or core.corner_index != ci)
 		else:
+			await _wait_game(func(): return (not pb_started) or pass_t >= float(PB.pass_after_exit_s))
 			_continue()
 		if seqs and lc_last:
 			for i in 6:
@@ -718,6 +735,7 @@ func _process(dt: float) -> void:
 		if reveal >= 3: cont_t += dt
 		var auto: bool = script_in == null or bool(script_in.get("demo", {}).get("auto_continue", false))
 		if auto and mode == "RACE" and cont_t >= float(PB.continue_s): _continue()
+		if cont_pending: _continue()
 	wheel_angle += minf(float(RS.wheel_spin_cap_rad_s), v / 0.31) * dt
 	_step_lanes(dt)
 	_render_hud(); _update_scene()
@@ -950,23 +968,30 @@ func _preview_lead(phases: Array) -> float:
 
 func _preview_phases() -> Array: return qte_res.duplicate()
 
-## pass target + plan: off1 = the visual gap the sim's lead will give; when the drawn order flips, the passer takes an open lane
-## while the cars overlap if their lines would share a lane there (Austin: shared exit lane -> pass in an open lane, then settle)
+## pass target + plan: once the Exit QTE has finished (qte_i >= 3), off1 = the visual gap the sim's lead will give
+## (same Combat.resolve_turn core.submit_qte uses). Until then the gap stays at off0 and there is no pass_plan.
+## When the drawn order flips, the passer takes an open lane while the cars overlap if their lines would share a
+## lane there (Austin: shared exit lane -> pass in an open lane, then settle). The sample window is the post-Exit
+## animation (pass_after_exit_s), with s_player still following the playback clock and capping at the end of travel.
 func _update_pass_target() -> void:
-	if core.phase != "TIMING": return
-	if not _playing(): return
+	if core.phase != "TIMING" and core.phase != "RESULT": return
+	if qte_i < 3:
+		off1_score = null; pass_plan = {}; return
 	var sc := str(_preview_phases())
 	if off1_score != null and String(off1_score) == sc: return
 	off1_score = sc; off1 = Track.rival_draw_offset(_preview_lead(_preview_phases()), disp.visual_gap); pass_plan = {}
 	if signf(off0) == signf(off1): return
 	var pl: String = core.player_line(); var rl: String = core.line
-	var travel: float = path.S + path.R * path.A + 10.0 - 8.0
+	var travel: float = _travel()
+	var dur: float = maxf(0.001, float(PB.pass_after_exit_s))
+	var t_hold: float = _hold_t(2)
+	var pb: float = float(disp.playback_s)
 	var others := []; var mine := []; var conflict := false; var passer := "P" if off1 < off0 else "R"
 	for i in 81:
-		var u := float(PB.pass_u0) + (float(PB.pass_u1) - float(PB.pass_u0)) * i / 80.0
-		var o := lerpf(off0, off1, Track.smooth((u - float(PB.pass_u0)) / (float(PB.pass_u1) - float(PB.pass_u0))))
+		var t := dur * i / 80.0
+		var o := lerpf(off0, off1, Track.smooth(t / dur))
 		if absf(o) >= float(PB.overlap_clear_m): continue
-		var sp := 8.0 + travel * u
+		var sp := 8.0 + travel * minf(1.0, (t_hold + t) / pb)
 		var dp := _line_d(pl, sp); var dr := _line_d(rl, sp + o)
 		if absf(dp - dr) < float(PB.min_sep_m): conflict = true
 		others.append(dr if passer == "P" else dp); mine.append(dp if passer == "P" else dr)
@@ -981,14 +1006,21 @@ func _update_pass_target() -> void:
 		if v > best_v: best_v = v; best = L
 	pass_plan = {"passer": passer, "open": best}
 
-## longitudinal gap: lerp from the pre-turn gap to the post-turn gap across the playback window, eased (no snaps)
+## longitudinal gap: hold the pre-turn gap exactly until the Exit QTE finishes, then lerp to the post-turn gap
+## over pass_after_exit_s (smoothstep, no exp lag so RESULT lands on the resolved lead with no snap). The
+## animation continues into RESULT when the leftover playback after the Exit hold is too short to read.
 func _ease_gap(dt: float) -> void:
-	var want := rival_offset_target
-	if _playing():
-		var u := minf(1.0, qte_t / float(disp.playback_s))
-		want = lerpf(off0, off1, Track.smooth((u - float(PB.pass_u0)) / (float(PB.pass_u1) - float(PB.pass_u0))))
-	elif core.phase == "TIMING": want = off0
-	rival_offset += (want - rival_offset) * (1.0 - exp(-dt / float(PB.gap_ease_s)))
+	if pb_started and (_playing() or core.phase == "RESULT"):
+		if qte_i < 3:
+			rival_offset = off0; return
+		_update_pass_target()
+		pass_t += dt
+		var dur := maxf(0.001, float(PB.pass_after_exit_s))
+		rival_offset = lerpf(off0, off1, Track.smooth(pass_t / dur))
+		return
+	if core.phase == "TIMING":
+		rival_offset = off0; return
+	rival_offset += (rival_offset_target - rival_offset) * (1.0 - exp(-dt / float(PB.gap_ease_s)))
 
 ## lateral positions with the pass offset: the passer moves to the open lane while the cars overlap, then back to its line
 func _pass_lanes() -> Vector2:

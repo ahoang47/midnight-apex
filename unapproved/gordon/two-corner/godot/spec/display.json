@@ -146,7 +146,7 @@
     }
    ]
   },
-  "overtake_rule": "AUSTIN 2026-11-11 ~10 PM PT (replaces the hold-then-snap override): 'if a pass occurs, it is visually shown during the dynamic play... if the exit lane is the same for both cars and one goes for a pass, then the passing car should go to an open lane for the pass animation, and then move into the position it needs to play for the next turn.' Gap/lead still from the sim; see playback_flow."
+  "overtake_rule": "AUSTIN 2026-11-11 ~10 PM PT (replaces the hold-then-snap override): 'if a pass occurs, it is visually shown during the dynamic play... if the exit lane is the same for both cars and one goes for a pass, then the passing car should go to an open lane for the pass animation, and then move into the position it needs to play for the next turn.' AUSTIN 2026-11-12: 'Order only changes after exit QTE.' Gap/lead still from the sim; the gap holds the pre-turn value until the Exit QTE finishes, then animates over pass_after_exit_s (into RESULT if needed). See playback_flow."
  },
  "render": {
   "internal_w": 640,
@@ -429,7 +429,9 @@
   "_blend": "PLACEHOLDER: the car leaves its Entry lane this many m before turn-in, reaches its Apex lane at mid-arc, and its Exit lane this many m past the arc",
   "pass_u0": 0.2,
   "pass_u1": 0.9,
-  "_pass_u": "PLACEHOLDER: part of the playback (0..1) over which the visual gap moves from the pre-turn to the post-turn value (the pass)",
+  "_pass_u": "UNUSED since shots12 (Austin 2026-11-12: order only changes after the Exit QTE). Was the part of playback (0..1) over which the visual gap moved from the pre-turn to the post-turn value.",
+  "pass_after_exit_s": 2.5,
+  "_pass_after_exit_s": "PLACEHOLDER: after the Exit QTE finishes (qte_i >= 3), the visual gap moves from the pre-turn value (off0) to the post-turn value (off1, from the same Combat.resolve_turn the core uses) over this many seconds. Remaining playback after the Exit hold is only ~0.16 s (HP) / ~0.23 s (N90) of disp.playback_s, too short to read a pass, so the animation continues into the RESULT / Enter-to-continue phase. 2.5 s matches the old readable window (pass_u1-pass_u0)*playback_s = 2.52 s. Cars stay on the playback path (s_player still caps at the end of playback) so the Exit camera is unchanged; the planned fixed hold-after-exit camera is not built yet.",
   "gap_ease_s": 0.12,
   "overlap_full_m": 5.5,
   "overlap_clear_m": 9.0,
