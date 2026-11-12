@@ -1,4 +1,6 @@
-# slots-v2 follow-up: fixes for the strong-player mature #2 skips (V1, V2). NOT APPROVED
+# slots-v2 follow-up: fixes for the strong-player mature #2 skips (V1, V2)
+
+> **Status (2026-11-12):** Austin approved **b3**, the crew-local level floor ("Oh, neat. Yes approved.", 6:55 AM PT). It is live in the sim, and its approved record is `design/notes/slots-v2/README.md` (b3 section), which **supersedes the b3 parts of this file**. Fixes **a, a0, b, b2 and c were not chosen**. The rest of this file is kept as the study record and is **not approved**.
 
 Barry [sim], 2026-11-11. Austin asked (10:58 PM PT): "sim the fixes for the strong mature #2 skips". This is a study only. Nothing here is live.
 

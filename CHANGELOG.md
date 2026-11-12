@@ -8,6 +8,25 @@
 
 ---
 
+## 2026-11-12 — Barry [sim][design]: mature #2 mod tier level floor live (slots-v2 fix b3, Austin approved)
+- **Ask:** Austin approved fix b3 from `unapproved/barry/slots-v2/RESULTS_v1v2.md` (2f6c437) at 6:55 AM PT: "Oh, neat. Yes approved."
+- **Change (`sim/velocity_shift/equations.py`):** new `MOD_TIER_LEVEL_FLOOR`, keyed by (round, 0-based play position) like the budget steps, plus `MOD_TIER_FLOOR_RUNG` (the mature #2 tier) and `MOD_TIER_FLOOR_MARGIN`.
+  - Each crew's mature #2 mod tier shows "requires level N" and can't be fitted below N, even when the player can afford it.
+- **Change (`sim/velocity_shift/progression.py`):**
+  - `derive_mod_tier_floors()` uses the study's derivation (crew-local no-grind level + margin, capped at the rung's cap) and generates the table.
+  - `mod_tier_floor` / `mod_tier_available` give the shop gate.
+  - In `run`, below the floor the mature #2 skip state races with the previous rung's mods. The tier is fitted at the floor, from story XP at a later rung or from grinding to the cap.
+  - New row fields: `mods`, `mods_skip`, `tier_floor`, `tier_locked`.
+- **Why:** without a floor, a strong player beat R1 position 2's and R2 position 3's mature #2 with no grinding, only because of the newly unlocked tier (47.86 → 52.49 and 47.84 → 52.67). That made a new mod a skip button, which goes against Austin's rule that a new mod must not beat the next wall on its own. b3 was the only simulated fix that removed both under balanced, window and aero10, added no decisive rung or dead win, and left weak and average grind and margins unchanged.
+- **Checks:**
+  - The floors equal the study's values (L4/14/26/54/71/83/111/128/140 in the default order) in all 216 orders.
+  - Official forced progression is still 153 grind / 162 levels / 0 lost XP in all 216 orders. The only report change is the skipped mature #2 rate of R1's first crew (tier locked at story level 3 < 4): Touge 42–51 → 33–44, Wangan 43–52 → 34–44, Street 42–50 → 32–42. Those were already 7-race walls.
+  - Study oracle with the live floor, all 216 orders (`design/notes/slots-v2/b3_check.py`): weak 141 → 141, average 153 → 153, strong 121 → 100 under all three policies. No newest-mod-decisive rung remains, down from 2.
+  - The playable spot-check is unchanged (`spotcheck_b3.json`).
+  - 56 tests pass: 52 + 4 new in `sim/tests/test_mod_floor.py`. The oracle test there skips when numpy or the share-grid banks are missing.
+- **Docs:** design/07 §6.4 and design/02 now cite the constants by name. The b3 evidence (`floor_cost.py`, `results_floor_cost.json`, `b3_check*`) moved to `design/notes/slots-v2/`. In `RESULTS_v1v2.md`, the b3 parts are marked superseded and a/a0/b/b2/c not chosen.
+- **For Gordon:** the new constants and functions above. Your pin, f0efecf (212eaab before that), has none of this, and nothing in combat or the QTE changed. The floor affects only progression and the shop gate.
+
 ## 2026-11-12 — Nathaniel [story]: Finale order locked as fixed; Reiko warning trigger stays open
 - **Ask:** Austin (7:00 AM PT): "Finale order should stick to that so the narrative works. Also kind of works personality wise. We can add the Reiko beat to the stack."
 - `story/canon.md`: the Finale line now marks Touge #1 → Wangan #2 → Street #3 as fixed, with the reason (decision 18 needs #1's "left" before #2's "pushed") and the in-world reason (each Myth Driver races only after hearing the one before him did).

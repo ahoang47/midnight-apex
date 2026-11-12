@@ -1,9 +1,12 @@
 """b3 feel cost: at every mature #2 (j=3) rung, grind races a player needs from the skip state to reach the b3 level floor (official
 grind payout, same as prog.grind_to), and whether the full scheduled loadout at that level clears (pooled mid >= 50). Balanced 2/2/2.
-Writes results_floor_cost.json."""
-import json
+Writes results_floor_cost.json.
+Moved from unapproved/barry/slots-v2 when b3 was approved (2026-11-12); study modules are still imported from there."""
+import json, os, sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "unapproved", "barry", "slots-v2"))
 import numpy as np
 import fixes as F, model as M, prog
+M.GRID_DIR = os.environ.get("SLOTS_V2_COUNTS", "/workspace/barry-drafts/slots-v2/counts")
 
 E, P = M.E, M.P
 SP, XC, X = P.curves(); Rl = P.ladder()[0]

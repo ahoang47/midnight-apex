@@ -16,6 +16,9 @@ Rules (all constants in equations.py):
   * Story XP per win: STORY_XP_* (boss pays the levels it unlocks, immediately).
   * Grind race XP: T2 taper, f(L, j) · x(L).
   * Forced player: grinds to the cap only at a rung that is not clear.
+  * Mod tier level floor (slots-v2 b3): the tier first fitted at mature #2 (MOD_TIER_FLOOR_RUNG) needs level
+    >= MOD_TIER_LEVEL_FLOOR[(round, position)]; below it the skip state races with the previous rung's mods. The tier
+    is fitted once the player reaches the floor on story XP, or after grinding to the cap.
   * Finale exempt: caps lifted, FINALE_GRIND_SHARE of each finale stat rise comes from levels.
 
 Win rates come from `config/winrate_n4000.json`: real output of the N=4000 race-balance
@@ -146,6 +149,52 @@ def ladder(order=None):
     return R, Lf, Lstep, budgets, Bp
 
 
+def _story_xp_after(R, i, x, XC, X, Lf, Lstep):
+    """Story XP a win at rung i adds (before the next-cap clamp) and the next rung's cap."""
+    nxt = R[i + 1]["L"] if i + 1 < len(R) else Lf[0]
+    unl = XC[Lstep if i + 1 == len(R) else nxt] - XC[x["L"]]
+    if x["k"] == 2:
+        add = 0.0
+    elif x["kind"] == "boss" or x["k"] == 3:
+        add = E.STORY_XP_BOSS * unl
+    else:
+        lam = E.STORY_XP_LT_ROUND_OPEN if x["ro"] else E.STORY_XP_LT
+        add = max(lam * unl, E.STORY_XP_LT_FLOOR * X[max(1, nxt)])
+    return add, nxt
+
+
+def derive_mod_tier_floors(order=None):
+    """Crew-local level floor of each crew's mature #2 mod tier, keyed (round, 0-based position) (slots-v2 fix b3).
+    Floor = level at the MOD_TIER_FLOOR_RUNG rung of a player who entered the crew at the previous crew boss's level cap
+    (no grind), then won on story XP only, + MOD_TIER_FLOOR_MARGIN; never above that rung's cap. Source of
+    E.MOD_TIER_LEVEL_FLOOR (same derivation as unapproved/barry/slots-v2/fixes.py LOCAL_L + 1)."""
+    SP, XC, X = curves(); R, Lf, Lstep, budgets, B_last = ladder(order)
+    xp = 0.0; prev_boss_cap = None; out = {}
+    for i, x in enumerate(R):
+        cap = x["L"]
+        if x["kind"] != "scripted" and x["j"] == 0 and prev_boss_cap is not None:
+            xp = max(xp, XC[prev_boss_cap])
+        if x["kind"] == "boss":
+            prev_boss_cap = cap
+        xp = min(xp, XC[cap])
+        if x["kind"] != "scripted" and x["j"] == E.MOD_TIER_FLOOR_RUNG:
+            out[(x["rnd"], x["pos"])] = min(cap, _level(XC, xp, cap) + E.MOD_TIER_FLOOR_MARGIN)
+        add, nxt = _story_xp_after(R, i, x, XC, X, Lf, Lstep)
+        xp = min(xp + add, XC[nxt])
+    return out
+
+
+def mod_tier_floor(rnd: int, pos: int, j: int):
+    """Level floor of the mod tier first fitted at rung j of the crew at (round, 0-based position); None if not floored."""
+    return E.MOD_TIER_LEVEL_FLOOR[(rnd, pos)] if j == E.MOD_TIER_FLOOR_RUNG else None
+
+
+def mod_tier_available(rnd: int, pos: int, j: int, level: int) -> bool:
+    """True when the mod tier unlocked for rung j can be fitted at this level ("requires level N" lock otherwise)."""
+    f = mod_tier_floor(rnd, pos, j)
+    return f is None or level >= f
+
+
 def _level(XC, xp, cap):
     L = 0
     while L + 1 <= cap and XC[L + 1] <= xp + 1e-9:
@@ -171,6 +220,7 @@ def run(policy: str = "forced", order=None):
     """Play the season. policy 'forced' grinds to the cap only at rungs that aren't clear; 'never' never grinds."""
     SP, XC, X = curves(); R, Lf, Lstep, budgets, B_last = ladder(order)
     xp = 0.0; rows = []; story = grind = lost = 0.0
+    prev_mods = 0.0; gated = 0.0; gate_floor = 0          # mod tier held back by its level floor (MOD_TIER_LEVEL_FLOOR)
 
     def grind_to(v, cap, j):
         n = 0
@@ -184,16 +234,28 @@ def run(policy: str = "forced", order=None):
         if xp > XC[cap] + 1e-9:
             lost += xp - XC[cap]; xp = XC[cap]
         L = _level(XC, xp, cap)
-        r_skip = (SP[L] + x["mods"]) / x["B"]; r_tgt = (SP[cap] + x["mods"]) / x["B"]
+        floor = None
+        if x["kind"] != "scripted":
+            if gated and L >= gate_floor:                  # floor reached later on story XP: the locked tier is fitted
+                gated = 0.0
+            floor = mod_tier_floor(x["rnd"], x["pos"], x["j"])
+            if floor is not None and L < floor:            # tier for this rung shows "requires level N": not fitted
+                gated = x["mods"] - prev_mods; gate_floor = floor
+        mods_skip = x["mods"] - gated
+        r_skip = (SP[L] + mods_skip) / x["B"]; r_tgt = (SP[cap] + x["mods"]) / x["B"]
         pooled = _rates(r_tgt, r_skip, "pooled")
         clear = x["kind"] == "scripted" or mid(pooled["avg_skip"]) >= E.CLEAR_THRESHOLD
         n, v2 = grind_to(xp, cap, max(0, x["j"]))
         g = n if (policy == "forced" and not clear) else 0
         if g:
             grind += v2 - xp; xp = v2
+            gated = 0.0                                    # ground to the cap (>= every floor): tier fitted
         row = dict(k=x["k"], crew=x["crew"], district=x["district"], rung=x["rung"], j=x["j"], round_open=x["ro"], pos=x.get("pos"),
                    unlocks=x.get("unlocks", []), B=round(x["B"], 1),
-                   level_cap=cap, story_level=L, races_to_cap=n, grind_races=g, clear=clear, **pooled)
+                   level_cap=cap, story_level=L, races_to_cap=n, grind_races=g, clear=clear,
+                   mods=round(x["mods"], 2), mods_skip=round(mods_skip, 2), tier_floor=floor,
+                   tier_locked=floor is not None and L < floor, **pooled)
+        prev_mods = x["mods"]
         if x["district"]:
             row["district_rates"] = _rates(r_tgt, r_skip, x["district"])
         nxt = R[i + 1]["L"] if i + 1 < len(R) else Lf[0]

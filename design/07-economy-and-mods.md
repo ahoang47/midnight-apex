@@ -210,12 +210,19 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 | Constant | Value | Notes |
 |---|---|---|
 | `PART_TIERS` | TBD (e.g. Street / Sport / Race / Rare) | Placeholder names |
-| `TIER_LEVEL_FLOOR[tier]` | TBD | `mod_notes.md:43` example: L25+ |
+| `TIER_LEVEL_FLOOR[tier]` | TBD for the general catalog | `mod_notes.md:43` example: L25+. The mature #2 tier's floor is live, see below |
 | `TIER_BASE_PRICE[tier]` | TBD | Tune so one tier ≈ `PARTS_PER_ROUND_TARGET` purchases per round |
 | `TIER_STAT_BUDGET[tier]` | TBD | Net bonus (upside minus trade-off) |
 | `TIER_UNLOCK[tier]` | TBD: round start / lieutenant ladder / boss defeated / wholesale | Shop gating (canon 28) |
 | `LIEUTENANT_PART_SOURCE[round][crew_step]` | TBD | Horizontal shop options unlocked by beating kids / mature / old heads |
 | `RARE_PART_SOURCE[boss_id]` | TBD | Which crew boss adds which rare tier-jump parts |
+
+**Mature #2 tier level floor (live; slots-v2 fix b3, Austin approved 2026-11-12, "Oh, neat. Yes approved.").** Constants in `sim/velocity_shift/equations.py`: `MOD_TIER_LEVEL_FLOOR`, `MOD_TIER_FLOOR_RUNG`, `MOD_TIER_FLOOR_MARGIN`. Logic in `sim/velocity_shift/progression.py`: `derive_mod_tier_floors`, `mod_tier_floor`, `mod_tier_available`, and `run`.
+- The mod tier a crew unlocks for its mature #2 race (`LADDER_RUNGS[MOD_TIER_FLOOR_RUNG]`) shows **"requires level N"** in the shop. It can't be fitted below level N, even when the player can afford it.
+- N is per crew, keyed by **(round, play position)** like the budget steps, so it's the same in all 216 play orders. N = the level a player has at that rung after entering the crew at the previous boss's level cap and winning on story XP only, + `MOD_TIER_FLOOR_MARGIN`, never above the rung's level cap. `derive_mod_tier_floors()` produces the table, and `sim/tests/test_mod_floor.py` pins it.
+- The tier is fitted once the player reaches N, whether from story XP at a later rung or by grinding. Below N, the mature #2 skip state races with the previous rung's mods.
+- **Why:** without the floor, a strong player (QTE profile `strong`) clears R1 position 2 and R2 position 3's mature #2 races with no grinding, purely because of the newly unlocked tier, which makes the new mod a skip button. With the floor, no strong mature #2 or boss clear depends on the newest mod under the balanced, window or aero10 policies. Weak and average grind are unchanged, and dead wins stay the same. Evidence: `design/notes/slots-v2/README.md` (b3 section).
+- **Where players notice it:** average play only at round 1 position 1's mature #2, which is already a wall and keeps the same grind. Strong players see it at the two fixed rungs, where they now need a few grind races to reach N.
 
 The catalog itself (individual parts) lives in a data file (§9.2). **No part list is invented here.** It is authored after Q6/Q7 are answered.
 

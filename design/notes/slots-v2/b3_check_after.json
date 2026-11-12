@@ -1,0 +1,6353 @@
+{
+"balanced|weak": {
+"orders": 216,
+"grind_totals": [
+141
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 22.62,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 20.02,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 7,
+"mid_skip": 16.17,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 16.77,
+"locked": false,
+"grind": 1
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 16.09,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.56,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 22.47,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 19.91,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 19,
+"mid_skip": 16.52,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 16.68,
+"locked": false,
+"grind": 1
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 16.01,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.54,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 22.47,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 19.91,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 31,
+"mid_skip": 16.52,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 16.68,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 16.01,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.54,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 21.63,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 20.02,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 63,
+"mid_skip": 16.29,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 15.99,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 16.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.6,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 22.63,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 19.93,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 76,
+"mid_skip": 16.0,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 16.66,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 15.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.5,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 22.58,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 19.9,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 88,
+"mid_skip": 16.54,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 16.7,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 16.02,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.5,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 21.63,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 20.02,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 120,
+"mid_skip": 16.29,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 15.99,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 16.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.6,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 22.63,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 19.93,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 133,
+"mid_skip": 16.0,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 16.66,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 15.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.5,
+"locked": false,
+"grind": 5
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 29.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 22.58,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 19.9,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 145,
+"mid_skip": 16.54,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 16.7,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 16.02,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 9.5,
+"locked": false,
+"grind": 5
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"balanced|average": {
+"orders": 216,
+"grind_totals": [
+153
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.83,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 71.16,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 3,
+"mid_skip": 38.48,
+"locked": true,
+"grind": 7
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.85,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.41,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.07,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 15,
+"mid_skip": 46.74,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.57,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.05,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.41,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.07,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 27,
+"mid_skip": 46.74,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.57,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.04,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 73.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 68.38,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 59,
+"mid_skip": 46.87,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 66.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.87,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.84,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.86,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 72,
+"mid_skip": 46.67,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.17,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.78,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 84,
+"mid_skip": 46.81,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.58,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.02,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 73.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 68.38,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 116,
+"mid_skip": 46.87,
+"locked": false,
+"grind": 9
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 66.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.87,
+"locked": false,
+"grind": 9
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.84,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.86,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 129,
+"mid_skip": 46.67,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.17,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.78,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 141,
+"mid_skip": 46.81,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.58,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.02,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"balanced|strong": {
+"orders": 216,
+"grind_totals": [
+100
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.5,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 93.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.91,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 3,
+"mid_skip": 81.08,
+"locked": true,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.34,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 73.05,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 59.99,
+"locked": false,
+"mid_prev_lines": 58.34,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 87.5,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 81.12,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 8,
+"mid_skip": 47.86,
+"locked": true,
+"grind": 13
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.45,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.89,
+"locked": false,
+"mid_prev_lines": 82.7,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.11,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.35,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 26,
+"mid_skip": 80.87,
+"locked": false,
+"mid_prev_lines": 76.46,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.24,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.68,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.86,
+"locked": false,
+"mid_prev_lines": 52.19,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 87.64,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 81.47,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 53,
+"mid_skip": 51.39,
+"locked": true,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 43.77,
+"locked": false,
+"grind": 19
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 90.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 86.42,
+"locked": false,
+"mid_prev_lines": 86.23,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.31,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.97,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 72,
+"mid_skip": 82.65,
+"locked": false,
+"mid_prev_lines": 80.87,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 75.19,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 59.95,
+"locked": false,
+"mid_prev_lines": 58.11,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 86.88,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 76.46,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 77,
+"mid_skip": 47.84,
+"locked": true,
+"grind": 16
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.46,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.15,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.87,
+"locked": false,
+"mid_prev_lines": 82.7,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.29,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.45,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 115,
+"mid_skip": 81.1,
+"locked": false,
+"mid_prev_lines": 76.05,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.34,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 62.6,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.37,
+"locked": false,
+"mid_prev_lines": 52.23,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.64,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 84.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 74.71,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 121,
+"mid_skip": 41.84,
+"locked": true,
+"grind": 18
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.09,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.84,
+"locked": false,
+"mid_prev_lines": 82.65,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.12,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.36,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 140,
+"mid_skip": 80.87,
+"locked": false,
+"mid_prev_lines": 76.46,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.7,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.82,
+"locked": false,
+"mid_prev_lines": 52.21,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 18
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"window|weak": {
+"orders": 216,
+"grind_totals": [
+141
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 33.87,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.02,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 23.07,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 7,
+"mid_skip": 18.68,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.49,
+"locked": false,
+"grind": 1
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.67,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 11.25,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 25.68,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.43,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 19,
+"mid_skip": 18.62,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.53,
+"locked": false,
+"grind": 1
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.67,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.13,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 25.68,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.43,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 31,
+"mid_skip": 18.62,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.53,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.74,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 33.87,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 24.67,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 23.39,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 63,
+"mid_skip": 19.5,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 18.21,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.79,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 12.77,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.02,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.07,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.53,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 76,
+"mid_skip": 18.33,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.48,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.37,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.61,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.15,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 25.96,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.8,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 88,
+"mid_skip": 18.62,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.52,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.62,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 33.87,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 24.67,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 23.39,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 120,
+"mid_skip": 19.5,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 18.21,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.79,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 12.77,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.02,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.07,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.53,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 133,
+"mid_skip": 18.33,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.48,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.37,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.61,
+"locked": false,
+"grind": 5
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.15,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 25.96,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.8,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 145,
+"mid_skip": 18.62,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.52,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.62,
+"locked": false,
+"grind": 5
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"window|average": {
+"orders": 216,
+"grind_totals": [
+153
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.83,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 71.16,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 3,
+"mid_skip": 38.48,
+"locked": true,
+"grind": 7
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.85,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.41,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.07,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 15,
+"mid_skip": 46.74,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.57,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.05,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.41,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.07,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 27,
+"mid_skip": 46.74,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.57,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.04,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 73.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 68.38,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 59,
+"mid_skip": 46.87,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 66.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.07,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.84,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.86,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 72,
+"mid_skip": 46.67,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.17,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.78,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 84,
+"mid_skip": 46.81,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.58,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.02,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 73.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 68.38,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 116,
+"mid_skip": 46.87,
+"locked": false,
+"grind": 9
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 66.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.07,
+"locked": false,
+"grind": 9
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.84,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.86,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 129,
+"mid_skip": 46.67,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.17,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.78,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 141,
+"mid_skip": 46.81,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.58,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.02,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"window|strong": {
+"orders": 216,
+"grind_totals": [
+100
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.5,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 93.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.91,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 3,
+"mid_skip": 81.08,
+"locked": true,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.34,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 73.05,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 59.99,
+"locked": false,
+"mid_prev_lines": 58.34,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 87.5,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 81.12,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 8,
+"mid_skip": 47.86,
+"locked": true,
+"grind": 13
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.45,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.89,
+"locked": false,
+"mid_prev_lines": 82.7,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.11,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.35,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 26,
+"mid_skip": 80.87,
+"locked": false,
+"mid_prev_lines": 76.46,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.24,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.68,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.86,
+"locked": false,
+"mid_prev_lines": 52.19,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 87.64,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 81.47,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 53,
+"mid_skip": 51.39,
+"locked": true,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 44.22,
+"locked": false,
+"grind": 19
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 90.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 86.42,
+"locked": false,
+"mid_prev_lines": 86.23,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.31,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.97,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 72,
+"mid_skip": 82.65,
+"locked": false,
+"mid_prev_lines": 80.87,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 75.19,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 59.95,
+"locked": false,
+"mid_prev_lines": 58.11,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 86.88,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 76.46,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 77,
+"mid_skip": 47.84,
+"locked": true,
+"grind": 16
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.46,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.15,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.87,
+"locked": false,
+"mid_prev_lines": 82.7,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.29,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.45,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 115,
+"mid_skip": 81.1,
+"locked": false,
+"mid_prev_lines": 76.05,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.34,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 62.6,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.37,
+"locked": false,
+"mid_prev_lines": 52.23,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.64,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 84.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 74.71,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 121,
+"mid_skip": 43.29,
+"locked": true,
+"grind": 18
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.09,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.84,
+"locked": false,
+"mid_prev_lines": 82.65,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.12,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.36,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 140,
+"mid_skip": 80.87,
+"locked": false,
+"mid_prev_lines": 76.46,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.7,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.82,
+"locked": false,
+"mid_prev_lines": 52.21,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 18
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"aero10|weak": {
+"orders": 216,
+"grind_totals": [
+141
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 33.87,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.02,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 23.07,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 7,
+"mid_skip": 18.68,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.49,
+"locked": false,
+"grind": 1
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.67,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 11.25,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 25.68,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.43,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 19,
+"mid_skip": 18.62,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.53,
+"locked": false,
+"grind": 1
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.67,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.13,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 25.68,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.43,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 31,
+"mid_skip": 18.62,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.53,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.74,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 33.87,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 24.67,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 23.39,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 63,
+"mid_skip": 19.5,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 18.21,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.79,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 12.77,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.24,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.41,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.65,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 76,
+"mid_skip": 18.63,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.56,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.66,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.63,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.23,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.07,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.95,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 88,
+"mid_skip": 19.38,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.63,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.71,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.64,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 33.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 24.79,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 23.49,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 120,
+"mid_skip": 19.63,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 18.41,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.94,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 12.96,
+"locked": false,
+"grind": 4
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.24,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.41,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.65,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 133,
+"mid_skip": 18.63,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.56,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.66,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.63,
+"locked": false,
+"grind": 5
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 35.23,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 26.07,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 22.95,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 145,
+"mid_skip": 19.38,
+"locked": false,
+"grind": 3
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 19.63,
+"locked": false,
+"grind": 2
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 18.71,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 10.64,
+"locked": false,
+"grind": 5
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"aero10|average": {
+"orders": 216,
+"grind_totals": [
+153
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.83,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 71.16,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 3,
+"mid_skip": 38.48,
+"locked": true,
+"grind": 7
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 48.85,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.41,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.07,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 15,
+"mid_skip": 46.74,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.57,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.05,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.41,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.07,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 27,
+"mid_skip": 46.74,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.57,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.04,
+"locked": false,
+"grind": 6
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 73.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 68.38,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 59,
+"mid_skip": 46.87,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 66.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.07,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.84,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.86,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 72,
+"mid_skip": 46.81,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.17,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.03,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 84,
+"mid_skip": 46.9,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.58,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.09,
+"locked": false,
+"grind": 7
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 73.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 68.38,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 116,
+"mid_skip": 46.98,
+"locked": false,
+"grind": 9
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 66.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.52,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.51,
+"locked": false,
+"grind": 9
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.84,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.86,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 129,
+"mid_skip": 46.81,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.17,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.39,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.03,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 83.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 75.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 70.99,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 141,
+"mid_skip": 46.9,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 67.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 65.58,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 49.09,
+"locked": false,
+"grind": 8
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+},
+"aero10|strong": {
+"orders": 216,
+"grind_totals": [
+100
+],
+"decisive_by_position": [],
+"default_rows": [
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 2",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "Prologue",
+"rnd": null,
+"pos": null,
+"rung": "scripted 3",
+"j": -1,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.5,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 93.28,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.91,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 4,
+"level_skip": 3,
+"mid_skip": 81.08,
+"locked": true,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.34,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 73.05,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Touge",
+"rnd": 1,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 59.99,
+"locked": false,
+"mid_prev_lines": 58.34,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 87.5,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 81.12,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 14,
+"level_skip": 8,
+"mid_skip": 47.86,
+"locked": true,
+"grind": 13
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.45,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.14,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Wangan",
+"rnd": 1,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.89,
+"locked": false,
+"mid_prev_lines": 82.7,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.11,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.35,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 26,
+"level_skip": 26,
+"mid_skip": 80.87,
+"locked": false,
+"mid_prev_lines": 76.46,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.24,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.68,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R1 Street",
+"rnd": 1,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.86,
+"locked": false,
+"mid_prev_lines": 52.19,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 87.64,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 81.47,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 54,
+"level_skip": 53,
+"mid_skip": 51.39,
+"locked": true,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 44.22,
+"locked": false,
+"grind": 19
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 90.26,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Wangan",
+"rnd": 2,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 86.42,
+"locked": false,
+"mid_prev_lines": 86.23,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.31,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.97,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 71,
+"level_skip": 72,
+"mid_skip": 82.65,
+"locked": false,
+"mid_prev_lines": 80.87,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 75.19,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.61,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Street",
+"rnd": 2,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 59.95,
+"locked": false,
+"mid_prev_lines": 58.11,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 86.88,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 76.46,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 83,
+"level_skip": 77,
+"mid_skip": 48.03,
+"locked": true,
+"grind": 16
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.46,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.15,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R2 Touge",
+"rnd": 2,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.87,
+"locked": false,
+"mid_prev_lines": 82.7,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.29,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.98,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.45,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "mature",
+"j": 3,
+"floor": 111,
+"level_skip": 115,
+"mid_skip": 81.1,
+"locked": false,
+"mid_prev_lines": 76.05,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.34,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "old head",
+"j": 5,
+"mid_skip": 62.6,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Street",
+"rnd": 3,
+"pos": 0,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.37,
+"locked": false,
+"mid_prev_lines": 52.23,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 0,
+"mid_skip": 90.64,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "kid",
+"j": 1,
+"mid_skip": 84.9,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 2,
+"mid_skip": 74.71,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "mature",
+"j": 3,
+"floor": 128,
+"level_skip": 121,
+"mid_skip": 43.46,
+"locked": true,
+"grind": 18
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 4,
+"mid_skip": 90.42,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "old head",
+"j": 5,
+"mid_skip": 88.09,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Touge",
+"rnd": 3,
+"pos": 1,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 82.84,
+"locked": false,
+"mid_prev_lines": 82.65,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 0,
+"mid_skip": 95.12,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "kid",
+"j": 1,
+"mid_skip": 92.95,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 2,
+"mid_skip": 90.36,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "mature",
+"j": 3,
+"floor": 140,
+"level_skip": 140,
+"mid_skip": 80.87,
+"locked": false,
+"mid_prev_lines": 76.46,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 4,
+"mid_skip": 70.25,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "old head",
+"j": 5,
+"mid_skip": 68.7,
+"locked": false,
+"grind": 0
+},
+{
+"crew": "R3 Wangan",
+"rnd": 3,
+"pos": 2,
+"rung": "crew boss",
+"j": 6,
+"mid_skip": 53.82,
+"locked": false,
+"mid_prev_lines": 52.21,
+"decisive": false,
+"grind": 0
+},
+{
+"crew": "Finale",
+"rung": "Myth #1",
+"j": 4,
+"grind": 18
+},
+{
+"crew": "Finale",
+"rung": "Myth #2",
+"j": 4,
+"grind": 6
+},
+{
+"crew": "Finale",
+"rung": "Myth #3",
+"j": 4,
+"grind": 4
+},
+{
+"crew": "Finale",
+"rung": "Summit",
+"j": 4,
+"grind": 6
+}
+]
+}
+}
