@@ -262,6 +262,14 @@ locks, the camera returns to Entry, and playback runs with the B.5a line-vs-line
 marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (lane/stance labels on the Apex and
 Exit picks there are placeholders).
 
+### B.5c One aliasing rule [MUST, APPROVED 2026-11-11]
+Every layer of a frame (3D render, HUD, panels, cards, chips, icons, text, decals, logo, sprites) is drawn and
+composited at **native 640×480 with no anti-aliasing and no smoothing**: no AA on shapes or text, no bilinear
+resampling, rotation or scaling with nearest only (or pre-drawn at final angle/size). RGB555 + 4×4 Bayer is applied
+once to the composited frame, then a **single 2× nearest upscale** at the very end. Nothing is upscaled, downscaled or
+smoothed in between. Texture filtering inside the 3D scene follows Q4 (smooth) and is not affected. Review images
+and contact sheets are judged from full-size frames; downscaled sheets are for layout only.
+
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
 lines face-up from the start (no hidden cards, no flips) so the player can learn rival patterns. Columns are ENTRY /
