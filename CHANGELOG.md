@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-12 — Nathaniel [story]: corner lines refer to stats; IN/MID/OUT is visual only
+- **Ask:** Austin in Exec Team (10:22 AM PT): "I think all backend should refer to stats. In/mid/out only visual reference."
+- `story/corner_lines.md`: every line now reads Entry-Apex-Exit by stat (e.g. Touge hairpin EN-HAN-POW), replacing the IN/MID/OUT form from 8911879. Header notes IN/MID/OUT is only the on-screen lane (OUT = POW, MID = HAN, IN = EN). No line changed.
+- `story/pitch.md`: players choose POW, EN or HAN per phase; the lane is how it shows on screen.
+
+---
+
 ## 2026-11-12 — Arthur [art]: POW/EN/HAN and OUT/MID/IN naming in art_direction; B.5d bend placeholder corrected
 
 - **Ask:** Austin in Exec Team (2026-11-12): stats and stances are always POW / EN / HAN; line choice is always OUT / MID / IN, with a short note of the stat (OUT (POW), MID (HAN), IN (EN)). The same OUT is the same POW line on a left or right turn. Canon: `design/01-system-overview.md` 81b230f.
