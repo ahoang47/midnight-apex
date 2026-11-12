@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-12 — Desmond [ci]: run CI on Python 3.13 so qte-v1 function bits match
+- **What:** both jobs in `.github/workflows/ci.yml` now use Python 3.13, the same series as the box (3.13.5).
+- **Why:** the first Actions run ([CI #1](https://github.com/ahoang47/midnight-apex/actions/runs/43269513343)) was green on **sim** (~1 min). On **godot** (~4 min 44 s) every two-corner race, dump/load, restart test and Plan the Line key test matched the pinned sim (max_abs_diff 0). The only failure was `tools/qte_fn_test.py`: 337 bit mismatches at max_abs_diff=2.220e-16 (one ULP) under the runner's Python 3.12.16. The same test is 0 mismatches on the box under Python 3.13.5. That was a CI setup choice, not a game-logic failure.
+
 ## 2026-11-12 — Gordon [godot]: two-corner editor scenes + QTEs during playback, static Apex/Exit stops (UNAPPROVED)
 
 **What:** `unapproved/gordon/two-corner/godot` is now split into scenes you can edit in the Godot editor:
