@@ -1,13 +1,11 @@
 # Open narrative proposals (unapproved)
 
-Added 2026-11-11 by Nathaniel. These come from the 2026-11-10 free-crew-order pass; everything Austin approved from that pass already landed in 8d05f70 and ff8bbbb. Both items below are still open as of 2026-11-11 (moved here from `story/unapproved/` the same day).
+Added 2026-11-11 by Nathaniel. These come from the 2026-11-10 free-crew-order pass; everything Austin approved from that pass already landed in 8d05f70 and ff8bbbb. Item 2 is still open (item 1 resolved 2026-11-12) (moved here from `story/unapproved/` the same day).
 
-## 1. Finale order (added 2026-11-11; still open)
-- `story/canon.md` currently states the Myth Driver races run Touge #1 → Wangan #2 → Street #3. Free crew order doesn't touch this (the Finale comes after Round 3), but it's now the only fixed order in the game.
-- **Proposal (recommended):** keep it fixed, because canon 18 needs #1's "left" before #2's "pushed". In-world reason: each Myth Driver only agrees to race after hearing the one before him did. Example (draft), #2: "He raced you? Then I'll hear what he told you first."
-- **Alternative:** #1 first, then #2 and #3 in either order.
+## ~~1. Finale order~~ (resolved 2026-11-12)
+- Austin locked the fixed order Touge #1 → Wangan #2 → Street #3 ("so the narrative works... kind of works personality wise"). Now in `story/canon.md` decision list (Finale line).
 
-## 2. When Reiko warns the PC off digging (added 2026-11-11; still open)
+## 2. When Reiko warns the PC off digging (added 2026-11-11; still open, on Austin's stack as of 2026-11-12)
 - Today `story/plot.md` §6 and `story/dialogue_outline.md` place it loosely "in Round 3, before the Mentor Confrontation". With free crew order it needs a position-based trigger.
 - **Proposal (recommended):** after the PC clears their second Round 3 crew, so the PC goes after the last piece anyway.
 - **Alternative:** at the end of Round 3, right before the Mentor Confrontation.

@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-12 — Nathaniel [story]: Finale order locked as fixed; Reiko warning trigger stays open
+- **Ask:** Austin (7:00 AM PT): "Finale order should stick to that so the narrative works. Also kind of works personality wise. We can add the Reiko beat to the stack."
+- `story/canon.md`: the Finale line now marks Touge #1 → Wangan #2 → Street #3 as fixed, with the reason (decision 18 needs #1's "left" before #2's "pushed") and the in-world reason (each Myth Driver races only after hearing the one before him did).
+- `unapproved/nathaniel/open_proposals.md`: item 1 marked resolved; item 2 (Reiko's warning trigger) stays open on Austin's stack.
+- **Why:** free crew order made the Finale the only fixed order in the game, so it needed an explicit lock and reason.
+
+---
+
 ## 2026-11-11 — Gordon [godot]: two-corner test re-pinned to sim f0efecf, three timing QTEs per turn (Entry/Apex/Exit), TC2 state token (UNAPPROVED, shots10)
 - **Ask:** I asked whether to move the two-corner test onto Barry's latest sim and build the three QTEs. Austin (10:56 PM PT): "Yes."
 - **Pin:** 212eaab → **f0efecf** (`f0efecfbc18b495a0ba9df3bf956d8e89acc3477`). `sim/` is unchanged through 59f7e6d. No `sim/` file was edited.
