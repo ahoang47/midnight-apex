@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Arthur [art]: PLAN THE LINE stance chips are framed
+
+- **Why:** Austin follow-up, 2026-11-12: "The chips should be framed."
+- **What:** Every OUT / MID / IN chip on the PLAN THE LINE panel now has its own bold, late-90s bevelled/outlined border in the plate style (pixel-hard, ink outer + edge inner + hard bevel). Unselected chips are framed too; the selected highlight stays inside the frame. `plan_panel.gd` and the line-preview frames/sheets were re-rendered in Godot. B.5d and the mockup README note the framed-chip treatment.
+
 ## 2026-11-12 — Arthur [art]: PLAN THE LINE stance chips are OUT/MID/IN + stat on every row
 
 - **Why:** Austin, 2026-11-12: "stance selection should say in/mid/out for all, with a chip explaining stat."

@@ -3,8 +3,31 @@
 ## (ENTRY, APEX, EXIT) labels choices OUT / MID / IN with a small stat chip
 ## (OUT · POW, MID · HAN, IN · EN). The pick itself is the stat. Austin 2026-11-12:
 ## "stance selection should say in/mid/out for all, with a chip explaining stat."
+## Each chip is framed (Austin follow-up: "The chips should be framed."): a bold,
+## late-90s bevelled/outlined border matching the plate style, pixel-hard, on
+## selected and unselected chips. The selected highlight stays inside the frame.
 @tool
 extends "res://scripts/hud/hud_panel.gd"
+
+## Slanted lane+stat chip with a hard plate-style frame. Highlight fill is inside the frame.
+func frame_lane_chip(lx: float, ry: float, w: float, selected: bool, active: bool, dim: bool) -> PackedVector2Array:
+	var pts := P([lx, ry + 1, lx + w - 2, ry + 1, lx + w - 4, ry + 24, lx - 2, ry + 24])
+	if selected:
+		solid(pts, AMBER if active else EDGE)
+	else:
+		solid(pts, Color8(14, 16, 36) if dim else Color8(20, 24, 52))
+	# Bold 2 px frame: outer ink, inner edge, then a hard bevel. Pixel-hard, no AA.
+	outline(pts, INK)
+	var inner := P([lx + 1, ry + 2, lx + w - 3, ry + 2, lx + w - 5, ry + 23, lx - 1, ry + 23])
+	outline(inner, EDGE if not dim else EDGE_D)
+	var hi := Color8(160, 180, 230, 220) if selected else Color8(120, 140, 190, 200)
+	var sh := Color8(0, 0, 0, 200)
+	draw_line(pts[0] + Vector2(1, 1), pts[1] + Vector2(-1, 1), hi, 1.0)
+	draw_line(pts[0] + Vector2(1, 1), pts[3] + Vector2(1, -1), Color8(hi.r8, hi.g8, hi.b8, 180), 1.0)
+	draw_line(pts[1] + Vector2(-1, 1), pts[2] + Vector2(-1, -1), sh, 1.0)
+	draw_line(pts[2] + Vector2(-1, -1), pts[3] + Vector2(1, -1), Color8(0, 0, 0, 220), 1.0)
+	return pts
+
 func paint() -> void:
 	var pl: Dictionary = st.plan
 	# Pass 4: slimmer and further right/down so the chase MX5 is not covered.
@@ -43,7 +66,7 @@ func paint() -> void:
 		t2(nx, ry + 8, PH[i], 12, ncol, true, "l", not active, true, true)
 		if locked:
 			check(nx + sw(PH[i], 12, true, true) + 4, ry + 6, CHECK_GREEN)
-		# All rows: OUT / MID / IN with a small stat chip, same style as the Entry chips.
+		# All rows: OUT / MID / IN with a small framed stat chip.
 		var chosen: String = ""
 		if locked and slots[i] != null:
 			chosen = String(slots[i])
@@ -53,22 +76,24 @@ func paint() -> void:
 			chosen = ORDER[int(pl.sel)] if int(pl.sel) >= 0 else ""
 		if active or locked:
 			var lx := x0 + 58
+			var w := 26.0
 			for k in lanes:
 				var lab: String = LANE[k]
 				var note: String = NAME[k]
-				var w := 26.0
 				var off: bool = active and int(pl.avail[k]) <= 0
-				if k == chosen and not off:
-					solid(P([lx, ry + 1, lx + w - 2, ry + 1, lx + w - 4, ry + 24, lx - 2, ry + 24]), AMBER if active else EDGE)
+				var selected: bool = (k == chosen and not off)
+				var dim: bool = locked or off
+				frame_lane_chip(lx, ry, w, selected, active, dim and not selected)
+				if selected:
 					t2(lx + w / 2 - 2, ry + 7, lab, 10, INK, true, "m", false, true)
 					# HAN yellow disappears on amber; use ink on the slab, stance colour otherwise.
 					t2(lx + w / 2 - 2, ry + 17, note, 8, INK, true, "m", false, true)
 					if locked:
-						check(lx + w - 2, ry + 3, INK)
+						check(lx + w - 7, ry + 3, INK)
 				else:
-					t2(lx + w / 2 - 2, ry + 7, lab, 10, DIMT if (locked or off) else SUB, true, "m", true, true)
-					t2(lx + w / 2 - 2, ry + 17, note, 8, dimc(STANCE[k], 0.7) if (locked or off) else STANCE[k], true, "m", false, true)
-				lx += w
+					t2(lx + w / 2 - 2, ry + 7, lab, 10, DIMT if dim else SUB, true, "m", true, true)
+					t2(lx + w / 2 - 2, ry + 17, note, 8, dimc(STANCE[k], 0.7) if dim else STANCE[k], true, "m", false, true)
+				lx += w + 2.0
 		else:
 			t2(x0 + 70, ry + 9, "--  --  --", 12, TODO, false, "l", false, true)
 	t2(x0 + 8, y1 - 12, "Line set. Enter to lock now" if ph >= 3 else "Line locks at turn-in", 9, SUB, true)
