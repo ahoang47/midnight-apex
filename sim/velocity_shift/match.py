@@ -4,8 +4,8 @@ from __future__ import annotations
 Each turn consists of 3 sequential clashes. After each card is played
 the player sees the result before picking the next card.
 
-The default engine is final-v1 Phi/tau progress (knot window, kappa,
-LINE_SET_C). Set MatchConfig.legacy_hp_dp to use the older HP/DP path.
+The default engine is final-v1 Phi/tau progress (visible QTE zone,
+kappa, LINE_SET_C). Set MatchConfig.legacy_hp_dp to use the older HP/DP path.
 """
 
 import copy
@@ -15,7 +15,7 @@ from typing import Callable, Optional
 from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
     TurnResult, TurnState, ClashResult, PersonalityConfig
 from .combat import resolve_turn, resolve_turn_legacy, pick_line, stances_to_cards, corner_at_turn, draw_weighted_hand, plan_player_cards
-from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod, RUBBER_BAND_FRACTION, OPPONENT_QTE
+from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod, RUBBER_BAND_FRACTION, OPPONENT_QTE, raw_qte_score
 from .deck import Deck
 from .trace import TraceLogger
 from .ai import get_personality, get_phase, get_total_phases
@@ -177,9 +177,25 @@ def run_match(
             o_han_pct = opponent.han / (opponent.pow + opponent.en + opponent.han) if (opponent.pow + opponent.en + opponent.han) > 0 else 1 / 3
             o_qte = apply_han_qte_mod(o_qte, o_han_pct)
         else:
-            # Playable engine: q_time in [0, 1]. HAN and the knot window are
-            # applied inside clash_progress. Opponent timing is OPPONENT_QTE.
-            p_qte = get_player_qte(turn_num)
+            # Playable engine: raw q_time in [0, 1]. HAN is applied inside
+            # clash_progress (no knot_window). If a skill profile or
+            # player_timing is configured, the score is E[s] at the race's
+            # fixed r (and qte_window_mod); otherwise the callback value is
+            # already a raw score (CLI / explicit test callbacks).
+            # Opponent timing is OPPONENT_QTE.
+            if cfg.player_qte_profile or cfg.player_timing is not None or cfg.player_quality is not None:
+                p_tot = player.pow + player.en + player.han
+                o_tot = opponent.pow + opponent.en + opponent.han
+                r = p_tot / o_tot if o_tot else 1.0
+                q_time = cfg.player_timing if cfg.player_timing is not None else cfg.player_quality
+                p_qte = raw_qte_score(
+                    r,
+                    profile=cfg.player_qte_profile,
+                    q_time=None if cfg.player_qte_profile else q_time,
+                    window_mod=cfg.qte_window_mod,
+                )
+            else:
+                p_qte = get_player_qte(turn_num)
             o_qte = OPPONENT_QTE
 
         turn_state = TurnState(

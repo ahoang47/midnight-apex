@@ -68,10 +68,11 @@ def resolve_turn(
 ) -> TurnResult:
     """Resolve one turn with the final-v1 Phi/tau progress model.
 
-    `turn_state.player_qte` / `opponent_qte` are timing skills in [0, 1]
-    (q_time), not 1–10 scores. Both sides then get the HAN timing
-    modifier. Only the player's q_time is also scaled by knot_window(r);
-    the opponent's window is off (W=1), matching equations_v2.
+    `turn_state.player_qte` / `opponent_qte` are raw timing scores in
+    [0, 1], not 1–10 scores. Both sides then get the HAN timing
+    modifier. There is no knot_window factor: the player's raw score
+    already reflects the visible zone at the race's fixed r. The
+    opponent uses OPPONENT_QTE (HAN still applies).
     `race_length` selects kappa. `boss_total` defaults to the opponent's
     stat sum, so the opponent's V is 1 and the player's V is r**kappa.
     """
@@ -121,12 +122,12 @@ def resolve_turn(
         pg = clash_progress(
             p_outcome, turn_state.player_qte,
             player.pow, player.en, player.han,
-            boss_total, kappa, scale_window=True,
+            boss_total, kappa,
         )
         og = clash_progress(
             o_outcome, turn_state.opponent_qte,
             opponent.pow, opponent.en, opponent.han,
-            boss_total, kappa, scale_window=False,
+            boss_total, kappa,
         )
         p_prog += pg
         o_prog += og

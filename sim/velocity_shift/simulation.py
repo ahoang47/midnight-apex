@@ -150,10 +150,13 @@ class SimulationRunner:
                     return PERFECT_QTE
                 return self._rng.uniform(PLAYER_QTE_MIN, PLAYER_QTE_MAX)
             return fn_legacy
-        # Playable engine: q_time is a skill in [0, 1], not a Bernoulli QTE roll.
-        if pq is None:
+        # Playable engine: raw QTE in [0, 1]. When a skill profile or
+        # player_timing is set, match.py evaluates raw_qte_score at the
+        # race's fixed r (visible zone + window mod) and ignores this
+        # callback. The value below is only used if those fields are unset.
+        if pq is None and self.cfg.player_qte_profile is None:
             return lambda t: self._rng.uniform(0.1, 1.0)
-        q_time = pq[1]
+        q_time = pq[1] if pq is not None else 0.6
         return lambda t: q_time
 
     def _make_opponent_card_fn(self) -> Callable:
@@ -189,6 +192,8 @@ class SimulationRunner:
             "player_quality": self.cfg.player_quality,
             "player_read": self.cfg.player_read,
             "player_timing": self.cfg.player_timing,
+            "player_qte_profile": self.cfg.player_qte_profile,
+            "qte_window_mod": self.cfg.qte_window_mod,
             "opponent_qte_ratio": self.cfg.opponent_qte_ratio,
             "district": self.cfg.district,
             "corners": list(self.cfg.corners) if self.cfg.corners else None,
@@ -207,7 +212,8 @@ def simulate_win_rate(
 ) -> float:
     """Win rate (%) of a SimulationRunner batch on a district's official tracks.
 
-    Balanced builds, player total = r * opp_total, q_read = q_time = q,
+    Balanced builds, player total = r * opp_total, q_read = q, timing skill
+    q evaluated at the visible zone for that r (raw_qte_score),
     opponent QTE from the engine constant. Ties count as a half-win, same
     as the winrate_n4000.json oracle. Seeds are spaced so tracks and races
     do not share nearby Python Random() seeds (consecutive integers are

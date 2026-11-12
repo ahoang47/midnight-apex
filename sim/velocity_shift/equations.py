@@ -110,25 +110,58 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
 # story ladder model in `progression.py` and its win-rate oracle
 # (`config/winrate_n4000.json`, real N=4000 sim output). The playable engine
 # in combat.py / match.py uses this same model: LINE_SET_C line picks,
-# KNOT_WINDOW_105, KAPPA_BY_LENGTH, OPPONENT_QTE, and the Phi/tau clash
-# payoff (2026-11-10). The older HP/DP resolve path is resolve_turn_legacy.
+# KAPPA_BY_LENGTH, OPPONENT_QTE, the visible QTE zone (`QTE_ZONE_WIDTH_105`,
+# approved qte-v1, 2026-11-11), and the Phi/tau clash payoff. The older
+# HP/DP resolve path is resolve_turn_legacy. KNOT_WINDOW_105 is legacy
+# (winrate_n4000.json / progression oracle, and the generator of the zone table).
 # All XP numbers are stand-ins pending playtest.
 
-# ── Combat race-balance settings (final-v1) ──
-# r = (player SP + mods) / opponent budget. Player-only QTE window:
-# fraction of timing skill that lands, piecewise-linear in r (capped at 1).
+# ── Combat race-balance settings (final-v1 + approved qte-v1, 2026-11-11) ──
+# r = (player SP + mods) / opponent budget. The stat gap is a VISIBLE QTE
+# zone width (qte_zone_width), not a hidden multiplier on the score.
+# Legacy hidden window, kept for the winrate_n4000.json / progression oracle
+# and as the generator of QTE_ZONE_WIDTH_105 (qte-v1 inverted E[s] so the
+# average player's expected raw score equals AVERAGE_PLAY_Q * knot_window(r)).
 KNOT_WINDOW_105 = ((0.80, 0.41), (0.85, 0.41), (0.90, 0.41), (0.95, 0.43), (1.00, 0.68), (1.05, 1.00))
 KAPPA_BY_LENGTH = {10: 1.55, 20: 1.35, 30: 1.20}   # stat-gap leverage V = r**kappa, by race length (turns)
 RACE_LENGTHS = (10, 20, 30)
 SIM_SEEDS = (20261113, 20261114, 20261115)
 OPPONENT_QTE = 1.0             # story-rung opponents time perfectly (uniform across rungs)
+# Visible QTE zone (qte-v1, Austin approved 2026-11-11). Presentation unit
+# is QTE_ZONE_BASE_MS (Godot QTE_TIMING_WINDOW_BASE_MS). Widths below are
+# fractions of that default zone. Interpolation: see qte_zone_width().
+QTE_ZONE_BASE_MS = 800
+# Exact inversions of E[s] at the KNOT_WINDOW_105 r knots for sigma_average
+# (the 4-dp figures 0.3276, 0.3448, 0.5802, 1.0 are these values rounded).
+# The last knot is 1.0 exactly (sigma_average is fitted so E[s] at w0 is 0.6).
+QTE_ZONE_WIDTH_105 = (
+    (0.80, 0.32758027216269503),
+    (0.85, 0.32758027216269503),
+    (0.90, 0.32758027216269503),
+    (0.95, 0.3447526695824932),
+    (1.00, 0.5802105104609707),
+    (1.05, 1.0),
+)
+# PLACEHOLDER until playtest data exists. Fitted so expected_hit_quality(σ, 1)
+# equals 0.4 / 0.6 / 0.8 at the default zone. Units are half-widths of w0
+# (a0 = QTE_ZONE_BASE_MS / 2).
+QTE_SKILL_TARGET_E = {"weak": 0.4, "average": 0.6, "strong": 0.8}
+QTE_SKILL_SIGMA_OVER_A0 = {  # PLACEHOLDER
+    "weak": 0.9074726672615829,
+    "average": 0.5139633886624675,
+    "strong": 0.25066753386161233,
+}
+# Window-only mods: MatchConfig.qte_window_mod is a multiplicative bonus on
+# the current zone (0.10 = +10% of qte_zone_width(r)). Slot competition and
+# the 105%-all-slots rule belong to the upcoming slot sim; they are not
+# modelled here.
 # Phi/tau clash payoff (final-v1 / equations_v1 K, unchanged). Per clash:
 #   g = V * Phi(outcome, q_eff) * M,  V = r**kappa,
-#   q_eff = clip(q_time * W * (1 + ETA * (han_share - 1/3)), 0, 1)
-# W is knot_window(r) for the player and 1.0 for the opponent (window off).
-# HAN still scales both sides — same as equations_v2.clash_progress. The
-# winrate_n4000 shortcut omitted the HAN term only because those cells
-# used balanced builds (han_share = 1/3, so the modifier is 1).
+#   q_eff = clip(raw_qte * (1 + ETA * (han_share - 1/3)), 0, 1)
+# No knot_window factor. The player's raw_qte already reflects the visible
+# zone at the race's fixed r (and any window-mod bonus). HAN still scales
+# both sides — same as equations_v2.clash_progress. The opponent uses
+# OPPONENT_QTE with HAN (window was never applied to them).
 W0 = 0.10                      # win payoff at q=0
 T_MAX = 0.75                   # tie payoff at q=1, as a fraction of a perfect win
 L_MAX = 0.25                   # loss payoff at q=1
@@ -221,7 +254,11 @@ FINALE_GRIND_SHARE = 0.14
 
 
 def knot_window(r: float) -> float:
-    """Player QTE window W(r) from KNOT_WINDOW_105 (flat below/above the ends, capped at 1)."""
+    """LEGACY hidden QTE window W(r) from KNOT_WINDOW_105 (flat outside the ends, capped at 1).
+
+    Not used by the playable engine. Kept for the winrate_n4000.json /
+    progression oracle and as the generator of qte_zone_width().
+    """
     xs = [k[0] for k in KNOT_WINDOW_105]; ys = [k[1] for k in KNOT_WINDOW_105]
     if r <= xs[0]:
         return ys[0]
@@ -229,6 +266,114 @@ def knot_window(r: float) -> float:
         if r <= x1:
             return min(1.0, y0 + (y1 - y0) * (r - x0) / (x1 - x0))
     return min(1.0, ys[-1])
+
+
+def expected_hit_quality(sigma_over_a0: float, width_over_w0: float) -> float:
+    """E[s] for one timing press: s = max(0, 1 - |e| / (w/2)), e ~ Normal(0, σ).
+
+    `width_over_w0` is the zone width as a fraction of QTE_ZONE_BASE_MS;
+    `sigma_over_a0` is σ in units of the default half-width a0.
+    Skill σ values are PLACEHOLDER until playtest data exists.
+    """
+    a = float(width_over_w0)
+    s = float(sigma_over_a0)
+    if a <= 0.0:
+        return 0.0
+    if s <= 0.0:
+        return 1.0
+    z = a / s
+    return math.erf(z / math.sqrt(2.0)) - (s / a) * math.sqrt(2.0 / math.pi) * (
+        1.0 - math.exp(-0.5 * z * z)
+    )
+
+
+def _qte_sigma_for_target(target: float) -> float:
+    """σ / a0 such that expected_hit_quality(σ, 1) = target. Internal."""
+    if not 0.0 < target < 1.0:
+        raise ValueError(f"target must be in (0, 1), got {target}")
+    lo, hi = 1e-8, 50.0
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        if expected_hit_quality(mid, 1.0) > target:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def _qte_width_for_target(target: float, sigma_over_a0: float) -> float:
+    """Zone width / w0 such that expected_hit_quality(σ, w) = target. Internal."""
+    if target <= 0.0:
+        return 0.0
+    if target >= 1.0 - 1e-15:
+        return float("inf")
+    lo, hi = 1e-10, 50.0 * max(sigma_over_a0, 1e-8)
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        if expected_hit_quality(sigma_over_a0, mid) < target:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def qte_sigma_over_a0(profile: str | None = None, q_time: float | None = None) -> float:
+    """σ / a0 for a named PLACEHOLDER profile, or for a skill with E[s]=q_time at w0."""
+    if profile is not None:
+        if profile not in QTE_SKILL_SIGMA_OVER_A0:
+            raise ValueError(f"unknown QTE skill profile {profile!r}")
+        return QTE_SKILL_SIGMA_OVER_A0[profile]
+    if q_time is None:
+        raise ValueError("need a skill profile or a q_time")
+    if q_time <= 0.0:
+        return float("inf")
+    if q_time >= 1.0:
+        return 0.0
+    for name, target in QTE_SKILL_TARGET_E.items():
+        if abs(q_time - target) < 1e-12:
+            return QTE_SKILL_SIGMA_OVER_A0[name]
+    return _qte_sigma_for_target(q_time)
+
+
+def qte_zone_width(r: float, window_mod: float = 0.0) -> float:
+    """Visible zone width as a fraction of QTE_ZONE_BASE_MS, at stat ratio r.
+
+    Interpolation matches qte-v1: invert expected_hit_quality so the
+    average player's E[s] equals AVERAGE_PLAY_Q * knot_window(r), then
+    apply the window-mod bonus as a multiplier, width * (1 + window_mod).
+    The result is flat below r=0.80 and plateaus at 1.0 (before the mod)
+    for r >= 1.05. The zone depends only on the race's fixed r and the
+    mod; it does not change with mid-race position.
+
+    window_mod is a multiplicative bonus (0.10 = +10% of the current
+    zone). Slot competition and the 105%-all-slots rule are not applied
+    here (upcoming slot sim).
+    """
+    target = AVERAGE_PLAY_Q * knot_window(r)
+    if r >= KNOT_WINDOW_105[-1][0] or abs(target - AVERAGE_PLAY_Q) < 1e-15:
+        width = 1.0
+    else:
+        width = _qte_width_for_target(target, QTE_SKILL_SIGMA_OVER_A0["average"])
+    width = width * (1.0 + window_mod)
+    return 0.0 if width < 0.0 else width
+
+
+def raw_qte_score(
+    r: float,
+    profile: str | None = None,
+    q_time: float | None = None,
+    window_mod: float = 0.0,
+) -> float:
+    """Expected raw QTE score at the race's fixed r (no HAN, no knot_window).
+
+    A named profile or an explicit q_time (E[s] at the default zone,
+    back-compat with tests / player_timing) is evaluated at qte_zone_width
+    (r, window_mod). Skill σ is PLACEHOLDER until playtest.
+    """
+    if profile is None and q_time is None:
+        profile = "average"
+    sig = qte_sigma_over_a0(profile, q_time)
+    return expected_hit_quality(sig, qte_zone_width(r, window_mod))
 
 
 def kappa_for_length(race_length: int) -> float:
@@ -275,19 +420,17 @@ def clash_progress(
     han_stat: float,
     boss_total: float,
     kappa: float,
-    scale_window: bool,
 ) -> float:
     """g = V * Phi(o, q_eff) * M.
 
-    HAN always scales q_eff. The knot window applies only when
-    scale_window is True (the player). The opponent is called with
-    scale_window=False so W=1, matching equations_v2.race_progress.
+    q_eff = clip(q_time * (1 + ETA * (han_share - 1/3)), 0, 1).
+    No knot_window factor: the player's q_time is already the raw score
+    at the visible zone. HAN still applies to both sides.
     """
     tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
     r = tot / boss_total if boss_total else 1.0
     V = r ** kappa
-    w = knot_window(r) if scale_window else 1.0
-    qe = q_time * w * (1.0 + ETA * (han_s - 1 / 3))
+    qe = q_time * (1.0 + ETA * (han_s - 1 / 3))
     qe = 0.0 if qe < 0.0 else 1.0 if qe > 1.0 else qe
     if outcome == StanceOutcome.WIN:
         M = 1.0 + MU * (pow_s - 1 / 3)

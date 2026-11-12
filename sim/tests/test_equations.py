@@ -84,6 +84,8 @@ def test_damage_mitigation():
 
 from velocity_shift.equations import (
     timing_value, clash_payoff, clash_progress, kappa_for_length, knot_window,
+    expected_hit_quality, qte_zone_width, raw_qte_score, QTE_SKILL_SIGMA_OVER_A0,
+    QTE_ZONE_WIDTH_105, AVERAGE_PLAY_Q,
     W0, T_MAX, L_MAX, KAPPA_BY_LENGTH,
 )
 from velocity_shift.models import StanceOutcome
@@ -112,10 +114,10 @@ def test_clash_progress_balanced_at_parity():
         (StanceOutcome.NEUTRAL, T_MAX),
         (StanceOutcome.LOSS, L_MAX),
     ):
-        g = clash_progress(outcome, 1.0, 100, 100, 100, 300, kap, scale_window=False)
+        g = clash_progress(outcome, 1.0, 100, 100, 100, 300, kap)
         assert abs(g - expected) < 1e-12, (outcome, g, expected)
-        # Official window is 1.0 at r=1.05; 105+105+105 vs 300.
-        g2 = clash_progress(outcome, 1.0, 105, 105, 105, 300, kap, scale_window=True)
+        # r=1.05; 105+105+105 vs 300. No knot_window factor on q_time.
+        g2 = clash_progress(outcome, 1.0, 105, 105, 105, 300, kap)
         V = (315 / 300) ** kap
         assert abs(g2 - V * expected) < 1e-12, (outcome, g2, V * expected)
 
@@ -125,5 +127,26 @@ def test_kappa_for_length_official_and_nearest():
     assert kappa_for_length(20) == KAPPA_BY_LENGTH[20]
     assert kappa_for_length(30) == KAPPA_BY_LENGTH[30]
     assert kappa_for_length(11) == KAPPA_BY_LENGTH[10]
+    # Legacy hidden window (oracle / zone-table generator only).
     assert knot_window(1.05) == 1.0
     assert knot_window(0.80) == 0.41
+
+
+def test_expected_hit_quality_at_default_zone_matches_qte_v1():
+    """PLACEHOLDER σ: weak/average/strong E[s] at w0 is 0.4 / 0.6 / 0.8."""
+    for name, target in (("weak", 0.4), ("average", 0.6), ("strong", 0.8)):
+        e = expected_hit_quality(QTE_SKILL_SIGMA_OVER_A0[name], 1.0)
+        assert abs(e - target) < 1e-12, (name, e, target)
+
+
+def test_qte_zone_width_at_knots_and_window_mod():
+    for r, w in QTE_ZONE_WIDTH_105:
+        got = qte_zone_width(r)
+        assert abs(got - w) < 1e-12, (r, got, w)
+    # Average player's E[s] at the unmodded zone equals 0.6 * legacy W(r).
+    for r in (0.80, 0.95, 1.00, 1.0355, 1.05, 1.10):
+        e = raw_qte_score(r, profile="average")
+        assert abs(e - AVERAGE_PLAY_Q * knot_window(r)) < 1e-12, (r, e)
+    # +20% window mod widens the zone; does not change mid-race (r is fixed).
+    assert abs(qte_zone_width(1.05, window_mod=0.20) - 1.20) < 1e-12
+    assert qte_zone_width(1.05, 0.20) > qte_zone_width(1.05, 0.0)

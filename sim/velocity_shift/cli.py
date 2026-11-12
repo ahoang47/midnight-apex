@@ -11,7 +11,7 @@ import random
 import datetime
 
 from .cars import build_stats, ARCHETYPES
-from .equations import HP_PER_LEVEL, qte_factor, DISTRICTS
+from .equations import HP_PER_LEVEL, qte_factor, DISTRICTS, qte_zone_width, QTE_ZONE_BASE_MS
 from .combat import official_tracks
 from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
     TurnResult, ClashResult, PersonalityConfig
@@ -432,6 +432,12 @@ def run_cli() -> None:
 
     laps = _lap_count(cfg.encounter_type)
     print(f"\n  {pn} vs {on} ({laps} lap(s), max {cfg.max_turns} turns)")
+    p_tot = cfg.player_stats.pow + cfg.player_stats.en + cfg.player_stats.han
+    o_tot = cfg.opponent_stats.pow + cfg.opponent_stats.en + cfg.opponent_stats.han
+    r = p_tot / o_tot if o_tot else 1.0
+    zw = qte_zone_width(r, cfg.qte_window_mod)
+    print(f"  QTE zone: {zw:.2f} × default ({zw * QTE_ZONE_BASE_MS:.0f} ms at r={r:.4f}); "
+          f"the score you enter is the raw hit quality at this zone")
 
     def get_player_card(turn: int, clash_index: int, hand: list[Card],
                         opponent_hand: list[Card],

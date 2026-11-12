@@ -132,13 +132,24 @@ class MatchConfig:
     player_quality: Optional[float] = None
     # Opt-in split of play quality into two independent skills, each in
     # [0, 1]. player_read: chance per clash of reading the AI's real pick
-    # and countering it. player_timing: chance per turn of a perfect QTE.
-    # Each one, if set, overrides player_quality for its own axis; an axis
-    # left unset falls back to player_quality (so player_quality=q is
-    # shorthand for read=timing=q), and to 0 (random) if that is unset too.
-    # All three None (the default) keeps the old random player exactly.
+    # and countering it. player_timing: expected hit quality at the default
+    # QTE zone (back-compat override). In the playable engine it is evaluated
+    # at the race's fixed r via raw_qte_score (the visible zone), not used
+    # as a hidden multiplier. Each one, if set, overrides player_quality for
+    # its own axis; an axis left unset falls back to player_quality (so
+    # player_quality=q is shorthand for read=timing=q), and to 0 (random)
+    # if that is unset too. All three None (the default) keeps the old
+    # random player exactly, unless player_qte_profile is set.
     player_read: Optional[float] = None
     player_timing: Optional[float] = None
+    # Named PLACEHOLDER skill profile ("weak" / "average" / "strong").
+    # When set, the playable engine uses that profile's σ at qte_zone_width
+    # (r, qte_window_mod) and ignores player_timing for the raw QTE score.
+    player_qte_profile: Optional[str] = None
+    # Multiplicative window-only mod on the visible zone (0.10 = +10% of
+    # qte_zone_width(r)). Slot competition and the 105%-all-slots rule
+    # belong to the upcoming slot sim and are not applied here.
+    qte_window_mod: float = 0.0
     # Opt-in (None = ENCOUNTER_RATIOS[encounter_type]): override the ratio
     # that scales the AI's QTE, e.g. 1.0 for a pure stat-parity test.
     opponent_qte_ratio: Optional[float] = None

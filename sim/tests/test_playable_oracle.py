@@ -1,4 +1,9 @@
-"""Playable engine (match.py / SimulationRunner) should track winrate_n4000.json."""
+"""Playable engine (match.py / SimulationRunner) should track winrate_n4000.json.
+
+The visible-QTE zone (qte-v1) replaces knot_window in the live path. For an
+average player, raw_qte_score(r) equals 0.6 * legacy knot_window(r), so these
+cells should still land in the official band (as the qte-v1 draft showed).
+"""
 from velocity_shift.progression import win_rate
 from velocity_shift.equations import AVERAGE_PLAY_Q
 from velocity_shift.simulation import simulate_win_rate
