@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Arthur [art]: stat is framed under the OUT/MID/IN position text
+
+- **Why:** Austin follow-up, 2026-11-12: "Not quite what I wanted. The stat should be framed under the position text."
+- **What:** The frame around the whole PLAN THE LINE chip is removed. OUT / MID / IN stays unframed text; directly under it the stat (POW / HAN / EN) sits in its own small framed box with a pixel-hard plate-style border, filled in the stat colour. Selected choices keep a highlight behind the position text and a brighter stat frame. The lock tick sits to the right of the position letters, on the highlight and clear of the stat box. Applied on all three rows. Line-preview frames and sheets re-rendered in Godot (`769f073`). B.5d and the mockup README updated.
+
 ## 2026-11-12 — Gordon [godot]: two-corner HUD plate grain, bevel, heavier type, and framed lane chips (UNAPPROVED)
 
 - **Why:** Austin, 12:55 PM PT, 2026-11-12: "I like his HUD look." Port of Arthur's plate grain, bevel and heavier fonts from `unapproved/arthur/mockups/line_preview/` into the two-corner HUD. Purely visual; no gameplay or sim change. Later the same day Austin ruled (relayed by Arthur; 9ba4c70 / c838466) that every PLAN THE LINE row uses IN/MID/OUT chips with the stat, and "The chips should be framed."
