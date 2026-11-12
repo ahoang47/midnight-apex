@@ -14,7 +14,7 @@ Every formula in the combat engine. All are pure functions in `sim/velocity_shif
 2. **Lock the AI-skill lever** that hits ~60% at 0.9/0.9: recommend **AI read 0.40 + AI QTE 10**. Needs a real engine hook + matching tells (Desmond).
 3. **Fix encounter scaling** (doc vs code mismatch; double-count today). Tiers should set **AI skill** (and maybe a small r), not double-scale level × QTE.
 4. **HP_PER_LEVEL**: code **180**, stale §1 says **120**. Recommend keep **180** and fix the doc.
-5. **Neutral vs Steady** naming (UI already Steady; code Neutral; stat label HAN).
+5. ~~**Neutral vs Steady** naming~~ **Resolved 2026-11-11: Neutral** (art Q6; canon block in 01).
 6. **Straight window**: 8s (06) vs 12s (Godot guide). Pick one for Godot.
 7. **Economy numbers** (debt race, DEBT_SHARE, wholesale, respec, betting stakes/odds/shell rate): list only; **no season runs** until you give success criteria.
 8. Accept or mark up the **§0 target curves** (q_read / q_time form, equal weights, coefficients).
@@ -116,7 +116,7 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 | **Recommend** | **Player-facing: Steady.** Code enum can stay NEUTRAL with a UI alias, or rename to STEADY in one pass. Stat stays **HAN**. Attack→**POW**, Defend→**EN**. |
 | **Alts** | Keep Neutral everywhere (simpler code, worse racing voice). |
 | **Evidence** | Naming only. |
-| **Decision needed:** | Lock player-facing third stance as **Steady**? Y/N |
+| **Resolved (2026-11-11):** | **Neutral** everywhere, player-facing too (art Q6 in `design/art/art_direction.md`; canon block in 01). |
 
 #### 8. Encounter ratios + opponent QTE
 

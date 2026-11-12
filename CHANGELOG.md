@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-12 — Barry [design]: systems/balance lines in the 01 design canon, stale HP/DP text removed, corners-v1 proposal (NOT approved)
+- **Ask:** Desmond asked each owner to fill the locked canon block in `design/01-system-overview.md` (7c42a87) with Austin-approved decisions and dates, and asked me to remove stale systems text (e.g. the HP/DP win decision).
+- **Canon lines added (each verified in CHANGELOG / commits):** combat scoring final-v1 (2026-11-09; playable 2026-11-10, 0dd376a; line set 6fc87d5); visible QTE zone qte-v1 (2026-11-11, 4cb5401); parity knot 0.67 + aero cap (2026-11-11, 5e5d902); mod slots 3 × 2 with window/aero any slot max one each and stat mods only just reaching 105 % (2026-11-11); new mods never skip a wall + mod tier level floor (2026-11-11 / 2026-11-12, 29f8431). Constants cited by name.
+- **Canon lines fixed:** Stats: Neutral resolved 2026-11-11 (art Q6, 55b9063), no longer "open". Play quality: the QTE is three 0–1 phase scores averaged, unplayed = 0 (f0efecf); the 1–10 CLI entry is an input format only. XP line: adds the GEO SP-per-level curve, per-crew grind taper and boss rewards (2026-11-09, 0c90c9c). Debt/aero clause dated 2026-11-10. Not duplicated: crew order, tracks/laps (Desmond), QTE zone-only difficulty (Gordon).
+- **Stale text removed:** the HP/DP data flow, `HP_PER_LEVEL`/`QTE_NORMALIZER` normalization and 1–10 QTE stat row, level-gap difficulty table, persistent 192-card deck loop, DP/max-HP position win decision and the damage/mitigation design properties. Replaced with a short "Live combat model" map that points to the canon block, 02 and `equations.py`. Architecture lines for equations/deck/combat/match updated. `design/02` decision sheet item 5 / §7 (Neutral vs Steady) marked resolved.
+- **New:** `unapproved/barry/corners-v1/README.md`, PROPOSAL, NOT APPROVED (sim paused by Austin 2026-11-12): the signature-corner rule, Nathaniel's and my candidate picks, Austin's flat-wild-race concern, three options, the proposed 3–7-of-10 sweep and its metrics, and Gordon's build needs. No sim run.
+- **For Gordon:** your Build bullet says each of the three QTEs "feeds its own clash"; the sim (f0efecf) averages the three into one raw QTE used for all three clashes. Please reword or check with Austin.
+
 ## 2026-11-12 — Gordon [godot]: build decisions in the 01 design-canon block
 - **What:** added one "Build (Godot)" bullet to the locked block at the top of `design/01-system-overview.md`: Godot only, combat freeze with the two-corner exception, Exit→Entry lockout deleted, 640×480 render with a 1280×960 HUD (B.5c), QTE zone-width-only difficulty, three QTEs per turn with unplayed scoring 0, turn flow and pauses, passes, and nodestar.tech owned by Austin.
 - **Why:** Desmond asked each owner to populate the canon block (7c42a87) with Austin-approved decisions and their dates. Single-threaded web export is left out because it is my build setting, not an Austin decision.

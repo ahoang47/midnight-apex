@@ -5,11 +5,16 @@
 > - **Crew ladder:** every round the PC runs each whole crew in order: kids, then mature members, then old heads (all lieutenants), then the crew boss. Between rounds the boss levels up the whole crew. **Crew order is free (Austin, 2026-11-10):** within a round the PC may challenge the three district crews in any order, but is locked into a crew once started until its boss is beaten; rounds stay gated (all three bosses before the next round). Budgets and cap raises are keyed by **play position**, not district: the first crew the PC challenges in Round 2 / Round 3 is the **round-opening crew** (`OPTION_A_ROUND_STEP`, `CAP_ALLOC_ROUND_OPEN`), the rest step by `OPTION_A_CREW_STEP` (`DISTRICTS`, `DEFAULT_CREW_ORDER` in `sim/velocity_shift/equations.py`; the default order is only an example for reports and tests). All 216 legal orders give the same walls and totals (`python scripts/run_progression.py --all-orders`).
 > - **Reputation:** the in-world reason crews take you on. It's lore only, not a tracked stat, and it's never called "street cred" or "rep".
 > - **Persistence:** loss persistence applies only to crew members (lieutenants) and crew bosses: if you lose to one of them, that driver remembers it in later barks and rematches (canon 27). Wild races and Myth Driver races don't have loss persistence. Scripted race 3 still has its own win gate to unlock mods (canon 19), and losing to a crew boss means a retry.
-> - **Stats:** **POW** (Attack), **EN** (Defend), **HAN** (the third stance). The third stance is `NEUTRAL` in code; the player-facing name ("Steady" vs "Neutral") is still open (decision sheet, 02).
-> - **Play quality:** two skills, **read** (`q_read`, countering the AI's real pick) and **timing** (`q_time`, hitting a perfect-10 **QTE**, the 1–10 timing input). `player_quality` sets both.
+> - **Stats:** **POW** (Attack), **EN** (Defend), **HAN** (the third stance). The third stance is **Neutral** everywhere, player-facing too (`NEUTRAL` in code; resolved 2026-11-11, art Q6 in `design/art/art_direction.md`, 55b9063).
+> - **Play quality:** two skills, **read** (`q_read`, countering the AI's real pick) and **timing** (`q_time`, the **QTE**). `player_quality` sets both. **Phase QTE (Austin, 2026-11-11, f0efecf):** each turn has an entry, apex and exit QTE; the sim scores each phase 0 to 1, the three are averaged into the turn's one raw QTE with no other math changed (`QTE_PHASES`, `mean_phase_qte`, `phase_raw_qte`), and an unplayed phase scores `PHASE_QTE_UNPLAYED` (0). The CLI's 1–10 entry is only an input format.
 > - **Stat parity:** the ratio of opponent stats to player stats; 0.8–1.2 counts as parity. The story caps the player at 0.8 of the top unlocked crew boss's stats.
-> - **Progression unlocks:** the first 3 races are scripted. **Mods** (parts bought once from Reiko at full price) unlock when the PC **wins race 3**, which also opens the world and **substories** (canon 19, 28). Beating story races up each crew's ladder (**lieutenants** as well as **crew bosses**) expands Reiko's paid shop stock, with crew bosses gating rare tier-jump mods (canon 28). **⚠ CONFLICT, pending Desmond's rewording of canon 28:** Austin decided on 2026-11-09 that mods are **bought only**; boss wins pay XP (levels, so some SP), money, a shell and a graphic, not rare mods. Canon 28 is not rewritten here; see 07 §5.2 and §8. **Wholesale** (Reiko's discount) unlocks at the end of Round 1. **Aero** (base boost plus a free point pool, tuned at the speakeasy's **wind tunnel**) unlocks when the **debt** to Sabine hits zero, early in Round 2 after the PC beats the first crew of the round (`DEBT_CLEAR_AFTER`). **Betting** unlocks at the end of Round 2 (`BETTING_UNLOCK_AFTER`); the finale opens after Round 3 (`FINALE_UNLOCK_AFTER`). **Shells** (car bodies) and shell-specific **graphics/liveries** are cosmetic only: crew bosses' signature shells come only from crew boss betting races at the promoter's subsea Wangan parking-area home base, while **substories** each award cash (through Sabine's normal debt cut while open), a free skewed-sidegrade mod straight to the garage stash (never aero), a shell-specific livery (Round 1–2 liveries target the starter shell or an already earned substory shell; later ones can tease locked shells), or—for a few standout substories—an oddball shell (canon 26, 28).
-> - **XP → levels → skill points (2026-11-09):** skill points come only from car levels; levels come from XP earned in story wins and **grind races** (repeatable races between story characters). The **level cap** equals the 80 % SP cap and rises with each story win; XP past the cap is lost. See 07 §8 and `sim/velocity_shift/progression.py`.
+> - **Combat scoring (final-v1; Austin 2026-11-09, playable engine 2026-11-10, 0dd376a):** a turn is 3 clashes (entry, apex, exit); each adds progress `g = V × Φ(outcome, q_eff) × M` with `V = r**kappa` (`KAPPA_BY_LENGTH`, `kappa_for_length(max_turns)`), and the higher progress total wins. There is no HP/DP; that path is legacy only (`resolve_turn_legacy`, `MatchConfig.legacy_hp_dp`). Opponents pick one whole line per corner from `LINE_SET_C` (`LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`; Street N90 and Wangan IR/SW mains approved 2026-11-10, 6fc87d5). Equations: 02.
+> - **Visible QTE zone (qte-v1; Austin 2026-11-11, 4cb5401):** the stat gap r sets the width of the visible QTE zone (`qte_zone_width`, `QTE_ZONE_WIDTH_105`, `QTE_ZONE_BASE_MS`); there is no hidden `knot_window` factor on the player's timing (`clash_progress`: `q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)`). The skill σ values (`QTE_SKILL_SIGMA_OVER_A0`) are placeholders until playtest.
+> - **Parity knot and aero cap (Austin 2026-11-11, 5e5d902):** the r = 1.00 knot in `KNOT_WINDOW_105` is 0.67 (was 0.68), which sets `QTE_ZONE_WIDTH_105`. Aero goes in any slot, at most `AERO_MAX_EQUIPPED` (1) equipped, counts inside the 105 % cap (`AERO_COUNTS_IN_MOD_CAP`), and its free wind-tunnel pool is at most `AERO_FREE_POOL_MAX_FRACTION` (10 %) of the part's total.
+> - **Mod slots (Austin 2026-11-11):** 6 slots in 3 categories × 2 (primarily POW, primarily EN, primarily HAN). A window mod and an aero part can each go in any slot, at most one of each equipped. Available stat mods only just reach the 105 % cap (`MOD_CAP_FRACTION`) when every slot is filled, never above. Not yet in sim constants; window size, prices and secondary splits are unapproved (`unapproved/barry/slots-v2/`).
+> - **New mods never skip a wall (Austin 2026-11-11):** a newly unlocked mod must not make the next wall beatable on its own, and grind stays mandatory. **Mod tier level floor (Austin 2026-11-12, 29f8431):** each crew's mature #2 mod tier needs a minimum car level before it can be fitted (`MOD_TIER_LEVEL_FLOOR`, `MOD_TIER_FLOOR_RUNG`, `MOD_TIER_FLOOR_MARGIN`; `mod_tier_available`). 07 §6.4.
+> - **Progression unlocks:** the first 3 races are scripted. **Mods** (parts bought once from Reiko at full price) unlock when the PC **wins race 3**, which also opens the world and **substories** (canon 19, 28). Beating story races up each crew's ladder (**lieutenants** as well as **crew bosses**) expands Reiko's paid shop stock, with crew bosses gating rare tier-jump mods (canon 28). **⚠ CONFLICT, pending Desmond's rewording of canon 28:** Austin decided on 2026-11-09 that mods are **bought only**; boss wins pay XP (levels, so some SP), money, a shell and a graphic, not rare mods. Canon 28 is not rewritten here; see 07 §5.2 and §8. **Wholesale** (Reiko's discount) unlocks at the end of Round 1. **Aero** (base boost plus a free point pool, tuned at the speakeasy's **wind tunnel**) unlocks when the **debt** to Sabine hits zero, early in Round 2 after the PC beats the first crew of the round (`DEBT_CLEAR_AFTER`; Austin, 2026-11-10). **Betting** unlocks at the end of Round 2 (`BETTING_UNLOCK_AFTER`); the finale opens after Round 3 (`FINALE_UNLOCK_AFTER`). **Shells** (car bodies) and shell-specific **graphics/liveries** are cosmetic only: crew bosses' signature shells come only from crew boss betting races at the promoter's subsea Wangan parking-area home base, while **substories** each award cash (through Sabine's normal debt cut while open), a free skewed-sidegrade mod straight to the garage stash (never aero), a shell-specific livery (Round 1–2 liveries target the starter shell or an already earned substory shell; later ones can tease locked shells), or—for a few standout substories—an oddball shell (canon 26, 28).
+> - **XP → levels → skill points (2026-11-09):** skill points come only from car levels; levels come from XP earned in story wins and **grind races** (repeatable races between story characters). The **level cap** equals the 80 % SP cap (`SP_CAP_FRACTION`) and rises with each story win; XP past the cap is lost. SP per level rises as levels go up, and each level costs more XP (`sp_per_level`, `xp_to_next`). Grind-race XP pays proportionally less further up each crew's ladder and at higher levels (per-crew taper: `grind_payout_fraction`, `TAPER_*`). Crew boss wins pay XP (so SP), money, a shell and a graphic; mods are bought only (see the canon 28 conflict above). Model: grind v8c (0c90c9c). See 07 §8 and `sim/velocity_shift/progression.py`.
 > - **Respec:** moving locked skill points (Jesse) or retuning aero (the tunnel) costs money and is capped per visit. **After the rift (Austin, 2026-11-11; canon in story/):** after the Mentor Confrontation Jesse stops respecs and tuning for the PC; both move to the speakeasy with Malo.
 > - **Shop after the rift (Austin, 2026-11-11):** Wholesale ends at the Mentor Confrontation; Reiko returns to full price but keeps selling through the Finale. **Big mods (Austin, 2026-11-10):** finishing Round 3 unlocks the big Finale mods, bought from Reiko at full price.
 > - **DAQ log (Austin, 2026-11-11):** Jesse's logger keeps only the last race and plays it back as a per-corner list of the PC's and the opponent's lines; after the rift the PC pulls it up alone. UI is Gordon's.
@@ -20,7 +25,7 @@
 > - **Places:** Jesse (the Tuner) and Reiko (parts) work out of **Sabine's garage**; the **speakeasy** is the barkeep Malo's bar (named 2026-11-11) with the hidden wind tunnel.
 > - **Level bands** in 04 (Starter … Legend) are stat-budget labels, not race tiers.
 
-A turn-based racing combat engine. Two combatants race. Each turn they select cards from a stat-proportional deck, resolve 3 rock-paper-scissors clashes, compute damage from a pure multiplicative formula, and track cumulative damage for position.
+A turn-based racing combat engine. Two combatants race a 10-turn lap (1–3 laps). Each turn the player picks a 3-stance line (entry, apex, exit) from a stat-weighted hand, the opponent draws a whole district line, and each of the 3 clashes adds Phi/tau progress; the higher progress total wins. The locked rules are in the canon block above; equations and constants are in `design/02-equations-reference.md` and `sim/velocity_shift/equations.py`.
 
 ---
 
@@ -31,10 +36,10 @@ sim/main.py
   └─> velocity_shift/
         ├─> cli.py          — Interactive match setup, prompts, display, run_cli
         ├─> models.py       — Data classes: Stance, CombatantStats, TurnState, MatchConfig, etc.
-        ├─> equations.py    — Pure math: qte, clash, damage, mitigation, stance resolution
-        ├─> deck.py         — Deck construction, draw/reset (192-card stat-proportional)
-        ├─> combat.py       — resolve_turn, resolve_battle, battle_winner
-        ├─> match.py        — run_match, multi-turn loop, position decision
+        ├─> equations.py    — Pure math and all constants: QTE zone, clash progress, kappa, line sets, progression
+        ├─> deck.py         — 192-card shoe (legacy HP/DP path only; live hands are drawn per turn)
+        ├─> combat.py       — resolve_turn (Phi/tau progress), pick_line, resolve_turn_legacy
+        ├─> match.py        — run_match, multi-turn loop, progress-total winner
         ├─> ai.py           — Opponent card selection strategies + QTE generation
         ├─> trace.py        — Structured execution logger
         ├─> simulation.py   — Batch runner for statistical analysis
@@ -51,7 +56,7 @@ sim/main.py
 |------|------|
 | `sim/velocity_shift/models.py` | All data classes and enums — no logic |
 | `sim/velocity_shift/equations.py` | Pure functions — no state, no side effects. All game constants as module-level names in equations.py — tunable in one place |
-| `sim/velocity_shift/deck.py` | Deck class — construction, draw, discard lifecycle |
+| `sim/velocity_shift/deck.py` | Deck class — construction, draw, discard lifecycle (legacy HP/DP path; the live engine uses `combat.draw_weighted_hand`) |
 | `sim/velocity_shift/combat.py` | Turn resolution orchestration + clash/battle logic |
 | `sim/velocity_shift/match.py` | Multi-turn match loop with callbacks |
 | `sim/velocity_shift/ai.py` | AI card selection strategies + QTE generation |
@@ -63,93 +68,26 @@ sim/main.py
 
 ---
 
-## Data Flow (one turn)
+## Live combat model (one turn)
+
+Superseded text removed 2026-11-12: the HP/DP data flow, `HP_PER_LEVEL` / `QTE_NORMALIZER` normalization, level-gap difficulty ratios, the persistent 192-card deck loop and the position (DP / max HP) win decision described the legacy path (`resolve_turn_legacy`, `MatchConfig.legacy_hp_dp`), not the live sim. The canon block wins; this is a map, not a second spec.
 
 ```
-Deck.draw(6) ──> Card[6] hand
-                      │
-            Player picks 3 in order (lead / middle / anchor)
-            Opponent AI picks 3
-            Each gets a QTE score (1–10)
-                      │
-                      ▼
-         resolve_stance() x3 ──> StanceOutcome[3]
-                      │
-                      ├──> battle_winner() ──> string label
-                      ├──> sum(outcome_values) ──> battle_mult = 1 + BATTLE_BONUS × |sum|
-                      │
-                      ▼
-         QTE rubber-band — who is leading?
-           gap > 0  → leader: QTE→offense / trailer: QTE→defense
-           gap < 0  → trailer: QTE→offense / leader: QTE→defense
-           gap == 0 → both use QTE on offense & defense (symmetric)
-                      │
-                      ▼
-          compute_damage() x3 ──> DP per clash
-         (POW × damage_QTE_factor × clash_mult × battle_mult)
-                      │
-                      ├──> damage_mitigation() ──> mitigation_mult per side
-                      │    (EN/1000 × MITIGATION_PER_1000 × defense_QTE_factor)
-                      │
-                      ▼
-          DP_turn = average(DP_1, DP_2, DP_3) × opponent_mitigation_mult
+draw_weighted_hand (HAND_SIZE, DECK_ALPHA; fresh each turn)
+        │
+Player locks a line: entry / apex / exit stances
+Opponent: pick_line from LINE_SET_C[district][corner] (LINE_ADHERENCE, LINE_ALT_WEIGHTS)
+Player QTE: entry/apex/exit phases → mean_phase_qte (unplayed = PHASE_QTE_UNPLAYED)
+        │      zone width = qte_zone_width(r, qte_window_mod); opponent uses OPPONENT_QTE
+        ▼
+clash_progress x3: g = V × Φ(outcome, q_eff) × M,  V = r**kappa_for_length(max_turns)
+        │      q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)
+        ▼
+progress totals accumulate; after max_turns the higher total wins
+(an exact tie is recorded as "Tie"; how a tie reads in game is not decided)
 ```
 
----
-
-## Core Combat Stats (0+, no upper bound)
-
-| Stat | Role | Effect |
-|------|------|--------|
-| POW | Offensive power | Directly scales damage output |
-| EN | Endurance | Mitigates incoming damage |
-| HAN | Handling | Drives Neutral card weight in deck composition |
-| QTE_score | Execution quality | Multiplier on damage and mitigation (1–10 scale) |
-
-### Normalization
-
-- `QTE_score / QTE_NORMALIZER (10)` → `QTE_factor` (0.1–1.0)
-- `level × HP_PER_LEVEL (180)` → max_hp for each combatant
-
----
-
-## Difficulty
-
-Difficulty is driven entirely by the **level gap** between combatants.
-There are no encounter tuning parameters.
-
-| Encounter type | Opponent level ratio | ~Turns vs equal stats | Feel |
-|---|---|---|---|
-| Wild | 0.35× player | 3–5 | Dominate — opponent stat-poor |
-| Lieutenant | 0.75× player | 10–12 | Pressure — near parity |
-| Boss | 1.15× player | 12+ | Heat — opponent marginally stronger |
-
----
-
-## Deck System
-
-- **192 cards** per combatant, built proportionally from POW, EN, HAN
-- POW → Attack card weight, EN → Defend card weight, HAN → Neutral card weight
-- Smoothing term (`alpha=0.85`) prevents any single stance from overwhelming the deck
-- **Draw 6** per turn, pick 3, discard 3
-- **Infinite deck loop**: when draw pile < 6, reshuffle discard back in
-
----
-
-## Win Condition
-
-- **Decision:** after max_turns, the winner is the combatant with the higher position (opponent DP / player_max_hp vs player DP / opponent_max_hp)
-- **Tie:** if positions are equal after max_turns, the opponent wins (the player needed to be ahead to win)
-
----
-
-## Key Design Properties
-
-1. **Pure multiplicative damage** — no gates, no interaction terms, no sigmoids
-2. **Multi-clash per turn** — 3 independent RPS resolutions, averaged
-3. **Battle bonus** — winning the battle amplifies all clash damage (`battle_mult = 1 + BATTLE_BONUS × |sum|`)
-4. **EN-based mitigation** — higher EN reduces incoming damage, gated by QTE execution
-5. **Position-based decision** — after max_turns, higher cumulative DP ratio wins
-6. **Deterministic core** — seeded RNG, reproducible results
-7. **Stat-to-stance mapping** — POW/EN/HAN directly drive deck card type proportions
-8. **Global knobs** — all game constants are named module-level values in equations.py, never per-encounter
+- **Stats:** POW / EN / HAN set the hand's stance weights; the stat gap is the ratio r (opponent / player), which sets both `V` and the visible QTE zone.
+- **Difficulty:** set by r per rung (`LADDER_R`, the target r at each rung's level cap) and by race length (`KAPPA_BY_LENGTH`), not by level-gap ratios or per-encounter knobs.
+- **Progression:** levels, caps, grind walls and the mod tier floor live in `sim/velocity_shift/progression.py`; see 07 §6 and §8.
+- **Global knobs:** every game constant is a named module-level value in `sim/velocity_shift/equations.py`; docs cite names, not copied values. Seeded RNG keeps runs reproducible.
