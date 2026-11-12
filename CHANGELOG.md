@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-12 — Barry [barry]: corners-v1 three-layer line model draft + Sim plan v2 (PROPOSAL, NOT APPROVED, no sim)
+
+- **Why:** Austin, 2026-11-12: "all districts should have a distinct default line for all corner types. Where this default line deviates is for select corners, this is where bluff lines come in to play. Where it deviates even more is for story characters, where they get their own line + bluff." Then "Draft it." No sim was approved, so none was run.
+- **What (`unapproved/barry/corners-v1/README.md` only):** three-layer table (district default, no bluff / signature corners, main + 2 alts / story characters, own line + bluff); full 8 x 3 defaults table, current vs proposed. Today 5 corner types collide across districts (HP T=W, N90 T=W, ES T=W, DR W=S, IR T=S). Proposal changes one district per collision, one letter each, chosen to fit documented habits and to avoid lines-v1 approved lines (Street N90, Wangan IR/SW) and Nathaniel's signature candidates: Wangan HP EHP->EHE, N90 EHP->EPP, ES HHH->HHE, DR EEH->EEE (Wangan's EN door-shut on exits / POW commit where the road opens); Street IR HHP->EHP (Street's EN at Entry). Within-district duplicates listed as info (Touge HP=N90, CR=IR=SW; Wangan IR=SW). Story-character layer is a schema slot only; Nathaniel and Desmond supply inputs. Open parameters listed (signature count, signature and character bluff rates; 0.65/0.21/0.14 noted as current value only). Flags for Desmond/Nathaniel. Draft Sim plan v2 (not started) with starting conditions, assumptions and 4 success criteria; the earlier paused plan is marked superseded.
+- **Left as is:** `sim/` and `LINE_SET_C` unchanged; no balance numbers set; `story/corner_lines.md` untouched (Nathaniel's).
+
 ## 2026-11-12 — Gordon [godot]: qte_fn_test allows 2 ULP on unrounded erf / ehq / zone (CI glibc 2.43)
 
 - **Why:** Desmond made the qte-v1 CI step strict in 50928ed. That run, and the follow-up on 328a817, failed the check on GitHub's Ubuntu 26.04 runner (glibc 2.43): 327 bit mismatches on the unrounded functions, 269 within 1 ULP, 58 at 2 ULP, `max_abs_diff=2.220e-16`. `raw_qte_score` stayed bit-exact (the 3-decimal rounding still pins gameplay). This box (glibc 2.41) remains bit-identical. The 1-ULP allowance added in 22208fb was not quite enough for the runner's libm.
