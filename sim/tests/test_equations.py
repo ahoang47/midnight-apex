@@ -165,3 +165,20 @@ def test_mean_phase_qte_unplayed_counts_as_zero():
     assert mean_phase_qte((1.0, None, 0.5)) == (1.0 + 0.0 + 0.5) / 3.0
     assert mean_phase_qte((None, None, None)) == 0.0
     assert mean_phase_qte(None) == 0.0
+
+
+def test_parity_knot_067_and_zone_width_slots_v2():
+    """Austin approved 2026-11-11 (slots-v2): r=1.00 knot 0.68 -> 0.67; zone generated from it."""
+    from velocity_shift.equations import KNOT_WINDOW_105, qte_zone_width
+    assert dict(KNOT_WINDOW_105)[1.00] == 0.67
+    assert abs(qte_zone_width(1.00) - 0.5698111340658429) < 1e-12
+    assert round(qte_zone_width(1.02), 4) == 0.7170
+    assert qte_zone_width(1.05) == 1.0 and round(qte_zone_width(0.95), 4) == 0.3448
+
+
+def test_aero_free_pool_cap_inside_mod_cap():
+    from velocity_shift.equations import (AERO_FREE_POOL_MAX_FRACTION, AERO_MAX_EQUIPPED, AERO_COUNTS_IN_MOD_CAP,
+                                          aero_free_pool_max)
+    assert AERO_FREE_POOL_MAX_FRACTION == 0.10 and AERO_MAX_EQUIPPED == 1 and AERO_COUNTS_IN_MOD_CAP
+    assert abs(aero_free_pool_max(40.0) - 4.0) < 1e-12
+    assert aero_free_pool_max(-1.0) == 0.0

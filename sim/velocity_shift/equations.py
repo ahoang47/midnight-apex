@@ -122,7 +122,9 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
 # Legacy hidden window, kept for the winrate_n4000.json / progression oracle
 # and as the generator of QTE_ZONE_WIDTH_105 (qte-v1 inverted E[s] so the
 # average player's expected raw score equals AVERAGE_PLAY_Q * knot_window(r)).
-KNOT_WINDOW_105 = ((0.80, 0.41), (0.85, 0.41), (0.90, 0.41), (0.95, 0.43), (1.00, 0.68), (1.05, 1.00))
+# 2026-11-11 (slots-v2, Austin approved): r=1.00 knot 0.68 -> 0.67, so a +75% window mod (1.15 x w0 cap) no longer
+# clears the R2/R3 opener boss walls without grinding (avg 49.07 mid); balanced grind 141/153/121 unchanged.
+KNOT_WINDOW_105 = ((0.80, 0.41), (0.85, 0.41), (0.90, 0.41), (0.95, 0.43), (1.00, 0.67), (1.05, 1.00))
 KAPPA_BY_LENGTH = {10: 1.55, 20: 1.35, 30: 1.20}   # stat-gap leverage V = r**kappa, by race length (turns)
 RACE_LENGTHS = (10, 20, 30)
 SIM_SEEDS = (20261113, 20261114, 20261115)
@@ -132,14 +134,14 @@ OPPONENT_QTE = 1.0             # story-rung opponents time perfectly (uniform ac
 # fractions of that default zone. Interpolation: see qte_zone_width().
 QTE_ZONE_BASE_MS = 800
 # Exact inversions of E[s] at the KNOT_WINDOW_105 r knots for sigma_average
-# (the 4-dp figures 0.3276, 0.3448, 0.5802, 1.0 are these values rounded).
+# (the 4-dp figures 0.3276, 0.3448, 0.5698, 1.0 are these values rounded; r=1.00 was 0.5802 before 2026-11-11).
 # The last knot is 1.0 exactly (sigma_average is fitted so E[s] at w0 is 0.6).
 QTE_ZONE_WIDTH_105 = (
     (0.80, 0.32758027216269503),
     (0.85, 0.32758027216269503),
     (0.90, 0.32758027216269503),
     (0.95, 0.3447526695824932),
-    (1.00, 0.5802105104609707),
+    (1.00, 0.5698111340658429),
     (1.05, 1.0),
 )
 # PLACEHOLDER until playtest data exists. Fitted so expected_hit_quality(σ, 1)
@@ -202,6 +204,14 @@ BUILD_STAT_MAX_SHARE = 0.50
 SP_CAP_FRACTION = 0.80         # skill points cap at 80 % of the reference budget (= level cap)
 MOD_CAP_FRACTION = 1.05        # SP + mods cap at 105 % of the reference budget before the finale
 MOD_SHARE_OF_REF = 0.25        # mods available at a rung = 0.25 × reference (bought only, never earned)
+# Aero parts (design/07 §6.3; Austin approved 2026-11-11, slots-v2): a stat part with a fixed base plus a free pool
+# assigned to POW/EN/HAN at the wind tunnel. It goes in any slot, at most one is equipped, and its whole stat total
+# (base + pool) counts inside MOD_CAP_FRACTION like any other mod. The free pool is at most AERO_FREE_POOL_MAX_FRACTION
+# of the part's stat total (above 10%, retuned aero lets avg players clear R3 Street's boss / the Summit unground).
+# Per-tier AERO_FREE_POINTS values are still TBD; they must satisfy pool <= AERO_FREE_POOL_MAX_FRACTION x tier total.
+AERO_FREE_POOL_MAX_FRACTION = 0.10
+AERO_MAX_EQUIPPED = 1
+AERO_COUNTS_IN_MOD_CAP = True
 REFERENCE_RULE = "V2"          # reference rises with each lieutenant win; crew boss = crew budget
 MOD_TIMING = "c"               # mods unlock progressively with lieutenant wins
 CLEAR_THRESHOLD = 50.0         # a rung is "clear" when average play (q 0.6) wins >= 50 % (midpoint of seed/length range)
@@ -406,6 +416,15 @@ def mean_phase_qte(value: float | None | list | tuple) -> float:
     if value is None:
         return PHASE_QTE_UNPLAYED
     return float(value)
+
+
+def aero_free_pool_max(part_stat_total: float) -> float:
+    """Largest free (wind-tunnel) pool an aero part may carry: AERO_FREE_POOL_MAX_FRACTION of its stat total.
+
+    The pool only redistributes points inside the part's total, so the part still counts in full
+    against MOD_CAP_FRACTION. Per-tier AERO_FREE_POINTS are TBD (design/07 §6.3).
+    """
+    return AERO_FREE_POOL_MAX_FRACTION * max(0.0, float(part_stat_total))
 
 
 def kappa_for_length(race_length: int) -> float:

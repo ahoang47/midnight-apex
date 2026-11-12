@@ -8,6 +8,21 @@
 
 ---
 
+## 2026-11-11 — Barry [sim]: approved slots-v2 parts are live: parity knot r=1.00 0.68 → 0.67, aero free pool ≤ 10% (Austin approved)
+- **Why:** Austin approved both at 10:58 PM PT ("Approve both").
+  - In slots-v2 the +75% window mod (1.15 × w0 cap) let average players clear the R2 Wangan and R3 Street crew bosses without grinding (49.14 → 50.30). The knot change is the smallest fix that leaves balanced grind unchanged.
+  - Aero retuned every race with a 20–30% pool cleared R3 Street's boss (with a window, 100/0/0) and the Summit (70/20/10) without grinding. At 10% it clears nothing.
+- **What (`sim/velocity_shift/equations.py`, single source):**
+  - **Knot:** `KNOT_WINDOW_105` (1.00, 0.68) → (1.00, 0.67). `QTE_ZONE_WIDTH_105` r=1.00 row 0.5802105 → 0.5698111. `qte_zone_width` generates from the knot (verified): r 1.02 0.7243 → 0.7170, r 1.0355 0.8548 → 0.8507; r ≤ 0.95 and ≥ 1.05 are unchanged.
+  - **Aero constants:** new `AERO_FREE_POOL_MAX_FRACTION = 0.10`, `AERO_MAX_EQUIPPED = 1`, `AERO_COUNTS_IN_MOD_CAP = True`, and helper `aero_free_pool_max()`. Per-tier `AERO_FREE_POINTS` are still TBD.
+- **Oracle:** `sim/config/winrate_n4000.json` was rebuilt with the new knots. The script is `design/unapproved/slots-v2/approved/rebuild_winrate_table.py`, the lines-v1 method; run on the old knots it reproduces the old table exactly. 395 rows changed, all at r 0.9525–1.045. Official forced progression is still 153 grind / 162 levels in all 216 orders.
+- **Docs:** `design/02-equations-reference.md` (caps/mods row, combat row, knot list) and `design/07-economy-and-mods.md` §6.3 (aero caps). §8.0's open item 4, "aero has no rule against caps", is marked resolved.
+- **Tests:** 2 new ones cover the knot/zone values and the aero cap. No test was pinned to 0.68/0.5802 except through `QTE_ZONE_WIDTH_105`, which was updated. Full suite passes: 52 tests.
+- **Playable spot-check (before → after):**
+  - Street mature #2 skipped: 43.5–49.4 (mean 46.82) → 43.0–49.4 (46.22). Its oracle band moves from 42.8–49.6 to 42.3–49.6.
+  - Street boss, Touge boss and Wangan boss at target (r 1.05) are unchanged: 63.2–65.1, 65.5–67.1, 63.7–67.1.
+- **Still unapproved** (in `design/unapproved/slots-v2/`): the window +75% / 1.15 cap rule, prices, the dead-win fill, and the strong-player mature #2 fixes.
+
 ## 2026-11-11 — Gordon [godot]: build guide §10.3 stance colours now match art_direction.md B.5
 - **What:** `design/godot-build-guide.md` §10.3 `ClashDisplay.gd` COLORS now use the art doc values (`design/art/art_direction.md:252`): Attack `#2CB84A` (green), Defend `#E8282C` (red), Neutral `#F0C828` (yellow, dark text), replacing the legacy `#16a34a` / `#dc2626` / `#d97706`.
 - **Why:** Arthur relayed that Austin asked for the stance colours to be aligned; Austin's own 2026-11-11 instruction was to make Attack/POW green and Defend/EN red in all docs. The two-corner build already uses the art doc values, so no build change.
