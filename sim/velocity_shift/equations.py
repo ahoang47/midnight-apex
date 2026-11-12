@@ -165,6 +165,19 @@ QTE_SKILL_SIGMA_OVER_A0 = {  # PLACEHOLDER
 # own visible sweep — Barry's proposal; Austin answered only the score.
 QTE_PHASES = ("entry", "apex", "exit")
 PHASE_QTE_UNPLAYED = 0.0
+# QTE score rounding (Austin approved via Desmond, 2026-11-12). Every QTE
+# phase score is rounded to QTE_SCORE_DECIMALS where it is computed
+# (raw_qte_score, phase_raw_qte), before mean_phase_qte, q_eff, clash or
+# progress math sees it, so a 1-ULP libm difference in erf/exp between
+# platforms (glibc 2.41 vs 2.43) cannot change gameplay. Rule (round_qte_score):
+#   floor(x * 10**QTE_SCORE_DECIMALS + 0.5) / 10**QTE_SCORE_DECIMALS
+# i.e. half-up on the scaled double, then an exact-integer division. Only
+# IEEE-754 correctly rounded * + / and floor are used, so the bits are the
+# same everywhere. Not Python round() (half-even on the exact binary value)
+# and not Godot snappedf() (divides and multiplies by the inexact 0.001);
+# both can give different bits. Godot mirrors with
+#   floor(x * 1000.0 + 0.5) / 1000.0
+QTE_SCORE_DECIMALS = 3
 # Phi/tau clash payoff (final-v1 / equations_v1 K, unchanged). Per clash:
 #   g = V * Phi(outcome, q_eff) * M,  V = r**kappa,
 #   q_eff = clip(raw_qte * (1 + ETA * (han_share - 1/3)), 0, 1)
@@ -406,21 +419,38 @@ def raw_qte_score(
     if profile is None and q_time is None:
         profile = "average"
     sig = qte_sigma_over_a0(profile, q_time)
-    return expected_hit_quality(sig, qte_zone_width(r, window_mod))
+    return round_qte_score(expected_hit_quality(sig, qte_zone_width(r, window_mod)))
+
+
+def round_qte_score(x: float) -> float:
+    """Round a QTE score to QTE_SCORE_DECIMALS: floor(x * 10**d + 0.5) / 10**d.
+
+    Half-up on the scaled value, then exact-integer division, so the result
+    is the double nearest k / 10**d and is bit-identical on every IEEE-754
+    platform (Godot: floor(x * 1000.0 + 0.5) / 1000.0). Non-finite values
+    pass through unchanged.
+    """
+    x = float(x)
+    if not math.isfinite(x):
+        return x
+    scale = float(10 ** QTE_SCORE_DECIMALS)
+    return math.floor(x * scale + 0.5) / scale
 
 
 def phase_raw_qte(score: float | None) -> float:
-    """Raw QTE for one Entry/Apex/Exit phase. None / unplayed is 0 (Austin)."""
+    """Raw QTE for one Entry/Apex/Exit phase, rounded by round_qte_score. None / unplayed is 0 (Austin)."""
     if score is None:
         return PHASE_QTE_UNPLAYED
-    return float(score)
+    return round_qte_score(score)
 
 
 def mean_phase_qte(value: float | None | list | tuple) -> float:
     """Turn raw_qte from a scalar or three phase scores.
 
-    A 3-tuple/list (Entry, Apex, Exit) is averaged; None / unplayed is 0
-    (Austin, 2026-11-11). A scalar is returned as-is. Clash math is not
+    A 3-tuple/list (Entry, Apex, Exit) is averaged (each phase already
+    rounded by phase_raw_qte, summed in Entry, Apex, Exit order, then / 3);
+    None / unplayed is 0 (Austin, 2026-11-11). A scalar is returned as-is
+    (it is treated as an already-computed turn raw_qte). Clash math is not
     changed: the result is the single raw_qte for the turn.
     """
     if isinstance(value, (list, tuple)) and len(value) == 3 and not isinstance(value, (str, bytes)):

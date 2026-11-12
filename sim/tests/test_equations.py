@@ -86,6 +86,7 @@ from velocity_shift.equations import (
     timing_value, clash_payoff, clash_progress, kappa_for_length, knot_window,
     expected_hit_quality, qte_zone_width, raw_qte_score, QTE_SKILL_SIGMA_OVER_A0,
     mean_phase_qte, phase_raw_qte, PHASE_QTE_UNPLAYED,
+    round_qte_score, QTE_SCORE_DECIMALS,
     QTE_ZONE_WIDTH_105, AVERAGE_PLAY_Q,
     W0, T_MAX, L_MAX, KAPPA_BY_LENGTH,
 )
@@ -144,10 +145,15 @@ def test_qte_zone_width_at_knots_and_window_mod():
     for r, w in QTE_ZONE_WIDTH_105:
         got = qte_zone_width(r)
         assert abs(got - w) < 1e-12, (r, got, w)
-    # Average player's E[s] at the unmodded zone equals 0.6 * legacy W(r).
+    # Average player's E[s] at the unmodded zone equals 0.6 * legacy W(r);
+    # raw_qte_score is that value rounded to QTE_SCORE_DECIMALS (2026-11-12).
+    sig = QTE_SKILL_SIGMA_OVER_A0["average"]
     for r in (0.80, 0.95, 1.00, 1.0355, 1.05, 1.10):
+        e_exact = expected_hit_quality(sig, qte_zone_width(r))
+        assert abs(e_exact - AVERAGE_PLAY_Q * knot_window(r)) < 1e-12, (r, e_exact)
         e = raw_qte_score(r, profile="average")
-        assert abs(e - AVERAGE_PLAY_Q * knot_window(r)) < 1e-12, (r, e)
+        assert e == round_qte_score(e_exact), (r, e)
+        assert abs(e - e_exact) <= 0.5 * 10 ** -QTE_SCORE_DECIMALS + 1e-15, (r, e)
     # +20% window mod widens the zone; does not change mid-race (r is fixed).
     assert abs(qte_zone_width(1.05, window_mod=0.20) - 1.20) < 1e-12
     assert qte_zone_width(1.05, 0.20) > qte_zone_width(1.05, 0.0)
@@ -165,6 +171,31 @@ def test_mean_phase_qte_unplayed_counts_as_zero():
     assert mean_phase_qte((1.0, None, 0.5)) == (1.0 + 0.0 + 0.5) / 3.0
     assert mean_phase_qte((None, None, None)) == 0.0
     assert mean_phase_qte(None) == 0.0
+
+
+def test_round_qte_score_rule_is_floor_half_up_exact_division():
+    """Austin approved via Desmond 2026-11-12: QTE_SCORE_DECIMALS = 3, rule floor(x*1000+0.5)/1000."""
+    import math
+    assert QTE_SCORE_DECIMALS == 3
+    for k in range(1001):  # grid values are fixed points and equal the decimal literal
+        assert round_qte_score(k / 1000) == k / 1000 == float(f"{k / 1000:.3f}")
+    assert round_qte_score(0.5434999) == 0.543
+    assert round_qte_score(0.5435001) == 0.544
+    assert round_qte_score(0.0045) == 0.005    # 0.0045 * 1000 == 4.5 exactly in doubles -> half-up (round() gives 0.004)
+    assert round_qte_score(0.0) == 0.0 and round_qte_score(1.0) == 1.0
+    assert math.isnan(round_qte_score(float("nan")))
+    # A 1-ULP perturbation away from a half-way point does not move the result.
+    x = 0.61234
+    assert round_qte_score(math.nextafter(x, 1)) == round_qte_score(math.nextafter(x, 0)) == 0.612
+
+
+def test_phase_scores_are_rounded_before_the_mean():
+    assert phase_raw_qte(0.66666) == 0.667
+    assert mean_phase_qte((0.66666, None, 0.12349)) == (0.667 + 0.0 + 0.123) / 3.0
+    for r in (0.80, 1.0355, 1.05):
+        for prof in ("weak", "average", "strong"):
+            v = raw_qte_score(r, profile=prof)
+            assert v == round_qte_score(v)
 
 
 def test_parity_knot_067_and_zone_width_slots_v2():
