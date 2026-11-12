@@ -1,0 +1,283 @@
+## sizes: mean paired delta range across crews + verdict counts (one window mod)
+A | kid #1 at target | weak | -17.5..+1.3 -2=2X5 | -11.6..+10.9 +2D4X3 | -5.4..+20.0 -2D6X1 | +8.7..+35.2 D9 | +22.4..+46.4 D9 | +33.2..+53.4 D9
+A | kid #1 at target | average | -23.4..-2.5 -2X7 | -16.7..+1.4 -2=2X5 | -13.1..+3.4 +2-2=2X3 | -6.5..+6.6 +4D2X3 | -1.6..+8.8 +2-1=2D4 | +1.4..+10.0 +2=1D6
+A | kid #1 at target | strong | -8.9..-1.9 -6X3 | -8.3..-0.7 -4=2X3 | -7.2..-0.3 -4=2X3 | -5.3..-0.1 -5=2X2 | -4.8..+0.0 -5=4 | -4.0..+0.6 -4=5
+A | mature #2 skipped | weak | -5.4..-4.8 -6X3 | -5.4..-4.6 -6X3 | -5.4..-4.4 -7X2 | -5.4..-3.7 -8X1 | -5.3..-1.6 -8X1 | -5.0..+1.7 +2-4=2X1
+A | mature #2 skipped | average | -47.2..-40.6 X9 | -46.9..-37.6 X9 | -46.4..-33.7 X9 | -44.9..-23.7 X9 | -41.7..-12.3 X9 | -36.3..-2.0 -3X6
+A | mature #2 skipped | strong | -66.0..-30.1 X9 | -60.8..-24.1 X9 | -55.7..-20.8 X9 | -46.1..-14.7 X9 | -36.5..-10.7 X9 | -29.7..-7.2 X9
+A | boss skipped | weak | -6.0..-5.2 X9 | -6.0..-5.1 X9 | -6.0..-4.8 -2X7 | -5.9..-3.9 -5X4 | -5.8..-1.6 -6X3 | -5.3..+2.6 +3-4=1X1
+A | boss skipped | average | -49.0..-41.6 X9 | -48.5..-38.1 X9 | -47.9..-33.4 X9 | -46.1..-23.2 X9 | -41.8..-10.6 X9 | -36.2..+0.0 =3X6
+A | boss skipped | strong | -64.5..-26.9 X9 | -58.5..-22.4 X9 | -52.3..-19.1 X9 | -42.2..-13.2 X9 | -33.7..-8.6 X9 | -28.1..-6.2 X9
+A | boss at target | weak | -14.4..-12.8 X9 | -14.4..-12.4 X9 | -14.3..-11.6 X9 | -14.1..-9.5 X9 | -13.6..-4.6 -2X7 | -12.3..+2.8 +3-1X5
+A | boss at target | average | -63.4..-49.3 X9 | -62.4..-43.8 X9 | -61.0..-37.4 X9 | -56.6..-24.5 X9 | -48.8..-12.7 X9 | -39.7..-3.7 -3X6
+A | boss at target | strong | -54.9..-20.9 X9 | -48.3..-18.3 X9 | -43.6..-15.7 X9 | -35.4..-11.4 X9 | -26.9..-7.9 X9 | -23.1..-5.8 X9
+A | Myth #2 skipped | weak | -4.2..-4.2 -1 | -4.1..-4.1 -1 | -4.1..-4.1 -1 | -3.7..-3.7 -1 | -2.9..-2.9 -1 | -1.2..-1.2 =1
+A | Myth #2 skipped | average | -41.4..-41.4 X1 | -39.7..-39.7 X1 | -37.4..-37.4 X1 | -30.9..-30.9 X1 | -20.6..-20.6 X1 | -10.4..-10.4 X1
+A | Myth #2 skipped | strong | -40.3..-40.3 X1 | -34.2..-34.2 X1 | -29.4..-29.4 X1 | -21.9..-21.9 X1 | -15.7..-15.7 X1 | -11.5..-11.5 X1
+A | Summit skipped | weak | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.5..-5.5 X1 | -5.2..-5.2 X1 | -4.5..-4.5 -1
+A | Summit skipped | average | -46.8..-46.8 X1 | -46.0..-46.0 X1 | -45.1..-45.1 X1 | -42.1..-42.1 X1 | -36.4..-36.4 X1 | -28.3..-28.3 X1
+A | Summit skipped | strong | -56.5..-56.5 X1 | -49.7..-49.7 X1 | -44.0..-44.0 X1 | -35.0..-35.0 X1 | -27.6..-27.6 X1 | -21.3..-21.3 X1
+B | kid #1 at target | weak | -17.5..-15.9 X9 | -11.8..-9.9 X9 | -5.5..-2.8 -6X3 | +8.1..+11.1 D9 | +22.2..+26.2 D9 | +33.0..+36.6 D9
+B | kid #1 at target | average | -24.0..-21.7 X9 | -17.2..-16.0 X9 | -13.6..-10.6 X9 | -6.5..-5.6 X9 | -1.6..-1.1 -4=5 | +1.4..+2.6 +8=1
+B | kid #1 at target | strong | -9.0..-8.4 X9 | -8.8..-7.3 X9 | -7.7..-6.4 X9 | -5.5..-4.7 -2X7 | -4.8..-4.4 -9 | -4.0..-3.7 -9
+B | mature #2 skipped | weak | -5.4..-4.9 -6X3 | -5.4..-4.9 -6X3 | -5.4..-4.9 -6X3 | -5.4..-4.8 -6X3 | -5.3..-4.7 -6X3 | -5.0..-4.4 -8X1
+B | mature #2 skipped | average | -47.2..-45.8 X9 | -46.9..-45.5 X9 | -46.4..-45.0 X9 | -45.2..-43.5 X9 | -42.2..-40.1 X9 | -37.4..-34.8 X9
+B | mature #2 skipped | strong | -68.5..-64.7 X9 | -63.7..-58.8 X9 | -58.0..-54.0 X9 | -48.4..-44.0 X9 | -39.0..-34.7 X9 | -31.1..-28.9 X9
+B | boss skipped | weak | -6.0..-5.4 X9 | -6.0..-5.4 X9 | -6.0..-5.4 X9 | -5.9..-5.3 X9 | -5.8..-5.2 X9 | -5.3..-4.9 -6X3
+B | boss skipped | average | -49.0..-47.5 X9 | -48.5..-47.1 X9 | -47.9..-46.5 X9 | -46.3..-44.5 X9 | -42.1..-40.6 X9 | -36.2..-34.7 X9
+B | boss skipped | strong | -64.5..-61.7 X9 | -58.5..-56.4 X9 | -52.7..-50.1 X9 | -42.7..-40.3 X9 | -33.9..-31.6 X9 | -28.5..-26.4 X9
+B | boss at target | weak | -14.4..-13.3 X9 | -14.4..-13.3 X9 | -14.3..-13.2 X9 | -14.1..-13.0 X9 | -13.6..-12.5 X9 | -12.3..-11.3 X9
+B | boss at target | average | -63.4..-62.0 X9 | -62.4..-60.9 X9 | -61.0..-59.4 X9 | -56.6..-55.1 X9 | -48.8..-47.0 X9 | -39.7..-37.9 X9
+B | boss at target | strong | -55.2..-53.4 X9 | -48.6..-46.5 X9 | -44.0..-41.6 X9 | -35.6..-33.4 X9 | -27.5..-25.9 X9 | -23.7..-21.3 X9
+B | Myth #2 skipped | weak | -4.2..-4.2 -1 | -4.2..-4.2 -1 | -4.2..-4.2 -1 | -4.2..-4.2 -1 | -4.2..-4.2 -1 | -4.1..-4.1 -1
+B | Myth #2 skipped | average | -43.7..-43.7 X1 | -43.6..-43.6 X1 | -43.5..-43.5 X1 | -42.9..-42.9 X1 | -41.6..-41.6 X1 | -38.9..-38.9 X1
+B | Myth #2 skipped | strong | -74.2..-74.2 X1 | -70.7..-70.7 X1 | -67.0..-67.0 X1 | -59.1..-59.1 X1 | -50.7..-50.7 X1 | -44.2..-44.2 X1
+B | Summit skipped | weak | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.5..-5.5 X1
+B | Summit skipped | average | -47.7..-47.7 X1 | -47.6..-47.6 X1 | -47.6..-47.6 X1 | -47.2..-47.2 X1 | -46.2..-46.2 X1 | -44.7..-44.7 X1
+B | Summit skipped | strong | -78.6..-78.6 X1 | -76.3..-76.3 X1 | -73.3..-73.3 X1 | -67.5..-67.5 X1 | -60.6..-60.6 X1 | -54.4..-54.4 X1
+C | kid #1 at target | weak | -0.4..+0.2 =9 | +8.2..+9.7 D9 | +17.5..+18.6 D9 | +31.9..+33.3 D9 | +43.8..+45.7 D9 | +51.1..+52.9 D9
+C | kid #1 at target | average | -4.4..-4.1 -9 | -1.6..-0.8 -2=7 | +1.8..+2.4 +9 | +5.1..+6.5 D9 | +7.1..+7.8 D9 | +9.3..+10.0 D9
+C | kid #1 at target | strong | -2.4..-1.9 -9 | -2.1..-1.8 -9 | -1.9..-1.4 -8=1 | -0.4..-0.3 =9 | -0.3..+0.0 =9 | +0.0..+0.0 =9
+C | mature #2 skipped | weak | -5.1..-4.5 -6X3 | -4.8..-4.2 -9 | -4.3..-3.7 -9 | -2.7..-2.0 -9 | +0.6..+1.4 =9 | +5.9..+7.5 D9
+C | mature #2 skipped | average | -37.2..-35.5 X9 | -32.7..-30.7 X9 | -27.3..-24.9 X9 | -15.7..-13.7 X9 | -3.4..-1.1 -7=2 | +6.3..+8.8 D9
+C | mature #2 skipped | strong | -23.1..-21.7 X9 | -18.5..-16.4 X9 | -15.4..-13.9 X9 | -10.7..-8.6 X9 | -6.5..-5.8 X9 | -5.2..-2.8 -8X1
+C | boss skipped | weak | -5.5..-5.0 -1X8 | -5.2..-4.5 -6X3 | -4.6..-4.0 -9 | -2.9..-1.8 -9 | +0.9..+2.8 +3=6 | +6.9..+9.6 D9
+C | boss skipped | average | -38.2..-35.0 X9 | -32.9..-29.6 X9 | -27.2..-23.5 X9 | -15.6..-11.1 X9 | -2.6..+1.4 -6=3 | +7.4..+10.4 D9
+C | boss skipped | strong | -21.7..-18.0 X9 | -16.9..-14.8 X9 | -14.3..-12.8 X9 | -8.8..-7.6 X9 | -5.8..-5.3 X9 | -2.4..-1.6 -9
+C | boss at target | weak | -13.0..-11.8 X9 | -12.1..-10.6 X9 | -10.9..-9.3 X9 | -6.8..-4.6 -2X7 | +1.2..+4.4 +3=6 | +10.9..+15.5 D9
+C | boss at target | average | -42.3..-38.1 X9 | -34.7..-30.6 X9 | -27.7..-23.3 X9 | -15.2..-11.6 X9 | -4.3..-1.6 -9 | +3.3..+5.8 +7D2
+C | boss at target | strong | -17.0..-12.9 X9 | -13.4..-11.2 X9 | -11.2..-9.9 X9 | -6.8..-6.0 X9 | -5.1..-4.0 -5X4 | -4.2..-1.5 -9
+C | Myth #2 skipped | weak | -4.2..-4.2 -1 | -4.1..-4.1 -1 | -4.1..-4.1 -1 | -3.7..-3.7 -1 | -2.9..-2.9 -1 | -1.2..-1.2 =1
+C | Myth #2 skipped | average | -41.4..-41.4 X1 | -39.7..-39.7 X1 | -37.4..-37.4 X1 | -30.9..-30.9 X1 | -20.6..-20.6 X1 | -10.4..-10.4 X1
+C | Myth #2 skipped | strong | -40.3..-40.3 X1 | -34.2..-34.2 X1 | -29.4..-29.4 X1 | -21.9..-21.9 X1 | -15.7..-15.7 X1 | -11.5..-11.5 X1
+C | Summit skipped | weak | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.6..-5.6 X1 | -5.5..-5.5 X1 | -5.2..-5.2 X1 | -4.5..-4.5 -1
+C | Summit skipped | average | -46.8..-46.8 X1 | -46.0..-46.0 X1 | -45.1..-45.1 X1 | -42.1..-42.1 X1 | -36.4..-36.4 X1 | -28.3..-28.3 X1
+C | Summit skipped | strong | -56.5..-56.5 X1 | -49.7..-49.7 X1 | -44.0..-44.0 X1 | -35.0..-35.0 X1 | -27.6..-27.6 X1 | -21.3..-21.3 X1
+## base mids (all-stat) and one-slot dr
+A kid #1 at target weak 28.4-29.6 dr 0.0358 0.0897
+A kid #1 at target average 82.6-84.5 dr 0.0358 0.0897
+A kid #1 at target strong 95.2-95.7 dr 0.0358 0.0897
+A mature #2 skipped weak 5.8-6.2 dr 0.0492 0.0843
+A mature #2 skipped average 46.2-48.0 dr 0.0492 0.0843
+A mature #2 skipped strong 81.8-83.6 dr 0.0492 0.0843
+A boss skipped weak 6.3-6.9 dr 0.0483 0.0826
+A boss skipped average 48.2-50.1 dr 0.0483 0.0826
+A boss skipped strong 81.9-83.7 dr 0.0483 0.0826
+A boss at target weak 14.4-15.2 dr 0.0483 0.0826
+A boss at target average 63.2-65.6 dr 0.0483 0.0826
+A boss at target strong 86.7-88.3 dr 0.0483 0.0826
+A Myth #2 skipped weak 5.3-5.3 dr 0.0586 0.0586
+A Myth #2 skipped average 44.7-44.7 dr 0.0586 0.0586
+A Myth #2 skipped strong 82.4-82.4 dr 0.0586 0.0586
+A Summit skipped weak 6.6-6.6 dr 0.0749 0.0749
+A Summit skipped average 47.0-47.0 dr 0.0749 0.0749
+A Summit skipped strong 83.6-83.6 dr 0.0749 0.0749
+B kid #1 at target weak 28.4-29.6 dr 0.0877 0.0897
+B kid #1 at target average 82.6-84.5 dr 0.0877 0.0897
+B kid #1 at target strong 95.2-95.7 dr 0.0877 0.0897
+B mature #2 skipped weak 5.8-6.2 dr 0.0825 0.0855
+B mature #2 skipped average 46.2-48.0 dr 0.0825 0.0855
+B mature #2 skipped strong 81.8-83.6 dr 0.0825 0.0855
+B boss skipped weak 6.3-6.9 dr 0.0816 0.083
+B boss skipped average 48.2-50.1 dr 0.0816 0.083
+B boss skipped strong 81.9-83.7 dr 0.0816 0.083
+B boss at target weak 14.4-15.2 dr 0.0816 0.083
+B boss at target average 63.2-65.6 dr 0.0816 0.083
+B boss at target strong 86.7-88.3 dr 0.0816 0.083
+B Myth #2 skipped weak 5.3-5.3 dr 0.1171 0.1171
+B Myth #2 skipped average 44.7-44.7 dr 0.1171 0.1171
+B Myth #2 skipped strong 82.4-82.4 dr 0.1171 0.1171
+B Summit skipped weak 6.6-6.6 dr 0.1497 0.1497
+B Summit skipped average 47.0-47.0 dr 0.1497 0.1497
+B Summit skipped strong 83.6-83.6 dr 0.1497 0.1497
+C kid #1 at target weak 28.4-29.6 dr 0.0413 0.0448
+C kid #1 at target average 82.6-84.5 dr 0.0413 0.0448
+C kid #1 at target strong 95.2-95.7 dr 0.0413 0.0448
+C mature #2 skipped weak 5.8-6.2 dr 0.039 0.0409
+C mature #2 skipped average 46.2-48.0 dr 0.039 0.0409
+C mature #2 skipped strong 81.8-83.6 dr 0.039 0.0409
+C boss skipped weak 6.3-6.9 dr 0.037 0.0403
+C boss skipped average 48.2-50.1 dr 0.037 0.0403
+C boss skipped strong 81.9-83.7 dr 0.037 0.0403
+C boss at target weak 14.4-15.2 dr 0.037 0.0403
+C boss at target average 63.2-65.6 dr 0.037 0.0403
+C boss at target strong 86.7-88.3 dr 0.037 0.0403
+C Myth #2 skipped weak 5.3-5.3 dr 0.0586 0.0586
+C Myth #2 skipped average 44.7-44.7 dr 0.0586 0.0586
+C Myth #2 skipped strong 82.4-82.4 dr 0.0586 0.0586
+C Summit skipped weak 6.6-6.6 dr 0.0749 0.0749
+C Summit skipped average 47.0-47.0 dr 0.0749 0.0749
+C Summit skipped strong 83.6-83.6 dr 0.0749 0.0749
+## break-even w*
+A mature #2 skipped {'weak': '0.88-2.04', 'average': '1.03-2.60', 'strong': '2.34-2.96 (some >3.00)'}
+A boss skipped {'weak': '0.85-1.93', 'average': '1.00-2.48', 'strong': '2.15-2.19 (some >3.00)'}
+A boss at target {'weak': '0.92-1.99', 'average': '1.17-2.97', 'strong': '2.83-2.89 (some >3.00)'}
+A Myth #2 skipped {'weak': '1.12-1.12', 'average': '1.31-1.31', 'strong': '2.94-2.94'}
+A Summit skipped {'weak': '1.63-1.63', 'average': '2.04-2.04', 'strong': ' (some >3.00)'}
+B mature #2 skipped {'weak': '1.95-2.09', 'average': '2.50-2.69', 'strong': ' (some >3.00)'}
+B boss skipped {'weak': '1.88-1.95', 'average': '2.41-2.50', 'strong': ' (some >3.00)'}
+B boss at target {'weak': '1.94-2.01', 'average': '2.88-2.99', 'strong': ' (some >3.00)'}
+B Myth #2 skipped {'weak': '2.43-2.43', 'average': ' (some >3.00)', 'strong': ' (some >3.00)'}
+B Summit skipped {'weak': ' (some >3.00)', 'average': ' (some >3.00)', 'strong': ' (some >3.00)'}
+C mature #2 skipped {'weak': '0.66-0.70', 'average': '0.76-0.81', 'strong': '1.50-1.63'}
+C boss skipped {'weak': '0.62-0.70', 'average': '0.72-0.81', 'strong': '1.35-1.55'}
+C boss at target {'weak': '0.64-0.73', 'average': '0.78-0.89', 'strong': '1.59-1.89'}
+C Myth #2 skipped {'weak': '1.12-1.12', 'average': '1.31-1.31', 'strong': '2.94-2.94'}
+C Summit skipped {'weak': '1.63-1.63', 'average': '2.04-2.04', 'strong': ' (some >3.00)'}
+## grind
+baseline|weak 141
+baseline|average 153
+baseline|strong 121
+A|weak|+10%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+10%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+10%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+10%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+10%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+10%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+10%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 7, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+10%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+10%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+10%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+10%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+10%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+10%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+10%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+10%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+10%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 7, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+10%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+10%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+20%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 10, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+20%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+20%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+20%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+20%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+20%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+20%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 18, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+20%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+20%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+20%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 10, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+20%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+20%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+20%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+20%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+20%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+20%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 18, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+20%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+20%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+30%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 10, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+30%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 6, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+30%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+30%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+30%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+30%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+30%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 27, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+30%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 18, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+30%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+30%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 10, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+30%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 6, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+30%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+30%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+30%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+30%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+30%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 27, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+30%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 18, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+30%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+50%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 19, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+50%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 10, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+50%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+50%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 9, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+50%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+50%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+50%|max1 {'grind': 137, 'lost_xp': 1623, 'window_rungs': 36, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+50%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 24, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+50%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+50%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 19, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+50%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 10, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+50%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+50%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 9, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+50%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+50%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+50%|max3 {'grind': 137, 'lost_xp': 1623, 'window_rungs': 36, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+50%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 24, 'clears_with_window_at_m2_or_boss': 0}
+C|strong|+50%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+75%|max1 {'grind': 139, 'lost_xp': 1623, 'window_rungs': 29, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+75%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 16, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+75%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+75%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 9, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+75%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+75%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+75%|max1 {'grind': 137, 'lost_xp': 1623, 'window_rungs': 63, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+75%|max1 {'grind': 140, 'lost_xp': 0, 'window_rungs': 40, 'clears_with_window_at_m2_or_boss': 2}
+C|strong|+75%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+75%|max3 {'grind': 139, 'lost_xp': 1623, 'window_rungs': 29, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+75%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 16, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+75%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+75%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 9, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+75%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+75%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+75%|max3 {'grind': 137, 'lost_xp': 1623, 'window_rungs': 63, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+75%|max3 {'grind': 140, 'lost_xp': 0, 'window_rungs': 40, 'clears_with_window_at_m2_or_boss': 2}
+C|strong|+75%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 2, 'clears_with_window_at_m2_or_boss': 0}
+A|weak|+100%|max1 {'grind': 137, 'lost_xp': 1623, 'window_rungs': 40, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+100%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 24, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+100%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 4, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+100%|max1 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 16, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+100%|max1 {'grind': 153, 'lost_xp': 0, 'window_rungs': 9, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+100%|max1 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+100%|max1 {'grind': 139, 'lost_xp': 1623, 'window_rungs': 63, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+100%|max1 {'grind': 109, 'lost_xp': 118, 'window_rungs': 63, 'clears_with_window_at_m2_or_boss': 12}
+C|strong|+100%|max1 {'grind': 127, 'lost_xp': 563, 'window_rungs': 22, 'clears_with_window_at_m2_or_boss': 8}
+A|weak|+100%|max3 {'grind': 137, 'lost_xp': 1623, 'window_rungs': 40, 'clears_with_window_at_m2_or_boss': 0}
+A|average|+100%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 24, 'clears_with_window_at_m2_or_boss': 0}
+A|strong|+100%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 4, 'clears_with_window_at_m2_or_boss': 0}
+B|weak|+100%|max3 {'grind': 141, 'lost_xp': 1623, 'window_rungs': 16, 'clears_with_window_at_m2_or_boss': 0}
+B|average|+100%|max3 {'grind': 153, 'lost_xp': 0, 'window_rungs': 9, 'clears_with_window_at_m2_or_boss': 0}
+B|strong|+100%|max3 {'grind': 121, 'lost_xp': 191, 'window_rungs': 0, 'clears_with_window_at_m2_or_boss': 0}
+C|weak|+100%|max3 {'grind': 139, 'lost_xp': 1623, 'window_rungs': 63, 'clears_with_window_at_m2_or_boss': 0}
+C|average|+100%|max3 {'grind': 109, 'lost_xp': 118, 'window_rungs': 63, 'clears_with_window_at_m2_or_boss': 12}
+C|strong|+100%|max3 {'grind': 127, 'lost_xp': 563, 'window_rungs': 22, 'clears_with_window_at_m2_or_boss': 8}
+## feel
+A {'scheme': 'A', 'slots': {'R1': 3, 'R2': 4, 'R3': 5, 'Finale': 6}, 'purchases': 80, 'story_wins_with_no_new_stat_tier': 9, 'upgrade_pct_median': 7.3, 'upgrade_pct_p10': 2.5, 'upgrade_pct_p90': 17.3, 'spend_stat_units': {'R1': 585.1, 'R2': 583.4, 'R3': 775.6, 'Finale': 1927.8}, 'spend_total': 3872.0, 'rungs_with_a_slot_under_90pct_of_mean': [{'where': 'R2 Wangan kid', 'min_over_mean': 0.53}, {'where': 'R2 Wangan kid', 'min_over_mean': 0.64}, {'where': 'R2 Wangan mature', 'min_over_mean': 0.75}, {'where': 'R2 Wangan mature', 'min_over_mean': 0.85}, {'where': 'R2 Wangan old head', 'min_over_mean': 0.9}, {'where': 'R2 Wangan old head', 'min_over_mean': 0.9}, {'where': 'R3 Street kid', 'min_over_mean': 0.67}, {'where': 'R3 Street kid', 'min_over_mean': 0.8}]}
+B {'scheme': 'B', 'slots': {'R1': 3, 'R2': 3, 'R3': 3, 'Finale': 3}, 'purchases': 72, 'story_wins_with_no_new_stat_tier': 9, 'upgrade_pct_median': 4.9, 'upgrade_pct_p10': 2.4, 'upgrade_pct_p90': 9.7, 'spend_stat_units': {'R1': 585.1, 'R2': 916.0, 'R3': 1440.4, 'Finale': 1927.8}, 'spend_total': 4869.3, 'rungs_with_a_slot_under_90pct_of_mean': []}
+C {'scheme': 'C', 'slots': {'R1': 6, 'R2': 6, 'R3': 6, 'Finale': 6}, 'purchases': 93, 'story_wins_with_no_new_stat_tier': 9, 'upgrade_pct_median': 10.4, 'upgrade_pct_p10': 5.0, 'upgrade_pct_p90': 19.4, 'spend_stat_units': {'R1': 336.0, 'R2': 522.8, 'R3': 822.2, 'Finale': 1927.8}, 'spend_total': 3608.8, 'rungs_with_a_slot_under_90pct_of_mean': [{'where': 'R2 Wangan old head', 'min_over_mean': 0.89}, {'where': 'R2 Wangan old head', 'min_over_mean': 0.89}, {'where': 'R2 Wangan crew boss', 'min_over_mean': 0.89}, {'where': 'R3 Street old head', 'min_over_mean': 0.89}, {'where': 'R3 Street old head', 'min_over_mean': 0.89}, {'where': 'R3 Street crew boss', 'min_over_mean': 0.89}]}
+## C +75% cap vs nocap
+nocap {'weak': 137, 'average': 140, 'strong': 121}
+  kid #1 at target | weak | base 28.4-29.6 | win 71.6-74.2 | +43.8..+45.7 D9
+  kid #1 at target | average | base 82.6-84.5 | win 89.9-91.2 | +7.1..+7.8 D9
+  kid #1 at target | strong | base 95.2-95.7 | win 95.2-95.7 | -0.3..+0.0 =9
+  mature #2 skipped | weak | base 5.8-6.2 | win 6.4-7.0 | +0.6..+1.4 =9
+  mature #2 skipped | average | base 46.2-48.0 | win 43.0-46.1 | -3.4..-1.1 -7=2
+  mature #2 skipped | strong | base 81.8-83.6 | win 75.5-77.8 | -6.5..-5.8 X9
+  boss skipped | weak | base 6.3-6.9 | win 7.0-9.1 | +0.9..+2.8 +3=6
+  boss skipped | average | base 48.2-50.1 | win 46.0-50.4 | -2.6..+1.4 -6=3
+  boss skipped | strong | base 81.9-83.7 | win 76.6-78.7 | -5.8..-5.3 X9
+  boss at target | weak | base 14.4-15.2 | win 15.3-18.8 | +1.2..+4.4 +3=6
+  boss at target | average | base 63.2-65.6 | win 59.0-62.1 | -4.3..-1.6 -9
+  boss at target | strong | base 86.7-88.3 | win 81.8-83.9 | -5.1..-4.0 -5X4
+  Myth #2 skipped | weak | base 5.3-5.3 | win 1.8-1.8 | -2.9..-2.9 -1
+  Myth #2 skipped | average | base 44.7-44.7 | win 24.5-24.5 | -20.6..-20.6 X1
+  Myth #2 skipped | strong | base 82.4-82.4 | win 66.4-66.4 | -15.7..-15.7 X1
+  Summit skipped | weak | base 6.6-6.6 | win 0.7-0.7 | -5.2..-5.2 X1
+  Summit skipped | average | base 47.0-47.0 | win 11.9-11.9 | -36.4..-36.4 X1
+  Summit skipped | strong | base 83.6-83.6 | win 56.0-56.0 | -27.6..-27.6 X1
+  campaign rungs (63 x target/skip): {('average', 'dominant'): 73, ('average', 'even'): 8, ('average', 'lean+'): 17, ('average', 'lean-'): 28, ('strong', 'dominated'): 24, ('strong', 'even'): 58, ('strong', 'lean-'): 44, ('weak', 'dominant'): 93, ('weak', 'even'): 21, ('weak', 'lean+'): 12}
+cap1.15 {'weak': 141, 'average': 140, 'strong': 121}
+  kid #1 at target | weak | base 28.4-29.6 | win 32.7-35.4 | +4.2..+5.9 +7D2
+  kid #1 at target | average | base 82.6-84.5 | win 79.7-81.3 | -2.5..-2.2 -9
+  kid #1 at target | strong | base 95.2-95.7 | win 92.9-93.8 | -2.1..-1.9 -9
+  mature #2 skipped | weak | base 5.8-6.2 | win 6.4-7.0 | +0.6..+1.4 =9
+  mature #2 skipped | average | base 46.2-48.0 | win 43.0-46.1 | -3.4..-1.1 -7=2
+  mature #2 skipped | strong | base 81.8-83.6 | win 75.5-77.8 | -6.5..-5.8 X9
+  boss skipped | weak | base 6.3-6.9 | win 7.0-9.1 | +0.9..+2.8 +3=6
+  boss skipped | average | base 48.2-50.1 | win 46.0-50.4 | -2.6..+1.4 -6=3
+  boss skipped | strong | base 81.9-83.7 | win 76.6-78.7 | -5.8..-5.3 X9
+  boss at target | weak | base 14.4-15.2 | win 15.3-17.6 | +1.2..+3.0 +3=6
+  boss at target | average | base 63.2-65.6 | win 59.0-61.8 | -4.3..-2.6 -9
+  boss at target | strong | base 86.7-88.3 | win 81.8-83.6 | -5.1..-4.4 -5X4
+  Myth #2 skipped | weak | base 5.3-5.3 | win 1.8-1.8 | -2.9..-2.9 -1
+  Myth #2 skipped | average | base 44.7-44.7 | win 24.5-24.5 | -20.6..-20.6 X1
+  Myth #2 skipped | strong | base 82.4-82.4 | win 66.4-66.4 | -15.7..-15.7 X1
+  Summit skipped | weak | base 6.6-6.6 | win 0.7-0.7 | -5.2..-5.2 X1
+  Summit skipped | average | base 47.0-47.0 | win 11.9-11.9 | -36.4..-36.4 X1
+  Summit skipped | strong | base 83.6-83.6 | win 56.0-56.0 | -27.6..-27.6 X1
+  campaign rungs (63 x target/skip): {('average', 'even'): 9, ('average', 'lean-'): 117, ('strong', 'dominated'): 31, ('strong', 'lean-'): 95, ('weak', 'dominant'): 4, ('weak', 'even'): 21, ('weak', 'lean+'): 101}

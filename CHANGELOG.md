@@ -8,6 +8,21 @@
 
 ---
 
+## 2026-11-11 — Barry [sim]: slots-v1 mod slot sim added to `design/unapproved/slots-v1/` (**NOT approved**)
+- **What:** compares three slot schemes, (A) 3 slots growing to 6 (+1 at the R2 and R3 openings and the finale), (B) fixed 3 and (C) fixed 6, with window-only mods competing for the same slots. Equipping a window mod drops the smallest stat mod, so it costs real stat points. Run on the live visible-QTE model at `4cb5401`. Oracle: the official clash-count banks, N=4,000 per bank, seeds 20261113–15 × 10/20/30 turns, with paired comparisons. Files: `RESULTS.md`, the scripts, `results*.json` and `summary.txt`. Nothing in `sim/` changed.
+- **Rule 1 (only just reach 105% with every slot filled, never above):** each scheme splits `MOD_SHARE_OF_REF × ref` over its slots. One new tier per story win goes into the smallest line, with a restock at the round openings. Scheme A's added slots necessarily start at 53–67% of a full slot.
+- **Findings:**
+  - Window mods of +10/20/30% of w(r) are clearly **dominated** at every key cell (mature #2 skipped, boss skipped, boss at target, Myth #2, Summit), for average and strong players in every scheme. For weak players they are dominated or lean−. Average boss at target loses 23–63 pp. Grind counts don't change (153 / 141 / 121 for average / weak / strong).
+  - Only fixed 6 separates the skill profiles at the break-even size: about +65% (weak), +80% (average), +150% (strong).
+  - Candidate: **C, one +75% window mod, plus qte-v1's 1.15 × w0 total-zone cap.** It gives no no-brainer for average or strong anywhere in the campaign, a weak-player edge of +0.6 to +5.9, and grind 140 for average (fragile: two opener-boss clears at 50.06 vs 48.85). Without the cap the mod is dominant on kid rungs, so slot competition does not replace the width cap.
+  - Finale windows are dominated in every scheme, so the 86/14 split stands.
+  - C also has the lowest R1–R3 spend (1,681 stat-units vs A 1,944 and B 2,941) and the largest upgrade per purchase (median +10.4%).
+- **Caveats:**
+  - σ and the press model are placeholders.
+  - Prices are ∝ stat value, and every payout constant is still TBD.
+  - The restock rule is my choice.
+- **Status:** NOT approved. Awaiting Austin's pick of scheme and window size.
+
 ## 2026-11-11 — Gordon [godot]: build guide follows qte-v1 visible QTE zone (sim 4cb5401)
 - **What:** `design/godot-build-guide.md` now follows the playable engine in Barry's `4cb5401`. §5 player `q_eff` is `clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)` with no `knot_window`; the stat gap is the visible zone `qte_zone_width(r, window_mod)` at the race's fixed r (no mid-race change); `MatchConfig.qte_window_mod` widens the zone; the opponent is unchanged (`OPPONENT_QTE`, HAN still applies). Named the new sim constants (`QTE_ZONE_BASE_MS`, `QTE_ZONE_WIDTH_105`, `QTE_SKILL_SIGMA_OVER_A0` as PLACEHOLDER, `QTE_SKILL_TARGET_E`) and cited `equations.py` / `combat.py` / `match.py` / `models.py` by line. `KNOT_WINDOW_105` / `knot_window` are marked legacy (oracle and zone-table generator only). §7 `qte_difficulty()` is not deleted: a note says that applying it on top of the zone width would double-count, it is pending Austin's decision, Barry recommends dropping it in favour of the zone width, and Godot should not implement it until then. The same note is in Appendix D, Appendix F, and Appendix H. No values were copied or invented beyond the guide's existing convention; no GDScript, scenes, or `sim/` touched.
 - **Why:** follows `sim/` at `4cb5401` (Barry [sim]: port approved qte-v1 visible-QTE zone into the playable engine), after Austin approved qte-v1 and asked to port it into `sim/`.
