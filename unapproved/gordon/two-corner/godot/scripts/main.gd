@@ -99,6 +99,15 @@ func _arg(k: String, def = null):
 func _json(p: String) -> Dictionary:
 	return JSON.parse_string(FileAccess.get_file_as_string(p))
 
+## Legibility (shots7, 2026-11-11): the 640x480 frame is upscaled by whole numbers whenever the window fits 2x or more
+## (art_direction.md A.5:115 'integer nearest', :141). Non-integer nearest (2.25x at 1080p, 1.6x at 768) drew the 1-px
+## stems of the 1-bit HUD text 2 or 3 (1 or 2) screen px wide, so letters broke up. Below 2x it stays fractional so the
+## game is not shrunk to 1x. Display settings (640x480, viewport stretch, keep aspect) are unchanged.
+func _fit_scale() -> void:
+	var w := get_window()
+	var s := minf(w.size.x / 640.0, w.size.y / 480.0)
+	w.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER if s >= 2.0 else Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+
 func _ready() -> void:
 	cfg = _json("res://spec/race_config.json")
 	disp = _json("res://spec/display.json")
@@ -116,6 +125,7 @@ func _ready() -> void:
 	if not OS.has_feature("web"): menu.items.append("QUIT")  # Quit: Godot desktop only
 	DIST = disp.districts; CS = disp.car_shading; PAL = disp.palette
 	_build_viewports()
+	_fit_scale(); get_window().size_changed.connect(_fit_scale)
 	straight_path = Track.straight(100000.0)
 	player_car = _load_car("res://assets/cars/car_mx5.glb", "res://assets/cars/mx5_env.png", "mx5")
 	rival_car = _load_car("res://assets/cars/car_s2000.glb", "res://assets/cars/s2000_env.png", "s2000")

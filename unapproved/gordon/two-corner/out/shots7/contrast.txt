@@ -1,0 +1,17 @@
+Text vs PANEL 50/50 over scene (WCAG ratio; 4.5 normal / 3.0 large):
+  WHITE title (255,255,255)            fog:18.53  dark:15.38  lamp:10.00  guardrail:5.11
+  L_WHITE (220,230,242)                fog:14.69  dark:12.19  lamp:7.92  guardrail:4.05
+  SUB (150,165,200) footer/hints       fog:7.51  dark:6.23  lamp:4.05  guardrail:2.07
+  L_DIM (140,159,180) RIVAL/RESULT     fog:6.82  dark:5.66  lamp:3.68  guardrail:1.88
+  TODO (110,122,155) pending crumbs    fog:4.34  dark:3.60  lamp:2.34  guardrail:1.20
+  L_DIMMER (96,108,132) "- -", ">"     fog:3.51  dark:2.91  lamp:1.89  guardrail:1.03
+  DIMT (88,92,110) none-drawn rows     fog:2.80  dark:2.32  lamp:1.51  guardrail:1.30
+  AMBER (255,176,40)                   fog:10.14  dark:8.41  lamp:5.47  guardrail:2.80
+Chips (text on solid chip, no shadow):
+  white on ATK green #2CB84A               2.60
+  white on DEF red #E8282C                 4.40
+  ink on NEU yellow #F0C828                12.36
+  L_WHITE TIE on (64,86,120)?              5.90
+  INK on AMBER slab                        11.46
+  none-drawn red dim 0.7 on panel/fog      2.40
+  none-drawn green dim 0.7 on panel/fog    3.70
