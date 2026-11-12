@@ -209,7 +209,7 @@ If Austin wants to keep window sizes at +10/20/30%, they are dead content at eve
 ## Reproduce
 
 ```
-cd design/unapproved/slots-v1 && ./run_all.sh && python3 summarize.py > summary.txt
+cd unapproved/barry/slots-v1 && ./run_all.sh && python3 summarize.py > summary.txt
 ```
 
 Needs numpy, the count banks under `/workspace/barry-drafts/{final-v1,lines-v1}`, and the repo sim at `/workspace/midnight-apex/sim`. Files:

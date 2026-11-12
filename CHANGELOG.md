@@ -8,6 +8,21 @@
 
 ---
 
+## 2026-11-11 — Barry [sim]: slots-v2 mature #2 fixes study (NOT approved); move my unapproved work to `unapproved/barry/`
+- **NOT APPROVED. Study only; no live constants changed.** Austin asked (10:58 PM PT) to sim fixes for the strong-player mature #2 skips: V1 = R1 Wangan j3, 47.86 → 52.49 with the newest mod; V2 = R2 Touge j3, 47.84 → 52.67. The study uses the live 0.67 knot and the 10% aero cap. It has the same oracle and statistical bar as slots-v2, and it covers weak/avg/strong × balanced/window/aero10.
+- **Write-up:** `unapproved/barry/slots-v2/RESULTS_v1v2.md`. Scripts: `fixes.py`, `fix_summary.py`, `floor_cost.py`, plus their JSON and `fixes.log`.
+- **Fixes tested:**
+  - **a / a0 (P2 prices):** rejected. They add a decisive strong rung (R2 Street j3, 47.86 → 52.42) and the mods lag.
+  - **b (floor = level cap):** strong grind goes 121 → 197, new strong boss walls appear, and the strong min margin is 0.89.
+  - **b2:** V2 remains.
+  - **c (delay the tier to j4):** dead wins double (9 → 18) and average mid at cap drops to 69.95–71.15.
+  - **b3 (crew-local level floor):** no decisive rungs under any policy, dead wins stay at 9, and weak/avg grind is unchanged (141/153). Strong needs 6 races (V1) and 7 races (V2) to reach the floor.
+- **Recommendation: b3.**
+- **Move (Desmond's convention):** `design/unapproved/slots-v1` → `unapproved/barry/slots-v1`, and `design/unapproved/slots-v2` → `unapproved/barry/slots-v2`.
+  - The approved slots-v2 parts (README, `rebuild_winrate_table.py`, spot-check) went to `design/notes/slots-v2/`, following the qte-v1 precedent.
+  - The empty `design/unapproved/` was removed.
+  - Paths were updated in the entries below, `design/07` §6.3, the RESULTS files, and the `winrate_n4000.json` `_provenance` string (string only; data unchanged).
+
 ## 2026-11-11 — Arthur [art]: B.5c is now crunchy 3D + sharp UI; unapproved pack-road Godot test
 - **B.5c** (`design/art/art_direction.md`) rewritten (Austin, 2026-11-11): 3D stays 640×480, no AA, RGB555 + 4×4 Bayer, then one 2× nearest upscale. UI is composited after that upscale, drawn sharp at 1280×960. Q4 smooth texture filtering in the 3D scene is unchanged.
 - **Unapproved road test** (`unapproved/arthur/mockups/psx_road_test/`): the approved line-select Entry frame, re-rendered in Godot 4.6.3 with a 3-lane road built from the urban stacked pack's `road1_alt.png` (CC0; worn painted dashes and yellow edges, no added noise or lettering). `before.png` is the existing Blender frame. After frames: smooth and nearest pack-road with the classic 640 HUD, plus `_sharpui` variants with chunky late-90s plates at 1280×960. Not approved until Austin says so.
@@ -30,19 +45,19 @@
 - **What (`sim/velocity_shift/equations.py`, single source):**
   - **Knot:** `KNOT_WINDOW_105` (1.00, 0.68) → (1.00, 0.67). `QTE_ZONE_WIDTH_105` r=1.00 row 0.5802105 → 0.5698111. `qte_zone_width` generates from the knot (verified): r 1.02 0.7243 → 0.7170, r 1.0355 0.8548 → 0.8507; r ≤ 0.95 and ≥ 1.05 are unchanged.
   - **Aero constants:** new `AERO_FREE_POOL_MAX_FRACTION = 0.10`, `AERO_MAX_EQUIPPED = 1`, `AERO_COUNTS_IN_MOD_CAP = True`, and helper `aero_free_pool_max()`. Per-tier `AERO_FREE_POINTS` are still TBD.
-- **Oracle:** `sim/config/winrate_n4000.json` was rebuilt with the new knots. The script is `design/unapproved/slots-v2/approved/rebuild_winrate_table.py`, the lines-v1 method; run on the old knots it reproduces the old table exactly. 395 rows changed, all at r 0.9525–1.045. Official forced progression is still 153 grind / 162 levels in all 216 orders.
+- **Oracle:** `sim/config/winrate_n4000.json` was rebuilt with the new knots. The script is `design/notes/slots-v2/rebuild_winrate_table.py`, the lines-v1 method; run on the old knots it reproduces the old table exactly. 395 rows changed, all at r 0.9525–1.045. Official forced progression is still 153 grind / 162 levels in all 216 orders.
 - **Docs:** `design/02-equations-reference.md` (caps/mods row, combat row, knot list) and `design/07-economy-and-mods.md` §6.3 (aero caps). §8.0's open item 4, "aero has no rule against caps", is marked resolved.
 - **Tests:** 2 new ones cover the knot/zone values and the aero cap. No test was pinned to 0.68/0.5802 except through `QTE_ZONE_WIDTH_105`, which was updated. Full suite passes: 52 tests.
 - **Playable spot-check (before → after):**
   - Street mature #2 skipped: 43.5–49.4 (mean 46.82) → 43.0–49.4 (46.22). Its oracle band moves from 42.8–49.6 to 42.3–49.6.
   - Street boss, Touge boss and Wangan boss at target (r 1.05) are unchanged: 63.2–65.1, 65.5–67.1, 63.7–67.1.
-- **Still unapproved** (in `design/unapproved/slots-v2/`): the window +75% / 1.15 cap rule, prices, the dead-win fill, and the strong-player mature #2 fixes.
+- **Still unapproved** (in `unapproved/barry/slots-v2/`): the window +75% / 1.15 cap rule, prices, the dead-win fill, and the strong-player mature #2 fixes.
 
 ## 2026-11-11 — Gordon [godot]: build guide §10.3 stance colours now match art_direction.md B.5
 - **What:** `design/godot-build-guide.md` §10.3 `ClashDisplay.gd` COLORS now use the art doc values (`design/art/art_direction.md:252`): Attack `#2CB84A` (green), Defend `#E8282C` (red), Neutral `#F0C828` (yellow, dark text), replacing the legacy `#16a34a` / `#dc2626` / `#d97706`.
 - **Why:** Arthur relayed that Austin asked for the stance colours to be aligned; Austin's own 2026-11-11 instruction was to make Attack/POW green and Defend/EN red in all docs. The two-corner build already uses the art doc values, so no build change.
 
-## 2026-11-11 — Barry [sim]: slots-v2, Austin's 2 POW / 2 EN / 2 HAN layout with window + aero, grind wall and price check, added to `design/unapproved/slots-v2/` (**NOT approved**)
+## 2026-11-11 — Barry [sim]: slots-v2, Austin's 2 POW / 2 EN / 2 HAN layout with window + aero, grind wall and price check, added to `unapproved/barry/slots-v2/` (**NOT approved**)
 - **What:** this reruns the slot sim on Austin's layout: 6 slots = 3 categories × 2, with secondary splits of 100/0/0, 80/10/10 and 70/20/10 (placeholders). The run adds:
   - a window mod (+75%, 1.15 × w0 cap) and an aero part (pool 10/20/30%, retuned every race, inside the 105% cap, from the second R2 crew). Each goes in any slot, at most one of each;
   - an exhaustive 105% check;
@@ -123,7 +138,7 @@
 - **What:** `design/godot-build-guide.md` §7 now uses the visible zone width `qte_zone_width(r, window_mod)` at the race's fixed r, plus `MatchConfig.qte_window_mod`, as the only QTE difficulty scale. `QTEController.start(...)` takes that zone (fraction of `QTE_ZONE_BASE_MS`, `equations.py:130–133` and `:338`). The old level-gap `qte_difficulty()` formula and the 800/650/500/300 ms table are removed from §7 and Appendix F, along with the Godot-only `QTE_TIMING_WINDOW_PER_GAP` / `QTE_TIMING_WINDOW_MIN_MS` / `QTE_MASH_SPEED_PER_GAP` constants. §15.2 `QTE_TIMING_WINDOW_BASE_MS` is no longer a Godot-only 600–1000 range; it points at sim `QTE_ZONE_BASE_MS` (`equations.py:130–133`). The pending-Austin / double-count notes in §5.1, §7, Appendix D, F, and H now state this resolution. No values invented; no `sim/`, scripts, or scenes touched.
 - **Why:** Austin, 2026-11-11, 8:48 PM PT: "Yeah QTE difficulty is scaled through the visibile zone. I don't see double dipping there."
 
-## 2026-11-11 — Barry [sim]: slots-v1 mod slot sim added to `design/unapproved/slots-v1/` (**NOT approved**)
+## 2026-11-11 — Barry [sim]: slots-v1 mod slot sim added to `unapproved/barry/slots-v1/` (**NOT approved**)
 - **What:** compares three slot schemes, (A) 3 slots growing to 6 (+1 at the R2 and R3 openings and the finale), (B) fixed 3 and (C) fixed 6, with window-only mods competing for the same slots. Equipping a window mod drops the smallest stat mod, so it costs real stat points. Run on the live visible-QTE model at `4cb5401`. Oracle: the official clash-count banks, N=4,000 per bank, seeds 20261113–15 × 10/20/30 turns, with paired comparisons. Files: `RESULTS.md`, the scripts, `results*.json` and `summary.txt`. Nothing in `sim/` changed.
 - **Rule 1 (only just reach 105% with every slot filled, never above):** each scheme splits `MOD_SHARE_OF_REF × ref` over its slots. One new tier per story win goes into the smallest line, with a restock at the round openings. Scheme A's added slots necessarily start at 53–67% of a full slot.
 - **Findings:**

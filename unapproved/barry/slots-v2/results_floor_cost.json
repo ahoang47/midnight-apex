@@ -1,0 +1,272 @@
+[
+{
+"profile": "weak",
+"crew": "R1 Touge",
+"level_skip": 7,
+"floor": 4,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.17,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R1 Wangan",
+"level_skip": 19,
+"floor": 14,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.52,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R1 Street",
+"level_skip": 31,
+"floor": 26,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.52,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R2 Wangan",
+"level_skip": 63,
+"floor": 54,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.29,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R2 Street",
+"level_skip": 76,
+"floor": 71,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.0,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R2 Touge",
+"level_skip": 88,
+"floor": 83,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.54,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R3 Street",
+"level_skip": 120,
+"floor": 111,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.29,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R3 Touge",
+"level_skip": 133,
+"floor": 128,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.0,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "weak",
+"crew": "R3 Wangan",
+"level_skip": 145,
+"floor": 140,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 16.54,
+"clears_at_floor": false,
+"grind_to_cap": 3
+},
+{
+"profile": "average",
+"crew": "R1 Touge",
+"level_skip": 3,
+"floor": 4,
+"races_to_floor": 1,
+"mid_at_floor_full_mods": 54.21,
+"clears_at_floor": true,
+"grind_to_cap": 7
+},
+{
+"profile": "average",
+"crew": "R1 Wangan",
+"level_skip": 15,
+"floor": 14,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.74,
+"clears_at_floor": false,
+"grind_to_cap": 7
+},
+{
+"profile": "average",
+"crew": "R1 Street",
+"level_skip": 27,
+"floor": 26,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.74,
+"clears_at_floor": false,
+"grind_to_cap": 7
+},
+{
+"profile": "average",
+"crew": "R2 Wangan",
+"level_skip": 59,
+"floor": 54,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.87,
+"clears_at_floor": false,
+"grind_to_cap": 8
+},
+{
+"profile": "average",
+"crew": "R2 Street",
+"level_skip": 72,
+"floor": 71,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.67,
+"clears_at_floor": false,
+"grind_to_cap": 7
+},
+{
+"profile": "average",
+"crew": "R2 Touge",
+"level_skip": 84,
+"floor": 83,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.81,
+"clears_at_floor": false,
+"grind_to_cap": 7
+},
+{
+"profile": "average",
+"crew": "R3 Street",
+"level_skip": 116,
+"floor": 111,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.87,
+"clears_at_floor": false,
+"grind_to_cap": 9
+},
+{
+"profile": "average",
+"crew": "R3 Touge",
+"level_skip": 129,
+"floor": 128,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.67,
+"clears_at_floor": false,
+"grind_to_cap": 8
+},
+{
+"profile": "average",
+"crew": "R3 Wangan",
+"level_skip": 141,
+"floor": 140,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 46.81,
+"clears_at_floor": false,
+"grind_to_cap": 8
+},
+{
+"profile": "strong",
+"crew": "R1 Touge",
+"level_skip": 3,
+"floor": 4,
+"races_to_floor": 1,
+"mid_at_floor_full_mods": 86.23,
+"clears_at_floor": true,
+"grind_to_cap": 0
+},
+{
+"profile": "strong",
+"crew": "R1 Wangan",
+"level_skip": 8,
+"floor": 14,
+"races_to_floor": 6,
+"mid_at_floor_full_mods": 80.87,
+"clears_at_floor": true,
+"grind_to_cap": 13
+},
+{
+"profile": "strong",
+"crew": "R1 Street",
+"level_skip": 26,
+"floor": 26,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 80.87,
+"clears_at_floor": true,
+"grind_to_cap": 0
+},
+{
+"profile": "strong",
+"crew": "R2 Wangan",
+"level_skip": 53,
+"floor": 54,
+"races_to_floor": 1,
+"mid_at_floor_full_mods": 63.62,
+"clears_at_floor": true,
+"grind_to_cap": 0
+},
+{
+"profile": "strong",
+"crew": "R2 Street",
+"level_skip": 72,
+"floor": 71,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 82.65,
+"clears_at_floor": true,
+"grind_to_cap": 0
+},
+{
+"profile": "strong",
+"crew": "R2 Touge",
+"level_skip": 77,
+"floor": 83,
+"races_to_floor": 7,
+"mid_at_floor_full_mods": 80.87,
+"clears_at_floor": true,
+"grind_to_cap": 16
+},
+{
+"profile": "strong",
+"crew": "R3 Street",
+"level_skip": 115,
+"floor": 111,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 81.1,
+"clears_at_floor": true,
+"grind_to_cap": 0
+},
+{
+"profile": "strong",
+"crew": "R3 Touge",
+"level_skip": 121,
+"floor": 128,
+"races_to_floor": 8,
+"mid_at_floor_full_mods": 80.83,
+"clears_at_floor": true,
+"grind_to_cap": 18
+},
+{
+"profile": "strong",
+"crew": "R3 Wangan",
+"level_skip": 140,
+"floor": 140,
+"races_to_floor": 0,
+"mid_at_floor_full_mods": 80.87,
+"clears_at_floor": true,
+"grind_to_cap": 0
+}
+]

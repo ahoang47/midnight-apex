@@ -25,4 +25,4 @@ Same method as `sim/tests/test_playable_oracle.py`: 1,000 races per (seed, lengt
 
 The r = 1.05 cells can't move, because the zone there is 1.0 either way.
 
-Everything else in `../RESULTS.md` is still **NOT approved**: window +75% / 1.15 cap, the P1/P2 prices, the dead-win fill, and the mature #2 fixes in `../RESULTS_v1v2.md`.
+Everything else in `unapproved/barry/slots-v2/RESULTS.md` is still **NOT approved**: window +75% / 1.15 cap, the P1/P2 prices, the dead-win fill, and the mature #2 fixes in `unapproved/barry/slots-v2/RESULTS_v1v2.md`.

@@ -1,6 +1,6 @@
 # slots-v2 — Austin's 2 POW / 2 EN / 2 HAN slot layout, window + aero, grind wall, economy (NOT approved)
 
-> **2026-11-11 10:58 PM PT: two parts are APPROVED and live** (see `approved/README.md`): the `KNOT_WINDOW_105` r = 1.00 knot 0.68 → 0.67, and the aero free pool ≤ 10% (`AERO_FREE_POOL_MAX_FRACTION`). Everything else here is still not approved.
+> **2026-11-11 10:58 PM PT: two parts are APPROVED and live** (see `design/notes/slots-v2/README.md`): the `KNOT_WINDOW_105` r = 1.00 knot 0.68 → 0.67, and the aero free pool ≤ 10% (`AERO_FREE_POOL_MAX_FRACTION`). Everything else here is still not approved.
 
 Barry, 2026-11-11. **Draft for Austin's review, not approved.** Main runs 8:55–10:36 PM PT, follow-ups 10:40–10:50 PM PT. The model is the live visible-QTE sim (`qte_zone_width`, `expected_hit_quality`, `QTE_SKILL_SIGMA_OVER_A0`). That math is unchanged since `4cb5401`, and `f0efecf` only averages the phase scores. The follow-ups ran at `4322b31` and reproduce the `results.json` finale cells exactly. **Nothing in `sim/` was changed.** Every "after" number comes from patching a constant in-process.
 

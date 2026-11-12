@@ -33,7 +33,7 @@ def rates(r, q):
 
 keys = {round(x, 4) for x in np.arange(0.80, 1.40001, 0.0025)}
 PROV = ("Build sim/config/winrate_n4000.json for the repo with the lines-v1 S-A + W-A tables (Barry, 2026-11-10; rebuilt 2026-11-11 for\n"
-        "KNOT_WINDOW_105 r=1.00 knot 0.68 -> 0.67, Austin approved; design/unapproved/slots-v2/approved/rebuild_winrate_table.py).\n"
+        "KNOT_WINDOW_105 r=1.00 knot 0.68 -> 0.67, Austin approved; design/notes/slots-v2/rebuild_winrate_table.py).\n"
         "District rates: Touge = official counts_n4000 cache masked to Touge tracks (unchanged lines); Street = counts_S_N90=SSA.npz,\n"
         "Wangan = counts_W_SW=IR=AAD.npz (N=4000 each on that district's own 5 tracks). Seeds 20261113-15 x 10/20/30 turns, knot window\n"
         f"{tuple(E.KNOT_WINDOW_105)}, kappa 1.55/1.35/1.20, opponent QTE 1.0, a=0.65. Pooled = equal-weight mean of the three district win rates per\n"
