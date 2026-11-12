@@ -8,3 +8,4 @@ Concept and UI mockups for review. Not approved by Austin. Proposals only; anyth
 - `crt/`: CRT shader comparison sheets (librashader)
 - `pattern_read/`: A/B layouts for showing a locked line
 - `race_state_study/`: fixed-chase race-state study, rival Entry matrix with the proposed player **Line Lock** selector, and the 640 vs 960 resolution test (experiment only)
+- `psx_road_test/`: unapproved Godot before/after of the line-select Entry frame with pack-based PSX roads, plus sharp-UI variants (new B.5c)

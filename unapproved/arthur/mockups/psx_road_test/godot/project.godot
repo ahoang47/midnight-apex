@@ -1,0 +1,20 @@
+; PSX road test (Arthur, unapproved). Godot 4.6.3, GL Compatibility.
+config_version=5
+
+[application]
+config/name="PSX Road Test"
+run/main_scene="res://road_test.tscn"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=960
+window/size/window_width_override=1280
+window/size/window_height_override=960
+window/stretch/mode="disabled"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/msaa_3d=0

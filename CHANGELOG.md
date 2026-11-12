@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-11 — Arthur [art]: B.5c is now crunchy 3D + sharp UI; unapproved pack-road Godot test
+- **B.5c** (`design/art/art_direction.md`) rewritten (Austin, 2026-11-11): 3D stays 640×480, no AA, RGB555 + 4×4 Bayer, then one 2× nearest upscale. UI is composited after that upscale, drawn sharp at 1280×960. Q4 smooth texture filtering in the 3D scene is unchanged.
+- **Unapproved road test** (`unapproved/arthur/mockups/psx_road_test/`): the approved line-select Entry frame, re-rendered in Godot 4.6.3 with a 3-lane road built from the urban stacked pack's `road1_alt.png` (CC0; worn painted dashes and yellow edges, no added noise or lettering). `before.png` is the existing Blender frame. After frames: smooth and nearest pack-road with the classic 640 HUD, plus `_sharpui` variants with chunky late-90s plates at 1280×960. Not approved until Austin says so.
+
 ## 2026-11-11 — Nathaniel [story]: signature corners and personal styles, the DAQ log, rift changes (Jesse shuts the PC out, Reiko drops wholesale), the barkeep is Malo; story/unapproved moved to unapproved/nathaniel/
 - **Line structure (canon 30; `corner_lines.md`, `plot.md`, `pitch.md`):** Austin's framing (locked): each district has a handful of signature corners where everyone in the district shares the same standard line and bluff; on every other corner wild racers share one line and bluff and named characters have their own style. **Why:** Austin wants a learnable district habit plus personality from named racers.
   - Signature corners are a first pass (draft), three per district: Touge hairpin/esses/decreasing radius (the mountain's corners), Wangan sweeper/increasing radius/constant radius (open highway), Street 90-degree/chicane/hairpin (city blocks). Each standard line is the district's existing main line; no letters changed (rechecked against `LINE_SET_C` at `5e5d902`, 0 mismatches). Austin said to first-pass it and share it with the right people; sim mapping is `<TBD: Barry>`.
