@@ -12,8 +12,8 @@ Notation: lines are Entry-Apex-Exit by stat. In tables, **P** = POW, **E** = EN,
 
 | Layer | Applies to | What the opponent plays | Bluff |
 |---|---|---|---|
-| 1. District default | Every racer in the district, on **normal** corners | One fixed line per (district, corner type). For every corner type the three districts' lines differ | None. Always played, so a player who has learned the district reads it fully |
-| 2. Signature corners | Every racer in the district, on a few **select** corners per track | The district default as main line, plus 2 bluff alts in today's structure (alts share main's Entry; alt1 switches Apex + Exit; alt2 switches Exit only) | Yes. Today's structure is `LINE_ADHERENCE` / `LINE_ALT_WEIGHTS`; the rate for this layer is open |
+| 1. District default | Every racer in the district, on **normal** corners, except a story character's swapped corners | One fixed line per (district, corner type). For every corner type the three districts' lines differ | None. Always played, so a player who has learned the district reads it fully |
+| 2. Signature corners | Every racer in the district, on a few **select** corners per track, except a story character's swapped corners | The district default as main line, plus 2 bluff alts in today's structure (alts share main's Entry; alt1 switches Apex + Exit; alt2 switches Exit only) | Yes. Today's structure is `LINE_ADHERENCE` / `LINE_ALT_WEIGHTS`; the rate for this layer is open |
 | 3. Story characters | Named racers only (lieutenants, crew bosses, Myth Drivers, Sabine), on **some** corners only: a subset of normal corners and a subset of signature corners (Austin, 2026-11-12) | On a swapped normal corner, their own line instead of the district default; on a swapped signature corner, their own line + bluff instead of the district's. Every other corner follows layers 1 and 2 | Own bluff on swapped signature corners; on swapped normal corners still open. Schema slot only; Nathaniel and Desmond supply the inputs |
 
 ### Layer 1: district defaults, current vs proposed (8 x 3)

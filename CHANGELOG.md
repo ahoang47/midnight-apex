@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Barry [barry]: corners-v1 layer rows note story-character swaps
+
+- **Why:** consistency with Austin's 2026-11-12 ruling that story characters swap only some corners; the layer 1 and 2 rows still read as covering every racer.
+- **What (`unapproved/barry/corners-v1/README.md`):** layer 1 and 2 "Applies to" cells now add "except a story character's swapped corners". Wording only; no numbers, no sim.
+
 ## 2026-11-12 — Barry [barry]: corners-v1 corrects the story-character layer and replaces sim criterion 1
 
 - **Why:** Austin, 2026-11-12: "Story characters swap some defaults, and some signature corners," and he said the old success criterion 1 was off.
