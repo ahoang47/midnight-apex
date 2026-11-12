@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-12 — Gordon [godot]: PLAN THE LINE stat framed under OUT/MID/IN; entry_strip no longer calls lane_stat (UNAPPROVED)
+
+- **Why:** Austin follow-up (relayed by Arthur, 769f073): "The stat should be framed under the position text." Arthur also reported that his `run.sh` symlinks our `entry_strip.gd`, which failed to parse because it called `lane_stat()` — a helper that exists only on our `hud_panel.gd`, not his.
+- **What (`unapproved/gordon/two-corner/`):** PLAN THE LINE chips now match Arthur 769f073: unframed OUT / MID / IN over a small framed stance-coloured POW / HAN / EN box (`stat_box`); the selected highlight sits behind the position text only; the lock tick sits to the right of the position letters. `entry_strip.gd` inlines the `OUT · POW` labels instead of calling `HudPanel.lane_stat`, so Arthur's symlink parses against his `hud_panel.gd`. No Arthur files were edited. Colours unchanged (POW `#2CB84A`, EN `#E8282C`, HAN `#F0C828`). Build id `272ae5508b`.
+- **Tests:** Quick local check (Austin, 2026-11-12): Godot headless parse/run plus one parity seed (`seed20261113_idx`) 0.0 vs pin 50928ed. Full parity, fuzz and key test left to CI. Token prefix `TC3:50928ed:272ae5508b:`.
+- **Shots:** `out/shots15/` — Entry / Apex / Exit selection at 1280×960 (hover on each stance, seed 20261114), Exit QTE, RESULT, and `compare_arthur_vs_gordon.png` against Arthur's 769f073 / fb38d45 frames.
+- **Left as is / differed from the mockup:** Hinting is off (B.5c / the brief); Arthur's mockup script used `HINTING_NORMAL`. Archivo Black is loaded as `hud.fa` the way Arthur's `hud.gd` does, but paint currently uses Nimbus Sans Bold for heavy titles, same as his `_font()`. The tie-gap bar and debug box still use the 9-slice `box()` path, matching Arthur's code (no `plate_finish` there). The known Entry-chase crest gap for follow-on chevrons is unchanged. Cameras and gameplay unchanged. The debug seed box is kept.
+
 ## 2026-11-12 — Arthur [art]: stat is framed under the OUT/MID/IN position text
 
 - **Why:** Austin follow-up, 2026-11-12: "Not quite what I wanted. The stat should be framed under the position text."

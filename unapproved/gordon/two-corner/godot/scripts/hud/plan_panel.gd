@@ -1,30 +1,34 @@
-## Combined PLAN THE LINE panel, lower right (Arthur line-preview pass 4 / 9a83828, Austin approved as build reference).
-## Adapted from unapproved/arthur/mockups/line_preview/godot/scripts/hud/plan_panel.gd into Gordon's tree.
+## Combined PLAN THE LINE panel, lower right (Arthur line-preview, Austin approved).
+## Adapted from unapproved/arthur/mockups/line_preview/godot/scripts/hud/plan_panel.gd.
+## Every row (Entry, Apex, Exit) shows unframed OUT / MID / IN over a small framed
+## stat box (Austin: "The stat should be framed under the position text." — 769f073).
 ## Narrower and further right/down so it clears the chase-camera MX5.
-## Every stance-selection row (Entry, Apex, Exit) uses corner-relative lane chips
-## "IN · EN" / "MID · HAN" / "OUT · POW" (Austin via Arthur, 2026-11-12).
 @tool
 extends "res://scripts/hud/hud_panel.gd"
 
-## Slanted lane+stat chip with a hard plate-style frame (Arthur c838466; Austin: "The chips should be framed.").
-## Highlight fill stays inside the frame. Pixel-hard, no AA.
-func frame_lane_chip(lx: float, ry: float, w: float, selected: bool, active: bool, dim: bool) -> PackedVector2Array:
-	var pts := P([lx, ry + 1, lx + w - 2, ry + 1, lx + w - 4, ry + 24, lx - 2, ry + 24])
-	if selected:
-		solid(pts, AMBER if active else EDGE)
-	else:
-		solid(pts, Color8(14, 16, 36) if dim else Color8(20, 24, 52))
-	# Bold 2 px frame: outer ink, inner edge, then a hard bevel.
+## Small framed stat box (POW / HAN / EN) in stance colour, plate-style bevel, pixel-hard.
+## Copied from Arthur's plan_panel.gd (769f073); keys are P/H/E.
+func stat_box(cx: float, y: float, label: String, col: Color, selected: bool, dim: bool) -> void:
+	var sz := 8
+	# Fixed width so POW / HAN / EN frames line up as a row of equal chips.
+	var w := maxf(sw("POW", sz, true, true) + 8.0, 24.0)
+	var h := 11.0
+	var x0 := cx - w / 2.0
+	var pts := P([x0 + 2, y, x0 + w, y, x0 + w - 2, y + h, x0, y + h])
+	var fill: Color = col if selected else dimc(col, 0.45 if dim else 0.7)
+	solid(pts, fill)
 	outline(pts, INK)
-	var inner := P([lx + 1, ry + 2, lx + w - 3, ry + 2, lx + w - 5, ry + 23, lx - 1, ry + 23])
-	outline(inner, EDGE if not dim else EDGE_D)
-	var hi := Color8(160, 180, 230, 220) if selected else Color8(120, 140, 190, 200)
-	var sh := Color8(0, 0, 0, 200)
+	var hi := Color8(255, 255, 255, 200) if selected else Color8(220, 230, 255, 110)
+	var sh := Color8(0, 0, 0, 200 if selected else 140)
 	draw_line(pts[0] + Vector2(1, 1), pts[1] + Vector2(-1, 1), hi, 1.0)
-	draw_line(pts[0] + Vector2(1, 1), pts[3] + Vector2(1, -1), Color8(hi.r8, hi.g8, hi.b8, 180), 1.0)
+	draw_line(pts[0] + Vector2(1, 1), pts[3] + Vector2(1, -1), Color8(hi.r8, hi.g8, hi.b8, 160), 1.0)
 	draw_line(pts[1] + Vector2(-1, 1), pts[2] + Vector2(-1, -1), sh, 1.0)
-	draw_line(pts[2] + Vector2(-1, -1), pts[3] + Vector2(1, -1), Color8(0, 0, 0, 220), 1.0)
-	return pts
+	draw_line(pts[2] + Vector2(-1, -1), pts[3] + Vector2(1, -1), Color8(0, 0, 0, 220 if selected else 150), 1.0)
+	# HAN yellow needs dark text; green/red use white. Dimmed boxes keep the same ink so the letters stay sharp.
+	var tc: Color = INK if col == STANCE["H"] else Color.WHITE
+	if dim and not selected:
+		tc = INK if col == STANCE["H"] else Color8(230, 230, 235)
+	t2(cx, y + h / 2.0, label, sz, tc, true, "m", false, true)
 
 func paint() -> void:
 	var pl: Dictionary = st.plan
@@ -63,30 +67,33 @@ func paint() -> void:
 		t2(nx, ry + 8, PH[i], 12, ncol, true, "l", not active, true, true)
 		if locked:
 			check(nx + sw(PH[i], 12, true, true) + 4, ry + 6, CHECK_GREEN)
+		var chosen_lane: String = ""
+		if locked:
+			if i == 0 and String(pl.get("entry", "")) != "":
+				chosen_lane = String(pl.entry)
+			elif slots[i] != null:
+				chosen_lane = String(slots[i])
+		elif active:
+			chosen_lane = ORDER[int(pl.sel)] if int(pl.sel) >= 0 else ""
 		if active or locked:
-			var chosen_lane: String = ""
-			if locked:
-				if i == 0 and String(pl.get("entry", "")) != "":
-					chosen_lane = String(pl.entry)
-				elif slots[i] != null:
-					chosen_lane = String(slots[i])
-			elif active:
-				chosen_lane = ORDER[int(pl.sel)] if int(pl.sel) >= 0 else ""
-			var lx := x0 + 54
-			var cw := 38.0
+			var lx := x0 + 56
+			var w := 44.0
 			for k in lanes:
-				var lab: String = lane_stat(k)
+				var lab: String = LANE[k]
+				var note: String = NAME[k]
 				var off: bool = active and int(pl.avail[k]) <= 0
 				var selected: bool = (k == chosen_lane and not off)
 				var dim: bool = locked or off
-				frame_lane_chip(lx, ry, cw, selected, active, dim and not selected)
+				var cx := lx + w / 2.0 - 1.0
+				var hw := w - 2.0
+				# Selection highlight behind the position text only — not a frame around the whole chip.
 				if selected:
-					t2(lx + cw / 2 - 2, ry + 12, lab, 8, INK, true, "m", false, true)
-					if locked:
-						check(lx + cw - 7, ry + 3, INK)
-				else:
-					t2(lx + cw / 2 - 2, ry + 12, lab, 8, DIMT if dim else SUB, true, "m", true, true)
-				lx += cw + 2.0
+					solid(P([lx, ry + 1, lx + hw, ry + 1, lx + hw - 2, ry + 13, lx - 2, ry + 13]), AMBER if active else EDGE)
+				t2(cx, ry + 7, lab, 10, INK if selected else (DIMT if dim else SUB), true, "m", not selected, true)
+				if selected and locked:
+					check(cx + sw(lab, 10, true, true) / 2.0 + 3.0, ry + 2, INK)
+				stat_box(cx, ry + 13, note, STANCE[k], selected, dim and not selected)
+				lx += w + 2.0
 		else:
 			t2(x0 + 70, ry + 9, "--  --  --", 12, TODO, false, "l", false, true)
 	t2(x0 + 8, y1 - 12, "Line set. Enter to lock now" if ph >= 3 else "Line locks at turn-in", 9, SUB, true)

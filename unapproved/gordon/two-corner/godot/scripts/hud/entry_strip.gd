@@ -1,4 +1,5 @@
 ## entry strip, bottom left (post_v5.py:98-111)
+## Labels are inlined (not HudPanel.lane_stat) so Arthur's run.sh can symlink this file onto his hud_panel.gd.
 @tool
 extends "res://scripts/hud/hud_panel.gd"
 func paint() -> void:
@@ -14,12 +15,12 @@ func paint() -> void:
 		var k: String = order[i]; var cx := x0 + 36 + i * 58; var ry := y0 + 19
 		if k == chosen:
 			solid(P([cx - 21, ry - 6, cx + 19, ry - 6, cx + 17, ry + 6, cx - 23, ry + 6]), AMBER)
-			t2(cx - 4 if pl.entry != "" else cx, ry, lane_stat(k), 10, INK, true, "m", false, true)
+			t2(cx - 4 if pl.entry != "" else cx, ry, "%s · %s" % [LANE[k], NAME[k]], 10, INK, true, "m", false, true)
 			if pl.entry != "": check(cx + 8, ry - 3, INK)
 		elif int(pl.avail_entry[k]) <= 0:
-			t2(cx - 2, ry - 2, lane_stat(k), 10, DIMT, true, "m", false, true)
+			t2(cx - 2, ry - 2, "%s · %s" % [LANE[k], NAME[k]], 10, DIMT, true, "m", false, true)
 			var lab: String = NAME[k] + " \u00b7 none drawn"; var w := sw(lab, 9) + 10.0
 			var tp := P([cx - w / 2 + 3, ry + 4, cx + w / 2, ry + 4, cx + w / 2 - 3, ry + 14, cx - w / 2, ry + 14])
 			outline(tp, dimc(STANCE[k], 0.55)); t2(cx, ry + 9, lab, 9, dimc(STANCE[k], 0.7), false, "m", false, true)
 		else:
-			t2(cx - 2, ry, lane_stat(k), 10, SUB, true, "m", true, true)
+			t2(cx - 2, ry, "%s · %s" % [LANE[k], NAME[k]], 10, SUB, true, "m", true, true)
