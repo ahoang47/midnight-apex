@@ -14,7 +14,7 @@ Notation: lines are Entry-Apex-Exit by stat. In tables, **P** = POW, **E** = EN,
 |---|---|---|---|
 | 1. District default | Every racer in the district, on **normal** corners | One fixed line per (district, corner type). For every corner type the three districts' lines differ | None. Always played, so a player who has learned the district reads it fully |
 | 2. Signature corners | Every racer in the district, on a few **select** corners per track | The district default as main line, plus 2 bluff alts in today's structure (alts share main's Entry; alt1 switches Apex + Exit; alt2 switches Exit only) | Yes. Today's structure is `LINE_ADHERENCE` / `LINE_ALT_WEIGHTS`; the rate for this layer is open |
-| 3. Story characters | Named racers only (lieutenants, crew bosses, Myth Drivers, Sabine), on **every** corner, signature corners included | Their own line, overriding the district layer | Their own bluff. Schema slot only; Nathaniel and Desmond supply the inputs |
+| 3. Story characters | Named racers only (lieutenants, crew bosses, Myth Drivers, Sabine), on **some** corners only: a subset of normal corners and a subset of signature corners (Austin, 2026-11-12) | On a swapped normal corner, their own line instead of the district default; on a swapped signature corner, their own line + bluff instead of the district's. Every other corner follows layers 1 and 2 | Own bluff on swapped signature corners; on swapped normal corners still open. Schema slot only; Nathaniel and Desmond supply the inputs |
 
 ### Layer 1: district defaults, current vs proposed (8 x 3)
 
@@ -52,9 +52,9 @@ Alts for the changed cells are not drafted. They only matter if that corner type
 
 ### Layer 3: story-character schema (slot only)
 
-**Ruling (Austin, 2026-11-12):** "Story characters use their own line and bluff on signature corners too." Story characters override the district layer on every corner, normal and signature. Their lines and bluff rates still come from Nathaniel and Desmond; none are invented here.
+**Ruling (Austin, 2026-11-12, corrected):** "Story characters swap some defaults, and some signature corners." A story character overrides only **some** corners: on a subset of normal corners their own line replaces the district default, and on a subset of signature corners their own line + bluff replaces the district line + bluff. All other corners follow the district layers. This replaces the earlier same-day "every corner" wording (aa1f141). Which corners each character swaps, and their lines and bluff rates, come from Nathaniel and Desmond; none are invented here.
 
-No character lines or rates are invented here. Proposed fields per named racer, per corner type: `main` line (3 letters), `alt1` and `alt2` (same structure rule, or a different one if Desmond wants), and a personal adherence and alt split. Missing fields fall back to the district layer. **Nathaniel and Desmond supply every character-level input.**
+No character lines or rates are invented here. Proposed fields per named racer: a list of swapped normal corners and a list of swapped signature corners; then, per swapped corner, `main` line (3 letters), `alt1` and `alt2` (same structure rule, or a different one if Desmond wants), and a personal adherence and alt split. Any corner not in either list falls back to the district layers. **Nathaniel and Desmond supply every character-level input.**
 
 ### Open parameters (none set)
 
@@ -64,6 +64,8 @@ No character lines or rates are invented here. Proposed fields per named racer, 
 | Which corners are signature | Nathaniel's and Barry's candidates above | open |
 | Signature-corner adherence and alt split (layer 2) | `LINE_ADHERENCE` 0.65, `LINE_ALT_WEIGHTS` 0.6 / 0.4 = 0.65 / 0.21 / 0.14 | open |
 | Story-character adherence and alt split (layer 3) | same 0.65 / 0.21 / 0.14 today | open |
+| Which corners each story character swaps (normal and signature) | none | open, Nathaniel / Desmond |
+| Does a character's swapped **normal** corner stay fixed, or also bluff? | Austin earlier said characters get "their own line + bluff" | open, needs Austin |
 | Story-character lines | Nathaniel's rung-level first pass in `story/corner_lines.md` (not mechanical yet) | open, Nathaniel / Desmond |
 | Alts for the 5 changed cells | none drafted | open, only if signature |
 | Entry lane-placement bluff rate (design/06) | not set | separate layer, open |
@@ -71,7 +73,7 @@ No character lines or rates are invented here. Proposed fields per named racer, 
 ### Flags for Desmond / Nathaniel
 - **Default line changes alter `story/corner_lines.md`.** The 5 changed cells (Wangan HP, N90, ES, DR; Street IR) would need new in-world reasons. Wangan HP and N90 currently read "the same textbook hairpin" / "same", which stop being true. Nathaniel's approved 2026-11-10 lines are otherwise untouched.
 - **Character layer needs their inputs.** Per-character lines, bluffs and rates come from Nathaniel and Desmond; Barry only provides the slot and runs the sim.
-- **Signature vs character precedence: settled.** Austin, 2026-11-12: story characters use their own line and bluff on signature corners too. Signature corners (district line + shared bluff) apply only to wild racers.
+- **Signature vs character precedence: settled.** Austin, 2026-11-12 (corrected): story characters swap some defaults and some signature corners; every other corner follows the district layers. Nathaniel and Desmond pick which corners each character swaps.
 - **Normal corners become fully readable** for wild racers. That is the feel point Austin raised; the sim plan below measures it.
 
 ## Sim plan v2: NOT STARTED (runs only when Austin approves a sim)
@@ -87,11 +89,12 @@ No character lines or rates are invented here. Proposed fields per named racer, 
 - No real track layouts exist in the repo, so placeholder layouts are built from each district's corner types and clearly labelled as placeholders.
 - The opponent draws its line fresh each time it reaches a corner (once per corner per lap).
 - Normal corners are deterministic for wild racers, so a player who has learned the district reads them perfectly.
-- Signature corners (district main + shared bluff) apply to wild racers only. Story characters play their own line and bluff on every corner, signature corners included (Austin, 2026-11-12); the old rule that every racer in the district reads the same on signature corners is superseded. Character inputs come from Nathaniel / Desmond.
+- Wild racers follow the district layers on every corner. A story character follows them too, except on its swapped corners: a subset of normal corners (own line) and a subset of signature corners (own line + bluff) (Austin, 2026-11-12, corrected). The old rule that every racer reads the same on signature corners is superseded. Swap lists, lines and rates come from Nathaniel / Desmond; until they exist, criterion 1 is not run.
+- Two player models per story character: one who has learned the character's swaps, and one who plays them on the district defaults (and district signature read).
 - Signature-corner count, bluff rates and character inputs are swept or taken from Nathaniel / Desmond, never invented as final values.
 
 **Success criteria**
-1. Named characters keep a clearly positive read edge over wild racers.
+1. Learning a story character pays off: a player who has learned the character's swaps does clearly better against them than one playing them on district defaults, and the character's bluffs don't wipe out that payoff. Reported per character once their inputs exist. (Replaces the old "read edge vs wild racers" criterion, 2026-11-12.)
 2. Balance holds: boss and lieutenant win rates within the usual margin, grind stays 141 / 153 / 100, walls unchanged; otherwise report the shift.
 3. Signature corners are measurably less predictable than normal corners.
 4. Austin's feel concern: report, per district, how much of a wild race is fully readable vs bluff.
@@ -103,7 +106,7 @@ No character lines or rates are invented here. Proposed fields per named racer, 
 > The earlier "Proposed sim (paused)" below is superseded by Sim plan v2.
 
 ## Rule (Austin, relayed by Nathaniel)
-- Each district has signature corners. On them, **every** racer in the district (wild racers, lieutenants, crew bosses) runs the same standard line and bluff. *(Superseded 2026-11-12: story characters use their own line and bluff on signature corners too; see the three-layer section.)*
+- Each district has signature corners. On them, **every** racer in the district (wild racers, lieutenants, crew bosses) runs the same standard line and bluff. *(Superseded 2026-11-12: story characters swap some normal and some signature corners; see the three-layer section.)*
 - On every other corner, all **wild racers** share one line and bluff, and **each named character** has their own style.
 
 ## Track facts (Austin, 2026-11-12)

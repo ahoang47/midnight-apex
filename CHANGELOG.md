@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Barry [barry]: corners-v1 corrects the story-character layer and replaces sim criterion 1
+
+- **Why:** Austin, 2026-11-12: "Story characters swap some defaults, and some signature corners," and he said the old success criterion 1 was off.
+- **What (`unapproved/barry/corners-v1/README.md`):** the "every corner" wording from aa1f141 is replaced. A story character overrides only a subset of normal corners (own line) and a subset of signature corners (own line + bluff); every other corner follows the district layers. Swap lists, lines and rates come from Nathaniel / Desmond. New open items: each character's swap list, and whether a swapped normal corner is fixed or also bluffs. Sim plan v2 criterion 1 is now "learning a story character pays off" (learned-swaps player clearly beats a district-defaults player, and the bluffs don't wipe it out), reported per character once inputs exist; assumptions updated to match. Still a proposal; no sim, `sim/` unchanged.
+
 ## 2026-11-12 — Barry [barry]: corners-v1 records Austin's ruling on story characters at signature corners
 
 - **Why:** Austin, 2026-11-12, answering the open parameter: "Story characters use their own line and bluff on signature corners too."
