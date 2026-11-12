@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-12 — Gordon [godot]: 01 Build bullet, QTE-per-clash conflict flagged
+- **What:** reworded the QTE line in the Build bullet of the `design/01-system-overview.md` canon block. It now says the sim (f0efecf) and the build average the three phase QTEs into one score for every clash, which conflicts with Austin's 2026-11-11 "each QTE feeds its own clash".
+- **Why:** Barry caught the mismatch. The canon block shouldn't state a rule the sim doesn't implement, so this stays marked open until Austin decides.
+
 ## 2026-11-12 — Barry [design]: systems/balance lines in the 01 design canon, stale HP/DP text removed, corners-v1 proposal (NOT approved)
 - **Ask:** Desmond asked each owner to fill the locked canon block in `design/01-system-overview.md` (7c42a87) with Austin-approved decisions and dates, and asked me to remove stale systems text (e.g. the HP/DP win decision).
 - **Canon lines added (each verified in CHANGELOG / commits):** combat scoring final-v1 (2026-11-09; playable 2026-11-10, 0dd376a; line set 6fc87d5); visible QTE zone qte-v1 (2026-11-11, 4cb5401); parity knot 0.67 + aero cap (2026-11-11, 5e5d902); mod slots 3 × 2 with window/aero any slot max one each and stat mods only just reaching 105 % (2026-11-11); new mods never skip a wall + mod tier level floor (2026-11-11 / 2026-11-12, 29f8431). Constants cited by name.
