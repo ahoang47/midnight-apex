@@ -58,7 +58,8 @@ func show_state(s: Dictionary) -> void:
 		if st.mirror: on.mirror = true
 		on.plate = true; on.gap = true
 		if st.phase == "SELECT":
-			on.timer = true; on.debug = 64.0; on.select = true; on.entry = true; on.plan = true
+			# Entry lane strip is folded into PlanPanel (Austin 2026-11-12, these frames only).
+			on.timer = true; on.debug = 64.0; on.select = true; on.plan = true
 			if int(st.plate.stop) == 0: on.lanes = true
 		elif st.phase == "TIMING" and st.locked_hold:
 			on.timer = true; on.debug = 64.0; on.lock = true
@@ -71,6 +72,9 @@ func show_state(s: Dictionary) -> void:
 			if st.phase == "FINISHED": on.finish = true
 			else: on.cont = true
 	if on.has("debug"): P.debug.position.y = on.debug
+	# Race split / tie-gap bar: top centre, directly under the REAR VIEW label (mirror at y=13-82, label at y=84).
+	if P.has("gap"):
+		P.gap.position = Vector2(220, 98)
 	for k in P:
 		var n: Control = P[k]
 		n.visible = on.has(k)

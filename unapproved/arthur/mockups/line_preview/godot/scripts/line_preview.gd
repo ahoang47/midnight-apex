@@ -1,5 +1,5 @@
 ## Unapproved B.5d line-preview mockup. Reuses Gordon's two-corner scenes (track, dressing, sky, cars, HUD)
-## on a copy; does not edit his files. Renders 5 frames + leaves them for make_sheet.py.
+## on a copy; does not edit his files. Renders 5 overview frames + 3 B.5b camera-stop frames.
 extends Control
 const ArtKit = preload("res://scripts/art_kit.gd")
 const Course = preload("res://scripts/course.gd")
@@ -9,16 +9,20 @@ const Dressing = preload("res://scripts/touge_dressing.gd")
 const POST_SH = preload("res://shaders/post.gdshader")
 const Chevrons = preload("res://scripts/line_chevrons.gd")
 
-const DIR := "R"
+const DIR := "L"
 const CODE := "HP"
 const LANE_W := 3.3
 const STANCE_COL := {"A": "ATK", "D": "DEF", "S": "NEU"}
-## Entry stays in the chosen lane; Apex/Exit end-offsets use the placeholder bend map.
 const LANE_OF := {"OUT": "outside", "MID": "center", "IN": "inside"}
+const SPEED_MS := 25.0  # display.json road_scroller: 0.05 * 1.0 * 500
+const RIVAL_AHEAD := 9.0  # visual_gap.min_spacing_m on a tie
+const OVERVIEW_S := 24.0
+const CHASE_S := 8.0  # Gordon's s_player during SELECT
 
 var disp: Dictionary
 var art
-var course
+var course  # Course.View of corner 1 (local s, like Gordon's path)
+var course_full  # continuous two-corner Course
 var view
 var cam: Camera3D
 var glow_cam: Camera3D
@@ -45,6 +49,7 @@ var A: float
 var E: float
 var fog: Color
 var lamp_items: Array = []
+var cedar_hidden: Array = []  # originals we toggled; reset per shot
 
 ## Frames (brief): 1 Entry=OUT hover ATK; 2 Entry locked OUT/ATK, Apex hover DEF;
 ## 3 same, Apex hover ATK; 4 Entry IN/DEF, Apex NEU, Exit hover ATK; 5 all three locked.
@@ -56,25 +61,39 @@ const FRAMES := [
 	{"file": "5_locked.png", "entry_lane": "IN", "entry": "D", "apex": "S", "exit": "A", "hover": -1, "locked": true, "show_rival": false, "stop": 0},
 ]
 
+## Same story beats as frames 1, 2 and 4, shot from Gordon's B.5b stops (shots11).
+const CAMSTOPS := [
+	{"file": "1_entry_out_atk_camstop.png", "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "", "hover": 0, "locked": false, "show_rival": true, "stop": 0, "cam": "chase"},
+	{"file": "2_apex_def_camstop.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1, "cam": "apex"},
+	{"file": "4_exit_atk_camstop.png", "entry_lane": "IN", "entry": "D", "apex": "S", "exit": "A", "hover": 2, "locked": false, "show_rival": false, "stop": 2, "cam": "exit"},
+]
+
 func _ready() -> void:
 	out_dir = ProjectSettings.globalize_path("res://").path_join("..")
 	disp = ArtKit.load_json("res://spec/display.json")
-	# More lamps so the pack asphalt reads around the whole hairpin; no orange wash.
-	disp.districts.touge.lamp_period_m = 22.0
-	disp.districts.touge.outside_side = -1.0  # right hairpin: outside is -d
-	disp.districts.touge.lamps = [[0, -1]]
 	art = ArtKit.new(disp)
 	fog = Color(disp.districts.touge.fog)
 	_build_viewports()
 	_build_course()
 	_build_world()
 	_load_cars()
-	_place_overview_camera()
-	await _settle(10)
-	for fr in FRAMES:
-		_apply_frame(fr)
-		await _settle(8)
-		await _capture(out_dir.path_join(fr.file))
+	var only := OS.get_environment("ONLY")
+	if only == "" or only == "overview" or not only.ends_with("camstop.png") and only != "camstop":
+		_place_camera("overview", OVERVIEW_S)
+		await _settle(10)
+		for fr in FRAMES:
+			if only != "" and only != "overview" and String(fr.file) != only:
+				continue
+			_apply_frame(fr, "overview")
+			await _settle(8)
+			await _capture(out_dir.path_join(fr.file))
+	if only == "" or only == "camstop" or only.ends_with("camstop.png"):
+		for fr in CAMSTOPS:
+			if only != "" and only != "camstop" and String(fr.file) != only:
+				continue
+			_apply_frame(fr, String(fr.cam))
+			await _settle(8)
+			await _capture(out_dir.path_join(fr.file))
 	print("LINE_PREVIEW_OK ", out_dir)
 	get_tree().quit(0)
 
@@ -142,7 +161,6 @@ func _build_viewports() -> void:
 	post_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	post_rect.texture = world_vp.get_texture()
 	post_rect.material = post_mat
-	# 3D-only composite (for a clean B.5c capture: dither at 640, 2x, then sharp HUD)
 	comp_vp = SubViewport.new()
 	comp_vp.size = Vector2i(640, 480)
 	comp_vp.transparent_bg = false
@@ -165,21 +183,23 @@ func _build_viewports() -> void:
 	hud_vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	hud_vp.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 	hud_rect = $HudRect
-	hud_rect.visible = false  # we composite HUD after the 2x upscale ourselves
+	hud_rect.visible = false
 	hud = $HudVP/Hud
 	hud.scale = Vector2(2, 2)
 	hud.setup(load("res://art/font_6x9.png"), JSON.parse_string(FileAccess.get_file_as_string("res://art/font.json")), load("res://art/panel9.png"), load("res://art/logo_v3.png"))
-	# hide the 640 window chrome so xvfb is just a black clear; captures use the viewports
 	post_rect.visible = false
 
 func _build_course() -> void:
-	S = float(disp.road.straight_m)
-	R = float(disp.road.by_code[CODE].corner_radius_m)
-	A = deg_to_rad(float(disp.road.by_code[CODE].corner_angle_deg))
-	E = float(disp.road.exit_m)
-	# Single right hairpin, same conventions as course.gd (forward -Z, d>0 = right of travel).
-	course = Course.new(0.0, 0.0, 0.0, -1.0).add_straight(S).add_arc(R, A, -1.0).add_straight(E)
-	view = Course.View.new(course, 0.0, S, R, A, E, -1.0)
+	# Same continuous Touge course as Gordon's two-corner build (HP L then N90 R).
+	var cfg: Dictionary = ArtKit.load_json("res://spec/race_config.json")
+	var tr: Dictionary = TrackRoad.build_course(disp, cfg)
+	course_full = tr.course
+	course = tr.views[0]
+	view = course
+	S = float(course.S)
+	R = float(course.R)
+	A = float(course.A)
+	E = float(course.E)
 
 func _build_world() -> void:
 	sky_root = $WorldVP/Sky
@@ -188,12 +208,10 @@ func _build_world() -> void:
 	var dressing = $WorldVP/Dressing
 	track.clear(); dressing.clear()
 	art.reset_for_rebuild()
-	var cr = track.build_strip(art, course, -80.0, course.length + 40.0, "touge", "CourseRoad")
-	var dd = dressing.build(art, course, -80.0, course.length + 40.0, "touge", "CourseDressing")
+	var cr = track.build_strip(art, course_full, -80.0, course_full.length + 40.0, "touge", "CourseRoad")
+	var dd = dressing.build(art, course_full, -80.0, course_full.length + 40.0, "touge", "CourseDressing")
 	Dressing.stream(dd, 0.0)
 	lamp_items = dd.items
-	_apply_pack_road(cr)
-	_add_pools()
 	art.apply_fog("touge")
 	sky_mat.set_shader_parameter("tex", art.tex("touge_sky"))
 	sky_mat.set_shader_parameter("band_tex", art.tex("touge_ridge"))
@@ -201,32 +219,8 @@ func _build_world() -> void:
 	chevrons = Chevrons.new()
 	chevrons.name = "Chevrons"
 	world_vp.add_child(chevrons)
-
-func _apply_pack_road(mi: MeshInstance3D) -> void:
-	var m: ShaderMaterial = mi.material_override
-	var t: Texture2D = load("res://art/road_3lane.png")
-	m.set_shader_parameter("tex", t)
-	m.set_shader_parameter("tile", 13.333)  # pack 3-lane tile, metres along
-	m.set_shader_parameter("gain", 1.38)    # slightly brighter base so grit reads off-pool; no orange
-	m.set_shader_parameter("scroll_m", 0.0)
-
-func _add_pools() -> void:
-	# Soft sodium pools under each lamp so the pack asphalt lights up in steps, still pale #F0C894.
-	if not ResourceLoader.exists("res://art/pool_blend50_0.png"):
-		return
-	var seen := {}
-	for it in lamp_items:
-		var s: float = float(it.base)
-		var key := snappedf(s, 1.0)
-		if seen.has(key):
-			continue
-		seen[key] = true
-		var mid: Dictionary = course.point(s, 0.0)
-		var p := Vector3(mid.x, 0.03, mid.z)
-		var dec: MeshInstance3D = art.decal("pool_blend50_0", 13.0, 13.0, 0.0, true, 0.09 * 1.8 * 1.15)
-		dec.position = p
-		# rotate the plane to sit in XZ (PlaneMesh is Y-up already)
-		world_vp.add_child(dec)
+	# Keep Gordon's touge road (no pack overlay, no extra pool decals) so the
+	# asphalt stays dark navy grey like shots11, with grit in his sodium pools.
 
 func _load_cars() -> void:
 	player_car = $WorldVP/PlayerCar
@@ -234,22 +228,54 @@ func _load_cars() -> void:
 	var CS: Dictionary = disp.car_shading
 	player_car.setup(art, CS)
 	rival_car.setup(art, CS)
-	# car glow sprites need district fog
 	for c in [player_car, rival_car]:
 		for ch in c.get_children():
 			if ch is MeshInstance3D and (ch as MeshInstance3D).material_override is ShaderMaterial:
 				art.glow_mats.append((ch as MeshInstance3D).material_override)
 	art.apply_fog("touge")
 
-func _place_overview_camera() -> void:
-	# High enough above and behind the car to see the whole right hairpin line, with the car still in frame.
-	var look_p: Dictionary = course.point(S + R * A * 0.40, 1.5)
-	var back: Dictionary = course.point(8.0, -12.0)
-	var cam_pos := Vector3(back.x, 16.0, back.z)
-	var look := Vector3(look_p.x, 0.0, look_p.z)
-	cam.position = cam_pos
-	cam.look_at(look, Vector3.UP)
-	cam.fov = 54.0
+func _chase_pose(pp: Dictionary) -> Array:
+	# B.5b fixed chase camera: offsets are not mirrored for left corners (display.json camera).
+	var t := Vector3(pp.tx, 0, pp.tz)
+	var p := Vector3(pp.x, 0, pp.z)
+	var rt := Vector3(-pp.tz, 0, pp.tx)
+	var cm: Dictionary = disp.camera
+	return [
+		p - t * float(cm.back) + rt * float(cm.side) + Vector3(0, float(cm.height), 0),
+		p + t * float(cm.look_ahead) + rt * float(cm.look_side) + Vector3(0, float(cm.look_y), 0)
+	]
+
+func _stop_pose(stop: int) -> Array:
+	# Same math as Gordon main.gd _stop_pose (select_cam apex / exit).
+	var k: float = Track.inside_sign(DIR)
+	var arc: float = R * A
+	var q: Dictionary = disp.select_cam.apex if stop == 1 else disp.select_cam.exit
+	var out_m: float = float(q.cam_out_m)
+	var cp: Dictionary = course.point(S + arc * float(q.cam_arc), -k * out_m)
+	var ts: float = S + arc * float(q.tgt_arc) if stop == 1 else S + arc + float(q.tgt_after_m)
+	var tp: Dictionary = course.point(ts, k * float(q.tgt_in_m))
+	return [Vector3(cp.x, float(q.cam_h), cp.z), Vector3(tp.x, float(q.tgt_y), tp.z), float(q.fov)]
+
+func _place_camera(kind: String, player_s: float) -> void:
+	if kind == "overview":
+		# High and on the outside of the left hairpin so the whole hook reads.
+		var ins := Track.inside_sign(DIR)
+		var look_p: Dictionary = course.point(S + R * A * 0.40, ins * 1.5)
+		var back: Dictionary = course.point(8.0, -ins * 12.0)
+		cam.position = Vector3(back.x, 16.0, back.z)
+		cam.look_at(Vector3(look_p.x, 0.0, look_p.z), Vector3.UP)
+		cam.fov = 54.0
+	elif kind == "chase":
+		var pose: Array = _chase_pose(course.point(player_s, 0.0))
+		cam.position = pose[0]
+		cam.look_at(pose[1], Vector3.UP)
+		cam.fov = float(disp.camera.fov)
+	else:
+		var stop := 1 if kind == "apex" else 2
+		var pose2: Array = _stop_pose(stop)
+		cam.position = pose2[0]
+		cam.look_at(pose2[1], Vector3.UP)
+		cam.fov = pose2[2]
 	glow_cam.fov = cam.fov
 	glow_cam.global_transform = cam.global_transform
 	sky_root.position = cam.position
@@ -259,13 +285,12 @@ func _lane_d(lane: String) -> float:
 
 func _end_d(start_d: float, stance: String) -> float:
 	# Placeholder bends (B.5d): ATK cuts toward the inside by 2/3 of a lane, DEF holds the outside, NEU mid-lane.
-	var ins := Track.inside_sign(DIR)  # +1 for R
+	var ins := Track.inside_sign(DIR)
 	var outside := -ins * LANE_W
 	if stance == "D":
 		return outside
 	if stance == "S":
 		return 0.0
-	# ATK: cut 2/3 lane toward the inside from where this segment starts, stay on the road
 	var cut := start_d + ins * (LANE_W * 2.0 / 3.0)
 	return clampf(cut, -LANE_W * 1.35, LANE_W * 1.35)
 
@@ -275,28 +300,65 @@ func _place_car(car: Node3D, s: float, d: float) -> Dictionary:
 	car.rotation.y = atan2(p.tx, p.tz)
 	return p
 
-func _apply_frame(fr: Dictionary) -> void:
+func _lane_markers(player_s: float, turn_m: float) -> Dictionary:
+	# Gordon main.gd: markers over the road ahead, 640-space unproject. Never a rival marker (B.4).
+	var ahead: float = player_s + clampf(turn_m, 14.0, 40.0)
+	var ln := {"A": "outside", "S": "center", "D": "inside"}
+	var out := {}
+	for k in ln:
+		var q: Dictionary = course.point(ahead, Track.lane_offset(ln[k], DIR, LANE_W))
+		var wp := Vector3(q.x, 0.05, q.z)
+		out[k] = null if cam.is_position_behind(wp) else cam.unproject_position(wp)
+	return out
+
+func _apply_frame(fr: Dictionary, cam_kind: String) -> void:
+	var player_s: float = CHASE_S if cam_kind != "overview" else OVERVIEW_S
 	var entry_lane: String = fr.entry_lane
 	var d_entry := _lane_d(entry_lane)
-	var pp := _place_car(player_car, 24.0, d_entry)
-	player_car.visible = true
-	rival_car.visible = bool(fr.show_rival)
+	var pp := _place_car(player_car, player_s, d_entry)
+	# Apex / Exit stops show geometry only (B.5b / shots11 / hide_cars_at_stops).
+	var cars_on: bool = (cam_kind == "overview" or cam_kind == "chase")
+	player_car.visible = cars_on
+	# Rival only at Entry, 9 m ahead; IN so it does not stack on an OUT player and matches shots11's left-side tell.
+	rival_car.visible = cars_on and bool(fr.show_rival)
 	if rival_car.visible:
-		_place_car(rival_car, 34.0, _lane_d("OUT"))
-	# Mirror: car's rear-view, looking back down the approach (not a blank box).
+		_place_car(rival_car, player_s + RIVAL_AHEAD, _lane_d("IN"))
+	_place_camera(cam_kind, player_s)
 	var t := Vector3(pp.tx, 0, pp.tz)
 	var p := Vector3(pp.x, 0, pp.z)
 	mirror_cam.position = p + Vector3(0, float(disp.mirror.cam_up), 0)
 	mirror_cam.look_at(p - t * float(disp.mirror.look_back) + Vector3(0, float(disp.mirror.look_y), 0), Vector3.UP)
-	post_mat.set_shader_parameter("mirror_on", 1.0)
-	glow_cam.global_transform = cam.global_transform
-	sky_root.position = cam.position
-	_build_line(fr, d_entry)
-	_show_hud(fr)
-	_thin_cedars()
+	# Mirror only on the chase camera (and the overview, so that sheet keeps a rear view).
+	var mirror_on := cam_kind == "chase" or cam_kind == "overview"
+	post_mat.set_shader_parameter("mirror_on", 1.0 if mirror_on else 0.0)
+	_build_line(fr, d_entry, player_s)
+	var left: float = 4.8
+	var turn_m: float = left * SPEED_MS
+	var lanes = _lane_markers(player_s, turn_m) if cam_kind == "chase" else null
+	_show_hud(fr, lanes, turn_m, left, mirror_on)
+	_set_cedars(cam_kind)
 
-func _thin_cedars() -> void:
-	# Inside-of-corner cedars were sitting on the hairpin and hiding the line; drop those, and any cedar close to the carriageway around the arc.
+func _reset_cedars() -> void:
+	for it in lamp_items:
+		if _is_cedar(it.obj):
+			it.obj.visible = true
+
+func _set_cedars(cam_kind: String) -> void:
+	_reset_cedars()
+	if cam_kind == "overview":
+		_thin_cedars_overview()
+	else:
+		# Gordon / build_lsc: drop cedars within 5.5 m of the camera so they do not sit in the lens.
+		for it in lamp_items:
+			if not _is_cedar(it.obj):
+				continue
+			var o: Node3D = it.obj
+			var dx := o.position.x - cam.position.x
+			var dz := o.position.z - cam.position.z
+			o.visible = Vector2(dx, dz).length() >= 5.5
+
+func _thin_cedars_overview() -> void:
+	# Inside-of-corner cedars hide the line from the high camera; drop those, plus a keep-out around the lens.
 	var ins := Track.inside_sign(DIR)
 	var a0 := S - 8.0
 	var a1 := S + R * A + 12.0
@@ -312,11 +374,11 @@ func _thin_cedars() -> void:
 		if s >= a0 and s <= a1 and absf(d) < 10.0:
 			o.visible = false
 			continue
-		# keep a keep-out around the camera, and drop the near-side trees that sit on the entry in this shot
 		if Vector2(o.position.x, o.position.z).distance_to(Vector2(cam.position.x, cam.position.z)) < 16.0:
 			o.visible = false
 			continue
-		if s < S + 16.0 and d < 0.0 and absf(d) < 22.0:
+		# near-side (outside) trees on the entry that sit in this high shot
+		if s < S + 16.0 and d * ins < 0.0 and absf(d) < 22.0:
 			o.visible = false
 
 func _is_cedar(o: Node3D) -> bool:
@@ -326,17 +388,15 @@ func _is_cedar(o: Node3D) -> bool:
 	var b := o.get_child(1)
 	return a is MeshInstance3D and b is MeshInstance3D and absf((b as Node3D).rotation.y - PI / 2.0) < 0.1
 
-func _build_line(fr: Dictionary, d_entry: float) -> void:
-	var s_e0 := 27.0
-	var s_e1 := S            # Entry ends at turn-in
-	var s_a1 := S + R * A    # Apex ends at exit-of-arc
+func _build_line(fr: Dictionary, d_entry: float, player_s: float) -> void:
+	var s_e0 := player_s + 3.0
+	var s_e1 := S
+	var s_a1 := S + R * A
 	var s_x1 := S + R * A + minf(E, 24.0)
 	var segs: Array = []
-	# Entry: starts (and stays) in the chosen Entry lane. Colour = Entry stance.
 	var d0 := d_entry
 	var d1 := d_entry
 	segs.append({"s0": s_e0, "s1": s_e1, "d0": d0, "d1": d1, "stance": fr.entry, "hovered": int(fr.hover) == 0})
-	# Apex / Exit only once that phase is in play (hovered or confirmed)
 	if String(fr.apex) != "" or int(fr.hover) >= 1:
 		var ap: String = fr.apex if String(fr.apex) != "" else "A"
 		var d2 := _end_d(d1, ap)
@@ -346,7 +406,6 @@ func _build_line(fr: Dictionary, d_entry: float) -> void:
 		var ex: String = fr.exit if String(fr.exit) != "" else "A"
 		var d3 := _end_d(d1, ex)
 		segs.append({"s0": s_a1, "s1": s_x1, "d0": d1, "d1": d3, "stance": ex, "hovered": int(fr.hover) == 2})
-	# Frame 1 only draws Entry (hover is 0, apex/exit empty) — good.
 	chevrons.build(course, segs, fog, float(disp.districts.touge.fog_near), float(disp.districts.touge.fog_far))
 
 func _icon() -> Dictionary:
@@ -363,7 +422,7 @@ func _icon() -> Dictionary:
 		st.append(Vector2(q2.x, q2.z))
 	return {"pts": pts, "stops": st}
 
-func _show_hud(fr: Dictionary) -> void:
+func _show_hud(fr: Dictionary, lanes, turn_m: float, left: float, mirror_on: bool = true) -> void:
 	var hover: int = int(fr.hover)
 	var phase: int = 3 if bool(fr.locked) else (2 if String(fr.exit) != "" or hover == 2 else (1 if String(fr.apex) != "" or hover == 1 else 0))
 	if bool(fr.locked):
@@ -380,24 +439,25 @@ func _show_hud(fr: Dictionary) -> void:
 	if phase > 0 and String(fr.entry) != "": avail[String(fr.entry)] -= 1
 	if phase > 1 and String(fr.apex) != "": avail[String(fr.apex)] -= 1
 	if phase > 2 and String(fr.exit) != "": avail[String(fr.exit)] -= 1
-	var plate := {"name": "HAIRPIN R", "icon": _icon(), "mode": "LOCK" if bool(fr.locked) else "VIEW", "stop": 0 if bool(fr.locked) else int(fr.stop), "done": 3 if bool(fr.locked) else phase}
+	var plate := {"name": "HAIRPIN L", "icon": _icon(), "mode": "LOCK" if bool(fr.locked) else "VIEW", "stop": 0 if bool(fr.locked) else int(fr.stop), "done": 3 if bool(fr.locked) else phase}
 	var plan := {"phase": phase, "sel": sel_i, "avail": avail, "avail_entry": {"A": 2, "S": 2, "D": 2}, "entry": entry_code}
 	var slots := [null, null, null]
 	if phase > 0: slots[0] = fr.entry
 	if phase > 1: slots[1] = fr.apex
 	if phase > 2 or bool(fr.locked): slots[2] = fr.exit
-	hud.show_state(_hud_state(fr, phase, sel_i, avail, entry_code, slots, plate, plan))
+	hud.show_state(_hud_state(fr, phase, sel_i, avail, entry_code, slots, plate, plan, lanes, turn_m, left, mirror_on))
+	# Leave out Gordon's debug box (F9 dump / seed / rig).
 	if hud.P.has("debug"):
 		hud.P.debug.visible = false
 
-func _hud_state(fr: Dictionary, phase: int, sel_i: int, avail: Dictionary, entry_code: String, slots: Array, plate: Dictionary, plan: Dictionary) -> Dictionary:
+func _hud_state(fr: Dictionary, phase: int, sel_i: int, avail: Dictionary, entry_code: String, slots: Array, plate: Dictionary, plan: Dictionary, lanes, turn_m: float, left: float, mirror_on: bool = true) -> Dictionary:
 	return {
-		"phase": "SELECT", "title": "CORNER 1/2 TOUGE HP (R)", "sub": "line preview", "build": "preview",
-		"lead": -0.05, "gap": -0.05, "left": 4.8, "total": 12.0,
+		"phase": "SELECT", "title": "CORNER 1/2 TOUGE HP (L)", "sub": "line preview", "build": "preview",
+		"lead": 0.0, "gap": 0.0, "left": left, "total": 12.0,
 		"slots": slots, "hand": ["A", "A", "S", "S", "D", "D"], "used": [],
 		"qte": null, "line": "", "rline": "", "outs": [],
-		"plate": plate, "locked_hold": false, "mirror": true, "play_phase": 0,
-		"plan": plan, "turn_m": 60.0, "dir": DIR, "lanes": null,
+		"plate": plate, "locked_hold": false, "mirror": mirror_on, "play_phase": 0,
+		"plan": plan, "turn_m": turn_m, "dir": DIR, "lanes": lanes,
 		"result": {}, "reveal": 0, "cont_left": 8.0, "leader_changed": false,
 		"winner": "", "cum_p": 0.0, "cum_o": 0.0, "last_corner": false, "fin": null
 	}
@@ -411,7 +471,6 @@ func _capture(path: String) -> void:
 	var hud_img := hud_vp.get_texture().get_image()
 	if hud_img.get_format() != Image.FORMAT_RGBA8:
 		hud_img.convert(Image.FORMAT_RGBA8)
-	# HUD is already 1280x960 (drawn at scale 2). Composite sharp on top of the upscaled 3D.
 	native.convert(Image.FORMAT_RGBA8)
 	native.blend_rect(hud_img, Rect2i(0, 0, 1280, 960), Vector2i.ZERO)
 	var out := Image.new()

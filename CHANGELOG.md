@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-11-12 — Arthur [art]: unapproved line-preview pass 2 (chevrons, night road, B.5b cameras, combined plan panel)
+
+- **Chevrons** now point in the direction of travel (the texture tip sits at +forward). Earlier pass had them pointing back at the player.
+- **Road** uses Gordon's touge asphalt (no pack overlay or extra pool decals), so it stays dark navy grey outside the sodium pools (B.2a). Grit reads mainly inside the pools.
+- **Course** is his left-hand Touge hairpin (`HAIRPIN L`), the same continuous two-corner path as shots11, not the earlier HAIRPIN R.
+- **Camera-stop frames** (`1_entry_out_atk_camstop.png`, `2_apex_def_camstop.png`, `4_exit_atk_camstop.png`, sheet `line_preview_camstops_sheet.png`) use Gordon's B.5b poses (chase / Apex / Exit from `main.gd` / `display.json select_cam`), his in-world IN / MID / OUT lane markers at Entry, and no debug box. Apex and Exit are geometry only (no cars, no mirror). Overview sheet still shows the whole hook from a high outside camera.
+- **HUD (these frames only, Gordon's files unedited):** the bottom-left ENTRY lane strip and the PLAN THE LINE panel are one bottom-right panel. Each phase row carries the lane and stance pick; the active row is highlighted and is where you choose. The tie-gap / race-split bar sits at the top centre, directly under the REAR VIEW mirror.
+- Still unapproved until Austin says so. Placeholder stance-to-bend mapping unchanged.
+
 ## 2026-11-12 — Desmond [ci]: allow qte-v1 function-bit check to fail on the Ubuntu runner
 - **What:** in `.github/workflows/ci.yml`, `tools/qte_fn_test.py` is now its own step with `continue-on-error`. `tools/run_parity.sh` skips that check when `SKIP_QTE_FN_TEST=1` (default unchanged). Race, dump/load, restart and key-test comparisons stay required. Godot cache now saves even when a later step fails.
 - **Why:** CI run [CI #2](https://github.com/ahoang47/midnight-apex/actions/runs/43270662837) still failed the function-bit test after switching to Python 3.13 (337 mismatches, max_abs_diff=2.220e-16, one ULP). The box (Debian 13, glibc 2.41, Python 3.13.5) is 0 mismatches; the Ubuntu 26.04 runner (glibc 2.43, Python 3.13.18) is not. Every gameplay parity check on that run was max_abs_diff 0. This is a pre-existing platform sensitivity in Gordon's bit-exact qte-v1 check, not a game-logic failure.

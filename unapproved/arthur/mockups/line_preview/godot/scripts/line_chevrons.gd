@@ -53,14 +53,15 @@ func _smooth(k: float) -> float:
 func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Color, fog_near: float, fog_far: float, hovered: bool) -> MeshInstance3D:
 	fwd = fwd.normalized()
 	var right := Vector3.UP.cross(fwd).normalized()
-	# quad in XZ, pointed along +fwd (texture V increases toward the point)
+	# Texture tip is at V=1 (bottom of line_chevron.png). Put that tip at +fwd
+	# so the point faces the direction of travel, not back at the player.
 	var hl := LENGTH * 0.5
 	var hw := WIDTH * (0.58 if not hovered else 0.62)
 	var v := [
 		pos - right * hw - fwd * hl, pos + right * hw - fwd * hl,
 		pos + right * hw + fwd * hl, pos - right * hw + fwd * hl
 	]
-	var uv := [Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(0, 0)]
+	var uv := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
 
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
