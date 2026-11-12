@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-12 — Gordon [godot]: qte_fn_test allows 2 ULP on unrounded erf / ehq / zone (CI glibc 2.43)
+
+- **Why:** Desmond made the qte-v1 CI step strict in 50928ed. That run, and the follow-up on 328a817, failed the check on GitHub's Ubuntu 26.04 runner (glibc 2.43): 327 bit mismatches on the unrounded functions, 269 within 1 ULP, 58 at 2 ULP, `max_abs_diff=2.220e-16`. `raw_qte_score` stayed bit-exact (the 3-decimal rounding still pins gameplay). This box (glibc 2.41) remains bit-identical. The 1-ULP allowance added in 22208fb was not quite enough for the runner's libm.
+- **What:** `tools/qte_fn_test.py` allows up to 2 ULP on `erf` / `expected_hit_quality` / `qte_zone_width` only. `raw_qte_score` is still exact. The log now prints per-group mismatch / ULP / fail counts and `max_ulp`.
+- **Left as is:** The rounding rule and the pin (50928ed). No Godot gameplay or token change (build id stays `512d64fca1`).
+
 ## 2026-11-12 — Gordon [godot]: two-corner POW/EN/HAN rename; re-pin to 50928ed; state token TC3 (UNAPPROVED)
 
 - **Why:** Austin's 2026-11-12 naming rule: everything behind the screen (code, data, specs, state tokens, docs) uses POW / EN / HAN. IN / MID / OUT appear only in what is drawn. Barry's sim rename 53267c5 landed that in the sim (P/E/H letters, `Stance.POW`/`EN`/`HAN`, `StanceOutcome.DRAW`, LINE_SET_C A→P / D→E / S→H). This pass mirrors it in the Godot two-corner build and moves the pin to **50928ed** (newest proto-build containing 53267c5; also includes the c3ffc41 QTE rounding and Desmond's strict qte-v1 CI step). sim/ is unchanged after 53267c5.
