@@ -55,10 +55,14 @@ enum QteType { MASH, TIMING }
 
 | Name | Notes |
 |------|-------|
-| `KNOT_WINDOW_105` | `(r, W)` knots for `knot_window(r)`, the player-only QTE window |
+| `QTE_ZONE_BASE_MS` | Presentation unit for the visible QTE zone (Godot `QTE_TIMING_WINDOW_BASE_MS`); `equations.py:133` |
+| `QTE_ZONE_WIDTH_105` | `(r, width/w0)` knots for the visible zone; used by `qte_zone_width(r, window_mod)` (`equations.py:137`, function at `:338`) |
+| `QTE_SKILL_SIGMA_OVER_A0` | PLACEHOLDER skill σ (units of the default half-width a0) until playtest; used by `expected_hit_quality` / `raw_qte_score` (`equations.py:149`, marked PLACEHOLDER) |
+| `QTE_SKILL_TARGET_E` | Target E[s] at the default zone for the named placeholder profiles (`equations.py:148`) |
+| `KNOT_WINDOW_105` | LEGACY `(r, W)` knots for `knot_window(r)`: `winrate_n4000.json` / progression oracle, and the generator of the zone table. Not used by `clash_progress` / `resolve_turn` (`equations.py:125`, `knot_window` at `:256`) |
 | `KAPPA_BY_LENGTH` | Stat-gap leverage `V = r^kappa`, keyed by race length in turns |
 | `RACE_LENGTHS` | Race lengths that have a `KAPPA_BY_LENGTH` entry |
-| `OPPONENT_QTE` | Opponent timing skill `q`; its window is `W = 1`, and HAN still applies |
+| `OPPONENT_QTE` | Opponent raw timing; unchanged (HAN still applies; no visible-zone width) (`equations.py:129`, `combat.py:75`) |
 | `W0`, `T_MAX`, `L_MAX` | Phi payoff: win at q = 0, tie at q = 1, loss at q = 1 |
 | `TAU_BETA`, `TAU_P_TOP`, `TAU_GAMMA` | tau(q): top-bonus share, top-bonus sharpness, body shape |
 | `MU` | POW share raises the win payoff; EN share raises the tie/loss payoff |
@@ -75,7 +79,7 @@ enum QteType { MASH, TIMING }
 | `PICKS_PER_TURN` | 3 | stances selected per turn |
 | `STRAIGHT_DURATION` | 12.0 | seconds for all 3 picks |
 | `PHASE_DURATION` | 4.0 | seconds per individual pick |
-| `QTE_TIMING_WINDOW_BASE_MS` | 800 | base width of timing target zone |
+| `QTE_TIMING_WINDOW_BASE_MS` | 800 | base width of timing target zone; presentation unit for sim `QTE_ZONE_BASE_MS` (`equations.py:130–133`) |
 | `QTE_TIMING_WINDOW_PER_GAP` | 50 | ms shrunk per level of opponent advantage |
 | `QTE_TIMING_WINDOW_MIN_MS` | 200 | floor for timing target zone |
 | `QTE_MASH_SPEED_PER_GAP` | 0.10 | press-rate multiplier per level gap |
@@ -123,6 +127,7 @@ extends Resource; class_name MatchConfig
 @export var deterministic: bool = true
 @export var rival_personality: String
 @export var encounter_type: String
+@export var qte_window_mod: float = 0.0  # multiplicative bonus on qte_zone_width(r); models.py:152
 ```
 
 ---
@@ -315,7 +320,7 @@ func on_pick_timeout(phase_index):
 
 ## 5. Combat Math
 
-**Goal:** Pure functions, a 1:1 port of the playable engine in `sim/velocity_shift/combat.py` (`resolve_turn`) and the Phi/tau functions in `sim/velocity_shift/equations.py` (0dd376a). A race is scored by progress: every clash adds progress to both cars, and the higher total at the end of the race wins. There are no HP or DP bars, knockouts, EN mitigation, rubber-banding or battle bonus.
+**Goal:** Pure functions, a 1:1 port of the playable engine in `sim/velocity_shift/combat.py` (`resolve_turn`) and the Phi/tau functions in `sim/velocity_shift/equations.py` (4cb5401, including the approved qte-v1 visible QTE zone). A race is scored by progress: every clash adds progress to both cars, and the higher total at the end of the race wins. There are no HP or DP bars, knockouts, EN mitigation, rubber-banding or battle bonus.
 
 ### 5.1 `CombatResolver.gd`
 
@@ -333,8 +338,30 @@ static func stat_shares(pow: float, en: float, han: float) -> Array
     # [total, pow / total, en / total, han / total]; [0, 1/3, 1/3, 1/3] when total <= 0
 
 static func knot_window(r: float) -> float
-    # W(r): piecewise-linear through the KNOT_WINDOW_105 knots,
-    # flat below the first knot and above the last, capped at 1
+    # LEGACY hidden W(r): piecewise-linear through the KNOT_WINDOW_105 knots,
+    # flat below the first knot and above the last, capped at 1.
+    # Not used by clash_progress / resolve_turn. Kept only to match the
+    # sim: winrate_n4000.json / progression oracle, and as the generator
+    # of qte_zone_width() (equations.py:256–268).
+
+static func expected_hit_quality(sigma_over_a0: float, width_over_w0: float) -> float
+    # E[s] for one timing press at a zone width (fraction of QTE_ZONE_BASE_MS).
+    # Skill σ values are PLACEHOLDER until playtest (QTE_SKILL_SIGMA_OVER_A0).
+    # equations.py:271
+
+static func qte_zone_width(r: float, window_mod: float = 0.0) -> float
+    # Visible zone width as a fraction of QTE_ZONE_BASE_MS, at the race's
+    # FIXED r (no mid-race change). window_mod is MatchConfig.qte_window_mod,
+    # a multiplicative bonus (0.10 = +10% of the current zone). Slot
+    # competition and the 105%-all-slots rule are not applied (upcoming
+    # slot sim). equations.py:338
+
+static func raw_qte_score(r: float, profile, q_time, window_mod: float = 0.0) -> float
+    # Expected raw QTE score at the race's fixed r (no HAN, no knot_window).
+    # A named PLACEHOLDER profile (MatchConfig.player_qte_profile) or an
+    # explicit player_timing is evaluated at qte_zone_width(r, window_mod).
+    # A live player's entered QTE is already the raw score at the visible
+    # zone (CLI). equations.py:361; match.py:180–196; models.py:145–152
 
 static func kappa_for_length(race_length: int) -> float
     # KAPPA_BY_LENGTH[race_length]; any other length uses the closest key (no interpolation)
@@ -352,12 +379,12 @@ static func clash_payoff(outcome: StanceOutcome, q: float) -> float
 
 static func clash_progress(outcome: StanceOutcome, q_time: float,
                            pow: float, en: float, han: float,
-                           boss_total: float, kappa: float, scale_window: bool) -> float
+                           boss_total: float, kappa: float) -> float
     # [total, pow_s, en_s, han_s] = stat_shares(pow, en, han)
     # r     = total / boss_total            (1.0 if boss_total == 0)
     # V     = r^kappa
-    # w     = knot_window(r) if scale_window else 1.0
-    # q_eff = clamp(q_time × w × (1 + ETA × (han_s - 1/3)), 0, 1)
+    # q_eff = clamp(q_time × (1 + ETA × (han_s - 1/3)), 0, 1)
+    #         no knot_window factor (equations.py:426–433)
     # M     = 1 + MU × (pow_s - 1/3) on a WIN, else 1 + MU × (en_s - 1/3)
     # return V × clash_payoff(outcome, q_eff) × M
 
@@ -369,24 +396,25 @@ static func resolve_turn(player_stances: Array, opponent_stances: Array,
     # boss_total = opponent.pow + opponent.en + opponent.han  → opponent V = 1, player V = r^kappa
     # kappa      = kappa_for_length(race_length)              (race_length = MatchConfig.max_turns, the planned race length, not the lap's corner count)
     # per clash i:
-    #   player_clash_progress[i]   = clash_progress(outcome,  player_q_time,   player stats,   boss_total, kappa, true)
-    #   opponent_clash_progress[i] = clash_progress(-outcome, opponent_q_time, opponent stats, boss_total, kappa, false)
+    #   player_clash_progress[i]   = clash_progress(outcome,  player_q_time,   player stats,   boss_total, kappa)
+    #   opponent_clash_progress[i] = clash_progress(-outcome, opponent_q_time, opponent stats, boss_total, kappa)
     # player_progress / opponent_progress = sum of the 3 clashes (not an average)
     # Returns { outcomes, battle_winner, player_clash_progress, opponent_clash_progress,
     #           player_progress, opponent_progress }
 ```
 
 **Inputs, as `match.py` feeds them:**
-- `player_q_time` is the turn's single corner-long QTE score from `QTEController.stop()` divided by `QTE_NORMALIZER` (the same conversion as `cli.prompt_qte()` → `qte_factor()`), so it lies in [0, 1]. The same value is used for all 3 clashes. Don't pre-apply HAN or the window; `clash_progress` applies both.
-- `opponent_q_time` is always `OPPONENT_QTE` (`AIQTE.opponent_q_time()`, §8.3).
-- Both sides use the same effective timing, `q_eff = clamp(q × W × (1 + ETA × (han_share - 1/3)), 0, 1)`. For the player, `q = player_q_time` and `W = knot_window(r)`. For the opponent, `q = OPPONENT_QTE` and `W = 1` (`scale_window = false`). The opponent's HAN share still scales its timing.
+- `player_q_time` is the turn's single corner-long raw QTE score from `QTEController.stop()` divided by `QTE_NORMALIZER` (the same conversion as `cli.prompt_qte()` → `qte_factor()`), so it lies in [0, 1]. The same value is used for all 3 clashes. It is already the raw score at the visible zone for the race's fixed r (and any `qte_window_mod`); don't pre-apply HAN. `clash_progress` applies only the HAN term (`combat.py:71–75`, `equations.py:426–428`). A simulated player uses `raw_qte_score` at that same fixed r (`match.py:180–196`).
+- `opponent_q_time` is always `OPPONENT_QTE` (`AIQTE.opponent_q_time()`, §8.3). The opponent is unchanged: no visible-zone width, HAN still applies (`combat.py:75`, `equations.py:163–164`).
+- Both sides use the same effective timing, `q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)`, with no `knot_window` factor (`equations.py:160`, `:426–433`). For the player, `raw_qte` is `player_q_time`. For the opponent, `raw_qte` is `OPPONENT_QTE`. The opponent's HAN share still scales its timing.
+- The stat gap lives in the visible zone width `qte_zone_width(r, window_mod)` (`equations.py:338`), evaluated at the race's FIXED r (it does not change mid-race). `MatchConfig.qte_window_mod` (`models.py:152`) widens that zone. `KNOT_WINDOW_105` / `knot_window` are legacy for the oracle only (and as the generator of the zone table); they are not used in `clash_progress` or `resolve_turn` (`equations.py:115–116`, `:256–260`).
 - Every clash pays both cars: a win pays at least `W0`, while a tie and a loss pay `T_MAX` and `L_MAX` scaled by timing.
 
 **Result** (`TurnManager._determine_winner()`, after `max_turns`): the higher of `player_cum_progress` and `opponent_cum_progress` wins, and equal totals are a `"Tie"`. Display shares are `pos_p = cum_p / (cum_p + cum_o)` (0.5 when both are 0), as `MatchResult.player_position` in `match.py`.
 
-Reference: `sim/velocity_shift/equations.py` (`stat_shares`, `knot_window`, `kappa_for_length`, `timing_value`, `clash_payoff`, `clash_progress`) and `combat.py` `resolve_turn`. The sim keeps the old HP/DP path as `resolve_turn_legacy` behind `MatchConfig.legacy_hp_dp` for frozen checks; Godot does not port it.
+Reference: `sim/velocity_shift/equations.py` (`stat_shares`, `qte_zone_width` `:338`, `raw_qte_score` `:361`, `expected_hit_quality` `:271`, `kappa_for_length`, `timing_value`, `clash_payoff`, `clash_progress` `:415`; legacy `knot_window` `:256`) and `combat.py` `resolve_turn` (`:71–75`, `:122–131`). The sim keeps the old HP/DP path as `resolve_turn_legacy` behind `MatchConfig.legacy_hp_dp` for frozen checks; Godot does not port it.
 
-> **Open question for Austin:** §7's level-gap QTE difficulty (`qte_difficulty()`) shrinks the timing zone and speeds up the mash when the opponent is stronger, while `knot_window(r)` already scales the player's timing by the stat ratio in the math. Keeping both would count the stat gap twice. §7 stays as written until you decide.
+> **Open question for Austin:** since 4cb5401, `sim/` carries the stat gap only in the visible zone width `qte_zone_width(r, window_mod)`. §7's level-gap `qte_difficulty()` still shrinks the timing zone and speeds up the mash when the opponent is stronger; applying that scaling on top of the zone width would double-count. §7 stays written here pending your decision. Barry's recommendation is to drop the level-gap scaling in favour of the zone width. Godot should not implement `qte_difficulty()` until this is decided.
 
 ---
 
@@ -482,7 +510,7 @@ static func qte_difficulty(player_level: int, opponent_level: int) -> Dictionary
 | +6 | 500 | 1.60 | Tough — zone shrinks, mash races |
 | +10 | 300 | 2.00 | Max before soft floor at 200ms |
 
-> **Open question for Austin:** this level-gap difficulty and `knot_window(r)` both penalize a stat gap (see §5.1).
+> **Open question for Austin (same as §5.1):** since 4cb5401, `sim/` carries the stat gap only in the visible zone width, so applying this level-gap `qte_difficulty()` scaling on top would double-count. Pending your decision; Barry's recommendation is to drop it in favour of the zone width. Godot should not implement `qte_difficulty()` until this is decided. The formula is left written here and is not deleted.
 
 ### 7.2 QTE Type lookup
 
@@ -564,9 +592,10 @@ static func pick_card(hand: Array, opponent_hand: Array,
 
 ```gdscript
 static func opponent_q_time() -> float
-    # Returns OPPONENT_QTE (match.py). Fixed, not rolled: no level ratio, no noise,
-    # no knot window, and no RNG draw. HAN is applied later inside
-    # CombatResolver.clash_progress(), the same as for the player.
+    # Returns OPPONENT_QTE (match.py:200). Opponent unchanged: fixed, not
+    # rolled; no level ratio, no noise, no visible-zone width, and no RNG
+    # draw. HAN is applied later inside CombatResolver.clash_progress(),
+    # the same as for the player (equations.py:163–164, combat.py:75).
 ```
 
 ---
@@ -986,9 +1015,11 @@ Combat constants are tuned in Barry's sim, not in Godot. Austin and Barry sign o
 
 | Constant (`equations.py`) | Effect |
 |----------|--------|
-| `KNOT_WINDOW_105` | How much of the player's timing lands at each stat ratio `r` |
+| `QTE_ZONE_BASE_MS`, `QTE_ZONE_WIDTH_105` | Visible QTE zone width at the race's fixed r (`qte_zone_width`) |
+| `QTE_SKILL_SIGMA_OVER_A0` | PLACEHOLDER skill σ for `expected_hit_quality` / `raw_qte_score` until playtest |
+| `KNOT_WINDOW_105` | LEGACY only: winrate oracle and generator of the zone table; not used in `clash_progress` |
 | `KAPPA_BY_LENGTH` | How strongly the stat ratio scales progress, per race length |
-| `OPPONENT_QTE` | How well the opponent times |
+| `OPPONENT_QTE` | How well the opponent times (unchanged; HAN still applies) |
 | `W0`, `T_MAX`, `L_MAX` | Progress for a win, tie and loss relative to a perfect win |
 | `TAU_BETA`, `TAU_P_TOP`, `TAU_GAMMA` | Shape of the timing curve tau(q) |
 | `MU` | How much POW share boosts wins and EN share boosts ties/losses |
@@ -1193,9 +1224,11 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
      → AIPicker: select opponent's 3 cards
 
 6. TurnManager: state = CORNER_PLAYBACK
-     → compute qte_difficulty = QTEController.qte_difficulty(player.level, opponent.level)
+     → visible zone = qte_zone_width(r, MatchConfig.qte_window_mod) at the race's fixed r
+       (equations.py:338). Do not also apply QTEController.qte_difficulty() until
+       Austin decides §7 (that would double-count the stat gap; see §5.1 / §7).
      → emit corner_started(player_stances, opponent_stances)
-      → QTEController.start(qte_type, qte_difficulty)
+      → QTEController.start(qte_type, zone from qte_zone_width)
       → ClashDisplay.display_summary(player_stances, opponent_stances)
       → Loop through 3 positions:
           CombatResolver.resolve_stance(player, opponent)
@@ -1208,8 +1241,9 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
 7. TurnManager: state = PROGRESS_BATCH
      → player_q_time = qte_score / QTE_NORMALIZER; opponent_q_time = AIQTE.opponent_q_time()
      → CombatResolver.resolve_turn(...): clash_progress for each car on all 3 clashes, summed
-       (q_eff = clamp(q × W × HAN term, 0, 1) on both sides: player W = knot_window(r);
-        opponent q = OPPONENT_QTE, W = 1; kappa from max_turns)
+       (q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1) on both sides,
+        no knot_window; player raw_qte is the entered QTE at the visible zone;
+        opponent raw_qte = OPPONENT_QTE; HAN still applies; kappa from max_turns)
      → PositionTracker: accumulate progress
      → CarAnimator: tween Z offsets to the new lead
      → ProgressGapDisplay: animate gap meter
@@ -1305,6 +1339,8 @@ One continuous QTE per corner. Type determined by `(turn_type × player stance)`
 
 ### Difficulty formula
 
+The playable engine's visible zone is `qte_zone_width(r, window_mod)` (`equations.py:338`), not this level-gap formula. Since 4cb5401, applying `qte_difficulty()` on top would double-count the stat gap. The formula is left written here pending Austin's decision (see §7); Godot should not implement it until then. Barry's recommendation is to drop it in favour of the zone width.
+
 ```gdscript
 gap = opponent_level - player_level
 timing_window_ms = max(QTE_TIMING_WINDOW_MIN_MS,
@@ -1344,6 +1380,7 @@ Make the draw from the match `RandomNumberGenerator` so a playtest dump's Block 
 - **Opponent cards:** the picked line, played exactly; no opponent hand.
 - **No DNF / knockout** — match always runs to max_turns, then the higher progress total wins.
 - **Race length sets kappa:** `max_turns` (default 10) is the planned race length, one of `RACE_LENGTHS`; kappa = `kappa_for_length(max_turns)`, never the lap's corner count. Any other length snaps to the nearest `KAPPA_BY_LENGTH` key.
+- **Visible QTE zone, not knot_window:** player `q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)` with no `knot_window`. The stat gap is `qte_zone_width(r, window_mod)` at the race's fixed r (`equations.py:338`). `KNOT_WINDOW_105` / `knot_window` are legacy for the oracle only. §7 `qte_difficulty()` is not implemented until Austin decides (double-count risk; see §5.1).
 - **Ties:** equal progress totals are a tie; no opponent tiebreaker.
 - **Car position in 3D:** drawn spacing only. Cumulative progress, position, and the win condition stay on the real gap (`design/06-pattern-read.md`, Lane Entry and visual gap). A capped lead ahead of the player is not the exact large-lead magnitude. The trailer is not given a matching cap. `CarAnimator.gd` still uses a symmetric Z lerp; that code was not updated with the rule.
 - **AnimationTree blend:** 7 animations + 3-way blend node = smooth stance transitions for any 3-stance sequence. No per-combination baking.
