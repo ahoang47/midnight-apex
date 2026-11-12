@@ -8,6 +8,28 @@
 
 ---
 
+## 2026-11-11 — Barry [sim]: slots-v2, Austin's 2 POW / 2 EN / 2 HAN layout with window + aero, grind wall and price check, added to `design/unapproved/slots-v2/` (**NOT approved**)
+- **What:** this reruns the slot sim on Austin's layout: 6 slots = 3 categories × 2, with secondary splits of 100/0/0, 80/10/10 and 70/20/10 (placeholders). The run adds:
+  - a window mod (+75%, 1.15 × w0 cap) and an aero part (pool 10/20/30%, retuned every race, inside the 105% cap, from the second R2 crew). Each goes in any slot, at most one of each;
+  - an exhaustive 105% check;
+  - the grind-wall test ("a newly unlocked mod with no grind clears no wall");
+  - placeholder price curves.
+- **How:** share-aware oracle with clash-count banks on a 244-point stat-share grid (N=4,000, seeds 20261113–15 × 10/20/30 turns, 9 paired banks; ≤ 0.20 pp interpolation error vs exact banks). Clears use the official pooled mid ≥ 50. The `counts/` banks (~44 MB) are not committed; `grid.py` rebuilds them. **Nothing in `sim/` changed.** Every constant change ran in-process only.
+- **Findings:**
+  - **Rule 1 holds:** 105% at all 63 story points. The brute force covers up to 262,144 loadouts per point, plus Austin's 46,656-loadout 36-mod example, with 0 loadouts over. The max equals best-per-slot because the total is a plain sum over independent slots.
+  - **Splits:** they don't change any grind count (141/153/121).
+  - **Category mix:** the fixed 2/2/2 layout is what prevents a no-brainer. With free choice, stacking POW or EN is dominant in 62 of 87 average cells and HAN is dead.
+  - **Window and aero:** the window is never dominant. Aero is never dominant, but it is never worse than the mod it replaces, so it needs a price premium.
+  - **Grind wall violations:**
+    - average + window clears the R2 Wangan and R3 Street bosses (49.14 → 50.30);
+    - strong players' newest tier alone clears R1 Wangan and R2 Touge mature #2 (49.02 → 53.11 / 53.10);
+    - 70/20/10 + aero 20/30% clears Summit skipped.
+  - **Smallest equation fix (proposal, not applied):** `KNOT_WINDOW_105` r = 1.00 knot 0.68 → 0.67. Zone width at r 1.00 goes 0.5802 → 0.5698, the window violations are gone and balanced grind is unchanged. It also needs an aero pool ≤ 10%. The strong-player mature #2 violations remain open.
+  - **Dead wins:** removing the 9 dead wins via `CAP_ALLOC_*` costs ≥ +28 average grind, so the recommendation is to fill them with window, aero or sidegrade unlocks instead.
+  - **Economy:** no single price satisfies both "can't buy on unlock" and "no extra grind" for strong players. Two options are given: P1 (1.1 race-units per tier) and P2 (grind-matched, 1.73–3.67 per purchase, which costs strong players 34 money races).
+- **Why:** Austin's 2026-11-11 brief, items 1–7. Follow-up runs filled gaps the interrupted worker left: `validate.json`, `results_econ_cleared*.json`, `results_aero_knot.json`, `results_finale_knot.json` and `results_price.json`.
+- **Needs Austin:** approve or reject the knot fix and the aero pool cap; P1 vs P2; and how to handle the strong-player mature #2 clears.
+
 ## 2026-11-11 — Gordon [godot]: two-corner shots9: after-turn countdown, arrow lanes, line-following cars, animated pass, continuous Touge track, 2x-grid HUD (unapproved/gordon)
 - **Why:** this comes from Austin's playtest (~9:58–10:01 PM PT). He said:
   - "The game plays a bit too fast for me to grasp each corner... the pause I'm referring to is the one after a turn completes. That should have a time limit. The line selection shall still stay unpaused per Arthur's playback rule."

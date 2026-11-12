@@ -1,0 +1,155 @@
+[
+{
+"profile": "strong",
+"crew": "R1 Touge",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 82.8,
+"mid_without_new_mod": 81.23,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R1 Touge",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 60.36,
+"mid_without_new_mod": 59.38,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R1 Wangan",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 53.11,
+"mid_without_new_mod": 49.02,
+"new_mod_is_decisive": true
+},
+{
+"profile": "strong",
+"crew": "R1 Wangan",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 86.4,
+"mid_without_new_mod": 86.2,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R1 Street",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 82.75,
+"mid_without_new_mod": 81.12,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R1 Street",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 55.66,
+"mid_without_new_mod": 53.0,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R2 Wangan",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 65.19,
+"mid_without_new_mod": 58.44,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R2 Wangan",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 86.42,
+"mid_without_new_mod": 86.23,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R2 Street",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 82.69,
+"mid_without_new_mod": 81.15,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R2 Street",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 60.33,
+"mid_without_new_mod": 59.29,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R2 Touge",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 53.1,
+"mid_without_new_mod": 49.02,
+"new_mod_is_decisive": true
+},
+{
+"profile": "strong",
+"crew": "R2 Touge",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 86.37,
+"mid_without_new_mod": 86.2,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R3 Street",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 81.26,
+"mid_without_new_mod": 76.44,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R3 Street",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 54.76,
+"mid_without_new_mod": 53.09,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R3 Touge",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 82.84,
+"mid_without_new_mod": 82.69,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R3 Wangan",
+"rung": "mature",
+"j": 3,
+"mid_with_new_mod": 81.18,
+"mid_without_new_mod": 76.46,
+"new_mod_is_decisive": false
+},
+{
+"profile": "strong",
+"crew": "R3 Wangan",
+"rung": "crew boss",
+"j": 6,
+"mid_with_new_mod": 54.67,
+"mid_without_new_mod": 53.02,
+"new_mod_is_decisive": false
+}
+]

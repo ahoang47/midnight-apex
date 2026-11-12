@@ -1,0 +1,298 @@
+{
+ "official_match": {
+  "wangan": true,
+  "street": true
+ },
+ "interp": [
+  {
+   "shares": [
+    0.2541,
+    0.4918,
+    0.2541
+   ],
+   "r": 1.0355,
+   "profile": "weak",
+   "interp_mean": 4.17,
+   "exact_mean": 4.06,
+   "max_abs_bank_diff": 0.71
+  },
+  {
+   "shares": [
+    0.2541,
+    0.4918,
+    0.2541
+   ],
+   "r": 1.0355,
+   "profile": "average",
+   "interp_mean": 42.1,
+   "exact_mean": 42.19,
+   "max_abs_bank_diff": 0.93
+  },
+  {
+   "shares": [
+    0.2541,
+    0.4918,
+    0.2541
+   ],
+   "r": 1.0355,
+   "profile": "strong",
+   "interp_mean": 79.24,
+   "exact_mean": 79.16,
+   "max_abs_bank_diff": 0.77
+  },
+  {
+   "shares": [
+    0.2541,
+    0.4918,
+    0.2541
+   ],
+   "r": 1.05,
+   "profile": "weak",
+   "interp_mean": 11.98,
+   "exact_mean": 11.86,
+   "max_abs_bank_diff": 0.55
+  },
+  {
+   "shares": [
+    0.2541,
+    0.4918,
+    0.2541
+   ],
+   "r": 1.05,
+   "profile": "average",
+   "interp_mean": 59.29,
+   "exact_mean": 59.18,
+   "max_abs_bank_diff": 1.01
+  },
+  {
+   "shares": [
+    0.2541,
+    0.4918,
+    0.2541
+   ],
+   "r": 1.05,
+   "profile": "strong",
+   "interp_mean": 85.24,
+   "exact_mean": 85.16,
+   "max_abs_bank_diff": 0.77
+  },
+  {
+   "shares": [
+    0.3062,
+    0.3712,
+    0.3226
+   ],
+   "r": 1.0355,
+   "profile": "weak",
+   "interp_mean": 4.99,
+   "exact_mean": 4.81,
+   "max_abs_bank_diff": 0.52
+  },
+  {
+   "shares": [
+    0.3062,
+    0.3712,
+    0.3226
+   ],
+   "r": 1.0355,
+   "profile": "average",
+   "interp_mean": 45.58,
+   "exact_mean": 45.62,
+   "max_abs_bank_diff": 0.86
+  },
+  {
+   "shares": [
+    0.3062,
+    0.3712,
+    0.3226
+   ],
+   "r": 1.0355,
+   "profile": "strong",
+   "interp_mean": 82.79,
+   "exact_mean": 82.83,
+   "max_abs_bank_diff": 0.68
+  },
+  {
+   "shares": [
+    0.3062,
+    0.3712,
+    0.3226
+   ],
+   "r": 1.05,
+   "profile": "weak",
+   "interp_mean": 13.21,
+   "exact_mean": 13.01,
+   "max_abs_bank_diff": 0.61
+  },
+  {
+   "shares": [
+    0.3062,
+    0.3712,
+    0.3226
+   ],
+   "r": 1.05,
+   "profile": "average",
+   "interp_mean": 62.87,
+   "exact_mean": 62.77,
+   "max_abs_bank_diff": 0.9
+  },
+  {
+   "shares": [
+    0.3062,
+    0.3712,
+    0.3226
+   ],
+   "r": 1.05,
+   "profile": "strong",
+   "interp_mean": 87.93,
+   "exact_mean": 88.02,
+   "max_abs_bank_diff": 0.3
+  },
+  {
+   "shares": [
+    0.4103,
+    0.2949,
+    0.2949
+   ],
+   "r": 1.0355,
+   "profile": "weak",
+   "interp_mean": 5.92,
+   "exact_mean": 5.93,
+   "max_abs_bank_diff": 0.27
+  },
+  {
+   "shares": [
+    0.4103,
+    0.2949,
+    0.2949
+   ],
+   "r": 1.0355,
+   "profile": "average",
+   "interp_mean": 49.31,
+   "exact_mean": 49.38,
+   "max_abs_bank_diff": 0.73
+  },
+  {
+   "shares": [
+    0.4103,
+    0.2949,
+    0.2949
+   ],
+   "r": 1.0355,
+   "profile": "strong",
+   "interp_mean": 84.99,
+   "exact_mean": 84.9,
+   "max_abs_bank_diff": 0.42
+  },
+  {
+   "shares": [
+    0.4103,
+    0.2949,
+    0.2949
+   ],
+   "r": 1.05,
+   "profile": "weak",
+   "interp_mean": 15.66,
+   "exact_mean": 15.8,
+   "max_abs_bank_diff": 0.82
+  },
+  {
+   "shares": [
+    0.4103,
+    0.2949,
+    0.2949
+   ],
+   "r": 1.05,
+   "profile": "average",
+   "interp_mean": 66.68,
+   "exact_mean": 66.53,
+   "max_abs_bank_diff": 0.7
+  },
+  {
+   "shares": [
+    0.4103,
+    0.2949,
+    0.2949
+   ],
+   "r": 1.05,
+   "profile": "strong",
+   "interp_mean": 89.59,
+   "exact_mean": 89.51,
+   "max_abs_bank_diff": 0.43
+  },
+  {
+   "shares": [
+    0.3333,
+    0.3333,
+    0.3334
+   ],
+   "r": 1.0355,
+   "profile": "weak",
+   "interp_mean": 5.05,
+   "exact_mean": 5.08,
+   "max_abs_bank_diff": 0.25
+  },
+  {
+   "shares": [
+    0.3333,
+    0.3333,
+    0.3334
+   ],
+   "r": 1.0355,
+   "profile": "average",
+   "interp_mean": 46.78,
+   "exact_mean": 46.84,
+   "max_abs_bank_diff": 0.73
+  },
+  {
+   "shares": [
+    0.3333,
+    0.3333,
+    0.3334
+   ],
+   "r": 1.0355,
+   "profile": "strong",
+   "interp_mean": 83.8,
+   "exact_mean": 83.75,
+   "max_abs_bank_diff": 0.3
+  },
+  {
+   "shares": [
+    0.3333,
+    0.3333,
+    0.3334
+   ],
+   "r": 1.05,
+   "profile": "weak",
+   "interp_mean": 13.68,
+   "exact_mean": 13.73,
+   "max_abs_bank_diff": 0.45
+  },
+  {
+   "shares": [
+    0.3333,
+    0.3333,
+    0.3334
+   ],
+   "r": 1.05,
+   "profile": "average",
+   "interp_mean": 64.24,
+   "exact_mean": 64.22,
+   "max_abs_bank_diff": 0.38
+  },
+  {
+   "shares": [
+    0.3333,
+    0.3333,
+    0.3334
+   ],
+   "r": 1.05,
+   "profile": "strong",
+   "interp_mean": 88.58,
+   "exact_mean": 88.55,
+   "max_abs_bank_diff": 0.28
+  }
+ ],
+ "max_abs_mean_diff": 0.20000000000000107,
+ "max_abs_bank_diff": 1.01
+}

@@ -1,0 +1,6389 @@
+[
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.15,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+26.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+23.07
+],
+[
+"R1 Touge",
+"mature",
+3,
+18.68
+],
+[
+"R1 Touge",
+"old head",
+1,
+19.49
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+12.33
+],
+[
+"R1 Wangan",
+"kid",
+2,
+25.68
+],
+[
+"R1 Wangan",
+"mature",
+2,
+22.43
+],
+[
+"R1 Wangan",
+"mature",
+3,
+18.62
+],
+[
+"R1 Wangan",
+"old head",
+1,
+19.53
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+11.73
+],
+[
+"R1 Street",
+"kid",
+2,
+25.68
+],
+[
+"R1 Street",
+"mature",
+2,
+22.43
+],
+[
+"R1 Street",
+"mature",
+3,
+18.62
+],
+[
+"R1 Street",
+"old head",
+2,
+19.53
+],
+[
+"R1 Street",
+"crew boss",
+4,
+11.72
+],
+[
+"R2 Wangan",
+"kid",
+2,
+24.67
+],
+[
+"R2 Wangan",
+"mature",
+2,
+23.39
+],
+[
+"R2 Wangan",
+"mature",
+3,
+19.5
+],
+[
+"R2 Wangan",
+"old head",
+2,
+18.21
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+13.47
+],
+[
+"R2 Street",
+"kid",
+2,
+26.07
+],
+[
+"R2 Street",
+"mature",
+3,
+22.53
+],
+[
+"R2 Street",
+"mature",
+3,
+18.33
+],
+[
+"R2 Street",
+"old head",
+2,
+19.48
+],
+[
+"R2 Street",
+"crew boss",
+4,
+11.58
+],
+[
+"R2 Touge",
+"kid",
+2,
+25.96
+],
+[
+"R2 Touge",
+"mature",
+3,
+22.8
+],
+[
+"R2 Touge",
+"mature",
+3,
+18.62
+],
+[
+"R2 Touge",
+"old head",
+2,
+19.52
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+11.6
+],
+[
+"R3 Street",
+"kid",
+2,
+24.67
+],
+[
+"R3 Street",
+"mature",
+3,
+23.39
+],
+[
+"R3 Street",
+"mature",
+3,
+19.5
+],
+[
+"R3 Street",
+"old head",
+2,
+18.21
+],
+[
+"R3 Street",
+"crew boss",
+4,
+13.47
+],
+[
+"R3 Touge",
+"kid",
+2,
+26.07
+],
+[
+"R3 Touge",
+"mature",
+3,
+22.53
+],
+[
+"R3 Touge",
+"mature",
+3,
+18.33
+],
+[
+"R3 Touge",
+"old head",
+2,
+19.48
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+11.58
+],
+[
+"R3 Wangan",
+"kid",
+2,
+25.96
+],
+[
+"R3 Wangan",
+"mature",
+3,
+22.8
+],
+[
+"R3 Wangan",
+"mature",
+3,
+18.62
+],
+[
+"R3 Wangan",
+"old head",
+2,
+19.52
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+11.6
+]
+]
+},
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.1,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+22.69
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.02
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.32
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.77
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+12.33
+],
+[
+"R1 Wangan",
+"kid",
+2,
+22.47
+],
+[
+"R1 Wangan",
+"mature",
+2,
+19.91
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.52
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.68
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+11.73
+],
+[
+"R1 Street",
+"kid",
+2,
+22.47
+],
+[
+"R1 Street",
+"mature",
+2,
+19.91
+],
+[
+"R1 Street",
+"mature",
+3,
+16.52
+],
+[
+"R1 Street",
+"old head",
+2,
+16.68
+],
+[
+"R1 Street",
+"crew boss",
+4,
+11.72
+],
+[
+"R2 Wangan",
+"kid",
+2,
+21.63
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.02
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.32
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.99
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+13.47
+],
+[
+"R2 Street",
+"kid",
+2,
+22.67
+],
+[
+"R2 Street",
+"mature",
+3,
+19.93
+],
+[
+"R2 Street",
+"mature",
+3,
+16.2
+],
+[
+"R2 Street",
+"old head",
+2,
+16.66
+],
+[
+"R2 Street",
+"crew boss",
+4,
+11.58
+],
+[
+"R2 Touge",
+"kid",
+2,
+22.58
+],
+[
+"R2 Touge",
+"mature",
+3,
+19.9
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.54
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.7
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+11.6
+],
+[
+"R3 Street",
+"kid",
+2,
+21.63
+],
+[
+"R3 Street",
+"mature",
+3,
+20.02
+],
+[
+"R3 Street",
+"mature",
+3,
+16.32
+],
+[
+"R3 Street",
+"old head",
+2,
+15.99
+],
+[
+"R3 Street",
+"crew boss",
+4,
+13.47
+],
+[
+"R3 Touge",
+"kid",
+2,
+22.67
+],
+[
+"R3 Touge",
+"mature",
+3,
+19.93
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.2
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+11.58
+],
+[
+"R3 Wangan",
+"kid",
+2,
+22.58
+],
+[
+"R3 Wangan",
+"mature",
+3,
+19.9
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.54
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.7
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+11.6
+]
+]
+},
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.05,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+22.62
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.02
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.17
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.77
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+11.04
+],
+[
+"R1 Wangan",
+"kid",
+2,
+22.47
+],
+[
+"R1 Wangan",
+"mature",
+2,
+19.91
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.52
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.68
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+11.61
+],
+[
+"R1 Street",
+"kid",
+2,
+22.47
+],
+[
+"R1 Street",
+"mature",
+2,
+19.91
+],
+[
+"R1 Street",
+"mature",
+3,
+16.52
+],
+[
+"R1 Street",
+"old head",
+2,
+16.68
+],
+[
+"R1 Street",
+"crew boss",
+4,
+11.61
+],
+[
+"R2 Wangan",
+"kid",
+2,
+21.63
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.02
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.29
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.99
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+11.18
+],
+[
+"R2 Street",
+"kid",
+2,
+22.63
+],
+[
+"R2 Street",
+"mature",
+3,
+19.93
+],
+[
+"R2 Street",
+"mature",
+3,
+16.0
+],
+[
+"R2 Street",
+"old head",
+2,
+16.66
+],
+[
+"R2 Street",
+"crew boss",
+4,
+10.85
+],
+[
+"R2 Touge",
+"kid",
+2,
+22.58
+],
+[
+"R2 Touge",
+"mature",
+3,
+19.9
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.54
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.7
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+10.87
+],
+[
+"R3 Street",
+"kid",
+2,
+21.63
+],
+[
+"R3 Street",
+"mature",
+3,
+20.02
+],
+[
+"R3 Street",
+"mature",
+3,
+16.29
+],
+[
+"R3 Street",
+"old head",
+2,
+15.99
+],
+[
+"R3 Street",
+"crew boss",
+4,
+11.18
+],
+[
+"R3 Touge",
+"kid",
+2,
+22.63
+],
+[
+"R3 Touge",
+"mature",
+3,
+19.93
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.0
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+10.85
+],
+[
+"R3 Wangan",
+"kid",
+2,
+22.58
+],
+[
+"R3 Wangan",
+"mature",
+3,
+19.9
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.54
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.7
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+10.87
+]
+]
+},
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.0,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+22.62
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.02
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.17
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.77
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+10.23
+],
+[
+"R1 Wangan",
+"kid",
+2,
+22.47
+],
+[
+"R1 Wangan",
+"mature",
+2,
+19.91
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.52
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.68
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+10.17
+],
+[
+"R1 Street",
+"kid",
+2,
+22.47
+],
+[
+"R1 Street",
+"mature",
+2,
+19.91
+],
+[
+"R1 Street",
+"mature",
+3,
+16.52
+],
+[
+"R1 Street",
+"old head",
+2,
+16.68
+],
+[
+"R1 Street",
+"crew boss",
+4,
+10.17
+],
+[
+"R2 Wangan",
+"kid",
+2,
+21.63
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.02
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.29
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.99
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+9.64
+],
+[
+"R2 Street",
+"kid",
+2,
+22.63
+],
+[
+"R2 Street",
+"mature",
+3,
+19.93
+],
+[
+"R2 Street",
+"mature",
+3,
+16.0
+],
+[
+"R2 Street",
+"old head",
+2,
+16.66
+],
+[
+"R2 Street",
+"crew boss",
+4,
+10.16
+],
+[
+"R2 Touge",
+"kid",
+2,
+22.58
+],
+[
+"R2 Touge",
+"mature",
+3,
+19.9
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.54
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.7
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+10.16
+],
+[
+"R3 Street",
+"kid",
+2,
+21.63
+],
+[
+"R3 Street",
+"mature",
+3,
+20.02
+],
+[
+"R3 Street",
+"mature",
+3,
+16.29
+],
+[
+"R3 Street",
+"old head",
+2,
+15.99
+],
+[
+"R3 Street",
+"crew boss",
+4,
+9.64
+],
+[
+"R3 Touge",
+"kid",
+2,
+22.63
+],
+[
+"R3 Touge",
+"mature",
+3,
+19.93
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.0
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+10.16
+],
+[
+"R3 Wangan",
+"kid",
+2,
+22.58
+],
+[
+"R3 Wangan",
+"mature",
+3,
+19.9
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.54
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.7
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+10.16
+]
+]
+},
+{
+"kind": "size",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.5,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+26.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+23.07
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.17
+],
+[
+"R1 Touge",
+"old head",
+1,
+18.17
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+10.23
+],
+[
+"R1 Wangan",
+"kid",
+2,
+25.68
+],
+[
+"R1 Wangan",
+"mature",
+2,
+22.43
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.52
+],
+[
+"R1 Wangan",
+"old head",
+1,
+17.19
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+10.17
+],
+[
+"R1 Street",
+"kid",
+2,
+25.68
+],
+[
+"R1 Street",
+"mature",
+2,
+22.43
+],
+[
+"R1 Street",
+"mature",
+3,
+16.52
+],
+[
+"R1 Street",
+"old head",
+2,
+17.19
+],
+[
+"R1 Street",
+"crew boss",
+4,
+10.17
+],
+[
+"R2 Wangan",
+"kid",
+2,
+24.67
+],
+[
+"R2 Wangan",
+"mature",
+2,
+23.39
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.78
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.99
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+9.64
+],
+[
+"R2 Street",
+"kid",
+2,
+26.07
+],
+[
+"R2 Street",
+"mature",
+3,
+22.53
+],
+[
+"R2 Street",
+"mature",
+3,
+16.0
+],
+[
+"R2 Street",
+"old head",
+2,
+17.1
+],
+[
+"R2 Street",
+"crew boss",
+4,
+10.16
+],
+[
+"R2 Touge",
+"kid",
+2,
+25.96
+],
+[
+"R2 Touge",
+"mature",
+3,
+22.8
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.54
+],
+[
+"R2 Touge",
+"old head",
+2,
+17.62
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+10.16
+],
+[
+"R3 Street",
+"kid",
+2,
+24.67
+],
+[
+"R3 Street",
+"mature",
+3,
+23.39
+],
+[
+"R3 Street",
+"mature",
+3,
+16.78
+],
+[
+"R3 Street",
+"old head",
+2,
+15.99
+],
+[
+"R3 Street",
+"crew boss",
+4,
+9.64
+],
+[
+"R3 Touge",
+"kid",
+2,
+26.07
+],
+[
+"R3 Touge",
+"mature",
+3,
+22.53
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.0
+],
+[
+"R3 Touge",
+"old head",
+2,
+17.1
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+10.16
+],
+[
+"R3 Wangan",
+"kid",
+2,
+25.96
+],
+[
+"R3 Wangan",
+"mature",
+3,
+22.8
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.54
+],
+[
+"R3 Wangan",
+"old head",
+2,
+17.62
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+10.16
+]
+]
+},
+{
+"kind": "size",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.25,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+26.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.02
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.17
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.77
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+10.23
+],
+[
+"R1 Wangan",
+"kid",
+2,
+25.68
+],
+[
+"R1 Wangan",
+"mature",
+2,
+19.91
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.52
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.68
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+10.17
+],
+[
+"R1 Street",
+"kid",
+2,
+25.68
+],
+[
+"R1 Street",
+"mature",
+2,
+19.91
+],
+[
+"R1 Street",
+"mature",
+3,
+16.52
+],
+[
+"R1 Street",
+"old head",
+2,
+16.68
+],
+[
+"R1 Street",
+"crew boss",
+4,
+10.17
+],
+[
+"R2 Wangan",
+"kid",
+2,
+24.67
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.79
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.29
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.99
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+9.64
+],
+[
+"R2 Street",
+"kid",
+2,
+26.07
+],
+[
+"R2 Street",
+"mature",
+3,
+19.93
+],
+[
+"R2 Street",
+"mature",
+3,
+16.0
+],
+[
+"R2 Street",
+"old head",
+2,
+16.66
+],
+[
+"R2 Street",
+"crew boss",
+4,
+10.16
+],
+[
+"R2 Touge",
+"kid",
+2,
+25.96
+],
+[
+"R2 Touge",
+"mature",
+3,
+19.9
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.54
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.7
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+10.16
+],
+[
+"R3 Street",
+"kid",
+2,
+24.67
+],
+[
+"R3 Street",
+"mature",
+3,
+20.79
+],
+[
+"R3 Street",
+"mature",
+3,
+16.29
+],
+[
+"R3 Street",
+"old head",
+2,
+15.99
+],
+[
+"R3 Street",
+"crew boss",
+4,
+9.64
+],
+[
+"R3 Touge",
+"kid",
+2,
+26.07
+],
+[
+"R3 Touge",
+"mature",
+3,
+19.93
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.0
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+10.16
+],
+[
+"R3 Wangan",
+"kid",
+2,
+25.96
+],
+[
+"R3 Wangan",
+"mature",
+3,
+19.9
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.54
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.7
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+10.16
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "official",
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+22.62
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.02
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.17
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.77
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+10.23
+],
+[
+"R1 Wangan",
+"kid",
+2,
+22.47
+],
+[
+"R1 Wangan",
+"mature",
+2,
+19.91
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.52
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.68
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+10.17
+],
+[
+"R1 Street",
+"kid",
+2,
+22.47
+],
+[
+"R1 Street",
+"mature",
+2,
+19.91
+],
+[
+"R1 Street",
+"mature",
+3,
+16.52
+],
+[
+"R1 Street",
+"old head",
+2,
+16.68
+],
+[
+"R1 Street",
+"crew boss",
+4,
+10.17
+],
+[
+"R2 Wangan",
+"kid",
+2,
+21.63
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.02
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.29
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.99
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+9.64
+],
+[
+"R2 Street",
+"kid",
+2,
+22.63
+],
+[
+"R2 Street",
+"mature",
+3,
+19.93
+],
+[
+"R2 Street",
+"mature",
+3,
+16.0
+],
+[
+"R2 Street",
+"old head",
+2,
+16.66
+],
+[
+"R2 Street",
+"crew boss",
+4,
+10.16
+],
+[
+"R2 Touge",
+"kid",
+2,
+22.58
+],
+[
+"R2 Touge",
+"mature",
+3,
+19.9
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.54
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.7
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+10.16
+],
+[
+"R3 Street",
+"kid",
+2,
+21.63
+],
+[
+"R3 Street",
+"mature",
+3,
+20.02
+],
+[
+"R3 Street",
+"mature",
+3,
+16.29
+],
+[
+"R3 Street",
+"old head",
+2,
+15.99
+],
+[
+"R3 Street",
+"crew boss",
+4,
+9.64
+],
+[
+"R3 Touge",
+"kid",
+2,
+22.63
+],
+[
+"R3 Touge",
+"mature",
+3,
+19.93
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.0
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+10.16
+],
+[
+"R3 Wangan",
+"kid",
+2,
+22.58
+],
+[
+"R3 Wangan",
+"mature",
+3,
+19.9
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.54
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.7
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+10.16
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": "official",
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+26.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+23.07
+],
+[
+"R1 Touge",
+"mature",
+3,
+18.68
+],
+[
+"R1 Touge",
+"old head",
+1,
+19.49
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+12.33
+],
+[
+"R1 Wangan",
+"kid",
+2,
+25.68
+],
+[
+"R1 Wangan",
+"mature",
+2,
+22.43
+],
+[
+"R1 Wangan",
+"mature",
+3,
+18.62
+],
+[
+"R1 Wangan",
+"old head",
+1,
+19.53
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+11.73
+],
+[
+"R1 Street",
+"kid",
+2,
+25.68
+],
+[
+"R1 Street",
+"mature",
+2,
+22.43
+],
+[
+"R1 Street",
+"mature",
+3,
+18.62
+],
+[
+"R1 Street",
+"old head",
+2,
+19.53
+],
+[
+"R1 Street",
+"crew boss",
+4,
+11.72
+],
+[
+"R2 Wangan",
+"kid",
+2,
+24.67
+],
+[
+"R2 Wangan",
+"mature",
+2,
+23.39
+],
+[
+"R2 Wangan",
+"mature",
+3,
+19.5
+],
+[
+"R2 Wangan",
+"old head",
+2,
+18.21
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+13.47
+],
+[
+"R2 Street",
+"kid",
+2,
+26.07
+],
+[
+"R2 Street",
+"mature",
+3,
+22.53
+],
+[
+"R2 Street",
+"mature",
+3,
+18.33
+],
+[
+"R2 Street",
+"old head",
+2,
+19.48
+],
+[
+"R2 Street",
+"crew boss",
+4,
+11.58
+],
+[
+"R2 Touge",
+"kid",
+2,
+25.96
+],
+[
+"R2 Touge",
+"mature",
+3,
+22.8
+],
+[
+"R2 Touge",
+"mature",
+3,
+18.62
+],
+[
+"R2 Touge",
+"old head",
+2,
+19.52
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+11.6
+],
+[
+"R3 Street",
+"kid",
+2,
+24.67
+],
+[
+"R3 Street",
+"mature",
+3,
+23.39
+],
+[
+"R3 Street",
+"mature",
+3,
+19.5
+],
+[
+"R3 Street",
+"old head",
+2,
+18.21
+],
+[
+"R3 Street",
+"crew boss",
+4,
+13.47
+],
+[
+"R3 Touge",
+"kid",
+2,
+26.07
+],
+[
+"R3 Touge",
+"mature",
+3,
+22.53
+],
+[
+"R3 Touge",
+"mature",
+3,
+18.33
+],
+[
+"R3 Touge",
+"old head",
+2,
+19.48
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+11.58
+],
+[
+"R3 Wangan",
+"kid",
+2,
+25.96
+],
+[
+"R3 Wangan",
+"mature",
+3,
+22.8
+],
+[
+"R3 Wangan",
+"mature",
+3,
+18.62
+],
+[
+"R3 Wangan",
+"old head",
+2,
+19.52
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+11.6
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "A: CREW (2,2,3,2,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 150,
+"base_grind": 150,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+22.62
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+17.37
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.78
+],
+[
+"R1 Touge",
+"old head",
+2,
+15.05
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+10.2
+],
+[
+"R1 Wangan",
+"kid",
+2,
+22.58
+],
+[
+"R1 Wangan",
+"mature",
+2,
+19.89
+],
+[
+"R1 Wangan",
+"mature",
+2,
+17.26
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.67
+],
+[
+"R1 Wangan",
+"old head",
+2,
+14.96
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+10.17
+],
+[
+"R1 Street",
+"kid",
+2,
+22.56
+],
+[
+"R1 Street",
+"mature",
+2,
+19.96
+],
+[
+"R1 Street",
+"mature",
+2,
+17.34
+],
+[
+"R1 Street",
+"old head",
+2,
+16.75
+],
+[
+"R1 Street",
+"old head",
+2,
+15.0
+],
+[
+"R1 Street",
+"crew boss",
+4,
+10.2
+],
+[
+"R2 Wangan",
+"kid",
+2,
+21.63
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.02
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.29
+],
+[
+"R2 Wangan",
+"old head",
+1,
+16.83
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.1
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+10.24
+],
+[
+"R2 Street",
+"kid",
+2,
+22.53
+],
+[
+"R2 Street",
+"mature",
+3,
+19.93
+],
+[
+"R2 Street",
+"mature",
+2,
+16.96
+],
+[
+"R2 Street",
+"old head",
+2,
+16.66
+],
+[
+"R2 Street",
+"old head",
+2,
+14.96
+],
+[
+"R2 Street",
+"crew boss",
+4,
+10.18
+],
+[
+"R2 Touge",
+"kid",
+2,
+22.57
+],
+[
+"R2 Touge",
+"mature",
+3,
+19.88
+],
+[
+"R2 Touge",
+"mature",
+2,
+17.24
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R2 Touge",
+"old head",
+2,
+14.94
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+10.16
+],
+[
+"R3 Street",
+"kid",
+2,
+21.63
+],
+[
+"R3 Street",
+"mature",
+3,
+20.02
+],
+[
+"R3 Street",
+"mature",
+3,
+16.29
+],
+[
+"R3 Street",
+"old head",
+1,
+16.83
+],
+[
+"R3 Street",
+"old head",
+2,
+15.1
+],
+[
+"R3 Street",
+"crew boss",
+4,
+10.24
+],
+[
+"R3 Touge",
+"kid",
+2,
+22.53
+],
+[
+"R3 Touge",
+"mature",
+3,
+19.93
+],
+[
+"R3 Touge",
+"mature",
+2,
+16.96
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R3 Touge",
+"old head",
+2,
+14.96
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+10.18
+],
+[
+"R3 Wangan",
+"kid",
+2,
+22.57
+],
+[
+"R3 Wangan",
+"mature",
+3,
+19.88
+],
+[
+"R3 Wangan",
+"mature",
+2,
+17.24
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.66
+],
+[
+"R3 Wangan",
+"old head",
+2,
+14.94
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+10.16
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": "A: CREW (2,2,3,2,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 150,
+"base_grind": 150,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+26.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+23.07
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.9
+],
+[
+"R1 Touge",
+"old head",
+1,
+19.51
+],
+[
+"R1 Touge",
+"old head",
+2,
+17.66
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+11.67
+],
+[
+"R1 Wangan",
+"kid",
+2,
+26.18
+],
+[
+"R1 Wangan",
+"mature",
+2,
+22.8
+],
+[
+"R1 Wangan",
+"mature",
+2,
+20.87
+],
+[
+"R1 Wangan",
+"old head",
+1,
+19.52
+],
+[
+"R1 Wangan",
+"old head",
+2,
+17.55
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+11.67
+],
+[
+"R1 Street",
+"kid",
+2,
+25.96
+],
+[
+"R1 Street",
+"mature",
+2,
+22.87
+],
+[
+"R1 Street",
+"mature",
+2,
+20.93
+],
+[
+"R1 Street",
+"old head",
+2,
+19.54
+],
+[
+"R1 Street",
+"old head",
+2,
+17.54
+],
+[
+"R1 Street",
+"crew boss",
+4,
+11.59
+],
+[
+"R2 Wangan",
+"kid",
+2,
+24.67
+],
+[
+"R2 Wangan",
+"mature",
+2,
+23.39
+],
+[
+"R2 Wangan",
+"mature",
+3,
+19.5
+],
+[
+"R2 Wangan",
+"old head",
+1,
+19.51
+],
+[
+"R2 Wangan",
+"old head",
+2,
+17.87
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+12.45
+],
+[
+"R2 Street",
+"kid",
+2,
+26.32
+],
+[
+"R2 Street",
+"mature",
+3,
+22.47
+],
+[
+"R2 Street",
+"mature",
+2,
+19.73
+],
+[
+"R2 Street",
+"old head",
+2,
+19.47
+],
+[
+"R2 Street",
+"old head",
+2,
+17.48
+],
+[
+"R2 Street",
+"crew boss",
+4,
+11.59
+],
+[
+"R2 Touge",
+"kid",
+2,
+25.95
+],
+[
+"R2 Touge",
+"mature",
+3,
+22.77
+],
+[
+"R2 Touge",
+"mature",
+2,
+19.72
+],
+[
+"R2 Touge",
+"old head",
+2,
+19.53
+],
+[
+"R2 Touge",
+"old head",
+2,
+17.54
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+11.6
+],
+[
+"R3 Street",
+"kid",
+2,
+24.67
+],
+[
+"R3 Street",
+"mature",
+3,
+23.39
+],
+[
+"R3 Street",
+"mature",
+3,
+19.5
+],
+[
+"R3 Street",
+"old head",
+1,
+19.51
+],
+[
+"R3 Street",
+"old head",
+2,
+17.87
+],
+[
+"R3 Street",
+"crew boss",
+4,
+12.45
+],
+[
+"R3 Touge",
+"kid",
+2,
+26.32
+],
+[
+"R3 Touge",
+"mature",
+3,
+22.47
+],
+[
+"R3 Touge",
+"mature",
+2,
+19.73
+],
+[
+"R3 Touge",
+"old head",
+2,
+19.47
+],
+[
+"R3 Touge",
+"old head",
+2,
+17.48
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+11.59
+],
+[
+"R3 Wangan",
+"kid",
+2,
+25.95
+],
+[
+"R3 Wangan",
+"mature",
+3,
+22.77
+],
+[
+"R3 Wangan",
+"mature",
+2,
+19.72
+],
+[
+"R3 Wangan",
+"old head",
+2,
+19.53
+],
+[
+"R3 Wangan",
+"old head",
+2,
+17.54
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+11.6
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "B: CREW (2,2,2,3,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+22.62
+],
+[
+"R1 Touge",
+"mature",
+2,
+21.38
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.15
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.73
+],
+[
+"R1 Touge",
+"old head",
+2,
+15.01
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+9.57
+],
+[
+"R1 Wangan",
+"kid",
+2,
+22.56
+],
+[
+"R1 Wangan",
+"mature",
+2,
+21.06
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.51
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.71
+],
+[
+"R1 Wangan",
+"old head",
+2,
+15.0
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+10.2
+],
+[
+"R1 Street",
+"kid",
+2,
+22.59
+],
+[
+"R1 Street",
+"mature",
+2,
+21.07
+],
+[
+"R1 Street",
+"mature",
+3,
+15.98
+],
+[
+"R1 Street",
+"old head",
+2,
+16.54
+],
+[
+"R1 Street",
+"old head",
+2,
+14.97
+],
+[
+"R1 Street",
+"crew boss",
+4,
+9.57
+],
+[
+"R2 Wangan",
+"kid",
+2,
+21.63
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.02
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.29
+],
+[
+"R2 Wangan",
+"old head",
+1,
+16.83
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.1
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+10.24
+],
+[
+"R2 Street",
+"kid",
+2,
+22.53
+],
+[
+"R2 Street",
+"mature",
+2,
+21.11
+],
+[
+"R2 Street",
+"mature",
+3,
+16.02
+],
+[
+"R2 Street",
+"old head",
+2,
+16.53
+],
+[
+"R2 Street",
+"old head",
+2,
+14.94
+],
+[
+"R2 Street",
+"crew boss",
+4,
+9.55
+],
+[
+"R2 Touge",
+"kid",
+2,
+22.47
+],
+[
+"R2 Touge",
+"mature",
+2,
+21.08
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.48
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R2 Touge",
+"old head",
+2,
+14.94
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+10.16
+],
+[
+"R3 Street",
+"kid",
+2,
+21.63
+],
+[
+"R3 Street",
+"mature",
+3,
+20.02
+],
+[
+"R3 Street",
+"mature",
+3,
+16.29
+],
+[
+"R3 Street",
+"old head",
+1,
+16.83
+],
+[
+"R3 Street",
+"old head",
+2,
+15.1
+],
+[
+"R3 Street",
+"crew boss",
+4,
+10.24
+],
+[
+"R3 Touge",
+"kid",
+2,
+22.53
+],
+[
+"R3 Touge",
+"mature",
+2,
+21.11
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.02
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.53
+],
+[
+"R3 Touge",
+"old head",
+2,
+14.94
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+9.55
+],
+[
+"R3 Wangan",
+"kid",
+2,
+22.47
+],
+[
+"R3 Wangan",
+"mature",
+2,
+21.08
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.48
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.66
+],
+[
+"R3 Wangan",
+"old head",
+2,
+14.94
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+10.16
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": "B: CREW (2,2,2,3,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+26.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+24.36
+],
+[
+"R1 Touge",
+"mature",
+3,
+18.52
+],
+[
+"R1 Touge",
+"old head",
+1,
+19.5
+],
+[
+"R1 Touge",
+"old head",
+2,
+17.59
+],
+[
+"R1 Touge",
+"crew boss",
+4,
+11.58
+],
+[
+"R1 Wangan",
+"kid",
+2,
+25.67
+],
+[
+"R1 Wangan",
+"mature",
+2,
+23.41
+],
+[
+"R1 Wangan",
+"mature",
+3,
+18.39
+],
+[
+"R1 Wangan",
+"old head",
+1,
+19.53
+],
+[
+"R1 Wangan",
+"old head",
+2,
+17.5
+],
+[
+"R1 Wangan",
+"crew boss",
+4,
+11.68
+],
+[
+"R1 Street",
+"kid",
+2,
+25.97
+],
+[
+"R1 Street",
+"mature",
+2,
+24.23
+],
+[
+"R1 Street",
+"mature",
+3,
+18.3
+],
+[
+"R1 Street",
+"old head",
+2,
+19.46
+],
+[
+"R1 Street",
+"old head",
+2,
+17.45
+],
+[
+"R1 Street",
+"crew boss",
+4,
+11.0
+],
+[
+"R2 Wangan",
+"kid",
+2,
+24.67
+],
+[
+"R2 Wangan",
+"mature",
+2,
+23.39
+],
+[
+"R2 Wangan",
+"mature",
+3,
+19.5
+],
+[
+"R2 Wangan",
+"old head",
+1,
+19.51
+],
+[
+"R2 Wangan",
+"old head",
+2,
+17.87
+],
+[
+"R2 Wangan",
+"crew boss",
+3,
+12.45
+],
+[
+"R2 Street",
+"kid",
+2,
+26.32
+],
+[
+"R2 Street",
+"mature",
+2,
+23.56
+],
+[
+"R2 Street",
+"mature",
+3,
+18.32
+],
+[
+"R2 Street",
+"old head",
+2,
+19.26
+],
+[
+"R2 Street",
+"old head",
+2,
+17.46
+],
+[
+"R2 Street",
+"crew boss",
+4,
+10.87
+],
+[
+"R2 Touge",
+"kid",
+2,
+25.68
+],
+[
+"R2 Touge",
+"mature",
+2,
+23.53
+],
+[
+"R2 Touge",
+"mature",
+3,
+18.37
+],
+[
+"R2 Touge",
+"old head",
+2,
+19.51
+],
+[
+"R2 Touge",
+"old head",
+2,
+17.54
+],
+[
+"R2 Touge",
+"crew boss",
+4,
+11.6
+],
+[
+"R3 Street",
+"kid",
+2,
+24.67
+],
+[
+"R3 Street",
+"mature",
+3,
+23.39
+],
+[
+"R3 Street",
+"mature",
+3,
+19.5
+],
+[
+"R3 Street",
+"old head",
+1,
+19.51
+],
+[
+"R3 Street",
+"old head",
+2,
+17.87
+],
+[
+"R3 Street",
+"crew boss",
+4,
+12.45
+],
+[
+"R3 Touge",
+"kid",
+2,
+26.32
+],
+[
+"R3 Touge",
+"mature",
+2,
+23.56
+],
+[
+"R3 Touge",
+"mature",
+3,
+18.32
+],
+[
+"R3 Touge",
+"old head",
+2,
+19.26
+],
+[
+"R3 Touge",
+"old head",
+2,
+17.46
+],
+[
+"R3 Touge",
+"crew boss",
+5,
+10.87
+],
+[
+"R3 Wangan",
+"kid",
+2,
+25.68
+],
+[
+"R3 Wangan",
+"mature",
+2,
+23.53
+],
+[
+"R3 Wangan",
+"mature",
+3,
+18.37
+],
+[
+"R3 Wangan",
+"old head",
+2,
+19.51
+],
+[
+"R3 Wangan",
+"old head",
+2,
+17.54
+],
+[
+"R3 Wangan",
+"crew boss",
+5,
+11.6
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "C: CREW (2,2,3,3,1,1,0), RO (18,4,4,4,2,1,0)",
+"grind": 122,
+"base_grind": 122,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+22.62
+],
+[
+"R1 Touge",
+"mature",
+2,
+20.02
+],
+[
+"R1 Touge",
+"mature",
+3,
+16.17
+],
+[
+"R1 Touge",
+"old head",
+1,
+16.77
+],
+[
+"R1 Touge",
+"old head",
+2,
+15.04
+],
+[
+"R1 Wangan",
+"kid",
+2,
+22.47
+],
+[
+"R1 Wangan",
+"mature",
+2,
+19.91
+],
+[
+"R1 Wangan",
+"mature",
+3,
+16.52
+],
+[
+"R1 Wangan",
+"old head",
+1,
+16.68
+],
+[
+"R1 Wangan",
+"old head",
+2,
+14.98
+],
+[
+"R1 Street",
+"kid",
+2,
+22.47
+],
+[
+"R1 Street",
+"mature",
+2,
+19.91
+],
+[
+"R1 Street",
+"mature",
+3,
+16.52
+],
+[
+"R1 Street",
+"old head",
+2,
+16.68
+],
+[
+"R1 Street",
+"old head",
+2,
+14.97
+],
+[
+"R2 Wangan",
+"kid",
+2,
+21.63
+],
+[
+"R2 Wangan",
+"mature",
+2,
+20.02
+],
+[
+"R2 Wangan",
+"mature",
+3,
+16.29
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.99
+],
+[
+"R2 Wangan",
+"old head",
+2,
+15.09
+],
+[
+"R2 Street",
+"kid",
+2,
+22.63
+],
+[
+"R2 Street",
+"mature",
+3,
+19.93
+],
+[
+"R2 Street",
+"mature",
+3,
+16.0
+],
+[
+"R2 Street",
+"old head",
+2,
+16.66
+],
+[
+"R2 Street",
+"old head",
+2,
+14.95
+],
+[
+"R2 Touge",
+"kid",
+2,
+22.58
+],
+[
+"R2 Touge",
+"mature",
+3,
+19.9
+],
+[
+"R2 Touge",
+"mature",
+3,
+16.54
+],
+[
+"R2 Touge",
+"old head",
+2,
+16.7
+],
+[
+"R2 Touge",
+"old head",
+2,
+14.95
+],
+[
+"R3 Street",
+"kid",
+2,
+21.63
+],
+[
+"R3 Street",
+"mature",
+3,
+20.02
+],
+[
+"R3 Street",
+"mature",
+3,
+16.29
+],
+[
+"R3 Street",
+"old head",
+2,
+15.99
+],
+[
+"R3 Street",
+"old head",
+2,
+15.09
+],
+[
+"R3 Touge",
+"kid",
+2,
+22.63
+],
+[
+"R3 Touge",
+"mature",
+3,
+19.93
+],
+[
+"R3 Touge",
+"mature",
+3,
+16.0
+],
+[
+"R3 Touge",
+"old head",
+2,
+16.66
+],
+[
+"R3 Touge",
+"old head",
+2,
+14.95
+],
+[
+"R3 Wangan",
+"kid",
+2,
+22.58
+],
+[
+"R3 Wangan",
+"mature",
+3,
+19.9
+],
+[
+"R3 Wangan",
+"mature",
+3,
+16.54
+],
+[
+"R3 Wangan",
+"old head",
+2,
+16.7
+],
+[
+"R3 Wangan",
+"old head",
+2,
+14.95
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": "C: CREW (2,2,3,3,1,1,0), RO (18,4,4,4,2,1,0)",
+"grind": 122,
+"base_grind": 122,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"kid",
+2,
+26.02
+],
+[
+"R1 Touge",
+"mature",
+2,
+23.07
+],
+[
+"R1 Touge",
+"mature",
+3,
+18.68
+],
+[
+"R1 Touge",
+"old head",
+1,
+19.49
+],
+[
+"R1 Touge",
+"old head",
+2,
+17.65
+],
+[
+"R1 Wangan",
+"kid",
+2,
+25.68
+],
+[
+"R1 Wangan",
+"mature",
+2,
+22.43
+],
+[
+"R1 Wangan",
+"mature",
+3,
+18.62
+],
+[
+"R1 Wangan",
+"old head",
+1,
+19.53
+],
+[
+"R1 Wangan",
+"old head",
+2,
+17.56
+],
+[
+"R1 Street",
+"kid",
+2,
+25.68
+],
+[
+"R1 Street",
+"mature",
+2,
+22.43
+],
+[
+"R1 Street",
+"mature",
+3,
+18.62
+],
+[
+"R1 Street",
+"old head",
+2,
+19.53
+],
+[
+"R1 Street",
+"old head",
+2,
+17.56
+],
+[
+"R2 Wangan",
+"kid",
+2,
+24.67
+],
+[
+"R2 Wangan",
+"mature",
+2,
+23.39
+],
+[
+"R2 Wangan",
+"mature",
+3,
+19.5
+],
+[
+"R2 Wangan",
+"old head",
+2,
+18.21
+],
+[
+"R2 Wangan",
+"old head",
+2,
+17.86
+],
+[
+"R2 Street",
+"kid",
+2,
+26.07
+],
+[
+"R2 Street",
+"mature",
+3,
+22.53
+],
+[
+"R2 Street",
+"mature",
+3,
+18.33
+],
+[
+"R2 Street",
+"old head",
+2,
+19.48
+],
+[
+"R2 Street",
+"old head",
+2,
+17.5
+],
+[
+"R2 Touge",
+"kid",
+2,
+25.96
+],
+[
+"R2 Touge",
+"mature",
+3,
+22.8
+],
+[
+"R2 Touge",
+"mature",
+3,
+18.62
+],
+[
+"R2 Touge",
+"old head",
+2,
+19.52
+],
+[
+"R2 Touge",
+"old head",
+2,
+17.55
+],
+[
+"R3 Street",
+"kid",
+2,
+24.67
+],
+[
+"R3 Street",
+"mature",
+3,
+23.39
+],
+[
+"R3 Street",
+"mature",
+3,
+19.5
+],
+[
+"R3 Street",
+"old head",
+2,
+18.21
+],
+[
+"R3 Street",
+"old head",
+2,
+17.86
+],
+[
+"R3 Touge",
+"kid",
+2,
+26.07
+],
+[
+"R3 Touge",
+"mature",
+3,
+22.53
+],
+[
+"R3 Touge",
+"mature",
+3,
+18.33
+],
+[
+"R3 Touge",
+"old head",
+2,
+19.48
+],
+[
+"R3 Touge",
+"old head",
+2,
+17.5
+],
+[
+"R3 Wangan",
+"kid",
+2,
+25.96
+],
+[
+"R3 Wangan",
+"mature",
+3,
+22.8
+],
+[
+"R3 Wangan",
+"mature",
+3,
+18.62
+],
+[
+"R3 Wangan",
+"old head",
+2,
+19.52
+],
+[
+"R3 Wangan",
+"old head",
+2,
+17.55
+]
+]
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.15,
+"grind": 140,
+"base_grind": 153,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Street",
+"mature",
+9,
+38.87
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Touge",
+"mature",
+10,
+38.87
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.1,
+"grind": 140,
+"base_grind": 153,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Street",
+"mature",
+9,
+38.87
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Touge",
+"mature",
+10,
+38.87
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.05,
+"grind": 140,
+"base_grind": 153,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Street",
+"mature",
+9,
+38.87
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Touge",
+"mature",
+10,
+38.87
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.0,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Wangan",
+"crew boss",
+8,
+49.14
+],
+[
+"R2 Street",
+"mature",
+7,
+46.93
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Street",
+"crew boss",
+9,
+49.14
+],
+[
+"R3 Touge",
+"mature",
+8,
+46.93
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "size",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.5,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.14
+],
+[
+"R2 Wangan",
+"crew boss",
+8,
+49.14
+],
+[
+"R2 Street",
+"mature",
+7,
+46.93
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.14
+],
+[
+"R3 Street",
+"crew boss",
+9,
+49.14
+],
+[
+"R3 Touge",
+"mature",
+8,
+46.93
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "size",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.25,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.14
+],
+[
+"R2 Wangan",
+"crew boss",
+8,
+49.14
+],
+[
+"R2 Street",
+"mature",
+7,
+46.93
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.14
+],
+[
+"R3 Street",
+"crew boss",
+9,
+49.14
+],
+[
+"R3 Touge",
+"mature",
+8,
+46.93
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "official",
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.14
+],
+[
+"R2 Wangan",
+"crew boss",
+8,
+49.14
+],
+[
+"R2 Street",
+"mature",
+7,
+46.93
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.14
+],
+[
+"R3 Street",
+"crew boss",
+9,
+49.14
+],
+[
+"R3 Touge",
+"mature",
+8,
+46.93
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": "official",
+"grind": 140,
+"base_grind": 153,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Street",
+"mature",
+9,
+38.87
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Touge",
+"mature",
+10,
+38.87
+],
+[
+"R3 Touge",
+"crew boss",
+8,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "A: CREW (2,2,3,2,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 181,
+"base_grind": 181,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"old head",
+9,
+34.01
+],
+[
+"R1 Touge",
+"crew boss",
+7,
+49.13
+],
+[
+"R1 Wangan",
+"old head",
+9,
+33.95
+],
+[
+"R1 Wangan",
+"crew boss",
+7,
+49.1
+],
+[
+"R1 Street",
+"old head",
+9,
+34.0
+],
+[
+"R1 Street",
+"crew boss",
+8,
+49.13
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.14
+],
+[
+"R2 Wangan",
+"crew boss",
+9,
+49.18
+],
+[
+"R2 Street",
+"old head",
+10,
+33.32
+],
+[
+"R2 Street",
+"crew boss",
+8,
+49.1
+],
+[
+"R2 Touge",
+"old head",
+10,
+33.93
+],
+[
+"R2 Touge",
+"crew boss",
+8,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.14
+],
+[
+"R3 Street",
+"crew boss",
+10,
+49.18
+],
+[
+"R3 Touge",
+"old head",
+11,
+33.32
+],
+[
+"R3 Touge",
+"crew boss",
+9,
+49.1
+],
+[
+"R3 Wangan",
+"old head",
+11,
+33.93
+],
+[
+"R3 Wangan",
+"crew boss",
+9,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": "A: CREW (2,2,3,2,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 181,
+"base_grind": 181,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"old head",
+9,
+34.69
+],
+[
+"R1 Touge",
+"crew boss",
+7,
+49.13
+],
+[
+"R1 Wangan",
+"old head",
+9,
+33.95
+],
+[
+"R1 Wangan",
+"crew boss",
+7,
+49.1
+],
+[
+"R1 Street",
+"old head",
+9,
+34.67
+],
+[
+"R1 Street",
+"crew boss",
+8,
+49.13
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Wangan",
+"crew boss",
+9,
+49.21
+],
+[
+"R2 Street",
+"old head",
+10,
+33.32
+],
+[
+"R2 Street",
+"crew boss",
+8,
+49.1
+],
+[
+"R2 Touge",
+"old head",
+10,
+34.64
+],
+[
+"R2 Touge",
+"crew boss",
+8,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Street",
+"crew boss",
+10,
+49.21
+],
+[
+"R3 Touge",
+"old head",
+11,
+33.32
+],
+[
+"R3 Touge",
+"crew boss",
+9,
+49.1
+],
+[
+"R3 Wangan",
+"old head",
+11,
+34.64
+],
+[
+"R3 Wangan",
+"crew boss",
+9,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "B: CREW (2,2,2,3,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 181,
+"base_grind": 181,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"old head",
+9,
+33.32
+],
+[
+"R1 Touge",
+"crew boss",
+7,
+49.02
+],
+[
+"R1 Wangan",
+"old head",
+9,
+33.98
+],
+[
+"R1 Wangan",
+"crew boss",
+7,
+49.13
+],
+[
+"R1 Street",
+"old head",
+9,
+33.29
+],
+[
+"R1 Street",
+"crew boss",
+8,
+48.96
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.14
+],
+[
+"R2 Wangan",
+"crew boss",
+9,
+49.18
+],
+[
+"R2 Street",
+"old head",
+10,
+33.29
+],
+[
+"R2 Street",
+"crew boss",
+8,
+48.98
+],
+[
+"R2 Touge",
+"old head",
+10,
+33.25
+],
+[
+"R2 Touge",
+"crew boss",
+8,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.14
+],
+[
+"R3 Street",
+"crew boss",
+10,
+49.18
+],
+[
+"R3 Touge",
+"old head",
+11,
+33.29
+],
+[
+"R3 Touge",
+"crew boss",
+9,
+48.98
+],
+[
+"R3 Wangan",
+"old head",
+11,
+33.25
+],
+[
+"R3 Wangan",
+"crew boss",
+9,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": "B: CREW (2,2,2,3,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 181,
+"base_grind": 181,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Touge",
+"old head",
+9,
+34.65
+],
+[
+"R1 Touge",
+"crew boss",
+7,
+49.02
+],
+[
+"R1 Wangan",
+"old head",
+9,
+33.98
+],
+[
+"R1 Wangan",
+"crew boss",
+7,
+49.13
+],
+[
+"R1 Street",
+"old head",
+9,
+33.39
+],
+[
+"R1 Street",
+"crew boss",
+8,
+48.96
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Wangan",
+"crew boss",
+9,
+49.21
+],
+[
+"R2 Street",
+"old head",
+10,
+33.78
+],
+[
+"R2 Street",
+"crew boss",
+8,
+48.98
+],
+[
+"R2 Touge",
+"old head",
+10,
+33.42
+],
+[
+"R2 Touge",
+"crew boss",
+8,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Street",
+"crew boss",
+10,
+49.21
+],
+[
+"R3 Touge",
+"old head",
+11,
+33.78
+],
+[
+"R3 Touge",
+"crew boss",
+9,
+48.98
+],
+[
+"R3 Wangan",
+"old head",
+11,
+33.42
+],
+[
+"R3 Wangan",
+"crew boss",
+9,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "C: CREW (2,2,3,3,1,1,0), RO (18,4,4,4,2,1,0)",
+"grind": 152,
+"base_grind": 152,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.14
+],
+[
+"R2 Wangan",
+"crew boss",
+8,
+49.14
+],
+[
+"R2 Street",
+"mature",
+7,
+46.93
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.14
+],
+[
+"R3 Street",
+"crew boss",
+9,
+49.14
+],
+[
+"R3 Touge",
+"mature",
+8,
+46.93
+],
+[
+"R3 Touge",
+"crew boss",
+7,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": "C: CREW (2,2,3,3,1,1,0), RO (18,4,4,4,2,1,0)",
+"grind": 139,
+"base_grind": 152,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Touge",
+"mature",
+7,
+47.06
+],
+[
+"R1 Touge",
+"crew boss",
+6,
+49.05
+],
+[
+"R1 Wangan",
+"mature",
+7,
+47.05
+],
+[
+"R1 Wangan",
+"crew boss",
+6,
+49.1
+],
+[
+"R1 Street",
+"mature",
+7,
+47.05
+],
+[
+"R1 Street",
+"crew boss",
+6,
+49.1
+],
+[
+"R2 Wangan",
+"mature",
+8,
+47.41
+],
+[
+"R2 Street",
+"mature",
+9,
+38.87
+],
+[
+"R2 Street",
+"crew boss",
+7,
+48.99
+],
+[
+"R2 Touge",
+"mature",
+7,
+47.03
+],
+[
+"R2 Touge",
+"crew boss",
+7,
+49.08
+],
+[
+"R3 Street",
+"mature",
+9,
+47.41
+],
+[
+"R3 Touge",
+"mature",
+10,
+38.87
+],
+[
+"R3 Touge",
+"crew boss",
+7,
+48.99
+],
+[
+"R3 Wangan",
+"mature",
+8,
+47.03
+],
+[
+"R3 Wangan",
+"crew boss",
+8,
+49.08
+]
+]
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.15,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+43.67
+],
+[
+"R2 Touge",
+"old head",
+22,
+41.71
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.1,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+43.67
+],
+[
+"R2 Touge",
+"old head",
+22,
+41.71
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.05,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+43.67
+],
+[
+"R2 Touge",
+"old head",
+22,
+41.71
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.0,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+43.67
+],
+[
+"R2 Touge",
+"old head",
+22,
+41.71
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "size",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.5,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+41.94
+],
+[
+"R2 Touge",
+"old head",
+22,
+39.8
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "size",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.25,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+41.94
+],
+[
+"R2 Touge",
+"old head",
+22,
+39.8
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "official",
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+41.94
+],
+[
+"R2 Touge",
+"old head",
+22,
+39.8
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": "official",
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+28,
+43.67
+],
+[
+"R2 Touge",
+"old head",
+22,
+41.71
+],
+[
+"R3 Touge",
+"mature",
+18,
+49.02
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "A: CREW (2,2,3,2,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+18,
+44.44
+],
+[
+"R2 Wangan",
+"old head",
+30,
+35.25
+],
+[
+"R2 Touge",
+"old head",
+21,
+44.44
+],
+[
+"R3 Touge",
+"mature",
+17,
+49.02
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": "A: CREW (2,2,3,2,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+18,
+44.44
+],
+[
+"R2 Wangan",
+"old head",
+30,
+40.77
+],
+[
+"R2 Touge",
+"old head",
+21,
+44.44
+],
+[
+"R3 Touge",
+"mature",
+17,
+49.02
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "B: CREW (2,2,2,3,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 160,
+"base_grind": 160,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+18,
+44.52
+],
+[
+"R1 Street",
+"crew boss",
+43,
+49.94
+],
+[
+"R2 Street",
+"old head",
+21,
+39.74
+],
+[
+"R3 Street",
+"old head",
+33,
+35.25
+],
+[
+"R3 Wangan",
+"old head",
+23,
+44.4
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": "B: CREW (2,2,2,3,1,1,1), RO (18,4,4,4,1,1,1)",
+"grind": 160,
+"base_grind": 160,
+"walls_cleared_by_mods": [],
+"dead_wins": 0,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+18,
+44.52
+],
+[
+"R1 Street",
+"crew boss",
+43,
+49.94
+],
+[
+"R2 Street",
+"old head",
+21,
+40.59
+],
+[
+"R3 Street",
+"old head",
+33,
+40.77
+],
+[
+"R3 Wangan",
+"old head",
+23,
+44.4
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "balanced",
+"knob": "C: CREW (2,2,3,3,1,1,0), RO (18,4,4,4,2,1,0)",
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+30,
+34.98
+],
+[
+"R2 Touge",
+"old head",
+21,
+44.5
+],
+[
+"R3 Touge",
+"mature",
+17,
+49.02
+]
+]
+},
+{
+"kind": "alloc",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": "C: CREW (2,2,3,3,1,1,0), RO (18,4,4,4,2,1,0)",
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"dead_wins": 9,
+"walls": [
+[
+"R1 Wangan",
+"old head",
+19,
+44.48
+],
+[
+"R2 Wangan",
+"old head",
+30,
+40.73
+],
+[
+"R2 Touge",
+"old head",
+21,
+44.5
+],
+[
+"R3 Touge",
+"mature",
+17,
+49.02
+]
+]
+}
+]

@@ -1,0 +1,906 @@
+{
+ "definition": "total % = (SP + \u03a3 mod stats) / reference; stat sum POW+EN+HAN (equations.stat_shares, progression r)",
+ "brute": [
+  {
+   "point": "R1 Street crew boss (j=6)",
+   "split": "100/0/0",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    5,
+    5,
+    4,
+    5,
+    5,
+    5
+   ],
+   "loadouts": 12500,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2751,
+   "share_max": 0.3982,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R1 Street crew boss (j=6)",
+   "split": "80/10/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    5,
+    5,
+    4,
+    5,
+    5,
+    5
+   ],
+   "loadouts": 12500,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2926,
+   "share_max": 0.3787,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R1 Street crew boss (j=6)",
+   "split": "70/20/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2926,
+   "share_max": 0.369,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan kid (j=0)",
+   "split": "100/0/0",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    6,
+    6,
+    5,
+    6,
+    6,
+    6
+   ],
+   "loadouts": 38880,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2759,
+   "share_max": 0.3962,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan kid (j=0)",
+   "split": "80/10/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    6,
+    6,
+    5,
+    6,
+    6,
+    6
+   ],
+   "loadouts": 38880,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2931,
+   "share_max": 0.3774,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan kid (j=0)",
+   "split": "70/20/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2931,
+   "share_max": 0.3679,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Street crew boss (j=6)",
+   "split": "100/0/0",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    6,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 100842,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2756,
+   "share_max": 0.3968,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Street crew boss (j=6)",
+   "split": "100/0/0",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 229376,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2756,
+   "share_max": 0.3968,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Street crew boss (j=6)",
+   "split": "80/10/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    6,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 100842,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2929,
+   "share_max": 0.3777,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Street crew boss (j=6)",
+   "split": "80/10/10",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 229376,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2929,
+   "share_max": 0.3777,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Street crew boss (j=6)",
+   "split": "70/20/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2929,
+   "share_max": 0.3682,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Street crew boss (j=6)",
+   "split": "70/20/10",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 262144,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2929,
+   "share_max": 0.3682,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature (j=3)",
+   "split": "100/0/0",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2737,
+   "share_max": 0.4012,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature (j=3)",
+   "split": "100/0/0",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 262144,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2737,
+   "share_max": 0.4012,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature (j=3)",
+   "split": "80/10/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2916,
+   "share_max": 0.3808,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature (j=3)",
+   "split": "80/10/10",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 262144,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2916,
+   "share_max": 0.3808,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature (j=3)",
+   "split": "70/20/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2916,
+   "share_max": 0.3707,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature (j=3)",
+   "split": "70/20/10",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 262144,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2916,
+   "share_max": 0.3707,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "100/0/0",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2753,
+   "share_max": 0.397,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "100/0/0",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 262144,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2753,
+   "share_max": 0.397,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "80/10/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2927,
+   "share_max": 0.3779,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "80/10/10",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 262144,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2927,
+   "share_max": 0.3779,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "70/20/10",
+   "aero": false,
+   "window": true,
+   "catalog_sizes": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "loadouts": 117649,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2927,
+   "share_max": 0.3683,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "70/20/10",
+   "aero": true,
+   "window": true,
+   "catalog_sizes": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loadouts": 262144,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.2927,
+   "share_max": 0.3683,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  }
+ ],
+ "campaign": [
+  {
+   "point": "R1 Touge kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Touge kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Touge mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Touge mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Touge old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Touge old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Touge crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Wangan kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Wangan kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Wangan mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Wangan mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Wangan old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Wangan old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Wangan crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Street kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Street kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Street mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Street mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Street old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Street old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R1 Street crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Wangan crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Street kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Street kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Street mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Street mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Street old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Street old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Street crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Touge kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Touge kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Touge mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Touge mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Touge old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Touge old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R2 Touge crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Street kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Street kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Street mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Street old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Street old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Street crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Touge kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Touge kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Touge mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Touge mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Touge old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Touge old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Touge crew boss j6",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan kid j0",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan kid j1",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan mature j2",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan mature j3",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan old head j4",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan old head j5",
+   "max_total_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss j6",
+   "max_total_pct": 105.0
+  }
+ ],
+ "austin36": [
+  {
+   "point": "R2 Touge kid (j=1)",
+   "split": "100/0/0",
+   "aero": false,
+   "window": false,
+   "catalog_sizes": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "loadouts": 46656,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.308,
+   "share_max": 0.3583,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R2 Touge kid (j=1)",
+   "split": "80/10/10",
+   "aero": false,
+   "window": false,
+   "catalog_sizes": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "loadouts": 46656,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.3156,
+   "share_max": 0.3508,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "100/0/0",
+   "aero": false,
+   "window": false,
+   "catalog_sizes": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "loadouts": 46656,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.307,
+   "share_max": 0.3609,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  },
+  {
+   "point": "R3 Wangan crew boss (j=6)",
+   "split": "80/10/10",
+   "aero": false,
+   "window": false,
+   "catalog_sizes": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "loadouts": 46656,
+   "max_total_pct": 105.0,
+   "separable_best_per_slot_pct": 105.0,
+   "reaches_105": true,
+   "over_105": 0,
+   "share_min": 0.3149,
+   "share_max": 0.3526,
+   "outside_25_50": 0,
+   "max_total_if_share_clamped_pct": 105.0
+  }
+ ],
+ "campaign_max_abs_dev_from_105_pct": 2.220446049250313e-14
+}

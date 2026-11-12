@@ -1,0 +1,392 @@
+[
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.04,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.03,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.02,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.01,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.04,
+"grind": 140,
+"base_grind": 153,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"changed": [
+[
+"R2 Wangan",
+"crew boss",
+8,
+0,
+50.3,
+"window@HAN[------]"
+],
+[
+"R2 Street",
+"mature",
+7,
+9,
+38.87,
+"fixed[------]"
+],
+[
+"R3 Street",
+"crew boss",
+9,
+0,
+50.3,
+"window@HAN[------]"
+],
+[
+"R3 Touge",
+"mature",
+8,
+10,
+38.87,
+"fixed[------]"
+]
+]
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.03,
+"grind": 140,
+"base_grind": 153,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"changed": [
+[
+"R2 Wangan",
+"crew boss",
+8,
+0,
+50.3,
+"window@HAN[------]"
+],
+[
+"R2 Street",
+"mature",
+7,
+9,
+38.87,
+"fixed[------]"
+],
+[
+"R3 Street",
+"crew boss",
+9,
+0,
+50.3,
+"window@HAN[------]"
+],
+[
+"R3 Touge",
+"mature",
+8,
+10,
+38.87,
+"fixed[------]"
+]
+]
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.02,
+"grind": 140,
+"base_grind": 153,
+"walls_cleared_by_mods": [
+[
+"R2 Wangan",
+"crew boss"
+],
+[
+"R3 Street",
+"crew boss"
+]
+],
+"changed": [
+[
+"R2 Wangan",
+"crew boss",
+8,
+0,
+50.3,
+"window@HAN[------]"
+],
+[
+"R2 Street",
+"mature",
+7,
+9,
+38.87,
+"fixed[------]"
+],
+[
+"R3 Street",
+"crew boss",
+9,
+0,
+50.3,
+"window@HAN[------]"
+],
+[
+"R3 Touge",
+"mature",
+8,
+10,
+38.87,
+"fixed[------]"
+]
+]
+},
+{
+"kind": "cap",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.01,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.04,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.03,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.02,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "cap",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 1.01,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.7,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.65,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.6,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "weak",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.55,
+"grind": 141,
+"base_grind": 141,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.7,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.65,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.6,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "average",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.55,
+"grind": 153,
+"base_grind": 153,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.7,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.65,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.6,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+},
+{
+"kind": "size",
+"profile": "strong",
+"split": "100/0/0",
+"policy": "window",
+"knob": 0.55,
+"grind": 121,
+"base_grind": 121,
+"walls_cleared_by_mods": [],
+"changed": []
+}
+]

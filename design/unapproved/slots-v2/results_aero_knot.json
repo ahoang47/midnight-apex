@@ -1,0 +1,40 @@
+[
+{
+"split": "100/0/0",
+"policy": "aero10",
+"grind": 153,
+"base_grind": 153,
+"changed": []
+},
+{
+"split": "100/0/0",
+"policy": "aero20",
+"grind": 153,
+"base_grind": 153,
+"changed": []
+},
+{
+"split": "100/0/0",
+"policy": "aero30",
+"grind": 146,
+"base_grind": 153,
+"changed": [
+[
+"R3 Street",
+"crew boss",
+9,
+0,
+50.14,
+"aero@EN+window@HAN P1.00/H0.00/E0.00[------]"
+],
+[
+"R3 Touge",
+"mature",
+8,
+10,
+38.91,
+"aero@EN pool->P1.00/H0.00/E0.00[------]"
+]
+]
+}
+]

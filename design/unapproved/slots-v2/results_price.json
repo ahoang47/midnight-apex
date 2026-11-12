@@ -1,0 +1,330 @@
+{
+ "units": "race-income units (1 race = 1 unit, placeholder)",
+ "P1": {
+  "single": 1.1,
+  "restock_each": 0.25,
+  "crews": {
+   "R1 Touge": {
+    "purchases": 11,
+    "opener": true,
+    "spend": 7.0,
+    "income": {
+     "weak": 19,
+     "average": 20,
+     "strong": 7
+    },
+    "surplus": {
+     "weak": 12.0,
+     "average": 13.0,
+     "strong": 0.0
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R1 Wangan": {
+    "purchases": 6,
+    "opener": false,
+    "spend": 6.6,
+    "income": {
+     "weak": 19,
+     "average": 20,
+     "strong": 26
+    },
+    "surplus": {
+     "weak": 12.4,
+     "average": 13.4,
+     "strong": 19.4
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R1 Street": {
+    "purchases": 6,
+    "opener": false,
+    "spend": 6.6,
+    "income": {
+     "weak": 20,
+     "average": 20,
+     "strong": 7
+    },
+    "surplus": {
+     "weak": 13.4,
+     "average": 13.4,
+     "strong": 0.4
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R2 Wangan": {
+    "purchases": 11,
+    "opener": true,
+    "spend": 7.0,
+    "income": {
+     "weak": 19,
+     "average": 23,
+     "strong": 35
+    },
+    "surplus": {
+     "weak": 12.0,
+     "average": 16.0,
+     "strong": 28.0
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R2 Street": {
+    "purchases": 6,
+    "opener": false,
+    "spend": 6.6,
+    "income": {
+     "weak": 21,
+     "average": 21,
+     "strong": 7
+    },
+    "surplus": {
+     "weak": 14.4,
+     "average": 14.4,
+     "strong": 0.4
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R2 Touge": {
+    "purchases": 6,
+    "opener": false,
+    "spend": 6.6,
+    "income": {
+     "weak": 21,
+     "average": 21,
+     "strong": 29
+    },
+    "surplus": {
+     "weak": 14.4,
+     "average": 14.4,
+     "strong": 22.4
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R3 Street": {
+    "purchases": 11,
+    "opener": true,
+    "spend": 7.0,
+    "income": {
+     "weak": 21,
+     "average": 25,
+     "strong": 7
+    },
+    "surplus": {
+     "weak": 14.0,
+     "average": 18.0,
+     "strong": 0.0
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R3 Touge": {
+    "purchases": 6,
+    "opener": false,
+    "spend": 6.6,
+    "income": {
+     "weak": 22,
+     "average": 23,
+     "strong": 25
+    },
+    "surplus": {
+     "weak": 15.4,
+     "average": 16.4,
+     "strong": 18.4
+    },
+    "races_of_income_per_single": 1.1
+   },
+   "R3 Wangan": {
+    "purchases": 6,
+    "opener": false,
+    "spend": 6.6,
+    "income": {
+     "weak": 22,
+     "average": 23,
+     "strong": 7
+    },
+    "surplus": {
+     "weak": 15.4,
+     "average": 16.4,
+     "strong": 0.4
+    },
+    "races_of_income_per_single": 1.1
+   }
+  },
+  "carried_wallet": {
+   "weak": {
+    "extra_money_races": 0.0,
+    "wallet_at_end_R3": 123.4
+   },
+   "average": {
+    "extra_money_races": 0.0,
+    "wallet_at_end_R3": 135.4
+   },
+   "strong": {
+    "extra_money_races": 0.0,
+    "wallet_at_end_R3": 89.4
+   }
+  },
+  "min_surplus": {
+   "weak": 12.0,
+   "average": 13.0,
+   "strong": 0.0
+  }
+ },
+ "P2": {
+  "crews": {
+   "R1 Touge": {
+    "purchases": 11,
+    "price_per_purchase": 1.73,
+    "spend": 19,
+    "income": {
+     "weak": 19,
+     "average": 20,
+     "strong": 7
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 12
+    }
+   },
+   "R1 Wangan": {
+    "purchases": 6,
+    "price_per_purchase": 3.17,
+    "spend": 19,
+    "income": {
+     "weak": 19,
+     "average": 20,
+     "strong": 26
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 0
+    }
+   },
+   "R1 Street": {
+    "purchases": 6,
+    "price_per_purchase": 3.33,
+    "spend": 20,
+    "income": {
+     "weak": 20,
+     "average": 20,
+     "strong": 7
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 13
+    }
+   },
+   "R2 Wangan": {
+    "purchases": 11,
+    "price_per_purchase": 1.73,
+    "spend": 19,
+    "income": {
+     "weak": 19,
+     "average": 23,
+     "strong": 35
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 0
+    }
+   },
+   "R2 Street": {
+    "purchases": 6,
+    "price_per_purchase": 3.5,
+    "spend": 21,
+    "income": {
+     "weak": 21,
+     "average": 21,
+     "strong": 7
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 14
+    }
+   },
+   "R2 Touge": {
+    "purchases": 6,
+    "price_per_purchase": 3.5,
+    "spend": 21,
+    "income": {
+     "weak": 21,
+     "average": 21,
+     "strong": 29
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 0
+    }
+   },
+   "R3 Street": {
+    "purchases": 11,
+    "price_per_purchase": 1.91,
+    "spend": 21,
+    "income": {
+     "weak": 21,
+     "average": 25,
+     "strong": 7
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 14
+    }
+   },
+   "R3 Touge": {
+    "purchases": 6,
+    "price_per_purchase": 3.67,
+    "spend": 22,
+    "income": {
+     "weak": 22,
+     "average": 23,
+     "strong": 25
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 0
+    }
+   },
+   "R3 Wangan": {
+    "purchases": 6,
+    "price_per_purchase": 3.67,
+    "spend": 22,
+    "income": {
+     "weak": 22,
+     "average": 23,
+     "strong": 7
+    },
+    "extra_money_races": {
+     "weak": 0,
+     "average": 0,
+     "strong": 15
+    }
+   }
+  },
+  "carried_wallet": {
+   "weak": {
+    "extra_money_races": 0.0,
+    "wallet_at_end_R3": 0.0
+   },
+   "average": {
+    "extra_money_races": 0.0,
+    "wallet_at_end_R3": 12.0
+   },
+   "strong": {
+    "extra_money_races": 34.0,
+    "wallet_at_end_R3": 0.0
+   }
+  },
+  "extra_money_races_total": {
+   "weak": 0,
+   "average": 0,
+   "strong": 68
+  }
+ }
+}

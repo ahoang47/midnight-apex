@@ -1,0 +1,482 @@
+[
+{
+"knot_100": 0.68,
+"profile": "weak",
+"policy": "balanced",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+9.64,
+"balanced"
+],
+[
+"R3 Street",
+4,
+9.64,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.68,
+"profile": "weak",
+"policy": "window",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+13.47,
+"window@HAN[------]"
+],
+[
+"R3 Street",
+4,
+13.47,
+"window@HAN[------]"
+]
+]
+},
+{
+"knot_100": 0.68,
+"profile": "average",
+"policy": "balanced",
+"grind": 153,
+"opener_boss": [
+[
+"R2 Wangan",
+8,
+49.14,
+"balanced"
+],
+[
+"R3 Street",
+9,
+49.14,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.68,
+"profile": "average",
+"policy": "window",
+"grind": 140,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+50.3,
+"window@HAN[------]"
+],
+[
+"R3 Street",
+0,
+50.3,
+"window@HAN[------]"
+]
+]
+},
+{
+"knot_100": 0.68,
+"profile": "strong",
+"policy": "balanced",
+"grind": 121,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.42,
+"balanced"
+],
+[
+"R3 Street",
+0,
+54.76,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.68,
+"profile": "strong",
+"policy": "window",
+"grind": 121,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.42,
+"balanced"
+],
+[
+"R3 Street",
+0,
+54.76,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.67,
+"profile": "weak",
+"policy": "balanced",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+9.6,
+"balanced"
+],
+[
+"R3 Street",
+4,
+9.6,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.67,
+"profile": "weak",
+"policy": "window",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+12.77,
+"window@HAN[------]"
+],
+[
+"R3 Street",
+4,
+12.77,
+"window@HAN[------]"
+]
+]
+},
+{
+"knot_100": 0.67,
+"profile": "average",
+"policy": "balanced",
+"grind": 153,
+"opener_boss": [
+[
+"R2 Wangan",
+8,
+48.87,
+"balanced"
+],
+[
+"R3 Street",
+9,
+48.87,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.67,
+"profile": "average",
+"policy": "window",
+"grind": 153,
+"opener_boss": [
+[
+"R2 Wangan",
+8,
+49.07,
+"window@HAN[------]"
+],
+[
+"R3 Street",
+9,
+49.07,
+"window@HAN[------]"
+]
+]
+},
+{
+"knot_100": 0.67,
+"profile": "strong",
+"policy": "balanced",
+"grind": 121,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.42,
+"balanced"
+],
+[
+"R3 Street",
+0,
+53.37,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.67,
+"profile": "strong",
+"policy": "window",
+"grind": 121,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.42,
+"balanced"
+],
+[
+"R3 Street",
+0,
+53.37,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.66,
+"profile": "weak",
+"policy": "balanced",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+9.54,
+"balanced"
+],
+[
+"R3 Street",
+4,
+9.54,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.66,
+"profile": "weak",
+"policy": "window",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+12.11,
+"window@HAN[------]"
+],
+[
+"R3 Street",
+4,
+12.11,
+"window@HAN[------]"
+]
+]
+},
+{
+"knot_100": 0.66,
+"profile": "average",
+"policy": "balanced",
+"grind": 153,
+"opener_boss": [
+[
+"R2 Wangan",
+8,
+48.46,
+"balanced"
+],
+[
+"R3 Street",
+9,
+48.46,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.66,
+"profile": "average",
+"policy": "window",
+"grind": 153,
+"opener_boss": [
+[
+"R2 Wangan",
+8,
+48.46,
+"fixed[------]"
+],
+[
+"R3 Street",
+9,
+48.46,
+"fixed[------]"
+]
+]
+},
+{
+"knot_100": 0.66,
+"profile": "strong",
+"policy": "balanced",
+"grind": 112,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.33,
+"balanced"
+],
+[
+"R3 Street",
+0,
+52.9,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.66,
+"profile": "strong",
+"policy": "window",
+"grind": 112,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.33,
+"balanced"
+],
+[
+"R3 Street",
+0,
+52.9,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.65,
+"profile": "weak",
+"policy": "balanced",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+9.54,
+"balanced"
+],
+[
+"R3 Street",
+4,
+9.54,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.65,
+"profile": "weak",
+"policy": "window",
+"grind": 141,
+"opener_boss": [
+[
+"R2 Wangan",
+3,
+11.08,
+"window@HAN[------]"
+],
+[
+"R3 Street",
+4,
+11.08,
+"window@HAN[------]"
+]
+]
+},
+{
+"knot_100": 0.65,
+"profile": "average",
+"policy": "balanced",
+"grind": 153,
+"opener_boss": [
+[
+"R2 Wangan",
+8,
+48.45,
+"balanced"
+],
+[
+"R3 Street",
+9,
+48.45,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.65,
+"profile": "average",
+"policy": "window",
+"grind": 153,
+"opener_boss": [
+[
+"R2 Wangan",
+8,
+48.45,
+"fixed[------]"
+],
+[
+"R3 Street",
+9,
+48.45,
+"fixed[------]"
+]
+]
+},
+{
+"knot_100": 0.65,
+"profile": "strong",
+"policy": "balanced",
+"grind": 112,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.33,
+"balanced"
+],
+[
+"R3 Street",
+0,
+51.9,
+"balanced"
+]
+]
+},
+{
+"knot_100": 0.65,
+"profile": "strong",
+"policy": "window",
+"grind": 112,
+"opener_boss": [
+[
+"R2 Wangan",
+0,
+86.33,
+"balanced"
+],
+[
+"R3 Street",
+0,
+51.9,
+"balanced"
+]
+]
+}
+]
