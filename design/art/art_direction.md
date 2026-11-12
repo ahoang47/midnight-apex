@@ -274,9 +274,11 @@ make. The line is built **phase by phase and chains**: the Entry segment starts 
 segment **starts where the Entry segment ends** and its angle changes with the Apex stance being hovered; the Exit
 segment starts where the Apex segment ends and angles with the Exit stance. Changing an earlier pick redraws every later
 segment. Confirmed segments stay solid, and the hovered segment updates live as the player scrolls stances. Visual
-treatment follows Austin's reference image (pending re-share to Arthur); until then: a flat ribbon on the road
-surface, drawn in the 3D layer (it is subject to B.5c crunch), tinted by the stance colour of that segment
-(ATK #2CB84A, DEF #E8282C, NEU #F0C828), no glow or soft edges. Purely visual (Austin 2026-11-12): it does not
+treatment (Austin 2026-11-12): a row of **flat chevrons painted on the road**, pointing in the direction of travel,
+evenly spaced along the path, drawn in the 3D layer (subject to B.5c crunch). Each segment's chevrons take that
+segment's stance colour, solid (ATK #2CB84A, DEF #E8282C, NEU #F0C828). There is no yellow-to-red gradient across
+the line; a slight brightness ramp along a segment is fine. The hovered segment uses a lighter or pulsed variant.
+No glow or soft edges. Purely visual (Austin 2026-11-12): it does not
 affect scoring and has no sim/ values. Stance-to-bend mapping (Arthur, placeholder until Austin approves): ATK cuts
 toward the inside at 2/3 of the lane width, DEF holds the outside line, NEU runs mid-lane; each segment starts from the previous end point.
 

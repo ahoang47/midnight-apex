@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Arthur [art]: B.5d line preview is flat stance-coloured chevrons; unapproved line-preview mockup
+- **B.5d** (`design/art/art_direction.md`): the preview is a row of flat chevrons painted on the road, pointing along the drive, stance-coloured per segment (ATK `#2CB84A`, DEF `#E8282C`, NEU `#F0C828`, solid). No yellow-to-red gradient across the line; a slight brightness ramp along a segment is fine. Still visual only; placeholder stance-to-bend mapping unchanged.
+- **Unapproved mockup** (`unapproved/arthur/mockups/line_preview/`): Godot 4.6.3 frames of the chained Entry/Apex/Exit preview on a copy of Gordon's two-corner scenes, with pack-road asphalt, a high camera that shows the whole hairpin, and sharp 1280×960 HUD. Not approved until Austin says so.
+
+
 ## 2026-11-12 — Desmond [ci]: run CI on Python 3.13 so qte-v1 function bits match
 - **What:** both jobs in `.github/workflows/ci.yml` now use Python 3.13, the same series as the box (3.13.5).
 - **Why:** the first Actions run ([CI #1](https://github.com/ahoang47/midnight-apex/actions/runs/43269513343)) was green on **sim** (~1 min). On **godot** (~4 min 44 s) every two-corner race, dump/load, restart test and Plan the Line key test matched the pinned sim (max_abs_diff 0). The only failure was `tools/qte_fn_test.py`: 337 bit mismatches at max_abs_diff=2.220e-16 (one ULP) under the runner's Python 3.12.16. The same test is 0 mismatches on the box under Python 3.13.5. That was a CI setup choice, not a game-logic failure.

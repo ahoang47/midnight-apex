@@ -9,3 +9,4 @@ Concept and UI mockups for review. Not approved by Austin. Proposals only; anyth
 - `pattern_read/`: A/B layouts for showing a locked line
 - `race_state_study/`: fixed-chase race-state study, rival Entry matrix with the proposed player **Line Lock** selector, and the 640 vs 960 resolution test (experiment only)
 - `psx_road_test/`: unapproved Godot before/after of the line-select Entry frame with pack-based PSX roads, plus sharp-UI variants (new B.5c)
+- `line_preview/`: unapproved Godot B.5d line-preview frames (flat stance-coloured chevrons on a pack road, copy of Gordon's two-corner scenes)
