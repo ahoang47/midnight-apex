@@ -24,7 +24,7 @@ CLASH_STAKES = 0.3
 CLASH_OUTCOMES: list[tuple[str, float]] = [
     ("Player sweeps (3-0)", 1 + CLASH_STAKES),
     ("Player wins   (2-1)", (2 * (1 + CLASH_STAKES) + (1 - CLASH_STAKES)) / 3),
-    ("Neutral       (1-1)", 1.0),
+    ("Draw          (1-1)", 1.0),
     ("Opponent wins (1-2)", ((1 + CLASH_STAKES) + 2 * (1 - CLASH_STAKES)) / 3),
     ("Opponent sweeps(0-3)", 1 - CLASH_STAKES),
 ]

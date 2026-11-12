@@ -44,8 +44,8 @@ Moved to `unapproved/gordon/playtest-state-spec.md` (unapproved; awaiting Austin
 **🤖 MCP creates** `scripts/globals.gd` — enums and constants.
 
 ```gdscript
-enum Stance { ATTACK, DEFEND, NEUTRAL }
-enum StanceOutcome { WIN = 1, NEUTRAL = 0, LOSS = -1 }
+enum Stance { POW, EN, HAN }
+enum StanceOutcome { WIN = 1, DRAW = 0, LOSS = -1 }
 enum EncounterType { WILD, LIEUTENANT, BOSS }
 enum PhaseType { AGGRESSIVE, REACTIVE, UNPREDICTABLE }
 enum QteType { MASH, TIMING }
@@ -174,9 +174,9 @@ Battle (Node)                                   ← TurnManager.gd attached
 │   │   └── CardPanel (VBox, 180px)
 │   │       ├── PhasePromptLabel (Label)      ← "ENTRY — Pick your stance"
 │   │       ├── StraightTimerBar (TextureProgress)
-│   │       ├── AttackButton (Button)
-│   │       ├── DefendButton (Button)
-│   │       └── SteadyButton (Button)
+│   │       ├── PowButton (Button)
+│   │       ├── EnButton (Button)
+│   │       └── HanButton (Button)
 │   │
 │   ├── BottomBar (HBoxContainer)
 │   │   ├── PhaseColumn (VBox)
@@ -222,14 +222,14 @@ Battle (Node)                                   ← TurnManager.gd attached
 class_name Deck
 
 static func deck_weights(pow: float, en: float, han: float) -> Array
-    # Returns [w_atk, w_neu, w_def] (Attack = POW, Steady = HAN, Defend = EN), §3.2
+    # Returns [w_pow, w_han, w_en], §3.2
 
 static func draw_hand(pow: float, en: float, han: float,
                       rng: RandomNumberGenerator, n: int = HAND_SIZE) -> Array
     # n cards drawn i.i.d. (with replacement) from deck_weights(), one rng.rand_weighted() per card
     # Returns Array[Stance]
 
-static func hand_stance_counts(hand: Array) -> Dictionary  # {ATTACK: N, DEFEND: N, NEUTRAL: N}
+static func hand_stance_counts(hand: Array) -> Dictionary  # {POW: N, EN: N, HAN: N}
 ```
 
 **Key rules:**
@@ -253,7 +253,7 @@ w_x     = raw_x / (raw_atk + raw_neu + raw_def)
 
 **Goal:** 12s countdown, 3 sequential phases (entry/apex/exit), auto-pick on timeout.
 
-> **Prototype timer, not the locked tell.** Austin locked the read on 2026-11-06 in `design/06-pattern-read.md`: the player locks all 3 cards up front, before corner playback, and the car tell is lane Entry (outside = Attack, center = Steady, inside = Defend), which can bluff by improper placement. Apex and Exit are inferred, with no explicit tell and no extra bluff layer. Shared Touge, Wangan, and Street tendencies are the intended inference, and the precise mapping is still TBD. The Aggressive, Defensive, and Precise rows in that doc are not that map. The steps below match the scripts that are already in the repo. They were not rewritten, and this decision did not pick 12s over the old 8s sentence in that doc.
+> **Prototype timer, not the locked tell.** Austin locked the read on 2026-11-06 in `design/06-pattern-read.md`: the player locks all 3 cards up front, before corner playback, and the car tell is the Entry lane, which shows the Entry stance (on-screen lane-to-stat map: `design/02-equations-reference.md` §6.0) and can bluff by improper placement. Apex and Exit are inferred, with no explicit tell and no extra bluff layer. Shared Touge, Wangan, and Street tendencies are the intended inference, and the precise mapping is still TBD. The Aggressive, Defensive, and Precise rows in that doc are not that map. The steps below match the scripts that are already in the repo. They were not rewritten, and this decision did not pick 12s over the old 8s sentence in that doc.
 
 ### 4.1 `StraightTimer.gd`
 
@@ -292,9 +292,9 @@ func start():
 ```gdscript
 func on_hand_dealt(hand: Array):
     counts = Deck.hand_stance_counts(hand)
-    AttackButton.text = "ATTACK (x" + str(counts[ATTACK]) + ")"
-    DefendButton.text = "DEFEND (x" + str(counts[DEFEND]) + ")"
-    SteadyButton.text = "STEADY (x" + str(counts[NEUTRAL]) + ")"
+    PowButton.text = "POW (x" + str(counts[POW]) + ")"
+    EnButton.text = "EN (x" + str(counts[EN]) + ")"
+    HanButton.text = "HAN (x" + str(counts[HAN]) + ")"
     disable all buttons initially
 
 func on_phase_pick(phase_index):
@@ -324,7 +324,7 @@ func on_pick_timeout(phase_index):
 
 ```gdscript
 static func resolve_stance(a: Stance, b: Stance) -> StanceOutcome
-    # Attack > Neutral > Defend > Attack
+    # POW > HAN > EN > POW; same stance → DRAW
 
 static func battle_winner(outcomes: Array) -> String
     # sum(outcome.values) — positive → "Player", negative → "Opponent", zero → "Tie"
@@ -370,7 +370,7 @@ static func timing_value(q: float) -> float
 static func clash_payoff(outcome: StanceOutcome, q: float) -> float
     # Phi(outcome, q), with t = timing_value(q):
     #   WIN     → W0 + (1 - W0) × t
-    #   NEUTRAL → T_MAX × t
+    #   DRAW    → T_MAX × t
     #   LOSS    → L_MAX × t
 
 static func clash_progress(outcome: StanceOutcome, q_time: float,
@@ -501,8 +501,8 @@ func stop() -> float:
 
 One continuous QTE per corner. Type determined by `(turn_type × stance)`:
 
-| Turn Type | ATTACK | DEFEND | STEADY |
-|-----------|--------|--------|--------|
+| Turn Type | POW | EN | HAN |
+|-----------|-----|----|-----|
 | Hairpin | MASH | TIMING | TIMING |
 | Constant Radius | TIMING | MASH | MASH |
 | Decreasing Radius | MASH | TIMING | MASH |
@@ -522,7 +522,7 @@ One continuous QTE per corner. Type determined by `(turn_type × stance)`:
 
 **🤖 MCP creates** static data classes:
 
-**`TurnTypeData.gd`** — per-district line tables. Mirrors `LINE_SET_C` in `sim/velocity_shift/equations.py` exactly (copied into `scripts/globals.gd` like every other sim constant, never retuned here): district (`touge`, `wangan`, `street`) → corner code (`HP`, `CR`, `DR`, `IR`, `N90`, `CH`, `ES`, `SW`) → `[main, alt1, alt2]`, each an Entry/Apex/Exit string of `D` (Defend), `S` (Steady = `Stance.NEUTRAL`) and `A` (Attack). The alternates share main's Entry: `alt1` switches Apex+Exit, `alt2` switches Exit only. Once per corner (each turn), the opponent draws one whole line with a single weighted pick over `[main, alt1, alt2]` with weights `[LINE_ADHERENCE, (1 - LINE_ADHERENCE) × LINE_ALT_WEIGHTS["alt1"], (1 - LINE_ADHERENCE) × LINE_ALT_WEIGHTS["alt2"]]`. It's one draw, not an adherence roll followed by an alternate roll. It plays the chosen line exactly, and its hand never blocks it. When `equations.py` changes a line (for example the 6fc87d5 Street `N90` and Wangan `IR`/`SW` edits), only the mirrored table changes:
+**`TurnTypeData.gd`** — per-district line tables. Mirrors `LINE_SET_C` in `sim/velocity_shift/equations.py` exactly (copied into `scripts/globals.gd` like every other sim constant, never retuned here): district (`touge`, `wangan`, `street`) → corner code (`HP`, `CR`, `DR`, `IR`, `N90`, `CH`, `ES`, `SW`) → `[main, alt1, alt2]`, each an Entry/Apex/Exit string of `P` (`Stance.POW`), `E` (`Stance.EN`) and `H` (`Stance.HAN`); letters renamed from A/D/S on 2026-11-12 (map: `design/02-equations-reference.md` §6.0). The alternates share main's Entry: `alt1` switches Apex+Exit, `alt2` switches Exit only. Once per corner (each turn), the opponent draws one whole line with a single weighted pick over `[main, alt1, alt2]` with weights `[LINE_ADHERENCE, (1 - LINE_ADHERENCE) × LINE_ALT_WEIGHTS["alt1"], (1 - LINE_ADHERENCE) × LINE_ALT_WEIGHTS["alt2"]]`. It's one draw, not an adherence roll followed by an alternate roll. It plays the chosen line exactly, and its hand never blocks it. When `equations.py` changes a line (for example the 6fc87d5 Street `N90` and Wangan `IR`/`SW` edits), only the mirrored table changes:
 
 ```gdscript
 static func get_lines(district: String, corner: String) -> Array[String]
@@ -611,7 +611,7 @@ static func generate_tells(turn: int, archetype: String,
 
 Each archetype maps to one face type with 3 expressions:
 
-| Face Type | ATK expression | ATK tell | DEF expression | DEF tell | NEU expression | NEU tell |
+| Face Type | POW expression | POW tell | EN expression | EN tell | HAN expression | HAN tell |
 |-----------|---------------|----------|----------------|----------|----------------|----------|
 | A — Scowling (POW) | Bared teeth, furrowed brow | Mouth closes over bared teeth briefly | Tight jaw, narrowed eyes | Eyes flick wide then narrow back | Flat stare, relaxed brow | Brow drops and returns |
 | B — Grinning (EN) | Wide smile, raised brows | Raised brows drop flat | Thin smile, watchful eyes | Eyes shift to the side | Half-smirk, steady gaze | Half-smirk goes straight |
@@ -624,7 +624,7 @@ Each archetype maps to one face type with 3 expressions:
 ```gdscript
 func set_face_sequence(expressions: Array[Dictionary], face_type: String)
     # Called at straight start with 3 (stance, is_bluff) tuples
-    # Load the correct ATK/DEF/NEU textures for this face_type
+    # Load the correct POW/EN/HAN textures for this face_type
     # Set tell overlay textures per stance
     # AnimationTreeBlendManager handles the alpha crossfade timing
 
@@ -701,9 +701,9 @@ The meter is scaled to the normalized lead `(cum_p - cum_o) / (cum_p + cum_o)`, 
 
 ```gdscript
 const COLORS = {
-    ATTACK:  Color("#2CB84A"),  # green — art_direction.md:252 (B.5)
-    DEFEND:  Color("#E8282C"),  # red — art_direction.md:252 (B.5)
-    NEUTRAL: Color("#F0C828"),  # yellow, dark text — art_direction.md:252 (B.5)
+    POW:     Color("#2CB84A"),  # green — art_direction.md:252 (B.5)
+    EN:      Color("#E8282C"),  # red — art_direction.md:252 (B.5)
+    HAN:     Color("#F0C828"),  # yellow, dark text — art_direction.md:252 (B.5)
 }
 
 func display_summary(player_stances: Array[int], opponent_stances: Array[int])
@@ -835,7 +835,7 @@ func set_tell_alpha(intensity: float, is_deceptive: bool)
 ### 12.1 Locked view (2026-11-06)
 
 - The race view used to read Entry is a fixed rear third-person camera on the **player**. It is not placed behind both cars, and it does not pull back to keep an uncapped leader in shot.
-- **Player behind:** cap how far ahead the rival is drawn so that rival's lane and Entry (outside = Attack, center = Steady, inside = Defend, relative to the next corner) stay readable. No distance number is approved. The cap is draw distance only. It is not a real-gap cap, and not a scoring or AI change. Visible spacing does not show the exact size of a large real lead.
+- **Player behind:** cap how far ahead the rival is drawn so that rival's lane and Entry stance stay readable. No distance number is approved. The cap is draw distance only. It is not a real-gap cap, and not a scoring or AI change. Visible spacing does not show the exact size of a large real lead.
 - **Player ahead:** the trailing rival recedes in the top-center rear-view mirror. Do not cap that recession to match the forward cap. Headlights and lane get harder to read with distance. That loss of Entry information is intentional. Do not add a HUD lane marker or enlarge the lamps to undo it.
 - Corner-playback camera paths later in this guide are the cinematic after the line is locked. They do not replace this view as the one Entry is read from, and they do not authorize a symmetrical rear cap.
 - Display settings are unchanged: 640×480, viewport stretch, keep aspect, as in §1.1 and `project.godot`. A higher-resolution / CRT trial was an experiment only.
@@ -1283,7 +1283,7 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
 
 | Files | Count |
 |-------|-------|
-| Button idle/pressed (ATK, DEF, STEADY) | 6 |
+| Button idle/pressed (POW, EN, HAN) | 6 |
 | Panel backgrounds (9-slice) | 4 |
 | Timer bar fills (straight, QTE mash) | 2 |
 | QTE indicator (timing marker, timing target) | 2 |
@@ -1298,8 +1298,8 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
 
 One continuous QTE per corner. Type determined by `(turn_type × player stance)`.
 
-| Turn Type | ATTACK | DEFEND | STEADY |
-|-----------|--------|--------|--------|
+| Turn Type | POW | EN | HAN |
+|-----------|-----|----|-----|
 | Hairpin | MASH | TIMING | TIMING |
 | Constant Radius | TIMING | MASH | MASH |
 | Decreasing Radius | MASH | TIMING | MASH |
@@ -1343,14 +1343,14 @@ lines  = LINE_SET_C["street"]["N90"]      # [main, alt1, alt2]
 a       = LINE_ADHERENCE
 weights = [a, (1 - a) * LINE_ALT_WEIGHTS["alt1"], (1 - a) * LINE_ALT_WEIGHTS["alt2"]]
 line    = lines[rng.rand_weighted(weights)]   # one draw per corner, played exactly
-stances = [line[0], line[1], line[2]]     # Entry, Apex, Exit (D/S/A)
+stances = [line[0], line[1], line[2]]     # Entry, Apex, Exit (P/E/H)
 ```
 
 Make the draw from the match `RandomNumberGenerator` so a playtest dump's Block C seed and RNG state reproduce the opponent's picks in Godot. Godot's generator isn't Python's, so this matches the sim's line rates, not its exact rolls.
 
 ## Appendix H: Notes / Gotchas
 
-- **Stance naming:** UI displays "STEADY" but the enum is `Stance.NEUTRAL`. Button label and all UI text uses "STEADY"; all logic uses NEUTRAL.
+- **Stance naming:** stances are `Stance.POW` / `Stance.EN` / `Stance.HAN` (string values `"POW"` / `"EN"` / `"HAN"`) and the same-stance clash result is `StanceOutcome.DRAW`, matching the sim. Old → new map: `design/02-equations-reference.md` §6.0. Lane words belong only to on-screen lane labels and art.
 - **Hands:** a fresh `HAND_SIZE` hand each turn, drawn i.i.d. from `deck_weights()`; pick 3, the rest is dropped. No persistent deck, no piles.
 - **Opponent cards:** the picked line, played exactly; no opponent hand.
 - **No DNF / knockout** — match always runs to max_turns, then the higher progress total wins.

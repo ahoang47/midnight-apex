@@ -96,9 +96,9 @@ def _apply_override(
         return sorted_cards[2] if len(sorted_cards) > 2 else sorted_cards[-1]
 
     if override == "alternate":
-        pattern = [Stance.ATTACK, Stance.DEFEND, Stance.ATTACK]
+        pattern = [Stance.POW, Stance.EN, Stance.POW]
         if turn_number % 2 == 0:
-            pattern = [Stance.DEFEND, Stance.ATTACK, Stance.DEFEND]
+            pattern = [Stance.EN, Stance.POW, Stance.EN]
         preferred = pattern[clash_index]
         for c in hand:
             if c == preferred:
@@ -111,9 +111,9 @@ def _apply_override(
         counts = Counter(player_stance_history)
         most_common = counts.most_common(1)[0][0]
         counters = {
-            Stance.ATTACK: Stance.DEFEND,
-            Stance.DEFEND: Stance.NEUTRAL,
-            Stance.NEUTRAL: Stance.ATTACK,
+            Stance.POW: Stance.EN,
+            Stance.EN: Stance.HAN,
+            Stance.HAN: Stance.POW,
         }
         target = counters[most_common]
         for c in hand:
@@ -183,13 +183,13 @@ AGGRESSIVE_DRIVER = PersonalityConfig(
     phases=[
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
-            weights={Stance.ATTACK: 3, Stance.DEFEND: 0, Stance.NEUTRAL: 1},
-            hand_requirements={Stance.ATTACK: 2},
+            weights={Stance.POW: 3, Stance.EN: 0, Stance.HAN: 1},
+            hand_requirements={Stance.POW: 2},
         ),
         PersonalityPhase(
             phase_type=PhaseType.REACTIVE,
             behavior_override="counter",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.UNPREDICTABLE,
@@ -203,12 +203,12 @@ DEFENSIVE_DRIVER = PersonalityConfig(
         PersonalityPhase(
             phase_type=PhaseType.REACTIVE,
             behavior_override="counter",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
-            weights={Stance.ATTACK: 3, Stance.DEFEND: 0, Stance.NEUTRAL: 1},
-            hand_requirements={Stance.ATTACK: 2},
+            weights={Stance.POW: 3, Stance.EN: 0, Stance.HAN: 1},
+            hand_requirements={Stance.POW: 2},
         ),
         PersonalityPhase(
             phase_type=PhaseType.UNPREDICTABLE,
@@ -222,12 +222,12 @@ PRECISE_DRIVER = PersonalityConfig(
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
             behavior_override="highest_ev",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.REACTIVE,
             behavior_override="counter",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.UNPREDICTABLE,
@@ -241,17 +241,17 @@ BALANCED_DRIVER = PersonalityConfig(
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
             behavior_override="alternate",
-            hand_requirements={Stance.ATTACK: 2, Stance.DEFEND: 1},
+            hand_requirements={Stance.POW: 2, Stance.EN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.REACTIVE,
             behavior_override="counter",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.REACTIVE,
             behavior_override="repeat_win",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
     ],
 )
@@ -262,12 +262,12 @@ ADAPTIVE_DRIVER = PersonalityConfig(
         PersonalityPhase(
             phase_type=PhaseType.AGGRESSIVE,
             behavior_override="third_highest_ev",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.REACTIVE,
             behavior_override="second_highest_ev",
-            hand_requirements={Stance.ATTACK: 1, Stance.DEFEND: 1, Stance.NEUTRAL: 1},
+            hand_requirements={Stance.POW: 1, Stance.EN: 1, Stance.HAN: 1},
         ),
         PersonalityPhase(
             phase_type=PhaseType.UNPREDICTABLE,

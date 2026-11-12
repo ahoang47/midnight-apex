@@ -18,22 +18,22 @@ wd     = alpha × EN / total   + beta / 3
 wn     = alpha × HAN / total  + beta / 3
 tw     = wp + wd + wn
 
-Attack  = round(192 × wp / tw)
-Defend  = round(192 × wd / tw)
-Neutral = 192 - Attack - Defend
+n_POW = round(192 × wp / tw)
+n_EN  = round(192 × wd / tw)
+n_HAN = 192 - n_POW - n_EN
 ```
 
 The `alpha=0.85` smoothing term blends stat proportions with equal thirds, preventing any single stance from overwhelming the deck at extreme stat spreads. A build with POW=900, EN=50, HAN=50 still gets ~5% of each off-stance card, preserving RPS flexibility.
 
-Stats have no upper bound. Deck composition scales naturally — more POW yields more Attack cards regardless of absolute value.
+Stats have no upper bound. Deck composition scales naturally — more POW yields more POW cards regardless of absolute value.
 
 ### What deck composition encodes
 
 | Build focus | Card pool tendency |
 |---|---|
-| POW-heavy | Mostly Attack cards — aggressive, high damage potential |
-| EN-heavy | Mostly Defend cards — survivability, damage mitigation |
-| HAN-heavy | Mostly Neutral cards — adaptable, flexible picks |
+| POW-heavy | Mostly POW cards — aggressive, high damage potential |
+| EN-heavy | Mostly EN cards — survivability, damage mitigation |
+| HAN-heavy | Mostly HAN cards — adaptable, flexible picks |
 | Balanced (~even) | ~64 of each — unpredictable, no strong bias |
 
 The deck is shuffled once at construction. Deck composition stays fixed for the entire match.
@@ -116,17 +116,17 @@ Anchor   vs Anchor   → StanceOutcome_3
 
 Stances are resolved via the RPS cycle:
 
-| Attacker | Defender | Result |
+| Stance | vs stance | Result |
 |---|---|---|
-| Attack | Neutral | WIN |
-| Attack | Defend | LOSS |
-| Neutral | Defend | WIN |
-| Neutral | Attack | LOSS |
-| Defend | Attack | WIN |
-| Defend | Neutral | LOSS |
-| Any | Same | NEUTRAL |
+| POW | HAN | WIN |
+| POW | EN | LOSS |
+| HAN | EN | WIN |
+| HAN | POW | LOSS |
+| EN | POW | WIN |
+| EN | HAN | LOSS |
+| Any | Same | DRAW |
 
-**RPS cycle:** `Attack > Neutral > Defend > Attack`
+**RPS cycle:** `POW > HAN > EN > POW` (names: 02 §6.0)
 
 ### Per-clash damage contribution
 
@@ -136,7 +136,7 @@ battle_mult   = 1 + BATTLE_BONUS × |sum(outcomes)|
 DP_i          = POW × QTE_factor × clash_mult_i × battle_mult
 ```
 
-Where `outcome_value = +1` for WIN, `0` for NEUTRAL, `-1` for LOSS.
+Where `outcome_value = +1` for WIN, `0` for DRAW, `-1` for LOSS.
 DP is floored at 0 (negative damage is impossible).
 
 ### Per-turn mitigation
@@ -159,7 +159,7 @@ han_pct  = HAN / (POW + EN + HAN)
 modified = raw_QTE × (1 + HAN_QTE_WEIGHT × (han_pct - 1/3))
 ```
 
-Where `HAN_QTE_WEIGHT = 0.5`. Neutral at `han_pct = 1/3` (no change). A high-HAN build (Precise, 55% HAN) gets ~+10.8%; a low-HAN build (Aggressive, 25%) gets ~−4.2%. The same formula applies to both player and AI. This value is then normalised to a `qte_factor` (score / 10.0, clamped 0–1) by `resolve_turn`.
+Where `HAN_QTE_WEIGHT = 0.5`. No change at `han_pct = 1/3`. A high-HAN build (Precise, 55% HAN) gets ~+10.8%; a low-HAN build (Aggressive, 25%) gets ~−4.2%. The same formula applies to both player and AI. This value is then normalised to a `qte_factor` (score / 10.0, clamped 0–1) by `resolve_turn`.
 
 ### QTE rubber-band (proportional blend)
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 """Deck construction, draw, and discard lifecycle.
 
-Cards are weighted by combatant stats (POW→ATTACK, EN→DEFEND, HAN→NEUTRAL)
+Cards are weighted by combatant stats (POW, EN, HAN -> Stance.POW / EN / HAN cards)
 with a smoothing term to ensure every deck has at least some of each stance.
 """
 
@@ -57,9 +57,9 @@ class Deck:
         a = round(cls.DECK_SIZE * wp)
         d = round(cls.DECK_SIZE * wd)
         n = cls.DECK_SIZE - a - d
-        raw: list[Card] = [Card(Stance.ATTACK) for _ in range(a)]
-        raw += [Card(Stance.DEFEND) for _ in range(d)]
-        raw += [Card(Stance.NEUTRAL) for _ in range(n)]
+        raw: list[Card] = [Card(Stance.POW) for _ in range(a)]
+        raw += [Card(Stance.EN) for _ in range(d)]
+        raw += [Card(Stance.HAN) for _ in range(n)]
         rng.shuffle(raw)
         return cls(raw, rng, reshuffle_on_end)
 

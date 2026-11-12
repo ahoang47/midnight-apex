@@ -48,7 +48,7 @@ def qte_factor(qte_score: float) -> float:
 def apply_han_qte_mod(qte_score: float, han_pct: float) -> float:
     """Modify a QTE score by HAN proportion. Same formula for both sides.
     han_pct = han / (pow + en + han).
-    Neutral at han_pct == 1/3, scales linearly with HAN_QTE_WEIGHT.
+    No change at han_pct == 1/3, scales linearly with HAN_QTE_WEIGHT.
     """
     return qte_score * (1.0 + HAN_QTE_WEIGHT * (han_pct - 1 / 3))
 
@@ -57,7 +57,7 @@ def clash_mult(outcome: StanceOutcome) -> float:
     """Return the damage multiplier for a single clash result.
 
     * WIN    → 1 + CLASH_STAKES
-    * NEUTRAL → 1.0
+    * DRAW   → 1.0
     * LOSS   → 1 - CLASH_STAKES
     """
     return 1.0 + CLASH_STAKES * outcome.value
@@ -89,15 +89,15 @@ def damage_mitigation(en_stat: float, qte_factor: float) -> float:
 def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
     """Resolve a single rock-paper-scissors clash between two stances.
 
-    Rules:
-        ATTACK > NEUTRAL > DEFEND > ATTACK
-        Same stance → NEUTRAL
+    Rules (design/02 §6.0 naming map):
+        POW > HAN > EN > POW
+        Same stance → draw (StanceOutcome.DRAW)
     """
     if a == b:
-        return StanceOutcome.NEUTRAL
-    if (a == Stance.ATTACK and b == Stance.NEUTRAL) or \
-       (a == Stance.NEUTRAL and b == Stance.DEFEND) or \
-       (a == Stance.DEFEND and b == Stance.ATTACK):
+        return StanceOutcome.DRAW
+    if (a == Stance.POW and b == Stance.HAN) or \
+       (a == Stance.HAN and b == Stance.EN) or \
+       (a == Stance.EN and b == Stance.POW):
         return StanceOutcome.WIN
     return StanceOutcome.LOSS
 
@@ -198,17 +198,17 @@ HAND_SIZE = 6                  # cards drawn per turn; 3 are played (Entry/Apex/
 LINE_ADHERENCE = 0.65          # boss follows its district line with prob a; 1-a = bluff/deviation
 LINE_ALT_WEIGHTS = {"alt1": 0.6, "alt2": 0.4}
 # Line set C: per district, per corner type -> [main, alt1, alt2] lines, each "Entry Apex Exit"
-# (D = Defend, S = Steady, A = Attack). Alternatives share main's Entry (unreadable at lock):
+# (P = POW, E = EN, H = HAN; letters renamed 2026-11-12 from A/D/S, map in design/02 §6.0). Alternatives share main's Entry (unreadable at lock):
 # alt1 switches Apex+Exit, alt2 switches Exit only. Mechanical stand-in.
-# 2026-11-10 (lines-v1 S-A + W-A, Austin): Street N90 DDA -> SSA; Wangan SW and IR AAA -> AAD.
+# 2026-11-10 (lines-v1 S-A + W-A, Austin): Street N90 EEP -> HHP; Wangan SW and IR PPP -> PPE.
 # Touge unchanged. In-world feel approved by Austin (Nathaniel, 2026-11-10; story/corner_lines.md).
 LINE_SET_C = {
-    "touge": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SSA", "SDS", "SSS"], "DR": ["SDS", "SAD", "SDD"], "IR": ["SSA", "SDS", "SSS"],
-              "N90": ["DSA", "DDS", "DSS"], "CH": ["SDA", "SAS", "SDS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["SSA", "SDS", "SSS"]},
-    "wangan": {"HP": ["DSA", "DDS", "DSS"], "CR": ["SAA", "SSS", "SAS"], "DR": ["DDS", "DAD", "DDD"], "IR": ["AAD", "ASA", "AAA"],
-               "N90": ["DSA", "DDS", "DSS"], "CH": ["DSA", "DDS", "DSS"], "ES": ["SSS", "SDD", "SSD"], "SW": ["AAD", "ASA", "AAA"]},
-    "street": {"HP": ["DDA", "DAS", "DDS"], "CR": ["DSD", "DDA", "DSA"], "DR": ["DDS", "DAD", "DDD"], "IR": ["SSA", "SDS", "SSS"],
-               "N90": ["SSA", "SDS", "SSS"], "CH": ["DAA", "DSS", "DAS"], "ES": ["ASA", "ADS", "ASS"], "SW": ["DDD", "DAA", "DDA"]},
+    "touge": {"HP": ["EHP", "EEH", "EHH"], "CR": ["HHP", "HEH", "HHH"], "DR": ["HEH", "HPE", "HEE"], "IR": ["HHP", "HEH", "HHH"],
+              "N90": ["EHP", "EEH", "EHH"], "CH": ["HEP", "HPH", "HEH"], "ES": ["HHH", "HEE", "HHE"], "SW": ["HHP", "HEH", "HHH"]},
+    "wangan": {"HP": ["EHP", "EEH", "EHH"], "CR": ["HPP", "HHH", "HPH"], "DR": ["EEH", "EPE", "EEE"], "IR": ["PPE", "PHP", "PPP"],
+               "N90": ["EHP", "EEH", "EHH"], "CH": ["EHP", "EEH", "EHH"], "ES": ["HHH", "HEE", "HHE"], "SW": ["PPE", "PHP", "PPP"]},
+    "street": {"HP": ["EEP", "EPH", "EEH"], "CR": ["EHE", "EEP", "EHP"], "DR": ["EEH", "EPE", "EEE"], "IR": ["HHP", "HEH", "HHH"],
+               "N90": ["HHP", "HEH", "HHH"], "CH": ["EPP", "EHH", "EPH"], "ES": ["PHP", "PEH", "PHH"], "SW": ["EEE", "EPP", "EEP"]},
 }
 BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total
 BUILD_STAT_MAX_SHARE = 0.50
@@ -492,7 +492,7 @@ def clash_payoff(outcome: StanceOutcome, q: float) -> float:
     t = timing_value(q)
     if outcome == StanceOutcome.WIN:
         return W0 + (1 - W0) * t
-    if outcome == StanceOutcome.NEUTRAL:
+    if outcome == StanceOutcome.DRAW:
         return T_MAX * t
     return L_MAX * t
 
@@ -533,7 +533,7 @@ def clash_progress(
 
 
 def deck_weights(pow_stat: float, en_stat: float, han_stat: float) -> tuple[float, float, float]:
-    """Multinomial weights for (Attack, Steady, Defend) = (POW, HAN, EN)."""
+    """Multinomial weights for the (POW, HAN, EN) stances."""
     tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
     raw = (
         pow_s * DECK_ALPHA + (1 - DECK_ALPHA) / 3,
@@ -545,26 +545,26 @@ def deck_weights(pow_stat: float, en_stat: float, han_stat: float) -> tuple[floa
 
 
 def counter_stance(s: Stance) -> Stance:
-    """The stance that beats `s` (Defend > Attack > Neutral > Defend)."""
-    if s == Stance.ATTACK:
-        return Stance.DEFEND
-    if s == Stance.NEUTRAL:
-        return Stance.ATTACK
-    return Stance.NEUTRAL
+    """The stance that beats `s` (EN > POW > HAN > EN)."""
+    if s == Stance.POW:
+        return Stance.EN
+    if s == Stance.HAN:
+        return Stance.POW
+    return Stance.HAN
 
 
 def loser_to_stance(s: Stance) -> Stance:
     """The stance that loses to `s`."""
-    if s == Stance.ATTACK:
-        return Stance.NEUTRAL
-    if s == Stance.NEUTRAL:
-        return Stance.DEFEND
-    return Stance.ATTACK
+    if s == Stance.POW:
+        return Stance.HAN
+    if s == Stance.HAN:
+        return Stance.EN
+    return Stance.POW
 
 
-# Stance index order used by assign_hand / deck_weights: Attack, Steady, Defend.
-_STANCE_INDEX = {Stance.ATTACK: 0, Stance.NEUTRAL: 1, Stance.DEFEND: 2}
-_INDEX_STANCE = (Stance.ATTACK, Stance.NEUTRAL, Stance.DEFEND)
+# Stance index order used by assign_hand / deck_weights: POW, HAN, EN.
+_STANCE_INDEX = {Stance.POW: 0, Stance.HAN: 1, Stance.EN: 2}
+_INDEX_STANCE = (Stance.POW, Stance.HAN, Stance.EN)
 
 
 def assign_hand(
@@ -575,7 +575,7 @@ def assign_hand(
 ) -> list[Stance]:
     """Greedy assign from a 6-card hand: lock wanted stances, then fallbacks, then any leftover.
 
-    Same rule as final-v1 / equations_v1._assign. `hand_counts` is [Attack, Steady, Defend].
+    Same rule as final-v1 / equations_v1._assign. `hand_counts` is [POW, HAN, EN].
     """
     c = list(hand_counts)
     out = [-1, -1, -1]

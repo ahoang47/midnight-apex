@@ -76,7 +76,7 @@
 | Stat budget = level × 30 | `sim/velocity_shift/cars.py:32-40` |
 | `CombatantStats` = name, pow, en, han, level. No equipment field exists | `sim/velocity_shift/models.py:43-54` |
 | Constants: CLASH_STAKES 0.35, BATTLE_BONUS 0.05, MITIGATION_PER_1000 0.4, MITIGATION_FLOOR 0.1, HP_PER_LEVEL 180, QTE_NORMALIZER 10, HAN_QTE_WEIGHT 0.5 | `sim/velocity_shift/equations.py:16-22` |
-| Deck mix is weighted by stat share (POW→Attack, EN→Defend, HAN→Neutral), so any stat change also changes the cards | `sim/velocity_shift/deck.py:4`, `:29-44` |
+| Deck mix is weighted by stat share (POW, EN, HAN shares → POW, EN, HAN cards), so any stat change also changes the cards | `sim/velocity_shift/deck.py:4`, `:29-44` |
 | QTE factor is clamped to 0–1 | `sim/velocity_shift/combat.py:111-112` |
 | Encounter ratios: wild 0.75, lieutenant 1.1, boss 1.2 (they live in `ai.py`, not `equations.py`) | `sim/velocity_shift/ai.py:17-21` |
 | Opponent level = round(player level × ratio) | `sim/velocity_shift/cli.py:305` |
@@ -189,9 +189,9 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 
 | Category (PROPOSAL, names are placeholders) | Touches | Existing hook |
 |---|---|---|
-| Engine / power | +POW (trade-off: −EN or −HAN) | `compute_damage` (`equations.py:48-58`), deck Attack share (`deck.py:40`) |
-| Chassis / armor | +EN (trade-off: −POW or −HAN) | `damage_mitigation` (`equations.py:61-68`), deck Defend share |
-| Suspension / handling | +HAN (trade-off) | `apply_han_qte_mod` (`equations.py:30-35`), deck Neutral share |
+| Engine / power | +POW (trade-off: −EN or −HAN) | `compute_damage` (`equations.py:48-58`), deck POW share (`deck.py:40`) |
+| Chassis / armor | +EN (trade-off: −POW or −HAN) | `damage_mitigation` (`equations.py:61-68`), deck EN share |
+| Suspension / handling | +HAN (trade-off) | `apply_han_qte_mod` (`equations.py:30-35`), deck HAN share |
 | Unique: clash | `+Δ` on CLASH_STAKES for certain clashes (e.g. "first clash each turn auto-wins", `mod_notes.md:46`) | `clash_mult` (`equations.py:38-45`). Needs a new hook |
 | Unique: QTE | `+Δ` to the QTE score or to mitigation floor terms (e.g. "QTE window +20% but max clash stakes reduced", `mod_notes.md:46`) | QTE pipeline (`match.py:130-136`). Needs a hook |
 
@@ -356,7 +356,7 @@ season.json ──► campaign.py ──► for each race:
 9. Share of income from wild races (farming check).
 10. Player vs opponent effective power per round (stat totals after parts, levels, HP).
 11. How often each part is bought or equipped (dead or overpowered parts).
-12. Deck-mix shift caused by parts (Attack/Defend/Neutral share).
+12. Deck-mix shift caused by parts (POW/EN/HAN share).
 13. Betting: share of Round 3 income from bets, the bettor's average return against the house edge, and the chance of going broke under each betting policy.
 14. Substories: share of wallet cash and debt repayment from substories, how much clearing zero vs all substories shifts the Round 2 debt-clearing race, and equip rate of free substory sidegrades vs Reiko's paid shop parts.
 

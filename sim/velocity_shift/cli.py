@@ -42,9 +42,9 @@ def _cards_label(cards: list) -> str:
         return "???"
     def _label(c: object) -> str:
         if isinstance(c, Card):
-            return c.stance.value.upper()[:4]
+            return c.stance.value
         if isinstance(c, Stance):
-            return c.value.upper()[:4]
+            return c.value
         return str(c)
     return "-".join(_label(c) for c in cards)
 
@@ -54,15 +54,15 @@ def _hand_label(cards: list) -> str:
         return "?"
     def _label(c: object) -> str:
         if isinstance(c, Card):
-            return c.stance.value.upper()[:4]
+            return c.stance.value
         if isinstance(c, Stance):
-            return c.value.upper()[:4]
+            return c.value
         return str(c)
     return " ".join(_label(c) for c in cards)
 
 
 def _outcome_icon(outcomes: list[StanceOutcome]) -> str:
-    icons = {StanceOutcome.WIN: "W", StanceOutcome.NEUTRAL: "\u2014", StanceOutcome.LOSS: "L"}
+    icons = {StanceOutcome.WIN: "W", StanceOutcome.DRAW: "\u2014", StanceOutcome.LOSS: "L"}
     return " ".join(icons[o] for o in outcomes)
 
 
@@ -362,13 +362,13 @@ def setup_match() -> MatchConfig:
 
 def _card_label(c: object) -> str:
     if isinstance(c, Card):
-        return c.stance.value.upper()[:4]
+        return c.stance.value
     if isinstance(c, Stance):
-        return c.value.upper()[:4]
+        return c.value
     return str(c)
 
 
-OUTCOME_ICONS = {StanceOutcome.WIN: "\u2713", StanceOutcome.NEUTRAL: "\u2014", StanceOutcome.LOSS: "\u2717"}
+OUTCOME_ICONS = {StanceOutcome.WIN: "\u2713", StanceOutcome.DRAW: "\u2014", StanceOutcome.LOSS: "\u2717"}
 
 
 def prompt_card_sequential(

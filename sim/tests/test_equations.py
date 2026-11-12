@@ -13,10 +13,10 @@ def test_qte_factor():
 
 
 def test_clash_mult():
-    """Clash multiplier: WIN=1.35, NEUTRAL=1, LOSS=0.65 (stakes baked at 0.35)."""
+    """Clash multiplier: WIN=1.35, DRAW=1, LOSS=0.65 (stakes baked at 0.35)."""
     assert clash_mult(StanceOutcome.WIN) == 1.35
     assert clash_mult(StanceOutcome.LOSS) == 0.65
-    assert clash_mult(StanceOutcome.NEUTRAL) == 1.0
+    assert clash_mult(StanceOutcome.DRAW) == 1.0
 
 
 def test_compute_damage():
@@ -38,16 +38,16 @@ def test_compute_damage():
 
 
 def test_resolve_stance():
-    """RPS rules: ATK>NEU>DEF>ATK; same stance → NEUTRAL."""
-    assert resolve_stance(Stance.ATTACK, Stance.ATTACK) == StanceOutcome.NEUTRAL
-    assert resolve_stance(Stance.ATTACK, Stance.NEUTRAL) == StanceOutcome.WIN
-    assert resolve_stance(Stance.ATTACK, Stance.DEFEND) == StanceOutcome.LOSS
-    assert resolve_stance(Stance.NEUTRAL, Stance.NEUTRAL) == StanceOutcome.NEUTRAL
-    assert resolve_stance(Stance.NEUTRAL, Stance.DEFEND) == StanceOutcome.WIN
-    assert resolve_stance(Stance.NEUTRAL, Stance.ATTACK) == StanceOutcome.LOSS
-    assert resolve_stance(Stance.DEFEND, Stance.DEFEND) == StanceOutcome.NEUTRAL
-    assert resolve_stance(Stance.DEFEND, Stance.ATTACK) == StanceOutcome.WIN
-    assert resolve_stance(Stance.DEFEND, Stance.NEUTRAL) == StanceOutcome.LOSS
+    """RPS rules: POW>HAN>EN>POW; same stance → draw (StanceOutcome.DRAW)."""
+    assert resolve_stance(Stance.POW, Stance.POW) == StanceOutcome.DRAW
+    assert resolve_stance(Stance.POW, Stance.HAN) == StanceOutcome.WIN
+    assert resolve_stance(Stance.POW, Stance.EN) == StanceOutcome.LOSS
+    assert resolve_stance(Stance.HAN, Stance.HAN) == StanceOutcome.DRAW
+    assert resolve_stance(Stance.HAN, Stance.EN) == StanceOutcome.WIN
+    assert resolve_stance(Stance.HAN, Stance.POW) == StanceOutcome.LOSS
+    assert resolve_stance(Stance.EN, Stance.EN) == StanceOutcome.DRAW
+    assert resolve_stance(Stance.EN, Stance.POW) == StanceOutcome.WIN
+    assert resolve_stance(Stance.EN, Stance.HAN) == StanceOutcome.LOSS
 
 
 def test_apply_han_qte_mod_neutral():
@@ -101,10 +101,10 @@ def test_timing_value_endpoints():
 
 def test_clash_payoff_at_perfect_timing():
     assert abs(clash_payoff(StanceOutcome.WIN, 1.0) - 1.0) < 1e-12
-    assert abs(clash_payoff(StanceOutcome.NEUTRAL, 1.0) - T_MAX) < 1e-12
+    assert abs(clash_payoff(StanceOutcome.DRAW, 1.0) - T_MAX) < 1e-12
     assert abs(clash_payoff(StanceOutcome.LOSS, 1.0) - L_MAX) < 1e-12
     assert abs(clash_payoff(StanceOutcome.WIN, 0.0) - W0) < 1e-12
-    assert clash_payoff(StanceOutcome.NEUTRAL, 0.0) == 0.0
+    assert clash_payoff(StanceOutcome.DRAW, 0.0) == 0.0
     assert clash_payoff(StanceOutcome.LOSS, 0.0) == 0.0
 
 
@@ -113,7 +113,7 @@ def test_clash_progress_balanced_at_parity():
     kap = kappa_for_length(20)
     for outcome, expected in (
         (StanceOutcome.WIN, 1.0),
-        (StanceOutcome.NEUTRAL, T_MAX),
+        (StanceOutcome.DRAW, T_MAX),
         (StanceOutcome.LOSS, L_MAX),
     ):
         g = clash_progress(outcome, 1.0, 100, 100, 100, 300, kap)

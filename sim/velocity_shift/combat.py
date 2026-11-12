@@ -297,11 +297,11 @@ def resolve_turn_legacy(
 # (equations_v4.generate_clashes). A whole 3-stance line is drawn once
 # per corner (once per turn), not per clash and not once per lap.
 
-# Steady in the line tables is the same stance as Neutral on a card.
+# LINE_SET_C letters -> stances, one letter per stat (design/02 §6.0).
 LETTER_TO_STANCE = {
-    "A": Stance.ATTACK,
-    "S": Stance.NEUTRAL,
-    "D": Stance.DEFEND,
+    "P": Stance.POW,
+    "E": Stance.EN,
+    "H": Stance.HAN,
 }
 
 _TRACKS_CACHE: dict[str, dict[str, list[str]]] | None = None
@@ -335,7 +335,7 @@ def line_triples(district: str, corner: str) -> list[str]:
 
 
 def parse_line(triple: str) -> list[Stance]:
-    """Convert an 'EntryApexExit' letter string (D/S/A) to three Stances."""
+    """Convert an 'EntryApexExit' letter string (P/E/H) to three Stances."""
     if len(triple) != 3 or any(ch not in LETTER_TO_STANCE for ch in triple):
         raise ValueError(f"Invalid line triple {triple!r}")
     return [LETTER_TO_STANCE[ch] for ch in triple]

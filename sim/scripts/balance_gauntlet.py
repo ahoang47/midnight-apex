@@ -62,12 +62,12 @@ def _stats(arch_name: str, level: int) -> tuple[float, float, float]:
 
 # Each outcome label maps to (player_stances, opponent_stances) that produce it
 _CLASH_PAIRS = {
-    "WIN":     ([Stance.ATTACK, Stance.ATTACK, Stance.ATTACK],
-                [Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL]),
-    "LOSS":    ([Stance.DEFEND, Stance.DEFEND, Stance.DEFEND],
-                [Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL]),
-    "TIE":     ([Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL],
-                [Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL]),
+    "WIN":     ([Stance.POW, Stance.POW, Stance.POW],
+                [Stance.HAN, Stance.HAN, Stance.HAN]),
+    "LOSS":    ([Stance.EN, Stance.EN, Stance.EN],
+                [Stance.HAN, Stance.HAN, Stance.HAN]),
+    "TIE":     ([Stance.HAN, Stance.HAN, Stance.HAN],
+                [Stance.HAN, Stance.HAN, Stance.HAN]),
 }
 
 CLASH_SCENARIO_SEQS = {
@@ -76,7 +76,7 @@ CLASH_SCENARIO_SEQS = {
     "mixed":          [["WIN", "LOSS", "TIE"]],
     "mostly_lose":    [["LOSS", "LOSS", "TIE"], ["LOSS", "LOSS", "WIN"], ["LOSS", "TIE", "TIE"]],
     "always_lose":    [["LOSS", "LOSS", "LOSS"]],
-    "always_neutral": [["TIE", "TIE", "TIE"]],
+    "always_draw": [["TIE", "TIE", "TIE"]],
 }
 
 

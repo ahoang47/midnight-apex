@@ -54,8 +54,8 @@ def test_pick_line_frequencies_match_weights():
     rng = Random(20261113)
     n = 20_000
     triples = line_triples("street", "N90")
-    # Street N90 after lines-v1 S-A: SSA / SDS / SSS
-    assert triples == ["SSA", "SDS", "SSS"]
+    # Street N90 after lines-v1 S-A: HHP / HEH / HHH
+    assert triples == ["HHP", "HEH", "HHH"]
     counts = Counter()
     for _ in range(n):
         line = "".join({v: k for k, v in LETTER_TO_STANCE.items()}[s] for s in pick_line("street", "N90", rng))

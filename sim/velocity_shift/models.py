@@ -11,10 +11,15 @@ from typing import Optional
 
 
 class Stance(Enum):
-    """The three rock-paper-scissors stances a card can hold."""
-    ATTACK = "attack"
-    DEFEND = "defend"
-    NEUTRAL = "neutral"
+    """The three rock-paper-scissors stances a card can hold, named by stat.
+
+    Backend code, data and line tables refer to stances only by stat (Austin,
+    2026-11-12). Member order (POW, EN, HAN) is the deck/iteration order.
+    Old -> new map: design/02-equations-reference.md §6.0.
+    """
+    POW = "POW"
+    EN = "EN"
+    HAN = "HAN"
 
 
 @dataclass(eq=False)
@@ -34,9 +39,9 @@ class Card:
 
 
 class StanceOutcome(Enum):
-    """Result of a single clash resolved by resolve_stance()."""
+    """Result of a single clash resolved by resolve_stance() (DRAW = same stance)."""
     WIN = 1
-    NEUTRAL = 0
+    DRAW = 0
     LOSS = -1
 
 

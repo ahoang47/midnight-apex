@@ -45,11 +45,11 @@ POW_abs = total_budget × pow_pct / 100
 
 | Archetype | L1 split | L100 target (POW / EN / HAN) | Deck bias | Play style |
 |---|---|---|---|---|
-| **Aggressive** | 33/33/33 | 55 / 20 / 25 | Heavy Attack cards | High burst, glassy |
-| **Defensive** | 33/33/33 | 20 / 55 / 25 | Heavy Defend cards | Damage mitigation, outlasts opponents |
-| **Precise** | 33/33/33 | 25 / 20 / 55 | Heavy Neutral cards | Flexible stance choices |
-| **Balanced** | 33/33/33 | 30 / 40 / 30 | Mild Defend lean | Jack-of-all-trades, endurance-tilt |
-| **Adaptive** | 33/33/33 | 30 / 30 / 40 | Mild Neutral lean | Jack-of-all-trades, handling-tilt |
+| **Aggressive** | 33/33/33 | 55 / 20 / 25 | Heavy POW cards | High burst, glassy |
+| **Defensive** | 33/33/33 | 20 / 55 / 25 | Heavy EN cards | Damage mitigation, outlasts opponents |
+| **Precise** | 33/33/33 | 25 / 20 / 55 | Heavy HAN cards | Flexible stance choices |
+| **Balanced** | 33/33/33 | 30 / 40 / 30 | Mild EN lean | Jack-of-all-trades, endurance-tilt |
+| **Adaptive** | 33/33/33 | 30 / 30 / 40 | Mild HAN lean | Jack-of-all-trades, handling-tilt |
 
 ---
 
@@ -79,7 +79,7 @@ Each combatant's max HP is `level × HP_PER_LEVEL (180)`. Since damage scales wi
 |---|---|
 | **POW** | Directly scales damage. Higher opponent POW forces player to win clashes or take big hits. |
 | **EN** | Determines damage mitigation. Higher EN opponent reduces your effective DP. |
-| **HAN** | Deck composition only (drives Neutral card weight). Higher HAN = more flexible stance choices. |
+| **HAN** | Deck composition only (drives HAN card weight). Higher HAN = more flexible stance choices. |
 
 ---
 
@@ -89,7 +89,7 @@ Each combatant's max HP is `level × HP_PER_LEVEL (180)`. Since damage scales wi
 |---|---|---|
 | POW-heavy | EN-heavy tanks (mitigation resists damage) | Glass cannon (mirror) |
 | EN-heavy | HAN-heavy (flexible stances, hard to predict) | POW-heavy (mitigation absorbs burst) |
-| HAN-heavy | POW-heavy (Neutral loses to Attack) | EN-heavy (Neutral beats Defend) |
+| HAN-heavy | POW-heavy (HAN loses to POW) | EN-heavy (HAN beats EN) |
 | Balanced | None strongly | None strongly |
 
 ---
@@ -122,8 +122,8 @@ Difficulty is driven by the level gap (above), but opponent *behavior variety* c
 
 | Personality | Phase 0 | Phase 1 | Phase 2 |
 |-------------|---------|---------|---------|
-| **Aggressive** | AGGRESSIVE (Atk+3) | REACTIVE (counter) | UNPREDICTABLE |
-| **Defensive** | REACTIVE (counter) | AGGRESSIVE (Atk+3) | UNPREDICTABLE |
+| **Aggressive** | AGGRESSIVE (POW+3) | REACTIVE (counter) | UNPREDICTABLE |
+| **Defensive** | REACTIVE (counter) | AGGRESSIVE (POW+3) | UNPREDICTABLE |
 | **Precise** | AGGRESSIVE (highest_ev) | REACTIVE (counter) | UNPREDICTABLE |
 | **Balanced** | AGGRESSIVE (alternate) | REACTIVE (counter) | REACTIVE (repeat_win) |
 | **Adaptive** | AGGRESSIVE (third_highest_ev) | REACTIVE (second_highest_ev) | UNPREDICTABLE |

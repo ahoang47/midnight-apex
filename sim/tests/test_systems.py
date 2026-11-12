@@ -31,13 +31,13 @@ def _o_pick(stance: Stance):
 def make_default_turn_state(turn=1,
                             p_cards=None, o_cards=None,
                             p_qte=0.8, o_qte=0.5):
-    """Build a TurnState with sensible defaults (P: ATK/NEU/DEF, O: DEF/NEU/ATK)."""
+    """Build a TurnState with sensible defaults (P: POW/HAN/EN, O: EN/HAN/POW)."""
     if p_cards is None:
-        p_cards = [Stance.ATTACK, Stance.NEUTRAL, Stance.DEFEND]
+        p_cards = [Stance.POW, Stance.HAN, Stance.EN]
     else:
         p_cards = [Stance(s) if isinstance(s, str) else s for s in p_cards]
     if o_cards is None:
-        o_cards = [Stance.DEFEND, Stance.NEUTRAL, Stance.ATTACK]
+        o_cards = [Stance.EN, Stance.HAN, Stance.POW]
     else:
         o_cards = [Stance(s) if isinstance(s, str) else s for s in o_cards]
     return TurnState(
@@ -69,14 +69,14 @@ def test_resolve_turn_battle_bonus():
     opponent = CombatantStats(name="O", pow=400, en=300, han=200)
 
     turn_win = make_default_turn_state(
-        p_cards=[Stance.ATTACK, Stance.ATTACK, Stance.ATTACK],
-        o_cards=[Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL],
+        p_cards=[Stance.POW, Stance.POW, Stance.POW],
+        o_cards=[Stance.HAN, Stance.HAN, Stance.HAN],
     )
     r1 = resolve_turn(turn_win, player, opponent)
 
     turn_tie = make_default_turn_state(
-        p_cards=[Stance.ATTACK, Stance.NEUTRAL, Stance.DEFEND],
-        o_cards=[Stance.ATTACK, Stance.NEUTRAL, Stance.DEFEND],
+        p_cards=[Stance.POW, Stance.HAN, Stance.EN],
+        o_cards=[Stance.POW, Stance.HAN, Stance.EN],
     )
     r2 = resolve_turn(turn_tie, player, opponent)
 
@@ -98,9 +98,9 @@ def test_run_match_full_race():
 
     result = run_match(
         cfg,
-        _p_pick(Stance.ATTACK),
+        _p_pick(Stance.POW),
         lambda t: 0.7,
-        _o_pick(Stance.NEUTRAL),
+        _o_pick(Stance.HAN),
         lambda t: 0.5,
     )
 
@@ -125,9 +125,9 @@ def test_positions_computed():
 
     result = run_match(
         cfg,
-        _p_pick(Stance.NEUTRAL),
+        _p_pick(Stance.HAN),
         lambda t: 0.5,
-        _o_pick(Stance.NEUTRAL),
+        _o_pick(Stance.HAN),
         lambda t: 0.5,
     )
 
@@ -144,8 +144,8 @@ def test_r105_same_stances_player_leads_on_v():
     player = CombatantStats(name="P", pow=105, en=105, han=105, level=50)
     opponent = CombatantStats(name="O", pow=100, en=100, han=100, level=50)
     turn = make_default_turn_state(
-        p_cards=[Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL],
-        o_cards=[Stance.NEUTRAL, Stance.NEUTRAL, Stance.NEUTRAL],
+        p_cards=[Stance.HAN, Stance.HAN, Stance.HAN],
+        o_cards=[Stance.HAN, Stance.HAN, Stance.HAN],
         p_qte=1.0, o_qte=1.0,
     )
     result = resolve_turn(turn, player, opponent, race_length=10)

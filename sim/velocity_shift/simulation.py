@@ -20,9 +20,9 @@ from .equations import PLAYER_QTE_MIN, PLAYER_QTE_MAX, PERFECT_QTE
 
 # The stance that beats each stance (equations.resolve_stance rules).
 _COUNTER = {
-    Stance.ATTACK: Stance.DEFEND,
-    Stance.DEFEND: Stance.NEUTRAL,
-    Stance.NEUTRAL: Stance.ATTACK,
+    Stance.POW: Stance.EN,
+    Stance.EN: Stance.HAN,
+    Stance.HAN: Stance.POW,
 }
 
 

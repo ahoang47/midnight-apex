@@ -14,7 +14,7 @@ Every formula in the combat engine. All are pure functions in `sim/velocity_shif
 2. **Lock the AI-skill lever** that hits ~60% at 0.9/0.9: recommend **AI read 0.40 + AI QTE 10**. Needs a real engine hook + matching tells (Desmond).
 3. **Fix encounter scaling** (doc vs code mismatch; double-count today). Tiers should set **AI skill** (and maybe a small r), not double-scale level × QTE.
 4. **HP_PER_LEVEL**: code **180**, stale §1 says **120**. Recommend keep **180** and fix the doc.
-5. ~~**Neutral vs Steady** naming~~ **Resolved 2026-11-11: Neutral** (art Q6; canon block in 01).
+5. ~~Third-stance naming~~ **Resolved 2026-11-12: POW / EN / HAN everywhere** (Austin; canon block in 01, map in §6.0).
 6. **Straight window**: 8s (06) vs 12s (Godot guide). Pick one for Godot.
 7. **Economy numbers** (debt race, DEBT_SHARE, wholesale, respec, betting stakes/odds/shell rate): list only; **no season runs** until you give success criteria.
 8. Accept or mark up the **§0 target curves** (q_read / q_time form, equal weights, coefficients).
@@ -52,7 +52,7 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 
 | | |
 |---|---|
-| **Current sim** | `resolve_stance`: Attack > Neutral > Defend > Attack; same → NEUTRAL (`equations.py:87-100`). `clash_mult = 1 + CLASH_STAKES × outcome`, **CLASH_STAKES = 0.35** (`equations.py:16`, `:54-61`). Battle margin: `battle_mult = 1 + BATTLE_BONUS × \|sum\|`, **BATTLE_BONUS = 0.05** (`equations.py:17`; applied in `combat.py`). |
+| **Current sim** | `resolve_stance`: POW > HAN > EN > POW; same → DRAW (`equations.py`, `resolve_stance`). `clash_mult = 1 + CLASH_STAKES × outcome`, **CLASH_STAKES = 0.35** (`equations.py:16`, `:54-61`). Battle margin: `battle_mult = 1 + BATTLE_BONUS × \|sum\|`, **BATTLE_BONUS = 0.05** (`equations.py:17`; applied in `combat.py`). |
 | **Recommend** | Keep RPS and **0.35 / 0.05**. They don't set difficulty (08 §5). Difficulty goes through AI skill. |
 | **Alts** | Raise stakes (0.45–0.60) for spicier swings (q50 moves ~0.03). Cut stakes for flatter races. |
 | **Evidence** | 08 §5: stakes/bonus barely move q50. |
@@ -72,8 +72,8 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 
 | | |
 |---|---|
-| **Current sim** | EN only mitigates incoming DP (formula above) and weights Defend cards in the deck. UI label **EN**. No separate "energy resource" / mana. |
-| **Recommend** | Keep EN as mitigation + Defend weight. No new resource meter in v1. |
+| **Current sim** | EN only mitigates incoming DP (formula above) and weights EN cards in the deck. UI label **EN**. No separate "energy resource" / mana. |
+| **Recommend** | Keep EN as mitigation + EN card weight. No new resource meter in v1. |
 | **Alts** | A spent resource (per-turn energy) would be a new system — out of scope for this lock. |
 | **Evidence** | `01-system-overview.md:83`; no energy pool in `sim/`. |
 | **Decision needed:** | Confirm EN stays mitigation-only (no AP/mana) for v1? Y/N |
@@ -82,7 +82,7 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 
 | | |
 |---|---|
-| **Current sim** | **DECK_SIZE = 192** (`deck.py:19`). Draw 6/turn. Weights: α=0.85 blend of POW/EN/HAN → Attack/Defend/Neutral (`deck.py:29-44`; `03:7-24`). Player: no reshuffle (discard grows). Opponent: reshuffle every turn. Boss max 30 turns → at most 180 cards used → **player deck never empties**. |
+| **Current sim** | **DECK_SIZE = 192** (`deck.py:19`). Draw 6/turn. Weights: α=0.85 blend of POW/EN/HAN stat shares → POW/EN/HAN cards (`deck.py:29-44`; `03:7-24`). Player: no reshuffle (discard grows). Opponent: reshuffle every turn. Boss max 30 turns → at most 180 cards used → **player deck never empties**. |
 | **Recommend** | Keep 192 / draw 6. Note the "never empties" property is intentional for bosses. |
 | **Alts** | Smaller deck (e.g. 96) would force late-race thinning; needs a design reason. |
 | **Evidence** | 08 §7 known limitation; 03 §deck management. |
@@ -108,15 +108,12 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 | **Evidence** | Parity pair spread q50 **0.01–0.48** (08 §3.1) — Aggressive is over-tuned; gauntlet PASS can still light green. |
 | **Decision needed:** | Keep "≥1 win and ≥1 loss" as the only archetype gate, or raise the bar? |
 
-#### 7. Neutral vs Steady naming
+#### 7. Stance naming
 
 | | |
 |---|---|
-| **Current** | Code/docs: stance **NEUTRAL** (`equations.py`, `models.py`). UI sample + guide buttons: **Steady** (`sample_battle_screen.html`, `godot-build-guide.md:178,303`). Stat: **HAN**. Art Q6 open (`art_direction.md:254`). |
-| **Recommend** | **Player-facing: Steady.** Code enum can stay NEUTRAL with a UI alias, or rename to STEADY in one pass. Stat stays **HAN**. Attack→**POW**, Defend→**EN**. |
-| **Alts** | Keep Neutral everywhere (simpler code, worse racing voice). |
-| **Evidence** | Naming only. |
-| **Resolved (2026-11-11):** | **Neutral** everywhere, player-facing too (art Q6 in `design/art/art_direction.md`; canon block in 01). |
+| **History** | The third stance had two names (one in code, one on UI buttons); resolved 2026-11-11 to one name, then superseded. |
+| **Resolved (2026-11-12, Austin):** | Stances and stats are **POW / EN / HAN** everywhere, code included (`Stance.POW` / `Stance.EN` / `Stance.HAN`). Old → new map in §6.0. |
 
 #### 8. Encounter ratios + opponent QTE
 
@@ -480,7 +477,7 @@ DP_i = POW × QTE_factor × clash_mult_i × battle_mult
 DP_turn_effective = average(DP_1, DP_2, DP_3) × opponent_mitigation_mult
 ```
 
-Where mitigation comes from the *opponent's* EN (they defend against your damage):
+Where mitigation comes from the *opponent's* EN (it mitigates your damage):
 
 ```
 opponent_mitigation_mult = max(MITIGATION_FLOOR, 1 - (opponent_EN / 1000) × MITIGATION_PER_1000 × opponent_QTE_factor)
@@ -514,12 +511,12 @@ clash_mult = 1 + CLASH_STAKES (0.35) × outcome_value
 
 | Variable | Range | Notes |
 |----------|-------|-------|
-| outcome_value | {-1, 0, +1} | LOSS / NEUTRAL / WIN |
+| outcome_value | {-1, 0, +1} | LOSS / DRAW / WIN |
 
 | Outcome | Bonus | Mult |
 |---------|-------|------|
 | WIN | +0.35 | 1.35× |
-| NEUTRAL | 0 | 1.00× |
+| DRAW | 0 | 1.00× |
 | LOSS | -0.35 | 0.65× |
 
 **Intent:** Single-parameter outcome modifier. 0.35 is the fixed game-wide clash stakes.
@@ -550,21 +547,36 @@ battle_mult = 1 + BATTLE_BONUS (0.05) × |sum(outcome_values)|
 
 ## 6. Stance Resolution
 
+### 6.0 Naming map (Austin, 2026-11-12)
+
+Stances are named by the stat that feeds them. Everything behind the screen (sim code, data, line tables, specs and these docs) uses **POW / EN / HAN** only. This table is the one place the old names appear; other docs refer here.
+
+| Stat / stance | Old stance names (retired) | Old code (retired) | New code (`sim/velocity_shift/models.py`) | Line-table letter (`LINE_SET_C`), old → new |
+|---|---|---|---|---|
+| **POW** | Attack, ATK | `Stance.ATTACK = "attack"` | `Stance.POW = "POW"` | A → **P** |
+| **EN** | Defend, DEF | `Stance.DEFEND = "defend"` | `Stance.EN = "EN"` | D → **E** |
+| **HAN** | Neutral, Steady, NEU | `Stance.NEUTRAL = "neutral"` | `Stance.HAN = "HAN"` | S → **H** |
+
+- The clash outcome for the same stance on both sides was `StanceOutcome.NEUTRAL`; it is now **`StanceOutcome.DRAW`** (value 0, unchanged).
+- Line tables are written as stat sequences, Entry-Apex-Exit: e.g. Touge hairpin main line `EHP` = EN-HAN-POW (was `DSA`).
+- **On screen only** (art, lane labels, camera): POW is drawn on the OUT lane, HAN on MID, EN on IN, relative to the corner, so OUT on a left turn and OUT on a right turn are the same stance. Backend docs don't use the lane words.
+- The rename changed names only; every number is identical (CHANGELOG 2026-11-12).
+
 **File:** `sim/velocity_shift/equations.py` — `resolve_stance()`
 
 ```
-Attack  vs Attack   → NEUTRAL
-Attack  vs Neutral  → WIN      (Attack beats Neutral)
-Attack  vs Defend   → LOSS     (Defend beats Attack)
-Neutral vs Neutral  → NEUTRAL
-Neutral vs Defend   → WIN      (Neutral beats Defend)
-Neutral vs Attack   → LOSS     (Attack beats Neutral)
-Defend  vs Defend   → NEUTRAL
-Defend  vs Attack   → WIN      (Defend beats Attack)
-Defend  vs Neutral  → LOSS     (Neutral beats Defend)
+POW vs POW → DRAW
+POW vs HAN → WIN      (POW beats HAN)
+POW vs EN  → LOSS     (EN beats POW)
+HAN vs HAN → DRAW
+HAN vs EN  → WIN      (HAN beats EN)
+HAN vs POW → LOSS     (POW beats HAN)
+EN  vs EN  → DRAW
+EN  vs POW → WIN      (EN beats POW)
+EN  vs HAN → LOSS     (HAN beats EN)
 ```
 
-RPS cycle: **Attack > Neutral > Defend > Attack**
+RPS cycle: **POW > HAN > EN > POW**
 
 ---
 
