@@ -1,13 +1,13 @@
 # Two-corner engine test (Godot 4.6.3)
 
-> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. Phase 5 UI/camera follows AD B.5a/B.5b at **ab1c4a1**. It is the one exception to the combat freeze. The sim is pinned at **f0efecf** (`f0efecfbc18b495a0ba9df3bf956d8e89acc3477`, Barry's per-phase QTE averaging on the qte-v1 visible zone; re-pinned from 212eaab in shots10, Austin approved 2026-11-11 10:56 PM PT). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
+> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. Phase 5 UI/camera follows AD B.5a/B.5b at **ab1c4a1**. It is the one exception to the combat freeze. The sim is pinned at **c3ffc41** (`c3ffc41791bdf86c249c5b1913b84eb6898620fc`, Barry's QTE phase-score rounding to 3 decimals on top of per-phase averaging / the qte-v1 visible zone; re-pinned from f0efecf, Austin approved via Desmond 2026-11-12). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
 
 > **2026-11-11: Three.js dropped (Austin).** The Godot build is the only one worked on and tested; parity is Godot vs the pinned sim.
 > Notes below that mention `threejs/` are historical; that tree is not in this copy.
 
-This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at f0efecf), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
+This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at c3ffc41), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
 
-Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `f0efecf` (`git worktree add _pin f0efecf`); do not use this branch's live `sim/`, which may move on. `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` no longer writes the Three.js constants file (shots10).
+Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `c3ffc41` (`git worktree add _pin c3ffc41`); do not use this branch's live `sim/`, which may move on (later 53267c5 is a stat-name rename only; this pin stays on c3ffc41 until Godot mirrors those names). `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` no longer writes the Three.js constants file (shots10).
 
 ## Layout
 - `spec/gen_constants.py` imports the pinned `equations.py` and writes `godot/scripts/sim_constants.gd`, citing `equations.py:<line>`

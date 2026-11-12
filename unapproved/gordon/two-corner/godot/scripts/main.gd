@@ -221,7 +221,7 @@ func _plan_key_test() -> void:
 				push_error("seed %d: RESULT gap %s != resolved %s (snap?)" % [sd, str(rival_offset), str(want_off)]); get_tree().quit(1); return
 			for i in 3:
 				var z := _qte_zone()
-				var ok: bool = qte_res[i] == null if float(want_ms[i]) < 0.0 else (qte_res[i] != null and float(qte_res[i]) == Combat.hit_quality(float(qte_press_ms[i]) - (z.x + z.y) / 2.0, zone_ms) and float(qte_res[i]) >= 0.0 and float(qte_res[i]) <= 1.0)
+				var ok: bool = qte_res[i] == null if float(want_ms[i]) < 0.0 else (qte_res[i] != null and float(qte_res[i]) == Combat.round_qte_score(Combat.hit_quality(float(qte_press_ms[i]) - (z.x + z.y) / 2.0, zone_ms)) and float(qte_res[i]) >= 0.0 and float(qte_res[i]) <= 1.0)
 				if not ok: push_error("seed %d: QTE %d press %s -> %s" % [sd, i, str(want_ms[i]), str(qte_res[i])]); get_tree().quit(1); return
 				if qte_res[i] == null: n_unplayed += 1
 			var q := []   # (_step_play submitted qte_res at the end of playback)
@@ -502,7 +502,7 @@ func _qte_timer_s() -> float: return maxf(float(QS.lead_ms) + float(C.QTE_ZONE_B
 func _qte_press() -> void:
 	var ms := _qte_ms(); var z := _qte_zone()
 	qte_press_ms[qte_i] = ms
-	qte_res[qte_i] = Combat.hit_quality(ms - (z.x + z.y) / 2.0, zone_ms)   # s = max(0, 1 - |e| / (w/2)), equations.py:280
+	qte_res[qte_i] = Combat.round_qte_score(Combat.hit_quality(ms - (z.x + z.y) / 2.0, zone_ms))  # rounded phase score (pin c3ffc41); HUD + token use this
 	qte_seg = "show"; qte_show_t = qte_seg_t
 func _qte_timeout() -> void:
 	qte_res[qte_i] = null; qte_press_ms[qte_i] = null   # unplayed = PHASE_QTE_UNPLAYED (0), Austin
@@ -515,7 +515,7 @@ func _step_qte(dt: float) -> void:
 	if qte_seg == "sweep":
 		var ms := _qte_ms()
 		if script_in != null and script_qte.size() == 3 and script_qte[qte_i] != null and ms >= _script_press_ms(script_qte[qte_i]):
-			qte_press_ms[qte_i] = ms; qte_res[qte_i] = script_qte[qte_i]; qte_seg = "show"; qte_show_t = qte_seg_t
+			qte_press_ms[qte_i] = ms; qte_res[qte_i] = Combat.phase_raw_qte(script_qte[qte_i]); qte_seg = "show"; qte_show_t = qte_seg_t
 		elif ms > _qte_zone().y:
 			_qte_timeout()
 	if qte_seg == "show" and qte_seg_t >= _qte_timer_s() and qte_seg_t - qte_show_t >= float(QS.result_hold_s):
@@ -683,7 +683,9 @@ func _run_one_race(race: Dictionary, pre: String) -> void:
 				await _wait_game(func(): return lock_hold_t >= (m + 1) * float(SC.lock_hold_s) / 3.2)
 				await _shot("seq_lock%d_%d" % [ci, m])
 		script_qte = []
-		for v in inp.qte: script_qte.append(RaceCore.fdec(v))
+		for v in inp.qte:
+			var s = RaceCore.fdec(v)
+			script_qte.append(null if s == null else Combat.round_qte_score(float(s)))
 		if seqs: _qte_shots(ci)   # runs alongside the playback frames below (the game clock is frozen during a shot)
 		for i in (SEQ_CORNER_N if seqs else 0):
 			await _wait_game(func(): return core.phase != "TIMING" or qte_t >= (i + 0.5) / SEQ_CORNER_N * float(disp.playback_s))

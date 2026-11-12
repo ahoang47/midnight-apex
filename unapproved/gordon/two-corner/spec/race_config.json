@@ -1,7 +1,7 @@
 {
   "_doc": "Two-corner engine test. Shared by Godot, Three.js and tools/sim_parity.py. No balance numbers here: stats come from sim constants by name.",
-  "pin_commit": "f0efecfbc18b495a0ba9df3bf956d8e89acc3477",
-  "_pin_doc": "Re-pinned from 212eaab to f0efecf (Barry's per-phase QTE averaging on top of the qte-v1 visible zone), Austin approved 2026-11-11 10:56 PM PT. sim/ is identical at origin/proto-build 59f7e6d (later commits are art/design only).",
+  "pin_commit": "c3ffc41791bdf86c249c5b1913b84eb6898620fc",
+  "_pin_doc": "Re-pinned from f0efecf to c3ffc41 (Barry's QTE phase-score rounding to 3 decimals: floor(x*1000+0.5)/1000 at raw_qte_score and phase_raw_qte). Austin approved via Desmond, 2026-11-12. Later sim commit 53267c5 is a stat-name rename only (numbers identical); this pin stays on c3ffc41 so Godot can keep the pre-rename stance letters until that mirror lands.",
   "max_turns": 2,
   "_max_turns_doc": "race length in turns = corners; kappa = kappa_for_length(2) -> nearest key 10 (sim rule, no interpolation)",
   "stats": {

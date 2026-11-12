@@ -225,18 +225,27 @@ static func qte_zone_width(r: float, window_mod: float = 0.0) -> float:
 	width = width * (1.0 + window_mod)
 	return 0.0 if width < 0.0 else width
 
-## equations.py:372 raw_qte_score: expected raw score at the race's fixed r (no HAN, no knot_window)
+## equations.py:407 raw_qte_score: expected raw score at the race's fixed r (no HAN, no knot_window),
+## rounded by round_qte_score (pin c3ffc41). expected_hit_quality and qte_zone_width stay unrounded.
 static func raw_qte_score(r: float, profile: String = "", q_time = null, window_mod: float = 0.0) -> float:
 	if profile == "" and q_time == null: profile = "average"
 	var sig := qte_sigma_over_a0(profile, q_time)
-	return expected_hit_quality(sig, qte_zone_width(r, window_mod))
+	return round_qte_score(expected_hit_quality(sig, qte_zone_width(r, window_mod)))
 
-## equations.py:390 phase_raw_qte: None / unplayed = PHASE_QTE_UNPLAYED (0, Austin)
+## equations.py:425 round_qte_score: floor(x * 10**QTE_SCORE_DECIMALS + 0.5) / 10**QTE_SCORE_DECIMALS.
+## Godot mirror (Barry, pin c3ffc41; Austin approved via Desmond 2026-11-12): floor(x * 1000.0 + 0.5) / 1000.0.
+## Not snappedf(x, 0.001): it divides and multiplies by the inexact 0.001 and differs on ~14% of inputs.
+## Non-finite values pass through. A scalar passed to mean_phase_qte / resolve_turn is still taken as-is.
+static func round_qte_score(x: float) -> float:
+	if not is_finite(x): return x
+	return floor(x * 1000.0 + 0.5) / 1000.0
+
+## equations.py:440 phase_raw_qte: None / unplayed = PHASE_QTE_UNPLAYED (0, Austin); a supplied score is rounded.
 static func phase_raw_qte(score) -> float:
 	if score == null: return C.PHASE_QTE_UNPLAYED
-	return float(score)
+	return round_qte_score(float(score))
 
-## equations.py:397 mean_phase_qte: a 3-list is averaged, a scalar is returned as-is. The sim's sum() is CPython 3.12+ sum(),
+## equations.py:447 mean_phase_qte: a 3-list is averaged (each phase already rounded by phase_raw_qte, summed Entry/Apex/Exit, then / 3.0; the mean is not re-rounded). A scalar is returned as-is. The sim's sum() is CPython 3.12+ sum(),
 ## which adds floats with Neumaier compensation (Objects/bltinmodule.c builtin_sum_impl): start 0 + x0, then t = f + x with
 ## c += (f - t) + x or (x - t) + f, and f + c at the end. Ported step for step so the mean is bit-identical.
 static func py_sum(xs: Array) -> float:
@@ -256,8 +265,10 @@ static func mean_phase_qte(value) -> float:
 	if value == null: return C.PHASE_QTE_UNPLAYED
 	return float(value)
 
-## one press in the visible zone, from the score definition in expected_hit_quality's docstring (equations.py:280):
+## one press in the visible zone, from the score definition in expected_hit_quality's docstring (equations.py:315):
 ## s = max(0, 1 - |e| / (w/2)), e = press time - zone centre, w = zone width in ms. GAME-SIDE (the sim never sees a press).
+## The geometric score is unrounded here; callers store round_qte_score(hit_quality(...)) so the HUD and the TC2 token
+## see the same rounded phase score that phase_raw_qte / the sim use.
 static func hit_quality(err_ms: float, zone_ms: float) -> float:
 	if zone_ms <= 0.0: return 0.0
 	return maxf(0.0, 1.0 - absf(err_ms) / (zone_ms / 2.0))

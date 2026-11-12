@@ -255,7 +255,7 @@ None of these files or edits exist yet. They are created only after Austin locks
 > Added by Gordon on 2026-11-11 with the shots10 sim re-pin, which Austin approved at 10:56 PM PT. This token belongs to the two-corner engine test only. It is a working example of the replay mode in §0.2 / Q4 and does not lock any part of `MX1`.
 
 - **Format:** `TC2:<sim7>:<build10>:<base64url(json)>:<crc16_hex4>`.
-  - `sim7` is the pinned sim commit (`_pin` HEAD; `f0efecf` since shots10).
+  - `sim7` is the pinned sim commit (`_pin` HEAD; `c3ffc41` since the 2026-11-12 rounding re-pin, was `f0efecf` from shots10).
   - `build10` is the first 10 hex characters of a SHA-1 over the build's own files: `project.godot`, `scripts/*.gd`, `shaders/*`, `spec/display.json`, `spec/race_config.json`. `tools/stamp_build.py` writes both values into `godot/spec/build.json`. `tools/run_parity.sh` runs it first.
   - The CRC is CRC-16/CCITT-FALSE, as in §0.2, over the ASCII `TC2` + `sim7` + `build10`, followed by the payload bytes.
   - The HUD menu shows `pin <sim7> build <build10>`.

@@ -1,6 +1,6 @@
 ## per-phase timing QTE during playback (shots10, moved into playback in shots11; no Arthur frame exists for it, so layout, labels and sizes are PLACEHOLDERS on the B.5a/B.5b
 ## palette and the 2x grid). Bar = the sweep in ms (display.json qte_sweep): lead-in, then the zone (amber; width from the sim's
-## qte_zone_width at the race's fixed r), cursor = white. Score = max(0, 1 - |e| / (zone/2)); past the far edge = unplayed (0).
+## qte_zone_width at the race's fixed r), cursor = white. Score = round_qte_score(max(0, 1 - |e| / (zone/2))) (3 decimals, pin c3ffc41); past the far edge = unplayed (0).
 @tool
 extends "res://scripts/hud/hud_panel.gd"
 func paint() -> void:
@@ -21,7 +21,7 @@ func paint() -> void:
 		var txt := "- -"; var col := L_DIMMER
 		if j < i or (j == i and q.seg == "show"):
 			if r == null: txt = "0 unplayed"; col = L_DIM
-			else: txt = "%.2f" % float(r); col = L_WHITE
+			else: txt = "%.3f" % float(r); col = L_WHITE
 		t2(cx + 2, y + 6, txt, 11, col, false, "l", true, true)
 	# the sweep bar
 	var bx0 := x0 + 12.0; var bx1 := x1 - 12.0; var by := y0 + 46.0; var bw := bx1 - bx0
@@ -39,6 +39,6 @@ func paint() -> void:
 	if q.seg == "show":
 		var r = q.res[i]
 		if r == null: t2(320, y0 + 60, "UNPLAYED  0", 12, L_DIM, true, "m")
-		else: t2(320, y0 + 60, ("HIT %.2f" if float(r) > 0.0 else "MISS %.2f") % float(r), 12, L_AMBER if float(r) > 0.0 else L_DIM, true, "m")
+		else: t2(320, y0 + 60, ("HIT %.3f" if float(r) > 0.0 else "MISS %.3f") % float(r), 12, L_AMBER if float(r) > 0.0 else L_DIM, true, "m")
 	else:
 		t2(320, y0 + 60, "zone %d ms" % roundi(float(q.zone[1]) - float(q.zone[0])), 10, SUB, false, "m")

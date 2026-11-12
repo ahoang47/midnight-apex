@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Parity: sim (pinned Python) vs Godot headless, plus dump/load round-trip, the in-game restart test and the Plan the Line key test.
 # Godot only since 2026-11-11 (Austin: Three.js dropped; its files stay in threejs/ untouched).
-# Sim pin f0efecf since shots10 (Austin approved 2026-11-11 10:56 PM PT): per-phase QTE inputs [entry, apex, exit] go into both
-# engines; the qte-v1 functions (erf, expected_hit_quality, qte_zone_width, raw_qte_score) are checked bit for bit.
+# Sim pin c3ffc41 (Austin approved via Desmond 2026-11-12): per-phase QTE inputs [entry, apex, exit] go into both
+# engines, each phase score rounded with floor(x*1000+0.5)/1000; the mean is not re-rounded. qte_fn_test.py checks
+# raw_qte_score bit-for-bit and allows a 1-ULP tolerance on unrounded erf / expected_hit_quality / qte_zone_width.
 set -u
 cd "$(dirname "$0")/.."
 G=${GODOT:-/workspace/tools/godot}

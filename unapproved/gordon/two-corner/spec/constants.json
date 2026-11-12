@@ -1,6 +1,6 @@
 {
- "_source": "sim/velocity_shift/equations.py @ f0efecfbc18b495a0ba9df3bf956d8e89acc3477",
- "commit": "f0efecfbc18b495a0ba9df3bf956d8e89acc3477",
+ "_source": "sim/velocity_shift/equations.py @ c3ffc41791bdf86c249c5b1913b84eb6898620fc",
+ "commit": "c3ffc41791bdf86c249c5b1913b84eb6898620fc",
  "values": {
   "W0": 0.1,
   "T_MAX": 0.75,
@@ -22,6 +22,7 @@
   "QTE_ZONE_BASE_MS": 800,
   "AVERAGE_PLAY_Q": 0.6,
   "PHASE_QTE_UNPLAYED": 0.0,
+  "QTE_SCORE_DECIMALS": 3,
   "KNOT_WINDOW_105": [
    [
     0.8,
@@ -41,7 +42,7 @@
    ],
    [
     1.0,
-    0.68
+    0.67
    ],
    [
     1.05,
@@ -227,7 +228,7 @@
    ],
    [
     1.0,
-    0.5802105104609707
+    0.5698111340658429
    ],
    [
     1.05,
@@ -278,7 +279,7 @@
   "KNOT_WINDOW_105[3][0]": 4606732058837280358,
   "KNOT_WINDOW_105[3][1]": 4601417811276983173,
   "KNOT_WINDOW_105[4][0]": 4607182418800017408,
-  "KNOT_WINDOW_105[4][1]": 4604300115038500291,
+  "KNOT_WINDOW_105[4][1]": 4604210043045952881,
   "KNOT_WINDOW_105[5][0]": 4607407598781385933,
   "KNOT_WINDOW_105[5][1]": 4607182418800017408,
   "KAPPA_BY_LENGTH[10]": 4609659398595071181,
@@ -302,7 +303,7 @@
   "QTE_ZONE_WIDTH_105[3][0]": 4606732058837280358,
   "QTE_ZONE_WIDTH_105[3][1]": 4599882131894972720,
   "QTE_ZONE_WIDTH_105[4][0]": 4607182418800017408,
-  "QTE_ZONE_WIDTH_105[4][1]": 4603401291222693362,
+  "QTE_ZONE_WIDTH_105[4][1]": 4603307621967377396,
   "QTE_ZONE_WIDTH_105[5][0]": 4607407598781385933,
   "QTE_ZONE_WIDTH_105[5][1]": 4607182418800017408,
   "QTE_SKILL_TARGET_E[weak]": 4600877379321698714,
@@ -313,36 +314,37 @@
   "QTE_SKILL_SIGMA_OVER_A0[strong]": 4598187244766278074
  },
  "source_lines": {
-  "W0": "sim/velocity_shift/equations.py:173",
-  "T_MAX": "sim/velocity_shift/equations.py:174",
-  "L_MAX": "sim/velocity_shift/equations.py:175",
-  "TAU_BETA": "sim/velocity_shift/equations.py:176",
-  "TAU_P_TOP": "sim/velocity_shift/equations.py:177",
-  "TAU_GAMMA": "sim/velocity_shift/equations.py:178",
-  "MU": "sim/velocity_shift/equations.py:179",
-  "ETA": "sim/velocity_shift/equations.py:180",
-  "DECK_ALPHA": "sim/velocity_shift/equations.py:181",
-  "HAND_SIZE": "sim/velocity_shift/equations.py:182",
-  "LINE_ADHERENCE": "sim/velocity_shift/equations.py:183",
-  "OPPONENT_QTE": "sim/velocity_shift/equations.py:129",
+  "W0": "sim/velocity_shift/equations.py:188",
+  "T_MAX": "sim/velocity_shift/equations.py:189",
+  "L_MAX": "sim/velocity_shift/equations.py:190",
+  "TAU_BETA": "sim/velocity_shift/equations.py:191",
+  "TAU_P_TOP": "sim/velocity_shift/equations.py:192",
+  "TAU_GAMMA": "sim/velocity_shift/equations.py:193",
+  "MU": "sim/velocity_shift/equations.py:194",
+  "ETA": "sim/velocity_shift/equations.py:195",
+  "DECK_ALPHA": "sim/velocity_shift/equations.py:196",
+  "HAND_SIZE": "sim/velocity_shift/equations.py:197",
+  "LINE_ADHERENCE": "sim/velocity_shift/equations.py:198",
+  "OPPONENT_QTE": "sim/velocity_shift/equations.py:131",
   "QTE_NORMALIZER": "sim/velocity_shift/equations.py:23",
   "PLAYER_QTE_MIN": "sim/velocity_shift/equations.py:38",
   "PLAYER_QTE_MAX": "sim/velocity_shift/equations.py:39",
   "PERFECT_QTE": "sim/velocity_shift/equations.py:40",
-  "SABINE_BUDGET": "sim/velocity_shift/equations.py:215",
-  "QTE_ZONE_BASE_MS": "sim/velocity_shift/equations.py:133",
-  "AVERAGE_PLAY_Q": "sim/velocity_shift/equations.py:208",
-  "PHASE_QTE_UNPLAYED": "sim/velocity_shift/equations.py:165",
-  "KNOT_WINDOW_105": "sim/velocity_shift/equations.py:125",
-  "KAPPA_BY_LENGTH": "sim/velocity_shift/equations.py:126",
-  "RACE_LENGTHS": "sim/velocity_shift/equations.py:127",
-  "LINE_ALT_WEIGHTS": "sim/velocity_shift/equations.py:184",
-  "LINE_SET_C": "sim/velocity_shift/equations.py:190",
-  "LADDER_R": "sim/velocity_shift/equations.py:213",
-  "LADDER_RUNGS": "sim/velocity_shift/equations.py:212",
-  "QTE_ZONE_WIDTH_105": "sim/velocity_shift/equations.py:137",
-  "QTE_SKILL_TARGET_E": "sim/velocity_shift/equations.py:148",
-  "QTE_SKILL_SIGMA_OVER_A0": "sim/velocity_shift/equations.py:149",
-  "QTE_PHASES": "sim/velocity_shift/equations.py:164"
+  "SABINE_BUDGET": "sim/velocity_shift/equations.py:250",
+  "QTE_ZONE_BASE_MS": "sim/velocity_shift/equations.py:135",
+  "AVERAGE_PLAY_Q": "sim/velocity_shift/equations.py:243",
+  "PHASE_QTE_UNPLAYED": "sim/velocity_shift/equations.py:167",
+  "QTE_SCORE_DECIMALS": "sim/velocity_shift/equations.py:180",
+  "KNOT_WINDOW_105": "sim/velocity_shift/equations.py:127",
+  "KAPPA_BY_LENGTH": "sim/velocity_shift/equations.py:128",
+  "RACE_LENGTHS": "sim/velocity_shift/equations.py:129",
+  "LINE_ALT_WEIGHTS": "sim/velocity_shift/equations.py:199",
+  "LINE_SET_C": "sim/velocity_shift/equations.py:205",
+  "LADDER_R": "sim/velocity_shift/equations.py:248",
+  "LADDER_RUNGS": "sim/velocity_shift/equations.py:247",
+  "QTE_ZONE_WIDTH_105": "sim/velocity_shift/equations.py:139",
+  "QTE_SKILL_TARGET_E": "sim/velocity_shift/equations.py:150",
+  "QTE_SKILL_SIGMA_OVER_A0": "sim/velocity_shift/equations.py:151",
+  "QTE_PHASES": "sim/velocity_shift/equations.py:166"
  }
 }

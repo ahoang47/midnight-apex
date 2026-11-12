@@ -17,8 +17,8 @@ commit = subprocess.check_output(["git", "-C", str(PIN), "rev-parse", "HEAD"], t
 SCALARS = ["W0", "T_MAX", "L_MAX", "TAU_BETA", "TAU_P_TOP", "TAU_GAMMA", "MU", "ETA",
            "DECK_ALPHA", "HAND_SIZE", "LINE_ADHERENCE", "OPPONENT_QTE", "QTE_NORMALIZER",
            "PLAYER_QTE_MIN", "PLAYER_QTE_MAX", "PERFECT_QTE", "SABINE_BUDGET",
-           # qte-v1 visible zone + per-phase QTE (pin f0efecf, Barry; Austin approved the re-pin 2026-11-11 10:56 PM PT)
-           "QTE_ZONE_BASE_MS", "AVERAGE_PLAY_Q", "PHASE_QTE_UNPLAYED"]
+           # qte-v1 visible zone + per-phase QTE (pin c3ffc41, Barry; rounding approved via Desmond 2026-11-12)
+           "QTE_ZONE_BASE_MS", "AVERAGE_PLAY_Q", "PHASE_QTE_UNPLAYED", "QTE_SCORE_DECIMALS"]
 STRUCTS = ["KNOT_WINDOW_105", "KAPPA_BY_LENGTH", "RACE_LENGTHS", "LINE_ALT_WEIGHTS", "LINE_SET_C", "LADDER_R", "LADDER_RUNGS",
            "QTE_ZONE_WIDTH_105", "QTE_SKILL_TARGET_E", "QTE_SKILL_SIGMA_OVER_A0", "QTE_PHASES"]
 
