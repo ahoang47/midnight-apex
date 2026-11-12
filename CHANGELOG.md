@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Barry [barry]: corners-v1 story characters include kids and matures
+
+- **Why:** Austin ruled "Kids and matures are story characters." The draft had listed only lieutenants, crew bosses, Myth Drivers and Sabine, which was my assumption.
+- **What:** `unapproved/barry/corners-v1/README.md` layer 3 now covers every ladder rung (kids, matures, old heads, crew bosses), Myth Drivers and Sabine. Only wild grind racers play pure district lines. Still a draft; no sim run, `sim/` unchanged.
+
 ## 2026-11-12 — Barry [barry]: corners-v1 layer rows note story-character swaps
 
 - **Why:** consistency with Austin's 2026-11-12 ruling that story characters swap only some corners; the layer 1 and 2 rows still read as covering every racer.
