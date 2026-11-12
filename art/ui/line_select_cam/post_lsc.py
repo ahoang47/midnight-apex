@@ -14,7 +14,7 @@ FN = '/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Bold.otf'; FI = '/us
 def font(n, it=False): return ImageFont.truetype(FI if it else FN, n)
 WHITE = (220, 230, 242); DIM = (140, 159, 180); DIMMER = (96, 108, 132); EDGE = (71, 94, 127); EDGE_L = (150, 172, 205)
 AMBER = (255, 184, 56); AMBER_D = (150, 90, 20); PANEL = (10, 14, 36); INK = (8, 10, 16); SOD = (240, 200, 148)
-COL = {'ATK': (232, 40, 44), 'DEF': (44, 184, 74), 'NEU': (240, 200, 40)}
+COL = {'ATK': (44, 184, 74), 'DEF': (232, 40, 44), 'NEU': (240, 200, 40)}   # art_direction B.5: stance colours swapped 2026-11-11 (ATK green #2CB84A, DEF red #E8282C)
 PICKS = [('ENTRY', 'MID', 'NEU'), ('APEX', 'IN', 'DEF'), ('EXIT', 'OUT', 'ATK')]   # sample picks for the mockup only
 def cut(x, y, x1, y1, c=5): return [(x, y), (x1 - c, y), (x1, y + c), (x1, y1), (x + c, y1), (x, y1 - c)]
 

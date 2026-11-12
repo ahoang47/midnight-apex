@@ -14,7 +14,7 @@ FN = '/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Bold.otf'; FI = '/us
 def font(n, it=False): return ImageFont.truetype(FI if it else FN, n)
 WHITE = (220, 230, 242); DIM = (140, 159, 180); DIMMER = (96, 108, 132); EDGE = (71, 94, 127); EDGE_L = (150, 172, 205)
 AMBER = (255, 184, 56); AMBER_D = (150, 90, 20); PANEL = (10, 14, 36); INK = (8, 10, 16); SOD = (240, 200, 148)
-COL = {'ATK': (232, 40, 44), 'DEF': (44, 184, 74), 'NEU': (240, 200, 40)}
+COL = {'ATK': (44, 184, 74), 'DEF': (232, 40, 44), 'NEU': (240, 200, 40)}   # art_direction B.5: stance colours swapped 2026-11-11 (ATK green #2CB84A, DEF red #E8282C)
 BEATS = {'ATK': 'NEU', 'NEU': 'DEF', 'DEF': 'ATK'}
 PHASES = ['ENTRY', 'APEX', 'EXIT']; YOU = ['NEU', 'DEF', 'ATK']; RIV = ['ATK', 'ATK', 'DEF']   # sample lines
 def result(a, b): return 'TIE' if a == b else ('WIN' if BEATS[a] == b else 'LOSS')
