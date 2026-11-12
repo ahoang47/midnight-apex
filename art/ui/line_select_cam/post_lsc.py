@@ -1,4 +1,4 @@
-"""Post for build_lsc.py: glow-only bloom (blend50 .22, 0) + sat 1.05 -> late-90s angular HUD drawn at native 640x480
+"""Post for build_lsc.py (B.5c-checked: see b5c_composite): glow-only bloom (blend50 .22, 0) + sat 1.05 -> late-90s angular HUD drawn at native 640x480
 (1-bit text, PS1 50/50 semi-transparent panels) -> RGB555 + 4x4 Bayer -> 2x nearest. Writes the 4 frames and a contact sheet.
 Selector adapted from race_state_study/entry_matrix (PLAYER LINE LOCK). UNAPPROVED PROPOSAL.  python3 post_lsc.py"""
 import os, sys, json, numpy as np
@@ -17,6 +17,26 @@ AMBER = (255, 184, 56); AMBER_D = (150, 90, 20); PANEL = (10, 14, 36); INK = (8,
 COL = {'ATK': (232, 40, 44), 'DEF': (44, 184, 74), 'NEU': (240, 200, 40)}
 PICKS = [('ENTRY', 'MID', 'NEU'), ('APEX', 'IN', 'DEF'), ('EXIT', 'OUT', 'ATK')]   # sample picks for the mockup only
 def cut(x, y, x1, y1, c=5): return [(x, y), (x1 - c, y), (x1, y + c), (x1, y1), (x + c, y1), (x, y1 - c)]
+
+
+# ---- B.5c (art_direction, 2026-11-11): every layer drawn and composited at native 640x480 with no AA and no smoothing.
+# Overlay layers must have binary alpha (PIL polygons/lines/arcs are aliased; text uses fontmode '1'); any rotation is NEAREST.
+# Composite = 50/50 PS1 semi layer, then hard 1-bit solid layer; RGB555 + 4x4 Bayer ONCE; then ONE 2x nearest upscale.
+# Layers are dumped to raw/layers_<name>.npz for verify_b5c.py. (Bloom on the 3D glow pass is the approved B.2a post, not an overlay.)
+def b5c_composite(b, semi, solid, name, raw_dir, out_dir):
+    assert semi.size == solid.size == (640, 480) and b.shape == (480, 640, 3), 'B.5c: native 640x480 only'
+    sa = np.asarray(semi).astype(np.float32); so = np.asarray(solid)
+    for lab, a in (('semi', sa[..., 3]), ('solid', so[..., 3])):
+        bad = set(np.unique(a).astype(int).tolist()) - {0, 255}
+        assert not bad, f'B.5c: soft alpha {sorted(bad)[:8]} in {lab} layer of {name}'
+    al = (sa[..., 3:] > 0) * .5
+    under = b * (1 - al) + sa[..., :3] * al
+    m = so[..., 3:] == 255
+    comp = np.clip(np.where(m, so[..., :3].astype(np.float32), under), 0, 255)
+    q = Image.fromarray(rgb555(comp))
+    np.savez_compressed(os.path.join(raw_dir, f'layers_{name}.npz'), solid=so, semi_a=sa[..., 3].astype(np.uint8), under=np.clip(under, 0, 255).astype(np.float32), comp=comp.astype(np.float32))
+    q.save(os.path.join(raw_dir, f'native_{name}.png')); q.resize((1280, 960), Image.NEAREST).save(os.path.join(out_dir, f'{name}.png'))
+    return q
 
 def scene(shot):
     base = np.asarray(Image.open(os.path.join(RAW, f'raw_{shot}.png')).convert('RGB')).astype(np.float32)
@@ -129,13 +149,8 @@ def frame(n):
             cx = x0 + 22 + k * 70; chip(cx, y1 + 5, st)
             if k < 2: txt(cx + 57, y1 + 5, '>', 12, DIM)
 
-    sa = np.asarray(semi).astype(np.float32); al = sa[..., 3:] / 255 * .5
-    b = b * (1 - al) + sa[..., :3] * al
-    so = np.asarray(solid); b = np.where(so[..., 3:] > 127, so[..., :3], b)
-    q = Image.fromarray(rgb555(np.clip(b, 0, 255)))
     name = {1: '1_entry_pick', 2: '2_apex_pick', 3: '3_exit_pick', 4: '4_line_locked'}[n]
-    q.save(os.path.join(RAW, f'native_{name}.png')); q.resize((1280, 960), Image.NEAREST).save(os.path.join(OUT, f'{name}.png'))
-    return q, name
+    return b5c_composite(b, semi, solid, name, RAW, OUT), name
 def scene_mirror():
     m = np.asarray(Image.open(os.path.join(RAW, 'raw_mirror.png')).convert('RGB')).astype(np.float32)
     lum = (m * np.array([.299, .587, .114])).sum(-1, keepdims=True); return np.clip(lum + (m - lum) * T['sat'], 0, 255)
@@ -153,7 +168,8 @@ for i, (q, name) in enumerate(frames):
     d.text((x + 12, y + 11), str(i + 1), font=font(19, True), fill=AMBER, anchor='mm'); d.text((x + 32, y + 11), titles[i], font=font(15, True), fill=INK, anchor='lm')
     d.line([(x + 166, y + 21), (x + 640, y + 21)], fill=EDGE)
     slots.append((q, (x, y + 24)))
-q = Image.fromarray(rgb555(np.asarray(sh).astype(np.float32)))      # quantise the sheet chrome, then paste the (already quantised) frames
-for f_, xy in slots: q.paste(f_, xy)
-q.resize((W * 2, H * 2), Image.NEAREST).save(os.path.join(OUT, 'line_select_cam_contact_sheet.png'))
+q = Image.fromarray(rgb555(np.asarray(sh).astype(np.float32)))      # quantise the sheet chrome (1-bit text, hard polys), then paste
+for f_, xy in slots: q.paste(f_, xy)                                 # the already-quantised native frames 1:1 (no resampling)
+q.resize((W * 2, H * 2), Image.NEAREST).save(os.path.join(OUT, 'line_select_cam_contact_sheet.png'))   # full size: same 2x as the frames
+json.dump({name: [xy[0] * 2, xy[1] * 2] for (f_, xy), (_, name) in zip(slots, frames)}, open(os.path.join(RAW, 'sheet_layout.json'), 'w'))
 print('post ok')

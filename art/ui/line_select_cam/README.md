@@ -1,6 +1,6 @@
 # Line select camera: Entry / Apex / Exit (approved 2026-11-11 (art_direction B.5b))
 
-Proposal only. Austin has not approved this, so nothing here is final UI, camera spec or mechanics.
+Approved flow (art_direction B.5b). The lane/stance labels on the Apex and Exit picks are still placeholders. The sample values below are not specs.
 
 ## Flow (Austin's idea)
 1. **Entry pick.** The existing selector on the fixed chase camera. The rival can be seen in its Entry lane, which is the only tell.
@@ -11,7 +11,7 @@ Proposal only. Austin has not approved this, so nothing here is final UI, camera
 ## Frames (1280x960 = 640x480 native, 2x nearest)
 - `1_entry_pick.png`: Chase camera. The rival S2000 is in the OUTSIDE lane (an ATK tell on a right hairpin). The Entry slot is active.
 - `2_apex_pick.png`: Apex camera. Entry is filled and Apex is active. Lane marks show OUT, MID and IN at the apex.
-- `3_exit_pick.png`: Exit camera. Entry and Apex are filled and Exit is active.
+- `3_exit_pick.png`: Exit camera. Entry and Apex are filled and Exit is active. Since 2026-11-11 this uses the closer rear-quarter exit camera (`pb_exit`), the same one the line-vs-line exit playback uses, so the pick view and the playback view match.
 - `4_line_locked.png`: Back on the chase camera with the banner and all 3 slots set. The rival is back in its Entry lane.
 - `line_select_cam_contact_sheet.png`: All 4 frames in order, labelled 1 to 4.
 
@@ -26,6 +26,8 @@ The corner plate in the top right shows the hairpin and the three camera stops (
 - **Scene.** A cheap Touge right hairpin built in Blender: a 3-lane road strip, W-beam guardrail with posts, chevron boards, a cut bank on the inside, a drop-off on the outside, cedar cards, and ridge cards in the distance.
 - **Lighting and tone.** Same unlit vertex-light, fog and emission method as lane_chain/v5 and entry_matrix. Uses the approved `blend50` tone: fog #0B172B, ambient #5575A0, pale sodium #F0C894 lamps with hard 3-step pools, and bloom (.22, 0). The fog is closer than in the city scenes.
 - **Cars.** Game .glb models with the A.4 faked shine.
-- **Render.** EEVEE at 640x480, 1 sample, filter 0. The HUD is drawn at native size with 1-bit text and PS1 50/50 panels, then RGB555 + 4x4 Bayer, then 2x nearest.
+- **Render.** EEVEE at 640x480, 1 sample, filter 0.
+- **Aliasing (B.5c).** Every overlay is drawn at native 640x480 with no AA: aliased polygons, lines and arcs, 1-bit text, and binary alpha. `post_lsc.py` checks this and stops if any layer has a soft alpha value. Compositing is the 50/50 semi layer, then the hard solid layer. RGB555 + 4x4 Bayer is applied once, followed by a single 2x nearest upscale. The contact sheet is built at full size: the native frames are pasted 1:1 and the whole sheet gets one 2x nearest, so each tile is pixel-identical to its frame. The bloom on the 3D glow pass is the approved B.2a post (0.22, 0), not an overlay.
+- **Check.** `verify_b5c.py` confirms that every 2x2 block is uniform, the overlay alpha is binary, there are no blended pixels on the inner or outer edge of any hard overlay, and the sheet tiles equal the frames. It also covers `art/ui/line_vs_line`.
 
-Rebuild: `./run.sh` (see the script for its dependencies). The .blend file and raw passes are kept on the box only.
+To rebuild, run `build_lsc.py` in Blender 4.2.3, then `post_lsc.py`, then `verify_b5c.py`. The box working copy, `/workspace/mockups/line_select_cam/`, has `run.sh` and the textures. The .blend file and raw passes stay on the box.

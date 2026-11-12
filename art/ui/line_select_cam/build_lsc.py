@@ -250,6 +250,12 @@ mkcam('apex', (CX + AP_R * math.cos(AP_PHI), CY + AP_R * math.sin(AP_PHI), AP_Z)
 EX_S = LA * float(os.environ.get('EX_F', .75)); ep, eh = track(EX_S, float(os.environ.get('EX_OFF', -7.5)))
 et, _ = track(LA + float(os.environ.get('EX_T', 24)), 1.0)
 mkcam('exit', ep + Vector((0, 0, float(os.environ.get('EX_Z', 7.5)))), et + Vector((0, 0, -1.2)), float(os.environ.get('EX_LENS', 19)))
+# B.5c pass (2026-11-11): the Exit stop now uses the same closer rear-quarter camera as the line_vs_line exit playback
+# (line_clash/build_clash.py 'pb_exit'), so the pick view and the playback view match. The old 'exit' camera is kept only so
+# the cedar keep-out set (and so the rest of the scene) stays identical to line_clash.
+PX_S = LA + float(os.environ.get('PX_S', -5.0)); pxp, _ = track(PX_S, float(os.environ.get('PX_OFF', -5.4)))
+pxt, _ = track(LA + float(os.environ.get('PX_T', 9.0)), float(os.environ.get('PX_TOFF', 1.2)))
+mkcam('pb_exit', pxp + Vector((0, 0, float(os.environ.get('PX_Z', 3.4)))), pxt + Vector((0, 0, float(os.environ.get('PX_TZ', 0.2)))), float(os.environ.get('PX_LENS', 24)))
 for p, h in TREES:
     if any((Vector((p.x, p.y, 0)) - Vector((c.location.x, c.location.y, 0))).length < 5.5 for k_, c in cams.items() if k_ != 'mirror'): continue
     cedar_at(p, h)
@@ -398,7 +404,7 @@ def scr(c, p, w=640, h=480):
     v = world_to_camera_view(sc, c, Vector(p)); return [round(v.x * w, 1), round((1 - v.y) * h, 1), round(v.z, 2)]
 PHASE_S = {'chase': -3.0, 'apex': LA / 2, 'exit': LA + 9.0}
 def render(shot, w=640, h=480, glow=True, rival_on=True):
-    c = cams[shot]; sc.camera = c; sc.render.resolution_x, sc.render.resolution_y = w, h
+    c = cams[{'exit': 'pb_exit'}.get(shot, shot)]; sc.camera = c; sc.render.resolution_x, sc.render.resolution_y = w, h
     for o in CAR_OBJS['S2000_']:
         o.hide_render = not rival_on
     for g in GLOWS:
