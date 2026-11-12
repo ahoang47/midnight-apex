@@ -1,6 +1,7 @@
 {
   "_doc": "Two-corner engine test. Shared by Godot, Three.js and tools/sim_parity.py. No balance numbers here: stats come from sim constants by name.",
-  "pin_commit": "212eaab99282fbc1c6fd5a9fc50048445ae01716",
+  "pin_commit": "f0efecfbc18b495a0ba9df3bf956d8e89acc3477",
+  "_pin_doc": "Re-pinned from 212eaab to f0efecf (Barry's per-phase QTE averaging on top of the qte-v1 visible zone), Austin approved 2026-11-11 10:56 PM PT. sim/ is identical at origin/proto-build 59f7e6d (later commits are art/design only).",
   "max_turns": 2,
   "_max_turns_doc": "race length in turns = corners; kappa = kappa_for_length(2) -> nearest key 10 (sim rule, no interpolation)",
   "stats": {
@@ -30,5 +31,7 @@
   "opponent": {
     "name": "Crew Boss",
     "car": "s2000"
-  }
+  },
+  "qte_window_mod": 0.0,
+  "_qte_window_mod_doc": "MatchConfig.qte_window_mod (sim/velocity_shift/models.py:157, default 0.0). No mods in this test. Zone = qte_zone_width(r, qte_window_mod) at the race's fixed r = player stat total / opponent stat total (match.py:190-192)."
 }

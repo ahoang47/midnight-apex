@@ -149,8 +149,10 @@ func _draw() -> void:
 		_entry_strip(); _plan_panel()
 	elif st.phase == "TIMING" and st.locked_hold:
 		_timer_panel(true); _debug(14, 64); _lock_banner()
+	elif st.phase == "TIMING" and st.get("qte") != null:
+		_timer_panel(true); _debug(14, 64); _qte_panel()
 	elif st.phase == "TIMING":
-		_line_vs_line(int(st.play_phase)); _debug(14, 106); _timing_panel()
+		_line_vs_line(int(st.play_phase)); _debug(14, 106)
 	else:
 		_line_vs_line(-1); _debug(14, 106)
 		if st.phase == "FINISHED": _finish_panel()
@@ -198,17 +200,18 @@ func _corner_plate() -> void:
 	match md:
 		"VIEW": cur = k; ndone = k
 		"LOCK": cur = 0; ndone = 3
+		"QTE": cur = k; ndone = k
 		"PLAY": cur = k; ndone = k
 		_: cur = -1; ndone = 3
-	var lab := "PLAY" if md in ["PLAY", "DONE"] else "VIEW"
+	var lab := "PLAY" if md in ["PLAY", "DONE"] else ("QTE" if md == "QTE" else "VIEW")
 	t2(534, 40, lab, 9, L_DIM)
 	t2(560, 38, "RESULT" if md == "DONE" else PHN[cur], 13, L_AMBER)
-	if md in ["VIEW", "LOCK"]:
+	if md in ["VIEW", "LOCK", "QTE"]:
 		var lt := ["E", "A", "X"]
 		for i in 3:
 			var on_cur := i == cur; var dn := (md == "LOCK" and i > 0) or (md == "VIEW" and i < cur)
 			t2(534 + i * 14, 58, lt[i], 10, L_AMBER if on_cur else (L_WHITE if dn else L_DIMMER))
-	t2(534, 74, "PLAYBACK" if lab == "PLAY" else "CAMERA STOP", 9, L_DIM)
+	t2(534, 74, "PLAYBACK" if lab == "PLAY" else ("TIMING" if lab == "QTE" else "CAMERA STOP"), 9, L_DIM)   # 'QTE' / 'TIMING' labels: PLACEHOLDER
 	# map: fit the path into x 486..526, y 28..90, forward = up
 	var ic: Dictionary = pl.icon; var pts: Array = ic.pts
 	var mn := Vector2(1e9, 1e9); var mx := Vector2(-1e9, -1e9)
@@ -375,17 +378,55 @@ func _plan_panel() -> void:
 	t2(x0 + 9, y1 - 16, "Line locks at turn-in", 10, SUB, true)
 	t2(x1 - 10, y1 - 16, "Enter SET  Bksp BACK", 10, SUB, false, "r")
 
-## compact timing needle (SPACE), kept from the earlier build, above the strip
-func _timing_panel() -> void:
-	box(232, 372, 176, 40); center(320, 376, [["TIMING - SPACE", WHITE]])
-	rect(240, 388, 160, 10, Color("#9597AD")); rect(241, 389, 158, 8, Color("#161C2A")); rect(316, 389, 8, 8, Color("#3CC8FF"))
-	rect(320 + roundi(st.needle * 78.0) - 1, 386, 2, 14, Color.WHITE)
+## per-phase timing QTE (shots10; no Arthur frame exists for it, so layout, labels and sizes are PLACEHOLDERS on the B.5a/B.5b
+## palette and the 2x grid). Bar = the sweep in ms (display.json qte_sweep): lead-in, then the zone (amber; width from the sim's
+## qte_zone_width at the race's fixed r), cursor = white. Score = max(0, 1 - |e| / (zone/2)); past the far edge = unplayed (0).
+func _qte_panel() -> void:
+	var q: Dictionary = st.qte; var i: int = int(q.i)
+	var x0 := 150.0; var y0 := 344.0; var x1 := 490.0; var y1 := 420.0
+	lpanel(x0, y0, x1, y1, L_EDGE_L, 7)
+	t2(x0 + 8, y0 + 5, "%s QTE" % PHN[i], 12, L_AMBER, true)
+	t2(x1 - 8, y0 + 6, "%s at the zone" % String(q.key), 10, SUB, false, "r")
+	# phase row: ENTRY / APEX / EXIT with the locked stance and the score so far
+	var line: String = q.line
+	for j in 3:
+		var cx := x0 + 60 + j * 110.0; var y := y0 + 22
+		if j == i: outline(cut_panel(cx - 46, y - 3, cx + 46, y + 15, 4), L_AMBER)
+		if line.length() == 3: lchip(cx - 44, y - 1, line[j], 40)
+		var r = q.res[j]
+		var txt := "- -"; var col := L_DIMMER
+		if j < i or (j == i and q.seg == "show"):
+			if r == null: txt = "0 unplayed"; col = L_DIM
+			else: txt = "%.2f" % float(r); col = L_WHITE
+		t2(cx + 2, y + 6, txt, 11, col, false, "l", true, true)
+	# the sweep bar
+	var bx0 := x0 + 12.0; var bx1 := x1 - 12.0; var by := y0 + 46.0; var bw := bx1 - bx0
+	var k: float = bw / float(q.bar_ms)
+	rect(bx0, by, bw, 8, L_SEG_OFF); outline(P([bx0, by, bx1, by, bx1, by + 8, bx0, by + 8]), L_EDGE)
+	var zx0 := roundf(bx0 + float(q.zone[0]) * k); var zx1 := roundf(bx0 + float(q.zone[1]) * k)
+	rect(zx0, by, maxf(1.0, zx1 - zx0), 8, L_AMBER); outline(P([zx0, by, zx1, by, zx1, by + 8, zx0, by + 8]), L_INK)
+	rect(roundf((zx0 + zx1) / 2.0), by - 2, 1, 12, L_INK)
+	var cur = null
+	if q.seg == "sweep": cur = float(q.ms)
+	elif q.seg == "show" and q.press[i] != null: cur = float(q.press[i])
+	if cur != null:
+		var cx := roundf(bx0 + float(cur) * k)
+		rect(cx - 2, by - 5, 4, 18, L_INK); rect(cx - 1, by - 4, 2, 16, L_WHITE)
+	if q.seg == "show":
+		var r = q.res[i]
+		if r == null: t2(320, y0 + 60, "UNPLAYED  0", 12, L_DIM, true, "m")
+		else: t2(320, y0 + 60, ("HIT %.2f" if float(r) > 0.0 else "MISS %.2f") % float(r), 12, L_AMBER if float(r) > 0.0 else L_DIM, true, "m")
+	else:
+		t2(320, y0 + 60, "zone %d ms" % roundi(float(q.zone[1]) - float(q.zone[0])), 10, SUB, false, "m")
 
 func _result_line() -> void:
 	var r: Dictionary = st.result
 	if r.is_empty(): return
-	var tm := ("%d" % int(r.timing)) if float(r.timing) == floorf(float(r.timing)) else str(r.timing)
-	var s := "timing %s (q %.2f)%s%s" % [tm, r.q_time, " [auto]" if r.autofilled else "", "  LEAD CHANGE" if st.leader_changed else ""]
+	var ph := []
+	for j in 3:
+		var v = (r.qte_in as Array)[j]
+		ph.append("%s %s" % [["E", "A", "X"][j], "--" if v == null else "%.2f" % float(v)])
+	var s := "QTE %s  avg %.3f%s%s" % ["  ".join(ph), r.q_time, " [auto]" if r.autofilled else "", "  LEAD CHANGE" if st.leader_changed else ""]
 	t2(200, 104, s, 10, SUB, true)
 	if int(st.reveal) >= 3:   # after-turn pause with a visible countdown; auto-continues at 0 (display.json playback_flow.continue_s, PLACEHOLDER)
 		var n := int(ceilf(float(st.get("cont_left", 0.0))))

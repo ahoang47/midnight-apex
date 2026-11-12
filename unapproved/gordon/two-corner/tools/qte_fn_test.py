@@ -1,0 +1,33 @@
+"""Bit-exact check: Godot combat.gd erf / expected_hit_quality / qte_zone_width / raw_qte_score vs the pinned sim.
+Usage: python3 tools/qte_fn_test.py   (needs /workspace/tools/godot; prints PASS/FAIL and the max |diff|)"""
+import json, math, random, struct, subprocess, sys
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "_pin" / "sim"))
+from velocity_shift import equations as E  # noqa: E402
+def h(x): return "0x%016x" % struct.unpack("<Q", struct.pack("<d", x))[0]
+def d(s): return struct.unpack("<d", struct.pack("<Q", int(s, 16)))[0]
+R = random.Random(11)
+erf_x = [R.uniform(-7, 7) * R.choice([1, 1, 0.3, 0.01, 1e-5, 1e-9]) for _ in range(4000)] + [0.0, 0.5, 0.84375, 1.25, 2.857, 6.0, 30.0]
+ehq = [(R.uniform(0.01, 2.0), R.uniform(0.0, 3.0)) for _ in range(1500)] + [(s, 1.0) for s in E.QTE_SKILL_SIGMA_OVER_A0.values()]
+zone = [(R.uniform(0.6, 1.2), R.choice([0.0, 0.0, 0.1, 0.25, R.uniform(0, 0.5)])) for _ in range(150)] + [(r, 0.0) for r, _ in E.KNOT_WINDOW_105] + [(1.05, 0.0)]
+raw = [(R.uniform(0.7, 1.15), R.choice(["weak", "average", "strong", None]), None, R.choice([0.0, 0.1])) for _ in range(60)]
+raw += [(R.uniform(0.7, 1.15), None, R.choice([0.4, 0.6, 0.8, R.uniform(0.05, 0.95)]), 0.0) for _ in range(30)]
+grid = {"erf": [h(x) for x in erf_x], "ehq": [[h(a), h(b)] for a, b in ehq], "zone": [[h(a), h(b)] for a, b in zone],
+        "raw": [[h(r), p, None if q is None else h(q), h(m)] for r, p, q, m in raw]}
+(ROOT / "out").mkdir(exist_ok=True)
+gp = ROOT / "out" / "qte_fn_grid.json"; op = ROOT / "out" / "qte_fn_godot.json"
+gp.write_text(json.dumps(grid))
+subprocess.run(["/workspace/tools/godot", "--headless", "--path", str(ROOT / "godot"), "--script", "res://scripts/headless_run.gd", "--",
+                "x", "--qte-fn-test", str(gp), "--out", str(op)], capture_output=True, check=True)
+g = json.loads(op.read_text())
+sim = {"erf": [math.erf(x) for x in erf_x], "ehq": [E.expected_hit_quality(a, b) for a, b in ehq],
+       "zone": [E.qte_zone_width(a, b) for a, b in zone], "raw": [E.raw_qte_score(r, profile=p, q_time=q, window_mod=m) for r, p, q, m in raw]}
+worst = 0.0; bad = 0; n = 0
+for k in sim:
+    for a, b in zip(sim[k], g[k]):
+        n += 1; bv = d(b)
+        if h(a) != b: bad += 1; worst = max(worst, abs(a - bv))
+print(f"qte-v1 functions Godot vs sim: {n} values (erf {len(erf_x)}, expected_hit_quality {len(ehq)}, qte_zone_width {len(zone)}, raw_qte_score {len(raw)}), "
+      f"bit mismatches={bad} max_abs_diff={worst:.3e} -> {'PASS' if bad == 0 else 'FAIL'}")
+sys.exit(1 if bad else 0)

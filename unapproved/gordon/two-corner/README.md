@@ -1,28 +1,30 @@
 # Two-corner engine test (Godot 4.6.3)
 
-> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. Phase 5 UI/camera follows AD B.5a/B.5b at **ab1c4a1**. It is the one exception to the combat freeze. The sim is pinned at **212eaab** (`212eaab99282fbc1c6fd5a9fc50048445ae01716`). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
+> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. Phase 5 UI/camera follows AD B.5a/B.5b at **ab1c4a1**. It is the one exception to the combat freeze. The sim is pinned at **f0efecf** (`f0efecfbc18b495a0ba9df3bf956d8e89acc3477`, Barry's per-phase QTE averaging on the qte-v1 visible zone; re-pinned from 212eaab in shots10, Austin approved 2026-11-11 10:56 PM PT). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
 
 > **2026-11-11: Three.js dropped (Austin).** The Godot build is the only one worked on and tested; parity is Godot vs the pinned sim.
 > Notes below that mention `threejs/` are historical; that tree is not in this copy.
 
-This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at 212eaab), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
+This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at f0efecf), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
 
-Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `212eaab` — do not use this branch's live `sim/`, which has moved on. `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` still writes a Three.js constants file if `threejs/src/core/` exists.
+Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `f0efecf` (`git worktree add _pin f0efecf`); do not use this branch's live `sim/`, which may move on. `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` no longer writes the Three.js constants file (shots10).
 
 ## Layout
-- `spec/gen_constants.py` imports the pinned `equations.py` and writes `godot/scripts/sim_constants.gd` and
-  `threejs/src/core/simConstants.js`. No value is typed by hand. Each engine self-checks the IEEE-754 bits of every float.
+- `spec/gen_constants.py` imports the pinned `equations.py` and writes `godot/scripts/sim_constants.gd`, citing `equations.py:<line>`
+  above every constant. No value is typed by hand. Long floats are written as an exact mantissa / 2^k (Godot's decimal parser is not
+  correctly rounded); `headless_run.gd` self-checks the IEEE-754 bits of every float.
 - `spec/race_config.json`: corners (Touge HP L, Touge N90 R; corner 2 was Street N90 R until shots9 — one continuous Touge road, Austin 2026-11-11) and stats by constant name (Balanced builds from
   `simulate_win_rate`, opp_total = `SABINE_BUDGET`, r = `LADDER_R[6]` crew boss = 1.05, so 105/105/105 vs 100/100/100).
   Base stats only: no mods, parts or loadouts.
-- `spec/display.json`: DISPLAY-ONLY placeholders (visual-gap cap, road, camera, mirror, QTE needle).
-- `spec/inputs/*.json`: scripted inputs `{seed, corners:[{pick:[hand idx...], timing:1..10}]}`. Fewer than 3 picks means the timer ran out, and the line is auto-filled.
+- `spec/display.json`: DISPLAY-ONLY placeholders (visual-gap cap, road, camera, mirror, QTE sweep).
+- `spec/inputs/*.json`: scripted inputs `{seed, corners:[{pick:[hand idx...], qte:[entry, apex, exit]}]}`. Each phase score is null
+  (unplayed = 0), a number in [0, 1], or `"0x<16 hex>"` IEEE-754 bits. Fewer than 3 picks means the timer ran out, and the line is auto-filled.
 - `tools/sim_parity.py`: the real pinned sim functions (`pick_line`, `draw_weighted_hand`, `resolve_turn`) in `run_match` draw order.
   `tools/check_driver_vs_run_match.py` proves the order matches `run_match`. `tools/compare.py` and `tools/run_parity.sh` check the engines against the sim.
 - RNG: CPython's `random.Random` (MT19937, `random()`, `choices` bisect) is ported exactly to JS and GDScript, so there is no pre-drawn stream.
 
 ## Run
-- Parity (Godot vs sim, dump/load, restart test, Plan the Line key test): `tools/run_parity.sh`
+- Parity (qte-v1 function bits, Godot vs sim, dump/load, restart test, Plan the Line + QTE key test vs sim): `tools/run_parity.sh`
 - Restart test (Godot game loop): `tools/run_restart_test.sh`
 - Screenshots + frame sequences (Godot): `tools/run_shots.sh [inputs-name] [outroot=out/shots5]`
 - Live check of the web export on :5176: `node tools/live_check_godot.mjs` (writes `out/shots5/live/` relative to this directory). The web export and the Playwright install from `threejs/node_modules` are not in this copy, so this script is noted only.
@@ -30,7 +32,7 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
   - from the repo root: `/workspace/tools/godot --path unapproved/gordon/two-corner/godot`
   - add `--rendering-driver opengl3` on the box
   - user args: `-- --seed N` (prefills the menu seed), `--no-menu`, `--script-inputs res://spec/X.json --shots DIR` (skips the menu)
-- Godot, headless: `/workspace/tools/godot --headless --path godot --script res://scripts/headless_run.gd -- ../spec/inputs/X.json --out f.json [--dump-after 0 --dump-to s.tc1 | --load s.tc1]`
+- Godot, headless: `/workspace/tools/godot --headless --path godot --script res://scripts/headless_run.gd -- ../spec/inputs/X.json --out f.json [--dump-after 0 --dump-to s.tc2 | --load s.tc2]`
 - Godot web export: `out/godot_web/` (served at http://127.0.0.1:5176/)
 - Three.js dev server: `cd threejs && npm run dev`, which serves http://127.0.0.1:5174/
   - query params: `?seed=N` (prefills the menu seed), `?menu=0` (straight into a race), `?script=X.json` (harness; skips the menu)
@@ -42,12 +44,15 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
   - Plan the Line (selection, at the B.5b camera stops): Up/Down choose the option for the current phase (on ENTRY, Left/Right move the lane the way the road shows it: a left corner has IN on the left, a right corner OUT; no wrap), Enter sets it and moves to
     the next phase (Enter on EXIT locks the line), Backspace goes back one phase. After each turn: 'Press Enter to continue' with a countdown that auto-continues (playback_flow.continue_s, PLACEHOLDER).
     (Hidden legacy: 1-6 still pick a hand index directly.)
-  - Space stops the timing needle
-  - F9 dumps a TC1 token (clipboard + console / user://last_state.tc1), F10 loads one (clipboard in Godot, prompt in the browser)
+  - QTE (after LINE LOCKED, at the Entry, Apex and Exit camera stops): Space when the cursor is in the amber zone; no press before
+    the cursor passes the zone's far edge = unplayed = 0
+  - F9 dumps a TC2 token (clipboard + console / user://last_state.tc1, file name unchanged), F10 loads one from the clipboard
 
 ## State token
-`TC1:<git7>:<base64url(json)>:<CRC-16/CCITT-FALSE>`. The JSON holds the seed plus `rng_draws` (replay counter), the phase, line, hand, picks, totals and history.
-Load reseeds, replays the draws and re-derives the line and hand, so a desync is detected. Tokens work across engines.
+Since shots10: `TC2:<sim7>:<build10>:<base64url(json)>:<CRC-16/CCITT-FALSE>`, spec in `unapproved/gordon/playtest-state-spec.md` §0.5.
+It records the sim pin and the build id (`tools/stamp_build.py` -> `godot/spec/build.json`), the seed, and every completed turn's picks and
+exact phase scores (IEEE-754 bits). Load replays them through the core and checks rng draws and total bits ("replay desync" otherwise).
+`python3 tools/decode_token.py '<token>'` decodes TC2 and TC1. TC1 tokens (sim 212eaab, builds up to 4322b31) replay on that build only.
 Stance letters in `line`, `hand` and `player_line`: `A` = Attack, `S` = **Neutral** (the sim's internal letter for `Stance.NEUTRAL`; shown as NEU), `D` = Defend.
 
 ## Phase 2 (display only, parity unchanged): scrolling straight + authored corner camera
@@ -149,3 +154,19 @@ Sources: `design/art/art_direction.md` at **ab1c4a1** (`ab1c4a12f69b23ccd74cd898
 - Placeholders: all of display.json `playback_flow` (continue_s 6, lane_ease_s 0.35, blend 6/8 m, pass window 0.2-0.9, overlap 5.5/9 m, min_sep 2.6 m).
 - Demo input `spec/inputs/shots9_pass.json` (seed 3): both corners share the Exit lane and the drawn order flips in both. Shots in `out/shots9/`.
 
+
+## shots10 (2026-11-11): re-pin to f0efecf + three timing QTEs per turn (Austin approved 10:56 PM PT: "Yes.")
+- **Pin:** `_pin` is now `f0efecfbc18b495a0ba9df3bf956d8e89acc3477` (sim/ is unchanged at origin/proto-build 59f7e6d). Ported to GDScript:
+  qte-v1 zone (`qte_zone_width`, `expected_hit_quality` with a bit-exact port of glibc's `erf`, `raw_qte_score`, `qte_sigma_over_a0`
+  and the two bisections), `phase_raw_qte`, `mean_phase_qte` (with CPython 3.12+ `sum()` Neumaier compensation so the mean is
+  bit-identical), `clash_progress` without the knot window, and `resolve_turn` with `player_qte_phases`. The PROVISIONAL W=1 hook is
+  retired: its hidden window no longer exists in clash math. Constants cite `equations.py:<line>` in `sim_constants.gd`.
+- **Game:** after LINE LOCKED, one timing QTE at each B.5b camera stop (Entry chase, Apex stop, Exit stop) over the scrolling road, then
+  the camera returns to Entry and playback (B.5a) runs. Zone = `qte_zone_width(r, qte_window_mod)` x `QTE_ZONE_BASE_MS`, the same for
+  all three. At this race's r = 1.05 that is 1.0 x 800 ms. Press score = max(0, 1 - |e| / (zone/2)) (the s in `expected_hit_quality`'s
+  docstring). The cursor passing the far edge = unplayed = 0. The three scores go to `core.submit_qte()`, and `resolve_turn` averages them.
+- **Placeholders** (display.json `qte_sweep`): lead_ms 700, tail_ms 200, ready_s 0.5, result_hold_s 0.6, key SPACE. The QTE panel
+  layout, labels and the plate's 'QTE' / 'TIMING' words have no Arthur frame.
+- **Parity:** `tools/qte_fn_test.py` checks 5,757 values bit for bit. Inputs are per-phase. fuzz300 mixes null / 0 / 1 / decimals /
+  k/1024 / raw bits. The 200-seed key test now plays the three QTEs by Space through the real input path and sends the same picks and
+  scores to the sim. Shots: `out/shots10/`.

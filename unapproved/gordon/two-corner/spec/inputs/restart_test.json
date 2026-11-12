@@ -1,5 +1,5 @@
 {
- "_doc": "Restart test (Austin 2026-11-10): race 1, then restart via each finish option. same = RESTART SAME SEED (key 1), new = NEW RACE (key 2, the random seed is preset by the harness), menu = MAIN MENU (key 3) -> type the seed -> START RACE. Every race must match the pinned sim.",
+ "_doc": "Restart test (Austin 2026-11-10): race 1, then restart via each finish option. same = RESTART SAME SEED (key 1), new = NEW RACE (key 2, the random seed is preset by the harness), menu = MAIN MENU (key 3) -> type the seed -> START RACE. Every race must match the pinned sim. Per-phase QTE inputs [entry, apex, exit] (null = unplayed = 0).",
  "races": [
   {
    "seed": 20261113,
@@ -10,7 +10,11 @@
       1,
       2
      ],
-     "timing": 7
+     "qte": [
+      0.7,
+      0.7,
+      0.7
+     ]
     },
     {
      "pick": [
@@ -18,7 +22,11 @@
       4,
       3
      ],
-     "timing": 10
+     "qte": [
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    ]
   },
@@ -31,7 +39,11 @@
       1,
       2
      ],
-     "timing": 7
+     "qte": [
+      0.7,
+      0.7,
+      0.7
+     ]
     },
     {
      "pick": [
@@ -39,7 +51,11 @@
       4,
       3
      ],
-     "timing": 10
+     "qte": [
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    ]
   },
@@ -50,12 +66,20 @@
      "pick": [
       3
      ],
-     "timing": 1,
-     "_doc": "only 1 card picked -> timer expiry auto-fills"
+     "_doc": "only 1 card picked -> timer expiry auto-fills",
+     "qte": [
+      0.1,
+      null,
+      0.1
+     ]
     },
     {
      "pick": [],
-     "timing": 5
+     "qte": [
+      0.5,
+      0.5,
+      0.5
+     ]
     }
    ]
   },
@@ -64,7 +88,11 @@
    "corners": [
     {
      "pick": [],
-     "timing": 7
+     "qte": [
+      0.7,
+      0.7,
+      0.7
+     ]
     },
     {
      "pick": [
@@ -72,7 +100,11 @@
       0,
       5
      ],
-     "timing": 8
+     "qte": [
+      0.8,
+      0.8,
+      0.8
+     ]
     }
    ]
   }

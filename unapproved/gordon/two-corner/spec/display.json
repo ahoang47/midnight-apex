@@ -26,9 +26,18 @@
   "_course": "shots9: the corners join into ONE continuous Touge road (straight 45, corner 1, join 47 = 10 + 45 - 8, corner 2, exit 30); radius/angle still the by_code PLACEHOLDERS"
  },
  "playback_s": 3.6,
- "qte": {
-  "period_s": 1.2,
-  "_doc": "PROVISIONAL UX: needle pos = sin(2*pi*t/period); score = clamp(round(10 - 9*|pos|), 1, 10); no press before playback ends -> PLAYER_QTE_MIN"
+ "qte_sweep": {
+  "_doc": "Per-phase timing QTE (Austin approved 2026-11-11 10:56 PM PT; sim pin f0efecf). One sweep each at the Entry, Apex and Exit camera stops, after LINE LOCKED and before playback, over the scrolling road. Zone width = qte_zone_width(r, qte_window_mod) x QTE_ZONE_BASE_MS (sim equations.py:346 / :133), the same for all three. Score of a press = max(0, 1 - |e| / (zone/2)), e = press time - zone centre (equations.py:280 docstring). The cursor passing the zone's far edge = unplayed = 0 (Barry's sim; Austin: unplayed scores 0). Every number below is a PLACEHOLDER (display only, never read by the sim).",
+  "lead_ms": 700,
+  "_lead_ms": "PLACEHOLDER: cursor travel before it reaches the zone's near edge",
+  "tail_ms": 200,
+  "_tail_ms": "PLACEHOLDER: bar drawn past a full-width zone (visual only; the sweep ends at the zone's far edge)",
+  "ready_s": 0.5,
+  "_ready_s": "PLACEHOLDER: beat after LINE LOCKED before the Entry sweep starts (Apex / Exit use select_cam.move_s for the camera move)",
+  "result_hold_s": 0.6,
+  "_result_hold_s": "PLACEHOLDER: how long a phase's score stays up before the camera moves on",
+  "key": "SPACE",
+  "_key": "PLACEHOLDER: kept from the earlier timing needle"
  },
  "camera": {
   "_source": "B.5b fixed chase camera (design/art/art_direction.md@ab1c4a1:256) = art/ui/line_select_cam/build_lsc.py@ab1c4a1:245 'fixed chase (entry_matrix exact)': camera at player root + (1.4 right, 7.6 back, 2.94 up), target (3.6, -6, -0.9) with the root at (0, -28, 0.16) -> 22 m ahead, 3.6 m right, 1.06 m below the root; lens 25 mm on a 36 mm horizontal sensor at 4:3 -> vertical fov 2*atan(13.5/25) = 56.7 deg. Used exactly as given ('fixed' chase camera, B.5b:256): offsets are NOT mirrored for left corners.",

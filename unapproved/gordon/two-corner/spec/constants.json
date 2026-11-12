@@ -1,6 +1,6 @@
 {
- "_source": "sim/velocity_shift/equations.py @ 212eaab99282fbc1c6fd5a9fc50048445ae01716",
- "commit": "212eaab99282fbc1c6fd5a9fc50048445ae01716",
+ "_source": "sim/velocity_shift/equations.py @ f0efecfbc18b495a0ba9df3bf956d8e89acc3477",
+ "commit": "f0efecfbc18b495a0ba9df3bf956d8e89acc3477",
  "values": {
   "W0": 0.1,
   "T_MAX": 0.75,
@@ -19,6 +19,9 @@
   "PLAYER_QTE_MAX": 10.0,
   "PERFECT_QTE": 10.0,
   "SABINE_BUDGET": 300.0,
+  "QTE_ZONE_BASE_MS": 800,
+  "AVERAGE_PLAY_Q": 0.6,
+  "PHASE_QTE_UNPLAYED": 0.0,
   "KNOT_WINDOW_105": [
    [
     0.8,
@@ -204,6 +207,47 @@
    "old head",
    "old head",
    "crew boss"
+  ],
+  "QTE_ZONE_WIDTH_105": [
+   [
+    0.8,
+    0.32758027216269503
+   ],
+   [
+    0.85,
+    0.32758027216269503
+   ],
+   [
+    0.9,
+    0.32758027216269503
+   ],
+   [
+    0.95,
+    0.3447526695824932
+   ],
+   [
+    1.0,
+    0.5802105104609707
+   ],
+   [
+    1.05,
+    1.0
+   ]
+  ],
+  "QTE_SKILL_TARGET_E": {
+   "weak": 0.4,
+   "average": 0.6,
+   "strong": 0.8
+  },
+  "QTE_SKILL_SIGMA_OVER_A0": {
+   "weak": 0.9074726672615829,
+   "average": 0.5139633886624675,
+   "strong": 0.25066753386161233
+  },
+  "QTE_PHASES": [
+   "entry",
+   "apex",
+   "exit"
   ]
  },
  "float_bits": {
@@ -223,6 +267,8 @@
   "PLAYER_QTE_MAX": 4621819117588971520,
   "PERFECT_QTE": 4621819117588971520,
   "SABINE_BUDGET": 4643985272004935680,
+  "AVERAGE_PLAY_Q": 4603579539098121011,
+  "PHASE_QTE_UNPLAYED": 0,
   "KNOT_WINDOW_105[0][0]": 4605380978949069210,
   "KNOT_WINDOW_105[0][1]": 4601057523306793533,
   "KNOT_WINDOW_105[1][0]": 4605831338911806259,
@@ -246,6 +292,57 @@
   "LADDER_R[3]": 4607542706770207048,
   "LADDER_R[4]": 4607497670773933343,
   "LADDER_R[5]": 4607452634777659638,
-  "LADDER_R[6]": 4607407598781385933
+  "LADDER_R[6]": 4607407598781385933,
+  "QTE_ZONE_WIDTH_105[0][0]": 4605380978949069210,
+  "QTE_ZONE_WIDTH_105[0][1]": 4599572781484489276,
+  "QTE_ZONE_WIDTH_105[1][0]": 4605831338911806259,
+  "QTE_ZONE_WIDTH_105[1][1]": 4599572781484489276,
+  "QTE_ZONE_WIDTH_105[2][0]": 4606281698874543309,
+  "QTE_ZONE_WIDTH_105[2][1]": 4599572781484489276,
+  "QTE_ZONE_WIDTH_105[3][0]": 4606732058837280358,
+  "QTE_ZONE_WIDTH_105[3][1]": 4599882131894972720,
+  "QTE_ZONE_WIDTH_105[4][0]": 4607182418800017408,
+  "QTE_ZONE_WIDTH_105[4][1]": 4603401291222693362,
+  "QTE_ZONE_WIDTH_105[5][0]": 4607407598781385933,
+  "QTE_ZONE_WIDTH_105[5][1]": 4607182418800017408,
+  "QTE_SKILL_TARGET_E[weak]": 4600877379321698714,
+  "QTE_SKILL_TARGET_E[average]": 4603579539098121011,
+  "QTE_SKILL_TARGET_E[strong]": 4605380978949069210,
+  "QTE_SKILL_SIGMA_OVER_A0[weak]": 4606349006677532766,
+  "QTE_SKILL_SIGMA_OVER_A0[average]": 4602804590196601148,
+  "QTE_SKILL_SIGMA_OVER_A0[strong]": 4598187244766278074
+ },
+ "source_lines": {
+  "W0": "sim/velocity_shift/equations.py:173",
+  "T_MAX": "sim/velocity_shift/equations.py:174",
+  "L_MAX": "sim/velocity_shift/equations.py:175",
+  "TAU_BETA": "sim/velocity_shift/equations.py:176",
+  "TAU_P_TOP": "sim/velocity_shift/equations.py:177",
+  "TAU_GAMMA": "sim/velocity_shift/equations.py:178",
+  "MU": "sim/velocity_shift/equations.py:179",
+  "ETA": "sim/velocity_shift/equations.py:180",
+  "DECK_ALPHA": "sim/velocity_shift/equations.py:181",
+  "HAND_SIZE": "sim/velocity_shift/equations.py:182",
+  "LINE_ADHERENCE": "sim/velocity_shift/equations.py:183",
+  "OPPONENT_QTE": "sim/velocity_shift/equations.py:129",
+  "QTE_NORMALIZER": "sim/velocity_shift/equations.py:23",
+  "PLAYER_QTE_MIN": "sim/velocity_shift/equations.py:38",
+  "PLAYER_QTE_MAX": "sim/velocity_shift/equations.py:39",
+  "PERFECT_QTE": "sim/velocity_shift/equations.py:40",
+  "SABINE_BUDGET": "sim/velocity_shift/equations.py:215",
+  "QTE_ZONE_BASE_MS": "sim/velocity_shift/equations.py:133",
+  "AVERAGE_PLAY_Q": "sim/velocity_shift/equations.py:208",
+  "PHASE_QTE_UNPLAYED": "sim/velocity_shift/equations.py:165",
+  "KNOT_WINDOW_105": "sim/velocity_shift/equations.py:125",
+  "KAPPA_BY_LENGTH": "sim/velocity_shift/equations.py:126",
+  "RACE_LENGTHS": "sim/velocity_shift/equations.py:127",
+  "LINE_ALT_WEIGHTS": "sim/velocity_shift/equations.py:184",
+  "LINE_SET_C": "sim/velocity_shift/equations.py:190",
+  "LADDER_R": "sim/velocity_shift/equations.py:213",
+  "LADDER_RUNGS": "sim/velocity_shift/equations.py:212",
+  "QTE_ZONE_WIDTH_105": "sim/velocity_shift/equations.py:137",
+  "QTE_SKILL_TARGET_E": "sim/velocity_shift/equations.py:148",
+  "QTE_SKILL_SIGMA_OVER_A0": "sim/velocity_shift/equations.py:149",
+  "QTE_PHASES": "sim/velocity_shift/equations.py:164"
  }
 }

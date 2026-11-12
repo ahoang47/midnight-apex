@@ -47,10 +47,9 @@ var rival_offset := 0.0
 var rival_offset_target := 0.0
 var rival_lane_d := 0.0
 var qte_t := 0.0
-var qte_stopped = null
 var reveal := 0
 var busy := false
-var script_timing := 1.0
+var script_qte: Array = []    # scripted runs: the exact phase scores to submit (parity); presses are placed to show them
 var fog_color := Color(0.043, 0.051, 0.102)
 # ── scrolling straight / corner camera (display only) ──
 var RS: Dictionary
@@ -101,7 +100,15 @@ var straights: Array = []     # per-corner infinite-scroll straight, anchored wh
 var lat_p := 0.0; var lat_r := 0.0; var err_p := 0.0; var err_r := 0.0; var tgt_p = null; var tgt_r = null
 var off0 := 0.0; var off1 := 0.0; var off1_score = null; var pass_plan := {}
 var cont_t := 0.0             # after-turn pause (RESULT), auto-continues at PB.continue_s
-var hold_stop := 0            # hook: 1 = hold the camera at the Apex stop pose while the road scrolls (for the per-phase QTE later)
+# ── shots10: three timing QTEs per turn (Entry / Apex / Exit camera stops), sim pin f0efecf (Austin approved 10:56 PM PT) ──
+var QS: Dictionary            # display.json "qte_sweep" (PLACEHOLDERS)
+var qte_i := -1               # TIMING: -1 = LINE LOCKED hold, 0..2 = phase QTE, 3 = camera back to Entry, 4 = playback
+var qte_seg := ""             # "move" (camera to the stop) | "sweep" (cursor running) | "show" (score up)
+var qte_seg_t := 0.0
+var qte_res: Array = [null, null, null]       # phase scores: float in [0, 1], or null = unplayed (0)
+var qte_press_ms: Array = [null, null, null]  # where the cursor stopped (display)
+var qte_from = null           # camera pose at the start of a move
+var zone_ms := 800.0          # qte_zone_width(r, mod) x QTE_ZONE_BASE_MS for this race (core.zone_ms())
 var min_sep_overlap := 99.0   # smallest lateral gap seen while the cars overlap longitudinally (no-clip check)
 var gif_dir := ""; var gif_dt := 0.1; var gif_next := 0.0; var gif_n := 0
 
@@ -137,9 +144,9 @@ func _ready() -> void:
 	if script_in != null: races = script_in.races if script_in.has("races") else [script_in]
 	var seed_v: int = int(races[0].seed) if script_in != null else int(_arg("--seed", "20261113"))
 	mode = "RACE" if (script_in != null or OS.get_cmdline_user_args().has("--no-menu")) else "MENU"
-	menu.seed_text = _arg("--seed", ""); menu.commit = C.PIN_COMMIT.substr(0, 7)
+	menu.seed_text = _arg("--seed", ""); menu.commit = "%s build %s" % [C.PIN_COMMIT.substr(0, 7), String(RaceCore.build_info().build)]
 	if not OS.has_feature("web"): menu.items.append("QUIT")  # Quit: Godot desktop only
-	DIST = disp.districts; CS = disp.car_shading; PAL = disp.palette; PB = disp.playback_flow
+	DIST = disp.districts; CS = disp.car_shading; PAL = disp.palette; PB = disp.playback_flow; QS = disp.qte_sweep
 	gif_dir = _arg("--gif", ""); gif_dt = float(_arg("--gif-dt", "0.1"))
 	if gif_dir != "": DirAccess.make_dir_recursive_absolute(gif_dir)
 	_build_viewports()
@@ -161,7 +168,8 @@ func _ready() -> void:
 func _plan_key_test() -> void:
 	var keys := [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_BACKSPACE]
 	var rng := RandomNumberGenerator.new(); rng.seed = 7
-	var n_lock := 0
+	var n_lock := 0; var n_unplayed := 0
+	var kt_inputs := []; var kt_out := []
 	for sd in range(1, 201):
 		start_race(sd)
 		var chosen := ""
@@ -186,9 +194,31 @@ func _plan_key_test() -> void:
 			if core.player_line() != chosen or core.autofilled: push_error("seed %d: locked %s, chose %s" % [sd, core.player_line(), chosen]); get_tree().quit(1); return
 			var shown := []   # B.5a panel results (shown during playback) must equal the sim's outcomes
 			for i in 3: shown.append(Combat.resolve_stance(core.player_line()[i], core.line[i]))
-			core.submit_timing(5.0)
+			# the three QTEs through the real input path: SPACE at a random point of each sweep, or no press (unplayed)
+			lock_hold_t = float(SC.lock_hold_s)
+			var want_ms := []
+			for i in 3: want_ms.append(-1.0 if rng.randf() < 0.25 else rng.randf_range(0.0, float(QS.lead_ms) + zone_ms))
+			var guard := 0
+			while qte_i < 4 and guard < 2000:
+				guard += 1
+				if qte_i >= 0 and qte_i <= 2 and qte_seg == "sweep" and float(want_ms[qte_i]) >= 0.0 and _qte_ms() >= float(want_ms[qte_i]): handle_key(KEY_SPACE)
+				_step_qte(1.0 / 60.0)
+			if qte_i < 4: push_error("seed %d: QTE stage never ended" % sd); get_tree().quit(1); return
+			for i in 3:
+				var z := _qte_zone()
+				var ok: bool = qte_res[i] == null if float(want_ms[i]) < 0.0 else (qte_res[i] != null and float(qte_res[i]) == Combat.hit_quality(float(qte_press_ms[i]) - (z.x + z.y) / 2.0, zone_ms) and float(qte_res[i]) >= 0.0 and float(qte_res[i]) <= 1.0)
+				if not ok: push_error("seed %d: QTE %d press %s -> %s" % [sd, i, str(want_ms[i]), str(qte_res[i])]); get_tree().quit(1); return
+				if qte_res[i] == null: n_unplayed += 1
+			core.submit_qte(qte_res.duplicate())
+			var q := []
+			for v in qte_res: q.append(null if v == null else RaceCore.fhex(float(v)))
+			kt_inputs.append({"seed": sd, "corners": [{"pick": core.picks.duplicate(), "qte": q}]})
+			kt_out.append({"seed": sd, "corners": core.history.duplicate(true), "player_total": core.cum_p, "opponent_total": core.cum_o, "winner": core.winner()})
 			if str(shown) != str(core.result.outcomes): push_error("seed %d: panel %s != sim %s" % [sd, str(shown), str(core.result.outcomes)]); get_tree().quit(1); return
-	print("PLAN KEY TEST PASS: 200 seeds, %d locked by keys; camera stop == picks every step; B.5a panel results == sim outcomes" % n_lock)
+	var od := ProjectSettings.globalize_path("res://").path_join("../out")
+	FileAccess.open(od.path_join("key_test_inputs.json"), FileAccess.WRITE).store_string(JSON.stringify({"races": kt_inputs}))
+	FileAccess.open(od.path_join("key_test_godot.json"), FileAccess.WRITE).store_string(JSON.stringify({"races": kt_out}, " ", false, true))
+	print("PLAN KEY TEST PASS: 200 seeds, %d locked by keys; camera stop == picks every step; 3 QTEs by SPACE per locked turn (%d unplayed) score = hit_quality(press); B.5a panel results == sim outcomes (sim compare: out/key_test_*.json)" % [n_lock, n_unplayed])
 	get_tree().quit(0)
 
 # ── viewports, post, HUD ──
@@ -550,8 +580,10 @@ func _setup_corner() -> void:
 	var c: Dictionary = core.corner()
 	path = views[core.corner_index]; straight_path = straights[core.corner_index]
 	_build_road(c.district)
-	s_player = 8.0; phase_t = 0.0; qte_t = 0.0; qte_stopped = null; reveal = 0; cam_curve_built = false; leader_changed = false
+	s_player = 8.0; phase_t = 0.0; qte_t = 0.0; reveal = 0; cam_curve_built = false; leader_changed = false
 	cont_t = 0.0; pass_plan = {}; off1_score = null
+	qte_i = -1; qte_seg = ""; qte_seg_t = 0.0; qte_res = [null, null, null]; qte_press_ms = [null, null, null]; qte_from = null
+	zone_ms = core.zone_ms()
 	plan_sel = 0; _plan_fix_sel(0)
 	last_stop = 0; stop_t = 99.0; stop_from = null; lock_hold_t = 99.0; lock_from = null
 	rival_lane_d = Track.lane_offset(core.entry_tell().lane, c.dir, disp.lane_width_m)
@@ -567,7 +599,7 @@ func _setup_corner() -> void:
 ## Full reset for START / RESTART / NEW RACE: a fresh RaceCore (fresh MT19937 seeded from s) and every display-side race variable.
 func start_race(s: int) -> void:
 	core = RaceCore.new(); core.setup(cfg, s); mode = "RACE"
-	scroller = RoadScroller.new(RS); clock = 0.0; wheel_angle = 0.0; back_from = null; back_t = 99.0; pending_snap = false; hold_stop = 0
+	scroller = RoadScroller.new(RS); clock = 0.0; wheel_angle = 0.0; back_from = null; back_t = 99.0; pending_snap = false
 	leader_changed = false; rival_offset = 0.0; result_t = 0.0; fin.sel = 0; first_corner = true
 	_setup_corner()
 
@@ -619,8 +651,8 @@ func handle_key(k: int) -> void:
 					core.pick(idx)
 					if core.picks.size() >= 3: _do_lock()   # Enter on EXIT locks the line
 					else: _plan_fix_sel(0)
-	elif core.phase == "TIMING" and k == KEY_SPACE and qte_stopped == null and lock_hold_t >= float(SC.lock_hold_s):
-		qte_stopped = sin(TAU * qte_t / float(disp.qte.period_s))
+	elif core.phase == "TIMING" and k == KEY_SPACE and qte_i >= 0 and qte_i <= 2 and qte_seg == "sweep" and script_in == null:
+		_qte_press()
 	elif core.phase == "RESULT" and (k == KEY_ENTER or k == KEY_KP_ENTER) and reveal >= 3:
 		_continue()
 
@@ -694,13 +726,49 @@ func _place(car: Node3D, pth, s: float, d: float) -> Dictionary:
 	for w in car.get_meta("wheels"): (w as Node3D).rotation.x = wheel_angle
 	return p
 
-func _qte_score(pos: float) -> float:
-	return clampf(roundf(10.0 - 9.0 * absf(pos)), 1.0, 10.0)
+# ── per-phase QTE (display + input; the scores go to core.submit_qte, which resolves the turn with the sim's averaging) ──
+## timeline of one sweep in ms: cursor starts at 0, zone = [lead, lead + zone_ms], sweep ends at the zone's far edge
+func _qte_zone() -> Vector2: return Vector2(float(QS.lead_ms), float(QS.lead_ms) + zone_ms)
+func _qte_ms() -> float: return qte_seg_t * 1000.0
+func _qte_press() -> void:
+	var ms := _qte_ms(); var z := _qte_zone()
+	qte_press_ms[qte_i] = ms
+	qte_res[qte_i] = Combat.hit_quality(ms - (z.x + z.y) / 2.0, zone_ms)   # s = max(0, 1 - |e| / (w/2)), equations.py:280
+	qte_seg = "show"; qte_seg_t = 0.0
+func _qte_timeout() -> void:
+	qte_res[qte_i] = null; qte_press_ms[qte_i] = null   # unplayed = PHASE_QTE_UNPLAYED (0), Austin
+	qte_seg = "show"; qte_seg_t = 0.0
+## scripted runs submit the exact scripted value; the cursor stops where that score sits (early side of the centre)
+func _script_press_ms(v) -> float:
+	var z := _qte_zone(); return (z.x + z.y) / 2.0 - (1.0 - float(v)) * zone_ms / 2.0
+func _step_qte(dt: float) -> void:
+	if qte_i < 0:
+		qte_i = 0; qte_seg = "move"; qte_seg_t = 0.0; qte_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}
+		return
+	qte_seg_t += dt
+	match qte_seg:
+		"move":
+			var dur: float = float(QS.ready_s) if qte_i == 0 else float(SC.move_s)
+			if qte_i == 3: dur = float(SC.move_s)
+			if qte_seg_t >= dur:
+				if qte_i == 3:
+					qte_i = 4; qte_t = 0.0; off0 = rival_offset; off1_score = null; pass_plan = {}; _update_pass_target()
+				else:
+					qte_seg = "sweep"; qte_seg_t = 0.0
+		"sweep":
+			var ms := _qte_ms()
+			if script_in != null and script_qte.size() == 3 and script_qte[qte_i] != null and ms >= _script_press_ms(script_qte[qte_i]):
+				qte_press_ms[qte_i] = ms; qte_res[qte_i] = script_qte[qte_i]; qte_seg = "show"; qte_seg_t = 0.0
+			elif ms > _qte_zone().y:
+				_qte_timeout()
+		"show":
+			if qte_seg_t >= float(QS.result_hold_s):
+				qte_i += 1; qte_seg = "move"; qte_seg_t = 0.0; qte_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}
 
 func _do_lock() -> void:
 	lock_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}; lock_hold_t = 0.0
 	core.lock(); phase_t = 0.0; scroller.transition_to_corner()  # §13.2/§14.2 transition_to_corner
-	off0 = rival_offset; off1_score = null; pass_plan = {}; _update_pass_target()
+	off0 = rival_offset; off1_score = null; pass_plan = {}
 	await _shot("%slock%d" % [shot_pre, core.corner_index])
 
 func _shot(name: String) -> void:
@@ -718,13 +786,15 @@ func _shot(name: String) -> void:
 
 func dump_state() -> String:
 	var tok := RaceCore.encode_token(core.dump())
-	print("TC1 token ", tok)
+	print("TC2 token ", tok)
 	DisplayServer.clipboard_set(tok)
 	var f := FileAccess.open("user://last_state.tc1", FileAccess.WRITE); f.store_string(tok)
 	return tok
 
 func load_state(tok: String) -> void:
-	var n = RaceCore.new(); n.load_state(cfg, RaceCore.decode_token(tok)); core = n
+	var d := RaceCore.decode_token(tok)
+	if d.is_empty(): return   # TC1 (pre-f0efecf build): refused with a message, replay it on its own build
+	var n = RaceCore.new(); n.load_state(cfg, d); core = n
 	first_corner = true
 	_setup_corner()
 	if core.phase == "RESULT": reveal = 3
@@ -735,7 +805,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if mode == "RACE" and k == KEY_F9: dump_state()
 	elif mode == "RACE" and k == KEY_F10:
 		var t := DisplayServer.clipboard_get()
-		if t.begins_with("TC1:"): load_state(t)
+		if t.begins_with("TC1:") or t.begins_with("TC2:"): load_state(t)
 	else: handle_key(k)
 
 const SEQ_SELECT_N := 6
@@ -770,7 +840,7 @@ func _run_script() -> void:
 					or core.history.size() > 0 or core.cum_p != 0.0 or core.cum_o != 0.0 or core.corner_index != 0:
 				push_error("restart %s: dirty state" % how); get_tree().quit(1); return
 		await _run_one_race(nxt, "" if ri == 0 else "r%d_" % ri)
-		results.append({"engine": "godot-4.6.3(windowed)", "commit": C.PIN_COMMIT, "seed": core.seed_value, "provisional_w1": true,
+		results.append({"engine": "godot-4.6.3(windowed)", "commit": C.PIN_COMMIT, "seed": core.seed_value, "build": RaceCore.build_info().build, "zone_width": core.zone_width(),
 			"corners": core.history, "player_total": core.cum_p, "opponent_total": core.cum_o, "winner": core.winner(), "rng_draws": core.rng.draws,
 			"restart": null if ri == 0 else script_in.restart[ri - 1]})
 	var out = results[0] if results.size() == 1 else {"races": results}
@@ -825,7 +895,15 @@ func _run_one_race(race: Dictionary, pre: String) -> void:
 			for m in 3:   # camera back to Entry + LINE LOCKED banner (B.5b frame 4)
 				await _wait_game(func(): return lock_hold_t >= (m + 1) * float(SC.lock_hold_s) / 3.2)
 				await _shot("seq_lock%d_%d" % [ci, m])
-		script_timing = float(inp.timing); qte_stopped = 0.0
+		script_qte = []
+		for v in inp.qte: script_qte.append(RaceCore.fdec(v))
+		if seqs:
+			for i in 3:   # each phase QTE: cursor mid-sweep, then the score
+				await _wait_game(func(): return qte_i > i or (qte_i == i and qte_seg == "sweep" and _qte_ms() >= float(QS.lead_ms) * 0.8))
+				if qte_i == i: await _shot("seq_qte%d_%d_sweep" % [ci, i])
+				await _wait_game(func(): return qte_i > i or (qte_i == i and qte_seg == "show" and qte_seg_t >= 0.15))
+				if qte_i == i: await _shot("seq_qte%d_%d_score" % [ci, i])
+		await _wait_game(func(): return qte_i >= 4 or core.phase != "TIMING")
 		for i in (SEQ_CORNER_N if seqs else 0):
 			await _wait_game(func(): return core.phase != "TIMING" or qte_t >= (i + 0.5) / SEQ_CORNER_N * float(disp.playback_s))
 			if core.phase != "TIMING": break
@@ -858,15 +936,16 @@ func _process(dt: float) -> void:
 	if mode == "MENU": phase_t = 0.0  # backdrop: the straight scrolls, the selection timer never runs
 	if core.phase == "SELECT" and phase_t >= RaceCore.STRAIGHT_DURATION and script_in == null:
 		_do_lock()  # timer expiry -> auto-fill (guide §4.2)
-	if core.phase == "TIMING" and lock_hold_t >= float(SC.lock_hold_s):
+	if core.phase == "TIMING" and lock_hold_t >= float(SC.lock_hold_s) and qte_i < 4:
+		_step_qte(dt)
+	if _playing():
 		qte_t += dt
 		var travel: float = path.S + path.R * path.A + 10.0 - 8.0
 		s_player = 8.0 + travel * minf(1.0, qte_t / float(disp.playback_s)); v += travel / float(disp.playback_s)
 		_update_pass_target()
 		if qte_t >= float(disp.playback_s):
-			var score: float = script_timing if script_in != null else (C.PLAYER_QTE_MIN if qte_stopped == null else _qte_score(qte_stopped))
 			var before: float = core.lead()
-			core.submit_timing(score); reveal = 0; phase_t = 0.0; result_t = 0.0
+			core.submit_qte(qte_res.duplicate()); reveal = 0; phase_t = 0.0; result_t = 0.0
 			var after: float = core.lead()
 			leader_changed = before != 0.0 and after != 0.0 and signf(before) != signf(after)
 			rival_offset_target = Track.rival_draw_offset(after, disp.visual_gap)  # = off1: the pass already played out (sim lead, same score)
@@ -918,8 +997,17 @@ func _update_camera(pc: Dictionary, pp: Dictionary) -> void:
 	var cc = CC.get(c.corner)
 	cam_fov = float(disp.camera.fov)
 	var stp := _sel_stop()
-	if hold_stop > 0 and core.phase == "TIMING":   # hook for the per-phase QTE: hold a B.5b stop pose while the road scrolls
-		var hp := _stop_pose(hold_stop); cam_pos = hp[0]; cam_look = hp[1]; cam_fov = hp[2]; rig = "STA"; return
+	if _in_qte():   # per-phase QTE at the B.5b camera stops: Entry = chase, Apex / Exit = stop poses held while the road scrolls
+		var qs := _qte_stop()
+		var tgt: Array = _stop_pose(qs) if qs > 0 else [ch[0], ch[1], float(disp.camera.fov)]
+		rig = ["BCH", "STA", "STX"][qs]
+		var dur: float = float(QS.ready_s) if qte_i == 0 else float(SC.move_s)
+		if qte_seg == "move" and qte_from != null and qte_seg_t < dur:
+			var kk := Track.smooth(qte_seg_t / dur)
+			cam_pos = (qte_from.pos as Vector3).lerp(tgt[0], kk); cam_look = (qte_from.look as Vector3).lerp(tgt[1], kk); cam_fov = lerpf(float(qte_from.fov), tgt[2], kk)
+		else:
+			cam_pos = tgt[0]; cam_look = tgt[1]; cam_fov = tgt[2]
+		return
 	if core.phase == "SELECT" and (stp > 0 or (stop_from != null and stop_t < float(SC.move_s))):
 		var tgt: Array = _stop_pose(stp) if stp > 0 else [ch[0], ch[1], float(disp.camera.fov)]
 		rig = ["BCH", "STA", "STX"][stp]
@@ -993,7 +1081,7 @@ func _update_scene() -> void:
 	cam.look_at(cam_look)
 	cam.fov = cam_fov; glow_cam.fov = cam_fov
 	glow_cam.global_transform = cam.global_transform
-	var cars_on: bool = not (core.phase == "SELECT" and mode == "RACE" and _sel_stop() > 0 and bool(SC.hide_cars_at_stops))
+	var cars_on: bool = not (((core.phase == "SELECT" and mode == "RACE" and _sel_stop() > 0) or (_in_qte() and qte_i in [1, 2])) and bool(SC.hide_cars_at_stops))
 	player_car.visible = cars_on; rival_car.visible = cars_on
 	post_mat.set_shader_parameter("mirror_on", 1.0 if _mirror_on() else 0.0)
 	sky_root.position = cam_pos  # painted sky follows the camera
@@ -1005,7 +1093,7 @@ func _update_scene() -> void:
 func _mirror_on() -> bool:
 	if mode == "MENU": return false   # the menu logo sits where the mirror goes
 	if core.phase == "SELECT": return _sel_stop() == 0 and not (stop_from != null and stop_t < float(SC.move_s))
-	if core.phase == "TIMING": return lock_hold_t < float(SC.lock_hold_s)
+	if core.phase == "TIMING": return lock_hold_t < float(SC.lock_hold_s) or (_in_qte() and qte_i == 0)
 	return core.phase == "FINISHED" and back_t >= float(CC.transition_to_straight_s)
 
 func _render_hud() -> void:
@@ -1037,14 +1125,23 @@ func _render_hud() -> void:
 		for i in 3: outs.append(Combat.resolve_stance(pline[i], rline[i]))
 	var plate := {"name": _corner_name(c), "icon": _plate_icon(), "mode": "VIEW", "stop": _sel_stop(), "done": core.picks.size()}
 	if core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s): plate.mode = "LOCK"
+	elif _in_qte(): plate.mode = "QTE"; plate.stop = _qte_stop()
 	elif core.phase == "TIMING": plate.mode = "PLAY"; plate.stop = play_phase
 	elif core.phase != "SELECT": plate.mode = "DONE"
 	hud.show_state({"phase": core.phase, "title": "CORNER %d/%d %s %s (%s)" % [core.corner_index + 1, cfg.corners.size(), String(c.district).to_upper(), c.corner, c.dir],
-		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "lead": core.lead(), "gap": core.gap(),
+		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "build": String(RaceCore.build_info().build), "lead": core.lead(), "gap": core.gap(),
 		"left": left, "total": RaceCore.STRAIGHT_DURATION, "slots": slots, "hand": core.hand, "used": core.picks,
-		"needle": qte_stopped if qte_stopped != null else sin(TAU * qte_t / float(disp.qte.period_s)), "line": pline, "rline": rline, "outs": outs, "plate": plate, "locked_hold": core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s), "mirror": _mirror_on(), "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
+		"qte": _qte_hud(), "line": pline, "rline": rline, "outs": outs, "plate": plate, "locked_hold": core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s), "mirror": _mirror_on(), "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
 		"result": r, "reveal": reveal, "cont_left": maxf(0.0, float(PB.continue_s) - cont_t), "leader_changed": leader_changed, "winner": core.winner() if core.phase == "FINISHED" else "", "cum_p": core.cum_p, "cum_o": core.cum_o,
 		"last_corner": core.corner_index + 1 >= cfg.corners.size(), "fin": fin if core.phase == "FINISHED" else null})
+
+## QTE panel state (hud.gd _qte_panel); null outside the QTE stage
+func _qte_hud():
+	if not _in_qte() or qte_i > 2: return null
+	var z := _qte_zone()
+	return {"i": qte_i, "seg": qte_seg, "ms": minf(_qte_ms(), z.y) if qte_seg == "sweep" else 0.0, "zone": [z.x, z.y], "zone_w": core.zone_width(),
+		"bar_ms": float(QS.lead_ms) + float(C.QTE_ZONE_BASE_MS) + float(QS.tail_ms), "res": qte_res.duplicate(), "press": qte_press_ms.duplicate(),
+		"line": core.player_line(), "key": String(QS.key)}
 
 # ── shots9: continuous course, lines, passes (display only; lead / gap always from the sim) ──
 ## straight S, corner 1, join, corner 2, exit. The join is 10 + (S - 8) m so the car ends corner 1's playback exactly where
@@ -1081,7 +1178,11 @@ func _line_d(line: String, s: float) -> float:
 	if s <= b1: return lerpf(a, x, Track.smooth((s - sa) / (b1 - sa)))
 	return x
 
-func _playing() -> bool: return core.phase == "TIMING" and lock_hold_t >= float(SC.lock_hold_s)
+func _playing() -> bool: return core.phase == "TIMING" and qte_i >= 4
+## TIMING before playback: LINE LOCKED hold, the three QTEs, the camera back to Entry
+func _in_qte() -> bool: return core.phase == "TIMING" and lock_hold_t >= float(SC.lock_hold_s) and qte_i >= 0 and qte_i < 4
+## camera stop of the QTE stage: 0 Entry, 1 Apex, 2 Exit (3 = returning to Entry)
+func _qte_stop() -> int: return 0 if qte_i >= 3 else qte_i
 
 ## lateral targets per phase; a target that jumps (new highlight, next corner) is eased out, a line followed smoothly is exact
 func _step_lanes(dt: float) -> void:
@@ -1102,28 +1203,26 @@ func _step_lanes(dt: float) -> void:
 	err_p *= k; err_r *= k; tgt_p = tp; tgt_r = tr
 	lat_p = float(tp) + err_p; lat_r = float(tr) + err_r
 
-## what the lead will be once this playback resolves: the same Combat.resolve_turn the core calls in submit_timing (pure, no RNG)
-func _preview_lead(score: float) -> float:
-	score = clampf(score, C.PLAYER_QTE_MIN, C.PLAYER_QTE_MAX)
+## what the lead will be once this playback resolves: the same Combat.resolve_turn the core calls in submit_qte (pure, no RNG)
+func _preview_lead(phases: Array) -> float:
 	var pc := []; var oc := []
 	for i in core.picks: pc.append(core.hand[i])
 	for ch in core.line: oc.append(ch)
-	var res := Combat.resolve_turn(pc, oc, core.player, core.opponent, score / C.QTE_NORMALIZER, C.OPPONENT_QTE, int(cfg.max_turns))
+	var res := Combat.resolve_turn(pc, oc, core.player, core.opponent, Combat.mean_phase_qte(phases), C.OPPONENT_QTE, int(cfg.max_turns), phases)
 	var cp: float = core.cum_p + res.player_progress; var co: float = core.cum_o + res.opponent_progress
 	var t := cp + co
 	return 0.0 if t == 0.0 else (cp - co) / t
 
-func _preview_score() -> float:
-	if script_in != null: return script_timing
-	return C.PLAYER_QTE_MIN if qte_stopped == null else _qte_score(qte_stopped)
+func _preview_phases() -> Array: return qte_res.duplicate()
 
 ## pass target + plan: off1 = the visual gap the sim's lead will give; when the drawn order flips, the passer takes an open lane
 ## while the cars overlap if their lines would share a lane there (Austin: shared exit lane -> pass in an open lane, then settle)
 func _update_pass_target() -> void:
 	if core.phase != "TIMING": return
-	var sc := _preview_score()
-	if off1_score != null and float(off1_score) == sc: return
-	off1_score = sc; off1 = Track.rival_draw_offset(_preview_lead(sc), disp.visual_gap); pass_plan = {}
+	if not _playing(): return
+	var sc := str(_preview_phases())
+	if off1_score != null and String(off1_score) == sc: return
+	off1_score = sc; off1 = Track.rival_draw_offset(_preview_lead(_preview_phases()), disp.visual_gap); pass_plan = {}
 	if signf(off0) == signf(off1): return
 	var pl: String = core.player_line(); var rl: String = core.line
 	var travel: float = path.S + path.R * path.A + 10.0 - 8.0

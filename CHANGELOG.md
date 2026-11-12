@@ -8,6 +8,34 @@
 
 ---
 
+## 2026-11-11 — Gordon [godot]: two-corner test re-pinned to sim f0efecf, three timing QTEs per turn (Entry/Apex/Exit), TC2 state token (UNAPPROVED, shots10)
+- **Ask:** I asked whether to move the two-corner test onto Barry's latest sim and build the three QTEs. Austin (10:56 PM PT): "Yes."
+- **Pin:** 212eaab → **f0efecf** (`f0efecfbc18b495a0ba9df3bf956d8e89acc3477`). `sim/` is unchanged through 59f7e6d. No `sim/` file was edited.
+- **Ported to GDScript bit for bit.** Every constant cites `sim/velocity_shift/equations.py:<line>` in `sim_constants.gd`, and no number was invented.
+  - Constants: QTE_ZONE_BASE_MS :133, QTE_ZONE_WIDTH_105 :137, QTE_SKILL_TARGET_E :148, QTE_SKILL_SIGMA_OVER_A0 :149 (placeholder in the sim), QTE_PHASES :164, PHASE_QTE_UNPLAYED :165, AVERAGE_PLAY_Q :208, ETA :180.
+  - Functions: `qte_zone_width` :346 (with `expected_hit_quality` and a glibc `erf` port), `raw_qte_score` :372, `phase_raw_qte` :390, `mean_phase_qte` :397 (CPython 3.12 `sum()` compensation), `clash_progress` :447 (q_eff = clip(raw × (1 + ETA(han_share − 1/3)), 0, 1)), and `resolve_turn` with `player_qte_phases` (models.py:68/88).
+  - The PROVISIONAL W=1 hook is **retired**: clash_progress no longer has a knot window.
+- **Game:**
+  - After LINE LOCKED, there is one timing QTE at each camera stop (Entry chase, Apex stop, Exit stop) over the scrolling road. Then the camera returns to Entry and playback runs.
+  - The zone is `qte_zone_width(r, qte_window_mod)` × 800 ms, the same for all three phases. At r = 1.05 that is 800 ms.
+  - Press score = max(0, 1 − |e|/(zone/2)). A cursor past the far edge = unplayed = 0.
+  - The three scores go to `player_qte_phases`, and `resolve_turn` averages them.
+  - Select and playback stay unpaused, and the countdown stays.
+- **Parity (new pin), all max_abs_diff 0.0:**
+  - qte-v1 functions: 5,757 values, 0 bit mismatches.
+  - Four named inputs, plus fuzz300 with per-phase inputs (null/0/1/decimals/raw bits).
+  - Dump/load for 3 seeds; restart test.
+  - 200-seed key test: 162 locked turns, QTEs pressed with SPACE, 125 unplayed, then compared with the sim.
+- **State token TC2:** `TC2:<sim7>:<build10>:<b64 json>:<crc>`. It records the sim pin and the build id (`godot/spec/build.json`, from `tools/stamp_build.py`), and replays picks plus exact phase scores (IEEE bits). TC1 seeds reproduce on their own build (≤ 4322b31). Spec: `unapproved/gordon/playtest-state-spec.md` §0.5.
+- **Output:**
+  - Web export rebuilt locally on :5176 (not deployed).
+  - GIF: `unapproved/gordon/two-corner/out/shots10/turn1_three_qtes_apex_unplayed.gif` (Entry 0.92, Apex unplayed, Exit 0.55).
+- **Placeholders for Arthur:** QTE sweep timing (lead 700 ms, tail 200 ms, ready 0.5 s, result hold 0.6 s, SPACE), QTE panel layout and labels, the plate words "QTE"/"TIMING", cars hidden at the Apex/Exit QTE stops, and an early press scoring 0 but counting as played.
+- **Conflicts (Austin to decide):**
+  - B.5c (31b2299) says UI is drawn sharp at 1280×960. The HUD text stays pixel-hard on the 2× grid per Austin's 10:22 PM steer to me ("now the text is really sharp and uncharacteristic of the vibe"), and it was kept unchanged on request.
+  - godot-build-guide §7.1/7.2 describes one continuous QTE per corner with TIMING/MASH and presses×10, and the guide's score is still 1–10.
+  - In B.5b, the QTEs now sit between the lock and the return to Entry.
+
 ## 2026-11-11 — Barry [sim]: slots-v2 mature #2 fixes study (NOT approved); move my unapproved work to `unapproved/barry/`
 - **NOT APPROVED. Study only; no live constants changed.** Austin asked (10:58 PM PT) to sim fixes for the strong-player mature #2 skips: V1 = R1 Wangan j3, 47.86 → 52.49 with the newest mod; V2 = R2 Touge j3, 47.84 → 52.67. The study uses the live 0.67 knot and the 10% aero cap. It has the same oracle and statistical bar as slots-v2, and it covers weak/avg/strong × balanced/window/aero10.
 - **Write-up:** `unapproved/barry/slots-v2/RESULTS_v1v2.md`. Scripts: `fixes.py`, `fix_summary.py`, `floor_cost.py`, plus their JSON and `fixes.log`.

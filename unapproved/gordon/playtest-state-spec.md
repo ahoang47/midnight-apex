@@ -249,3 +249,23 @@ None of these files or edits exist yet. They are created only after Austin locks
 5. **Release safety:** `--playtest-state` and `F10` clipboard hot-warp enabled in all debug builds (`OS.is_debug_build()`) and stripped from release exports, with `F9` capture kept in release for external testers or not?
 6. **Who owns the append-only ID tables** that the token indexes (`RivalId` roster, mod/part IDs, shell/livery IDs, substory IDs): Barry in `design/07` / `sim/config/parts.json` with a Godot mirror, or a Godot-side `scripts/` table that `design/` references?
 
+
+### 0.5 Two-corner test token (`TC2`): implemented in `unapproved/gordon/two-corner/` (UNAPPROVED)
+
+> Added by Gordon on 2026-11-11 with the shots10 sim re-pin, which Austin approved at 10:56 PM PT. This token belongs to the two-corner engine test only. It is a working example of the replay mode in §0.2 / Q4 and does not lock any part of `MX1`.
+
+- **Format:** `TC2:<sim7>:<build10>:<base64url(json)>:<crc16_hex4>`.
+  - `sim7` is the pinned sim commit (`_pin` HEAD; `f0efecf` since shots10).
+  - `build10` is the first 10 hex characters of a SHA-1 over the build's own files: `project.godot`, `scripts/*.gd`, `shaders/*`, `spec/display.json`, `spec/race_config.json`. `tools/stamp_build.py` writes both values into `godot/spec/build.json`. `tools/run_parity.sh` runs it first.
+  - The CRC is CRC-16/CCITT-FALSE, as in §0.2, over the ASCII `TC2` + `sim7` + `build10`, followed by the payload bytes.
+  - The HUD menu shows `pin <sim7> build <build10>`.
+- **Payload:** `seed`, `rng_draws`, `corner_index`, `phase`, the current `picks` and `auto`, and `turns[]`. Each completed turn has `picks` (hand indices after any auto-fill), `auto`, and `qte` = `[entry, apex, exit]`. Each phase score is either `null` (unplayed = `PHASE_QTE_UNPLAYED` = 0, Austin) or a `"0x<16 hex>"` IEEE-754 bit pattern. `cum_player` and `cum_opponent` are stored the same way, as a check only.
+  - Scores are stored as bit patterns because Godot's JSON and decimal parser is not correctly rounded. In a box test, 37% of random doubles failed to round-trip through `JSON.stringify` → `parse_string`. TC1 stored totals as JSON numbers, so a load could drift by 1 ulp.
+- **Load = replay:** `race_core.gd load_state()` seeds a fresh core and replays every turn's picks and phase scores through the same `submit_qte()` path, then re-picks the current corner. If the replayed phase, corner, `rng_draws` and the totals' bits differ from the token, it reports **"replay desync"**.
+  - A token whose `sim7` differs from the running build is refused.
+  - A token with the same `sim7` but a different `build10` loads with a warning. Results replay exactly; visuals may differ.
+- **Old seeds reproduce on their own build:**
+  - Results depend on the seed, the picks, the QTE input and the **sim pin**, so record `sim7` + `build10` (the token does this) with any seed you report.
+  - `TC1:<sim7>:…` tokens are from sim 212eaab and repo `unapproved/gordon/two-corner` builds up to 4322b31. That era used a single 1–10 timing per turn. They are refused with a message telling you to check that commit out and replay there.
+- **Tools:** `python3 tools/decode_token.py '<token>'` decodes TC2 and TC1, checks the CRC and turns the bit patterns into numbers. `F9` copies a token and `F10` loads one from the clipboard.
+- **For `MX1` (proposal, not decided):** Austin's three QTEs per turn mean `qte_history` needs three values per turn (Entry / Apex / Exit, each a score or unplayed) instead of one. In §0.2 that is about 3 × `u16` per turn rather than 2 B per turn.

@@ -12,7 +12,7 @@ worst = 0.0; nclash = 0; fails = []; rows = []
 for s, g in zip(S, G):
     assert s["seed"] == g["seed"]
     for i, (cs, cg) in enumerate(zip(s["corners"], g["corners"])):
-        for k in ("line", "hand", "picks", "outcomes", "timing", "rng_draws_after"):
+        for k in ("line", "hand", "picks", "outcomes", "qte_in", "qte_phases", "q_time", "zone_width", "rng_draws_after"):
             if cs[k] != cg[k]: fails.append(f"seed {s['seed']} corner {i} {k}: sim={cs[k]} engine={cg[k]}")
         for side in ("player_clash", "opponent_clash"):
             for j, (a, b) in enumerate(zip(cs[side], cg[side])):

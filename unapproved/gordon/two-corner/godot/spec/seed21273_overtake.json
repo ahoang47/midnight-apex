@@ -1,1 +1,26 @@
-{"seed": 21273, "corners": [{"pick": [], "timing": 7}, {"pick": [1, 0, 5], "timing": 8}], "_doc": "player takes the lead in corner 2 -> swing_overtake"}
+{
+ "seed": 21273,
+ "corners": [
+  {
+   "pick": [],
+   "qte": [
+    0.7,
+    0.7,
+    0.7
+   ]
+  },
+  {
+   "pick": [
+    1,
+    0,
+    5
+   ],
+   "qte": [
+    0.8,
+    0.8,
+    0.8
+   ]
+  }
+ ],
+ "_doc": "player takes the lead in corner 2 -> swing_overtake"
+}
