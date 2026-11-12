@@ -268,6 +268,17 @@ The 3D scene is rendered at **native 640×480 with no anti-aliasing**, then **RG
 full 1280×960 output resolution, **pixel-hard**: no font or edge anti-aliasing, a hard 2 px drop shadow, bold chunky late-90s type and plates (Austin 2026-11-11, 10:21 PM to Gordon and 11:12 PM to Arthur). Larger screens scale the whole frame by whole numbers. Texture filtering inside the 3D scene follows Q4 (smooth) and is not affected.
 Review images and contact sheets are judged from full-size frames; downscaled sheets are for layout only.
 
+### B.5d Line preview during stance selection [APPROVED 2026-11-12, Austin]
+While the player is choosing (B.5b camera stops), draw a racing-line preview on the road showing the path their choices
+make. The line is built **phase by phase and chains**: the Entry segment starts from the chosen Entry lane; the Apex
+segment **starts where the Entry segment ends** and its angle changes with the Apex stance being hovered; the Exit
+segment starts where the Apex segment ends and angles with the Exit stance. Changing an earlier pick redraws every later
+segment. Confirmed segments stay solid, and the hovered segment updates live as the player scrolls stances. Visual
+treatment follows Austin's reference image (pending re-share to Arthur); until then: a flat ribbon on the road
+surface, drawn in the 3D layer (it is subject to B.5c crunch), tinted by the stance colour of that segment
+(ATK #2CB84A, DEF #E8282C, NEU #F0C828), no glow or soft edges. Mapping from stance to line angle comes from sim/
+(Barry); Arthur does not set geometry numbers.
+
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
 lines face-up from the start (no hidden cards, no flips) so the player can learn rival patterns. Columns are ENTRY /
