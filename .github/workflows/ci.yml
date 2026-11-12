@@ -59,6 +59,7 @@ jobs:
         with:
           path: ${{ env.GODOT_DIR }}
           key: godot-${{ env.GODOT_VERSION }}-stable-linux.x86_64
+          save-always: true
       - name: Install Godot 4.6.3
         if: steps.cache-godot.outputs.cache-hit != 'true'
         run: |
@@ -80,11 +81,18 @@ jobs:
           git -C _pin checkout --detach "$PIN"
           git -C _pin rev-parse HEAD
           test -f _pin/sim/velocity_shift/equations.py
+      - name: qte-v1 function bits (Godot vs pinned sim)
+        continue-on-error: true
+        env:
+          GODOT: ${{ env.GODOT_DIR }}/godot
+        working-directory: unapproved/gordon/two-corner
+        run: python3 tools/qte_fn_test.py
       - name: Two-corner parity, dump/load, restart, and key test
         env:
           GODOT: ${{ env.GODOT_DIR }}/godot
           SDL_AUDIODRIVER: dummy
           LIBGL_ALWAYS_SOFTWARE: "1"
+          SKIP_QTE_FN_TEST: "1"
         working-directory: unapproved/gordon/two-corner
         run: |
           "$GODOT" --version

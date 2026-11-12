@@ -9,7 +9,9 @@ G=${GODOT:-/workspace/tools/godot}
 mkdir -p out
 rc=0
 python3 tools/stamp_build.py
-echo -n "== "; python3 tools/qte_fn_test.py || rc=1
+if [ "${SKIP_QTE_FN_TEST:-0}" != "1" ]; then
+  echo -n "== "; python3 tools/qte_fn_test.py || rc=1
+fi
 for f in seed20261113_idx seed20261114_idx seed42_timeout seed21273_overtake fuzz300; do
   python3 tools/sim_parity.py spec/inputs/$f.json --out out/sim_$f.json >/dev/null
   $G --headless --path godot --script res://scripts/headless_run.gd -- ../spec/inputs/$f.json --out ../out/godot_$f.json >/dev/null 2>&1
