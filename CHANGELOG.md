@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-11 — Gordon [godot]: QTE difficulty is the visible zone only (Austin)
+- **What:** `design/godot-build-guide.md` §7 now uses the visible zone width `qte_zone_width(r, window_mod)` at the race's fixed r, plus `MatchConfig.qte_window_mod`, as the only QTE difficulty scale. `QTEController.start(...)` takes that zone (fraction of `QTE_ZONE_BASE_MS`, `equations.py:130–133` and `:338`). The old level-gap `qte_difficulty()` formula and the 800/650/500/300 ms table are removed from §7 and Appendix F, along with the Godot-only `QTE_TIMING_WINDOW_PER_GAP` / `QTE_TIMING_WINDOW_MIN_MS` / `QTE_MASH_SPEED_PER_GAP` constants. §15.2 `QTE_TIMING_WINDOW_BASE_MS` is no longer a Godot-only 600–1000 range; it points at sim `QTE_ZONE_BASE_MS` (`equations.py:130–133`). The pending-Austin / double-count notes in §5.1, §7, Appendix D, F, and H now state this resolution. No values invented; no `sim/`, scripts, or scenes touched.
+- **Why:** Austin, 2026-11-11, 8:48 PM PT: "Yeah QTE difficulty is scaled through the visibile zone. I don't see double dipping there."
+
 ## 2026-11-11 — Barry [sim]: slots-v1 mod slot sim added to `design/unapproved/slots-v1/` (**NOT approved**)
 - **What:** compares three slot schemes, (A) 3 slots growing to 6 (+1 at the R2 and R3 openings and the finale), (B) fixed 3 and (C) fixed 6, with window-only mods competing for the same slots. Equipping a window mod drops the smallest stat mod, so it costs real stat points. Run on the live visible-QTE model at `4cb5401`. Oracle: the official clash-count banks, N=4,000 per bank, seeds 20261113–15 × 10/20/30 turns, with paired comparisons. Files: `RESULTS.md`, the scripts, `results*.json` and `summary.txt`. Nothing in `sim/` changed.
 - **Rule 1 (only just reach 105% with every slot filled, never above):** each scheme splits `MOD_SHARE_OF_REF × ref` over its slots. One new tier per story win goes into the smallest line, with a restock at the round openings. Scheme A's added slots necessarily start at 53–67% of a full slot.

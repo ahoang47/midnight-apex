@@ -55,7 +55,7 @@ enum QteType { MASH, TIMING }
 
 | Name | Notes |
 |------|-------|
-| `QTE_ZONE_BASE_MS` | Presentation unit for the visible QTE zone (Godot `QTE_TIMING_WINDOW_BASE_MS`); `equations.py:133` |
+| `QTE_ZONE_BASE_MS` | Presentation unit for the visible QTE zone. Godot `QTE_TIMING_WINDOW_BASE_MS` is this constant, not a separately tuned value (`equations.py:130–133`) |
 | `QTE_ZONE_WIDTH_105` | `(r, width/w0)` knots for the visible zone; used by `qte_zone_width(r, window_mod)` (`equations.py:137`, function at `:338`) |
 | `QTE_SKILL_SIGMA_OVER_A0` | PLACEHOLDER skill σ (units of the default half-width a0) until playtest; used by `expected_hit_quality` / `raw_qte_score` (`equations.py:149`, marked PLACEHOLDER) |
 | `QTE_SKILL_TARGET_E` | Target E[s] at the default zone for the named placeholder profiles (`equations.py:148`) |
@@ -79,10 +79,6 @@ enum QteType { MASH, TIMING }
 | `PICKS_PER_TURN` | 3 | stances selected per turn |
 | `STRAIGHT_DURATION` | 12.0 | seconds for all 3 picks |
 | `PHASE_DURATION` | 4.0 | seconds per individual pick |
-| `QTE_TIMING_WINDOW_BASE_MS` | 800 | base width of timing target zone; presentation unit for sim `QTE_ZONE_BASE_MS` (`equations.py:130–133`) |
-| `QTE_TIMING_WINDOW_PER_GAP` | 50 | ms shrunk per level of opponent advantage |
-| `QTE_TIMING_WINDOW_MIN_MS` | 200 | floor for timing target zone |
-| `QTE_MASH_SPEED_PER_GAP` | 0.10 | press-rate multiplier per level gap |
 
 ### 1.3 `SignalBus.gd` (autoload)
 
@@ -414,7 +410,7 @@ static func resolve_turn(player_stances: Array, opponent_stances: Array,
 
 Reference: `sim/velocity_shift/equations.py` (`stat_shares`, `qte_zone_width` `:338`, `raw_qte_score` `:361`, `expected_hit_quality` `:271`, `kappa_for_length`, `timing_value`, `clash_payoff`, `clash_progress` `:415`; legacy `knot_window` `:256`) and `combat.py` `resolve_turn` (`:71–75`, `:122–131`). The sim keeps the old HP/DP path as `resolve_turn_legacy` behind `MatchConfig.legacy_hp_dp` for frozen checks; Godot does not port it.
 
-> **Open question for Austin:** since 4cb5401, `sim/` carries the stat gap only in the visible zone width `qte_zone_width(r, window_mod)`. §7's level-gap `qte_difficulty()` still shrinks the timing zone and speeds up the mash when the opponent is stronger; applying that scaling on top of the zone width would double-count. §7 stays written here pending your decision. Barry's recommendation is to drop the level-gap scaling in favour of the zone width. Godot should not implement `qte_difficulty()` until this is decided.
+> **Resolved (Austin, 2026-11-11, 8:48 PM PT):** "Yeah QTE difficulty is scaled through the visibile zone. I don't see double dipping there." QTE difficulty is scaled only through the visible zone width `qte_zone_width(r, window_mod)` at the race's fixed r, plus `MatchConfig.qte_window_mod`. The old level-gap `qte_difficulty()` scaling is dropped; see §7.
 
 ---
 
@@ -472,14 +468,15 @@ States:
 **🤖 MCP creates** `scripts/QTEController.gd`:
 
 ```gdscript
-func start(qte_type: QteType, difficulty: Dictionary):
+func start(qte_type: QteType, zone_width_over_w0: float):
     # Show QTEOverlay
-    # Mash: count presses against speed_multiplier requirement
-    #   Fills MashIndicator TextureProgress over ~3-4s
-    #   difficulty.speed_multiplier adjusts how fast fill depletes between presses
-    #   At 1.5x, you must press 50% faster to maintain the same fill rate
-    # Timing: moving marker across target zone
-    #   difficulty.timing_window_ms sets the width of the target zone
+    # zone_width_over_w0 comes from qte_zone_width(r, MatchConfig.qte_window_mod)
+    # at the race's FIXED r (equations.py:338). No mid-race change, and no
+    # extra level-gap shrink or mash-speed scale.
+    # Timing target width in ms = zone_width_over_w0 × QTE_ZONE_BASE_MS
+    #   (equations.py:130–133; Godot presentation name QTE_TIMING_WINDOW_BASE_MS).
+    # Mash: count presses; fills MashIndicator TextureProgress over ~3-4s
+    # Timing: moving marker across that target zone
     #   Multiple successful presses increase score
     # Read QTE type from TurnTypeData.get_qte_type(turn_type, player_stance)
     # Runs ~3-4s (concurrent with clash resolution)
@@ -490,27 +487,15 @@ func stop() -> float:
     # Return final score (1.0–10.0)
 ```
 
-**Difficulty:**
+**Zone width** (this is the QTE difficulty):
 
 ```gdscript
-static func qte_difficulty(player_level: int, opponent_level: int) -> Dictionary:
-    var gap = opponent_level - player_level
-    return {
-        timing_window_ms: max(QTE_TIMING_WINDOW_MIN_MS,
-            QTE_TIMING_WINDOW_BASE_MS - gap * QTE_TIMING_WINDOW_PER_GAP),
-        speed_multiplier: 1.0 + max(0, gap) * QTE_MASH_SPEED_PER_GAP,
-    }
+# CombatResolver.qte_zone_width(r, window_mod)  — equations.py:338
+# timing_window_ms = qte_zone_width(r, window_mod) × QTE_ZONE_BASE_MS
+#   (equations.py:130–133)
 ```
 
-| gap | timing_window_ms | speed_multiplier | feel |
-|-----|-----------------|-----------------|------|
-| -10 | 800 (capped) | 1.0 | Player dominates — no bonus |
-| 0 | 800 | 1.0 | Even match — base difficulty |
-| +3 | 650 | 1.30 | Opponent fav — tighter timing |
-| +6 | 500 | 1.60 | Tough — zone shrinks, mash races |
-| +10 | 300 | 2.00 | Max before soft floor at 200ms |
-
-> **Open question for Austin (same as §5.1):** since 4cb5401, `sim/` carries the stat gap only in the visible zone width, so applying this level-gap `qte_difficulty()` scaling on top would double-count. Pending your decision; Barry's recommendation is to drop it in favour of the zone width. Godot should not implement `qte_difficulty()` until this is decided. The formula is left written here and is not deleted.
+> **Resolved (Austin, 2026-11-11, 8:48 PM PT):** "Yeah QTE difficulty is scaled through the visibile zone. I don't see double dipping there." Difficulty is scaled only through this visible zone, plus `MatchConfig.qte_window_mod`. The old level-gap `qte_difficulty()` (and its ms table) is dropped.
 
 ### 7.2 QTE Type lookup
 
@@ -1015,7 +1000,7 @@ Combat constants are tuned in Barry's sim, not in Godot. Austin and Barry sign o
 
 | Constant (`equations.py`) | Effect |
 |----------|--------|
-| `QTE_ZONE_BASE_MS`, `QTE_ZONE_WIDTH_105` | Visible QTE zone width at the race's fixed r (`qte_zone_width`) |
+| `QTE_ZONE_BASE_MS`, `QTE_ZONE_WIDTH_105` | Visible QTE zone width at the race's fixed r (`qte_zone_width`). Godot `QTE_TIMING_WINDOW_BASE_MS` is the presentation name for `QTE_ZONE_BASE_MS` (`equations.py:130–133`), not a separately tuned range |
 | `QTE_SKILL_SIGMA_OVER_A0` | PLACEHOLDER skill σ for `expected_hit_quality` / `raw_qte_score` until playtest |
 | `KNOT_WINDOW_105` | LEGACY only: winrate oracle and generator of the zone table; not used in `clash_progress` |
 | `KAPPA_BY_LENGTH` | How strongly the stat ratio scales progress, per race length |
@@ -1031,7 +1016,6 @@ Godot-only feel constants, tuned here:
 | Constant | Effect | Recommended range |
 |----------|--------|-------------------|
 | `STRAIGHT_DURATION` | Seconds to pick 3 stances | 8.0 – 12.0 |
-| `QTE_TIMING_WINDOW_BASE_MS` | Base timing target width | 600 – 1000 |
 
 ### 15.3 Tuning flow
 
@@ -1225,10 +1209,10 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
 
 6. TurnManager: state = CORNER_PLAYBACK
      → visible zone = qte_zone_width(r, MatchConfig.qte_window_mod) at the race's fixed r
-       (equations.py:338). Do not also apply QTEController.qte_difficulty() until
-       Austin decides §7 (that would double-count the stat gap; see §5.1 / §7).
+       (equations.py:338). This is the QTE difficulty (Austin, 2026-11-11, 8:48 PM PT:
+       scaled only through the visible zone; no level-gap qte_difficulty() on top).
      → emit corner_started(player_stances, opponent_stances)
-      → QTEController.start(qte_type, zone from qte_zone_width)
+      → QTEController.start(qte_type, qte_zone_width(r, qte_window_mod))
       → ClashDisplay.display_summary(player_stances, opponent_stances)
       → Loop through 3 positions:
           CombatResolver.resolve_stance(player, opponent)
@@ -1329,32 +1313,23 @@ One continuous QTE per corner. Type determined by `(turn_type × player stance)`
 - Rapid button press (input map: `qte_mash`)
 - Fill bar builds during corner playback (~3-4s)
 - Final score = fill % × 10, normalized 1–10
-- **Difficulty scaling:** `speed_multiplier` adjusts how fast the fill bar depletes between presses — at 1.5×, you must press 50% faster to maintain the same fill rate.
+- No separate mash-speed difficulty scale.
 
 ### Timing mode (continuous)
 - Moving marker oscillates across a target zone
 - Timer ticks down; multiple successful presses increase score
 - Final score = (successful_presses / total_opportunities × 10)
-- **Difficulty scaling:** `timing_window_ms` sets the width of the target zone — at 800ms the zone is generous, at 200ms you must nail the frame. Both the window size and the marker oscillation speed scale with the gap.
 
-### Difficulty formula
+### Zone width (QTE difficulty)
 
-The playable engine's visible zone is `qte_zone_width(r, window_mod)` (`equations.py:338`), not this level-gap formula. Since 4cb5401, applying `qte_difficulty()` on top would double-count the stat gap. The formula is left written here pending Austin's decision (see §7); Godot should not implement it until then. Barry's recommendation is to drop it in favour of the zone width.
+**Resolved (Austin, 2026-11-11, 8:48 PM PT):** "Yeah QTE difficulty is scaled through the visibile zone. I don't see double dipping there." Difficulty is scaled only through the visible zone; the old level-gap `qte_difficulty()` formula and its ms table are dropped.
 
-```gdscript
-gap = opponent_level - player_level
-timing_window_ms = max(QTE_TIMING_WINDOW_MIN_MS,
-                       QTE_TIMING_WINDOW_BASE_MS - gap × QTE_TIMING_WINDOW_PER_GAP)
-speed_multiplier = 1.0 + max(0, gap) × QTE_MASH_SPEED_PER_GAP
+```
+zone_width_over_w0 = qte_zone_width(r, MatchConfig.qte_window_mod)   # equations.py:338
+timing_window_ms   = zone_width_over_w0 × QTE_ZONE_BASE_MS           # equations.py:130–133
 ```
 
-| gap | timing_window_ms | speed_multiplier | feel |
-|-----|-----------------|-----------------|------|
-| -10 | 800 (capped) | 1.0 | Player dominates — no bonus |
-| 0 | 800 | 1.0 | Even match — base difficulty |
-| +3 | 650 | 1.30 | Opponent fav — tighter timing |
-| +6 | 500 | 1.60 | Tough — zone shrinks, mash races |
-| +10 | 300 | 2.00 | Max before soft floor at 200ms |
+`r` is the race's fixed stat ratio (no mid-race change). `qte_window_mod` is a multiplicative bonus on the current zone (`models.py:152`). Values live in the sim; do not retune them in Godot.
 
 ---
 
@@ -1380,7 +1355,7 @@ Make the draw from the match `RandomNumberGenerator` so a playtest dump's Block 
 - **Opponent cards:** the picked line, played exactly; no opponent hand.
 - **No DNF / knockout** — match always runs to max_turns, then the higher progress total wins.
 - **Race length sets kappa:** `max_turns` (default 10) is the planned race length, one of `RACE_LENGTHS`; kappa = `kappa_for_length(max_turns)`, never the lap's corner count. Any other length snaps to the nearest `KAPPA_BY_LENGTH` key.
-- **Visible QTE zone, not knot_window:** player `q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)` with no `knot_window`. The stat gap is `qte_zone_width(r, window_mod)` at the race's fixed r (`equations.py:338`). `KNOT_WINDOW_105` / `knot_window` are legacy for the oracle only. §7 `qte_difficulty()` is not implemented until Austin decides (double-count risk; see §5.1).
+- **Visible QTE zone, not knot_window:** player `q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)` with no `knot_window`. QTE difficulty is scaled only through `qte_zone_width(r, window_mod)` at the race's fixed r (`equations.py:338`), plus `MatchConfig.qte_window_mod` (Austin, 2026-11-11, 8:48 PM PT). `KNOT_WINDOW_105` / `knot_window` are legacy for the oracle only. The old level-gap `qte_difficulty()` is dropped.
 - **Ties:** equal progress totals are a tie; no opponent tiebreaker.
 - **Car position in 3D:** drawn spacing only. Cumulative progress, position, and the win condition stay on the real gap (`design/06-pattern-read.md`, Lane Entry and visual gap). A capped lead ahead of the player is not the exact large-lead magnitude. The trailer is not given a matching cap. `CarAnimator.gd` still uses a symmetric Z lerp; that code was not updated with the rule.
 - **AnimationTree blend:** 7 animations + 3-way blend node = smooth stance transitions for any 3-stance sequence. No per-combination baking.
