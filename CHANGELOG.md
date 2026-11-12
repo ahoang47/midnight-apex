@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Barry [barry]: corners-v1 records Austin's ruling on story characters at signature corners
+
+- **Why:** Austin, 2026-11-12, answering the open parameter: "Story characters use their own line and bluff on signature corners too."
+- **What (`unapproved/barry/corners-v1/README.md`):** ruling recorded in the three-layer section (story characters override the district layer on every corner, signature corners included; lines and rates still from Nathaniel / Desmond, none invented). The item is removed from the open parameters, the flag is marked settled, and the Sim plan v2 assumptions now say signature corners apply to wild racers only. The old everyone-shares rule is marked superseded. Still a proposal; no sim, `sim/` unchanged.
+
 ## 2026-11-12 — Barry [barry]: corners-v1 three-layer line model draft + Sim plan v2 (PROPOSAL, NOT APPROVED, no sim)
 
 - **Why:** Austin, 2026-11-12: "all districts should have a distinct default line for all corner types. Where this default line deviates is for select corners, this is where bluff lines come in to play. Where it deviates even more is for story characters, where they get their own line + bluff." Then "Draft it." No sim was approved, so none was run.
