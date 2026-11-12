@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [proto-build]
+  pull_request:
+    branches: [proto-build]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sim:
+    name: sim
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: sim
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pytest
+        run: python -m pip install pytest
+      - name: Unit and integration tests
+        run: python -m pytest tests/ -q --tb=short
+      - name: Progression report (default order)
+        run: python scripts/run_progression.py
+      - name: Balance gauntlet
+        run: python scripts/balance_gauntlet.py
+
+  godot:
+    name: godot
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GODOT_VERSION: "4.6.3"
+      GODOT_DIR: ${{ github.workspace }}/.tools/godot-ci
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install display libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            xvfb libgl1 libgl1-mesa-dri libglu1-mesa \
+            libxcursor1 libxi6 libxinerama1 libxrandr2 \
+            libxkbcommon0 libx11-6 libfontconfig1 libpulse0
+      - name: Cache Godot
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.GODOT_DIR }}
+          key: godot-${{ env.GODOT_VERSION }}-stable-linux.x86_64
+      - name: Install Godot 4.6.3
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$GODOT_DIR"
+          curl -L --fail -o /tmp/godot.zip \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -o /tmp/godot.zip -d /tmp/godot-extract
+          install -m 0755 \
+            "/tmp/godot-extract/Godot_v${GODOT_VERSION}-stable_linux.x86_64" \
+            "$GODOT_DIR/godot"
+      - name: Check out pinned sim into _pin/
+        working-directory: unapproved/gordon/two-corner
+        run: |
+          PIN=$(python3 -c "import json; print(json.load(open('spec/race_config.json'))['pin_commit'])")
+          echo "Two-corner sim pin: $PIN"
+          git fetch --depth=1 origin "$PIN"
+          git worktree add --detach --no-checkout _pin "$PIN"
+          git -C _pin sparse-checkout set --cone sim
+          git -C _pin checkout --detach "$PIN"
+          git -C _pin rev-parse HEAD
+          test -f _pin/sim/velocity_shift/equations.py
+      - name: Two-corner parity, dump/load, restart, and key test
+        env:
+          GODOT: ${{ env.GODOT_DIR }}/godot
+          SDL_AUDIODRIVER: dummy
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        working-directory: unapproved/gordon/two-corner
+        run: |
+          "$GODOT" --version
+          bash tools/run_parity.sh

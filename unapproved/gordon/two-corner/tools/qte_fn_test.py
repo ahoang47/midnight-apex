@@ -1,6 +1,6 @@
 """Bit-exact check: Godot combat.gd erf / expected_hit_quality / qte_zone_width / raw_qte_score vs the pinned sim.
-Usage: python3 tools/qte_fn_test.py   (needs /workspace/tools/godot; prints PASS/FAIL and the max |diff|)"""
-import json, math, random, struct, subprocess, sys
+Usage: python3 tools/qte_fn_test.py   (uses $GODOT or /workspace/tools/godot; prints PASS/FAIL and the max |diff|)"""
+import json, math, os, random, struct, subprocess, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "_pin" / "sim"))
@@ -18,7 +18,8 @@ grid = {"erf": [h(x) for x in erf_x], "ehq": [[h(a), h(b)] for a, b in ehq], "zo
 (ROOT / "out").mkdir(exist_ok=True)
 gp = ROOT / "out" / "qte_fn_grid.json"; op = ROOT / "out" / "qte_fn_godot.json"
 gp.write_text(json.dumps(grid))
-subprocess.run(["/workspace/tools/godot", "--headless", "--path", str(ROOT / "godot"), "--script", "res://scripts/headless_run.gd", "--",
+godot = os.environ.get("GODOT", "/workspace/tools/godot")
+subprocess.run([godot, "--headless", "--path", str(ROOT / "godot"), "--script", "res://scripts/headless_run.gd", "--",
                 "x", "--qte-fn-test", str(gp), "--out", str(op)], capture_output=True, check=True)
 g = json.loads(op.read_text())
 sim = {"erf": [math.erf(x) for x in erf_x], "ehq": [E.expected_hit_quality(a, b) for a, b in ehq],

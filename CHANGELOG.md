@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-12 — Desmond [ci]: GitHub Actions on push and pull request to proto-build
+- **What:** added `.github/workflows/ci.yml`. On push or pull request to `proto-build` it runs two jobs:
+  - **sim:** Python 3.12, `pytest tests/` (55 tests plus one skip when the numpy share-grid oracle is missing), then `scripts/run_progression.py` (default order) and `scripts/balance_gauntlet.py`. All three are deterministic and finish well under 5 minutes.
+  - **godot:** official Godot 4.6.3 linux x86_64 (cached), then Gordon's two-corner harness in `unapproved/gordon/two-corner/`: `tools/run_parity.sh` (qte-v1 function bits, headless `headless_run.gd` vs the pinned sim, dump/load, restart test, Plan the Line key test). The sim pin is read from `spec/race_config.json` (currently `f0efecf`, Austin-approved 2026-11-11; earlier notes said 212eaab) and checked out into `_pin/` with a git worktree so `tools/sim_parity.py` and `tools/stamp_build.py` work.
+- **Tool edits:** `tools/run_restart_test.sh` and `tools/qte_fn_test.py` now use `$GODOT`, defaulting to `/workspace/tools/godot`. `run_parity.sh` already did. No game logic or numbers changed.
+- **Not in CI:** a headless smoke of the root `project.godot`. It has no main scene and no `scenes/` or `scripts/` at the repo root, so there is nothing runnable to smoke.
+- **Why:** Austin asked for automatic runs on every push, in place of a manual "check the commits" rule, so the sim tests and Godot/sim parity run without someone starting them by hand.
+
 ## 2026-11-12 — Nathaniel [story]: corner_lines.md says Neutral, not Steady
 - `story/corner_lines.md` lines 3 and 20: "Steady" changed to "Neutral" for the S stance letter.
 - **Why:** the player-facing stance name Neutral was approved 2026-11-11 (design/01 canon block, Stats line, d8ce5b1); story/ shouldn't use the dropped name.
