@@ -1,4 +1,4 @@
-## Display-resolution HUD laid out in 640x480 design units (canvas_items stretch, Austin 2026-11-11). Plan the Line layout from Arthur's /workspace/mockups/lane_chain/v5/post_v5.py (NimbusSansNarrow,
+## HUD laid out in 640x480 design units, drawn on a 1280x960 2x pixel grid (Austin 2026-11-11 22:21). Plan the Line layout from Arthur's /workspace/mockups/lane_chain/v5/post_v5.py (NimbusSansNarrow,
 ## PS1 50/50 semi panels); debug boxes, menu and gap meter keep the 6x9 bitmap font + 9-slice stand-ins from spec/gen_art.py.
 extends Control
 ## Stance UI colours (Austin 2026-11-11, swapped the same day): ATK/POW green #2CB84A, DEF/EN red #E8282C, NEU/HAN yellow #F0C828 with dark text.
@@ -35,28 +35,33 @@ func setup(font_png: Texture2D, meta: Dictionary, panel_png: Texture2D, logo_png
 	size = Vector2(640, 480); mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fn = _font("res://fonts/NimbusSansNarrow-Bold.otf"); fi = _font("res://fonts/NimbusSansNarrow-BoldOblique.otf")
 
-## Display-resolution HUD (Austin 2026-11-11 21:41, 'continue upressing'): the project stretch mode is canvas_items, so this
-## Control is laid out in 640x480 design units (same positions, sizes and colours as Arthur's frames) and the canvas transform
-## scales it to the window. Glyphs are rasterised at size x scale by the viewport's automatic font oversampling
-## (oversampling 0 = follow the viewport), greyscale AA, light hinting. This departs from the mockups' 1-bit 640x480 text
-## (post_lsc.py:34) and from art_direction.md:115/:141 integer-nearest upscale, for the UI only; the 3D world keeps it.
+## HUD on a 2x pixel grid (Austin 2026-11-11 22:21 PT: "now the text is really sharp and uncharacteristic of the vibe", he
+## chose "Draw HUD text pixel-hard on a 2x grid (1280x960)"). This Control is laid out in 640x480 design units and drawn
+## into a 1280x960 SubViewport at scale 2 (main.gd). Text is rasterised at size x 2, 1-bit (no antialiasing, no subpixel
+## positioning, no oversampling), so 1 design px = a 2x2 block for shapes and the 6x9 bitmap font, while glyph edges sit
+## on the 1280x960 grid. The shadow is 1 design px = 2 px. The SubViewport is then shown nearest at a whole-number scale.
+## Departs from the mockups' 1-bit 640x480 text (post_lsc.py:34) and art_direction.md:115/:141/:242 for the UI only.
+const TS := 2   # text raster scale (2x grid)
 func _font(p: String) -> FontFile:
 	var f: FontFile = (load(p) as FontFile).duplicate()
-	f.antialiasing = TextServer.FONT_ANTIALIASING_GRAY; f.hinting = TextServer.HINTING_LIGHT
-	f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_AUTO; f.oversampling = 0.0
+	f.antialiasing = TextServer.FONT_ANTIALIASING_NONE; f.hinting = TextServer.HINTING_NORMAL
+	f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED; f.oversampling = 1.0
 	return f
 
-func sw(s: String, sz: int, it := false) -> float: return (fi if it else fn).get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz).x
+## widths and ascents are measured at the raster size (size x 2) and given back in design units
+func sw(s: String, sz: int, it := false) -> float: return (fi if it else fn).get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz * TS).x / TS
 ## anchor: 'l' left / 'm' centre / 'r' right on x; y = top of the line (PIL 'la'), or the vertical middle when mid = true
 func t2(x: float, y: float, s: String, sz: int, col: Color, it := false, anchor := "l", shadow := true, mid := false) -> void:
-	var f: FontFile = fi if it else fn
-	var w := f.get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz).x
-	if anchor == "m": x -= w / 2.0
-	elif anchor == "r": x -= w
-	var base := y + (f.get_ascent(sz) if not mid else (f.get_ascent(sz) - f.get_descent(sz)) / 2.0)
-	x = roundf(x); base = roundf(base)
-	if shadow: draw_string(f, Vector2(x + 1, base + 1), s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, INK)
-	draw_string(f, Vector2(x, base), s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, col)
+	var f: FontFile = fi if it else fn; var z := sz * TS
+	var w := f.get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, z).x
+	var X := x * TS; var B := y * TS + (f.get_ascent(z) if not mid else (f.get_ascent(z) - f.get_descent(z)) / 2.0)
+	if anchor == "m": X -= w / 2.0
+	elif anchor == "r": X -= w
+	X = roundf(X); B = roundf(B)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0 / TS, 1.0 / TS))   # undo the node's x2 so glyphs land 1:1 on the 1280x960 grid
+	if shadow: draw_string(f, Vector2(X + TS, B + TS), s, HORIZONTAL_ALIGNMENT_LEFT, -1, z, INK)
+	draw_string(f, Vector2(X, B), s, HORIZONTAL_ALIGNMENT_LEFT, -1, z, col)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 ## PS1 50/50 semi-transparent poly (post_v5.py:149-153): alpha 255 -> 0.5, partial alpha -> a * 0.75
 func semi(pts: PackedVector2Array, col: Color, a := 1.0) -> void:
@@ -311,8 +316,11 @@ func _entry_strip() -> void:
 	var poly := cut_panel(x0, y0, x0 + 188, y0 + 36, 6); semi(poly, PANEL); outline(poly, EDGE)
 	t2(x0 + 8, y0 + 3, "ENTRY", 10, SUB, true)
 	var chosen: String = pl.entry if pl.entry != "" else (ORDER[int(pl.sel)] if int(pl.phase) == 0 else "")
+	# lanes in on-screen order (Austin 2026-11-11: Left / Right move the Entry lane the way the road shows it):
+	# right corner OUT MID IN as post_v5.py:98, left corner mirrored to IN MID OUT
+	var order: Array = ["D", "S", "A"] if String(st.get("dir", "R")) == "L" else ORDER
 	for i in 3:
-		var k: String = ORDER[i]; var cx := x0 + 36 + i * 58; var ry := y0 + 19
+		var k: String = order[i]; var cx := x0 + 36 + i * 58; var ry := y0 + 19
 		if k == chosen:
 			solid(P([cx - 21, ry - 6, cx + 19, ry - 6, cx + 17, ry + 6, cx - 23, ry + 6]), AMBER)
 			t2(cx - 4 if pl.entry != "" else cx, ry, LANE[k], 12, INK, true, "m", false, true)
@@ -379,7 +387,9 @@ func _result_line() -> void:
 	var tm := ("%d" % int(r.timing)) if float(r.timing) == floorf(float(r.timing)) else str(r.timing)
 	var s := "timing %s (q %.2f)%s%s" % [tm, r.q_time, " [auto]" if r.autofilled else "", "  LEAD CHANGE" if st.leader_changed else ""]
 	t2(200, 104, s, 10, SUB, true)
-	if int(st.reveal) >= 3: t2(200, 117, "Enter: finish" if st.last_corner else "Enter: next corner", 11, EDGE, true)
+	if int(st.reveal) >= 3:   # after-turn pause with a visible countdown; auto-continues at 0 (display.json playback_flow.continue_s, PLACEHOLDER)
+		var n := int(ceilf(float(st.get("cont_left", 0.0))))
+		t2(200, 117, "Press Enter to %s  %d" % ["finish" if st.last_corner else "continue", n], 11, EDGE, true)
 
 ## finish: winner + options (keys 1-3, or arrows + Enter), centre panel above the strip
 func _finish_panel() -> void:

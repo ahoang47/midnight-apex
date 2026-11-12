@@ -8,6 +8,37 @@
 
 ---
 
+## 2026-11-11 — Gordon [godot]: two-corner shots9: after-turn countdown, arrow lanes, line-following cars, animated pass, continuous Touge track, 2x-grid HUD (unapproved/gordon)
+- **Why:** this comes from Austin's playtest (~9:58–10:01 PM PT). He said:
+  - "The game plays a bit too fast for me to grasp each corner... the pause I'm referring to is the one after a turn completes. That should have a time limit. The line selection shall still stay unpaused per Arthur's playback rule."
+  - "left and right don't scroll left and right when selecting an entry lane."
+  - "the car's path should follow its line. Right now, the cars just follow the lane they were placed in."
+  - "We already have the infinite scrolling for entry, we can reuse that for the exit. What we don't have is an infinite scrolling for apex while the QTE plays."
+  - "if a pass occurs, it is visually shown during the corner... the passing car shifts to an open lane, completes the pass animation, and then move into the position it needs to play for the next turn."
+  - "the two corners should be in the same district as part of a continuous 2-turn track."
+  - Then at 10:22 PM PT: "now the text is really sharp and uncharacteristic of the vibe". He chose: "Draw HUD text pixel-hard on a 2x grid (1280x960)".
+- **What (display/flow only; sim pin 212eaab, scoring and RNG unchanged):**
+  - **After-turn pause.** Once the B.5a RESULT row fills in, the HUD shows "Press Enter to continue N", a visible countdown, and auto-continues. The duration is a placeholder. There is still no pause in selection or playback.
+  - **Arrow keys.** Left/Right move the Entry highlight in on-screen direction: L corners show IN MID OUT, R corners show OUT MID IN, with no wrap. Lanes with none drawn are skipped.
+  - **Cars follow their lines.** Both cars' lateral offset blends Entry lane → Apex lane at mid-arc → Exit lane, smoothly.
+  - **Scroll and hold.** The infinite road scroll (Entry's straight) now runs at the Apex and Exit stops too. A `hold_stop` hook keeps the Apex scroll held for the later QTE. B.5b framing is kept.
+  - **Animated pass.** This replaces the hold-then-snap rule. During playback the visual gap moves from the pre-turn to the post-turn order. If the two lines share a lane while the cars overlap, the passer moves to the open lane, completes the pass, then settles onto its line. The scripted run's smallest lateral gap while overlapping is 3.30 m (no clipping).
+  - **One continuous Touge course** (`course.gd`): straight, HP L, joining straight, N90 R, exit. Corner 2 changes from Street N90 R to Touge N90 R.
+  - **HUD on a 2x grid.** The HUD is rendered into a 1280x960 SubViewport: font size ×2, no AA, no subpixel, oversampling 1, 2 px shadow. The 6x9 bitmap font is 2x nearest. The layer is shown nearest at a whole-number scale; below 1280x960 it falls back to fractional linear. The project base is now 1280x960 (Main scale 2, still 640x480 design units). The 3D world is unchanged: 640x480 + post shader, nearest.
+- **Placeholders** (`spec/display.json` `playback_flow`): continue_s 6.0, lane_ease_s 0.35, blend_before_m 6, blend_after_m 8, pass_u0/u1 0.2/0.9, gap_ease_s 0.12, overlap_full_m 5.5, overlap_clear_m 9.0, min_sep_m 2.6.
+- **Verify:**
+  - `tools/run_parity.sh` PASSes with max diff 0.0 (four inputs, fuzz300, save/load, restart, 200-seed key test).
+  - The scripted `spec/inputs/shots9_pass.json` run (shared exit lane in both corners, a pass each way) matches the sim.
+  - The web export was rebuilt on the box (:5176), not deployed.
+  - Shots, GIFs and the before (85d505d smooth) / after zoom composite are in `unapproved/gordon/two-corner/out/shots9/`.
+- **Flagged for Arthur/Desmond (proposals, not decided):**
+  - The 2x-grid HUD departs from `design/art/art_direction.md:115/:141/:242` and from the 1-bit 640x480 mockup text (`art/ui/line_select_cam/post_lsc.py:34`). Text is now pixel-hard on 1280x960, not 640x480.
+  - The Apex/Exit lane for each stance borrows the Entry rule (A = outside, S = centre, D = inside). This is not approved.
+  - The ENTRY strip is mirrored on L corners. The mockup shows OUT MID IN.
+  - The Touge dressing is one-sided, so on the R corner the cedars and lamps sit on the inside, unlike the B.5b frames.
+  - The pinned sim's line set for Touge N90 (DSA/DDS/DSS) replaces Street's (SSA/SDS/SSS), so the rival's corner-2 lines change for the same seed.
+  - `design/godot-build-guide.md` may still describe the old snap rule. It was not edited.
+
 ## 2026-11-11 — Barry [sim]: three QTE phase scores average into the turn's raw_qte
 - **What:** the playable engine still uses one `raw_qte` and the existing `q_eff` formula per turn (`clash_progress` / `resolve_turn` math unchanged). The turn's raw input can now be three phase scores (Entry, Apex, Exit): `mean_phase_qte` / `phase_raw_qte` average them, and an unplayed / None phase is `PHASE_QTE_UNPLAYED` (0). `TurnState.player_qte_phases` / `TurnResult.player_qte_phases` carry the three inputs; a 3-tuple from `get_player_qte` is averaged in `match.py`. The default profile / `player_timing` / `player_quality` path is still a single `raw_qte_score(...)` call, so SimulationRunner results are identical. The CLI prompts for the three 1–10 scores (blank = 0) and passes the tuple. No miss-probability knob. No studies re-run.
 - **Why:** Austin's two-corner playtest feedback, relayed by Gordon (~10 PM PT, 2026-11-11): there should be a QTE for entry, apex, and exit individually, and an unplayed QTE should count as 0. Austin then, directly, at 10:01 PM PT: "the 3 QTE scores should be counted as an average. Do not redo any of the math for it."

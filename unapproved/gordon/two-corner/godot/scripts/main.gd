@@ -16,6 +16,7 @@ const GLOW_SH = preload("res://shaders/glow.gdshader")
 const SKY_SH = preload("res://shaders/sky.gdshader")
 const FX_SH = preload("res://shaders/fx.gdshader")
 const Hud = preload("res://scripts/hud.gd")
+const Course = preload("res://scripts/course.gd")
 const TAG := "640"
 
 var cfg: Dictionary
@@ -33,6 +34,8 @@ var mirror_cam: Camera3D
 var post_rect: TextureRect
 var post_mat: ShaderMaterial
 var hud
+var hud_vp: SubViewport
+var hud_rect: TextureRect
 var env_mat: ShaderMaterial
 var car_mats: Array[ShaderMaterial] = []
 var player_car: Node3D
@@ -90,6 +93,17 @@ var stop_t := 99.0
 var stop_from = null
 var lock_hold_t := 99.0
 var lock_from = null
+# ── shots9 (Austin playtest 2026-11-11 ~10 PM PT), display only ──
+var PB: Dictionary            # display.json "playback_flow" (PLACEHOLDERS)
+var course                    # one continuous Touge road: straight, corner 1, straight, corner 2, straight
+var views: Array = []         # per-corner local view of the course (local 0 = 45 m before turn-in)
+var straights: Array = []     # per-corner infinite-scroll straight, anchored where that corner's approach starts
+var lat_p := 0.0; var lat_r := 0.0; var err_p := 0.0; var err_r := 0.0; var tgt_p = null; var tgt_r = null
+var off0 := 0.0; var off1 := 0.0; var off1_score = null; var pass_plan := {}
+var cont_t := 0.0             # after-turn pause (RESULT), auto-continues at PB.continue_s
+var hold_stop := 0            # hook: 1 = hold the camera at the Apex stop pose while the road scrolls (for the per-phase QTE later)
+var min_sep_overlap := 99.0   # smallest lateral gap seen while the cars overlap longitudinally (no-clip check)
+var gif_dir := ""; var gif_dt := 0.1; var gif_next := 0.0; var gif_n := 0
 
 func _arg(k: String, def = null):
 	var a := OS.get_cmdline_user_args()
@@ -99,15 +113,16 @@ func _arg(k: String, def = null):
 func _json(p: String) -> Dictionary:
 	return JSON.parse_string(FileAccess.get_file_as_string(p))
 
-## Legibility (shots7, 2026-11-11): the 640x480 frame is upscaled by whole numbers whenever the window fits 2x or more
-## (art_direction.md A.5:115 'integer nearest', :141). Non-integer nearest (2.25x at 1080p, 1.6x at 768) drew the 1-px
-## stems of the 1-bit HUD text 2 or 3 (1 or 2) screen px wide, so letters broke up. Below 2x it stays fractional so the
-## game is not shrunk to 1x. Since shots8 the stretch mode is canvas_items: the 3D world is still a 640x480 SubViewport shown
-## nearest at this scale with the RGB555 + Bayer post, and the HUD draws at window resolution in 640x480 design units.
+## Window scale (shots7/8/9). The game is laid out in 640x480 design units under a x2 node scale on a 1280x960 project base,
+## and the HUD is a 1280x960 layer (2x pixel grid, Austin 2026-11-11 22:21). When the window fits 1280x960 or more the
+## frame scales by a whole number of that base (1x at 1920x1080 and 2560x1440, 2x at 2560x1920): the HUD layer goes up
+## nearest by a whole number and the 640x480 world by twice that (art_direction.md:115/:141 integer nearest for the world).
+## Below 1280x960 the scale is fractional and the HUD layer is shown LINEAR (nearest downscaling would drop rows of 1-bit text).
 func _fit_scale() -> void:
 	var w := get_window()
-	var s := minf(w.size.x / 640.0, w.size.y / 480.0)
-	w.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER if s >= 2.0 else Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	var s := minf(w.size.x / 1280.0, w.size.y / 960.0)
+	w.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER if s >= 1.0 else Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	if hud_rect != null: hud_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if s >= 1.0 else CanvasItem.TEXTURE_FILTER_LINEAR
 
 func _ready() -> void:
 	cfg = _json("res://spec/race_config.json")
@@ -124,10 +139,13 @@ func _ready() -> void:
 	mode = "RACE" if (script_in != null or OS.get_cmdline_user_args().has("--no-menu")) else "MENU"
 	menu.seed_text = _arg("--seed", ""); menu.commit = C.PIN_COMMIT.substr(0, 7)
 	if not OS.has_feature("web"): menu.items.append("QUIT")  # Quit: Godot desktop only
-	DIST = disp.districts; CS = disp.car_shading; PAL = disp.palette
+	DIST = disp.districts; CS = disp.car_shading; PAL = disp.palette; PB = disp.playback_flow
+	gif_dir = _arg("--gif", ""); gif_dt = float(_arg("--gif-dt", "0.1"))
+	if gif_dir != "": DirAccess.make_dir_recursive_absolute(gif_dir)
 	_build_viewports()
+	scale = Vector2(2, 2)   # 640x480 design units on the 1280x960 base
 	_fit_scale(); get_window().size_changed.connect(_fit_scale)
-	straight_path = Track.straight(100000.0)
+	_build_course()
 	player_car = _load_car("res://assets/cars/car_mx5.glb", "res://assets/cars/mx5_env.png", "mx5")
 	rival_car = _load_car("res://assets/cars/car_s2000.glb", "res://assets/cars/s2000_env.png", "s2000")
 	core = RaceCore.new()
@@ -203,7 +221,15 @@ func _build_viewports() -> void:
 	post_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	post_rect.texture = world_vp.get_texture(); post_rect.material = post_mat
 	add_child(post_rect)
-	hud = Hud.new(); add_child(hud)
+	# HUD on a 2x pixel grid (Austin 2026-11-11 22:21): drawn into a 1280x960 SubViewport at scale 2, shown nearest over the world
+	hud_vp = SubViewport.new(); hud_vp.size = Vector2i(1280, 960); hud_vp.transparent_bg = true; hud_vp.disable_3d = true
+	hud_vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	hud_vp.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	add_child(hud_vp)
+	hud_rect = TextureRect.new(); hud_rect.size = Vector2(640, 480); hud_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	hud_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE; hud_rect.texture = hud_vp.get_texture(); hud_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(hud_rect)
+	hud = Hud.new(); hud_vp.add_child(hud); hud.scale = Vector2(2, 2)
 	hud.setup(load("res://art/font_6x9.png"), _json("res://art/font.json"), load("res://art/panel9.png"), load("res://art/logo_v3.png"))
 	var IW: int = int(disp.render.internal_w); var IH: int = int(disp.render.internal_h)
 	world_vp.size = Vector2i(IW, IH)
@@ -503,7 +529,7 @@ func _build_road(dk: String) -> void:
 	scroll_mats = scroll_mats.filter(func(m): return card_mats.values().has(m))
 	glow_mats.clear()
 	straight_d = _build_district(straight_path, RS.straight_from_m, RS.straight_to_m, dk)
-	corner_d = _build_district(path, -10.0, path.length, dk)
+	corner_d = _build_district(course, -60.0, course.length + 60.0, dk)   # the whole continuous course (both corners)
 	world_vp.add_child(straight_d.group); world_vp.add_child(corner_d.group)
 	for c in [player_car, rival_car]:  # car head/tail glow sprites keep their fog uniforms in step
 		for ch in c.get_children():
@@ -522,9 +548,10 @@ func _quad(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector3, col:
 # ── game flow ──
 func _setup_corner() -> void:
 	var c: Dictionary = core.corner()
-	path = Track.for_corner(c.dir, disp.road, c.corner)
+	path = views[core.corner_index]; straight_path = straights[core.corner_index]
 	_build_road(c.district)
 	s_player = 8.0; phase_t = 0.0; qte_t = 0.0; qte_stopped = null; reveal = 0; cam_curve_built = false; leader_changed = false
+	cont_t = 0.0; pass_plan = {}; off1_score = null
 	plan_sel = 0; _plan_fix_sel(0)
 	last_stop = 0; stop_t = 99.0; stop_from = null; lock_hold_t = 99.0; lock_from = null
 	rival_lane_d = Track.lane_offset(core.entry_tell().lane, c.dir, disp.lane_width_m)
@@ -532,6 +559,7 @@ func _setup_corner() -> void:
 	scroller.transition_to_straight()
 	if first_corner:
 		rival_offset = rival_offset_target; back_t = 99.0
+		tgt_p = null; tgt_r = null; err_p = 0.0; err_r = 0.0
 	else:
 		_return_to_chase()
 	first_corner = false
@@ -539,7 +567,7 @@ func _setup_corner() -> void:
 ## Full reset for START / RESTART / NEW RACE: a fresh RaceCore (fresh MT19937 seeded from s) and every display-side race variable.
 func start_race(s: int) -> void:
 	core = RaceCore.new(); core.setup(cfg, s); mode = "RACE"
-	scroller = RoadScroller.new(RS); clock = 0.0; wheel_angle = 0.0; back_from = null; back_t = 99.0; pending_snap = false
+	scroller = RoadScroller.new(RS); clock = 0.0; wheel_angle = 0.0; back_from = null; back_t = 99.0; pending_snap = false; hold_stop = 0
 	leader_changed = false; rival_offset = 0.0; result_t = 0.0; fin.sel = 0; first_corner = true
 	_setup_corner()
 
@@ -579,8 +607,9 @@ func handle_key(k: int) -> void:
 	if core.phase == "FINISHED": _finish_key(k); return
 	if core.phase == "SELECT":
 		if k >= KEY_1 and k <= KEY_6: core.pick(k - KEY_1); _plan_fix_sel(0)   # legacy direct hand-index pick (hidden; kept for old scripts)
-		elif k == KEY_UP or (k == KEY_LEFT and core.picks.size() == 0): _plan_fix_sel(-1)
-		elif k == KEY_DOWN or (k == KEY_RIGHT and core.picks.size() == 0): _plan_fix_sel(1)
+		elif k == KEY_UP: _plan_fix_sel(-1)
+		elif k == KEY_DOWN: _plan_fix_sel(1)
+		elif (k == KEY_LEFT or k == KEY_RIGHT) and core.picks.size() == 0: _plan_lane_step(-1 if k == KEY_LEFT else 1)
 		elif k == KEY_BACKSPACE: core.unpick(); _plan_fix_sel(0)
 		elif k == KEY_ENTER or k == KEY_KP_ENTER:
 			if core.picks.size() >= 3: _do_lock()
@@ -593,9 +622,24 @@ func handle_key(k: int) -> void:
 	elif core.phase == "TIMING" and k == KEY_SPACE and qte_stopped == null and lock_hold_t >= float(SC.lock_hold_s):
 		qte_stopped = sin(TAU * qte_t / float(disp.qte.period_s))
 	elif core.phase == "RESULT" and (k == KEY_ENTER or k == KEY_KP_ENTER) and reveal >= 3:
-		core.next()
-		if core.phase != "FINISHED": _setup_corner()
-		else: _return_to_chase()
+		_continue()
+
+## after-turn pause ends (Enter, or the countdown runs out): next corner, or the finish
+func _continue() -> void:
+	core.next()
+	if core.phase != "FINISHED": _setup_corner()
+	else: _return_to_chase()
+
+## Entry lane with Left / Right (Austin 2026-11-11: "left and right don't scroll left and right when selecting an entry lane").
+## Moves to the next drawn lane in that on-screen direction: a left corner has IN on the left, a right corner has OUT on the left.
+## No wrap; lanes with none drawn are skipped.
+func _screen_lanes() -> Array: return ["D", "S", "A"] if String(core.corner().dir) == "L" else ["A", "S", "D"]
+func _plan_lane_step(dir: int) -> void:
+	var order := _screen_lanes(); var a := _plan_avail()
+	var j: int = order.find(PLAN_ORDER[plan_sel]) + dir
+	while j >= 0 and j < 3:
+		if int(a[order[j]]) > 0: plan_sel = PLAN_ORDER.find(order[j]); return
+		j += dir
 
 ## corner plate title: turn type + direction (frames: 'HAIRPIN R'; N90 label from display.json corner_cams / guide §13.3)
 func _corner_name(c: Dictionary) -> String:
@@ -635,14 +679,10 @@ func _plan_fix_sel(dir: int) -> void:
 		if n > 0 or dir != 0: plan_sel = (plan_sel + (dir if dir != 0 else 1) + 3) % 3
 		if int(a[PLAN_ORDER[plan_sel]]) > 0: return
 
-## END_TURN: swing back to the chase cam (§12.2 transition_to_straight). AUSTIN OVERRIDE (guide §13.2 step 9a): no swing_overtake;
-## cars hold their pre-corner spacing through the corner camera and snap to the visual-gap positions when the chase lock is reached.
+## END_TURN: swing back to the chase cam (§12.2 transition_to_straight). Passes are now shown during playback (Austin 2026-11-11
+## ~10 PM PT, replaces the hold-then-snap rule), so nothing snaps here.
 func _return_to_chase() -> void:
-	back_from = {"pos": cam_pos, "look": cam_look}; back_t = 0.0; pending_snap = true
-
-func _maybe_snap() -> void:
-	if pending_snap and back_t >= float(CC.transition_to_straight_s):
-		rival_offset = rival_offset_target; pending_snap = false
+	back_from = {"pos": cam_pos, "look": cam_look}; back_t = 0.0; pending_snap = false
 
 func _in_straight() -> bool: return core.phase == "SELECT" and _sel_stop() == 0  # Apex/Exit stops show the corner geometry (B.5b)
 
@@ -660,6 +700,7 @@ func _qte_score(pos: float) -> float:
 func _do_lock() -> void:
 	lock_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}; lock_hold_t = 0.0
 	core.lock(); phase_t = 0.0; scroller.transition_to_corner()  # §13.2/§14.2 transition_to_corner
+	off0 = rival_offset; off1_score = null; pass_plan = {}; _update_pass_target()
 	await _shot("%slock%d" % [shot_pre, core.corner_index])
 
 func _shot(name: String) -> void:
@@ -733,6 +774,7 @@ func _run_script() -> void:
 			"corners": core.history, "player_total": core.cum_p, "opponent_total": core.cum_o, "winner": core.winner(), "rng_draws": core.rng.draws,
 			"restart": null if ri == 0 else script_in.restart[ri - 1]})
 	var out = results[0] if results.size() == 1 else {"races": results}
+	print("MIN_SEP_OVERLAP %.3f m (lateral gap while within %.1f m along the road; 99 = never overlapped)" % [min_sep_overlap, float(PB.car_len_m)])
 	if shots_dir != "":
 		var tag: String = TAG
 		FileAccess.open(shots_dir.path_join("result_%s.json" % tag), FileAccess.WRITE).store_string(JSON.stringify(out, " ", false, true))
@@ -751,12 +793,29 @@ func _run_one_race(race: Dictionary, pre: String) -> void:
 				await _wait_game(func(): return phase_t >= 0.3 + i * SEQ_SELECT_DT)
 				await _shot("seq_select%d_%d" % [ci, i])
 		var pk: Array = inp.get("pick", [])
+		var dm: Dictionary = script_in.get("demo", {})
+		if not dm.is_empty() and pk.size() > 0:   # shots9 demo: Left / Right over the Entry lanes, ending on the scripted Entry stance
+			var keys: Array = dm.get("arrows%d" % ci, [])
+			var want: String = core.hand[int(pk[0])]
+			for key in keys:
+				var t0 := clock
+				await _wait_game(func(): return clock >= t0 + float(dm.get("key_gap_s", 0.6)))
+				handle_key(KEY_LEFT if key == "LEFT" else KEY_RIGHT)
+			while PLAN_ORDER[plan_sel] != want:
+				var t1 := clock
+				await _wait_game(func(): return clock >= t1 + float(dm.get("key_gap_s", 0.6)))
+				handle_key(KEY_LEFT if _screen_lanes().find(want) < _screen_lanes().find(PLAN_ORDER[plan_sel]) else KEY_RIGHT)
+			var t2 := clock
+			await _wait_game(func(): return clock >= t2 + 0.8)
 		for j in pk.size():
+			if not dm.is_empty() and j > 0:   # hold at the Apex / Exit stop so the road scroll shows
+				await _wait_game(func(): return stop_t >= float(SC.move_s) + float(dm.get("stop_hold_s", 1.5)))
 			if seqs and j > 0:   # B.5b camera stops: Apex / Exit pick shots once the camera has arrived (picks are the scripted hand indices, unchanged)
 				_plan_fix_sel(0)
 				await _wait_game(func(): return stop_t >= float(SC.move_s) + 0.1)
 				await _shot("plan_%s%d" % ["apex" if j == 1 else "exit", ci])
 			core.pick(int(pk[j]))
+			await get_tree().process_frame; await get_tree().process_frame   # let _process start the camera move (stop_t = 0) before timing on it
 			if seqs and j < 2 and j + 1 < pk.size():
 				for m in 3:   # camera-move frames between stops
 					await _wait_game(func(): return stop_t >= (m + 1) * float(SC.move_s) / 4.0)
@@ -774,9 +833,10 @@ func _run_one_race(race: Dictionary, pre: String) -> void:
 		await _wait_game(func(): return core.phase == "RESULT" and reveal >= 3 and result_t > 0.4)
 		await _shot("%sresult%d" % [pre, ci])
 		lc_last = leader_changed
-		core.next()
-		if core.phase != "FINISHED": _setup_corner()
-		else: _return_to_chase()
+		if bool(script_in.get("demo", {}).get("auto_continue", false)):   # let the after-turn countdown run out on its own
+			await _wait_game(func(): return core.phase == "FINISHED" or core.corner_index != ci)
+		else:
+			_continue()
 		if seqs and lc_last:
 			for i in 6:
 				await _wait_game(func(): return back_t >= i * 0.25)
@@ -793,8 +853,7 @@ func _process(dt: float) -> void:
 		if stp != last_stop:
 			stop_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}; stop_t = 0.0; last_stop = stp
 	if core.phase == "TIMING": lock_hold_t += dt
-	if not (core.phase == "SELECT" and _sel_stop() > 0):   # the straight keeps scrolling at the Entry stop; Apex/Exit stops are still frames of the corner
-		scroller.update(dt)
+	scroller.update(dt)   # infinite scroll at every stop (Austin 2026-11-11): Entry on the straight, Apex and Exit on the corner
 	var v: float = scroller.speed_ms()
 	if mode == "MENU": phase_t = 0.0  # backdrop: the straight scrolls, the selection timer never runs
 	if core.phase == "SELECT" and phase_t >= RaceCore.STRAIGHT_DURATION and script_in == null:
@@ -803,18 +862,33 @@ func _process(dt: float) -> void:
 		qte_t += dt
 		var travel: float = path.S + path.R * path.A + 10.0 - 8.0
 		s_player = 8.0 + travel * minf(1.0, qte_t / float(disp.playback_s)); v += travel / float(disp.playback_s)
+		_update_pass_target()
 		if qte_t >= float(disp.playback_s):
 			var score: float = script_timing if script_in != null else (C.PLAYER_QTE_MIN if qte_stopped == null else _qte_score(qte_stopped))
 			var before: float = core.lead()
 			core.submit_timing(score); reveal = 0; phase_t = 0.0; result_t = 0.0
 			var after: float = core.lead()
 			leader_changed = before != 0.0 and after != 0.0 and signf(before) != signf(after)
-			rival_offset_target = Track.rival_draw_offset(after, disp.visual_gap)  # applied at the chase lock (Austin override)
+			rival_offset_target = Track.rival_draw_offset(after, disp.visual_gap)  # = off1: the pass already played out (sim lead, same score)
+			cont_t = 0.0
+	_ease_gap(dt)
 	if core.phase == "RESULT":
 		result_t += dt
 		reveal = mini(3, int(floor(phase_t / 0.6)) + 1)
+		if reveal >= 3: cont_t += dt
+		var auto: bool = script_in == null or bool(script_in.get("demo", {}).get("auto_continue", false))
+		if auto and mode == "RACE" and cont_t >= float(PB.continue_s): _continue()
 	wheel_angle += minf(float(RS.wheel_spin_cap_rad_s), v / 0.31) * dt
+	_step_lanes(dt)
 	_render_hud(); _update_scene()
+	if gif_dir != "" and clock >= gif_next:
+		gif_next += gif_dt; _gif_frame()
+
+func _gif_frame() -> void:
+	busy = true
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png(gif_dir.path_join("f%05d.png" % gif_n)); gif_n += 1
+	busy = false
 
 ## fixed chase camera (B.5b frames: build_lsc.py:245, see display.json camera)
 func _chase_pose(pp: Dictionary) -> Array:
@@ -838,12 +912,14 @@ func _stop_pose(stop: int) -> Array:
 	return [Vector3(cp.x, q.cam_h, cp.z), Vector3(tp.x, q.tgt_y, tp.z), float(q.fov)]
 
 ## camera rig: chase (BCH) / authored corner Path3D (BCL/BCR, §13.3) / swing back to chase. No swing_overtake (Austin override).
-func _update_camera(pp: Dictionary) -> void:
-	var ch := _chase_pose(pp)
+func _update_camera(pc: Dictionary, pp: Dictionary) -> void:
+	var ch := _chase_pose(pc)   # B.5b fixed chase camera on the road centre line (the car moves across its lanes in front of it)
 	var c: Dictionary = core.corner()
 	var cc = CC.get(c.corner)
 	cam_fov = float(disp.camera.fov)
 	var stp := _sel_stop()
+	if hold_stop > 0 and core.phase == "TIMING":   # hook for the per-phase QTE: hold a B.5b stop pose while the road scrolls
+		var hp := _stop_pose(hold_stop); cam_pos = hp[0]; cam_look = hp[1]; cam_fov = hp[2]; rig = "STA"; return
 	if core.phase == "SELECT" and (stp > 0 or (stop_from != null and stop_t < float(SC.move_s))):
 		var tgt: Array = _stop_pose(stp) if stp > 0 else [ch[0], ch[1], float(disp.camera.fov)]
 		rig = ["BCH", "STA", "STX"][stp]
@@ -867,7 +943,7 @@ func _update_camera(pp: Dictionary) -> void:
 			var k := Track.smooth(back_t / float(CC.transition_to_straight_s))
 			cam_pos = (back_from.pos as Vector3).lerp(ch[0], k); cam_look = (back_from.look as Vector3).lerp(ch[1], k)
 		else:
-			cam_pos = ch[0]; cam_look = ch[1]; _maybe_snap()
+			cam_pos = ch[0]; cam_look = ch[1]
 		return
 	rig = "BCL" if c.dir == "L" else "BCR"
 	var u: float = qte_t / float(disp.playback_s) if core.phase == "TIMING" else 1.0
@@ -904,14 +980,15 @@ func _update_scene() -> void:
 	for m in scroll_mats:
 		if m.has_meta("scrolls"): m.set_shader_parameter("scroll_m", scroller.scroll_m())
 	_stream_district(straight_d if st else corner_d, scroller.scroll_m())
-	var at_stop: bool = core.phase == "SELECT" and mode == "RACE" and _sel_stop() > 0
-	for it in corner_d.items:   # keep props out of the stop lens (build_lsc.py:254 drops cedars within 5.5 m of a camera)
+	for it in corner_d.items:   # keep props out of every camera lens (build_lsc.py:254 drops cedars within 5.5 m of a camera)
 		var o: Node3D = it.obj
-		o.visible = not (at_stop and Vector2(o.position.x - cam_pos.x, o.position.z - cam_pos.z).length() < 5.5)
+		o.visible = Vector2(o.position.x - cam_pos.x, o.position.z - cam_pos.z).length() >= 5.5
 	var pth = straight_path if st else path
-	var pp := _place(player_car, pth, s_player, 0.0)
-	_place(rival_car, pth, s_player + rival_offset, rival_lane_d)
-	_update_camera(pp)
+	var lp := _pass_lanes()
+	var pp := _place(player_car, pth, s_player, lp.x)
+	_place(rival_car, pth, s_player + rival_offset, lp.y)
+	if absf(rival_offset) < float(PB.car_len_m) and player_car.visible: min_sep_overlap = minf(min_sep_overlap, absf(lp.x - lp.y))
+	_update_camera(pth.point(s_player, 0.0), pp)
 	cam.position = cam_pos
 	cam.look_at(cam_look)
 	cam.fov = cam_fov; glow_cam.fov = cam_fov
@@ -966,5 +1043,125 @@ func _render_hud() -> void:
 		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "lead": core.lead(), "gap": core.gap(),
 		"left": left, "total": RaceCore.STRAIGHT_DURATION, "slots": slots, "hand": core.hand, "used": core.picks,
 		"needle": qte_stopped if qte_stopped != null else sin(TAU * qte_t / float(disp.qte.period_s)), "line": pline, "rline": rline, "outs": outs, "plate": plate, "locked_hold": core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s), "mirror": _mirror_on(), "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
-		"result": r, "reveal": reveal, "leader_changed": leader_changed, "winner": core.winner() if core.phase == "FINISHED" else "", "cum_p": core.cum_p, "cum_o": core.cum_o,
+		"result": r, "reveal": reveal, "cont_left": maxf(0.0, float(PB.continue_s) - cont_t), "leader_changed": leader_changed, "winner": core.winner() if core.phase == "FINISHED" else "", "cum_p": core.cum_p, "cum_o": core.cum_o,
 		"last_corner": core.corner_index + 1 >= cfg.corners.size(), "fin": fin if core.phase == "FINISHED" else null})
+
+# ── shots9: continuous course, lines, passes (display only; lead / gap always from the sim) ──
+## straight S, corner 1, join, corner 2, exit. The join is 10 + (S - 8) m so the car ends corner 1's playback exactly where
+## corner 2's selection starts (s = 8 on corner 2's scroll straight): one continuous road, no teleport.
+func _build_course() -> void:
+	var S: float = disp.road.straight_m
+	course = Course.new(); course.add_straight(S)
+	views = []; straights = []
+	var n: int = cfg.corners.size()
+	for i in n:
+		var c: Dictionary = cfg.corners[i]
+		var g: Dictionary = disp.road.by_code.get(String(c.corner), {"corner_radius_m": 20.0, "corner_angle_deg": 90.0})
+		var R: float = g.corner_radius_m; var A: float = deg_to_rad(float(g.corner_angle_deg)); var sg := 1.0 if String(c.dir) == "L" else -1.0
+		var anchor: float = course.length - S
+		var E: float = float(disp.road.exit_m) if i == n - 1 else 10.0 + S - 8.0
+		course.add_arc(R, A, sg).add_straight(E)
+		views.append(Course.View.new(course, anchor, S, R, A, E, sg))
+	for i in n:
+		var a: Dictionary = course.at(views[i].off)
+		straights.append(Course.new(a.x, a.z, a.tx, a.tz).add_straight(100000.0))
+
+func _lane_d(stance: String) -> float:
+	return Track.lane_offset({"A": "outside", "S": "center", "D": "inside"}[stance], String(core.corner().dir), disp.lane_width_m)
+
+## the car drives its line: Entry lane up to turn-in, Apex lane at mid-arc, Exit lane past the arc (lane/stance = the Entry rule,
+## borrowed for Apex / Exit as in the B.5b frames' labels). Blend distances are PLACEHOLDERS (display.json playback_flow).
+func _line_d(line: String, s: float) -> float:
+	if line.length() < 3: return 0.0
+	var arc: float = path.R * path.A; var sa: float = path.S + arc * 0.5
+	var b0: float = path.S - float(PB.blend_before_m); var b1: float = path.S + arc + float(PB.blend_after_m)
+	var e := _lane_d(line[0]); var a := _lane_d(line[1]); var x := _lane_d(line[2])
+	if s <= b0: return e
+	if s <= sa: return lerpf(e, a, Track.smooth((s - b0) / (sa - b0)))
+	if s <= b1: return lerpf(a, x, Track.smooth((s - sa) / (b1 - sa)))
+	return x
+
+func _playing() -> bool: return core.phase == "TIMING" and lock_hold_t >= float(SC.lock_hold_s)
+
+## lateral targets per phase; a target that jumps (new highlight, next corner) is eased out, a line followed smoothly is exact
+func _step_lanes(dt: float) -> void:
+	var tp = tgt_p; var tr = tgt_r
+	if mode == "RACE" and core.phase == "SELECT":
+		tp = _lane_d(core.hand[core.picks[0]] if core.picks.size() > 0 else PLAN_ORDER[plan_sel])
+		tr = _lane_d(core.line[0])
+	elif core.phase == "TIMING" and not _playing():
+		tp = _lane_d(core.player_line()[0]); tr = _lane_d(core.line[0])
+	elif core.phase == "TIMING" or core.phase == "RESULT":
+		var pl: String = core.player_line(); var rl: String = core.line
+		tp = _line_d(pl, s_player); tr = _line_d(rl, s_player + rival_offset)
+	if tp == null: tp = 0.0
+	if tr == null: tr = 0.0
+	var k := exp(-dt / float(PB.lane_ease_s))
+	if tgt_p != null and absf(float(tp) - float(tgt_p)) > 1.2: err_p += float(tgt_p) - float(tp)
+	if tgt_r != null and absf(float(tr) - float(tgt_r)) > 1.2: err_r += float(tgt_r) - float(tr)
+	err_p *= k; err_r *= k; tgt_p = tp; tgt_r = tr
+	lat_p = float(tp) + err_p; lat_r = float(tr) + err_r
+
+## what the lead will be once this playback resolves: the same Combat.resolve_turn the core calls in submit_timing (pure, no RNG)
+func _preview_lead(score: float) -> float:
+	score = clampf(score, C.PLAYER_QTE_MIN, C.PLAYER_QTE_MAX)
+	var pc := []; var oc := []
+	for i in core.picks: pc.append(core.hand[i])
+	for ch in core.line: oc.append(ch)
+	var res := Combat.resolve_turn(pc, oc, core.player, core.opponent, score / C.QTE_NORMALIZER, C.OPPONENT_QTE, int(cfg.max_turns))
+	var cp: float = core.cum_p + res.player_progress; var co: float = core.cum_o + res.opponent_progress
+	var t := cp + co
+	return 0.0 if t == 0.0 else (cp - co) / t
+
+func _preview_score() -> float:
+	if script_in != null: return script_timing
+	return C.PLAYER_QTE_MIN if qte_stopped == null else _qte_score(qte_stopped)
+
+## pass target + plan: off1 = the visual gap the sim's lead will give; when the drawn order flips, the passer takes an open lane
+## while the cars overlap if their lines would share a lane there (Austin: shared exit lane -> pass in an open lane, then settle)
+func _update_pass_target() -> void:
+	if core.phase != "TIMING": return
+	var sc := _preview_score()
+	if off1_score != null and float(off1_score) == sc: return
+	off1_score = sc; off1 = Track.rival_draw_offset(_preview_lead(sc), disp.visual_gap); pass_plan = {}
+	if signf(off0) == signf(off1): return
+	var pl: String = core.player_line(); var rl: String = core.line
+	var travel: float = path.S + path.R * path.A + 10.0 - 8.0
+	var others := []; var mine := []; var conflict := false; var passer := "P" if off1 < off0 else "R"
+	for i in 81:
+		var u := float(PB.pass_u0) + (float(PB.pass_u1) - float(PB.pass_u0)) * i / 80.0
+		var o := lerpf(off0, off1, Track.smooth((u - float(PB.pass_u0)) / (float(PB.pass_u1) - float(PB.pass_u0))))
+		if absf(o) >= float(PB.overlap_clear_m): continue
+		var sp := 8.0 + travel * u
+		var dp := _line_d(pl, sp); var dr := _line_d(rl, sp + o)
+		if absf(dp - dr) < float(PB.min_sep_m): conflict = true
+		others.append(dr if passer == "P" else dp); mine.append(dp if passer == "P" else dr)
+	if not conflict: return
+	var w: float = disp.lane_width_m; var best := 0.0; var best_v := -1.0
+	var avg := 0.0
+	for m in mine: avg += float(m) / maxf(1.0, mine.size())
+	for L in [-w, 0.0, w]:
+		var mn := 99.0
+		for ot in others: mn = minf(mn, absf(L - float(ot)))
+		var v := mn - 0.01 * absf(L - avg)   # farthest from the other car; ties -> nearest to the passer's own line
+		if v > best_v: best_v = v; best = L
+	pass_plan = {"passer": passer, "open": best}
+
+## longitudinal gap: lerp from the pre-turn gap to the post-turn gap across the playback window, eased (no snaps)
+func _ease_gap(dt: float) -> void:
+	var want := rival_offset_target
+	if _playing():
+		var u := minf(1.0, qte_t / float(disp.playback_s))
+		want = lerpf(off0, off1, Track.smooth((u - float(PB.pass_u0)) / (float(PB.pass_u1) - float(PB.pass_u0))))
+	elif core.phase == "TIMING": want = off0
+	rival_offset += (want - rival_offset) * (1.0 - exp(-dt / float(PB.gap_ease_s)))
+
+## lateral positions with the pass offset: the passer moves to the open lane while the cars overlap, then back to its line
+func _pass_lanes() -> Vector2:
+	var dp := lat_p; var dr := lat_r
+	if not pass_plan.is_empty() and (core.phase == "TIMING" or core.phase == "RESULT"):
+		var a := absf(rival_offset)
+		var w := 1.0 - Track.smooth((a - float(PB.overlap_full_m)) / (float(PB.overlap_clear_m) - float(PB.overlap_full_m)))
+		if pass_plan.passer == "P": dp = lerpf(dp, float(pass_plan.open), w)
+		else: dr = lerpf(dr, float(pass_plan.open), w)
+	return Vector2(dp, dr)

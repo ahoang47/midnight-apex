@@ -12,7 +12,7 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
 ## Layout
 - `spec/gen_constants.py` imports the pinned `equations.py` and writes `godot/scripts/sim_constants.gd` and
   `threejs/src/core/simConstants.js`. No value is typed by hand. Each engine self-checks the IEEE-754 bits of every float.
-- `spec/race_config.json`: corners (Touge HP L, Street N90 R) and stats by constant name (Balanced builds from
+- `spec/race_config.json`: corners (Touge HP L, Touge N90 R; corner 2 was Street N90 R until shots9 — one continuous Touge road, Austin 2026-11-11) and stats by constant name (Balanced builds from
   `simulate_win_rate`, opp_total = `SABINE_BUDGET`, r = `LADDER_R[6]` crew boss = 1.05, so 105/105/105 vs 100/100/100).
   Base stats only: no mods, parts or loadouts.
 - `spec/display.json`: DISPLAY-ONLY placeholders (visual-gap cap, road, camera, mirror, QTE needle).
@@ -39,8 +39,8 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
 - Keys:
   - Main menu: Up/Down select, Enter confirm; on SEED, 0-9 type and Backspace delete (empty = random seed). QUIT is Godot desktop only
   - Finish screen: 1 restart same seed, 2 new race (random seed), 3 main menu (or Left/Right + Enter)
-  - Plan the Line (selection, at the B.5b camera stops): Up/Down choose the option for the current phase (Left/Right also work on ENTRY), Enter sets it and moves to
-    the next phase (Enter on EXIT locks the line), Backspace goes back one phase. Enter on the result = next corner / finish.
+  - Plan the Line (selection, at the B.5b camera stops): Up/Down choose the option for the current phase (on ENTRY, Left/Right move the lane the way the road shows it: a left corner has IN on the left, a right corner OUT; no wrap), Enter sets it and moves to
+    the next phase (Enter on EXIT locks the line), Backspace goes back one phase. After each turn: 'Press Enter to continue' with a countdown that auto-continues (playback_flow.continue_s, PLACEHOLDER).
     (Hidden legacy: 1-6 still pick a hand index directly.)
   - Space stops the timing needle
   - F9 dumps a TC1 token (clipboard + console / user://last_state.tc1), F10 loads one (clipboard in Godot, prompt in the browser)
@@ -56,8 +56,9 @@ Stance letters in `line`, `hand` and `player_line`: `A` = Attack, `S` = **Neutra
   Metres-per-UV (road_uv_length_m 500 → 25 m/s), tiles, lamp spacing, wheel cap, bob are PLACEHOLDERS. Lamps stream past; wheels spin; identical body bob.
 - Corner: same scroller on the CornerRoad. Camera: §12.2 side-offset transition, then an authored path per turn type (Godot Path3D/PathFollow3D,
   Three.js CatmullRomCurve3): HP tight inside line, N90 hard cut to the apex. Rig modes BCH / BCL / BCR shown in the HUD. Keyframes are PLACEHOLDERS (display.json corner_cams).
-- Overtakes: AUSTIN OVERRIDE of guide §13.2 step 9a — no swing_overtake(). Cars hold position through the corner camera and snap to the
-  new visual-gap positions when the camera reaches the rear chase lock (END_TURN swing back, transition_to_straight_s).
+- Overtakes (since shots9, Austin 2026-11-11 ~10 PM PT, replaces the hold-then-snap rule): "if a pass occurs, it is visually shown during the
+  dynamic play... if the exit lane is the same for both cars and one goes for a pass, then the passing car should go to an open lane for the
+  pass animation, and then move into the position it needs to play for the next turn." See the shots9 section below.
 - Frame sequences: scripted runs write seq_select*/seq_corner*/seq_snap* PNGs + frames_640.json; `python3 tools/frame_compare.py out/shots3` makes GIFs and numbers.
 - Live check: `URL=... TAG=... node threejs/headless/live_check.mjs`.
 
@@ -119,3 +120,32 @@ Sources: `design/art/art_direction.md` at **ab1c4a1** (`ab1c4a12f69b23ccd74cd898
   and the parity harness. The playback camera is still the guide §13.3 authored path.
 - **Touge dressing** now comes from the approved B.5b Touge frames (road paint, guardrail, cedars, ridge, lamps, fog 9-78 m); see the report.
 - Shots: `out/shots5/` on the box prototype (GIFs `corner1_touge_HP_full.gif`, `corner2_street_N90_full.gif`). This copy keeps only `out/shots5/composites/` (`vs_line_select_cam.png`, `vs_line_vs_line.png`, `before_after_phase4.png`, palette-quantised to fit the size budget); `python3 tools/phase5_composites.py` needs the full frame sets.
+
+## shots9 (display/flow only, scoring/RNG/pin unchanged): Austin's playtest, 2026-11-11 ~9:58-10:22 PM PT
+- **After-turn pause:** once the RESULT row fills in, 'Press Enter to continue  N' counts down and auto-continues ("That should have a time limit").
+  No pause was added to selection or playback (B.5a). Length `playback_flow.continue_s` = 6 s, PLACEHOLDER awaiting Desmond/Austin.
+- **Entry lane with Left/Right:** on-screen direction (left corner: IN MID OUT left to right; right corner: OUT MID IN). The bottom-left ENTRY strip
+  lists the lanes in that same on-screen order, so it is mirrored on left corners (post_v5.py:98 draws OUT MID IN). The player car eases into
+  the highlighted lane while you choose.
+- **Cars drive their lines:** both cars go Entry lane -> Apex lane (mid-arc) -> Exit lane, smoothly (`playback_flow.blend_*`, PLACEHOLDER).
+  Apex/Exit lanes use the Entry lane rule (A outside, S centre, D inside), as the B.5b frames' labels do; no Apex/Exit lane mapping is approved.
+  The chase camera stays on the road centre line (B.5b framing), so the car visibly moves across lanes.
+- **Infinite scroll at every stop:** the road also scrolls at the Apex and Exit stops (Phase 5 kept it to Entry only). `hold_stop` in main.gd is a
+  hook to hold the Apex stop pose with the road scrolling while a QTE plays later (not used by the flow yet).
+- **Passes during playback:** the visual gap moves from the pre-turn value to the post-turn value across `pass_u0..pass_u1` of the playback
+  (lead/gap still from the sim: `_preview_lead` calls the same pure `Combat.resolve_turn` the core uses, for the score in play). If the drawn order flips
+  and the lines share a lane while the cars overlap, the passer takes the open lane, overtakes, and settles back onto its line. No-clip check: the
+  scripted run prints `MIN_SEP_OVERLAP` (lateral gap while the cars are within `car_len_m` along the road).
+- **One continuous Touge road:** straight 45, corner 1 (HP L), join 47 (= 10 + 45 - 8, so corner 1's playback ends exactly where corner 2's selection
+  starts), corner 2 (N90 R), exit 30 (`scripts/course.gd`). Radius/angle stay the `road.by_code` PLACEHOLDERS. Corner 2 now uses the sim's Touge N90
+  line set (`LINE_SET_C.touge.N90` DSA/DDS/DSS instead of Street's SSA/SDS/SSS), so the rival's corner-2 lines differ from before for the same seed.
+  The Touge dressing is one-sided (cedars/lamps on the right of travel), so on corner 2 (a right turn) they sit on its inside, unlike the B.5b frames.
+- **HUD on a 2x pixel grid (Austin 22:21: "now the text is really sharp and uncharacteristic of the vibe"; he chose "Draw HUD text pixel-hard on a
+  2x grid (1280x960)"):** the HUD (640x480 design units) is drawn into a 1280x960 SubViewport at x2. Text is rasterised at size x2, 1-bit (no AA,
+  no subpixel), with a 2 px shadow, and the 6x9 bitmap font and panels go up x2 nearest. The project base is 1280x960 with the game at x2. When
+  the window fits 1280x960 or more, everything scales by a whole number of that (HUD nearest, world 640x480 at twice that). Below 1280x960 the
+  scale is fractional and the HUD layer is shown linear. **Departs from art_direction.md:115/:141/:242 (integer nearest upscale of one 640x480 frame,
+  viewport stretch) and the mockups' 1-bit 640x480 text (post_lsc.py:34) for the UI only, at Austin's request; flag for Arthur.**
+- Placeholders: all of display.json `playback_flow` (continue_s 6, lane_ease_s 0.35, blend 6/8 m, pass window 0.2-0.9, overlap 5.5/9 m, min_sep 2.6 m).
+- Demo input `spec/inputs/shots9_pass.json` (seed 3): both corners share the Exit lane and the drawn order flips in both. Shots in `out/shots9/`.
+

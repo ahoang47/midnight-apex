@@ -1,0 +1,18 @@
+== seed20261113_idx  Godot vs sim
+races=1 clash_values=12 max_abs_diff=0.000e+00 tol=1e-12 -> PASS
+== seed20261114_idx  Godot vs sim
+races=1 clash_values=12 max_abs_diff=0.000e+00 tol=1e-12 -> PASS
+== seed42_timeout  Godot vs sim
+races=1 clash_values=12 max_abs_diff=0.000e+00 tol=1e-12 -> PASS
+== seed21273_overtake  Godot vs sim
+races=1 clash_values=12 max_abs_diff=0.000e+00 tol=1e-12 -> PASS
+== fuzz300  Godot vs sim
+races=300 clash_values=3600 max_abs_diff=0.000e+00 tol=1e-12 -> PASS
+== dump after corner 1 result, load in a fresh process, finish
+godot_resumed: races=1 clash_values=12 max_abs_diff=0.000e+00 tol=1e-12 -> PASS
+== restart test (game loop)
+restart Godot vs sim: races=4 clash_values=48 max_abs_diff=0.000e+00 tol=1e-12 -> PASS
+== Plan the Line key test: PLAN KEY TEST PASS: 200 seeds, 166 locked by keys; camera stop == picks every step; B.5a panel results == sim outcomes
+token:
+TC1:212eaab:eyJzY2hlbWEiOiJUQzEiLCJjb21taXQiOiIyMTJlYWFiIiwic2VlZCI6MjAyNjExMTMsInJuZ19kcmF3cyI6NywiY29ybmVyX2luZGV4IjowLCJwaGFzZSI6IlJFU1VMVCIsImxpbmUiOiJEU0Ei ...
+exit=0

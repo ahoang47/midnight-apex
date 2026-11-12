@@ -9,10 +9,26 @@
     "ladder_rung": 6
   },
   "corners": [
-    {"district": "touge",  "corner": "HP",  "dir": "L", "_doc": "first corner of tracks_v1 T1_Akina_Switchbacks"},
-    {"district": "street", "corner": "N90", "dir": "R", "_doc": "first corner of tracks_v1 S1_Shibuya_Grid"}
+    {
+      "district": "touge",
+      "corner": "HP",
+      "dir": "L",
+      "_doc": "first corner of tracks_v1 T1_Akina_Switchbacks"
+    },
+    {
+      "district": "touge",
+      "corner": "N90",
+      "dir": "R",
+      "_doc": "Austin 2026-11-11 ~10 PM PT: both corners in one district on a continuous 2-turn track (he picked Touge). N90 is corner 7 of tracks_v1 T1_Akina_Switchbacks; its Touge line set (LINE_SET_C touge N90) replaces Street N90's for the rival. Was street N90 R."
+    }
   ],
   "_dir_doc": "corner direction is display-only (lane tell side). LINE_SET_C / tracks_v1 carry no L/R; PLACEHOLDER.",
-  "player": {"name": "Player", "car": "mx5"},
-  "opponent": {"name": "Crew Boss", "car": "s2000"}
+  "player": {
+    "name": "Player",
+    "car": "mx5"
+  },
+  "opponent": {
+    "name": "Crew Boss",
+    "car": "s2000"
+  }
 }

@@ -22,7 +22,8 @@
     "corner_radius_m": 10.0,
     "corner_angle_deg": 90.0
    }
-  }
+  },
+  "_course": "shots9: the corners join into ONE continuous Touge road (straight 45, corner 1, join 47 = 10 + 45 - 8, corner 2, exit 30); radius/angle still the by_code PLACEHOLDERS"
  },
  "playback_s": 3.6,
  "qte": {
@@ -136,7 +137,7 @@
     }
    ]
   },
-  "overtake_rule": "AUSTIN OVERRIDE of guide 13.2 step 9a: no swing_overtake animation; on a leader change the cars hold position through the corner camera and snap to the new visual-gap positions when the camera reaches the rear chase lock"
+  "overtake_rule": "AUSTIN 2026-11-11 ~10 PM PT (replaces the hold-then-snap override): 'if a pass occurs, it is visually shown during the dynamic play... if the exit lane is the same for both cars and one goes for a pass, then the passing car should go to an open lane for the pass animation, and then move into the position it needs to play for the next turn.' Gap/lead still from the sim; see playback_flow."
  },
  "render": {
   "internal_w": 640,
@@ -407,5 +408,26 @@
   "_lock_hold_s": "PLACEHOLDER: LINE LOCKED hold on the Entry chase camera before playback runs (B.5b 'the camera returns to Entry, and playback runs'; frame 4 shows the banner; no duration given)",
   "hide_cars_at_stops": true,
   "_hide": "B.5b:258-259 'without the rival'; frames 2_apex_pick / 3_exit_pick show no cars at all, so the player car is hidden too"
+ },
+ "playback_flow": {
+  "_doc": "shots9 (Austin playtest 2026-11-11 ~9:58-10:01 PM PT). Display/flow only, never read by the sim. EVERY NUMBER HERE IS A PLACEHOLDER awaiting Desmond/Austin.",
+  "continue_s": 6.0,
+  "_continue_s": "PLACEHOLDER: after-turn pause ('Press Enter to continue', visible countdown, auto-continues). Starts once the RESULT row has filled in. Austin: 'That should have a time limit.' No pause in line selection or playback (B.5a).",
+  "lane_ease_s": 0.35,
+  "_lane_ease_s": "PLACEHOLDER: time constant for lane changes that are not part of a line (Entry highlight, next corner's entry lane)",
+  "blend_before_m": 6.0,
+  "blend_after_m": 8.0,
+  "_blend": "PLACEHOLDER: the car leaves its Entry lane this many m before turn-in, reaches its Apex lane at mid-arc, and its Exit lane this many m past the arc",
+  "pass_u0": 0.2,
+  "pass_u1": 0.9,
+  "_pass_u": "PLACEHOLDER: part of the playback (0..1) over which the visual gap moves from the pre-turn to the post-turn value (the pass)",
+  "gap_ease_s": 0.12,
+  "overlap_full_m": 5.5,
+  "overlap_clear_m": 9.0,
+  "_overlap": "PLACEHOLDER: the passer is fully in the open lane while the cars are within 5.5 m along the road, back on its line beyond 9 m (= visual_gap.min_spacing_m)",
+  "min_sep_m": 2.6,
+  "_min_sep_m": "PLACEHOLDER: lines closer than this while overlapping count as a shared lane",
+  "car_len_m": 4.6,
+  "_car_len_m": "no-clip check: lateral gap is measured while the cars are within this many m along the road"
  }
 }

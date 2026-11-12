@@ -1,0 +1,3 @@
+{"seed": 3, "corners": [{"pick": [0, 4, 5], "timing": 3}, {"pick": [0, 1, 3], "timing": 3}],
+ "demo": {"arrows0": ["RIGHT", "LEFT", "LEFT", "RIGHT"], "arrows1": ["LEFT", "RIGHT", "RIGHT"], "key_gap_s": 0.6, "stop_hold_s": 1.5, "auto_continue": true},
+ "_doc": "shots9 demo: corner 1 SAA vs DSA and corner 2 AAS vs DDS share their Exit lane, and the drawn order flips in both corners (player passes in corner 1, rival re-passes in corner 2). Arrow keys are display-only; picks are the scripted hand indices."}
