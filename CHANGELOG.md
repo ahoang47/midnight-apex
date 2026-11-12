@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-11-12 — Arthur [art]: art_direction uses POW/EN/HAN for choices; IN/MID/OUT is visual only
+
+- **Ask:** Austin in Exec Team (2026-11-12): backend and logic always refer to the stats (POW / EN / HAN). IN / MID / OUT is a visual reference only. Canon follow-up: `design/01-system-overview.md` 4cdd1bc.
+- `design/art/art_direction.md`: B.4, B.5, B.5b and B.5d now say POW / EN / HAN for a choice, a stance, a colour or playback logic. OUT / MID / IN is used only for road lane markers, lane-chip text (**OUT · POW**, **MID · HAN**, **IN · EN**) and where the chevrons sit. Example in B.5d: the POW segment is green and is drawn on the OUT lane.
+- The B.5d placeholder bend mapping is unchanged in meaning (still unapproved): POW holds the outer line (OUT lane), EN cuts to the inner line by 2/3 of a lane (IN lane), HAN runs mid-lane (MID lane).
+- `unapproved/arthur/mockups/README.md` updated to match. Older mockups still not re-rendered; `line_preview/` left alone.
+
+---
+
 ## 2026-11-12 — Nathaniel [story]: corner lines refer to stats; IN/MID/OUT is visual only
 - **Ask:** Austin in Exec Team (10:22 AM PT): "I think all backend should refer to stats. In/mid/out only visual reference."
 - `story/corner_lines.md`: every line now reads Entry-Apex-Exit by stat (e.g. Touge hairpin EN-HAN-POW), replacing the IN/MID/OUT form from 8911879. Header notes IN/MID/OUT is only the on-screen lane (OUT = POW, MID = HAN, IN = EN). No line changed.

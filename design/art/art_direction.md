@@ -227,8 +227,7 @@ were lost with the box and are **re-proposed** here.
 - **Overworld:** angled semi-isometric (Racing Lagoon / PS1 Final Fantasy). Perspective with a long lens vs true
   orthographic is open (Q8). This overworld note is not the race camera.
 - **Race (locked 2026-11-06; the rest of Part B is still proposal):** fixed rear third-person camera on the player.
-  The player locks the 3-card line before corner playback. The rival's lane is Entry, relative to the next corner:
-  **OUT (POW)**, **MID (HAN)**, **IN (EN)**. OUT on a left turn and OUT on a right turn are the same POW line.
+  The player locks the 3-card line before corner playback. The rival's Entry pick is a stat (**POW**, **HAN** or **EN**), relative to the next corner. On screen that pick is drawn in the matching lane: POW on OUT, HAN on MID, EN on IN. POW on a left turn and POW on a right turn are the same choice, even though the OUT lane sits on opposite sides of the road.
   Entry can bluff by improper placement. Apex and Exit are
   inferred, not drawn as tells. Shared Touge, Wangan, and Street tendencies are the intended inference; the precise
   mapping is still TBD, and the older Aggressive, Defensive, and Precise rows are not that map. When the player is
@@ -248,6 +247,7 @@ were lost with the box and are **re-proposed** here.
 ### B.5 Characters, portraits, UI [PROPOSAL]
 - Characters never appear in-world. JoJo-style 2D portraits/overlays use the same low-res, limited-palette treatment
   (palette size open, Q7). Whether painted silhouettes behind shop windows count as "characters in-world" is open (Q5).
+- **Naming (Austin, 2026-11-12):** choices, stances, colours and playback logic are always **POW / EN / HAN**. **OUT / MID / IN** is visual only: road lane markers, lane-chip text, and where the chevrons sit physically. Example: the POW segment is green and is drawn on the OUT lane. POW on a left turn and POW on a right turn are the same choice.
 - Faces follow `face_{scowling|grinning|focused}_{pow|en|han}.png` and `tell_*` overlays. Existing Appendix E filenames still use the suffixes `_atk|_def|_neu`, which map to **POW / EN / HAN**; player-facing labels use the new names.
 - **POW / EN / HAN** colours should be reserved for UI and not used for world neon
   *(proposal)*. **POW** is `#2CB84A` (green), **EN** is `#E8282C` (red), **HAN** is `#F0C828` (yellow, dark text). Austin swapped the green and red on 2026-11-11 (under the old Attack/Defend names they had been POW `#E8282C` and EN `#2CB84A`). The third stance is **HAN** (Q6, resolved 2026-11-11 as the third stance, renamed HAN on 2026-11-12).
@@ -260,8 +260,8 @@ Apex card. **Exit:** the camera moves to the exit and the player picks their Exi
 corner is shown **without the rival**: those stops show geometry only. The player gleans the rival's Apex/Exit from its
 Entry, district tendencies, corner geometry and the lead/gap, never from an on-screen tell. Once all three are set the line
 locks, the camera returns to Entry, and playback runs with the B.5a line-vs-line panel. Corner plate (top right)
-marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (lane labels on the Apex and
-Exit picks there are placeholders; write them **OUT · POW**, **MID · HAN**, **IN · EN**).
+marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (on-screen lane chips and road markers on the Apex and
+Exit picks there are placeholders; write them **OUT · POW**, **MID · HAN**, **IN · EN**. The pick itself is the stat).
 
 ### B.5c Crunchy 3D, sharp UI [MUST, APPROVED 2026-11-11]
 The 3D scene is rendered at **native 640×480 with no anti-aliasing**, then **RGB555 + 4×4 Bayer** is applied, then a
@@ -269,18 +269,18 @@ The 3D scene is rendered at **native 640×480 with no anti-aliasing**, then **RG
 full 1280×960 output resolution, **pixel-hard**: no font or edge anti-aliasing, a hard 2 px drop shadow, bold chunky late-90s type and plates (Austin 2026-11-11, 10:21 PM to Gordon and 11:12 PM to Arthur). Larger screens scale the whole frame by whole numbers. Texture filtering inside the 3D scene follows Q4 (smooth) and is not affected.
 Review images and contact sheets are judged from full-size frames; downscaled sheets are for layout only.
 
-### B.5d Line preview during line selection [APPROVED 2026-11-12, Austin]
+### B.5d Line preview during selection [APPROVED 2026-11-12, Austin]
 While the player is choosing (B.5b camera stops), draw a racing-line preview on the road showing the path their choices
-make. The line is built **phase by phase and chains**: the Entry segment starts from the chosen Entry lane; the Apex
-segment **starts where the Entry segment ends** and its path changes with the Apex line being hovered; the Exit
-segment starts where the Apex segment ends and follows the Exit line. Changing an earlier pick redraws every later
-segment. Confirmed segments stay solid, and the hovered segment updates live as the player scrolls line choices. Visual
+make. The line is built **phase by phase and chains**: the Entry segment starts from the chosen Entry stat and is drawn on that stat's lane; the Apex
+segment **starts where the Entry segment ends** and its path changes with the Apex stat being hovered; the Exit
+segment starts where the Apex segment ends and follows the Exit stat. Changing an earlier pick redraws every later
+segment. Confirmed segments stay solid, and the hovered segment updates live as the player scrolls POW / EN / HAN. Visual
 treatment (Austin 2026-11-12): a row of **flat chevrons painted on the road**, pointing in the direction of travel,
 evenly spaced along the path, drawn in the 3D layer (subject to B.5c crunch). Each segment's chevrons take that
-segment's stat colour, solid (**POW** #2CB84A, **EN** #E8282C, **HAN** #F0C828). There is no yellow-to-red gradient across
+segment's stat colour, solid (**POW** #2CB84A, **EN** #E8282C, **HAN** #F0C828). The POW segment is green and is drawn on the OUT lane, HAN yellow on MID, EN red on IN. There is no yellow-to-red gradient across
 the line; a slight brightness ramp along a segment is fine. The hovered segment uses a lighter or pulsed variant.
 No glow or soft edges. Purely visual (Austin 2026-11-12): it does not
-affect scoring and has no sim/ values. Line-to-bend mapping (Arthur, placeholder until Austin approves; earlier draft was flipped): **POW (OUT)** holds the outer line of the corner, **EN (IN)** cuts to the inner line by 2/3 of a lane, **HAN (MID)** runs mid-lane; each segment starts from the previous end point.
+affect scoring and has no sim/ values. Where the chevrons sit (Arthur, placeholder until Austin approves; earlier draft was flipped): the **POW** segment holds the outer line of the corner (drawn on the OUT lane), the **EN** segment cuts to the inner line by 2/3 of a lane (drawn on the IN lane), and the **HAN** segment runs mid-lane (drawn on the MID lane); each segment starts from the previous end point.
 
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
