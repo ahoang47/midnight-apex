@@ -8,8 +8,8 @@ Alternative lines keep the main Entry. alt1 changes Apex and Exit, alt2 changes 
 
 | Corner | Touge | Wangan | Street |
 |---|---|---|---|
-| Hairpin | IN-MID-OUT: brake inside, roll the apex, drive off the turn to carry momentum down the hill | IN-MID-OUT: the same textbook hairpin, since highway crews treat a hairpin as a tollbooth, not a fight | IN-IN-OUT: hold the inside through the apex so nobody gets a nose in, then go |
-| Constant radius | MID-MID-OUT: hold the arc, carry speed, power out | MID-OUT-OUT: the road stays open, so commit from the apex on | IN-MID-IN: cover the inside, ride it out, cover again on exit, position over speed |
+| Hairpin | IN-MID-OUT: brake on the IN line, roll the apex, drive off the turn to carry momentum down the hill | IN-MID-OUT: the same textbook hairpin, since highway crews treat a hairpin as a tollbooth, not a fight | IN-IN-OUT: hold IN through the apex so nobody gets a nose in, then go |
+| Constant radius | MID-MID-OUT: hold the arc, carry speed, power out | MID-OUT-OUT: the road stays open, so commit from the apex on | IN-MID-IN: cover IN, ride it out, cover again on exit, position over speed |
 | Decreasing radius | MID-IN-MID: the mountain pinches, so protect at the late apex and smooth out | IN-IN-MID: professionals don't gamble on a closing corner | IN-IN-MID: door shut until it opens |
 | Increasing radius | MID-MID-OUT: patient, then let the road open up | OUT-OUT-IN: the road opens, so go flat out, then shut the door on the exit so the car behind can't use your draft on the next straight | MID-MID-OUT: even Street lets an opening corner run |
 | 90-degree | IN-MID-OUT: square it off, drive out | IN-MID-OUT: same | MID-MID-OUT: it's an intersection, so you can't dive the corner of the block. Hold your lane through the cross street, then punch it out |
@@ -27,7 +27,7 @@ The corner choice below is a first pass, pending Barry's check. How it maps to t
 
 | District | Signature corner | Standard line | Why everyone here drives it this way |
 |---|---|---|---|
-| Touge | Hairpin | IN-MID-OUT | Brake inside, roll the apex, drive off the turn: momentum down the hill is how the mountain passes |
+| Touge | Hairpin | IN-MID-OUT | Brake on the IN line, roll the apex, drive off the turn: momentum down the hill is how the mountain passes |
 | Touge | Esses | MID-MID-MID | Flow with no stance changes: nobody on the mountain breaks rhythm and loses momentum |
 | Touge | Decreasing radius | MID-IN-MID | The mountain pinches, so protect at the late apex and smooth out |
 | Wangan | Sweeper | OUT-OUT-IN | Flat out through the long bend, then close the door before the straight |
@@ -35,7 +35,7 @@ The corner choice below is a first pass, pending Barry's check. How it maps to t
 | Wangan | Constant radius | MID-OUT-OUT | The road stays open, so commit from the apex on |
 | Street | 90-degree | MID-MID-OUT | It's an intersection: hold your lane through the cross street, then punch it out |
 | Street | Chicane | IN-OUT-OUT | Protect the entry, then muscle through the flick |
-| Street | Hairpin | IN-IN-OUT | Hold the inside through the apex so nobody gets a nose in, then go |
+| Street | Hairpin | IN-IN-OUT | Hold IN through the apex so nobody gets a nose in, then go |
 
 Why these three: Touge's are the mountain's corners, Wangan's the open-highway corners, Street's the city-block corners.
 

@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-12 — Nathaniel [story]: naming sweep follow-up (Desmond's 81b230f rule)
+- `story/corner_lines.md`: the remaining "inside" line descriptions now say IN.
+- Swept all of story/ (canon, barks, dialogue_outline, plot, pitch, characters) for Attack/Defend/Neutral/Steady/outside/center/inside. Every remaining hit is plain English, not a stance or line ("heart attack", "doesn't defend herself", "outsider", the Touge boss being "steady"), or a bark tone heading ("Neutral" mid-race state in barks.md), so they stay.
+
+---
+
 ## 2026-11-12 — Nathaniel [story]: story/ uses POW/EN/HAN for stats and IN/MID/OUT for line choices
 - **Ask:** Austin in Exec Team (10:19 AM PT): stats are POW/EN/HAN across all mentions; line choices are IN/OUT/MID with a small note of the stat each needs; outside on a left and outside on a right are the same choice.
 - `story/corner_lines.md`: every line rewritten from sim letters to Entry-Apex-Exit choices (D = IN/EN, S = MID/HAN, A = OUT/POW, per the locked lane rule in design/06: inside = Defend, center = Neutral, outside = Attack). Header explains the notation; district-habit prose uses IN/MID/OUT with stats. No line changed.
