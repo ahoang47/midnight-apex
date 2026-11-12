@@ -52,7 +52,8 @@ func show_state(s: Dictionary) -> void:
 		if st.mirror: on.mirror = true
 		on.plate = true; on.gap = true
 		if st.phase == "SELECT":
-			on.timer = true; on.debug = 64.0; on.select = true; on.entry = true; on.plan = true
+			# Entry lane strip is folded into the combined PlanPanel (Arthur line-preview pass 4, Austin 2026-11-12).
+			on.timer = true; on.debug = 64.0; on.select = true; on.plan = true
 			if int(st.plate.stop) == 0: on.lanes = true
 		elif st.phase == "TIMING" and st.locked_hold:
 			on.timer = true; on.debug = 64.0; on.lock = true
@@ -65,6 +66,11 @@ func show_state(s: Dictionary) -> void:
 			if st.phase == "FINISHED": on.finish = true
 			else: on.cont = true
 	if on.has("debug"): P.debug.position.y = on.debug
+	# Race split / tie-gap bar: top centre, directly under the REAR VIEW label (mirror at y=13-82, label at y=84).
+	# Coords from Arthur pass 4; overridable via st.gap_pos (display.json line_preview.gap_pos).
+	if P.has("gap") and on.has("gap"):
+		var gp = st.get("gap_pos", [220, 98])
+		P.gap.position = Vector2(float(gp[0]), float(gp[1]))
 	for k in P:
 		var n: Control = P[k]
 		n.visible = on.has(k)
