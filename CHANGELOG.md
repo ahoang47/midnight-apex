@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-12 — Arthur [art]: POW/EN/HAN and OUT/MID/IN naming in art_direction; B.5d bend placeholder corrected
+
+- **Ask:** Austin in Exec Team (2026-11-12): stats and stances are always POW / EN / HAN; line choice is always OUT / MID / IN, with a short note of the stat (OUT (POW), MID (HAN), IN (EN)). The same OUT is the same POW line on a left or right turn. Canon: `design/01-system-overview.md` 81b230f.
+- `design/art/art_direction.md`: B.4, B.5, B.5b, B.5d, C.1, Q6 and K2 use the new names. Colours stay POW `#2CB84A`, EN `#E8282C`, HAN `#F0C828`. Lane labels are written **OUT · POW**, **MID · HAN**, **IN · EN**.
+- **B.5d placeholder bend mapping was flipped** (still unapproved): POW (OUT) holds the outer line of the corner, EN (IN) cuts to the inner line by 2/3 of a lane, HAN (MID) runs mid-lane. Each segment still starts from the previous end point.
+- Older mockups under `unapproved/arthur/mockups/` were not re-rendered. `mockups/README.md` notes that they predate this naming. `mockups/line_preview/` was left alone (separate re-render in progress).
+- Left as historical or geometry: hub/frame centre, "top-center" mirror, "inside the 3D scene", the old Aggressive / Defensive / Precise row names, and Appendix E face/tell suffixes `_atk|_def|_neu` (mapped to POW / EN / HAN; files not renamed).
+
+---
+
 ## 2026-11-12 — Nathaniel [story]: naming sweep follow-up (Desmond's 81b230f rule)
 - `story/corner_lines.md`: the remaining "inside" line descriptions now say IN.
 - Swept all of story/ (canon, barks, dialogue_outline, plot, pitch, characters) for Attack/Defend/Neutral/Steady/outside/center/inside. Every remaining hit is plain English, not a stance or line ("heart attack", "doesn't defend herself", "outsider", the Touge boss being "steady"), or a bark tone heading ("Neutral" mid-race state in barks.md), so they stay.

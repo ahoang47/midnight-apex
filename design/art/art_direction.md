@@ -228,7 +228,8 @@ were lost with the box and are **re-proposed** here.
   orthographic is open (Q8). This overworld note is not the race camera.
 - **Race (locked 2026-11-06; the rest of Part B is still proposal):** fixed rear third-person camera on the player.
   The player locks the 3-card line before corner playback. The rival's lane is Entry, relative to the next corner:
-  outside = Attack, center = Steady, inside = Defend. Entry can bluff by improper placement. Apex and Exit are
+  **OUT (POW)**, **MID (HAN)**, **IN (EN)**. OUT on a left turn and OUT on a right turn are the same POW line.
+  Entry can bluff by improper placement. Apex and Exit are
   inferred, not drawn as tells. Shared Touge, Wangan, and Street tendencies are the intended inference; the precise
   mapping is still TBD, and the older Aggressive, Defensive, and Precise rows are not that map. When the player is
   behind, draw the rival no farther ahead than keeps that lane readable from this camera. No distance number is
@@ -247,9 +248,9 @@ were lost with the box and are **re-proposed** here.
 ### B.5 Characters, portraits, UI [PROPOSAL]
 - Characters never appear in-world. JoJo-style 2D portraits/overlays use the same low-res, limited-palette treatment
   (palette size open, Q7). Whether painted silhouettes behind shop windows count as "characters in-world" is open (Q5).
-- Faces follow `face_{scowling|grinning|focused}_{atk|def|neu}.png` and `tell_*` overlays (Appendix E).
-- Stance colours (Attack / Defend / **Neutral**) should be reserved for UI and not used for world neon
-  *(proposal)*. Attack/POW is `#2CB84A` (green) and Defend/EN is `#E8282C` (red); Neutral/HAN stays `#F0C828` (yellow, dark text). Austin swapped Attack and Defend on 2026-11-11 (they were Attack `#E8282C` and Defend `#2CB84A`). The third stance is **Neutral** (`neu`) in all art/UI files (Q6, resolved 2026-11-11).
+- Faces follow `face_{scowling|grinning|focused}_{pow|en|han}.png` and `tell_*` overlays. Existing Appendix E filenames still use the suffixes `_atk|_def|_neu`, which map to **POW / EN / HAN**; player-facing labels use the new names.
+- **POW / EN / HAN** colours should be reserved for UI and not used for world neon
+  *(proposal)*. **POW** is `#2CB84A` (green), **EN** is `#E8282C` (red), **HAN** is `#F0C828` (yellow, dark text). Austin swapped the green and red on 2026-11-11 (under the old Attack/Defend names they had been POW `#E8282C` and EN `#2CB84A`). The third stance is **HAN** (Q6, resolved 2026-11-11 as the third stance, renamed HAN on 2026-11-12).
 - Bitmap-style font, 9-slice panels drawn at native resolution.
 
 ### B.5b Line select: camera stops [APPROVED 2026-11-11]
@@ -259,8 +260,8 @@ Apex card. **Exit:** the camera moves to the exit and the player picks their Exi
 corner is shown **without the rival**: those stops show geometry only. The player gleans the rival's Apex/Exit from its
 Entry, district tendencies, corner geometry and the lead/gap, never from an on-screen tell. Once all three are set the line
 locks, the camera returns to Entry, and playback runs with the B.5a line-vs-line panel. Corner plate (top right)
-marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (lane/stance labels on the Apex and
-Exit picks there are placeholders).
+marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (lane labels on the Apex and
+Exit picks there are placeholders; write them **OUT · POW**, **MID · HAN**, **IN · EN**).
 
 ### B.5c Crunchy 3D, sharp UI [MUST, APPROVED 2026-11-11]
 The 3D scene is rendered at **native 640×480 with no anti-aliasing**, then **RGB555 + 4×4 Bayer** is applied, then a
@@ -268,19 +269,18 @@ The 3D scene is rendered at **native 640×480 with no anti-aliasing**, then **RG
 full 1280×960 output resolution, **pixel-hard**: no font or edge anti-aliasing, a hard 2 px drop shadow, bold chunky late-90s type and plates (Austin 2026-11-11, 10:21 PM to Gordon and 11:12 PM to Arthur). Larger screens scale the whole frame by whole numbers. Texture filtering inside the 3D scene follows Q4 (smooth) and is not affected.
 Review images and contact sheets are judged from full-size frames; downscaled sheets are for layout only.
 
-### B.5d Line preview during stance selection [APPROVED 2026-11-12, Austin]
+### B.5d Line preview during line selection [APPROVED 2026-11-12, Austin]
 While the player is choosing (B.5b camera stops), draw a racing-line preview on the road showing the path their choices
 make. The line is built **phase by phase and chains**: the Entry segment starts from the chosen Entry lane; the Apex
-segment **starts where the Entry segment ends** and its angle changes with the Apex stance being hovered; the Exit
-segment starts where the Apex segment ends and angles with the Exit stance. Changing an earlier pick redraws every later
-segment. Confirmed segments stay solid, and the hovered segment updates live as the player scrolls stances. Visual
+segment **starts where the Entry segment ends** and its path changes with the Apex line being hovered; the Exit
+segment starts where the Apex segment ends and follows the Exit line. Changing an earlier pick redraws every later
+segment. Confirmed segments stay solid, and the hovered segment updates live as the player scrolls line choices. Visual
 treatment (Austin 2026-11-12): a row of **flat chevrons painted on the road**, pointing in the direction of travel,
 evenly spaced along the path, drawn in the 3D layer (subject to B.5c crunch). Each segment's chevrons take that
-segment's stance colour, solid (ATK #2CB84A, DEF #E8282C, NEU #F0C828). There is no yellow-to-red gradient across
+segment's stat colour, solid (**POW** #2CB84A, **EN** #E8282C, **HAN** #F0C828). There is no yellow-to-red gradient across
 the line; a slight brightness ramp along a segment is fine. The hovered segment uses a lighter or pulsed variant.
 No glow or soft edges. Purely visual (Austin 2026-11-12): it does not
-affect scoring and has no sim/ values. Stance-to-bend mapping (Arthur, placeholder until Austin approves): ATK cuts
-toward the inside at 2/3 of the lane width, DEF holds the outside line, NEU runs mid-lane; each segment starts from the previous end point.
+affect scoring and has no sim/ values. Line-to-bend mapping (Arthur, placeholder until Austin approves; earlier draft was flipped): **POW (OUT)** holds the outer line of the corner, **EN (IN)** cuts to the inner line by 2/3 of a lane, **HAN (MID)** runs mid-lane; each segment starts from the previous end point.
 
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
@@ -305,7 +305,7 @@ phase plays. The corner plate (top right) shows the current phase. No pause or c
 
 ### C.1 Naming and folders
 - Lowercase snake_case, `category_variant_direction` (from `design/godot-build-guide.md` Appendix E), e.g. `road_corner_left`,
-  `face_grinning_atk.png`, `car_s2000_body.png`.
+  `face_grinning_pow.png`, `car_s2000_body.png`. Existing Appendix E face/tell files still use `_atk|_def|_neu` (POW / EN / HAN).
 - Source-art layout (in use from 2026-10-31, see `art/README.md`):
   `art/vehicles/<car_id>/` → `README.md`, build script(s) at the top level, exports (`.glb`, `.blend`, optional
   `.obj/.mtl/.fbx`) and textures (`<car_id>_body.png`, `_atlas.png`, ...) beside them, `tex/` texture painters,
@@ -320,18 +320,18 @@ phase plays. The corner plate (top right) shows the current phase. No pause or c
   is still worth confirming.)
 - ~~Q4~~ **Resolved 2026-11-11:** textures use **smooth filtering**.
 - **Q5** Do customer silhouettes painted into shop windows break "characters never rendered in-world"?
-- ~~Q6~~ **Resolved 2026-11-11:** the third stance is **Neutral**.
+- ~~Q6~~ **Resolved 2026-11-11:** the third stance is **HAN** (resolved as the third stance on 2026-11-11, then called Neutral; renamed HAN on 2026-11-12).
 - **Q7** Portrait palette limit (e.g. 32 or 64 colours per portrait)?
 - **Q8** Overworld camera: perspective (long lens) or orthographic?
 - **Q9** Mod attach points: which parts are swappable (wing, hood, bumpers, wheels) and where they attach?
 
-Also pending: confirm the IoU bar (A.1.2), reserving stance colours for UI (B.5).
+Also pending: confirm the IoU bar (A.1.2), reserving POW / EN / HAN colours for UI (B.5).
 
 ### C.3 Doc conflicts found while writing (for Design)
 - **K1** `design/godot-build-guide.md` says "Low-poly PS1-style" car body; the car budget is now ≤ 2,000 tris per car
   (A.2.1, 2026-10-31; the first reference builds were ~4.4k). Proposal: reword to "low-poly PSX/early-PS2 style,
   ≤ 2k tris per car incl. wheels".
-- **K2** *(resolved by Q6: Neutral)* Third stance called "Neutral" in some docs and "Steady" in lockout tables/UI asset list (Q6).
+- **K2** *(resolved by Q6 and the 2026-11-12 naming rule)* The third stance is **HAN**. Older Neutral / Steady / NEU labels are retired.
 - **K3** Pitch says three Myth Drivers; plot outline and Sabine's sheet mention a fourth.
 - **K4** *(resolved by Q3: 640×480)* Project display is 640×480; the approved vibe-check frames were 640×448 (Q3).
 - **K5** "Night-only city" vs the story opening that establishes normal daytime life (needs a daytime look or a cut).
