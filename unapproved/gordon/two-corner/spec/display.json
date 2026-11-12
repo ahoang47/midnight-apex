@@ -440,30 +440,5 @@
   "_min_sep_m": "PLACEHOLDER: lines closer than this while overlapping count as a shared lane",
   "car_len_m": 4.6,
   "_car_len_m": "no-clip check: lateral gap is measured while the cars are within this many m along the road"
- },
-"line_preview": {
-    "_doc": "B.5d racing-line preview during SELECT (Austin approved Arthur's line-preview mockup, commit 9a83828, as the build reference). Purely visual: no scoring, no sim values. Chevrons and measures copied from Arthur's line_chevrons.gd pass 4. Bends are PLACEHOLDER (Arthur pass 4, used as-is): POW holds the outer line (OUT, -1 lane), HAN sits mid-lane (0), EN cuts to the inner line (IN, +1 lane, full lane width), each a multiple of lane_width_m times Track.inside_sign. The Entry segment stays in the chosen Entry lane; later segments start at the previous end. Implied follow-on (not yet chosen) is Apex EN then Exit POW, drawn pending at ~66% brightness and slightly thinner. Panel and gap_pos are Arthur pass 4 layout (narrower plan panel, split bar under the mirror).",
-    "spacing_m": 2.6,
-    "width_m": 1.9,
-    "length_m": 2.3,
-    "y_m": 0.05,
-    "pending_brightness": 0.66,
-    "pending_width_scale": 0.44,
-    "hovered_width_scale": 0.62,
-    "solid_width_scale": 0.58,
-    "hovered_pulse": 1.22,
-    "hovered_gap_pulse": 0.72,
-    "ramp": [0.88, 1.14],
-    "pending_fog_amount": 0.38,
-    "follow_on_apex": "E",
-    "follow_on_exit": "P",
-    "bend": {
-      "_doc": "PLACEHOLDER. End lateral offset as a multiple of lane_width_m, corner-relative via Track.inside_sign (negative = outside / OUT, 0 = mid, positive = inside / IN). Arthur pass 4 / 9a83828, used as-is; do not invent a new map. (art_direction.md B.5d still mentions an earlier 2/3-lane EN cut; the approved mockup is full lane width.)",
-      "P": -1.0,
-      "H": 0.0,
-      "E": 1.0
-    },
-    "panel": [424, 372, 636, 479],
-    "gap_pos": [220, 98]
-  }
+ }
 }

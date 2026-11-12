@@ -5,7 +5,7 @@
 > **2026-11-11: Three.js dropped (Austin).** The Godot build is the only one worked on and tested; parity is Godot vs the pinned sim.
 > Notes below that mention `threejs/` are historical; that tree is not in this copy.
 
-This is the working copy at `/workspace/prototypes/two-corner/`. The repo mirror is `unapproved/gordon/two-corner/`. This tree also has the `_pin/` worktree (sim at 50928ed), the historical `threejs/` tree (untouched), and local `out/`.
+This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at 50928ed), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
 
 Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `50928ed` (`git worktree add _pin 50928ed`); do not use this branch's live `sim/`, which may move on. sim/ is unchanged after 53267c5. `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` no longer writes the Three.js constants file (shots10).
 
@@ -127,16 +127,6 @@ Sources: `design/art/art_direction.md` at **ab1c4a1** (`ab1c4a12f69b23ccd74cd898
   and the parity harness. The playback camera is still the guide §13.3 authored path.
 - **Touge dressing** now comes from the approved B.5b Touge frames (road paint, guardrail, cedars, ridge, lamps, fog 9-78 m); see the report.
 - Shots: `out/shots5/` on the box prototype (GIFs `corner1_touge_HP_full.gif`, `corner2_street_N90_full.gif`). This copy keeps only `out/shots5/composites/` (`vs_line_select_cam.png`, `vs_line_vs_line.png`, `before_after_phase4.png`, palette-quantised to fit the size budget); `python3 tools/phase5_composites.py` needs the full frame sets.
-
-## B.5d line preview (2026-11-12, display only, parity unchanged)
-
-Austin approved Arthur's line-preview mockup (relayed by Arthur, commit **9a83828**) as the build reference. Purely visual; no gameplay or sim change.
-
-- Flat chevrons on the road along the chained Entry → Apex → Exit line, pointing in the direction of travel, no glow. Colours are the stance UI set: POW `#2CB84A`, EN `#E8282C`, HAN `#F0C828`. Hovered segment at full strength; follow-on segments solid at 0.66 brightness and slightly thinner (Arthur pass 4 measures, `spec/display.json` `line_preview`, marked PLACEHOLDER). Scripts `godot/scripts/line_chevrons.gd` and the chevron shader/art are copied from Arthur's mockup and adapted here (credit in the script).
-- Bend mapping is Arthur's, recorded as PLACEHOLDER: POW holds the outer line (−1 × lane width), HAN mid-lane (0), EN cuts to the inner line (+1 × full lane width, corner-relative via `track.gd`). Implied follow-on is Apex EN, Exit POW. Each segment starts where the previous one ends. Entry stays in the chosen Entry lane.
-- One combined PLAN THE LINE panel at the bottom right (narrower so it clears the car). Lane chips read `OUT · POW`, `MID · HAN`, `IN · EN`. The race split bar sits under the rear-view mirror. Entry camera, Entry select framing, and Exit camera are unchanged.
-- Known leftover: from the Entry chase cam the follow-on line vanishes over the crest (`_in_straight()` hides the hook mesh). Left as-is; same gap is in the mockup.
-- Shots: `out/shots14/` (Entry / Apex / Exit × each stance hover, 640 and 1280; `compare_arthur_vs_gordon.png`). Shot harness: `--line-preview-shots <dir>` (seed 20261114 so every stance can be hovered at Exit).
 
 ## shots9 (display/flow only, scoring/RNG/pin unchanged): Austin's playtest, 2026-11-11 ~9:58-10:22 PM PT
 - **After-turn pause:** once the RESULT row fills in, 'Press Enter to continue  N' counts down and auto-continues ("That should have a time limit").

@@ -8,14 +8,6 @@
 
 ---
 
-## 2026-11-12 — Gordon [godot]: two-corner B.5d line preview from Arthur's approved mockup (UNAPPROVED)
-
-- **Why:** Austin approved Arthur's line-preview mockup as the build reference (relayed by Arthur, commit 9a83828). Purely visual; no gameplay or sim change.
-- **What (`unapproved/gordon/two-corner/`):** Flat chevrons on the road along the chained Entry → Apex → Exit line, pointing in the direction of travel, no glow. Each segment is coloured by stance (POW `#2CB84A`, EN `#E8282C`, HAN `#F0C828`). Hovered segment at full strength; follow-on segments solid at 0.66 brightness and slightly thinner (Arthur pass 4 measures). `line_chevrons.gd`, `shaders/chevron.gdshader` and `art/line_chevron.png` are copied from Arthur's mockup and adapted here (credit in the script). Bend mapping is Arthur's, recorded as PLACEHOLDER in `spec/display.json`: POW holds the outer line, HAN mid-lane, EN cuts to the inner line over the full lane width, corner-relative via `track.gd`. Implied follow-on is Apex EN, Exit POW. One combined PLAN THE LINE panel at the bottom right (narrower so it clears the car); lane chips read `OUT · POW`, `MID · HAN`, `IN · EN`. The race split bar sits under the rear-view mirror. Entry camera, Entry select framing, and Exit camera are unchanged. Build id `2ba8a4d505`.
-- **Tests:** `python3 tools/qte_fn_test.py` as CI runs it: PASS, 5757 values, raw_qte_score exact, 0 mismatches. `run_parity.sh` seeds + fuzz300, save/load, restart, and the 200-seed key test all 0.0 vs pin 50928ed. Token prefix `TC3:50928ed:2ba8a4d505:`.
-- **Shots:** `out/shots14/` — Entry / Apex / Exit × each stance hover at native 640×480 (3D+post) and the final 1280×960 composite; `compare_arthur_vs_gordon.png` side-by-side with Arthur's frames. Shot seed 20261114 (opening hand P/H/E ×2; 20261113 has only one EN).
-- **Left as is / differed from the mockup:** The known gap where the follow-on line vanishes over the crest from the Entry chase cam (`_in_straight()` hides the hook mesh) is left as-is; the same gap is in the mockup. Entry row uses combined lane chips (`OUT · POW`) only — the slim panel cannot also fit Arthur's second POW/HAN/EN chip group on that row (the written spec called for the combined chips). Plate grain, bevel, and heavier mockup fonts were not ported (those assets/fonts are not in this tree; would be a global HUD restyle beyond this brief). The debug seed box is kept. art_direction.md B.5d still mentions a 2/3-lane EN cut; pass 4 / the approved mockup uses the full lane width, which is what is built (PLACEHOLDER).
-
 ## 2026-11-12 — Barry [barry]: corners-v1 story characters include kids and matures
 
 - **Why:** Austin ruled "Kids and matures are story characters." The draft had listed only lieutenants, crew bosses, Myth Drivers and Sabine, which was my assumption.

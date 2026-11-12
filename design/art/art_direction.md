@@ -280,7 +280,7 @@ evenly spaced along the path, drawn in the 3D layer (subject to B.5c crunch). Ea
 segment's stat colour, solid (**POW** #2CB84A, **EN** #E8282C, **HAN** #F0C828). The POW segment is green and is drawn on the OUT lane, HAN yellow on MID, EN red on IN. There is no yellow-to-red gradient across
 the line; a slight brightness ramp along a segment is fine. The hovered segment uses a lighter or pulsed variant.
 No glow or soft edges. Purely visual (Austin 2026-11-12): it does not
-affect scoring and has no sim/ values. Where the chevrons sit (Arthur, placeholder until Austin approves; earlier draft was flipped): the **POW** segment holds the outer line of the corner (drawn on the OUT lane), the **EN** segment cuts to the inner line by 2/3 of a lane (drawn on the IN lane), and the **HAN** segment runs mid-lane (drawn on the MID lane); each segment starts from the previous end point.
+affect scoring and has no sim/ values. Where the chevrons sit (Arthur, placeholder until Austin approves; earlier draft was flipped): the **POW** segment holds the outer line of the corner (drawn on the OUT lane), the **EN** segment cuts across the full lane width to the inner line (drawn on the IN lane), and the **HAN** segment runs mid-lane (drawn on the MID lane); each segment starts from the previous end point.
 
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card

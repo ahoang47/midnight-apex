@@ -1,7 +1,7 @@
 ## Two-corner test, Godot presentation. Logic lives in race_core.gd. Scene refactor (2026-11-12): the nodes live in scenes
 ## (main.tscn composes track.tscn, touge_dressing.tscn, sky.tscn, car.tscn x2, camera_rig.tscn, hud.tscn; see the README
 ## 'Editor workflow'); this script wires them up and runs the game flow, cameras and passes exactly as before.
-## User args (after --): --script-inputs <file> --shots <dir> --seed N --no-menu --line-preview-shots <dir>   (single look: 640x480, RGB555 + Bayer; no CRT/low-res)
+## User args (after --): --script-inputs <file> --shots <dir> --seed N --no-menu   (single look: 640x480, RGB555 + Bayer; no CRT/low-res)
 ## Main menu (Austin 2026-11-10) unless --script-inputs or --no-menu; --seed N prefills the seed field. headless_run.gd never shows it.
 extends Control
 
@@ -15,14 +15,12 @@ const GLOW_SH = preload("res://shaders/glow.gdshader")
 const ArtKit = preload("res://scripts/art_kit.gd")
 const TrackRoad = preload("res://scripts/track_road.gd")
 const Dressing = preload("res://scripts/touge_dressing.gd")
-const LineChevrons = preload("res://scripts/line_chevrons.gd")
 const TAG := "640"
 
 var cfg: Dictionary
 var disp: Dictionary
 var script_in = null
 var shots_dir := ""
-var shot_dual := false  # also write 640 (3D+post) and 1280 (final composite) siblings
 var core
 var world_vp: SubViewport
 var mirror_vp: SubViewport
@@ -117,7 +115,6 @@ var qte_from = null           # camera pose at the start of a move
 var zone_ms := 800.0          # qte_zone_width(r, mod) x QTE_ZONE_BASE_MS for this race (core.zone_ms())
 var min_sep_overlap := 99.0   # smallest lateral gap seen while the cars overlap longitudinally (no-clip check)
 var gif_dir := ""; var gif_dt := 0.1; var gif_next := 0.0; var gif_n := 0
-var chevrons: Node3D  # B.5d road chevrons (SELECT only, purely visual)
 
 func _arg(k: String, def = null):
 	var a := OS.get_cmdline_user_args()
@@ -162,9 +159,6 @@ func _ready() -> void:
 	_build_course()
 	player_car = _load_car($WorldVP/PlayerCar)   # car.tscn: car_mx5.glb, mx5_env.png, car_shading.mx5
 	rival_car = _load_car($WorldVP/RivalCar)     # car.tscn: car_s2000.glb, s2000_env.png, car_shading.s2000
-	chevrons = LineChevrons.new()
-	chevrons.cfg = disp.get("line_preview", {})
-	$WorldVP.add_child(chevrons)
 	core = RaceCore.new()
 	core.setup(cfg, seed_v)
 	_setup_corner()
@@ -172,10 +166,6 @@ func _ready() -> void:
 		_run_script()
 	elif OS.get_cmdline_user_args().has("--plan-key-test"):
 		_plan_key_test()
-	elif _arg("--line-preview-shots") != null:
-		shots_dir = _arg("--line-preview-shots")
-		DirAccess.make_dir_recursive_absolute(shots_dir)
-		await _run_line_preview_shots()
 
 ## Plan the Line key test: random Up/Down/Left/Right/Enter/Backspace over many seeds; every pick must be an unused hand index of the
 ## highlighted stance, the cursor never rests on a 'none drawn' stance, and the 3rd Enter locks exactly the chosen stances.
@@ -579,140 +569,7 @@ func _shot(name: String) -> void:
 	await RenderingServer.frame_post_draw
 	var img := get_viewport().get_texture().get_image()
 	img.save_png(shots_dir.path_join("%s_%s.png" % [name, TAG]))
-	if shot_dual:
-		await _save_shot_resolutions(name)
 	busy = false
-
-
-## 640 = post-processed 3D (B.5c native); 1280 = 2× nearest + HUD composite (final judged frame).
-func _save_shot_resolutions(name: String) -> void:
-	var post_img := await _bake_post_640()
-	if post_img != null:
-		post_img.save_png(shots_dir.path_join("%s_640.png" % name))
-		var hi := Image.new(); hi.copy_from(post_img)
-		if hi.get_format() != Image.FORMAT_RGBA8:
-			hi.convert(Image.FORMAT_RGBA8)
-		hi.resize(1280, 960, Image.INTERPOLATE_NEAREST)
-		var hud_img := hud_vp.get_texture().get_image()
-		if hud_img.get_format() != Image.FORMAT_RGBA8:
-			hud_img.convert(Image.FORMAT_RGBA8)
-		hi.blend_rect(hud_img, Rect2i(0, 0, 1280, 960), Vector2i.ZERO)
-		hi.convert(Image.FORMAT_RGB8)
-		hi.save_png(shots_dir.path_join("%s_1280.png" % name))
-
-func _bake_post_640() -> Image:
-	# Re-use the on-screen Post TextureRect's material on a 640 bake viewport.
-	var bake := SubViewport.new()
-	bake.size = Vector2i(640, 480)
-	bake.transparent_bg = false
-	bake.disable_3d = true
-	bake.render_target_update_mode = SubViewport.UPDATE_ONCE
-	bake.msaa_2d = Viewport.MSAA_DISABLED
-	bake.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-	add_child(bake)
-	var cr := TextureRect.new()
-	cr.size = Vector2(640, 480)
-	cr.stretch_mode = TextureRect.STRETCH_SCALE
-	cr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	cr.texture = world_vp.get_texture()
-	cr.material = post_mat
-	bake.add_child(cr)
-	await RenderingServer.frame_post_draw
-	await RenderingServer.frame_post_draw
-	var img := bake.get_texture().get_image()
-	bake.queue_free()
-	return img
-
-## B.5d line preview during SELECT only. Entry stays in the chosen lane; Apex/Exit use Arthur's PLACEHOLDER bend map.
-func _update_line_preview() -> void:
-	if chevrons == null:
-		return
-	if mode != "RACE" or core.phase != "SELECT":
-		chevrons.clear()
-		return
-	var lpv: Dictionary = disp.get("line_preview", {})
-	chevrons.cfg = lpv
-	var c: Dictionary = core.corner()
-	var dir := String(c.dir)
-	var w := float(disp.lane_width_m)
-	var entry: String = core.hand[core.picks[0]] if core.picks.size() > 0 else PLAN_ORDER[plan_sel]
-	var hover: int = core.picks.size()  # 0 Entry, 1 Apex, 2 Exit
-	var follow_ap: String = String(lpv.get("follow_on_apex", "E"))
-	var follow_ex: String = String(lpv.get("follow_on_exit", "P"))
-	var ap: String = core.hand[core.picks[1]] if core.picks.size() > 1 else (PLAN_ORDER[plan_sel] if hover == 1 else follow_ap)
-	var ex: String = core.hand[core.picks[2]] if core.picks.size() > 2 else (PLAN_ORDER[plan_sel] if hover == 2 else follow_ex)
-	var apex_pending: bool = core.picks.size() < 2 and hover < 1
-	var exit_pending: bool = core.picks.size() < 3 and hover < 2
-	var d0 := _lane_d(entry)           # Entry segment stays in the chosen Entry lane
-	var d1 := d0
-	var d2 := _bend_d(ap, dir, w)
-	var d3 := _bend_d(ex, dir, w)
-	var s_e0 := s_player + 3.0
-	var s_e1 := float(path.S)
-	var s_a1 := float(path.S) + float(path.R) * float(path.A)
-	var s_x1 := s_a1 + minf(float(path.E), 24.0)
-	var segs: Array = []
-	segs.append({"s0": s_e0, "s1": s_e1, "d0": d0, "d1": d1, "stance": entry, "hovered": hover == 0, "pending": false})
-	segs.append({"s0": s_e1, "s1": s_a1, "d0": d1, "d1": d2, "stance": ap, "hovered": hover == 1, "pending": apex_pending})
-	segs.append({"s0": s_a1, "s1": s_x1, "d0": d2, "d1": d3, "stance": ex, "hovered": hover == 2, "pending": exit_pending})
-	var D: Dictionary = DIST[String(c.district)]
-	chevrons.build(path, segs, Color(D.fog), float(D.fog_near), float(D.fog_far))
-
-## PLACEHOLDER bend (display.json line_preview.bend, Arthur pass 4): multiple of lane width, inside-positive.
-func _bend_d(stance: String, dir: String, w: float) -> float:
-	var lpv: Dictionary = disp.get("line_preview", {})
-	var b: Dictionary = lpv.get("bend", {"P": -1.0, "H": 0.0, "E": 1.0})
-	return float(b.get(stance, 0.0)) * Track.inside_sign(dir) * w
-
-func _run_line_preview_shots() -> void:
-	shot_dual = true
-	mode = "RACE"
-	# 20261114 opening hand is P/H/E x2 (20261113 has only one EN, so Exit EN hover would be skipped).
-	# First corner is still the left Touge hairpin.
-	start_race(20261114)
-	await _wait_game(func(): return core.phase == "SELECT" and clock > 0.4)
-	var names := {"P": "pow", "H": "han", "E": "en"}
-	for k in PLAN_ORDER:
-		plan_sel = PLAN_ORDER.find(k)
-		_plan_fix_sel(0)
-		# if none drawn of k, skip
-		if PLAN_ORDER[plan_sel] != k:
-			continue
-		await get_tree().process_frame
-		await _shot("entry_%s" % names[k])
-	# Lock Entry OUT/POW (P), then hover each Apex, then lock Apex EN, then hover each Exit.
-	plan_sel = PLAN_ORDER.find("P")
-	if _plan_hand_index("P") >= 0:
-		handle_key(KEY_ENTER)
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await _wait_game(func(): return _sel_stop() == 1 and stop_t >= float(SC.move_s) + 0.25)
-		for k in PLAN_ORDER:
-			plan_sel = PLAN_ORDER.find(k)
-			_plan_fix_sel(0)
-			if PLAN_ORDER[plan_sel] != k:
-				continue
-			await get_tree().process_frame
-			await _shot("apex_%s" % names[k])
-		plan_sel = PLAN_ORDER.find("E")
-		if _plan_hand_index("E") < 0:
-			# any remaining EN-less: pick whatever is selected
-			pass
-		else:
-			plan_sel = PLAN_ORDER.find("E")
-		handle_key(KEY_ENTER)
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await _wait_game(func(): return _sel_stop() == 2 and stop_t >= float(SC.move_s) + 0.25)
-		for k in PLAN_ORDER:
-			plan_sel = PLAN_ORDER.find(k)
-			_plan_fix_sel(0)
-			if PLAN_ORDER[plan_sel] != k:
-				continue
-			await get_tree().process_frame
-			await _shot("exit_%s" % names[k])
-	print("LINE_PREVIEW_SHOTS_OK ", shots_dir)
-	get_tree().quit()
 
 func dump_state() -> String:
 	var tok := RaceCore.encode_token(core.dump())
@@ -1001,7 +858,6 @@ func _update_scene() -> void:
 	var t := Vector3(pp.tx, 0, pp.tz); var p := Vector3(pp.x, 0, pp.z)
 	mirror_cam.position = p + Vector3(0, float(disp.mirror.cam_up), 0)  # build_lsc.py:246
 	mirror_cam.look_at(p - t * float(disp.mirror.look_back) + Vector3(0, float(disp.mirror.look_y), 0))
-	_update_line_preview()
 
 ## rear-view mirror only on the chase camera (B.5b frames 1 and 4); none during corner playback (B.5a frames) or at the Apex/Exit stops
 func _mirror_on() -> bool:
@@ -1042,12 +898,10 @@ func _render_hud() -> void:
 	elif _qte_active(): plate.mode = "QTE"; plate.stop = qte_i
 	elif core.phase == "TIMING": plate.mode = "PLAY"; plate.stop = play_phase
 	elif core.phase != "SELECT": plate.mode = "DONE"
-	var lpv: Dictionary = disp.get("line_preview", {})
 	hud.show_state({"phase": core.phase, "title": "CORNER %d/%d %s %s (%s)" % [core.corner_index + 1, cfg.corners.size(), String(c.district).to_upper(), c.corner, c.dir],
 		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "build": String(RaceCore.build_info().build), "lead": core.lead(), "gap": core.gap(),
 		"left": left, "total": RaceCore.STRAIGHT_DURATION, "slots": slots, "hand": core.hand, "used": core.picks,
 		"qte": _qte_hud(), "line": pline, "rline": rline, "outs": outs, "plate": plate, "locked_hold": core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s), "mirror": _mirror_on(), "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
-		"preview_panel": lpv.get("panel", [424, 372, 636, 479]), "gap_pos": lpv.get("gap_pos", [220, 98]),
 		"result": r, "reveal": reveal, "cont_left": maxf(0.0, float(PB.continue_s) - cont_t), "leader_changed": leader_changed, "winner": core.winner() if core.phase == "FINISHED" else "", "cum_p": core.cum_p, "cum_o": core.cum_o,
 		"last_corner": core.corner_index + 1 >= cfg.corners.size(), "fin": fin if core.phase == "FINISHED" else null})
 

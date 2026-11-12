@@ -13,9 +13,9 @@ const NAME := {"P": "POW", "H": "HAN", "E": "EN"}
 const LANE := {"P": "OUT", "H": "MID", "E": "IN"}
 const ORDER := ["P", "H", "E"]
 const PH := ["ENTRY", "APEX", "EXIT"]
-## on-screen lane chip, e.g. "OUT · POW" (art_direction.md B.5b; Austin 2026-11-12)
+## on-screen lane label, e.g. "OUT (POW)"
 static func lane_stat(k: String) -> String:
-	return "%s · %s" % [LANE[k], NAME[k]]
+	return "%s (%s)" % [LANE[k], NAME[k]]
 const PHL := ["entry", "apex", "exit"]
 # lane_chain/v5/post_v5.py:15-17 + 76
 const AMBER := Color8(255, 176, 40); const AMBER_D := Color8(150, 80, 14)
