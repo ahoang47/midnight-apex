@@ -27,15 +27,15 @@
  },
  "playback_s": 3.6,
  "qte_sweep": {
-  "_doc": "Per-phase timing QTE (Austin approved 2026-11-11 10:56 PM PT; sim pin f0efecf). One sweep each at the Entry, Apex and Exit camera stops, after LINE LOCKED and before playback, over the scrolling road. Zone width = qte_zone_width(r, qte_window_mod) x QTE_ZONE_BASE_MS (sim equations.py:346 / :133), the same for all three. Score of a press = max(0, 1 - |e| / (zone/2)), e = press time - zone centre (equations.py:280 docstring). The cursor passing the zone's far edge = unplayed = 0 (Barry's sim; Austin: unplayed scores 0). Every number below is a PLACEHOLDER (display only, never read by the sim).",
+  "_doc": "Per-phase timing QTE (Austin approved 2026-11-11 10:56 PM PT; sim pin f0efecf). One sweep each during playback (shots11, Austin 2026-11-12): the cars hold at the Entry / Apex / Exit point while that phase's timer (lead + base zone + tail, at least result_hold_s after the score) runs, the road keeps scrolling, then they drive on. Zone width = qte_zone_width(r, qte_window_mod) x QTE_ZONE_BASE_MS (sim equations.py:346 / :133), the same for all three. Score of a press = max(0, 1 - |e| / (zone/2)), e = press time - zone centre (equations.py:280 docstring). The cursor passing the zone's far edge = unplayed = 0 (Barry's sim; Austin: unplayed scores 0). Every number below is a PLACEHOLDER (display only, never read by the sim).",
   "lead_ms": 700,
   "_lead_ms": "PLACEHOLDER: cursor travel before it reaches the zone's near edge",
   "tail_ms": 200,
   "_tail_ms": "PLACEHOLDER: bar drawn past a full-width zone (visual only; the sweep ends at the zone's far edge)",
   "ready_s": 0.5,
-  "_ready_s": "PLACEHOLDER: beat after LINE LOCKED before the Entry sweep starts (Apex / Exit use select_cam.move_s for the camera move)",
+  "_ready_s": "UNUSED since shots11 (the QTEs moved into playback); was the beat after LINE LOCKED before the Entry sweep",
   "result_hold_s": 0.6,
-  "_result_hold_s": "PLACEHOLDER: how long a phase's score stays up before the camera moves on",
+  "_result_hold_s": "PLACEHOLDER: minimum time a phase's score stays up before the cars drive on",
   "key": "SPACE",
   "_key": "PLACEHOLDER: kept from the earlier timing needle"
  },

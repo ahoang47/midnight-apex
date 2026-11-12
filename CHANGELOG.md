@@ -8,6 +8,44 @@
 
 ---
 
+## 2026-11-12 — Gordon [godot]: two-corner editor scenes + QTEs during playback, static Apex/Exit stops (UNAPPROVED)
+
+**What:** `unapproved/gordon/two-corner/godot` is now split into scenes you can edit in the Godot editor:
+- `main.tscn` puts the scenes together.
+- `track.tscn` is a @tool road builder. Its params are exported and it has a "Rebuild road" button.
+- `touge_dressing.tscn` (@tool) holds the lamps, verge, rail, cedars and street branch.
+- `sky.tscn` holds the sky cylinder.
+- `car.tscn` is used for both the player and the rival; the rival uses S2000 overrides.
+- `camera_rig.tscn` holds the camera rig.
+- `hud.tscn` is built from real Control nodes, one per panel: line select, Line Locked, QTE (with its own timer), debug HUD, the Enter-to-continue prompt and timer, plus the plate, meters, finish panel and menu.
+
+Shared art builders moved verbatim into `art_kit.gd`. The @tool previews build only in the editor and are not saved into the .tscn files.
+
+**Playback QTE flow:** the Entry, Apex and Exit QTEs now run during playback. Each one has its own timer, and the cars hold at the plate E/A/X marks while the road keeps scrolling. Apex and Exit selection now happen at static camera stops.
+
+**Why:** Austin asked to work on the editor workflow using the two-corner scene, and on 2026-11-12 he asked for this QTE flow. No numbers or rules changed: all values come from the sim constants and spec/*.json. Only the `_doc` text in display.json changed.
+
+**Entry left unchanged (Austin's hard constraint):**
+- shots10 vs shots11 `seq_select0_0..5`: 0 differing pixels, 6 of 6 frames.
+- Fixed-step A/B runs: Entry select and lock frames are identical, and so is the camera, rig and car state.
+- Refactor alone vs d5aa56c: 73/73 shots and 611/611 GIF frames are pixel-identical.
+- Corner 2 Entry frames differ only in road scroll phase (40 m), because corner 1's playback now includes the QTE holds.
+
+**Parity:** all checks pass at 0.0 on build `29c4eb591e` (sim f0efecf):
+- qte-v1 functions
+- 4 seeds plus fuzz300
+- 3 TC2 dump/load round-trips (token `TC2:f0efecf:29c4eb591e:`)
+- the restart test
+- the 200-seed Plan the Line key test (162 races, 972 clash values)
+
+The checks also pass from a clean checkout with no `.godot`, as CI runs them. `tools/stamp_build.py` now hashes `scripts/**/*.gd` and `scenes/*.tscn`.
+
+**Also:**
+- `out/shots11`: README, the Entry pixel-diff report, a side-by-side image, the turn-1 GIF (400 px; the 640 px GIF stays in the prototype working copy) and editor screenshots.
+- The README has a new "Editor workflow" section.
+- `playtest-state-spec.md`: Steady vs Neutral is marked resolved, Neutral approved 2026-11-11.
+- The web export was rebuilt in the working copy and is not in the repo. A browser smoke test could not run because headless Chrome on the box has no WebGL2.
+
 ## 2026-11-12 — Desmond [ci]: GitHub Actions on push and pull request to proto-build
 - **What:** added `.github/workflows/ci.yml`. On push or pull request to `proto-build` it runs two jobs:
   - **sim:** Python 3.12, `pytest tests/` (55 tests plus one skip when the numpy share-grid oracle is missing), then `scripts/run_progression.py` (default order) and `scripts/balance_gauntlet.py`. All three are deterministic and finish well under 5 minutes.

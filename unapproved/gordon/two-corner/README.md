@@ -22,6 +22,7 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
 - `tools/sim_parity.py`: the real pinned sim functions (`pick_line`, `draw_weighted_hand`, `resolve_turn`) in `run_match` draw order.
   `tools/check_driver_vs_run_match.py` proves the order matches `run_match`. `tools/compare.py` and `tools/run_parity.sh` check the engines against the sim.
 - RNG: CPython's `random.Random` (MT19937, `random()`, `choices` bisect) is ported exactly to JS and GDScript, so there is no pre-drawn stream.
+- Godot scenes (since shots11): `godot/scenes/` holds `main.tscn` plus six sub-scenes; see **Editor workflow** below.
 
 ## Run
 - Parity (qte-v1 function bits, Godot vs sim, dump/load, restart test, Plan the Line + QTE key test vs sim): `tools/run_parity.sh`
@@ -170,3 +171,58 @@ Sources: `design/art/art_direction.md` at **ab1c4a1** (`ab1c4a12f69b23ccd74cd898
 - **Parity:** `tools/qte_fn_test.py` checks 5,757 values bit for bit. Inputs are per-phase. fuzz300 mixes null / 0 / 1 / decimals /
   k/1024 / raw bits. The 200-seed key test now plays the three QTEs by Space through the real input path and sends the same picks and
   scores to the sim. Shots: `out/shots10/`.
+
+## Editor workflow (shots11, 2026-11-12, UNAPPROVED)
+Austin: "I think this is a good chance to work on your workflow for the editor with the two corner scene." The test used to build
+everything in code under one Control. It is now split into scenes that open in the Godot 4.6.3 editor and show what the game draws.
+No number, rule or sim value changed in the split. Values still come from `sim_constants.gd` (generated from the pinned sim) and
+`spec/*.json` (display placeholders), and the split alone was pixel-identical on all 73 shots and 611 GIF frames (fixed-step A/B, `out/shots11/entry_pixel_diff.txt`).
+
+**Open the project:** `godot --editor --path unapproved/gordon/two-corner/godot` (Godot 4.6.3; on the box the working copy is `/workspace/prototypes/two-corner/godot` and needs `--rendering-driver opengl3`;
+the editor runs on the Compatibility renderer like the game). F5 runs `main.tscn`. A scene path after the project opens that scene directly,
+e.g. `... res://scenes/track.tscn`. To validate every scene headless: `godot --headless --editor --path godot res://scenes/<name>.tscn --quit-after 120`
+and check the output for `ERROR`.
+
+**Which scene to edit for what**
+
+| Scene | Script | Purpose / edit it for |
+|---|---|---|
+| `scenes/main.tscn` | `scripts/main.gd` | Composition: WorldVP (640x480 3D SubViewport) with CameraRig, Sky, PlayerCar, RivalCar, Track, Dressing; MirrorVP; Post (RGB555 + Bayer, 2x nearest); HudVP (1280x960) + HudRect; GlowVP. Game flow, cameras, passes and the QTE flow stay in `main.gd`. Child order matters (GlowVP stays last, so the post pass reads last frame's glow as before). |
+| `scenes/track.tscn` | `scripts/track_road.gd` (@tool) | The Touge road surface: one continuous course (straight 45, hairpin L, join 47, N90 R, exit 30) plus each corner's scroll straight at runtime. Geometry comes from `display.json` `road` / `lane_width_m` / `districts.<dk>.lamp_period_m`, shown read-only in the inspector under "Spec values". |
+| `scenes/touge_dressing.tscn` | `scripts/touge_dressing.gd` (@tool) | Lamps, verge, guardrail, cedar cards (B.5b Touge frames); the Street branch is kept for a Street corner. Props stream with the road scroll at runtime. |
+| `scenes/sky.tscn` | `scripts/sky.gd` (@tool) | Painted sky cylinder + ridge band (`SkyCylinder` node); follows the camera at runtime. |
+| `scenes/car.tscn` | `scripts/car.gd` (@tool) | Wraps a `.glb` from `assets/cars` (exports `model`, `env_texture`, `car_id` = key into `display.json` `car_shading`). `main.tscn` has PlayerCar (MX5) and RivalCar (S2000, overridden exports). The A.8 shading, wheel pivots, decals and glows are added at runtime. |
+| `scenes/camera_rig.tscn` | `scripts/camera_rig.gd` | `Cam` (main camera) and `CornerPath/Follow` (the §13.3 authored playback path). Poses are still computed in `main.gd` `_update_camera`, unchanged. **The Entry camera and Entry selection screen are final (Austin 2026-11-12): don't change their placement, framing, motion or timing.** |
+| `scenes/hud.tscn` | `scripts/hud.gd` + `scripts/hud/*.gd` | One Control per panel: MirrorFrame, CornerPlate, GapMeter, LineLockTimer, DebugHud, LineSelect (Lanes, EntryStrip, PlanPanel), LineLockedBanner, QtePanel, LineVsLine, ContinuePrompt (result line + Enter-to-continue countdown), FinishPanel, MainMenu. `hud.gd` picks which panels show; each panel script draws its part. Shared palette and helpers: `scripts/hud/hud_panel.gd`. |
+| (no scene) | `scripts/art_kit.gd` | Shared mesh / material builders used by the scenes above and by `main.gd`, so the editor and the game build the same thing. |
+
+**How @tool regeneration works**
+- Generated geometry (road strips, dressing, sky mesh, car model) is built in `_ready()` when `Engine.is_editor_hint()` is true, as children with
+  no owner, so it shows in the viewport but is **never saved into the .tscn**. At runtime the same functions run from `main.gd` (per corner, with
+  the corner's district and scroll straight), and the editor-only build does nothing.
+- To see a spec change: edit `spec/display.json` (or `race_config.json`), copy it to `godot/spec/`, then press **Rebuild road** / **Rebuild dressing**
+  in the inspector (or reopen the scene). `district`, `preview_in_editor` and `preview_fog` (fog off by default so a top view stays readable) are
+  editor-preview settings only.
+- The HUD preview: pick a state in `Hud` > **Editor Preview** (select / lock / qte / play / result / finish / menu). The samples are display stand-ins,
+  never used by the game. Text is rasterised for the 2x grid, so view the HUD at 200 % zoom to see it as the game shows it.
+- Moving a HUD panel node in the editor only moves its selection box. Each panel still draws at the coordinates of the approved frames
+  (post_lsc.py / post_clash.py / post_v5.py), so a layout change is a code change in that panel's script, not a drag.
+- Placement in a .tscn that the runtime overwrites from the spec (viewport sizes, camera fov / near / far) is only an editor default; `main.gd`
+  still sets it from `display.json` at start.
+- The build id (`tools/stamp_build.py`) now also hashes `scripts/hud/*.gd` and `scenes/*.tscn`.
+- Editor screenshots: `out/shots11/editor_track_tscn.png` (top view of the road, Track inspector), `editor_touge_dressing_tscn.png`, `editor_hud_tscn.png`.
+
+## shots11 (2026-11-12): QTEs during playback, static Apex / Exit stops (UNAPPROVED)
+Austin 2026-11-12: line select is Entry, then a static Apex stop, then a static Exit stop. The QTEs play during playback (entry, apex, exit),
+each with a timer, and while a QTE runs the cars stay at that phase with the road scrolling until the timer runs out. The Entry camera and
+Entry selection screen stay exactly as they were.
+- **Selection:** Entry is unchanged, and corner 1 Entry select frames are pixel-identical to shots10. At the Apex and Exit stops the road and props are now static:
+  the drawn scroll freezes while the scroller keeps running underneath, so the return to Entry (LINE LOCKED) is pixel-identical too.
+- **Playback:** after LINE LOCKED the car drives its line, holds at the Entry point (turn-in - 6 m), the Apex point (mid-arc) and the Exit point
+  (arc end + 6 m), the same E / A / X marks as the corner plate, and runs that phase's QTE there with the road still scrolling. Phase timer =
+  lead_ms + QTE_ZONE_BASE_MS + tail_ms (1.7 s), and at least result_hold_s after the score goes up. The sweep, zone, score
+  (max(0, 1 - |e| / (zone/2))) and unplayed = 0 are unchanged. The B.5a panel shows the phase being played, and the QTE panel sits under it with
+  the timer. The three scores go to `core.submit_qte()` at the end of playback, and `resolve_turn` averages them as before.
+- `qte_sweep.ready_s` is no longer used. Layout, timer text and hold points are PLACEHOLDERS (no Arthur frame).
+- **Shots:** `out/shots11/`. Full-turn GIF `turn1_full_qte_in_playback.gif` (640 px, 10 fps), with a repo copy `turn1_full_qte_in_playback_400.gif`;
+  `side_by_side_shots10_vs_shots11.png`; `entry_pixel_diff.txt`; `parity.txt`.

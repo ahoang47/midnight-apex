@@ -1,0 +1,175 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/hud/mirror_frame.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/hud/corner_plate.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/hud/gap_meter.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/hud/line_lock_timer.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/hud/debug_hud.gd" id="6"]
+[ext_resource type="Script" path="res://scripts/hud/lanes.gd" id="7"]
+[ext_resource type="Script" path="res://scripts/hud/entry_strip.gd" id="8"]
+[ext_resource type="Script" path="res://scripts/hud/plan_panel.gd" id="9"]
+[ext_resource type="Script" path="res://scripts/hud/line_locked_banner.gd" id="10"]
+[ext_resource type="Script" path="res://scripts/hud/qte_panel.gd" id="11"]
+[ext_resource type="Script" path="res://scripts/hud/line_vs_line.gd" id="12"]
+[ext_resource type="Script" path="res://scripts/hud/continue_prompt.gd" id="13"]
+[ext_resource type="Script" path="res://scripts/hud/finish_panel.gd" id="14"]
+[ext_resource type="Script" path="res://scripts/hud/main_menu.gd" id="15"]
+
+[node name="Hud" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 480.0
+mouse_filter = 2
+texture_filter = 1
+script = ExtResource("1")
+
+[node name="MirrorFrame" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 221.0
+offset_top = 13.0
+offset_right = 419.0
+offset_bottom = 93.0
+mouse_filter = 2
+script = ExtResource("2")
+
+[node name="CornerPlate" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 476.0
+offset_top = 12.0
+offset_right = 628.0
+offset_bottom = 96.0
+mouse_filter = 2
+script = ExtResource("3")
+
+[node name="GapMeter" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 203.0
+offset_top = 428.0
+offset_right = 403.0
+offset_bottom = 468.0
+mouse_filter = 2
+script = ExtResource("4")
+
+[node name="LineLockTimer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = 192.0
+offset_bottom = 57.0
+mouse_filter = 2
+script = ExtResource("5")
+
+[node name="DebugHud" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 14.0
+offset_top = 64.0
+offset_right = 192.0
+offset_bottom = 100.0
+mouse_filter = 2
+script = ExtResource("6")
+
+[node name="LineSelect" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 640.0
+offset_bottom = 480.0
+mouse_filter = 2
+
+[node name="Lanes" type="Control" parent="LineSelect"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 640.0
+offset_bottom = 480.0
+mouse_filter = 2
+script = ExtResource("7")
+
+[node name="EntryStrip" type="Control" parent="LineSelect"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 14.0
+offset_top = 430.0
+offset_right = 202.0
+offset_bottom = 466.0
+mouse_filter = 2
+script = ExtResource("8")
+
+[node name="PlanPanel" type="Control" parent="LineSelect"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 404.0
+offset_top = 313.0
+offset_right = 628.0
+offset_bottom = 468.0
+mouse_filter = 2
+script = ExtResource("9")
+
+[node name="LineLockedBanner" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 170.0
+offset_top = 108.0
+offset_right = 410.0
+offset_bottom = 172.0
+mouse_filter = 2
+script = ExtResource("10")
+
+[node name="QtePanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 150.0
+offset_top = 344.0
+offset_right = 490.0
+offset_bottom = 420.0
+mouse_filter = 2
+script = ExtResource("11")
+
+[node name="LineVsLine" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 120.0
+offset_top = 12.0
+offset_right = 466.0
+offset_bottom = 100.0
+mouse_filter = 2
+script = ExtResource("12")
+
+[node name="ContinuePrompt" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 200.0
+offset_top = 104.0
+offset_right = 460.0
+offset_bottom = 130.0
+mouse_filter = 2
+script = ExtResource("13")
+
+[node name="FinishPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 170.0
+offset_top = 300.0
+offset_right = 470.0
+offset_bottom = 398.0
+mouse_filter = 2
+script = ExtResource("14")
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 640.0
+offset_bottom = 480.0
+mouse_filter = 2
+script = ExtResource("15")

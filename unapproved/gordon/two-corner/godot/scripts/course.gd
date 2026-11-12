@@ -1,3 +1,4 @@
+@tool
 ## Continuous display track (Austin 2026-11-11 ~10 PM PT: "the two corners should be in the same district as part of a
 ## continuous 2-turn track"): straight, corner, straight, corner, straight as ONE road. Display only, never read by the sim.
 ## Same conventions as track.gd: forward of the first straight is -Z, lateral d > 0 = right of travel (tangent x up).

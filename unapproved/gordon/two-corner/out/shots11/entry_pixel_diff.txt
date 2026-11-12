@@ -1,0 +1,30 @@
+Entry camera / Entry selection pixel diff, shots10 (build 8063046172) vs shots11 (this build), same inputs spec/inputs/shots10_qte.json (seed 3), windowed 1280x960.
+A) real-time runs (out/shots10/run vs out/shots11/run):
+  seq_select0_0_640.png: differing pixels = 0 of 1228800
+  seq_select0_1_640.png: differing pixels = 0 of 1228800
+  seq_select0_2_640.png: differing pixels = 0 of 1228800
+  seq_select0_3_640.png: differing pixels = 0 of 1228800
+  seq_select0_4_640.png: differing pixels = 0 of 1228800
+  seq_select0_5_640.png: differing pixels = 0 of 1228800
+B) fixed 1/60 s step, old build d5aa56c vs this build (TEST-ONLY copies under /workspace/tmp/tc_fixA, tc_fixC; removes frame-timing jitter):
+  seq_lock0_0: differing pixels = 0; camera/rig/cars state identical; road scroll 261.46 m -> 261.46 m
+  seq_lock0_1: differing pixels = 0; camera/rig/cars state identical; road scroll 269.58 m -> 269.58 m
+  seq_lock0_2: differing pixels = 0; camera/rig/cars state identical; road scroll 275.33 m -> 275.33 m
+  seq_lock1_0: differing pixels = 815831; camera/rig/cars state identical; road scroll 823.54 m -> 783.54 m
+  seq_lock1_1: differing pixels = 678382; camera/rig/cars state identical; road scroll 831.67 m -> 791.67 m
+  seq_lock1_2: differing pixels = 687539; camera/rig/cars state identical; road scroll 837.42 m -> 797.42 m
+  seq_select0_0: differing pixels = 0; camera/rig/cars state identical; road scroll 7.50 m -> 7.50 m
+  seq_select0_1: differing pixels = 0; camera/rig/cars state identical; road scroll 12.92 m -> 12.92 m
+  seq_select0_2: differing pixels = 0; camera/rig/cars state identical; road scroll 17.50 m -> 17.50 m
+  seq_select0_3: differing pixels = 0; camera/rig/cars state identical; road scroll 22.50 m -> 22.50 m
+  seq_select0_4: differing pixels = 0; camera/rig/cars state identical; road scroll 27.50 m -> 27.50 m
+  seq_select0_5: differing pixels = 0; camera/rig/cars state identical; road scroll 32.50 m -> 32.50 m
+  seq_select1_0: differing pixels = 701537; camera/rig/cars state identical; road scroll 569.58 m -> 529.58 m
+  seq_select1_1: differing pixels = 691380; camera/rig/cars state identical; road scroll 575.00 m -> 535.00 m
+  seq_select1_2: differing pixels = 680340; camera/rig/cars state identical; road scroll 579.58 m -> 539.58 m
+  seq_select1_3: differing pixels = 628007; camera/rig/cars state identical; road scroll 584.58 m -> 544.58 m
+  seq_select1_4: differing pixels = 613066; camera/rig/cars state identical; road scroll 589.58 m -> 549.58 m
+  seq_select1_5: differing pixels = 678510; camera/rig/cars state identical; road scroll 594.58 m -> 554.58 m
+Corner 1 Entry selection and the LINE LOCKED return to Entry are pixel-identical. Corner 2 Entry selection has the same camera pose, rig and
+car positions; only the road texture phase differs, by 40.00 m of scroll, because corner 1's playback now has the three QTE holds
+(the road scroll is a clock that keeps running). The scene refactor alone (before the QTE-flow change) was pixel-identical on all 73 shots and 611 GIF frames (fixed step).

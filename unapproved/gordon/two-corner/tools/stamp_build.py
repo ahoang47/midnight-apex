@@ -1,6 +1,6 @@
 """Stamp the Godot build id into godot/spec/build.json (read by race_core.gd for the TC2 state token and the HUD).
 
-build = first 10 hex of sha1 over the files that decide what a seed does and shows: godot/project.godot, godot/scripts/*.gd,
+build = first 10 hex of sha1 over the files that decide what a seed does and shows: godot/project.godot, godot/scripts/**/*.gd, godot/scenes/*.tscn (since the scene refactor),
 godot/shaders/*, godot/spec/display.json, godot/spec/race_config.json. sim = the pinned sim commit (_pin HEAD).
 A token records both, so a seed replays on the build that made it (unapproved/gordon/playtest-state-spec.md §0.5).
 Usage: python3 tools/stamp_build.py   (run_parity.sh and the web export run it first)
@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 G = ROOT / "godot"
 files = [G / "project.godot", G / "spec" / "display.json", G / "spec" / "race_config.json"]
-files += sorted((G / "scripts").glob("*.gd")) + sorted(p for p in (G / "shaders").glob("*") if p.is_file() and not p.name.endswith(".uid"))
+files += sorted((G / "scripts").rglob("*.gd")) + sorted((G / "scenes").glob("*.tscn")) + sorted(p for p in (G / "shaders").glob("*") if p.is_file() and not p.name.endswith(".uid"))
 h = hashlib.sha1()
 for f in files:
     h.update(str(f.relative_to(G)).encode() + b"\0" + f.read_bytes() + b"\0")
