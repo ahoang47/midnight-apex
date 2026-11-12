@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-12 — Gordon [godot]: build decisions in the 01 design-canon block
+- **What:** added one "Build (Godot)" bullet to the locked block at the top of `design/01-system-overview.md`: Godot only, combat freeze with the two-corner exception, Exit→Entry lockout deleted, 640×480 render with a 1280×960 HUD (B.5c), QTE zone-width-only difficulty, three QTEs per turn with unplayed scoring 0, turn flow and pauses, passes, and nodestar.tech owned by Austin.
+- **Why:** Desmond asked each owner to populate the canon block (7c42a87) with Austin-approved decisions and their dates. Single-threaded web export is left out because it is my build setting, not an Austin decision.
+
 ## 2026-11-12 — Barry [sim][design]: mature #2 mod tier level floor live (slots-v2 fix b3, Austin approved)
 - **Ask:** Austin approved fix b3 from `unapproved/barry/slots-v2/RESULTS_v1v2.md` (2f6c437) at 6:55 AM PT: "Oh, neat. Yes approved."
 - **Change (`sim/velocity_shift/equations.py`):** new `MOD_TIER_LEVEL_FLOOR`, keyed by (round, 0-based play position) like the budget steps, plus `MOD_TIER_FLOOR_RUNG` (the mature #2 tier) and `MOD_TIER_FLOOR_MARGIN`.
