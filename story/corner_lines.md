@@ -1,6 +1,6 @@
 # Corner Lines: In-World Reasons
 
-Narrative flavor for the district corner lines. This file has no numbers. The letters (Defend, Steady, Attack for Entry/Apex/Exit) are Barry's `LINE_SET_C` in `sim/velocity_shift/equations.py`, read at `6fc87d5` and rechecked unchanged at `5e5d902`. Adherence and alt weights (`LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`) are Barry's too. If the table changes, the letters here follow it and only the reasons get rewritten.
+Narrative flavor for the district corner lines. This file has no numbers. The letters (Defend, Neutral, Attack for Entry/Apex/Exit) are Barry's `LINE_SET_C` in `sim/velocity_shift/equations.py`, read at `6fc87d5` and rechecked unchanged at `5e5d902`. Adherence and alt weights (`LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`) are Barry's too. If the table changes, the letters here follow it and only the reasons get rewritten.
 
 Alternative lines keep the main Entry. alt1 changes Apex and Exit, alt2 changes only Exit. The lane bluff (sitting in the wrong lane, design 06) is a separate layer and isn't covered here.
 
@@ -17,7 +17,7 @@ Alternative lines keep the main Entry. alt1 changes Apex and Exit, alt2 changes 
 | Esses | SSS: flow, with no stance changes and no lost momentum | SSS: same, since nobody wants to be the one who breaks rhythm on a bend | ASA: throw it in, settle, throw it out, loud at both ends |
 | Sweeper | SSA: hold the arc, power at the end | AAD: flat out through the long bend, then close the door on the exit before the straight | DDD: a long corner is a long time to defend |
 
-District habits, for barks: Touge preserves momentum (mostly Steady, Attack only on exits). Wangan commits where the road opens and shuts the door before the straights. Street fights for position (Defend-heavy, Attack as a lunge), except at intersections, where it waits out the cross street.
+District habits, for barks: Touge preserves momentum (mostly Neutral, Attack only on exits). Wangan commits where the road opens and shuts the door before the straights. Street fights for position (Defend-heavy, Attack as a lunge), except at intersections, where it waits out the cross street.
 
 ## Signature corners (first pass, draft 2026-11-11)
 

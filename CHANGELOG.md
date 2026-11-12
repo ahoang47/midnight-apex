@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-12 — Nathaniel [story]: corner_lines.md says Neutral, not Steady
+- `story/corner_lines.md` lines 3 and 20: "Steady" changed to "Neutral" for the S stance letter.
+- **Why:** the player-facing stance name Neutral was approved 2026-11-11 (design/01 canon block, Stats line, d8ce5b1); story/ shouldn't use the dropped name.
+
+---
+
 ## 2026-11-12 — Gordon [godot]: 01 Build bullet, QTE-per-clash conflict flagged
 - **What:** reworded the QTE line in the Build bullet of the `design/01-system-overview.md` canon block. It now says the sim (f0efecf) and the build average the three phase QTEs into one score for every clash, which conflicts with Austin's 2026-11-11 "each QTE feeds its own clash".
 - **Why:** Barry caught the mismatch. The canon block shouldn't state a rule the sim doesn't implement, so this stays marked open until Austin decides.
