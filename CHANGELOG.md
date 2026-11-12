@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-12 — Nathaniel [story]: corner_lines.md header matches the sim's new P/E/H letters
+- `story/corner_lines.md` header now says `LINE_SET_C` uses P/E/H (Barry's rename in 53267c5) instead of A/D/S. No line changed.
+
+---
+
 ## 2026-11-12 — Gordon [godot]: QTE rounding mirrored; two-corner re-pin to c3ffc41; qte_fn_test 1-ULP on intermediates
 
 - **Why:** Barry's sim commit c3ffc41 (Austin approved via Desmond, 2026-11-12) rounds each Entry / Apex / Exit raw score to 3 decimals so a 1-ULP libm difference in `erf`/`exp` (glibc 2.41 vs 2.43) cannot change gameplay. CI still compared Godot to the older pin (f0efecf), so this mirrors the rule and moves the pin.

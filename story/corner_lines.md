@@ -1,6 +1,6 @@
 # Corner Lines: In-World Reasons
 
-Narrative flavor for the district corner lines. This file has no numbers. Each line is written Entry-Apex-Exit by stat: **POW**, **EN** or **HAN** (Austin 2026-11-12: everything behind the screen refers to stats; IN/MID/OUT is only the on-screen lane, with OUT = POW, MID = HAN, IN = EN relative to the corner). The lines are Barry's `LINE_SET_C` (sim letters A/D/S = POW/EN/HAN) in `sim/velocity_shift/equations.py`, read at `6fc87d5` and rechecked unchanged at `5e5d902`. Adherence and alt weights (`LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`) are Barry's too. If the table changes, the lines here follow it and only the reasons get rewritten.
+Narrative flavor for the district corner lines. This file has no numbers. Each line is written Entry-Apex-Exit by stat: **POW**, **EN** or **HAN** (Austin 2026-11-12: everything behind the screen refers to stats; IN/MID/OUT is only the on-screen lane, with OUT = POW, MID = HAN, IN = EN relative to the corner). The lines are Barry's `LINE_SET_C` (sim letters P/E/H = POW/EN/HAN since 53267c5) in `sim/velocity_shift/equations.py`, read at `6fc87d5` and rechecked unchanged at `5e5d902`. Adherence and alt weights (`LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`) are Barry's too. If the table changes, the lines here follow it and only the reasons get rewritten.
 
 Alternative lines keep the main Entry. alt1 changes Apex and Exit, alt2 changes only Exit. The lane bluff (sitting in the wrong lane, design 06) is a separate layer and isn't covered here.
 
