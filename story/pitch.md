@@ -22,11 +22,13 @@ Inspired by:
 
 Races are structured as tactical encounters rather than traditional racing gameplay.
 
-Players dynamically choose between:
+Players dynamically choose a line through each phase of a corner (Entry, Apex, Exit):
 
-- Attack
-- Defend
-- Neutral
+- IN (needs EN)
+- MID (needs HAN)
+- OUT (needs POW)
+
+The car's stats are POW, EN and HAN.
 
 These decisions interact with:
 

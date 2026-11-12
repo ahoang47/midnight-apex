@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-11-12 — Nathaniel [story]: story/ uses POW/EN/HAN for stats and IN/MID/OUT for line choices
+- **Ask:** Austin in Exec Team (10:19 AM PT): stats are POW/EN/HAN across all mentions; line choices are IN/OUT/MID with a small note of the stat each needs; outside on a left and outside on a right are the same choice.
+- `story/corner_lines.md`: every line rewritten from sim letters to Entry-Apex-Exit choices (D = IN/EN, S = MID/HAN, A = OUT/POW, per the locked lane rule in design/06: inside = Defend, center = Neutral, outside = Attack). Header explains the notation; district-habit prose uses IN/MID/OUT with stats. No line changed.
+- `story/pitch.md`: the stance list now reads IN/MID/OUT with their stats, and names POW/EN/HAN as the stats.
+- Left alone: `story/barks.md` "Neutral" entries are mid-race momentum and tone headings, not stances.
+- **Why:** one naming scheme across the repo.
+
+---
+
 ## 2026-11-12 — Barry [sim]: QTE phase scores rounded to 3 decimals (`QTE_SCORE_DECIMALS`), Austin approved via Desmond, 2026-11-12
 - **Why:** CI's `tools/qte_fn_test.py` failed on the Ubuntu runner (glibc 2.43) with 337 one-ULP mismatches that the box (glibc 2.41) doesn't show. Rounding the score where it is computed stops a 1-ULP libm difference in `erf`/`exp` from reaching gameplay. Austin approved via Desmond, 2026-11-12.
 - **What (`sim/velocity_shift/equations.py`):** new `QTE_SCORE_DECIMALS = 3` and `round_qte_score(x) = floor(x * 10**3 + 0.5) / 10**3` (non-finite values pass through). `raw_qte_score` returns the rounded E[s], and `phase_raw_qte` rounds each Entry/Apex/Exit score. So `mean_phase_qte`, `q_eff`, clashes and progress only ever see rounded phase scores. `expected_hit_quality` itself stays unrounded, because the zone-width inversion bisects on it. The mean of three rounded phases is not re-rounded. A scalar passed straight to `resolve_turn` is still taken as-is.
