@@ -13,7 +13,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Within each 
 - **PC:** deflects about themselves; quick to decide what others think; earnest once locked on. Kept light.
 - **Jesse:** warm and easygoing. **Reiko:** sharp and businesslike.
 - **#1:** blunt, suspicious, sure he's right. **#2:** composed and polished, guilt leaks sideways. **#3:** charming and restless, avoids hard talks.
-- **Barkeep:** easygoing host; stays out of it.
+- **Malo (the barkeep):** easygoing host; stays out of it.
 - **Touge:** a big-brother boss; a young, gossipy crew. **Wangan:** the promoter (always selling); a polite, cliquey crew of professionals. **Street:** the influencer (on camera); a loud, online crew.
 
 **Rules for every crew line**
@@ -66,6 +66,14 @@ All dialogue in play order, scene by scene: beats plus rough lines. Within each 
 - **After the race 3 win:** Reiko sees the PC is serious and opens parts sales at full price (locked beat). The world opens up: wild races and the crews.
 - Reiko: "Fine. You can buy through me. Full price." (draft)
 - Jesse: "That's Reiko for 'nice job.'" (draft)
+
+### The DAQ log: first time (after opening race 2)
+- **Beat:** builds on the DAQ install in the garage intro (`scripts/prologue.md`). Jesse shows the PC the last race, corner by corner: the PC's line and the opponent's line (canon 29). The UI is Gordon's.
+- **Beat:** Jesse plugs a beat-up laptop into the car. (draft)
+- Jesse: "Every corner, your line, their line. It only holds one race, so look now before the next one writes over it." (draft)
+- PC: "Only one?" (draft)
+- Jesse: "It's a race logger, not a library. I pull the good stuff off every night." (draft)
+- Repeat garage barks after races: `barks.md` §5.
 
 ### PC backstory beat
 - `<OPEN: PC backstory beats across the game (Q6)>`. First pass: in the Prologue the PC dodges "where you from?" and Sabine doesn't push (already in scene 3).
@@ -217,9 +225,9 @@ All dialogue in play order, scene by scene: beats plus rough lines. Within each 
 - **Trigger:** early in Round 2, after the first crew rematch (whichever crew the PC takes on first), the debt hits zero; the exact race comes from Barry's season sim.
 - **Beat:** aero unlocks (bought from Reiko, tuned at the wind tunnel). Sabine takes the PC out for drinks at the speakeasy, the PC's first visit. `<OPEN: the speakeasy drinks scene (Q16)>`
 - Sabine (draft): "We're even. Come on. First round's on me."
-- Barkeep (draft): "Sabine brought someone. That's new." / "What are you drinking? I'll remember."
+- Malo (draft): "Sabine brought someone. That's new." / "What are you drinking? I'll remember."
 - Reiko (draft, about aero): "Aero parts are in. Tuning happens at the tunnel, not here."
-- Speakeasy name and barkeep name: `<OPEN: Q11>`.
+- Speakeasy name and location: `<OPEN: Q11>`. The barkeep's name is Malo (locked 2026-11-11).
 - **"Sabine's crew" intro (first pass 2026-11-05, needs more passes):** around the speakeasy, Jesse and Reiko introduce the PC to the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24).
 - Jesse (draft): "These people don't run crews. They run cars. You're in."
 - Reiko (draft): "Don't make me regret bringing you."
@@ -308,19 +316,19 @@ All dialogue in play order, scene by scene: beats plus rough lines. Within each 
 - **Jesse and Reiko at the rift (first pass 2026-11-05, needs more passes):** Reiko is stung — she let the PC in. Jesse refuses to smooth it over (subverting the Prologue beat where he softened Reiko's edge) and quietly points out that the PC decided without asking.
 - Jesse (draft): "You decided. You didn't ask."
 - Reiko (draft): "We're done talking."
-- **Finale rift:** Reiko goes strictly business (parts/shop stay open); Jesse stays quiet/strained (tuning/respec stay open). The warmth is gone.
-- **Reiko keeps the door open (Austin, 2026-11-10):** Because the PC and Reiko warmed up to each other over time (from "Wholesale is for crew. You're not crew." to wholesale to "Sabine's crew"), she's still willing to sell the PC parts after the confrontation: strictly business, but the door stays open. That's why the shop and the big Round 3 mods stay available during the Finale.
+- **Finale rift (locked, Austin 2026-11-11; replaces the 2026-11-10 wording):** Jesse shuts the PC out: no tuning or respecs for the PC, so the PC does those at the reverse speakeasy with Malo. Reiko drops wholesale (back to full price) but still sells to the PC, because she's a business owner. The warmth is gone.
+- **The DAQ log after the rift (locked):** the PC plugs into the logger and pulls the last race themselves. Jesse has no line.
 
 ### After the Mentor Confrontation: big finale mods (Round 3 complete)
 - **Trigger:** all three Round 3 crew bosses beaten (Round 3 complete).
-- **Beat:** the big finale mods unlock, bought from Reiko. Strictly business, but she still sells to the PC.
+- **Beat:** the big finale mods unlock, bought from Reiko at full price (no wholesale after the rift). She still sells to the PC because she's a business owner.
 - Reiko (draft): "New stock's in. Prices are on the tag."
 
 ---
 
 ## Finale — Myth Driver races
 
-Order (locked): Touge #1 → Wangan #2 → Street #3. Like wild races, Myth Driver race results don't persist (canon 27). How each real reason comes out to the PC is `<OPEN: Q10>`.
+Order (locked): Touge #1 → Wangan #2 → Street #3. Tuning and respecs happen at the reverse speakeasy with Malo, and the PC reads the DAQ log alone (locked 2026-11-11). Like wild races, Myth Driver race results don't persist (canon 27). How each real reason comes out to the PC is `<OPEN: Q10>`.
 
 ### Myth Driver #1 race (Touge)
 - **Beat:** he insists Sabine left on her own the night of the sweep (first pass). It sounds settled until #2's race.

@@ -1,6 +1,6 @@
 # Corner Lines: In-World Reasons
 
-Narrative flavor for the district corner lines. This file has no numbers. The letters (Defend, Steady, Attack for Entry/Apex/Exit) are Barry's `LINE_SET_C` in `sim/velocity_shift/equations.py`, read at `6fc87d5`. Adherence and alt weights (`LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`) are Barry's too. If the table changes, the letters here follow it and only the reasons get rewritten.
+Narrative flavor for the district corner lines. This file has no numbers. The letters (Defend, Steady, Attack for Entry/Apex/Exit) are Barry's `LINE_SET_C` in `sim/velocity_shift/equations.py`, read at `6fc87d5` and rechecked unchanged at `5e5d902`. Adherence and alt weights (`LINE_ADHERENCE`, `LINE_ALT_WEIGHTS`) are Barry's too. If the table changes, the letters here follow it and only the reasons get rewritten.
 
 Alternative lines keep the main Entry. alt1 changes Apex and Exit, alt2 changes only Exit. The lane bluff (sitting in the wrong lane, design 06) is a separate layer and isn't covered here.
 
@@ -19,9 +19,29 @@ Alternative lines keep the main Entry. alt1 changes Apex and Exit, alt2 changes 
 
 District habits, for barks: Touge preserves momentum (mostly Steady, Attack only on exits). Wangan commits where the road opens and shuts the door before the straights. Street fights for position (Defend-heavy, Attack as a lunge), except at intersections, where it waits out the cross street.
 
+## Signature corners (first pass, draft 2026-11-11)
+
+Austin's framing (locked, canon 30): each district has a handful of signature corners the player learns. On those, everyone in the district (wild racers, crew members and the crew boss) shares the same standard line and the same bluff. On every other corner, wild racers share one line and bluff, and named characters drive their own style (`plot.md` districts, Myth Driver sheets).
+
+The corner choice below is a first pass, pending Barry's check. How it maps to the sim (which alternative counts as the shared bluff, adherence) is `<TBD: Barry>`. Each standard line is the district's main line above; no letters change.
+
+| District | Signature corner | Standard line | Why everyone here drives it this way |
+|---|---|---|---|
+| Touge | Hairpin | DSA | Brake inside, roll the apex, drive off the turn: momentum down the hill is how the mountain passes |
+| Touge | Esses | SSS | Flow with no stance changes: nobody on the mountain breaks rhythm and loses momentum |
+| Touge | Decreasing radius | SDS | The mountain pinches, so protect at the late apex and smooth out |
+| Wangan | Sweeper | AAD | Flat out through the long bend, then close the door before the straight |
+| Wangan | Increasing radius | AAD | The road opens, so go flat out, then shut the door so the car behind can't use your draft |
+| Wangan | Constant radius | SAA | The road stays open, so commit from the apex on |
+| Street | 90-degree | SSA | It's an intersection: hold your lane through the cross street, then punch it out |
+| Street | Chicane | DAA | Protect the entry, then muscle through the flick |
+| Street | Hairpin | DDA | Hold the inside through the apex so nobody gets a nose in, then go |
+
+Why these three: Touge's are the mountain's corners, Wangan's the open-highway corners, Street's the city-block corners.
+
 ## Alternative lines
 
-An alternative is the line a driver takes when they think you've learned their district's habit. The lane and Entry stay honest; the difference shows at the apex (alt1) or only at the exit (alt2). By rung (pending Open Question 17):
+An alternative is the line a driver takes when they think you've learned their district's habit. The lane and Entry stay honest; the difference shows at the apex (alt1) or only at the exit (alt2). On a signature corner the bluff is shared by everyone in the district (canon 30), so the who-and-why on those rows is the bark hook for who's best known for it, not who alone uses it. On every other corner the rung entries are a first pass at named characters' styles. By rung (pending Open Question 17):
 - Kids: alts read as nerve or ego, not craft, either a cocky overcommit or a flinch.
 - Mature members: deliberate counters ("I know you know").
 - Old heads: habits from "that night" and the old generation, invisible until the apex and the hardest to learn.

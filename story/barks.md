@@ -366,3 +366,22 @@ Boss dialogue should react to QTE streaks, momentum swings, signature moves, and
 - "This is where racers reveal themselves."
 - "Push harder."
 - "Don't disappoint me now."
+
+---
+
+# 5. Garage: Jesse's DAQ Log (canon 29)
+
+Jesse offers the last race's DAQ log in the garage after races: each corner, the PC's line and the opponent's line. The logger holds only one race. First-time scene: `dialogue_outline.md` Prologue. All lines are drafts.
+
+### Offer (any result)
+- "Want to run back the last one?"
+- "Logger's still got it."
+
+### After a Loss
+- "Don't guess why. Let's look."
+
+### After a Win
+- "Nice. Let's see if that was skill or luck."
+
+### After the Mentor Confrontation (locked)
+- No Jesse line. The PC plugs into the logger and pulls the last race themselves.

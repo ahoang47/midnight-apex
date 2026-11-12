@@ -6,7 +6,7 @@
 - [Myth Driver #1](myth_driver_1.md) — Antagonist / Former ally (Touge)
 - [Myth Driver #2](myth_driver_2.md) — Former friend / Resentful rival (Wangan)
 - [Myth Driver #3](myth_driver_3.md) — Former friend / Left without a goodbye (Street)
-- [The Barkeep](barkeep.md) — Owner of the reverse speakeasy (name `<TODO>`)
+- [Malo (the Barkeep)](barkeep.md) — Owner of the reverse speakeasy
 
 Myth Drivers tone note: the scene mythologizes them similarly to how SpaceX employees are in the books by Eric Berger (canon 1).
 

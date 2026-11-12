@@ -52,6 +52,8 @@ The goal is to create:
 
 without relying on simulator driving execution.
 
+Races move fast, so Jesse's DAQ keeps the last race for playback: the DAQ log lists every corner with the player's line and the opponent's line, so the player can study what happened (canon 29).
+
 ---
 
 # Core Gameplay Loop
@@ -132,6 +134,7 @@ Each district contains:
 - one main crew and its crew boss, each round run from its kids to its mature members to its old heads to the boss, and leveled up for the next round
 - race organizers
 - unique tactical identities and AI behavior patterns
+- a handful of signature corners every local drives the same way, the district habit the player learns; off them, named racers each drive their own style (canon 30)
 
 ---
 
