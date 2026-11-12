@@ -701,9 +701,9 @@ The meter is scaled to the normalized lead `(cum_p - cum_o) / (cum_p + cum_o)`, 
 
 ```gdscript
 const COLORS = {
-    ATTACK:  Color("#16a34a"),
-    DEFEND:  Color("#dc2626"),
-    NEUTRAL: Color("#d97706"),
+    ATTACK:  Color("#2CB84A"),  # green — art_direction.md:252 (B.5)
+    DEFEND:  Color("#E8282C"),  # red — art_direction.md:252 (B.5)
+    NEUTRAL: Color("#F0C828"),  # yellow, dark text — art_direction.md:252 (B.5)
 }
 
 func display_summary(player_stances: Array[int], opponent_stances: Array[int])

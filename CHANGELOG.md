@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-11 — Gordon [godot]: build guide §10.3 stance colours now match art_direction.md B.5
+- **What:** `design/godot-build-guide.md` §10.3 `ClashDisplay.gd` COLORS now use the art doc values (`design/art/art_direction.md:252`): Attack `#2CB84A` (green), Defend `#E8282C` (red), Neutral `#F0C828` (yellow, dark text), replacing the legacy `#16a34a` / `#dc2626` / `#d97706`.
+- **Why:** Arthur relayed that Austin asked for the stance colours to be aligned; Austin's own 2026-11-11 instruction was to make Attack/POW green and Defend/EN red in all docs. The two-corner build already uses the art doc values, so no build change.
+
 ## 2026-11-11 — Barry [sim]: slots-v2, Austin's 2 POW / 2 EN / 2 HAN layout with window + aero, grind wall and price check, added to `design/unapproved/slots-v2/` (**NOT approved**)
 - **What:** this reruns the slot sim on Austin's layout: 6 slots = 3 categories × 2, with secondary splits of 100/0/0, 80/10/10 and 70/20/10 (placeholders). The run adds:
   - a window mod (+75%, 1.15 × w0 cap) and an aero part (pool 10/20/30%, retuned every race, inside the 105% cap, from the second R2 crew). Each goes in any slot, at most one of each;
