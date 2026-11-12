@@ -1,17 +1,18 @@
-## 1:1 port of sim/velocity_shift/equations.py + combat.py playable engine (pinned commit, see sim_constants.gd PIN_COMMIT). Stances are letters A/S/D.
-## Pin f0efecf (Austin approved the re-pin 2026-11-11 10:56 PM PT): qte-v1 visible zone, no knot_window factor in clash_progress,
-## Entry / Apex / Exit phase scores averaged into the turn's raw_qte. The old PROVISIONAL W=1 hook is gone (its hidden window no longer exists).
+## 1:1 port of sim/velocity_shift/equations.py + combat.py playable engine (pinned commit, see sim_constants.gd PIN_COMMIT).
+## Stances are letters P/E/H (Stance.POW/EN/HAN). Pin 50928ed (includes 53267c5 rename + c3ffc41 QTE rounding).
+## qte-v1 visible zone, no knot_window factor in clash_progress, Entry / Apex / Exit phase scores averaged into the turn's raw_qte.
 extends RefCounted
 const C = preload("res://scripts/sim_constants.gd")
-const LETTERS := ["A", "S", "D"]  # _INDEX_STANCE order: Attack, Neutral (letter S = Stance.NEUTRAL; player-facing NEU, Q6 2026-11-11), Defend
+const LETTERS := ["P", "H", "E"]  # _INDEX_STANCE order: POW, HAN, EN (models.py Stance member order is POW, EN, HAN)
 const WIN := 1
-const NEUTRAL := 0
+const DRAW := 0  # StanceOutcome.DRAW
 const LOSS := -1
 
 static func resolve_stance(a: String, b: String) -> int:
 	if a == b:
-		return NEUTRAL
-	if (a == "A" and b == "S") or (a == "S" and b == "D") or (a == "D" and b == "A"):
+		return DRAW
+	# POW beats HAN, HAN beats EN, EN beats POW (equations.py resolve_stance)
+	if (a == "P" and b == "H") or (a == "H" and b == "E") or (a == "E" and b == "P"):
 		return WIN
 	return LOSS
 
@@ -44,7 +45,7 @@ static func clash_payoff(outcome: int, q: float) -> float:
 	var t := timing_value(q)
 	if outcome == WIN:
 		return C.W0 + (1.0 - C.W0) * t
-	if outcome == NEUTRAL:
+	if outcome == DRAW:
 		return C.T_MAX * t
 	return C.L_MAX * t
 
@@ -267,7 +268,7 @@ static func mean_phase_qte(value) -> float:
 
 ## one press in the visible zone, from the score definition in expected_hit_quality's docstring (equations.py:315):
 ## s = max(0, 1 - |e| / (w/2)), e = press time - zone centre, w = zone width in ms. GAME-SIDE (the sim never sees a press).
-## The geometric score is unrounded here; callers store round_qte_score(hit_quality(...)) so the HUD and the TC2 token
+## The geometric score is unrounded here; callers store round_qte_score(hit_quality(...)) so the HUD and the TC3 token
 ## see the same rounded phase score that phase_raw_qte / the sim use.
 static func hit_quality(err_ms: float, zone_ms: float) -> float:
 	if zone_ms <= 0.0: return 0.0

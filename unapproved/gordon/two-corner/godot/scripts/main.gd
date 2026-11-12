@@ -80,7 +80,7 @@ var fin := {"items": ["RESTART SAME SEED", "NEW RACE", "MAIN MENU"], "sel": 0}
 var next_random_seed = null  # test harness preset for NEW RACE / RANDOM
 var shot_pre := ""
 # ── PLAN THE LINE selection (display/input only; every pick still goes through core.pick(hand index)) ──
-const PLAN_ORDER := ["A", "S", "D"]   # rows: Attack / Neutral / Defend = OUT / MID / IN
+const PLAN_ORDER := ["P", "H", "E"]   # rows: POW / HAN / EN; on-screen lanes OUT / MID / IN
 var plan_sel := 0
 # ── B.5b camera stops (display only): stop 0 = Entry (chase, rival visible), 1 = Apex, 2 = Exit (corner geometry, no cars) ──
 var SC: Dictionary
@@ -349,7 +349,7 @@ func _setup_corner() -> void:
 	zone_ms = core.zone_ms()
 	plan_sel = 0; _plan_fix_sel(0)
 	last_stop = 0; stop_t = 99.0; stop_from = null; lock_hold_t = 99.0; lock_from = null
-	rival_lane_d = Track.lane_offset(core.entry_tell().lane, c.dir, disp.lane_width_m)
+	rival_lane_d = Track.lane_offset_for_stance(core.entry_tell().stance, c.dir, disp.lane_width_m)
 	rival_offset_target = Track.rival_draw_offset(core.lead(), disp.visual_gap)
 	scroller.transition_to_straight()
 	if first_corner:
@@ -431,7 +431,7 @@ func _continue() -> void:
 ## Entry lane with Left / Right (Austin 2026-11-11: "left and right don't scroll left and right when selecting an entry lane").
 ## Moves to the next drawn lane in that on-screen direction: a left corner has IN on the left, a right corner has OUT on the left.
 ## No wrap; lanes with none drawn are skipped.
-func _screen_lanes() -> Array: return ["D", "S", "A"] if String(core.corner().dir) == "L" else ["A", "S", "D"]
+func _screen_lanes() -> Array: return ["E", "H", "P"] if String(core.corner().dir) == "L" else ["P", "H", "E"]
 func _plan_lane_step(dir: int) -> void:
 	var order := _screen_lanes(); var a := _plan_avail()
 	var j: int = order.find(PLAN_ORDER[plan_sel]) + dir
@@ -457,7 +457,7 @@ func _plate_icon() -> Dictionary:
 
 ## stance availability = copies in the hand minus picks already used
 func _plan_avail(skip_first := false) -> Dictionary:
-	var a := {"A": 0, "S": 0, "D": 0}
+	var a := {"P": 0, "H": 0, "E": 0}
 	for h in core.hand: a[h] += 1
 	for j in core.picks.size():
 		if skip_first and j == 0: continue
@@ -573,14 +573,14 @@ func _shot(name: String) -> void:
 
 func dump_state() -> String:
 	var tok := RaceCore.encode_token(core.dump())
-	print("TC2 token ", tok)
+	print("TC3 token ", tok)
 	DisplayServer.clipboard_set(tok)
 	var f := FileAccess.open("user://last_state.tc1", FileAccess.WRITE); f.store_string(tok)
 	return tok
 
 func load_state(tok: String) -> void:
 	var d := RaceCore.decode_token(tok)
-	if d.is_empty(): return   # TC1 (pre-f0efecf build): refused with a message, replay it on its own build
+	if d.is_empty(): return   # outdated TC1/TC2: refused with a message, replay it on its own build
 	var n = RaceCore.new(); n.load_state(cfg, d); core = n
 	first_corner = true
 	_setup_corner()
@@ -592,7 +592,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if mode == "RACE" and k == KEY_F9: dump_state()
 	elif mode == "RACE" and k == KEY_F10:
 		var t := DisplayServer.clipboard_get()
-		if t.begins_with("TC1:") or t.begins_with("TC2:"): load_state(t)
+		if t.begins_with("TC1:") or t.begins_with("TC2:") or t.begins_with("TC3:"): load_state(t)
 	else: handle_key(k)
 
 const SEQ_SELECT_N := 6
@@ -882,7 +882,7 @@ func _render_hud() -> void:
 	if core.phase == "SELECT" and mode == "RACE":   # player lane chevrons over the road ahead (post_v5.py:66); never a rival-lane marker (B.4)
 		lanes = {}
 		var ahead: float = s_player + clampf(turn_m, 14.0, 40.0)
-		var ln := {"A": "outside", "S": "center", "D": "inside"}
+		var ln := Track.LANE_FOR
 		for k in ln:
 			var wp := _pp(straight_path, ahead, Track.lane_offset(ln[k], c.dir, disp.lane_width_m), 0.05)
 			lanes[k] = null if cam.is_position_behind(wp) else cam.unproject_position(wp)
@@ -920,7 +920,7 @@ func _build_course() -> void:
 	course = tr.course; views = tr.views; straights = tr.straights
 
 func _lane_d(stance: String) -> float:
-	return Track.lane_offset({"A": "outside", "S": "center", "D": "inside"}[stance], String(core.corner().dir), disp.lane_width_m)
+	return Track.lane_offset_for_stance(stance, String(core.corner().dir), disp.lane_width_m)
 
 ## the car drives its line: Entry lane up to turn-in, Apex lane at mid-arc, Exit lane past the arc (lane/stance = the Entry rule,
 ## borrowed for Apex / Exit as in the B.5b frames' labels). Blend distances are PLACEHOLDERS (display.json playback_flow).

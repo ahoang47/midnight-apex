@@ -13,7 +13,7 @@ math has no knot_window factor at this pin (the old PROVISIONAL W=1 hook is reti
 qte_zone_width(r, qte_window_mod) at the race's fixed r (match.py:190-192), reported per corner.
 
 Timer-expiry auto-fill (guide §4.2, Godot-only UX): remaining slots take the stance with
-the highest remaining count; ties broken in index order Attack, Neutral (letter S), Defend. No RNG.
+the highest remaining count; ties broken in index order POW, HAN, EN (letters P, H, E). No RNG.
 """
 import argparse, json, struct, sys
 from pathlib import Path
@@ -26,8 +26,8 @@ from velocity_shift.equations import phase_raw_qte, mean_phase_qte, qte_zone_wid
 from velocity_shift.combat import pick_line, draw_weighted_hand, resolve_turn, line_triples, parse_line  # noqa: E402
 from velocity_shift.models import CombatantStats, TurnState, Stance  # noqa: E402
 
-LET = {Stance.ATTACK: "A", Stance.NEUTRAL: "S", Stance.DEFEND: "D"}
-ORDER = [Stance.ATTACK, Stance.NEUTRAL, Stance.DEFEND]
+LET = {Stance.POW: "P", Stance.HAN: "H", Stance.EN: "E"}
+ORDER = [Stance.POW, Stance.HAN, Stance.EN]  # same tie-break index order as _INDEX_STANCE / autofill
 
 
 class CountingRandom(Random):
@@ -43,8 +43,8 @@ def autofill(hand_letters, picked_idx):
     out = list(picked_idx)
     while len(out) < 3:
         rem = [i for i in range(len(hand_letters)) if i not in used]
-        counts = {s: sum(1 for i in rem if hand_letters[i] == s) for s in "ASD"}
-        best = max("ASD", key=lambda s: (counts[s], -"ASD".index(s)))
+        counts = {s: sum(1 for i in rem if hand_letters[i] == s) for s in "PHE"}
+        best = max("PHE", key=lambda s: (counts[s], -"PHE".index(s)))
         i = next(i for i in rem if hand_letters[i] == best)
         out.append(i); used.add(i)
     return out

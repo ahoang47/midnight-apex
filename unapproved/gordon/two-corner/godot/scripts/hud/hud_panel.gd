@@ -5,16 +5,17 @@
 ## the drawn positions stay those of the approved frames (post_lsc.py / post_clash.py / post_v5.py) unless the code changes.
 @tool
 extends Control
-## Stance UI colours (Austin 2026-11-11, swapped the same day): ATK/POW green #2CB84A, DEF/EN red #E8282C, NEU/HAN yellow #F0C828 with dark text.
-## Letter 'S' is the sim's internal code for Neutral (race_core.gd / combat.gd are unchanged).
-const STANCE := {"A": Color8(44, 184, 74), "S": Color8(240, 200, 40), "D": Color8(232, 40, 44)}
-const CHECK_GREEN := Color8(44, 184, 74)  # breadcrumb tick; not a stance colour (stays green after the DEF/EN swap to red)
-const NAME := {"A": "ATK", "S": "NEU", "D": "DEF"}
-const FULL := {"A": "Attack", "S": "Neutral", "D": "Defend"}   # option names: '<Stance> <phase>' (Austin's final call, 07:34)
-const TAG := {"A": "POW", "S": "HAN", "D": "EN"}               # stat-tag chips (lane_chain/v5/post_v5.py:59)
-const LANE := {"A": "OUT", "S": "MID", "D": "IN"}              # same lane rule as the entry tell (race_core.gd entry_tell)
-const ORDER := ["A", "S", "D"]
+## Stance UI colours (Austin 2026-11-11, swapped the same day; names POW/EN/HAN as of 2026-11-12): POW green #2CB84A, EN red #E8282C, HAN yellow #F0C828 with dark text.
+## Keys are the sim letters P/E/H. IN/MID/OUT is the on-screen lane only (OUT = POW, MID = HAN, IN = EN).
+const STANCE := {"P": Color8(44, 184, 74), "H": Color8(240, 200, 40), "E": Color8(232, 40, 44)}
+const CHECK_GREEN := Color8(44, 184, 74)  # breadcrumb tick; not a stance colour
+const NAME := {"P": "POW", "H": "HAN", "E": "EN"}
+const LANE := {"P": "OUT", "H": "MID", "E": "IN"}
+const ORDER := ["P", "H", "E"]
 const PH := ["ENTRY", "APEX", "EXIT"]
+## on-screen lane label, e.g. "OUT (POW)"
+static func lane_stat(k: String) -> String:
+	return "%s (%s)" % [LANE[k], NAME[k]]
 const PHL := ["entry", "apex", "exit"]
 # lane_chain/v5/post_v5.py:15-17 + 76
 const AMBER := Color8(255, 176, 40); const AMBER_D := Color8(150, 80, 14)
@@ -95,7 +96,7 @@ func chip(x1: float, y: float, label: String, col: Color, dim := false, pending 
 	elif dim:
 		outline(pts, dimc(col, 0.55)); t2(x0 + w / 2, y + 1, label, sz, dimc(col, 0.7), false, "m", false)
 	else:
-		solid(pts, col); outline(pts, INK); t2(x0 + w / 2, y + 1, label, sz, INK if col == STANCE.S else Color.WHITE, false, "m", false)
+		solid(pts, col); outline(pts, INK); t2(x0 + w / 2, y + 1, label, sz, INK if col == STANCE["H"] else Color.WHITE, false, "m", false)
 	return w
 
 ## 6x9 bitmap font (debug boxes, menu, gap meter)
@@ -121,10 +122,10 @@ func rect(x: float, y: float, w: float, h: float, col: Color) -> void: draw_rect
 
 func lpanel(x0: float, y0: float, x1: float, y1: float, col: Color = L_EDGE, c := 5.0) -> void:
 	var p := cut_panel(x0, y0, x1, y1, c); semi(p, PANEL); outline(p, col)
-## stance chip (post_clash.py:39-42): 49 x 14 slanted, label = ATK / DEF / NEU
+## stance chip (post_clash.py:39-42): 49 x 14 slanted, label = POW / EN / HAN
 func lchip(x: float, y: float, k: String, w := 49.0) -> void:
 	var p := P([x + 4, y, x + w, y, x + w - 4, y + 14, x, y + 14]); solid(p, STANCE[k]); outline(p, L_INK)
-	t2(x + w / 2, y + 7, NAME[k], 11, L_INK if k == "S" else Color.WHITE, false, "m", false, true)
+	t2(x + w / 2, y + 7, NAME[k], 11, L_INK if k == "H" else Color.WHITE, false, "m", false, true)
 ## RESULT chip (post_clash.py:43-47)
 func lres(cx: float, y: float, o: int) -> void:
 	var w := 49.0; var x := cx - floorf(w / 2); var p := P([x + 4, y, x + w, y, x + w - 4, y + 14, x, y + 14])

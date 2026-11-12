@@ -376,10 +376,10 @@
   }
  },
  "stance_ui": {
-  "_source": "UI stance colours approved by Austin 2026-11-11, then swapped the same day (Attack/POW green, Defend/EN red): A #2CB84A, D #E8282C, S #F0C828. Neutral unchanged. Earlier that day the mockups used A #E8282C / D #2CB84A (tones/work/lane/post_v5.py:14, lane_chain/v5/post_v5.py:14, pattern_read/compose_mockups.py:10). Supersedes design/godot-build-guide.md@55b9063:940-942 (#dc2626/#16a34a/#d97706, 2026-10-31). Third stance = Neutral/NEU (art_direction.md@55b9063 Q6)",
-  "A": "#2CB84A",
-  "D": "#E8282C",
-  "S": "#F0C828",
+  "_source": "UI stance colours approved by Austin 2026-11-11, then swapped the same day (POW green, EN red): P #2CB84A, E #E8282C, H #F0C828. Keys renamed A/D/S -> P/E/H on 2026-11-12 (Austin: backend is POW/EN/HAN; IN/MID/OUT is visual only). Earlier that day the mockups used A #E8282C / D #2CB84A (tones/work/lane/post_v5.py:14, lane_chain/v5/post_v5.py:14, pattern_read/compose_mockups.py:10). Supersedes design/godot-build-guide.md@55b9063:940-942 (#dc2626/#16a34a/#d97706, 2026-10-31). Third stance was Neutral/NEU at art_direction.md@55b9063 Q6; it is HAN as of 2026-11-12.",
+  "P": "#2CB84A",
+  "E": "#E8282C",
+  "H": "#F0C828",
   "ink": "#08080E",
   "panel": "#0A0E24",
   "edge": "#D2E6FF",

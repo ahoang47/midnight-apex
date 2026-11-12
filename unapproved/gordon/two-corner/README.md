@@ -1,13 +1,13 @@
 # Two-corner engine test (Godot 4.6.3)
 
-> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. Phase 5 UI/camera follows AD B.5a/B.5b at **ab1c4a1**. It is the one exception to the combat freeze. The sim is pinned at **c3ffc41** (`c3ffc41791bdf86c249c5b1913b84eb6898620fc`, Barry's QTE phase-score rounding to 3 decimals on top of per-phase averaging / the qte-v1 visible zone; re-pinned from f0efecf, Austin approved via Desmond 2026-11-12). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
+> **UNAPPROVED.** This is the two-corner engine test, with provisional numbers. Phase 5 UI/camera follows AD B.5a/B.5b at **ab1c4a1**. It is the one exception to the combat freeze. The sim is pinned at **50928ed** (`50928ed0e268277e50f97a68c7d71151078e976e`, newest proto-build containing Barry's 53267c5 POW/EN/HAN rename and the c3ffc41 QTE rounding; Austin's 2026-11-12 naming rule: backend is POW/EN/HAN, IN/MID/OUT is visual only). The palette is Arthur's B.2a, committed at **55b9063** (`55b90630ce777fa8f9fffac7c243dd341d158725`).
 
 > **2026-11-11: Three.js dropped (Austin).** The Godot build is the only one worked on and tested; parity is Godot vs the pinned sim.
 > Notes below that mention `threejs/` are historical; that tree is not in this copy.
 
-This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at c3ffc41), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
+This copy lives at `unapproved/gordon/two-corner/` in the repo (Austin's 2026-11-11 directive: unapproved work that other bots need to reference goes in `unapproved/<owner>/`). The original `_pin/` worktree (sim at 50928ed), `threejs/`, the Godot web export, and the rest of `out/` are not included here. Key composites are under `out/shots5/composites/` (the Phase 4 composites were superseded and removed; they are in git history).
 
-Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `c3ffc41` (`git worktree add _pin c3ffc41`); do not use this branch's live `sim/`, which may move on (later 53267c5 is a stat-name rename only; this pin stays on c3ffc41 until Godot mirrors those names). `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` no longer writes the Three.js constants file (shots10).
+Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_run_match.py`, `spec/gen_constants.py`) look for `_pin/sim`. To re-run them, point those tools at a checkout of `50928ed` (`git worktree add _pin 50928ed`); do not use this branch's live `sim/`, which may move on. sim/ is unchanged after 53267c5. `spec/gen_art.py` also reads the logo from `_pin/art/logo/final/`. `spec/gen_constants.py` no longer writes the Three.js constants file (shots10).
 
 ## Layout
 - `spec/gen_constants.py` imports the pinned `equations.py` and writes `godot/scripts/sim_constants.gd`, citing `equations.py:<line>`
@@ -47,14 +47,14 @@ Tools that import the pinned sim (`tools/sim_parity.py`, `tools/check_driver_vs_
     (Hidden legacy: 1-6 still pick a hand index directly.)
   - QTE (after LINE LOCKED, at the Entry, Apex and Exit camera stops): Space when the cursor is in the amber zone; no press before
     the cursor passes the zone's far edge = unplayed = 0
-  - F9 dumps a TC2 token (clipboard + console / user://last_state.tc1, file name unchanged), F10 loads one from the clipboard
+  - F9 dumps a TC3 token (clipboard + console / user://last_state.tc1, file name unchanged), F10 loads one from the clipboard
 
 ## State token
-Since shots10: `TC2:<sim7>:<build10>:<base64url(json)>:<CRC-16/CCITT-FALSE>`, spec in `unapproved/gordon/playtest-state-spec.md` §0.5.
+Since this pass: `TC3:<sim7>:<build10>:<base64url(json)>:<CRC-16/CCITT-FALSE>`, spec in `unapproved/gordon/playtest-state-spec.md` §0.5.
 It records the sim pin and the build id (`tools/stamp_build.py` -> `godot/spec/build.json`), the seed, and every completed turn's picks and
 exact phase scores (IEEE-754 bits). Load replays them through the core and checks rng draws and total bits ("replay desync" otherwise).
-`python3 tools/decode_token.py '<token>'` decodes TC2 and TC1. TC1 tokens (sim 212eaab, builds up to 4322b31) replay on that build only.
-Stance letters in `line`, `hand` and `player_line`: `A` = Attack, `S` = **Neutral** (the sim's internal letter for `Stance.NEUTRAL`; shown as NEU), `D` = Defend.
+`python3 tools/decode_token.py '<token>'` decodes TC3, and flags older TC2/TC1 as outdated tokens. TC2 (A/S/D letters) and TC1 (sim 212eaab) must be replayed on the build that made them.
+Stance letters in `line`, `hand` and `player_line`: `P` = POW, `E` = EN, `H` = HAN. On screen the lane is written **OUT (POW)**, **MID (HAN)**, **IN (EN)**.
 
 ## Phase 2 (display only, parity unchanged): scrolling straight + authored corner camera
 - STRAIGHT (whole selection timer): StraightRoad strip mesh (road/verge/barrier textures from spec/gen_textures.py) scrolled by UV offset
@@ -99,13 +99,13 @@ Sources (pin 212eaab): `design/art/art_direction.md` (Part A binding for cars, P
   `/workspace/mockups/tones/work/tones.py` preset `blend50` into `spec/display.json` `palette` (fog #0B172B, zenith #010408, no city glow,
   ambient #5575A0 x0.8, every lamp #F0C894 x0.85, 3-step pools x0.09, bloom 0.22 / threshold 0 as a glow-only pass, saturation 1.05).
   `palette.calib` holds display calibration gains (not doc values) that scale the mockup light terms onto our stand-in textures.
-- Stance UI colours (Austin, swapped 2026-11-11): ATK/POW #2CB84A (green), DEF/EN #E8282C (red), NEU/HAN #F0C828 (yellow) with dark text on yellow (`display.json` `stance_ui`).
-- Third stance is **Neutral / NEU** everywhere player-facing (Q6, Austin). The sim keeps the internal letter `S` (combat.gd, race_core.gd unchanged).
+- Stance UI colours (Austin, swapped 2026-11-11; names as of 2026-11-12): POW #2CB84A (green), EN #E8282C (red), HAN #F0C828 (yellow) with dark text on yellow (`display.json` `stance_ui`).
+- Backend, data, tokens and docs name stances by stat only (POW / EN / HAN, letters P / E / H). IN / MID / OUT is the on-screen lane (OUT = POW, MID = HAN, IN = EN), written **OUT (POW)** on the HUD.
 - Filtering (Q4): world textures smooth (linear; the car albedo uses mipmaps per the A.8 shader sketch), no other mips. HUD stays crisp:
   NimbusSansNarrow Bold / BoldOblique at 1-bit (the mockups' fonts, `godot/fonts/README.md`), 640x480 nearest upscale (A.5).
 - Plan the Line (Arthur's `/workspace/mockups/lane_chain/v5`): the 6-card hand is hidden and only decides which options are available.
   PLAN THE LINE panel (breadcrumb ENTRY > APEX > EXIT, options '<Stance> <phase>' with POW/EN/HAN chips, '<TAG> · none drawn' greying),
-  ENTRY strip (OUT = Attack, MID = Neutral, IN = Defend, same lane rule as the tell), turn-in plate + 16-segment timer under the mirror,
+  ENTRY strip (OUT (POW), MID (HAN), IN (EN)), turn-in plate + 16-segment timer under the mirror,
   player lane chevrons over the road, 'Line locks at turn-in'. Corner playback: LINE LOCKED strip with the current phase in amber,
   then per-clash results in the same strip. Gap meter moved to the top right. Scripted inputs are unchanged (`pick` = hand indices).
 - Shots: `out/shots4/`; composites (`python3 tools/phase4_composites.py`, paths are relative to this directory): `out/shots4/composites/`. Those Phase 4 composites were removed from this copy in Phase 5 (superseded; see git history).

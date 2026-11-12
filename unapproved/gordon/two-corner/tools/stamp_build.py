@@ -1,4 +1,4 @@
-"""Stamp the Godot build id into godot/spec/build.json (read by race_core.gd for the TC2 state token and the HUD).
+"""Stamp the Godot build id into godot/spec/build.json (read by race_core.gd for the TC3 state token and the HUD).
 
 build = first 10 hex of sha1 over the files that decide what a seed does and shows: godot/project.godot, godot/scripts/**/*.gd, godot/scenes/*.tscn (since the scene refactor),
 godot/shaders/*, godot/spec/display.json, godot/spec/race_config.json. sim = the pinned sim commit (_pin HEAD).

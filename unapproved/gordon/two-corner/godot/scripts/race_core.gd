@@ -61,7 +61,7 @@ static func autofill(h: Array, pk: Array) -> Array:
 		for i in h.size():
 			if not out.has(i): rem.append(i)
 		var best := ""; var best_n := -1
-		for s in ["A", "S", "D"]:
+		for s in ["P", "H", "E"]:
 			var n := 0
 			for i in rem:
 				if h[i] == s: n += 1
@@ -92,10 +92,10 @@ func _start_corner(i: int) -> void:
 	phase = "SELECT"
 	event.emit("deal", {"line": line, "hand": "".join(hand)})
 
-## Entry tell (lane). Sim has no lane bluff (alt lines share Entry), so the lane always shows the true Entry.
+## Entry tell: the opponent's Entry stance (P/E/H). Sim has no lane bluff (alt lines share Entry), so this is always the true Entry.
+## The on-screen lane is Track.lane_for(stance): OUT = POW, MID = HAN, IN = EN.
 func entry_tell() -> Dictionary:
-	var e := line[0]
-	return {"stance": e, "lane": "outside" if e == "A" else ("center" if e == "S" else "inside")}
+	return {"stance": line[0]}
 
 func can_pick(i: int) -> bool:
 	return phase == "SELECT" and i >= 0 and i < hand.size() and not picks.has(i) and picks.size() < 3
@@ -163,7 +163,7 @@ func lead() -> float:  # guide §0.1 / §10.1 display shares
 func gap() -> float:
 	return cum_p - cum_o
 
-## ── state dump/load (TC2): seed + every completed turn's picks and exact phase scores; load REPLAYS them through this core,
+## ── state dump/load (TC3): seed + every completed turn's picks and exact phase scores; load REPLAYS them through this core,
 ## so totals are bit-exact (no decimal floats are parsed back). capture never touches the RNG. Records sim pin + build id.
 static func fhex(x: float) -> String:
 	var b := Combat._bits(x)
@@ -182,15 +182,15 @@ func dump() -> Dictionary:
 		var q := []
 		for v in h.qte_in: q.append(null if v == null else fhex(float(v)))
 		turns.append({"picks": h.picks.duplicate(), "auto": h.autofilled, "qte": q})
-	return {"schema": "TC2", "sim": C.PIN_COMMIT.substr(0, 7), "build": String(bi.build), "seed": seed_value, "rng_draws": rng.draws,
+	return {"schema": "TC3", "sim": C.PIN_COMMIT.substr(0, 7), "build": String(bi.build), "seed": seed_value, "rng_draws": rng.draws,
 		"corner_index": corner_index, "phase": phase, "picks": picks.duplicate(), "auto": autofilled, "turns": turns,
 		"cum_player": fhex(cum_p), "cum_opponent": fhex(cum_o)}
 
 func load_state(c: Dictionary, d: Dictionary) -> void:
-	assert(d.schema == "TC2", "unknown schema")
+	assert(d.schema == "TC3", "outdated token" if str(d.get("schema", "")) in ["TC1", "TC2"] else "unknown schema")
 	assert(String(d.sim) == C.PIN_COMMIT.substr(0, 7), "token is from sim %s; this build is sim %s: replay it on its own build" % [d.sim, C.PIN_COMMIT.substr(0, 7)])
 	if String(d.build) != String(build_info().build):
-		push_warning("TC2 token from build %s, running build %s (same sim pin): results replay; visuals may differ" % [d.build, build_info().build])
+		push_warning("TC3 token from build %s, running build %s (same sim pin): results replay; visuals may differ" % [d.build, build_info().build])
 	setup(c, int(d.seed))
 	for t in d.turns:
 		for i in t.picks: pick(int(i))
@@ -208,8 +208,8 @@ func load_state(c: Dictionary, d: Dictionary) -> void:
 		push_error("replay desync")
 		assert(false, "replay desync")
 
-## ── compact token TC2:<sim7>:<build10>:<base64url(json)>:<CRC16 hex4> (CRC over "TC2" + sim7 + build + payload bytes) ──
-## TC1 (sim 212eaab, repo builds up to 4322b31) is refused with a message: replay those on that build.
+## ── compact token TC3:<sim7>:<build10>:<base64url(json)>:<CRC16 hex4> (CRC over "TC3" + sim7 + build + payload bytes) ──
+## TC2 (pre-POW/EN/HAN rename, pin c3ffc41 and earlier) and TC1 (sim 212eaab) are refused as outdated tokens.
 static func crc16(bytes: PackedByteArray) -> int:
 	var crc := 0xFFFF
 	for b in bytes:
@@ -220,20 +220,20 @@ static func crc16(bytes: PackedByteArray) -> int:
 
 static func encode_token(d: Dictionary) -> String:
 	var payload: PackedByteArray = JSON.stringify(d, "", false, true).to_utf8_buffer()
-	var head: PackedByteArray = ("TC2" + String(d.sim) + String(d.build)).to_utf8_buffer()
+	var head: PackedByteArray = ("TC3" + String(d.sim) + String(d.build)).to_utf8_buffer()
 	var crc: String = "%04X" % crc16(head + payload)
 	var b64: String = Marshalls.raw_to_base64(payload).replace("+", "-").replace("/", "_").replace("=", "")
-	return "TC2:%s:%s:%s:%s" % [d.sim, d.build, b64, crc]
+	return "TC3:%s:%s:%s:%s" % [d.sim, d.build, b64, crc]
 
 static func decode_token(tok: String) -> Dictionary:
 	var parts := tok.strip_edges().split(":")
-	if parts[0] == "TC1":
-		push_error("TC1 token (sim %s): made before the f0efecf re-pin; replay it on its own build (repo unapproved/gordon/two-corner at 4322b31 or earlier)" % parts[1])
+	if parts[0] == "TC1" or parts[0] == "TC2":
+		push_error("outdated token (%s): this build uses TC3 (POW/EN/HAN stance letters). Replay that token on the build that made it." % parts[0])
 		return {}
-	assert(parts[0] == "TC2" and parts.size() == 5, "bad token")
+	assert(parts[0] == "TC3" and parts.size() == 5, "bad token")
 	var s := parts[3].replace("-", "+").replace("_", "/")
 	while s.length() % 4 != 0: s += "="
 	var payload: PackedByteArray = Marshalls.base64_to_raw(s)
-	var calc: String = "%04X" % crc16(("TC2" + parts[1] + parts[2]).to_utf8_buffer() + payload)
+	var calc: String = "%04X" % crc16(("TC3" + parts[1] + parts[2]).to_utf8_buffer() + payload)
 	assert(calc == parts[4], "CRC mismatch")
 	return JSON.parse_string(payload.get_string_from_utf8())

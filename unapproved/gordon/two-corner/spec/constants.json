@@ -1,6 +1,6 @@
 {
- "_source": "sim/velocity_shift/equations.py @ c3ffc41791bdf86c249c5b1913b84eb6898620fc",
- "commit": "c3ffc41791bdf86c249c5b1913b84eb6898620fc",
+ "_source": "sim/velocity_shift/equations.py @ 50928ed0e268277e50f97a68c7d71151078e976e",
+ "commit": "50928ed0e268277e50f97a68c7d71151078e976e",
  "values": {
   "W0": 0.1,
   "T_MAX": 0.75,
@@ -66,128 +66,128 @@
   "LINE_SET_C": {
    "touge": {
     "HP": [
-     "DSA",
-     "DDS",
-     "DSS"
+     "EHP",
+     "EEH",
+     "EHH"
     ],
     "CR": [
-     "SSA",
-     "SDS",
-     "SSS"
+     "HHP",
+     "HEH",
+     "HHH"
     ],
     "DR": [
-     "SDS",
-     "SAD",
-     "SDD"
+     "HEH",
+     "HPE",
+     "HEE"
     ],
     "IR": [
-     "SSA",
-     "SDS",
-     "SSS"
+     "HHP",
+     "HEH",
+     "HHH"
     ],
     "N90": [
-     "DSA",
-     "DDS",
-     "DSS"
+     "EHP",
+     "EEH",
+     "EHH"
     ],
     "CH": [
-     "SDA",
-     "SAS",
-     "SDS"
+     "HEP",
+     "HPH",
+     "HEH"
     ],
     "ES": [
-     "SSS",
-     "SDD",
-     "SSD"
+     "HHH",
+     "HEE",
+     "HHE"
     ],
     "SW": [
-     "SSA",
-     "SDS",
-     "SSS"
+     "HHP",
+     "HEH",
+     "HHH"
     ]
    },
    "wangan": {
     "HP": [
-     "DSA",
-     "DDS",
-     "DSS"
+     "EHP",
+     "EEH",
+     "EHH"
     ],
     "CR": [
-     "SAA",
-     "SSS",
-     "SAS"
+     "HPP",
+     "HHH",
+     "HPH"
     ],
     "DR": [
-     "DDS",
-     "DAD",
-     "DDD"
+     "EEH",
+     "EPE",
+     "EEE"
     ],
     "IR": [
-     "AAD",
-     "ASA",
-     "AAA"
+     "PPE",
+     "PHP",
+     "PPP"
     ],
     "N90": [
-     "DSA",
-     "DDS",
-     "DSS"
+     "EHP",
+     "EEH",
+     "EHH"
     ],
     "CH": [
-     "DSA",
-     "DDS",
-     "DSS"
+     "EHP",
+     "EEH",
+     "EHH"
     ],
     "ES": [
-     "SSS",
-     "SDD",
-     "SSD"
+     "HHH",
+     "HEE",
+     "HHE"
     ],
     "SW": [
-     "AAD",
-     "ASA",
-     "AAA"
+     "PPE",
+     "PHP",
+     "PPP"
     ]
    },
    "street": {
     "HP": [
-     "DDA",
-     "DAS",
-     "DDS"
+     "EEP",
+     "EPH",
+     "EEH"
     ],
     "CR": [
-     "DSD",
-     "DDA",
-     "DSA"
+     "EHE",
+     "EEP",
+     "EHP"
     ],
     "DR": [
-     "DDS",
-     "DAD",
-     "DDD"
+     "EEH",
+     "EPE",
+     "EEE"
     ],
     "IR": [
-     "SSA",
-     "SDS",
-     "SSS"
+     "HHP",
+     "HEH",
+     "HHH"
     ],
     "N90": [
-     "SSA",
-     "SDS",
-     "SSS"
+     "HHP",
+     "HEH",
+     "HHH"
     ],
     "CH": [
-     "DAA",
-     "DSS",
-     "DAS"
+     "EPP",
+     "EHH",
+     "EPH"
     ],
     "ES": [
-     "ASA",
-     "ADS",
-     "ASS"
+     "PHP",
+     "PEH",
+     "PHH"
     ],
     "SW": [
-     "DDD",
-     "DAA",
-     "DDA"
+     "EEE",
+     "EPP",
+     "EEP"
     ]
    }
   },

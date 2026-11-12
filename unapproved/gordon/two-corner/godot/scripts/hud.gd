@@ -89,10 +89,10 @@ func _sample(kind: String) -> Dictionary:
 		else: pts.append(Vector2(-28.0, -12.0 + (i - 18) * 2.0))
 	var plate := {"name": "HAIRPIN L", "icon": {"pts": pts, "stops": [pts[4], pts[12], pts[21]]}, "mode": "VIEW", "stop": 0, "done": 0}
 	var s := {"phase": "SELECT", "title": "CORNER 1/2 TOUGE HP (L)", "sub": "seed 3 f0efecf BCH 25m/s", "build": "editor", "lead": -0.05, "gap": -0.05,
-		"left": 8.4, "total": 12.0, "slots": [null, null, null], "hand": ["A", "A", "S", "S", "D", "D"], "used": [],
+		"left": 8.4, "total": 12.0, "slots": [null, null, null], "hand": ["P", "P", "H", "H", "E", "E"], "used": [],
 		"qte": null, "line": "", "rline": "", "outs": [], "plate": plate, "locked_hold": false, "mirror": true, "play_phase": 0,
-		"plan": {"phase": 0, "sel": 0, "avail": {"A": 2, "S": 2, "D": 2}, "avail_entry": {"A": 2, "S": 2, "D": 2}, "entry": ""},
-		"turn_m": 60.0, "dir": "L", "lanes": {"A": Vector2(372, 300), "S": Vector2(320, 300), "D": Vector2(268, 300)},
+		"plan": {"phase": 0, "sel": 0, "avail": {"P": 2, "H": 2, "E": 2}, "avail_entry": {"P": 2, "H": 2, "E": 2}, "entry": ""},
+		"turn_m": 60.0, "dir": "L", "lanes": {"P": Vector2(372, 300), "H": Vector2(320, 300), "E": Vector2(268, 300)},
 		"result": {}, "reveal": 0, "cont_left": 8.0, "leader_changed": false, "winner": "", "cum_p": 0.0, "cum_o": 0.0, "last_corner": false, "fin": null}
 	match kind:
 		"lock":

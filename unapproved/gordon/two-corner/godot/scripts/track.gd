@@ -34,12 +34,21 @@ func point(s: float, d: float) -> Dictionary:
 	var p := at(s)
 	return {"x": p.x - p.tz * d, "z": p.z + p.tx * d, "tx": p.tx, "tz": p.tz}
 
+## which way is the geometric inside of this corner (not a stance/line name)
 static func inside_sign(dir: String) -> float:
 	return -1.0 if dir == "L" else 1.0
 
+## on-screen lane for a stance letter (P/E/H). IN/MID/OUT live only here and on the HUD.
+const LANE_FOR := {"P": "OUT", "H": "MID", "E": "IN"}
+static func lane_for(stance: String) -> String:
+	return LANE_FOR[stance]
+
 static func lane_offset(lane: String, dir: String, w: float) -> float:
-	if lane == "center": return 0.0
-	return (inside_sign(dir) if lane == "inside" else -inside_sign(dir)) * w
+	if lane == "MID": return 0.0
+	return (inside_sign(dir) if lane == "IN" else -inside_sign(dir)) * w
+
+static func lane_offset_for_stance(stance: String, dir: String, w: float) -> float:
+	return lane_offset(lane_for(stance), dir, w)
 
 ## asymmetric visual gap (display only; PLACEHOLDER constants in spec/display.json)
 static func rival_draw_offset(lead: float, vg: Dictionary) -> float:

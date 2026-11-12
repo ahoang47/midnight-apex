@@ -15,12 +15,12 @@ func paint() -> void:
 			var mk := func(dy: float) -> PackedVector2Array: return P([x - w / 2, y - h + dy, x - w / 2 + t, y - h + dy, x, y - 4 + dy, x + w / 2 - t, y - h + dy, x + w / 2, y - h + dy, x, y + dy])
 			solid(mk.call(3.0), AMBER_D); solid(mk.call(0.0), AMBER); outline(mk.call(3.0), INK); outline(mk.call(0.0), INK)
 			draw_line(Vector2(x - w / 2 + 2, y - h + 1), Vector2(x - w / 2 + t - 1, y - h + 1), Color8(255, 236, 170), 1.0)
-			t2(x, y - h - 9, LANE[k], 11, AMBER, false, "m", true, true)
+			t2(x, y - h - 9, lane_stat(k), 10, AMBER, false, "m", true, true)
 		else:
 			var w := 12.0; var h := 7.0; var t := 4.0
 			var pts := P([x - w / 2, y - h, x - w / 2 + t, y - h, x, y - 3, x + w / 2 - t, y - h, x + w / 2, y - h, x, y])
 			if int(pl.avail_entry[k]) <= 0:
-				solid(pts, Color8(40, 42, 56)); outline(pts, Color8(70, 74, 92)); lock_x(x, y - 4, 4, dimc(STANCE.S, 0.7))
-				t2(x, y - h - 8, LANE[k], 10, DIMT, false, "m", true, true)
+				solid(pts, Color8(40, 42, 56)); outline(pts, Color8(70, 74, 92)); lock_x(x, y - 4, 4, dimc(STANCE["H"], 0.7))
+				t2(x, y - h - 8, lane_stat(k), 9, DIMT, false, "m", true, true)
 			else:
-				semi(pts, Color8(150, 170, 210)); t2(x, y - h - 8, LANE[k], 10, Color8(120, 135, 170), false, "m", true, true)
+				semi(pts, Color8(150, 170, 210)); t2(x, y - h - 8, lane_stat(k), 9, Color8(120, 135, 170), false, "m", true, true)
