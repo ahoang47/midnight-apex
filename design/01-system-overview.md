@@ -12,6 +12,7 @@
 > - **XP → levels → skill points (2026-11-09):** skill points come only from car levels; levels come from XP earned in story wins and **grind races** (repeatable races between story characters). The **level cap** equals the 80 % SP cap and rises with each story win; XP past the cap is lost. See 07 §8 and `sim/velocity_shift/progression.py`.
 > - **Respec:** moving locked skill points (Jesse) or retuning aero (the tunnel) costs money and is capped per visit.
 > - **Tracks (Austin, 2026-11-12):** 3 tracks per district, 9 in total. Every track is exactly 10 turns per lap. 20- and 30-turn races are 2 and 3 laps of the same track. Each district has a few signature corners where every racer in the district runs the same standard line and bluff; on other corners wild racers share one line and bluff and each named character has their own style (which corners and lines: pending, sim paused on Austin's call).
+> - **Art (Arthur):** locked art rules live in `design/art/art_direction.md` (approved items marked MUST/APPROVED with dates), incl. B.5c: 3D at 640×480 no AA → RGB555 + Bayer → 2× nearest; UI pixel-hard at 1280×960 (2026-11-11).
 > - **Places:** Jesse (the Tuner) and Reiko (parts) work out of **Sabine's garage**; the **speakeasy** is the barkeep's bar with the hidden wind tunnel.
 > - **Level bands** in 04 (Starter … Legend) are stat-budget labels, not race tiers.
 

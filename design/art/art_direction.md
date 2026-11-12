@@ -265,7 +265,7 @@ Exit picks there are placeholders).
 ### B.5c Crunchy 3D, sharp UI [MUST, APPROVED 2026-11-11]
 The 3D scene is rendered at **native 640×480 with no anti-aliasing**, then **RGB555 + 4×4 Bayer** is applied, then a
 **single 2× nearest-neighbour upscale** to 1280×960. The UI is composited **after** that upscale, drawn sharp at the
-full 1280×960 output resolution. Texture filtering inside the 3D scene follows Q4 (smooth) and is not affected.
+full 1280×960 output resolution, **pixel-hard**: no font or edge anti-aliasing, a hard 2 px drop shadow, bold chunky late-90s type and plates (Austin 2026-11-11, 10:21 PM to Gordon and 11:12 PM to Arthur). Larger screens scale the whole frame by whole numbers. Texture filtering inside the 3D scene follows Q4 (smooth) and is not affected.
 Review images and contact sheets are judged from full-size frames; downscaled sheets are for layout only.
 
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
