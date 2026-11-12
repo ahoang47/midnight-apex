@@ -308,17 +308,15 @@ func _place_camera(kind: String, player_s: float) -> void:
 func _lane_d(lane: String) -> float:
 	return Track.lane_offset(LANE_OF[lane], DIR, LANE_W)
 
-func _end_d(start_d: float, stance: String) -> float:
-	# Placeholder bends (B.5d, Austin 2026-11-12): POW bends to the outer line, EN cuts to the inner line by 2/3 of a lane, HAN runs mid-lane. Matches OUT=POW / IN=EN.
+func _end_d(_start_d: float, stance: String) -> float:
+	# Austin pass 4: POW hugs the outer line, EN cuts hard to the inner line, HAN sits clearly mid-lane.
+	# Full lane-width spacing so the three variants read apart side-by-side. Each segment still starts at the previous end.
 	var ins := Track.inside_sign(DIR)
-	var outside := -ins * LANE_W
 	if stance == "A":
-		return outside
+		return -ins * LANE_W
 	if stance == "S":
 		return 0.0
-	# EN (and any other): cut toward the inside by 2/3 of a lane.
-	var cut := start_d + ins * (LANE_W * 2.0 / 3.0)
-	return clampf(cut, -LANE_W * 1.35, LANE_W * 1.35)
+	return ins * LANE_W
 
 func _place_car(car: Node3D, s: float, d: float) -> Dictionary:
 	var p: Dictionary = course.point(s, d)

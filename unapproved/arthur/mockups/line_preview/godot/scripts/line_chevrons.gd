@@ -33,21 +33,21 @@ func build(pth, segs: Array, fog: Color, fog_near: float, fog_far: float) -> voi
 		var s := s0 + LENGTH * 0.5
 		var i := 0
 		while s <= s1 - LENGTH * 0.35:
-			# hovered: lighter + slightly gapped. pending (not yet chosen): same hue, dimmer / slightly gapped.
+			# hovered: lighter + slightly gapped. pending follow-on: solid ~66% brightness, slightly thinner, no glow.
 			var t := clampf((s - s0) / maxf(0.001, s1 - s0), 0.0, 1.0)
 			var ramp := lerpf(0.88, 1.14, t)
 			var pulse := 1.22 if hovered else 1.0
 			if hovered and i % 2 == 1:
 				pulse = 0.72
 			if pending:
-				pulse = 0.88 if i % 2 == 0 else 0.60
+				pulse = 0.66
 			var tint := Color(col.r * ramp * pulse, col.g * ramp * pulse, col.b * ramp * pulse)
 			tint.r = minf(1.0, tint.r); tint.g = minf(1.0, tint.g); tint.b = minf(1.0, tint.b)
 			var d := lerpf(float(seg.d0), float(seg.d1), _smooth(t))
 			var q: Dictionary = pth.point(s, d)
-			# Pending follow-on is a tell: fade a little less so Apex/Exit previews still read through the hook.
-			var fog_amt := 0.58 if pending else 1.0
-			add_child(_chevron(tex, Vector3(q.x, Y, q.z), Vector3(q.tx, 0, q.tz), tint, fog, fog_near, fog_far, hovered, fog_amt))
+			# Fade less than the scenery so the follow-on still reads around the hook, without looking like a glow.
+			var fog_amt := 0.38 if pending else 1.0
+			add_child(_chevron(tex, Vector3(q.x, Y, q.z), Vector3(q.tx, 0, q.tz), tint, fog, fog_near, fog_far, hovered, pending, fog_amt))
 			s += SPACING
 			i += 1
 
@@ -55,13 +55,14 @@ func _smooth(k: float) -> float:
 	k = clampf(k, 0.0, 1.0)
 	return k * k * (3.0 - 2.0 * k)
 
-func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Color, fog_near: float, fog_far: float, hovered: bool, fog_amt: float = 1.0) -> MeshInstance3D:
+func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Color, fog_near: float, fog_far: float, hovered: bool, pending: bool = false, fog_amt: float = 1.0) -> MeshInstance3D:
 	fwd = fwd.normalized()
 	var right := Vector3.UP.cross(fwd).normalized()
 	# Texture tip is at V=1 (bottom of line_chevron.png). Put that tip at +fwd
 	# so the point faces the direction of travel, not back at the player.
 	var hl := LENGTH * 0.5
-	var hw := WIDTH * (0.58 if not hovered else 0.62)
+	# pending: slightly thinner so it stays secondary to the hovered / locked segment
+	var hw := WIDTH * (0.44 if pending else (0.62 if hovered else 0.58))
 	var v := [
 		pos - right * hw - fwd * hl, pos + right * hw - fwd * hl,
 		pos + right * hw + fwd * hl, pos - right * hw + fwd * hl
