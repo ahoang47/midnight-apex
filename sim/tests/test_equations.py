@@ -85,6 +85,7 @@ def test_damage_mitigation():
 from velocity_shift.equations import (
     timing_value, clash_payoff, clash_progress, kappa_for_length, knot_window,
     expected_hit_quality, qte_zone_width, raw_qte_score, QTE_SKILL_SIGMA_OVER_A0,
+    mean_phase_qte, phase_raw_qte, PHASE_QTE_UNPLAYED,
     QTE_ZONE_WIDTH_105, AVERAGE_PLAY_Q,
     W0, T_MAX, L_MAX, KAPPA_BY_LENGTH,
 )
@@ -150,3 +151,17 @@ def test_qte_zone_width_at_knots_and_window_mod():
     # +20% window mod widens the zone; does not change mid-race (r is fixed).
     assert abs(qte_zone_width(1.05, window_mod=0.20) - 1.20) < 1e-12
     assert qte_zone_width(1.05, 0.20) > qte_zone_width(1.05, 0.0)
+
+
+def test_mean_phase_qte_averages_three_scores():
+    assert mean_phase_qte((1.0, 0.4, 0.8)) == (1.0 + 0.4 + 0.8) / 3.0
+    assert mean_phase_qte([0.0, 0.6, 1.2]) == (0.0 + 0.6 + 1.2) / 3.0
+    # A scalar is the turn raw_qte as-is (default / profile path unchanged).
+    assert mean_phase_qte(0.6) == 0.6
+
+
+def test_mean_phase_qte_unplayed_counts_as_zero():
+    assert phase_raw_qte(None) == PHASE_QTE_UNPLAYED == 0.0
+    assert mean_phase_qte((1.0, None, 0.5)) == (1.0 + 0.0 + 0.5) / 3.0
+    assert mean_phase_qte((None, None, None)) == 0.0
+    assert mean_phase_qte(None) == 0.0

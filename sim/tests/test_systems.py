@@ -153,3 +153,19 @@ def test_r105_same_stances_player_leads_on_v():
     assert abs(result.player_progress - 3 * V * T_MAX) < 1e-12
     assert abs(result.opponent_progress - 3 * T_MAX) < 1e-12
     assert result.player_progress > result.opponent_progress
+
+def test_resolve_turn_phase_mean_matches_scalar():
+    """Three phase scores average into the existing single raw_qte; clash math is unchanged."""
+    player = CombatantStats(name="P", pow=500, en=200, han=300)
+    opponent = CombatantStats(name="O", pow=400, en=300, han=200)
+    mean = (1.0 + 0.0 + 0.5) / 3.0
+    via_phases_state = make_default_turn_state(p_qte=0.0)
+    via_phases_state.player_qte_phases = [1.0, None, 0.5]
+    via_phases = resolve_turn(via_phases_state, player, opponent)
+    via_scalar = resolve_turn(make_default_turn_state(p_qte=mean), player, opponent)
+    assert via_phases.player_qte == mean
+    assert via_phases.player_qte_phases == [1.0, 0.0, 0.5]
+    assert via_phases.player_progress == via_scalar.player_progress
+    assert via_phases.opponent_progress == via_scalar.opponent_progress
+    assert via_phases.player_clash_progress == via_scalar.player_clash_progress
+    assert via_phases.opponent_clash_progress == via_scalar.opponent_clash_progress

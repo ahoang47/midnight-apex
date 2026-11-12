@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-11 — Barry [sim]: three QTE phase scores average into the turn's raw_qte
+- **What:** the playable engine still uses one `raw_qte` and the existing `q_eff` formula per turn (`clash_progress` / `resolve_turn` math unchanged). The turn's raw input can now be three phase scores (Entry, Apex, Exit): `mean_phase_qte` / `phase_raw_qte` average them, and an unplayed / None phase is `PHASE_QTE_UNPLAYED` (0). `TurnState.player_qte_phases` / `TurnResult.player_qte_phases` carry the three inputs; a 3-tuple from `get_player_qte` is averaged in `match.py`. The default profile / `player_timing` / `player_quality` path is still a single `raw_qte_score(...)` call, so SimulationRunner results are identical. The CLI prompts for the three 1–10 scores (blank = 0) and passes the tuple. No miss-probability knob. No studies re-run.
+- **Why:** Austin's two-corner playtest feedback, relayed by Gordon (~10 PM PT, 2026-11-11): there should be a QTE for entry, apex, and exit individually, and an unplayed QTE should count as 0. Austin then, directly, at 10:01 PM PT: "the 3 QTE scores should be counted as an average. Do not redo any of the math for it."
+- **Docs:** `design/02-equations-reference.md` names the new helpers (no values copied). `design/godot-build-guide.md` was not edited.
+- **Tests:** mean of three, unplayed = 0, and `resolve_turn` with phases matches the same turn scored with the pre-averaged scalar. `test_playable_oracle.py` is unchanged and still passes.
+
 ## 2026-11-11 — Gordon [godot]: two-corner HUD text drawn at display resolution (unapproved/gordon, departs from A.5 for UI only)
 - **What:** in `unapproved/gordon/two-corner/godot/project.godot`, the stretch mode `viewport` becomes `canvas_items` (640x480 base and keep aspect are unchanged; `_fit_scale()` still chooses integer scaling at 2x or more).
   - **The 3D world is unchanged.** It is still a 640x480 SubViewport going through the post shader (bloom, then RGB555 + 4x4 Bayer on 640x480 pixels), shown nearest at a whole-number scale.

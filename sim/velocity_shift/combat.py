@@ -16,6 +16,7 @@ from .equations import (
     qte_factor, clash_mult, compute_damage, resolve_stance, damage_mitigation, BATTLE_BONUS,
     LINE_SET_C, LINE_ADHERENCE, LINE_ALT_WEIGHTS,
     clash_progress, kappa_for_length, deck_weights, assign_hand, HAND_SIZE,
+    mean_phase_qte, phase_raw_qte,
     counter_stance, loser_to_stance, _STANCE_INDEX, _INDEX_STANCE,
 )
 from .trace import TraceLogger
@@ -69,18 +70,26 @@ def resolve_turn(
     """Resolve one turn with the final-v1 Phi/tau progress model.
 
     `turn_state.player_qte` / `opponent_qte` are raw timing scores in
-    [0, 1], not 1–10 scores. Both sides then get the HAN timing
-    modifier. There is no knot_window factor: the player's raw score
-    already reflects the visible zone at the race's fixed r. The
-    opponent uses OPPONENT_QTE (HAN still applies).
+    [0, 1], not 1–10 scores. If `player_qte_phases` is a length-3 list
+    (Entry, Apex, Exit), it is averaged into that single `player_qte`
+    (None / unplayed = 0; Austin, 2026-11-11); clash math is unchanged.
+    Both sides then get the HAN timing modifier. There is no
+    knot_window factor: the player's raw score already reflects the
+    visible zone at the race's fixed r. The opponent uses OPPONENT_QTE
+    (HAN still applies).
     `race_length` selects kappa. `boss_total` defaults to the opponent's
     stat sum, so the opponent's V is 1 and the player's V is r**kappa.
     """
     t = TurnResult(turn_number=turn_state.turn_number)
     t.player_cards = list(turn_state.player_cards)
     t.opponent_cards = list(turn_state.opponent_cards)
-    t.player_qte = turn_state.player_qte
+    if turn_state.player_qte_phases:
+        t.player_qte_phases = [phase_raw_qte(v) for v in turn_state.player_qte_phases]
+        t.player_qte = mean_phase_qte(turn_state.player_qte_phases)
+    else:
+        t.player_qte = turn_state.player_qte
     t.opponent_qte = turn_state.opponent_qte
+    player_qte = t.player_qte
 
     local_trace = TraceLogger() if trace is None else trace
     lt = local_trace
@@ -110,7 +119,7 @@ def resolve_turn(
 
     lt.log("progress", "r", round(r, 6))
     lt.log("progress", "kappa", kappa)
-    lt.log("progress", "player q_time", round(turn_state.player_qte, 4))
+    lt.log("progress", "player q_time", round(player_qte, 4))
     lt.log("progress", "opponent q_time", round(turn_state.opponent_qte, 4))
 
     p_prog = 0.0
@@ -120,7 +129,7 @@ def resolve_turn(
     for i, p_outcome in enumerate(p_outcomes):
         o_outcome = StanceOutcome(-p_outcome.value)
         pg = clash_progress(
-            p_outcome, turn_state.player_qte,
+            p_outcome, player_qte,
             player.pow, player.en, player.han,
             boss_total, kappa,
         )

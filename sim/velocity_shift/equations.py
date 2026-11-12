@@ -155,6 +155,14 @@ QTE_SKILL_SIGMA_OVER_A0 = {  # PLACEHOLDER
 # the current zone (0.10 = +10% of qte_zone_width(r)). Slot competition and
 # the 105%-all-slots rule belong to the upcoming slot sim; they are not
 # modelled here.
+# Per-phase QTE input (Austin, 2026-11-11, relayed by Gordon, then
+# revised the same night): Entry, Apex, and Exit can each supply a raw
+# score, and the turn's raw_qte is their mean. An unplayed or timed-out
+# phase counts as 0 (Austin). Clash math is unchanged: one raw_qte and
+# the existing q_eff formula per turn. The timeout window is the zone's
+# own visible sweep — Barry's proposal; Austin answered only the score.
+QTE_PHASES = ("entry", "apex", "exit")
+PHASE_QTE_UNPLAYED = 0.0
 # Phi/tau clash payoff (final-v1 / equations_v1 K, unchanged). Per clash:
 #   g = V * Phi(outcome, q_eff) * M,  V = r**kappa,
 #   q_eff = clip(raw_qte * (1 + ETA * (han_share - 1/3)), 0, 1)
@@ -343,7 +351,10 @@ def qte_zone_width(r: float, window_mod: float = 0.0) -> float:
     apply the window-mod bonus as a multiplier, width * (1 + window_mod).
     The result is flat below r=0.80 and plateaus at 1.0 (before the mod)
     for r >= 1.05. The zone depends only on the race's fixed r and the
-    mod; it does not change with mid-race position.
+    mod; it does not change with mid-race position. The same width is
+    used for Entry, Apex, and Exit. The timeout window for an unplayed
+    phase is this visible sweep (Barry's proposal; Austin answered only
+    that an unplayed phase scores 0).
 
     window_mod is a multiplicative bonus (0.10 = +10% of the current
     zone). Slot competition and the 105%-all-slots rule are not applied
@@ -374,6 +385,27 @@ def raw_qte_score(
         profile = "average"
     sig = qte_sigma_over_a0(profile, q_time)
     return expected_hit_quality(sig, qte_zone_width(r, window_mod))
+
+
+def phase_raw_qte(score: float | None) -> float:
+    """Raw QTE for one Entry/Apex/Exit phase. None / unplayed is 0 (Austin)."""
+    if score is None:
+        return PHASE_QTE_UNPLAYED
+    return float(score)
+
+
+def mean_phase_qte(value: float | None | list | tuple) -> float:
+    """Turn raw_qte from a scalar or three phase scores.
+
+    A 3-tuple/list (Entry, Apex, Exit) is averaged; None / unplayed is 0
+    (Austin, 2026-11-11). A scalar is returned as-is. Clash math is not
+    changed: the result is the single raw_qte for the turn.
+    """
+    if isinstance(value, (list, tuple)) and len(value) == 3 and not isinstance(value, (str, bytes)):
+        return sum(phase_raw_qte(v) for v in value) / 3.0
+    if value is None:
+        return PHASE_QTE_UNPLAYED
+    return float(value)
 
 
 def kappa_for_length(race_length: int) -> float:

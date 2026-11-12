@@ -62,6 +62,10 @@ class TurnState:
     opponent_cards: list = field(default_factory=list)
     player_qte: float = 0.0
     opponent_qte: float = 0.0
+    # Optional Entry/Apex/Exit raw scores. When set (length 3), the turn's
+    # player_qte is their mean; None / unplayed counts as 0 (Austin).
+    # Clash math still uses the single averaged player_qte.
+    player_qte_phases: list = field(default_factory=list)
 
 
 @dataclass
@@ -81,6 +85,7 @@ class TurnResult:
     battle_mult: float = 1.0
     player_qte: float = 0.0
     opponent_qte: float = 0.0
+    player_qte_phases: list[float] = field(default_factory=list)  # inputs that were averaged into player_qte
     player_hand: list = field(default_factory=list)
     opponent_hand: list = field(default_factory=list)
     trace: list[dict] = field(default_factory=list)

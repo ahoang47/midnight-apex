@@ -11,7 +11,7 @@ import random
 import datetime
 
 from .cars import build_stats, ARCHETYPES
-from .equations import HP_PER_LEVEL, qte_factor, DISTRICTS, qte_zone_width, QTE_ZONE_BASE_MS
+from .equations import HP_PER_LEVEL, qte_factor, DISTRICTS, qte_zone_width, QTE_ZONE_BASE_MS, QTE_PHASES
 from .combat import official_tracks
 from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
     TurnResult, ClashResult, PersonalityConfig
@@ -408,16 +408,31 @@ def prompt_card_sequential(
         print("  Invalid choice.")
 
 
-def prompt_qte(turn: int, who: str) -> float:
-    while True:
-        raw = input(f"  [Turn {turn}] {who} QTE score (1-10): ").strip()
-        try:
-            val = float(raw)
-            if 1.0 <= val <= 10.0:
-                return qte_factor(val)
-            print("  Must be between 1 and 10.")
-        except ValueError:
-            print("  Invalid number.")
+def prompt_qte(turn: int, who: str) -> tuple[float, float, float]:
+    """Prompt Entry/Apex/Exit scores (1-10). Blank / unplayed is 0 (Austin).
+
+    The three raw scores (already /10) are averaged in match.py into the
+    turn's single raw_qte; clash math is unchanged.
+    """
+    scores: list[float] = []
+    for phase in QTE_PHASES:
+        label = phase.capitalize()
+        while True:
+            raw = input(
+                f"  [Turn {turn}] {who} {label} QTE score (1-10, blank=0): "
+            ).strip()
+            if raw == "":
+                scores.append(0.0)
+                break
+            try:
+                val = float(raw)
+                if 1.0 <= val <= 10.0:
+                    scores.append(qte_factor(val))
+                    break
+                print("  Must be between 1 and 10, or blank for unplayed (0).")
+            except ValueError:
+                print("  Invalid number.")
+    return (scores[0], scores[1], scores[2])
 
 
 def run_cli() -> None:
@@ -437,7 +452,8 @@ def run_cli() -> None:
     r = p_tot / o_tot if o_tot else 1.0
     zw = qte_zone_width(r, cfg.qte_window_mod)
     print(f"  QTE zone: {zw:.2f} × default ({zw * QTE_ZONE_BASE_MS:.0f} ms at r={r:.4f}); "
-          f"the score you enter is the raw hit quality at this zone")
+          f"enter an Entry, Apex, and Exit score (blank = unplayed = 0); "
+          f"the turn uses their average as the raw hit quality at this zone")
 
     def get_player_card(turn: int, clash_index: int, hand: list[Card],
                         opponent_hand: list[Card],

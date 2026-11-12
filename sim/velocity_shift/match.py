@@ -15,7 +15,7 @@ from typing import Callable, Optional
 from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
     TurnResult, TurnState, ClashResult, PersonalityConfig
 from .combat import resolve_turn, resolve_turn_legacy, pick_line, stances_to_cards, corner_at_turn, draw_weighted_hand, plan_player_cards
-from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod, RUBBER_BAND_FRACTION, OPPONENT_QTE, raw_qte_score
+from .equations import resolve_stance, HP_PER_LEVEL, apply_han_qte_mod, RUBBER_BAND_FRACTION, OPPONENT_QTE, raw_qte_score, mean_phase_qte, phase_raw_qte
 from .deck import Deck
 from .trace import TraceLogger
 from .ai import get_personality, get_phase, get_total_phases
@@ -24,7 +24,7 @@ from .ai import get_personality, get_phase, get_total_phases
 def run_match(
     cfg: MatchConfig,
     get_player_card: Callable[[int, int, list[Card], list[Card], list[ClashResult]], Card],
-    get_player_qte: Callable[[int], float],
+    get_player_qte: Callable[[int], float | list | tuple | None],
     get_opponent_card: Callable[
         [int, int, list[Card], list[Card], int, PersonalityConfig | None, list[ClashResult], list[Stance]],
         Card,
@@ -181,8 +181,11 @@ def run_match(
             # clash_progress (no knot_window). If a skill profile or
             # player_timing is configured, the score is E[s] at the race's
             # fixed r (and qte_window_mod); otherwise the callback value is
-            # already a raw score (CLI / explicit test callbacks).
+            # already a raw score (CLI / explicit test callbacks). A 3-tuple
+            # of Entry/Apex/Exit scores is averaged into that single raw_qte
+            # (unplayed / None = 0; Austin, 2026-11-11); clash math is unchanged.
             # Opponent timing is OPPONENT_QTE.
+            p_phases: list[float] = []
             if cfg.player_qte_profile or cfg.player_timing is not None or cfg.player_quality is not None:
                 p_tot = player.pow + player.en + player.han
                 o_tot = opponent.pow + opponent.en + opponent.han
@@ -195,7 +198,12 @@ def run_match(
                     window_mod=cfg.qte_window_mod,
                 )
             else:
-                p_qte = get_player_qte(turn_num)
+                cb = get_player_qte(turn_num)
+                if isinstance(cb, (list, tuple)) and len(cb) == 3 and not isinstance(cb, (str, bytes)):
+                    p_phases = [phase_raw_qte(v) for v in cb]
+                    p_qte = mean_phase_qte(cb)
+                else:
+                    p_qte = cb
             o_qte = OPPONENT_QTE
 
         turn_state = TurnState(
@@ -204,6 +212,7 @@ def run_match(
             opponent_cards=o_cards,
             player_qte=p_qte,
             opponent_qte=o_qte,
+            player_qte_phases=p_phases if not legacy else [],
         )
 
         if legacy:
