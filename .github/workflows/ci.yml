@@ -82,7 +82,6 @@ jobs:
           git -C _pin rev-parse HEAD
           test -f _pin/sim/velocity_shift/equations.py
       - name: qte-v1 function bits (Godot vs pinned sim)
-        continue-on-error: true
         env:
           GODOT: ${{ env.GODOT_DIR }}/godot
         working-directory: unapproved/gordon/two-corner
