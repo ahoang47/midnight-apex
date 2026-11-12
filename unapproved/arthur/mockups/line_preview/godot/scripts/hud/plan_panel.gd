@@ -41,46 +41,49 @@ func paint() -> void:
 		if locked:
 			check(nx + sw(PH[i], 12, true, true) + 4, ry + 6, CHECK_GREEN)
 		if i == 0:
-			# Entry row always shows the three lanes; chosen/hovered slab is amber.
+			# Entry row always shows the three lanes; each lane carries a small note of the
+			# stat it needs (OUT=POW, MID=HAN, IN=EN), same on left and right turns.
 			var chosen_lane: String = ""
 			if locked and String(pl.entry) != "":
 				chosen_lane = String(pl.entry)
 			elif active:
 				chosen_lane = ORDER[int(pl.sel)] if int(pl.sel) >= 0 else ""
-			var lx := x0 + 78
+			var lx := x0 + 64
 			for k in lanes:
 				var lab: String = LANE[k]
-				var w := 32.0
+				var note: String = NAME[k]
+				var w := 28.0
 				if k == chosen_lane:
-					solid(P([lx, ry + 2, lx + w - 2, ry + 2, lx + w - 4, ry + 16, lx - 2, ry + 16]), AMBER if active else EDGE)
-					t2(lx + w / 2 - 2, ry + 9, lab, 11, INK, true, "m", false, true)
+					solid(P([lx, ry + 2, lx + w - 2, ry + 2, lx + w - 4, ry + 26, lx - 2, ry + 26]), AMBER if active else EDGE)
+					t2(lx + w / 2 - 2, ry + 8, lab, 11, INK, true, "m", false, true)
+					# HAN yellow disappears on amber; use ink on the slab, stance colour otherwise.
+					t2(lx + w / 2 - 2, ry + 19, note, 8, INK, true, "m", false, true)
 					if locked:
-						check(lx + w - 2, ry + 5, INK)
+						check(lx + w - 2, ry + 4, INK)
 				else:
-					t2(lx + w / 2 - 2, ry + 9, lab, 11, DIMT if locked else SUB, true, "m", true, true)
+					t2(lx + w / 2 - 2, ry + 8, lab, 11, DIMT if locked else SUB, true, "m", true, true)
+					t2(lx + w / 2 - 2, ry + 19, note, 8, dimc(STANCE[k], 0.7) if locked else STANCE[k], true, "m", false, true)
 				lx += w
-		# Stance picks (every row). Active = the three options, with the hovered one marked.
-		# Locked = the confirmed stance + chip. Pending = dashes.
+		# Stance picks. Active = POW / HAN / EN, hovered slab highlighted (that is the chip).
+		# Locked = one coloured stance chip. Pending = dashes. No second tag chip.
 		if active:
-			var sx := x0 + 178
+			var sx := x0 + (148 if i == 0 else 78)
 			for j in 3:
 				var k: String = ORDER[j]
 				var off: bool = int(pl.avail[k]) <= 0
 				var picked: bool = (j == int(pl.sel) and not off)
 				var lab: String = NAME[k]
-				var w := 30.0
+				var w := 28.0
 				if picked:
 					solid(P([sx, ry + 2, sx + w - 2, ry + 2, sx + w - 4, ry + 16, sx - 2, ry + 16]), AMBER)
 					t2(sx + w / 2 - 1, ry + 9, lab, 11, INK, true, "m", false, true)
 				else:
 					t2(sx + w / 2 - 1, ry + 9, lab, 11, DIMT if off else Color.WHITE, true, "m", not off, true)
 				sx += w
-			# No stat chip on the active row: the three stance labels already fill the width.
 		elif locked:
 			var k: String = String(slots[i]) if slots[i] != null else ""
 			if k != "":
-				t2(x0 + 178, ry + 9, NAME[k], 12, Color.WHITE, true, "l", true, true)
-				chip(x1 - 8, ry + 8, TAG[k], STANCE[k], false)
+				chip(x1 - 8, ry + 8, NAME[k], STANCE[k], false)
 		else:
 			t2(x0 + 178, ry + 9, "--  --  --", 12, TODO, false, "l", false, true)
 	t2(x0 + 9, y1 - 16, "Line set. Enter to lock now" if ph >= 3 else "Line locks at turn-in", 10, SUB, true)

@@ -5,13 +5,13 @@
 ## the drawn positions stay those of the approved frames (post_lsc.py / post_clash.py / post_v5.py) unless the code changes.
 @tool
 extends Control
-## Stance UI colours (Austin 2026-11-11, swapped the same day): ATK/POW green #2CB84A, DEF/EN red #E8282C, NEU/HAN yellow #F0C828 with dark text.
+## Stance UI colours: POW green #2CB84A, EN red #E8282C, HAN yellow #F0C828 with dark text. ATK/DEF/NEU are retired.
 ## Letter 'S' is the sim's internal code for Neutral (race_core.gd / combat.gd are unchanged).
 const STANCE := {"A": Color8(44, 184, 74), "S": Color8(240, 200, 40), "D": Color8(232, 40, 44)}
 const CHECK_GREEN := Color8(44, 184, 74)  # breadcrumb tick; not a stance colour (stays green after the DEF/EN swap to red)
-const NAME := {"A": "ATK", "S": "NEU", "D": "DEF"}
-const FULL := {"A": "Attack", "S": "Neutral", "D": "Defend"}   # option names: '<Stance> <phase>' (Austin's final call, 07:34)
-const TAG := {"A": "POW", "S": "HAN", "D": "EN"}               # stat-tag chips (lane_chain/v5/post_v5.py:59)
+const NAME := {"A": "POW", "S": "HAN", "D": "EN"}
+const FULL := {"A": "POW", "S": "HAN", "D": "EN"}
+const TAG := {"A": "POW", "S": "HAN", "D": "EN"}               # same as NAME; kept for chip() callers
 const LANE := {"A": "OUT", "S": "MID", "D": "IN"}              # same lane rule as the entry tell (race_core.gd entry_tell)
 const ORDER := ["A", "S", "D"]
 const PH := ["ENTRY", "APEX", "EXIT"]
@@ -152,7 +152,7 @@ func t2_fit(x: float, y: float, s: String, sz: int, col: Color, x1: float, it :=
 	while sz > 9 and sw(s, sz, it, heavy) > (x1 - x):
 		sz -= 1
 	t2(x, y, s, sz, col, it, "l", true, false, heavy)
-## stance chip (post_clash.py:39-42): 49 x 14 slanted, label = ATK / DEF / NEU
+## stance chip (post_clash.py:39-42): 49 x 14 slanted, label = POW / EN / HAN
 func lchip(x: float, y: float, k: String, w := 49.0) -> void:
 	var p := P([x + 4, y, x + w, y, x + w - 4, y + 14, x, y + 14]); solid(p, STANCE[k]); outline(p, L_INK)
 	t2(x + w / 2, y + 7, NAME[k], 11, L_INK if k == "S" else Color.WHITE, false, "m", false, true)

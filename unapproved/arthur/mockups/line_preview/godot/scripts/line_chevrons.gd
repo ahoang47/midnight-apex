@@ -18,7 +18,7 @@ func clear() -> void:
 		ch.queue_free()
 	mat_cache.clear()
 
-## segs: array of {s0, s1, d0, d1, stance, hovered}
+## segs: array of {s0, s1, d0, d1, stance, hovered, pending}
 func build(pth, segs: Array, fog: Color, fog_near: float, fog_far: float) -> void:
 	clear()
 	var tex: Texture2D = load("res://art/line_chevron.png")
@@ -29,20 +29,25 @@ func build(pth, segs: Array, fog: Color, fog_near: float, fog_far: float) -> voi
 			continue
 		var col: Color = COL[String(seg.stance)]
 		var hovered: bool = bool(seg.hovered)
+		var pending: bool = bool(seg.get("pending", false))
 		var s := s0 + LENGTH * 0.5
 		var i := 0
 		while s <= s1 - LENGTH * 0.35:
-			# hovered: lighter + slightly gapped (every other chevron a touch dimmer) so it reads as a live variant
+			# hovered: lighter + slightly gapped. pending (not yet chosen): same hue, dimmer / slightly gapped.
 			var t := clampf((s - s0) / maxf(0.001, s1 - s0), 0.0, 1.0)
 			var ramp := lerpf(0.88, 1.14, t)
 			var pulse := 1.22 if hovered else 1.0
 			if hovered and i % 2 == 1:
 				pulse = 0.72
+			if pending:
+				pulse = 0.88 if i % 2 == 0 else 0.60
 			var tint := Color(col.r * ramp * pulse, col.g * ramp * pulse, col.b * ramp * pulse)
 			tint.r = minf(1.0, tint.r); tint.g = minf(1.0, tint.g); tint.b = minf(1.0, tint.b)
 			var d := lerpf(float(seg.d0), float(seg.d1), _smooth(t))
 			var q: Dictionary = pth.point(s, d)
-			add_child(_chevron(tex, Vector3(q.x, Y, q.z), Vector3(q.tx, 0, q.tz), tint, fog, fog_near, fog_far, hovered))
+			# Pending follow-on is a tell: fade a little less so Apex/Exit previews still read through the hook.
+			var fog_amt := 0.58 if pending else 1.0
+			add_child(_chevron(tex, Vector3(q.x, Y, q.z), Vector3(q.tx, 0, q.tz), tint, fog, fog_near, fog_far, hovered, fog_amt))
 			s += SPACING
 			i += 1
 
@@ -50,7 +55,7 @@ func _smooth(k: float) -> float:
 	k = clampf(k, 0.0, 1.0)
 	return k * k * (3.0 - 2.0 * k)
 
-func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Color, fog_near: float, fog_far: float, hovered: bool) -> MeshInstance3D:
+func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Color, fog_near: float, fog_far: float, hovered: bool, fog_amt: float = 1.0) -> MeshInstance3D:
 	fwd = fwd.normalized()
 	var right := Vector3.UP.cross(fwd).normalized()
 	# Texture tip is at V=1 (bottom of line_chevron.png). Put that tip at +fwd
@@ -76,6 +81,7 @@ func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Colo
 	m.set_shader_parameter("fog_color", Vector3(fog.r, fog.g, fog.b))
 	m.set_shader_parameter("fog_near", fog_near)
 	m.set_shader_parameter("fog_far", fog_far)
+	m.set_shader_parameter("fog_amount", fog_amt)
 	m.render_priority = 2
 	mat_cache.append(m)
 	var mi := MeshInstance3D.new()

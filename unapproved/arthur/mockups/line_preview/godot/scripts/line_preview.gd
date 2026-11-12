@@ -1,5 +1,5 @@
 ## Unapproved B.5d line-preview mockup. Reuses Gordon's two-corner scenes (track, dressing, sky, cars, HUD)
-## on a copy; does not edit his files. Renders 5 overview frames + 3 B.5b camera-stop frames.
+## on a copy; does not edit his files. Renders overview frames, B.5b camera-stop frames, and pass-3 stance variants.
 extends Control
 const ArtKit = preload("res://scripts/art_kit.gd")
 const Course = preload("res://scripts/course.gd")
@@ -12,7 +12,7 @@ const Chevrons = preload("res://scripts/line_chevrons.gd")
 const DIR := "L"
 const CODE := "HP"
 const LANE_W := 3.3
-const STANCE_COL := {"A": "ATK", "D": "DEF", "S": "NEU"}
+const STANCE_COL := {"A": "POW", "D": "EN", "S": "HAN"}
 const LANE_OF := {"OUT": "outside", "MID": "center", "IN": "inside"}
 const SPEED_MS := 25.0  # display.json road_scroller: 0.05 * 1.0 * 500
 const RIVAL_AHEAD := 9.0  # visual_gap.min_spacing_m on a tie
@@ -51,21 +51,33 @@ var fog: Color
 var lamp_items: Array = []
 var cedar_hidden: Array = []  # originals we toggled; reset per shot
 
-## Frames (brief): 1 Entry=OUT hover ATK; 2 Entry locked OUT/ATK, Apex hover DEF;
-## 3 same, Apex hover ATK; 4 Entry IN/DEF, Apex NEU, Exit hover ATK; 5 all three locked.
+## Canonical sequence everywhere: Entry OUT+POW, Apex EN, Exit POW.
+## Overview (high camera) and the older cam-stop trio use that same sequence.
 const FRAMES := [
-	{"file": "1_entry_out_atk.png", "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "", "hover": 0, "locked": false, "show_rival": true, "stop": 0},
-	{"file": "2_apex_def.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1},
-	{"file": "3_apex_atk.png", "entry_lane": "OUT", "entry": "A", "apex": "A", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1},
-	{"file": "4_exit_atk.png", "entry_lane": "IN", "entry": "D", "apex": "S", "exit": "A", "hover": 2, "locked": false, "show_rival": false, "stop": 2},
-	{"file": "5_locked.png", "entry_lane": "IN", "entry": "D", "apex": "S", "exit": "A", "hover": -1, "locked": true, "show_rival": false, "stop": 0},
+	{"file": "1_entry_out_pow.png", "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "", "hover": 0, "locked": false, "show_rival": true, "stop": 0},
+	{"file": "2_apex_en.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1},
+	{"file": "3_apex_pow.png", "entry_lane": "OUT", "entry": "A", "apex": "A", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1},
+	{"file": "4_exit_pow.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "A", "hover": 2, "locked": false, "show_rival": false, "stop": 2},
+	{"file": "5_locked.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "A", "hover": -1, "locked": true, "show_rival": false, "stop": 0},
 ]
 
-## Same story beats as frames 1, 2 and 4, shot from Gordon's B.5b stops (shots11).
 const CAMSTOPS := [
-	{"file": "1_entry_out_atk_camstop.png", "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "", "hover": 0, "locked": false, "show_rival": true, "stop": 0, "cam": "chase"},
-	{"file": "2_apex_def_camstop.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1, "cam": "apex"},
-	{"file": "4_exit_atk_camstop.png", "entry_lane": "IN", "entry": "D", "apex": "S", "exit": "A", "hover": 2, "locked": false, "show_rival": false, "stop": 2, "cam": "exit"},
+	{"file": "1_entry_out_pow_camstop.png", "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "", "hover": 0, "locked": false, "show_rival": true, "stop": 0, "cam": "chase"},
+	{"file": "2_apex_en_camstop.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1, "cam": "apex"},
+	{"file": "4_exit_pow_camstop.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "A", "hover": 2, "locked": false, "show_rival": false, "stop": 2, "cam": "exit"},
+]
+
+## Pass 3 stance variants (camera-stop framing). Implied follow-on segments are dimmer.
+const CANON_APEX := "D"
+const CANON_EXIT := "A"
+const VARIANTS := [
+	{"file": "a_entry_out_pow.png", "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "", "hover": 0, "locked": false, "show_rival": true, "stop": 0, "cam": "chase"},
+	{"file": "b_apex_pow.png", "entry_lane": "OUT", "entry": "A", "apex": "A", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1, "cam": "apex"},
+	{"file": "b_apex_han.png", "entry_lane": "OUT", "entry": "A", "apex": "S", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1, "cam": "apex"},
+	{"file": "b_apex_en.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "", "hover": 1, "locked": false, "show_rival": false, "stop": 1, "cam": "apex"},
+	{"file": "c_exit_pow.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "A", "hover": 2, "locked": false, "show_rival": false, "stop": 2, "cam": "exit"},
+	{"file": "c_exit_han.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "S", "hover": 2, "locked": false, "show_rival": false, "stop": 2, "cam": "exit"},
+	{"file": "c_exit_en.png", "entry_lane": "OUT", "entry": "A", "apex": "D", "exit": "D", "hover": 2, "locked": false, "show_rival": false, "stop": 2, "cam": "exit"},
 ]
 
 func _ready() -> void:
@@ -78,7 +90,7 @@ func _ready() -> void:
 	_build_world()
 	_load_cars()
 	var only := OS.get_environment("ONLY")
-	if only == "" or only == "overview" or not only.ends_with("camstop.png") and only != "camstop":
+	if only == "" or only == "overview" or _in_list(FRAMES, only):
 		_place_camera("overview", OVERVIEW_S)
 		await _settle(10)
 		for fr in FRAMES:
@@ -87,15 +99,28 @@ func _ready() -> void:
 			_apply_frame(fr, "overview")
 			await _settle(8)
 			await _capture(out_dir.path_join(fr.file))
-	if only == "" or only == "camstop" or only.ends_with("camstop.png"):
+	if only == "" or only == "camstop" or _in_list(CAMSTOPS, only):
 		for fr in CAMSTOPS:
 			if only != "" and only != "camstop" and String(fr.file) != only:
 				continue
 			_apply_frame(fr, String(fr.cam))
 			await _settle(8)
 			await _capture(out_dir.path_join(fr.file))
+	if only == "" or only == "variants" or _in_list(VARIANTS, only):
+		for fr in VARIANTS:
+			if only != "" and only != "variants" and String(fr.file) != only:
+				continue
+			_apply_frame(fr, String(fr.cam))
+			await _settle(8)
+			await _capture(out_dir.path_join(fr.file))
 	print("LINE_PREVIEW_OK ", out_dir)
 	get_tree().quit(0)
+
+func _in_list(arr: Array, file: String) -> bool:
+	for fr in arr:
+		if String(fr.file) == file:
+			return true
+	return false
 
 func _settle(n: int = 6) -> void:
 	for i in n:
@@ -284,13 +309,14 @@ func _lane_d(lane: String) -> float:
 	return Track.lane_offset(LANE_OF[lane], DIR, LANE_W)
 
 func _end_d(start_d: float, stance: String) -> float:
-	# Placeholder bends (B.5d): ATK cuts toward the inside by 2/3 of a lane, DEF holds the outside, NEU mid-lane.
+	# Placeholder bends (B.5d, Austin 2026-11-12): POW bends to the outer line, EN cuts to the inner line by 2/3 of a lane, HAN runs mid-lane. Matches OUT=POW / IN=EN.
 	var ins := Track.inside_sign(DIR)
 	var outside := -ins * LANE_W
-	if stance == "D":
+	if stance == "A":
 		return outside
 	if stance == "S":
 		return 0.0
+	# EN (and any other): cut toward the inside by 2/3 of a lane.
 	var cut := start_d + ins * (LANE_W * 2.0 / 3.0)
 	return clampf(cut, -LANE_W * 1.35, LANE_W * 1.35)
 
@@ -389,23 +415,26 @@ func _is_cedar(o: Node3D) -> bool:
 	return a is MeshInstance3D and b is MeshInstance3D and absf((b as Node3D).rotation.y - PI / 2.0) < 0.1
 
 func _build_line(fr: Dictionary, d_entry: float, player_s: float) -> void:
+	# Always chain Entry -> Apex -> Exit (B.5d). Unchosen follow-on segments use the
+	# canonical defaults (Apex EN, Exit POW) and draw dimmer / pending.
 	var s_e0 := player_s + 3.0
 	var s_e1 := S
 	var s_a1 := S + R * A
 	var s_x1 := S + R * A + minf(E, 24.0)
-	var segs: Array = []
+	var hover: int = int(fr.hover)
+	var locked: bool = bool(fr.locked)
+	var ap: String = String(fr.apex) if String(fr.apex) != "" else CANON_APEX
+	var ex: String = String(fr.exit) if String(fr.exit) != "" else CANON_EXIT
+	var apex_pending: bool = (not locked) and String(fr.apex) == "" and hover < 1
+	var exit_pending: bool = (not locked) and String(fr.exit) == "" and hover < 2
 	var d0 := d_entry
 	var d1 := d_entry
-	segs.append({"s0": s_e0, "s1": s_e1, "d0": d0, "d1": d1, "stance": fr.entry, "hovered": int(fr.hover) == 0})
-	if String(fr.apex) != "" or int(fr.hover) >= 1:
-		var ap: String = fr.apex if String(fr.apex) != "" else "A"
-		var d2 := _end_d(d1, ap)
-		segs.append({"s0": s_e1, "s1": s_a1, "d0": d1, "d1": d2, "stance": ap, "hovered": int(fr.hover) == 1})
-		d1 = d2
-	if String(fr.exit) != "" or int(fr.hover) >= 2:
-		var ex: String = fr.exit if String(fr.exit) != "" else "A"
-		var d3 := _end_d(d1, ex)
-		segs.append({"s0": s_a1, "s1": s_x1, "d0": d1, "d1": d3, "stance": ex, "hovered": int(fr.hover) == 2})
+	var d2 := _end_d(d1, ap)
+	var d3 := _end_d(d2, ex)
+	var segs: Array = []
+	segs.append({"s0": s_e0, "s1": s_e1, "d0": d0, "d1": d1, "stance": fr.entry, "hovered": hover == 0, "pending": false})
+	segs.append({"s0": s_e1, "s1": s_a1, "d0": d1, "d1": d2, "stance": ap, "hovered": hover == 1, "pending": apex_pending})
+	segs.append({"s0": s_a1, "s1": s_x1, "d0": d2, "d1": d3, "stance": ex, "hovered": hover == 2, "pending": exit_pending})
 	chevrons.build(course, segs, fog, float(disp.districts.touge.fog_near), float(disp.districts.touge.fog_far))
 
 func _icon() -> Dictionary:
