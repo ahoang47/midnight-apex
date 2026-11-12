@@ -276,8 +276,9 @@ segment starts where the Apex segment ends and angles with the Exit stance. Chan
 segment. Confirmed segments stay solid, and the hovered segment updates live as the player scrolls stances. Visual
 treatment follows Austin's reference image (pending re-share to Arthur); until then: a flat ribbon on the road
 surface, drawn in the 3D layer (it is subject to B.5c crunch), tinted by the stance colour of that segment
-(ATK #2CB84A, DEF #E8282C, NEU #F0C828), no glow or soft edges. Mapping from stance to line angle comes from sim/
-(Barry); Arthur does not set geometry numbers.
+(ATK #2CB84A, DEF #E8282C, NEU #F0C828), no glow or soft edges. Purely visual (Austin 2026-11-12): it does not
+affect scoring and has no sim/ values. Stance-to-bend mapping (Arthur, placeholder until Austin approves): ATK cuts
+toward the inside at 2/3 of the lane width, DEF holds the outside line, NEU runs mid-lane; each segment starts from the previous end point.
 
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
