@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-12 — Arthur [art]: PLAN THE LINE stance chips are OUT/MID/IN + stat on every row
+
+- **Why:** Austin, 2026-11-12: "stance selection should say in/mid/out for all, with a chip explaining stat."
+- **What:** On the PLAN THE LINE panel, the ENTRY, APEX and EXIT rows all label choices OUT / MID / IN, each with a small stat chip (OUT · POW green #2CB84A, MID · HAN yellow #F0C828, IN · EN red #E8282C), the same stacked chip style as the existing Entry row. Apex and Exit no longer use plain POW / HAN / EN labels, and the extra POW/HAN/EN group on the Entry row is dropped. The pick itself remains the stat; backend naming is unchanged.
+- `design/art/art_direction.md`: B.5 naming rule, B.5b and B.5d now state this on-screen label rule.
+- `unapproved/arthur/mockups/line_preview/`: `plan_panel.gd` and README updated; all overview, camera-stop and stance-variant frames plus sheets re-rendered in Godot.
+
 ## 2026-11-12 — Gordon [godot]: two-corner B.5d line preview from Arthur's approved mockup (UNAPPROVED)
 
 - **Why:** Austin approved Arthur's line-preview mockup as the build reference (relayed by Arthur, commit 9a83828). Purely visual; no gameplay or sim change.

@@ -247,7 +247,7 @@ were lost with the box and are **re-proposed** here.
 ### B.5 Characters, portraits, UI [PROPOSAL]
 - Characters never appear in-world. JoJo-style 2D portraits/overlays use the same low-res, limited-palette treatment
   (palette size open, Q7). Whether painted silhouettes behind shop windows count as "characters in-world" is open (Q5).
-- **Naming (Austin, 2026-11-12):** choices, stances, colours and playback logic are always **POW / EN / HAN**. **OUT / MID / IN** is visual only: road lane markers, lane-chip text, and where the chevrons sit physically. Example: the POW segment is green and is drawn on the OUT lane. POW on a left turn and POW on a right turn are the same choice.
+- **Naming (Austin, 2026-11-12):** behind the screen, choices, stances, colours and playback logic are always **POW / EN / HAN**. **OUT / MID / IN** is visual only: road lane markers, on-screen stance-selection labels, lane-chip text, and where the chevrons sit physically. On the PLAN THE LINE panel, the ENTRY, APEX and EXIT rows all label the choices **OUT / MID / IN**, each with a small stat chip (**OUT · POW** green #2CB84A, **MID · HAN** yellow #F0C828, **IN · EN** red #E8282C). The pick itself is the stat. Example: the POW segment is green and is drawn on the OUT lane. POW on a left turn and POW on a right turn are the same choice. (Austin follow-up, 2026-11-12: "stance selection should say in/mid/out for all, with a chip explaining stat.")
 - Faces follow `face_{scowling|grinning|focused}_{pow|en|han}.png` and `tell_*` overlays. Existing Appendix E filenames still use the suffixes `_atk|_def|_neu`, which map to **POW / EN / HAN**; player-facing labels use the new names.
 - **POW / EN / HAN** colours should be reserved for UI and not used for world neon
   *(proposal)*. **POW** is `#2CB84A` (green), **EN** is `#E8282C` (red), **HAN** is `#F0C828` (yellow, dark text). Austin swapped the green and red on 2026-11-11 (under the old Attack/Defend names they had been POW `#E8282C` and EN `#2CB84A`). The third stance is **HAN** (Q6, resolved 2026-11-11 as the third stance, renamed HAN on 2026-11-12).
@@ -260,8 +260,8 @@ Apex card. **Exit:** the camera moves to the exit and the player picks their Exi
 corner is shown **without the rival**: those stops show geometry only. The player gleans the rival's Apex/Exit from its
 Entry, district tendencies, corner geometry and the lead/gap, never from an on-screen tell. Once all three are set the line
 locks, the camera returns to Entry, and playback runs with the B.5a line-vs-line panel. Corner plate (top right)
-marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (on-screen lane chips and road markers on the Apex and
-Exit picks there are placeholders; write them **OUT · POW**, **MID · HAN**, **IN · EN**. The pick itself is the stat).
+marks the current stop E / A / X. Reference frames: `art/ui/line_select_cam/` (older Apex and Exit chips there are placeholders).
+On-screen stance selection on the ENTRY, APEX and EXIT rows is written **OUT · POW**, **MID · HAN**, **IN · EN**. The pick itself is the stat. Road markers stay IN / MID / OUT.
 
 ### B.5c Crunchy 3D, sharp UI [MUST, APPROVED 2026-11-11]
 The 3D scene is rendered at **native 640×480 with no anti-aliasing**, then **RGB555 + 4×4 Bayer** is applied, then a
@@ -281,6 +281,7 @@ segment's stat colour, solid (**POW** #2CB84A, **EN** #E8282C, **HAN** #F0C828).
 the line; a slight brightness ramp along a segment is fine. The hovered segment uses a lighter or pulsed variant.
 No glow or soft edges. Purely visual (Austin 2026-11-12): it does not
 affect scoring and has no sim/ values. Where the chevrons sit (Arthur, placeholder until Austin approves; earlier draft was flipped): the **POW** segment holds the outer line of the corner (drawn on the OUT lane), the **EN** segment cuts across the full lane width to the inner line (drawn on the IN lane), and the **HAN** segment runs mid-lane (drawn on the MID lane); each segment starts from the previous end point.
+The PLAN THE LINE panel (bottom right in the line-preview frames) has ENTRY, APEX and EXIT rows. Every row labels the choices **OUT / MID / IN**, each with a small stat chip (**OUT · POW**, **MID · HAN**, **IN · EN**), the same style on all three rows. Apex and Exit do not use plain POW / HAN / EN labels. The pick itself remains the stat (behind the screen, B.5 naming).
 
 ### B.5a Corner playback: line vs line [APPROVED 2026-11-11]
 During the corner playback cinematic, show the LINE LOCKED panel with two rows, YOU and RIVAL, and both full 3-card
