@@ -8,6 +8,19 @@
 
 ---
 
+## 2026-11-11 — Gordon [godot]: two-corner HUD text drawn at display resolution (unapproved/gordon, departs from A.5 for UI only)
+- **What:** in `unapproved/gordon/two-corner/godot/project.godot`, the stretch mode `viewport` becomes `canvas_items` (640x480 base and keep aspect are unchanged; `_fit_scale()` still chooses integer scaling at 2x or more).
+  - **The 3D world is unchanged.** It is still a 640x480 SubViewport going through the post shader (bloom, then RGB555 + 4x4 Bayer on 640x480 pixels), shown nearest at a whole-number scale.
+  - **The HUD keeps its 640x480 design units,** so its positions, sizes, colours and font face match Arthur's frames. It is now rasterised at window resolution. `hud.gd _font` uses the viewport's font oversampling, greyscale AA and light hinting, and the 1-unit shadow, outlines and rules scale with the display. Four `draw_line` calls change from the default -1 width to 1.0.
+  - `run_shots.sh` frames are now captured at the window size (1280x960). Parity PASSes with max diff 0.0 on everything `run_parity.sh` runs (four inputs, fuzz300, save/load, restart test, 200-seed key test). The web export was rebuilt on the box (:5176).
+  - Shots and composites are in `unapproved/gordon/two-corner/out/shots8/`.
+- **Why:** Austin, 9:41 PM PT, after seeing the shots7 2x-integer composite: "I think you have to continue upressing. Those are still pretty tough to read."
+- **Departure, flagged for Arthur:**
+  - `design/art/art_direction.md:115/:141` (integer nearest upscale) and `:242` ("viewport stretch") no longer apply to UI text, at Austin's direct request.
+  - The mockups' 1-bit 640x480 text (`art/ui/line_select_cam/post_lsc.py:34`) is now smooth text at display resolution in the build.
+  - The world look keeps A.5.
+- **Still pixel-scaled:** the Godot stand-in 6x9 bitmap font (menu, debug box, gap meter, TIMING panel). It is crisp at 2x/3x but uneven below 2x. Moving it to the HUD font would be a face change, so it is a proposal and not done here.
+
 ## 2026-11-11 — Gordon [godot]: two-corner HUD text legibility, integer browser scaling (unapproved/gordon)
 - **What:** `unapproved/gordon/two-corner/godot/scripts/main.gd` adds `_fit_scale()`. The 640x480 frame now upscales by a whole number (`Window.CONTENT_SCALE_STRETCH_INTEGER`) whenever the window fits 2x or more, and stays fractional below 2x. Display settings (640x480, viewport stretch, keep aspect) are unchanged. No HUD layout, font, size, or colour changed, and no scoring changed. Parity still PASSes: max diff 0.0 on all four inputs, the fuzz300 run, save/load and the restart test, plus the 200-seed key test (`out/shots7/parity.txt`). The web export was rebuilt on the box.
 - **Why:** Austin: "Text is really difficult to read on the game." The browser build was scaled 2.25x at 1920x1080 and 1.6x at 1366x768 with nearest filtering. That drew the 1-px stems of the 1-bit HUD text 2 or 3 (1 or 2) screen px wide, so letters broke up. `design/art/art_direction.md:115` asks for an integer nearest upscale (and `:141` for a nearest upscale). At 1080p the frame is now a crisp 2x, about 11% smaller than before.

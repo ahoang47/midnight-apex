@@ -1,4 +1,4 @@
-## Native-resolution HUD (640x480 under viewport stretch). Plan the Line layout from Arthur's /workspace/mockups/lane_chain/v5/post_v5.py (1-bit NimbusSansNarrow,
+## Display-resolution HUD laid out in 640x480 design units (canvas_items stretch, Austin 2026-11-11). Plan the Line layout from Arthur's /workspace/mockups/lane_chain/v5/post_v5.py (NimbusSansNarrow,
 ## PS1 50/50 semi panels); debug boxes, menu and gap meter keep the 6x9 bitmap font + 9-slice stand-ins from spec/gen_art.py.
 extends Control
 ## Stance UI colours (Austin 2026-11-11, swapped the same day): ATK/POW green #2CB84A, DEF/EN red #E8282C, NEU/HAN yellow #F0C828 with dark text.
@@ -35,11 +35,15 @@ func setup(font_png: Texture2D, meta: Dictionary, panel_png: Texture2D, logo_png
 	size = Vector2(640, 480); mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fn = _font("res://fonts/NimbusSansNarrow-Bold.otf"); fi = _font("res://fonts/NimbusSansNarrow-BoldOblique.otf")
 
-## mockup text is PIL fontmode '1' (1-bit, no AA); B.5 'drawn at native resolution'
+## Display-resolution HUD (Austin 2026-11-11 21:41, 'continue upressing'): the project stretch mode is canvas_items, so this
+## Control is laid out in 640x480 design units (same positions, sizes and colours as Arthur's frames) and the canvas transform
+## scales it to the window. Glyphs are rasterised at size x scale by the viewport's automatic font oversampling
+## (oversampling 0 = follow the viewport), greyscale AA, light hinting. This departs from the mockups' 1-bit 640x480 text
+## (post_lsc.py:34) and from art_direction.md:115/:141 integer-nearest upscale, for the UI only; the 3D world keeps it.
 func _font(p: String) -> FontFile:
 	var f: FontFile = (load(p) as FontFile).duplicate()
-	f.antialiasing = TextServer.FONT_ANTIALIASING_NONE; f.hinting = TextServer.HINTING_NORMAL
-	f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED; f.oversampling = 1.0
+	f.antialiasing = TextServer.FONT_ANTIALIASING_GRAY; f.hinting = TextServer.HINTING_LIGHT
+	f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_AUTO; f.oversampling = 0.0
 	return f
 
 func sw(s: String, sz: int, it := false) -> float: return (fi if it else fn).get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz).x
@@ -230,7 +234,7 @@ func _lock_banner() -> void:
 	var sh := PackedVector2Array()
 	for v in slab: sh.append(v + Vector2(2, 3))
 	solid(sh, L_AMBER_D); solid(slab, L_AMBER); outline(slab, L_INK)
-	draw_line(Vector2(x0 + 12, y0 + 3), Vector2(x1 - 4, y0 + 3), Color8(255, 236, 170))
+	draw_line(Vector2(x0 + 12, y0 + 3), Vector2(x1 - 4, y0 + 3), Color8(255, 236, 170), 1.0)
 	t2((x0 + x1) / 2.0, (y0 + y1) / 2.0 + 1, "LINE LOCKED", 26, L_INK, true, "m", false, true)
 	var ln: String = st.line if String(st.line).length() == 3 else ""
 	for k in ln.length():
@@ -262,7 +266,7 @@ func _line_vs_line(k: int) -> void:
 	for i in 3:
 		if (k < 0 or i <= k) and outs.size() == 3: lres(cols[i], y0 + 70, int(outs[i]))
 		else: t2(cols[i], y0 + 77, "- -", 11, L_DIMMER, false, "m", true, true)
-	draw_line(Vector2(x0 + 6, y0 + 25), Vector2(x1 - 8, y0 + 25), L_EDGE)
+	draw_line(Vector2(x0 + 6, y0 + 25), Vector2(x1 - 8, y0 + 25), L_EDGE, 1.0)
 
 ## gap / lead meter, moved to the top right (the mirror owns top centre, the turn-in plate sits under it)
 func _gap_meter(x: float, y: float) -> void:
@@ -289,7 +293,7 @@ func _lanes() -> void:
 			var w := 26.0; var h := 15.0; var t := 8.0
 			var mk := func(dy: float) -> PackedVector2Array: return P([x - w / 2, y - h + dy, x - w / 2 + t, y - h + dy, x, y - 4 + dy, x + w / 2 - t, y - h + dy, x + w / 2, y - h + dy, x, y + dy])
 			solid(mk.call(3.0), AMBER_D); solid(mk.call(0.0), AMBER); outline(mk.call(3.0), INK); outline(mk.call(0.0), INK)
-			draw_line(Vector2(x - w / 2 + 2, y - h + 1), Vector2(x - w / 2 + t - 1, y - h + 1), Color8(255, 236, 170))
+			draw_line(Vector2(x - w / 2 + 2, y - h + 1), Vector2(x - w / 2 + t - 1, y - h + 1), Color8(255, 236, 170), 1.0)
 			t2(x, y - h - 9, LANE[k], 11, AMBER, false, "m", true, true)
 		else:
 			var w := 12.0; var h := 7.0; var t := 4.0
@@ -343,7 +347,7 @@ func _plan_panel() -> void:
 		else:
 			t2(x, y, lab, 11, TODO, true); x += w
 		if i < 2: t2(x + 4, y, ">", 11, TODO, true); x += 15
-	draw_line(Vector2(x0 + 6, y0 + 22), Vector2(x1 - 8, y0 + 22), EDGE_D)
+	draw_line(Vector2(x0 + 6, y0 + 22), Vector2(x1 - 8, y0 + 22), EDGE_D, 1.0)
 	if ph < 3:
 		for i in 3:
 			var k: String = ORDER[i]; var ry := y0 + 29 + i * 22

@@ -102,7 +102,8 @@ func _json(p: String) -> Dictionary:
 ## Legibility (shots7, 2026-11-11): the 640x480 frame is upscaled by whole numbers whenever the window fits 2x or more
 ## (art_direction.md A.5:115 'integer nearest', :141). Non-integer nearest (2.25x at 1080p, 1.6x at 768) drew the 1-px
 ## stems of the 1-bit HUD text 2 or 3 (1 or 2) screen px wide, so letters broke up. Below 2x it stays fractional so the
-## game is not shrunk to 1x. Display settings (640x480, viewport stretch, keep aspect) are unchanged.
+## game is not shrunk to 1x. Since shots8 the stretch mode is canvas_items: the 3D world is still a 640x480 SubViewport shown
+## nearest at this scale with the RGB555 + Bayer post, and the HUD draws at window resolution in 640x480 design units.
 func _fit_scale() -> void:
 	var w := get_window()
 	var s := minf(w.size.x / 640.0, w.size.y / 480.0)
