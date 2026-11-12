@@ -711,6 +711,19 @@ func _run_line_preview_shots() -> void:
 				continue
 			await get_tree().process_frame
 			await _shot("exit_%s" % names[k])
+		# Lock Exit POW (canonical follow-on), then capture the Exit QTE and the RESULT panel.
+		plan_sel = PLAN_ORDER.find("P")
+		if _plan_hand_index("P") < 0:
+			_plan_fix_sel(0)
+		else:
+			plan_sel = PLAN_ORDER.find("P")
+		handle_key(KEY_ENTER)
+		await _wait_game(func(): return core.phase == "TIMING" and qte_i == 2 and qte_seg == "sweep" and _qte_ms() >= 40.0)
+		await get_tree().process_frame
+		await _shot("exit_qte")
+		await _wait_game(func(): return core.phase == "RESULT" and reveal >= 3 and result_t > 0.4)
+		await get_tree().process_frame
+		await _shot("result")
 	print("LINE_PREVIEW_SHOTS_OK ", shots_dir)
 	get_tree().quit()
 

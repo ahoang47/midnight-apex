@@ -15,6 +15,9 @@ var logo: Texture2D
 var st: Dictionary = {}
 var fn: FontFile   # NimbusSansNarrow-Bold, 1-bit
 var fi: FontFile   # -BoldOblique
+var fb: FontFile   # NimbusSans-Bold (heavier titles); from Arthur's line-preview HUD
+var fa: FontFile   # Archivo Black, short labels (loaded as in Arthur's hud.gd)
+var grain: Texture2D  # noisy plate fill (HUD plates only, 1280 layer after the 640 dither)
 
 ## editor only: which sample state the panels draw
 @export_enum("select", "lock", "qte", "play", "result", "finish", "menu") var editor_preview := "select":
@@ -32,13 +35,17 @@ func setup(font_png: Texture2D, meta: Dictionary, panel_png: Texture2D, logo_png
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	size = Vector2(640, 480); mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fn = _font("res://fonts/NimbusSansNarrow-Bold.otf"); fi = _font("res://fonts/NimbusSansNarrow-BoldOblique.otf")
+	fb = _font("res://fonts/NimbusSans-Bold.otf") if ResourceLoader.exists("res://fonts/NimbusSans-Bold.otf") else fn
+	fa = _font("res://fonts/ArchivoBlack-Regular.ttf") if ResourceLoader.exists("res://fonts/ArchivoBlack-Regular.ttf") else fb
+	grain = load("res://art/plate_grain.png") as Texture2D   # sampled nearest via this HUD CanvasItem
 	for n in P.values():
 		if "hud" in n: n.hud = self   # LineSelect is a plain container
 
 const TS := 2   # text raster scale (2x grid)
 func _font(p: String) -> FontFile:
 	var f: FontFile = (load(p) as FontFile).duplicate()
-	f.antialiasing = TextServer.FONT_ANTIALIASING_NONE; f.hinting = TextServer.HINTING_NORMAL
+	# B.5c: pixel-hard UI, no AA, hinting off (Arthur's mockup script used HINTING_NORMAL; the brief asks for off).
+	f.antialiasing = TextServer.FONT_ANTIALIASING_NONE; f.hinting = TextServer.HINTING_NONE
 	f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED; f.oversampling = 1.0
 	return f
 

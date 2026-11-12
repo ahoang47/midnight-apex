@@ -3,7 +3,7 @@
 extends "res://scripts/hud/hud_panel.gd"
 func paint() -> void:
 	var locked: bool = st.phase == "TIMING"
-	lpanel(14, 12, 192, 57); t2(23, 18, "LINE LOCK", 12, L_WHITE)
+	lpanel(14, 12, 192, 57); t2(23, 16, "LINE LOCK", 13, L_WHITE, false, "l", true, false, true)
 	var on := 17 if locked else ceili(17.0 * float(st.left) / float(st.total))
 	if locked: t2(183, 18, "SET", 19, L_WHITE, false, "r")
 	else: t2(183, 18, "%04.1fs" % float(st.left), 19, L_AMBER, false, "r")

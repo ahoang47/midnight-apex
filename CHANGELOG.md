@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-12 — Gordon [godot]: two-corner HUD plate grain, bevel, heavier type, and framed lane chips (UNAPPROVED)
+
+- **Why:** Austin, 12:55 PM PT, 2026-11-12: "I like his HUD look." Port of Arthur's plate grain, bevel and heavier fonts from `unapproved/arthur/mockups/line_preview/` into the two-corner HUD. Purely visual; no gameplay or sim change. Later the same day Austin ruled (relayed by Arthur; 9ba4c70 / c838466) that every PLAN THE LINE row uses IN/MID/OUT chips with the stat, and "The chips should be framed."
+- **What (`unapproved/gordon/two-corner/`):** `plate_finish` from Arthur's `hud_panel.gd` (grain tile, 1 px banding, hard bevel) is applied to every `lpanel` and the PLAN THE LINE body. Grain is drawn only on HUD plates, on the 1280×960 HUD layer after the 640×480 dither pass — never on the 3D or the road. Fonts copied into `godot/fonts/`: Nimbus Sans Bold (with the existing Narrow Bold / Bold Oblique) and Archivo Black, with licenses alongside. Titles use Nimbus Sans Bold (`hud.fb`); text is pixel-hard (no AA, hinting off, nearest). Every row uses corner-relative `OUT · POW` / `MID · HAN` / `IN · EN` chips, framed with Arthur's `frame_lane_chip` (ink outer, edge inner, hard bevel; highlight stays inside the frame). Colours unchanged (POW `#2CB84A`, EN `#E8282C`, HAN `#F0C828`). Debug box keeps the 6x9 bitmap so F9/F10 and the seed stay readable. The after-turn QTE/continue line is moved just under the gap bar so it no longer overlaps the meter. Build id `1da2058394`.
+- **Tests:** `python3 tools/qte_fn_test.py` as CI runs it: PASS, 5757 values, raw_qte_score exact, 0 mismatches. `run_parity.sh` seeds + fuzz300, save/load, restart, and the 200-seed key test all 0.0 vs pin 50928ed. Token prefix `TC3:50928ed:1da2058394:`.
+- **Shots:** `out/shots15/` — Entry / Apex / Exit selection at 1280×960 (hover on each stance, seed 20261114), Exit QTE, RESULT, and `compare_arthur_vs_gordon.png` against Arthur's c838466 frames.
+- **Left as is / differed from the mockup:** Arthur's chips are stacked (lane over stat in a 26 px slab); this build keeps the combined single-line `OUT · POW` wording from the written brief, now on every row, inside the same plate-style frame. Hinting is off (B.5c / the brief); Arthur's mockup script used `HINTING_NORMAL`. Archivo Black is loaded as `hud.fa` the way Arthur's `hud.gd` does, but paint currently uses Nimbus Sans Bold for heavy titles, same as his `_font()`. The tie-gap bar and debug box still use the 9-slice `box()` path, matching Arthur's code (no `plate_finish` there). The known Entry-chase crest gap for follow-on chevrons is unchanged. Cameras and gameplay unchanged. The debug seed box is kept.
+
 ## 2026-11-12 — Arthur [art]: PLAN THE LINE stance chips are framed
 
 - **Why:** Austin follow-up, 2026-11-12: "The chips should be framed."

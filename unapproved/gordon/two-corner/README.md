@@ -138,6 +138,11 @@ Austin approved Arthur's line-preview mockup (relayed by Arthur, commit **9a8382
 - Known leftover: from the Entry chase cam the follow-on line vanishes over the crest (`_in_straight()` hides the hook mesh). Left as-is; same gap is in the mockup.
 - Shots: `out/shots14/` (Entry / Apex / Exit × each stance hover, 640 and 1280; `compare_arthur_vs_gordon.png`). Shot harness: `--line-preview-shots <dir>` (seed 20261114 so every stance can be hovered at Exit).
 
+## HUD look (2026-11-12, display only, parity unchanged)
+
+Austin (12:55 PM PT): "I like his HUD look." Plate grain, bevel and heavier titles are ported from Arthur's line-preview `hud_panel.gd` (`plate_finish`) and fonts. Grain is drawn only on HUD plates, on the 1280×960 HUD layer after the 640×480 dither pass — never on the 3D or the road. Fonts: Nimbus Sans Narrow Bold / Bold Oblique, Nimbus Sans Bold (URW++ base35, AGPL-3 with Font exception), and Archivo Black (SIL OFL 1.1); licenses sit next to the files in `godot/fonts/`. Text is pixel-hard (no AA, hinting off, nearest). Colours unchanged. Every PLAN THE LINE row uses corner-relative `OUT · POW` / `MID · HAN` / `IN · EN` chips (Austin via Arthur, 9ba4c70). Debug box keeps the 6x9 bitmap so F9/F10 and the seed stay readable. Cameras and gameplay unchanged. Shots: `out/shots15/`.
+
+
 ## shots9 (display/flow only, scoring/RNG/pin unchanged): Austin's playtest, 2026-11-11 ~9:58-10:22 PM PT
 - **After-turn pause:** once the RESULT row fills in, 'Press Enter to continue  N' counts down and auto-continues ("That should have a time limit").
   No pause was added to selection or playback (B.5a). Length `playback_flow.continue_s` = 6 s, PLACEHOLDER awaiting Desmond/Austin.

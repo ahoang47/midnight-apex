@@ -3,7 +3,7 @@
 extends "res://scripts/hud/hud_panel.gd"
 func paint() -> void:
 	var pl: Dictionary = st.plate
-	lpanel(476, 12, 628, 96); t2(534, 18, String(pl.name), 16, L_WHITE)
+	lpanel(476, 12, 628, 96); t2_fit(528, 16, String(pl.name), 16, L_WHITE, 622.0, false, true)
 	var md: String = pl.mode; var k: int = int(pl.stop)
 	var cur := -1; var ndone := 0
 	match md:

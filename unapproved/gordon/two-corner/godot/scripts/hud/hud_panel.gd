@@ -55,10 +55,14 @@ func _draw() -> void:
 func paint() -> void: pass
 
 ## widths and ascents are measured at the raster size (size x 2) and given back in design units
-func sw(s: String, sz: int, it := false) -> float: return (hud.fi if it else hud.fn).get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz * TS).x / TS
+## heavy = NimbusSans-Bold (Arthur's titles); otherwise Narrow Bold / BoldOblique
+func _font(it := false, heavy := false) -> FontFile:
+	if heavy and hud.fb != null: return hud.fb
+	return hud.fi if it else hud.fn
+func sw(s: String, sz: int, it := false, heavy := false) -> float: return _font(it, heavy).get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz * TS).x / TS
 ## anchor: 'l' left / 'm' centre / 'r' right on x; y = top of the line (PIL 'la'), or the vertical middle when mid = true
-func t2(x: float, y: float, s: String, sz: int, col: Color, it := false, anchor := "l", shadow := true, mid := false) -> void:
-	var f: FontFile = hud.fi if it else hud.fn; var z := sz * TS
+func t2(x: float, y: float, s: String, sz: int, col: Color, it := false, anchor := "l", shadow := true, mid := false, heavy := false) -> void:
+	var f: FontFile = _font(it, heavy); var z := sz * TS
 	var w := f.get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, z).x
 	var X := x * TS; var B := y * TS + (f.get_ascent(z) if not mid else (f.get_ascent(z) - f.get_descent(z)) / 2.0)
 	if anchor == "m": X -= w / 2.0
@@ -121,7 +125,36 @@ func box(x: float, y: float, w: float, h: float) -> void: draw_style_box(hud.pan
 func rect(x: float, y: float, w: float, h: float, col: Color) -> void: draw_rect(Rect2(x, y, w, h), col)
 
 func lpanel(x0: float, y0: float, x1: float, y1: float, col: Color = L_EDGE, c := 5.0) -> void:
-	var p := cut_panel(x0, y0, x1, y1, c); semi(p, PANEL); outline(p, col)
+	var p := cut_panel(x0, y0, x1, y1, c); semi(p, PANEL); plate_finish(p, x0, y0, x1, y1); outline(p, col)
+## Noisy, bevelled, slightly banded plate fill (Arthur line-preview hud_panel.gd). Pixel-hard, no AA.
+## Grain is drawn here on the 1280×960 HUD layer, after the 640×480 dither pass — never on the 3D or the road.
+func plate_finish(pts: PackedVector2Array, x0: float = 0.0, y0: float = 0.0, x1: float = 0.0, y1: float = 0.0) -> void:
+	if hud != null and hud.grain != null and pts.size() >= 3:
+		var uvs := PackedVector2Array(); var cols := PackedColorArray()
+		for p in pts:
+			uvs.append(p / 48.0)
+			cols.append(Color(1, 1, 1, 0.28))
+		draw_polygon(pts, cols, uvs, hud.grain)
+	# colour banding: a few 1 px hard bars, no soft gradient
+	if x1 > x0 and y1 > y0:
+		var band := Color(0, 0, 0, 0.16)
+		var hi := Color(1, 1, 1, 0.07)
+		var y := y0 + 6.0
+		var n := 0
+		while y < y1 - 4.0:
+			draw_line(Vector2(x0 + 3, y), Vector2(x1 - 3, y), band if n % 2 == 0 else hi, 1.0)
+			y += 5.0
+			n += 1
+	# hard bevel
+	if pts.size() >= 6:
+		draw_line(pts[0] + Vector2(1, 1), pts[1] + Vector2(-1, 1), Color8(120, 140, 190, 200), 1.0)
+		draw_line(pts[0] + Vector2(1, 1), pts[pts.size() - 1] + Vector2(1, -1), Color8(120, 140, 190, 180), 1.0)
+		draw_line(pts[2] + Vector2(-1, 0), pts[3] + Vector2(-1, 0), Color8(0, 0, 0, 160), 1.0)
+		draw_line(pts[3] + Vector2(0, -1), pts[4] + Vector2(0, -1), Color8(0, 0, 0, 180), 1.0)
+func t2_fit(x: float, y: float, s: String, sz: int, col: Color, x1: float, it := false, heavy := true) -> void:
+	while sz > 9 and sw(s, sz, it, heavy) > (x1 - x):
+		sz -= 1
+	t2(x, y, s, sz, col, it, "l", true, false, heavy)
 ## stance chip (post_clash.py:39-42): 49 x 14 slanted, label = POW / EN / HAN
 func lchip(x: float, y: float, k: String, w := 49.0) -> void:
 	var p := P([x + 4, y, x + w, y, x + w - 4, y + 14, x, y + 14]); solid(p, STANCE[k]); outline(p, L_INK)
