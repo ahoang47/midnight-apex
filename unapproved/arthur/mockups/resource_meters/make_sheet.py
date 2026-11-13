@@ -87,6 +87,21 @@ D_FRAMES = [
     ("d_susp_refill.png", "D  NEXT TURN  suspension recovers  fuel/brakes do not"),
 ]
 
+E_FRAMES = [
+    ("e_full.png", "E1  BOTTOM BAND  flat HUD  HEAT/BRAKES/SUSP + LINE LOCK + PLAN  — all full"),
+    ("e_drain.png", "E1  AFTER A POW PICK  HEAT headroom drains  ghost in the trough"),
+    ("e_low.png", "E1  OVERHEAT  heat + brakes warning  hot tint + OVERHEAT tag"),
+    ("e_empty.png", "E1  LIMP  heat empty (dark trough, no slash)  LIMP tag"),
+    ("e_susp_spent.png", "E1  AFTER A HAN PICK  suspension spent  heat still limp"),
+    ("e_susp_refill.png", "E1  NEXT TURN  suspension recovers  heat stays limp"),
+]
+
+COMPARE = [
+    ("d_full.png", "D  BEFORE  grainy plates  meters bottom-left  LINE LOCK and PLAN on the play area"),
+    ("e_full.png", "E1  AFTER  one flat bottom band  play area clear  floating turn sign"),
+    ("e2_full.png", "E2  AFTER  bottom band + slim top strip for LINE LOCK and the corner name"),
+]
+
 
 def main():
     # Row 1: three style variants at full. Rows 2–3: state strip for the hero variant.
@@ -96,6 +111,11 @@ def main():
     # Variant D gets its own sheet (bottom-left continuous bars).
     if Path(ROOT / "d_full.png").exists():
         build([D_FRAMES[:3], D_FRAMES[3:]], "resource_meters_d_sheet.png")
+    if Path(ROOT / "e_full.png").exists():
+        build([E_FRAMES[:3], E_FRAMES[3:]], "resource_meters_e_sheet.png")
+    if Path(ROOT / "e_full.png").exists() and Path(ROOT / "d_full.png").exists():
+        row = [c for c in COMPARE if Path(ROOT / c[0]).exists()]
+        build([row], "resource_meters_d_vs_e.png")
 
 
 if __name__ == "__main__":

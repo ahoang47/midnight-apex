@@ -74,6 +74,14 @@ func show_state(s: Dictionary) -> void:
 			else: on.cont = true
 	if st.get("resources") != null:
 		on.resources = true
+		var ev := String(st.resources.get("variant", ""))
+		if ev.begins_with("E"):
+			# E draws LINE LOCK, PLAN THE LINE, the corner plate and a flat
+			# tie-gap itself so the play area can stay clear (International Rally).
+			on.erase("timer")
+			on.erase("plan")
+			on.erase("plate")
+			on.erase("gap")
 	if on.has("debug"): P.debug.position.y = on.debug
 	# Race split / tie-gap bar: top centre, directly under the REAR VIEW label (mirror at y=13-82, label at y=84).
 	if P.has("gap"):

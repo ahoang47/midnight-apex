@@ -11,6 +11,14 @@
 ##       column; long thin continuous fill bars in framed troughs, no pips. Austin
 ##       2026-11-13: "the bars are more 'freeform' when depleting vs discrete ticks"
 ##       and "it should be in the bottom left."
+##   E — International Rally-style bottom HUD band (Austin 2026-11-13: that GBC
+##       shot "shows a better HUD design"). HEAT / BRAKES / SUSP compact on the
+##       left (continuous troughs, not segments), LINE LOCK + corner map in the
+##       middle, PLAN THE LINE chips on the right. Top stays minimal: rear view,
+##       a tighter tie-gap, and a floating turn sign (first reference). POW fuel
+##       row becomes HEAT with a coolant-temperature icon (headroom left; OVERHEAT
+##       / LIMP tags). E1 = everything in the bottom band. E2 = bottom band + a
+##       slim top strip for LINE LOCK and the corner name if the band is tight.
 ##
 ## EN icon: a wheel (tyre + rim + spokes) with the brake rotor and caliper visible
 ## through the spoke gaps, so it reads as the wheel-and-brake package.
@@ -32,6 +40,13 @@ const RIM := Color8(210, 216, 226)
 const RIM_D := Color8(120, 128, 140)
 const HUB := Color8(48, 50, 58)
 const INK_I := Color8(6, 6, 10)
+const ITEMS_E := [
+	{"key": "fuel", "label": "HEAT", "stat": "POW"},
+	{"key": "brakes", "label": "BRAKES", "stat": "EN"},
+	{"key": "susp", "label": "SUSP", "stat": "HAN"},
+]
+# Hot tint used only on a warning HEAT bar (overheat). The POW chip stays green.
+const COL_HOT := Color8(255, 112, 28)
 
 func paint() -> void:
 	var rs: Dictionary = st.get("resources", {})
@@ -45,6 +60,10 @@ func paint() -> void:
 			_paint_c(rs)
 		"D":
 			_paint_d(rs)
+		"E", "E1":
+			_paint_e(rs, false)
+		"E2":
+			_paint_e(rs, true)
 		_:
 			_paint_b(rs)
 
@@ -230,12 +249,12 @@ func _badge_at(x: float, y: float, s: Dictionary, anchor: String = "r") -> void:
 	var w := sw(b, sz, true, true) + 8.0
 	var x0 := x - w if anchor == "r" else x
 	var col: Color = L_AMBER if b == "LOW" else (s.col if b == "RECOVER" else Color8(232, 40, 44))
+	if b == "OVERHEAT":
+		col = COL_HOT
 	var pts := P([x0 + 2, y, x0 + w, y, x0 + w - 2, y + 10, x0, y + 10])
 	solid(pts, col)
 	outline(pts, INK)
-	var tc: Color = INK if b == "LOW" or b == "RECOVER" else Color.WHITE
-	if b == "RECOVER":
-		tc = INK  # yellow fill
+	var tc: Color = INK if b == "LOW" or b == "RECOVER" or b == "OVERHEAT" else Color.WHITE
 	t2(x0 + w / 2.0, y + 5.0, b, sz, tc, true, "m", false, true)
 
 func _pip_col(s: Dictionary, lit: bool, ghost: bool) -> Color:
@@ -243,6 +262,8 @@ func _pip_col(s: Dictionary, lit: bool, ghost: bool) -> Color:
 		if s.flash:
 			return Color(minf(s.col.r * 1.15 + 0.15, 1), minf(s.col.g * 1.15 + 0.15, 1), minf(s.col.b * 1.15 + 0.1, 1))
 		if s.blink:
+			if bool(s.get("hot", false)):
+				return COL_HOT
 			return L_AMBER if s.key != "susp" else s.col
 		return s.col
 	if ghost:
@@ -381,12 +402,15 @@ func _icon_at(cx: float, cy: float, s: Dictionary, r: float) -> void:
 		col = dimc(s.col, 0.45)
 	match String(s.key):
 		"fuel":
-			_icon_pump(cx, cy, r, col)
+			if bool(s.get("heat", false)):
+				_icon_coolant(cx, cy, r, col)
+			else:
+				_icon_pump(cx, cy, r, col)
 		"brakes":
 			_icon_wheel(cx, cy, r, col, s.empty)
 		_:
 			_icon_shock(cx, cy, r, col)
-	if s.empty:
+	if s.empty and not bool(s.get("no_slash", false)):
 		# Slash through the icon.
 		draw_line(Vector2(cx - r + 1, cy + r - 2), Vector2(cx + r - 1, cy - r + 2), Color8(232, 40, 44), 2.0)
 		draw_line(Vector2(cx - r + 1, cy + r - 2), Vector2(cx + r - 1, cy - r + 2), INK_I, 1.0)
@@ -565,3 +589,465 @@ func _icon_shock(cx: float, cy: float, r: float, col: Color) -> void:
 	# lower eye
 	_ring_track(cx, ly, eye_r - 0.15, eye_in - 0.1, 0.0, TAU, col)
 	_ring_track(cx, ly, eye_r + 0.15, eye_r - 0.15, 0.0, TAU, INK_I)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Variant E: International Rally bottom band, flat HUD (Austin 2026-11-13:
+# "the correct art direction is flatter is better"). No plate grain, no bevel,
+# no sheen. Solid dark fills, 1–2 px hard borders, flat chips, chunky type,
+# POW / EN / HAN colours. E1 = one bottom band. E2 = band + slim top strip.
+# ─────────────────────────────────────────────────────────────────────────────
+func _item_state_e(rs: Dictionary, it: Dictionary) -> Dictionary:
+	var s: Dictionary = _item_state(rs, it)
+	if String(it.key) == "fuel":
+		s["heat"] = true
+		s["no_slash"] = true
+		s["hot"] = bool(s.warn) or bool(s.blink) or String(s.badge) == "OVERHEAT"
+	return s
+
+
+func _flat_panel(x0: float, y0: float, x1: float, y1: float, border: Color = EDGE) -> void:
+	# Hard rectangle. Solid fill, 2 px border (ink outside, edge inside). No grain, no bevel, no banding.
+	var r := Rect2(x0, y0, x1 - x0, y1 - y0)
+	draw_rect(r, PANEL, true)
+	draw_rect(r, INK, false, 1.0)
+	if x1 - x0 > 4.0 and y1 - y0 > 4.0:
+		draw_rect(Rect2(x0 + 1.0, y0 + 1.0, x1 - x0 - 2.0, y1 - y0 - 2.0), border, false, 1.0)
+
+
+func _vdiv(x: float, y0: float, y1: float) -> void:
+	draw_line(Vector2(x, y0 + 5.0), Vector2(x, y1 - 5.0), EDGE_D, 1.0)
+
+
+func _e_trough(x: float, y: float, w: float, h: float, s: Dictionary) -> void:
+	# Flat well + flat fill. Same freeform slanted nose as D, but no highlight sheen and no well bevel.
+	var well := Rect2(x, y, w, h)
+	draw_rect(well, Color8(8, 10, 16), true)
+	draw_rect(well, INK, false, 1.0)
+	var pips: float = maxf(float(s.pips), 1.0)
+	var inner := w - 2.0
+	var fill_w := inner * (float(s.val) / pips)
+	var ghost_w := inner * (float(s.val + int(s.get("ghost", 0))) / pips)
+	var x0 := x + 1.0
+	var y0 := y + 1.0
+	var y1 := y + h - 1.0
+	if ghost_w > fill_w + 0.5:
+		_trough_fill(x0, y0, y1, ghost_w, inner, dimc(s.col, 0.45), false)
+	if fill_w >= 1.0:
+		var col := _pip_col(s, true, false)
+		var is_full := fill_w >= inner - 0.51
+		_trough_fill(x0, y0, y1, fill_w, inner, col, not is_full)
+	# Empty HEAT is a dark trough + LIMP tag; no slash and no red midline.
+
+
+func _paint_e(rs: Dictionary, e2: bool) -> void:
+	_paint_e_gap()
+	_paint_e_sign()
+	var x0 := 8.0
+	var y0 := 408.0
+	var x1 := 632.0
+	var y1 := 479.0
+	_flat_panel(x0, y0, x1, y1)
+	if e2:
+		_paint_e_lock_strip()
+		_paint_e_corner_strip()
+		_paint_e_meters(rs, 12.0, y0, 248.0, y1)
+		_vdiv(254.0, y0, y1)
+		_paint_e_map(258.0, y0, 356.0, y1)
+		_vdiv(362.0, y0, y1)
+		_paint_e_plan(366.0, y0, x1 - 4.0, y1)
+	else:
+		_paint_e_meters(rs, 12.0, y0, 204.0, y1)
+		_vdiv(209.0, y0, y1)
+		_paint_e_lock(214.0, y0, 368.0, y1)
+		_vdiv(373.0, y0, y1)
+		_paint_e_plan(378.0, y0, x1 - 4.0, y1)
+
+
+func _paint_e_meters(rs: Dictionary, x0: float, y0: float, x1: float, y1: float) -> void:
+	var pad := 5.0
+	var rh: float = ((y1 - y0) - pad * 2.0) / 3.0
+	for i in ITEMS_E.size():
+		var s: Dictionary = _item_state_e(rs, ITEMS_E[i])
+		var y: float = y0 + pad + float(i) * rh
+		var icy: float = y + rh * 0.5
+		var r: float = 10.0 if String(s.key) == "susp" else 9.0
+		_icon_at(x0 + 11.0, icy, s, r)
+		var cx := x0 + 24.0
+		var tw: float = _e_stat_tag(cx, icy - 5.0, s)
+		var bx := cx + tw + 4.0
+		var badge: String = String(s.badge)
+		var badge_w := 0.0
+		if badge != "":
+			badge_w = sw(badge, 8, true, true) + 10.0
+		var bx1: float = x1 - 3.0 - (badge_w + 2.0 if badge_w > 0.0 else 0.0)
+		_e_trough(bx, icy - 4.0, maxf(bx1 - bx, 16.0), 8.0, s)
+		if badge_w > 0.0:
+			_e_badge_at(x1 - 3.0, icy - 5.0, s)
+
+
+func _lock_state() -> Dictionary:
+	var left := float(st.get("left", 4.8))
+	var total := maxf(float(st.get("total", 12.0)), 0.001)
+	var locked := String(st.get("phase", "")) == "TIMING"
+	var frac := 1.0 if locked else clampf(left / total, 0.0, 1.0)
+	return {
+		"key": "lock",
+		"col": L_AMBER,
+		"val": int(round(frac * 120.0)),
+		"pips": 120,
+		"ghost": 0,
+		"flash": false,
+		"spent": false,
+		"blink": false,
+		"empty": false,
+		"hot": false,
+		"badge": "",
+		"warn": false,
+		"left": left,
+		"locked": locked,
+	}
+
+
+func _paint_e_lock(x0: float, y0: float, x1: float, y1: float) -> void:
+	var ls: Dictionary = _lock_state()
+	t2(x0 + 4.0, y0 + 6.0, "LINE LOCK", 9, L_WHITE, true, "l", false, true)
+	if bool(ls.locked):
+		t2(x1 - 4.0, y0 + 6.0, "SET", 11, L_WHITE, true, "r", false, true)
+	else:
+		t2(x1 - 4.0, y0 + 5.0, "%04.1fs" % float(ls.left), 11, L_AMBER, true, "r", false, true)
+	_e_trough(x0 + 4.0, y0 + 16.0, (x1 - 4.0) - (x0 + 4.0), 7.0, ls)
+	# Map on the left, corner name + stacked stops on the right, under the timer bar.
+	_paint_e_map_path(x0 + 4.0, y0 + 26.0, x0 + 68.0, y1 - 4.0)
+	var lx := x0 + 72.0
+	t2(lx, y0 + 30.0, String(st.plate.get("name", "HAIRPIN L")) if st.has("plate") else "HAIRPIN L", 9, L_WHITE, true, "l", false, true)
+	if st.has("plate"):
+		_paint_e_stops(lx, y0 + 42.0, st.plate, x1 - 4.0)
+
+
+func _paint_e_lock_strip() -> void:
+	# E2: slim top-left strip, clear of the rear view (221.5–418.5).
+	var x0 := 12.0
+	var y0 := 12.0
+	var x1 := 208.0
+	var y1 := 46.0
+	_flat_panel(x0, y0, x1, y1)
+	var ls: Dictionary = _lock_state()
+	t2(x0 + 5.0, y0 + 5.0, "LINE LOCK", 9, L_WHITE, true, "l", false, true)
+	if bool(ls.locked):
+		t2(x1 - 5.0, y0 + 5.0, "SET", 11, L_WHITE, true, "r", false, true)
+	else:
+		t2(x1 - 5.0, y0 + 4.0, "%04.1fs" % float(ls.left), 11, L_AMBER, true, "r", false, true)
+	_e_trough(x0 + 5.0, y0 + 18.0, (x1 - 5.0) - (x0 + 5.0), 8.0, ls)
+
+
+func _paint_e_corner_strip() -> void:
+	# E2: slim top-right strip with the corner name and E / A / X stops.
+	var x0 := 430.0
+	var y0 := 12.0
+	var x1 := 632.0
+	var y1 := 46.0
+	_flat_panel(x0, y0, x1, y1)
+	if not st.has("plate"):
+		return
+	var pl: Dictionary = st.plate
+	t2(x0 + 6.0, y0 + 6.0, String(pl.get("name", "HAIRPIN L")), 11, L_WHITE, true, "l", false, true)
+	_paint_e_stops(x0 + 6.0, y0 + 22.0, pl, x1 - 6.0)
+
+
+func _paint_e_stops(x: float, y: float, pl: Dictionary, x_right: float = -1.0) -> void:
+	var md: String = String(pl.get("mode", "VIEW"))
+	var k: int = int(pl.get("stop", 0))
+	var cur := -1
+	var ndone := 0
+	match md:
+		"VIEW":
+			cur = k
+			ndone = k
+		"LOCK":
+			cur = 0
+			ndone = 3
+		"QTE", "PLAY":
+			cur = k
+			ndone = k
+		_:
+			cur = -1
+			ndone = 3
+	var lab := "PLAY" if md in ["PLAY", "DONE"] else ("QTE" if md == "QTE" else "VIEW")
+	t2(x, y, lab, 8, L_DIM, true, "l", false, true)
+	var phn: String = "RESULT" if md == "DONE" else (PHN[cur] if cur >= 0 and cur < PHN.size() else "")
+	var px := x + 28.0
+	t2(px, y - 1.0, phn, 9, L_AMBER, true, "l", false, true)
+	if not (md in ["VIEW", "LOCK", "QTE"]):
+		return
+	# E / A / X sit after the phase name when there is room; otherwise they wrap to the next line.
+	var ex := px + sw(phn, 9, true, true) + 10.0
+	var letters_w := 14.0 * 3.0
+	var ey := y
+	if x_right > 0.0 and ex + letters_w > x_right:
+		ex = x
+		ey = y + 11.0
+	var lt := ["E", "A", "X"]
+	for i in 3:
+		var on_cur := i == cur
+		var dn := (md == "LOCK" and i > 0) or (md == "VIEW" and i < cur)
+		t2(ex + float(i) * 14.0, ey, lt[i], 9, L_AMBER if on_cur else (L_WHITE if dn else L_DIMMER), true, "l", false, true)
+
+
+func _paint_e_map(x0: float, y0: float, x1: float, y1: float) -> void:
+	if not st.has("plate"):
+		return
+	var pl: Dictionary = st.plate
+	t2(x0 + 4.0, y0 + 6.0, String(pl.get("name", "HAIRPIN L")), 9, L_WHITE, true, "l", false, true)
+	_paint_e_stops(x0 + 4.0, y0 + 16.0, pl, x1 - 3.0)
+	_paint_e_map_path(x0 + 4.0, y0 + 38.0, x1 - 3.0, y1 - 4.0)
+
+
+func _paint_e_map_path(box_x0: float, box_y0: float, box_x1: float, box_y1: float) -> void:
+	if not st.has("plate"):
+		return
+	if box_y1 - box_y0 < 16.0 or box_x1 - box_x0 < 16.0:
+		return
+	var pl: Dictionary = st.plate
+	var ic: Dictionary = pl.get("icon", {})
+	var pts: Array = ic.get("pts", [])
+	if pts.is_empty():
+		return
+	var mn := Vector2(1e9, 1e9)
+	var mx := Vector2(-1e9, -1e9)
+	for v in pts:
+		var p: Vector2 = v
+		mn = Vector2(minf(mn.x, p.x), minf(mn.y, p.y))
+		mx = Vector2(maxf(mx.x, p.x), maxf(mx.y, p.y))
+	var sc := minf((box_x1 - box_x0) / maxf(mx.x - mn.x, 1.0), (box_y1 - box_y0) / maxf(mx.y - mn.y, 1.0))
+	var ctr := (mn + mx) / 2.0
+	var mid := Vector2((box_x0 + box_x1) * 0.5, (box_y0 + box_y1) * 0.5)
+	var line := PackedVector2Array()
+	for v in pts:
+		var p: Vector2 = v
+		line.append(mid + (p - ctr) * sc)
+	if line.size() >= 2:
+		draw_polyline(line, SOD, 2.0)
+		var e: Vector2 = line[line.size() - 1]
+		var dvec: Vector2 = (e - line[line.size() - 2]).normalized()
+		var nv := Vector2(-dvec.y, dvec.x)
+		solid(PackedVector2Array([e + dvec * 5.0, e - dvec * 3.0 + nv * 4.0, e - dvec * 3.0 - nv * 4.0]), SOD)
+	var md: String = String(pl.get("mode", "VIEW"))
+	var k: int = int(pl.get("stop", 0))
+	var cur := -1
+	var ndone := 0
+	match md:
+		"VIEW":
+			cur = k
+			ndone = k
+		"LOCK":
+			cur = 0
+			ndone = 3
+		"QTE", "PLAY":
+			cur = k
+			ndone = k
+		_:
+			cur = -1
+			ndone = 3
+	var stops: Array = ic.get("stops", [])
+	for i in mini(3, stops.size()):
+		var sp: Vector2 = stops[i]
+		var c: Vector2 = mid + (sp - ctr) * sc
+		var dn := i < ndone and i != cur
+		var dia := P([c.x, c.y - 4, c.x + 4, c.y, c.x, c.y + 4, c.x - 4, c.y])
+		solid(dia, L_AMBER if i == cur else (L_WHITE if dn else L_TODO))
+		outline(dia, INK)
+
+
+func _paint_e_plan(x0: float, y0: float, x1: float, y1: float) -> void:
+	if not st.has("plan"):
+		return
+	var pl: Dictionary = st.plan
+	t2(x0 + 4.0, y0 + 5.0, "PLAN THE LINE", 8, L_WHITE, true, "l", false, true)
+	var ph: int = int(pl.get("phase", 0))
+	var slots: Array = st.get("slots", [null, null, null])
+	var lanes: Array = ["D", "S", "A"] if String(st.get("dir", "R")) == "L" else ORDER
+	var row0 := y0 + 13.0
+	var rh: float = maxf(((y1 - 2.0) - row0) / 3.0, 16.0)
+	for i in 3:
+		var ry: float = row0 + float(i) * rh
+		var active: bool = (i == ph and ph < 3)
+		var locked: bool = (i < ph) or (ph >= 3 and slots[i] != null)
+		if active:
+			# Flat active cue: a solid 2 px amber tick, no fade wash.
+			draw_rect(Rect2(x0 + 3.0, ry + 1.0, 2.0, rh - 2.0), L_AMBER, true)
+		var nx := x0 + (8.0 if active else 5.0)
+		var ncol: Color = INK if active else (EDGE if locked else TODO)
+		if active:
+			# Name sits on a flat amber slab so it stays readable without a glow.
+			var nw: float = sw(PH[i], 8, true, true) + 6.0
+			draw_rect(Rect2(nx - 2.0, ry + 2.0, nw, 9.0), L_AMBER, true)
+		t2(nx, ry + 6.0, PH[i], 8, ncol, true, "l", not active, true)
+		if locked:
+			check(nx + sw(PH[i], 8, true, true) + 3.0, ry + 3.0, CHECK_GREEN)
+		var chosen := ""
+		if locked and slots[i] != null:
+			chosen = String(slots[i])
+		elif locked and i == 0 and String(pl.get("entry", "")) != "":
+			chosen = String(pl.entry)
+		elif active:
+			chosen = ORDER[int(pl.get("sel", 0))] if int(pl.get("sel", 0)) >= 0 else ""
+		if active or locked:
+			var lx := x0 + 52.0
+			var w := 42.0
+			if x1 - lx < w * 3.0 + 4.0:
+				w = maxf(((x1 - 2.0) - lx) / 3.0, 32.0)
+			for k in lanes:
+				var lab: String = LANE[k]
+				var note: String = NAME[k]
+				var avail: Dictionary = pl.get("avail", {})
+				var off: bool = active and int(avail.get(k, 1)) <= 0
+				var selected: bool = (k == chosen and not off)
+				var dim: bool = locked or off
+				var cx := lx + w * 0.5
+				if selected:
+					draw_rect(Rect2(lx, ry + 1.0, w - 3.0, 8.0), AMBER if active else EDGE, true)
+				t2(cx, ry + 5.0, lab, 8, INK if selected else (DIMT if dim else SUB), true, "m", not selected, true)
+				if selected and locked:
+					check(cx + sw(lab, 8, true, true) * 0.5 + 2.0, ry + 1.0, INK)
+				_e_stat_box(cx, ry + 9.0, note, STANCE[k], selected, dim and not selected)
+				lx += w
+		else:
+			t2(x0 + 54.0, ry + 8.0, "--  --  --", 10, TODO, false, "l", false, true)
+
+
+func _e_stat_box(cx: float, y: float, label: String, col: Color, selected: bool, dim: bool) -> void:
+	# Flat chip: hard rect, solid fill, 1 px ink border. No bevel, no slant, no sheen.
+	var sz := 8
+	var w := maxf(sw("POW", sz, true, true) + 6.0, 22.0)
+	var h := 8.0
+	var x0 := cx - w * 0.5
+	var r := Rect2(x0, y, w, h)
+	var fill: Color = col if selected else dimc(col, 0.45 if dim else 0.7)
+	draw_rect(r, fill, true)
+	draw_rect(r, INK, false, 1.0)
+	var tc: Color = INK if col == STANCE.S else Color.WHITE
+	if dim and not selected:
+		tc = INK if col == STANCE.S else Color8(230, 230, 235)
+	t2(cx, y + h * 0.5, label, sz, tc, true, "m", false, true)
+
+
+func _paint_e_gap() -> void:
+	# Compact flat tie-gap under REAR VIEW. Starts low enough that it does not
+	# clip the REAR VIEW label (label at y=84, size 9).
+	var lead := float(st.get("lead", 0.0))
+	var x := 236.0
+	var y := 98.0
+	var w := 168.0
+	var h := 24.0
+	_flat_panel(x, y, x + w, y + h)
+	var pos := "1st" if lead > 0.0 else ("2nd" if lead < 0.0 else "TIE")
+	t2(x + 5.0, y + 4.0, "%s GAP" % pos, 8, L_WHITE, true, "l", false, true)
+	var by := y + 14.0
+	var bx0 := x + 36.0
+	var bx1 := x + w - 28.0
+	draw_rect(Rect2(bx0, by, bx1 - bx0, 5.0), Color8(8, 10, 16), true)
+	draw_rect(Rect2(bx0, by, bx1 - bx0, 5.0), INK, false, 1.0)
+	var mid := (bx0 + bx1) * 0.5
+	var maxw := (bx1 - bx0) * 0.5 - 1.0
+	var bw: float = minf(maxw, absf(lead) * maxw * 2.5)
+	if lead > 0.0:
+		draw_rect(Rect2(mid, by + 1.0, bw, 3.0), Color8(60, 200, 255), true)
+	elif lead < 0.0:
+		draw_rect(Rect2(mid - bw, by + 1.0, bw, 3.0), Color8(255, 60, 140), true)
+	draw_rect(Rect2(mid, by, 1.0, 5.0), Color.WHITE, true)
+	t2(x + 5.0, y + 16.0, "RIVAL", 7, SUB, true, "l", false, true)
+	t2(x + w - 5.0, y + 16.0, "YOU", 7, SUB, true, "r", false, true)
+
+
+func _paint_e_sign() -> void:
+	# Floating upcoming-turn sign, first-reference language, drawn flat:
+	# hard amber plate, 2 px ink border, flat black left arrow. No bevel, no gloss.
+	var cx := 320.0
+	var cy := 150.0
+	var w := 34.0
+	var h := 36.0
+	var x0 := cx - w * 0.5
+	var y0 := cy - h * 0.5
+	var x1 := cx + w * 0.5
+	var y1 := cy + h * 0.5
+	draw_rect(Rect2(x0, y0, w, h), Color8(255, 184, 56), true)
+	draw_rect(Rect2(x0, y0, w, h), INK, false, 1.0)
+	draw_rect(Rect2(x0 + 1.0, y0 + 1.0, w - 2.0, h - 2.0), INK, false, 1.0)
+	# 90-degree left arrow, chunky and flat.
+	var shaft := P([cx - 2, cy - 4, cx + 6, cy - 4, cx + 6, cy + 13, cx - 2, cy + 13])
+	solid(shaft, INK)
+	var bar := P([cx - 10, cy - 4, cx + 6, cy - 4, cx + 6, cy + 3, cx - 10, cy + 3])
+	solid(bar, INK)
+	var head := P([cx - 16, cy - 0.5, cx - 5, cy - 11, cx - 5, cy + 10])
+	solid(head, INK)
+
+
+func _e_stat_tag(x: float, y: float, s: Dictionary) -> float:
+	# Flat POW / EN / HAN chip: hard rect, solid fill, 1 px ink border. No slant, no bevel.
+	var lab: String = s.stat
+	var sz := 8
+	var w := maxf(sw(lab, sz, true, true) + 8.0, 22.0)
+	var h := 10.0
+	var fill: Color = s.col if not s.empty else dimc(s.col, 0.35)
+	if s.blink:
+		fill = s.col
+	draw_rect(Rect2(x, y, w, h), fill, true)
+	draw_rect(Rect2(x, y, w, h), INK, false, 1.0)
+	var tc: Color = INK if s.key == "susp" else Color.WHITE
+	if s.empty and not s.blink:
+		tc = Color8(230, 230, 235)
+	t2(x + w / 2.0, y + h / 2.0, lab, sz, tc, true, "m", false, true)
+	return w
+
+
+func _e_badge_at(x: float, y: float, s: Dictionary) -> void:
+	var b: String = s.badge
+	if b == "":
+		return
+	var sz := 8
+	var w := sw(b, sz, true, true) + 8.0
+	var x0 := x - w
+	var col: Color = L_AMBER if b == "LOW" else (s.col if b == "RECOVER" else Color8(232, 40, 44))
+	if b == "OVERHEAT":
+		col = COL_HOT
+	draw_rect(Rect2(x0, y, w, 10.0), col, true)
+	draw_rect(Rect2(x0, y, w, 10.0), INK, false, 1.0)
+	var tc: Color = INK if b == "LOW" or b == "RECOVER" or b == "OVERHEAT" else Color.WHITE
+	t2(x0 + w / 2.0, y + 5.0, b, sz, tc, true, "m", false, true)
+
+
+func _icon_coolant(cx: float, cy: float, r: float, col: Color) -> void:
+	# Standard dashboard coolant-temperature symbol: thermometer dipping into
+	# wavy coolant lines. Chunky, pixel-hard, flat (no glass sheen).
+	var stem_w := 3.0 if r < 12.0 else 4.0
+	var stem_x := cx - stem_w * 0.5
+	var stem_top := cy - r * 0.95
+	var bulb_r := maxf(3.5, r * 0.40)
+	var bulb_cy := cy + r * 0.42
+	var stem_bot := bulb_cy - bulb_r * 0.25
+	# Two short wavy coolant lines through the bulb (ISO dashboard language).
+	# Kept narrow so they read as water, not a star around the stem.
+	for i in 2:
+		var wy: float = bulb_cy - 1.5 + float(i) * 4.0
+		var pts := PackedVector2Array([
+			Vector2(cx - r * 0.95, wy),
+			Vector2(cx - r * 0.55, wy - 1.5),
+			Vector2(cx - r * 0.15, wy + 1.5),
+			Vector2(cx + r * 0.25, wy - 1.5),
+			Vector2(cx + r * 0.65, wy + 1.5),
+			Vector2(cx + r * 1.00, wy),
+		])
+		draw_polyline(pts, col, 2.0)
+	# Stem body
+	draw_rect(Rect2(stem_x, stem_top, stem_w, stem_bot - stem_top), Color8(18, 18, 24), true)
+	draw_rect(Rect2(stem_x, stem_top, stem_w, stem_bot - stem_top), INK_I, false, 1.0)
+	# Mercury in the stem
+	var mer_top := stem_top + (stem_bot - stem_top) * 0.28
+	draw_rect(Rect2(stem_x + 1.0, mer_top, stem_w - 2.0, stem_bot - mer_top + 1.0), col, true)
+	# Ticks on the right of the stem
+	for i in 3:
+		var ty: float = stem_top + 2.0 + float(i) * ((mer_top - stem_top - 1.0) / 2.0 + 2.5)
+		draw_line(Vector2(stem_x + stem_w, ty), Vector2(stem_x + stem_w + 3.0, ty), INK_I, 1.0)
+	# Bulb — one flat fill + ink outline, no inner shading that would read as gloss.
+	_disc(cx, bulb_cy, bulb_r, INK_I)
+	_disc(cx, bulb_cy, bulb_r - 1.0, col)

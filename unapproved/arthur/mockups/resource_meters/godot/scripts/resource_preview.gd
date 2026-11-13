@@ -86,6 +86,34 @@ func _fr(file: String, res: Dictionary, phase: String = "select") -> Dictionary:
 		fr.stop = 0
 	return fr
 
+func _e_res(variant: String, fuel: int, brakes: int, susp: int, extra: Dictionary = {}) -> Dictionary:
+	# HEAT uses the fuel key (headroom left). Badges are OVERHEAT / LIMP, not LOW / EMPTY.
+	return _res(variant, fuel, brakes, susp, extra)
+
+
+func _e_frames(tag: String, variant: String, states: Array = []) -> Array:
+	var all := [
+		_fr("%s_full.png" % tag, _e_res(variant, 8, 8, 8), "select"),
+		_fr("%s_drain.png" % tag, _e_res(variant, 5, 8, 8, {"ghosts": {"fuel": 3}, "spent": "fuel"}), "after_pow"),
+		_fr("%s_low.png" % tag, _e_res(variant, 2, 3, 5, {"warn": ["fuel", "brakes"], "blink": true, "badge": {"fuel": "OVERHEAT"}}), "after_pow"),
+		_fr("%s_empty.png" % tag, _e_res(variant, 0, 2, 4, {"warn": ["fuel"], "badge": {"fuel": "LIMP"}}), "after_pow"),
+		_fr("%s_susp_spent.png" % tag, _e_res(variant, 0, 2, 2, {"ghosts": {"susp": 3}, "spent": "susp", "badge": {"fuel": "LIMP"}}), "after_han"),
+		_fr("%s_susp_refill.png" % tag, _e_res(variant, 0, 2, 8, {"flash": "susp", "badge": {"fuel": "LIMP", "susp": "RECOVER"}}), "next"),
+	]
+	if states.is_empty():
+		return all
+	var keep := {}
+	for s in states:
+		keep[s] = true
+	var out: Array = []
+	for fr in all:
+		for s in states:
+			if String(fr.file).ends_with("%s.png" % s):
+				out.append(fr)
+				break
+	return out
+
+
 func _all_frames() -> Array:
 	var out: Array = []
 	for v in ["A", "B", "C", "D"]:
@@ -96,6 +124,10 @@ func _all_frames() -> Array:
 		out.append(_fr("%s_empty.png" % tag, _res(v, 0, 2, 4, {"warn": ["fuel"], "badge": {"fuel": "EMPTY"}}), "after_pow"))
 		out.append(_fr("%s_susp_spent.png" % tag, _res(v, 0, 2, 2, {"ghosts": {"susp": 3}, "spent": "susp", "badge": {"fuel": "EMPTY"}}), "after_han"))
 		out.append(_fr("%s_susp_refill.png" % tag, _res(v, 0, 2, 8, {"flash": "susp", "badge": {"fuel": "EMPTY", "susp": "RECOVER"}}), "next"))
+	# E1 (default E): full International Rally bottom band. All heat / limp states.
+	out.append_array(_e_frames("e", "E"))
+	# E2: bottom band + slim top strip. Full + low are enough to judge the layout.
+	out.append_array(_e_frames("e2", "E2", ["full", "low"]))
 	return out
 
 func _ready() -> void:
@@ -109,7 +141,8 @@ func _ready() -> void:
 	_load_cars()
 	var only := OS.get_environment("ONLY")
 	for fr in _all_frames():
-		if only != "" and String(fr.file) != only and only != String(fr.resources.variant):
+		var ev := String(fr.resources.variant)
+		if only != "" and String(fr.file) != only and only != ev and not (only == "E" and ev.begins_with("E")):
 			continue
 		_apply_frame(fr, String(fr.cam))
 		await _settle(8)
