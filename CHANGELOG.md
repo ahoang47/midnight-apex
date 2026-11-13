@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: E3B PLAN THE LINE grid cleanup; no lane lines on touge
+
+- **Why:** Austin, 2026-11-13: "Kinda sloppy, out/mid/in is bunched together and the plan the line box is sloppy." Also: remove the dashed centre and edge lane markings from the touge road in these mockup renders — they wobble near the camera and make the road look too wide for a tight touge pass.
+- **What (`unapproved/arthur/mockups/resource_meters/`):** PLAN THE LINE is laid out on a clean grid: a header row with a gap below the title; E/A/X in a fixed left column and the row labels in a fixed second column; three evenly spaced, equal-width stance columns with the position text centred over a same-width framed stat box (canon unchanged: unframed position, framed stat underneath). Consistent row height and inner padding, nothing touching the panel border. The ENTRY highlight no longer fills over the text; the selected choice is a 1 px frame around the stack. Empty APEX/EXIT rows show a centred dash in each column. The section is a little wider, taking space from LINE LOCK, which stays readable. `e3b_full.png`, `e3b_states.png`, `e3b_overrun.png` and `e3b_locked.png` re-rendered in Godot. Before/after of the box at 2×: `plan_box_cleanup.png`. Concept only; not in the sim.
+- **Touge lane lines:** Rule — lane lines appear only in the Street and Wangan settings, never on touge. Gordon's road bake (`unapproved/gordon/two-corner/spec/gen_art.py`, which writes `godot/art/touge_road.png` and is loaded by `art_kit.gd`) was not edited. The E3B mockup overrides that texture with a local no-line `godot/art/touge_road.png`.
+
 ## 2026-11-13 — Arthur [art]: E3B EN 5-spoke rotated; HAN coilover shortened
 
 - **Why:** Austin, 2026-11-13: approved the light 5-spoke and asked to rotate it so no spoke sits on the horizontal, then: "Next is to make the coil over shorter so it doesn’t impede."

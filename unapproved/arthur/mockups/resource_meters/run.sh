@@ -13,12 +13,16 @@ if [[ ! -d "$SRC" ]]; then
 fi
 
 # Files we own in this mockup — never replace them with a symlink to line_preview.
+# art/touge_road.png is a local override of Gordon's touge road texture with
+# the lane lines painted out (lane lines are Street/Wangan only, never touge).
 OVERLAY=(
   project.godot
   scenes/resource_preview.tscn
   scripts/resource_preview.gd
   scripts/hud.gd
   scripts/hud/resource_stack.gd
+  art/touge_road.png
+  art/touge_road.png.import
 )
 
 is_overlay() {

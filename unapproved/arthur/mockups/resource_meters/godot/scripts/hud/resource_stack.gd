@@ -1474,9 +1474,11 @@ func _paint_e3b(rs: Dictionary) -> void:
 	_flat_panel(x0, y0, x1, y1)
 	_paint_e3b_meters(rs, 12.0, y0, 210.0, y1)
 	_vdiv(216.0, y0, y1)
-	_paint_e3_lock(222.0, y0, 400.0, y1)
-	_vdiv(406.0, y0, y1)
-	_paint_e3b_plan(rs, 412.0, y0, x1 - 4.0, y1)
+	# Steal a little width from LINE LOCK so PLAN THE LINE can sit on a clean
+	# three-column grid. The lock title, timer and trough stay readable.
+	_paint_e3_lock(222.0, y0, 372.0, y1)
+	_vdiv(378.0, y0, y1)
+	_paint_e3b_plan(rs, 384.0, y0, x1 - 4.0, y1)
 
 
 func _item_state_e3b(rs: Dictionary, it: Dictionary) -> Dictionary:
@@ -1653,14 +1655,30 @@ func _paint_e3b_plan(rs: Dictionary, x0: float, y0: float, x1: float, y1: float)
 	if not st.has("plan"):
 		return
 	var pl: Dictionary = st.plan
-	_ta(x0 + 22.0, y0 + 2.0, "PLAN THE LINE", 10, L_WHITE, "l", true, false)
+	# Clean grid. Nothing touches the panel border. Title gets its own header
+	# row with a gap below. E/A/X in a fixed left column, row labels in a
+	# fixed second column, then three equal-width OUT/MID/IN columns with
+	# even gutters. Position text is unframed and centred in the column;
+	# the framed stat box sits centred directly under it, same width in every
+	# column.
+	var pad := 4.0
+	var ix0 := x0 + pad
+	var ix1 := x1 - pad
+	_ta(ix0, y0 + 9.0, "PLAN THE LINE", 10, L_WHITE, "l", true, true)
 	var cam: Dictionary = _e_cam(st.plate) if st.has("plate") else {"cur": -1, "ndone": 0, "md": "VIEW"}
 	var ph: int = int(pl.get("phase", 0))
 	var slots: Array = st.get("slots", [null, null, null])
 	var lanes: Array = ["D", "S", "A"] if String(st.get("dir", "R")) == "L" else ORDER
-	var row0 := y0 + 13.0
-	var rh: float = maxf(((y1 - 2.0) - row0) / 3.0, 16.0)
+	var row0 := y0 + 16.0
+	var rh: float = maxf(((y1 - 3.0) - row0) / 3.0, 16.0)
 	var letters := ["E", "A", "X"]
+	var letter_w := 16.0
+	var label_x := ix0 + letter_w + 4.0
+	var label_w := 38.0
+	var grid_x := label_x + label_w + 5.0
+	var n_col := 3
+	var gutter := 6.0
+	var col_w: float = maxf(((ix1 - grid_x) - gutter * float(n_col - 1)) / float(n_col), 36.0)
 	# Stance keys that are locked (unavailable) or in OVERRUN (selectable, penalty).
 	var locked_stance := {}
 	var overrun_stance := {}
@@ -1673,25 +1691,26 @@ func _paint_e3b_plan(rs: Dictionary, x0: float, y0: float, x1: float, y1: float)
 			overrun_stance[stn] = true
 	for i in 3:
 		var ry: float = row0 + float(i) * rh
+		var mid_y: float = ry + rh * 0.5
 		var active: bool = (i == ph and ph < 3)
 		var locked_row: bool = (i < ph) or (ph >= 3 and slots[i] != null)
 		var on_cam: bool = int(cam.cur) == i
 		var cam_done: bool = i < int(cam.ndone) and not on_cam
 		var lcol: Color = L_AMBER if on_cam else (L_WHITE if cam_done else L_DIMMER)
+		# E/A/X sit in their own column. The camera highlight stays inside it
+		# and never runs into the row label.
 		if on_cam:
-			draw_rect(Rect2(x0 + 3.0, ry + 2.0, 16.0, rh - 4.0), L_AMBER, true)
+			draw_rect(Rect2(ix0, ry + 2.0, letter_w, rh - 4.0), L_AMBER, true)
 			lcol = INK
-		_ta(x0 + 11.0, ry + rh * 0.5, letters[i], 11, lcol, "m", not on_cam, true)
+		_ta(ix0 + letter_w * 0.5, mid_y, letters[i], 11, lcol, "m", not on_cam, true)
+		# Active row: no fill behind the label. A short amber tick in the
+		# gutter plus amber type marks the row; the selected cell is framed.
 		if active:
-			draw_rect(Rect2(x0 + 21.0, ry + 1.0, 2.0, rh - 2.0), L_AMBER, true)
-		var nx := x0 + 26.0
-		var ncol: Color = INK if active else (EDGE if locked_row else TODO)
-		if active:
-			var nw: float = _swf(_fb(), PH[i], 10) + 6.0
-			draw_rect(Rect2(nx - 2.0, ry + 1.0, nw, 10.0), L_AMBER, true)
-		_tb(nx, ry + 1.0, PH[i], 10, ncol, "l", not active, false)
+			draw_rect(Rect2(label_x - 3.0, ry + 2.0, 2.0, rh - 4.0), L_AMBER, true)
+		var ncol: Color = L_AMBER if active else (EDGE if locked_row else TODO)
+		_tb(label_x + 1.0, mid_y, PH[i], 10, ncol, "l", not active, true)
 		if locked_row:
-			check(nx + _swf(_fb(), PH[i], 10) + 3.0, ry + 2.0, CHECK_GREEN)
+			check(label_x + 1.0 + _swf(_fb(), PH[i], 10) + 3.0, mid_y - 4.0, CHECK_GREEN)
 		var chosen := ""
 		if locked_row and slots[i] != null:
 			chosen = String(slots[i])
@@ -1699,18 +1718,12 @@ func _paint_e3b_plan(rs: Dictionary, x0: float, y0: float, x1: float, y1: float)
 			chosen = String(pl.entry)
 		elif active:
 			chosen = ORDER[int(pl.get("sel", 0))] if int(pl.get("sel", 0)) >= 0 else ""
-		# Don't show a locked stance as the selected chip.
 		if locked_stance.has(chosen):
 			if active:
 				chosen = ""
-				# Fall back to the hovered/selected only if it isn't locked; already blanked.
-			# For a locked row that already committed this stance, still show it struck.
-		var lx := x0 + 78.0
 		if active or locked_row:
-			var w := 42.0
-			if x1 - lx < w * 3.0 + 4.0:
-				w = maxf(((x1 - 2.0) - lx) / 3.0, 34.0)
-			for k in lanes:
+			for k_i in n_col:
+				var k: String = String(lanes[k_i])
 				var lab: String = LANE[k]
 				var note: String = NAME[k]
 				var avail: Dictionary = pl.get("avail", {})
@@ -1718,30 +1731,39 @@ func _paint_e3b_plan(rs: Dictionary, x0: float, y0: float, x1: float, y1: float)
 				var off: bool = (active and int(avail.get(k, 1)) <= 0) or stance_lock
 				var selected: bool = (k == chosen and not off)
 				var dim: bool = locked_row or off
-				var cx := lx + w * 0.5
+				var cx: float = grid_x + (col_w + gutter) * float(k_i) + col_w * 0.5
+				var cell_x: float = grid_x + (col_w + gutter) * float(k_i)
+				# Selected choice: a 1 px amber (or edge) frame hugging the
+				# position + stat stack. No filled bar over the position text.
 				if selected:
-					draw_rect(Rect2(lx, ry + 1.0, w - 3.0, 9.0), AMBER if active else EDGE, true)
-				_tb(cx, ry + 1.0, lab, 9, INK if selected else (DIMT if dim else SUB), "m", not selected, false)
+					var stack_w := maxf(maxf(_swf(_fb(), "POW", 8) + 6.0, 22.0), _swf(_fb(), lab, 9)) + 8.0
+					var fr := Rect2(cx - stack_w * 0.5, ry + 1.0, stack_w, rh - 2.0)
+					draw_rect(fr, L_AMBER if active else EDGE, false, 1.0)
+				_tb(cx, ry + 4.0, lab, 9, (L_AMBER if active else L_WHITE) if selected else (DIMT if dim else SUB), "m", not selected, true)
 				if selected and locked_row:
 					check(cx + _swf(_fb(), lab, 9) * 0.5 + 2.0, ry + 1.0, INK)
-				_e3_stat_box(cx, ry + 11.0, note, STANCE[k], selected, dim and not selected)
+				_e3_stat_box(cx, ry + rh - 8.0, note, STANCE[k], selected, dim and not selected)
 				if stance_lock:
 					# Hard strike across the lane + stat chip so the stance reads unavailable.
-					var x_a := lx + 2.0
-					var x_b := lx + w - 5.0
-					draw_line(Vector2(x_a, ry + 18.0), Vector2(x_b, ry + 3.0), INK, 2.0)
-					draw_line(Vector2(x_a, ry + 18.0), Vector2(x_b, ry + 3.0), Color8(220, 220, 224), 1.0)
+					var x_a := cell_x + 3.0
+					var x_b := cell_x + col_w - 3.0
+					draw_line(Vector2(x_a, ry + rh - 3.0), Vector2(x_b, ry + 3.0), INK, 2.0)
+					draw_line(Vector2(x_a, ry + rh - 3.0), Vector2(x_b, ry + 3.0), Color8(220, 220, 224), 1.0)
 				elif overrun_stance.has(k):
 					# Penalty badge: the stat box itself fills hot orange, label stays
 					# POW / EN / HAN in ink. No extra tab — the cell is too tight.
 					var box_w := maxf(_swf(_fb(), "POW", 8) + 6.0, 22.0)
+					var by0 := ry + rh - 8.0
 					var bx0 := cx - box_w * 0.5
-					draw_rect(Rect2(bx0, ry + 11.0, box_w, 7.0), COL_OVERRUN, true)
-					draw_rect(Rect2(bx0, ry + 11.0, box_w, 7.0), INK, false, 1.0)
-					_tb(cx, ry + 14.5, note, 8, INK, "m", false, true)
-				lx += w
+					draw_rect(Rect2(bx0, by0, box_w, 7.0), COL_OVERRUN, true)
+					draw_rect(Rect2(bx0, by0, box_w, 7.0), INK, false, 1.0)
+					_tb(cx, by0 + 3.5, note, 8, INK, "m", false, true)
 		else:
-			_tb(lx, ry + rh * 0.5, "--  --  --", 11, TODO, "l", false, true)
+			# Empty pending rows: a neat dash centred in each column.
+			for k_i in n_col:
+				var cx2: float = grid_x + (col_w + gutter) * float(k_i) + col_w * 0.5
+				_tb(cx2, mid_y, "--", 11, TODO, "m", false, true)
+
 
 
 func _paint_icon_job() -> void:
