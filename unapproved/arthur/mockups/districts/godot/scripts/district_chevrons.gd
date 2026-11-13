@@ -14,6 +14,9 @@ const COL := {
 var mat_cache: Array[ShaderMaterial] = []
 var width_k := 1.0  # touge 0.6, street 0.8, wangan 1.0
 var spacing_k := 1.0
+var elev_fn: Callable  # (s, d) -> road height; empty = flat road
+var _s := 0.0
+var _d := 0.0
 
 func clear() -> void:
 	for ch in get_children():
@@ -50,6 +53,7 @@ func build(pth, segs: Array, fog: Color, fog_near: float, fog_far: float) -> voi
 			var q: Dictionary = pth.point(s, d)
 			# Fade less than the scenery so the follow-on still reads around the hook, without looking like a glow.
 			var fog_amt := 0.38 if pending else 1.0
+			_s = s; _d = d
 			add_child(_chevron(tex, Vector3(q.x, Y, q.z), Vector3(q.tx, 0, q.tz), tint, fog, fog_near, fog_far, hovered, pending, fog_amt))
 			s += SPACING * spacing_k
 			i += 1
@@ -70,6 +74,12 @@ func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Colo
 		pos - right * hw - fwd * hl, pos + right * hw - fwd * hl,
 		pos + right * hw + fwd * hl, pos - right * hw + fwd * hl
 	]
+	if elev_fn.is_valid():
+		# graded road: lift each corner onto the road (right = -road d, fwd = +s)
+		var sa := [-hl, -hl, hl, hl]
+		var da := [hw, -hw, -hw, hw]
+		for k in 4:
+			v[k].y = Y + float(elev_fn.call(_s + sa[k], _d + da[k]))
 	var uv := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
 
 	var st := SurfaceTool.new()

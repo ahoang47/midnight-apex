@@ -20,3 +20,19 @@ for i, (k, name, sub) in enumerate(ROWS):
     d.text((x, 8), name, font=f1, fill=(240, 200, 40))
     d.text((x, 36), sub, font=f2, fill=(210, 216, 226))
 sheet.save(os.path.join(HERE, 'districts_sheet.png')); print('sheet', sheet.size)
+
+# consistency_sheet.png: touge mouse / touge cat / street / wangan, 2x2, same HUD, chevrons, palette and camera family
+CELLS = [('touge_mouse', 'TOUGE - MOUSE (leading)', 'rival 6.5 m behind: beams on road + car, rear view, gap bar'),
+         ('touge_cat', 'TOUGE - CAT (chasing)', 'rival 11 m ahead in the chevrons, taillights'),
+         ('street', 'STREET', 'standard Entry chase'),
+         ('wangan', 'WANGAN', 'standard Entry chase')]
+cs = Image.new('RGB', (PAD + 2 * (W + PAD), 2 * (TOP + H) + PAD), (11, 23, 43))
+d = ImageDraw.Draw(cs)
+for i, (k, name, sub) in enumerate(CELLS):
+    im = Image.open(os.path.join(HERE, k + '.png')).convert('RGB').resize((W, H), Image.BOX)
+    x = PAD + (i % 2) * (W + PAD); y = (i // 2) * (TOP + H)
+    cs.paste(im, (x, y + TOP))
+    d.rectangle([x - 1, y + TOP - 1, x + W, y + TOP + H], outline=(110, 127, 151))
+    d.text((x, y + 8), name, font=f1, fill=(240, 200, 40))
+    d.text((x, y + 36), sub, font=f2, fill=(210, 216, 226))
+cs.save(os.path.join(HERE, 'consistency_sheet.png')); print('consistency', cs.size)

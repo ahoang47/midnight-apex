@@ -37,7 +37,27 @@ The road strips here use a 1 m × 1 m grid instead of Gordon's 3 m × 2 m. This 
 
 Material names starting `Emit_` draw full-bright. Everything else is unlit through Gordon's scroll shader, with fog.
 
-Scene triangles (env plus road grid, cars excluded): touge 7.7k, street 15.9k, wangan 14.5k. The road grid accounts for about 2.6k / 3.5k / 5.3k of those. Street and Wangan are over the ~12k guide. Fewer shop rows or a 2 m road grid would bring them under.
+Scene triangles (env plus road grid, cars excluded; Austin has since confirmed there are no hardware limits): touge 7.7k, street 15.9k, wangan 14.5k. The road grid accounts for about 2.6k / 3.5k / 5.3k of those. Street and Wangan are over the ~12k guide. Fewer shop rows or a 2 m road grid would bring them under.
+
+## Pass 2 (Austin, 2026-11-13): touge grade + cat and mouse
+
+**Touge grade.** The touge road climbs at **8.5 %** up the approach. It eases over a crest inside the hairpin (0 % at about 75 % of the arc), then falls at 5 % out of it. Through the hairpin it banks up to 6 %, with the outside high. Everything reads its height from one `elev(s, d)`: the road grid, verges, cut-slope modules and guardrail (both pitched to the grade), cedars, the lamp, the cars (pitched and rolled), the chevrons (each corner sits on the road), and the chase and rear-view cameras. Street and Wangan stay flat. `touge.png` is re-rendered on the grade.
+
+**Cat and mouse** is art presentation only; scoring is unchanged.
+- `touge_mouse.png` (leading, rival 6.5 m behind, slightly inside). Same chase camera as every other frame. Faked lighting, no dynamic lights:
+  - The chaser's beam is a long additive `headlight_throw` decal (17 m) that runs under and past the player.
+  - The player's own shadow is thrown forward into that beam.
+  - A rear light on the player car (`shaders/car_lit.gdshader`, a copy of the car shader plus one stepped, cone-limited halogen light) lights the tail and rear deck.
+  - Bigger head glows on the chaser make it read in the rear-view inset.
+- `touge_mouse_far.png` (rival 24 m back): the rear view shows only the headlight pair, and the gap bar is near full.
+- `touge_mouse_pulled.png` (alternative): the same shot with the camera pulled 2.2 m back and 0.9 m up. It shows more of the beam around the car, but the rival's nose still sits under the HUD band, and the player car gets smaller. I kept the standard camera for `touge_mouse.png` so the camera family stays identical.
+- `touge_cat.png` (chasing, rival 11 m ahead in the player's line): the taillights sit in the chevrons, with slightly bigger tail glows and a red tail wash on the road. Standard camera.
+
+**Prominent tie-gap.** `godot/scripts/hud/resource_stack.gd` is a copy of the E3B HUD with one addition, `_paint_e_gap_big()`. When the state has `gap_s`, the tie-gap box is wider and taller. It carries a role tag (MOUSE LEADING / CAT CHASING / TIE), the gap in seconds and an 8 px bar instead of 5 px, with the same colours and position. Every frame here, Street and Wangan included, uses it so the HUD stays identical across districts.
+
+`consistency_sheet.png` is a 2×2 of touge_mouse, touge_cat, street and wangan.
+
+Rebuild the pulled-camera alternative with `MOUSE_CAM_TEST=1 ./run.sh`. Use `FRAME=touge_cat.png` to render one frame.
 
 ## Open points
 - The course is unchanged in all three: the same 45 m straight into HP L (R 14 m), so the HUD reads HAIRPIN L everywhere. A real Wangan would more likely be a fast sweeper. That's a Design / Gordon call.

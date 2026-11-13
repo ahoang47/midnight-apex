@@ -8,6 +8,19 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: Touge on a grade + cat-and-mouse frames; consistency sheet
+
+- **Why:** Austin, 2026-11-13: give the touge road a real grade. Touge has no passes, so a race is half leading (mouse) and half following (cat). Two worries: mouse readability as the gap grows, and whether touge feels like a different game from Street and Wangan. Presentation only; scoring unchanged.
+- **What (`unapproved/arthur/mockups/districts/`):**
+  - **Grade:** touge climbs at 8.5%, crests through the hairpin and falls at 5% after it, with up to 6% bank. The road, verges, cut slope, guardrail, trees, lamp, cars, chevrons and cameras all follow it.
+  - **Mouse** (`touge_mouse.png`, standard camera): faked chaser lighting. A long beam decal runs under the player, the player's shadow is thrown into the beam, and a stepped rear light on the player car (`shaders/car_lit.gdshader` copy) lights the tail. The head glows are bigger so the chaser reads in the rear view.
+  - **Mouse, far** (`touge_mouse_far.png`): only the headlight pair in the rear view, and a near-full gap bar.
+  - **Mouse, pulled-back camera** (`touge_mouse_pulled.png`): an alternative only. The HUD band still hides the rival's nose.
+  - **Cat** (`touge_cat.png`): the rival is ahead in the chevrons, with bigger tail glows and a red tail wash on the road.
+  - **Tie-gap:** made prominent in a HUD copy. The box is bigger, with a MOUSE/CAT tag, the gap in seconds and an 8 px bar. It's used in all district frames.
+  - **Sheets:** `consistency_sheet.png` (mouse, cat, street, wangan) and a refreshed `districts_sheet.png`.
+- **Not changed:** Gordon's files and the sim.
+
 ## 2026-11-13 — Arthur [art]: District looks draft (touge narrow, street, wangan) with the E3B HUD
 
 - **Why:** Austin, 2026-11-13: "The road also reads really wide. This works for wangan and maybe street but not for touge. Mind drafting up the looks for all 3 districts with this in mind, with the current HUD?" Follow-up: Wangan keeps the current E3B road as is, with its width, plus lane lines.

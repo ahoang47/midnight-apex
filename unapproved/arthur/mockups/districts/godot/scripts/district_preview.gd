@@ -69,12 +69,31 @@ var fog: Color
 var env_root: Node3D
 var prop_cache := {}
 var tris := 0
+var cam_pull := false
 
-func _fr(file: String, load: Dictionary) -> Dictionary:
+func _fr(file: String, load: Dictionary, extra: Dictionary = {}) -> Dictionary:
 	# E3B full frame exactly as e3b_full.png: Entry select, OUT/POW hovered, mixed mid loads under LIMIT.
+	# rival_ds / rival_lane: rival placement relative to the player. lead / gap_s feed the (prominent) tie-gap box.
 	var res := {"variant": "E3B", "fuel": 8, "brakes": 8, "susp": 8, "pips": 8, "load": load}
-	return {"file": file, "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "",
-		"hover": 0, "locked": false, "show_rival": true, "stop": 0, "cam": "chase", "resources": res}
+	var fr := {"file": file, "entry_lane": "OUT", "entry": "A", "apex": "", "exit": "",
+		"hover": 0, "locked": false, "show_rival": true, "stop": 0, "cam": "chase", "resources": res,
+		"rival_ds": RIVAL_AHEAD, "rival_lane": "IN", "lead": 0.0, "gap_s": 0.0, "role": "std"}
+	for k in extra: fr[k] = extra[k]
+	return fr
+
+## Cat and mouse (touge, presentation only, scoring unchanged): no passes, so half the race leads, half follows.
+func _frames() -> Array:
+	var L := {"fuel": 0.42, "brakes": 0.58, "susp": 0.30}
+	var out := [_fr("%s.png" % DK, L)]
+	if DK == "touge":
+		# CAT: rival ahead in the player's own line, taillights sitting in the chevrons. Standard camera.
+		out.append(_fr("touge_cat.png", L, {"rival_ds": 11.0, "rival_lane": "OUT", "rival_d_nudge": -0.25, "lead": -0.12, "gap_s": 0.44, "role": "cat"}))
+		# MOUSE: rival 6.5 m behind, slightly inside so its lamps clear the player's tail. Headlights light the road + the player.
+		out.append(_fr("touge_mouse.png", L, {"rival_ds": -6.5, "rival_lane": "OUT", "rival_d_nudge": -0.9, "lead": 0.10, "gap_s": 0.26, "role": "mouse"}))
+		out.append(_fr("touge_mouse_far.png", L, {"rival_ds": -24.0, "rival_lane": "OUT", "rival_d_nudge": -0.6, "lead": 0.36, "gap_s": 0.96, "role": "mouse"}))
+		if OS.get_environment("MOUSE_CAM_TEST") != "":
+			out.append(_fr("touge_mouse_pulled.png", L, {"rival_ds": -6.5, "rival_lane": "OUT", "rival_d_nudge": -0.9, "lead": 0.10, "gap_s": 0.26, "role": "mouse", "cam_pull": true}))
+	return out
 
 func _ready() -> void:
 	DK = OS.get_environment("DISTRICT") if OS.get_environment("DISTRICT") != "" else "touge"
@@ -90,12 +109,52 @@ func _ready() -> void:
 	_build_course()
 	_build_world()
 	_load_cars()
-	var fr := _fr("%s.png" % DK, {"fuel": 0.42, "brakes": 0.58, "susp": 0.30})
-	_apply_frame(fr, "chase")
-	await _settle(8)
-	await _capture(out_dir.path_join(fr.file))
+	var only := OS.get_environment("FRAME")
+	for fr in _frames():
+		if only != "" and String(fr.file) != only: continue
+		_apply_frame(fr, "chase")
+		await _settle(8)
+		await _capture(out_dir.path_join(fr.file))
 	print("DISTRICT_OK ", DK, " env_tris ", tris)
 	get_tree().quit(0)
+
+# ---------------------------------------------------------------------------------------------------
+# Touge grade (Austin 2026-11-13: "give the touge road a real grade"). Climb at 8.5 % up the approach, easing
+# over a crest through the hairpin (grade 0 at ~75 % of the arc), then falling at 5 % out of it. The hairpin banks
+# up to 6 % (outside high). Street / Wangan stay flat. Everything (road, verges, props, cars, chevrons, cameras)
+# reads its height from elev(s, d).
+var _elev_tab := PackedFloat32Array()
+const ELEV_S0 := -120.0
+const ELEV_STEP := 0.5
+
+func grade_at(s: float) -> float:
+	var crest: float = S + R * A * 0.75
+	if s < 28.0: return 0.085
+	if s < crest: return lerpf(0.085, 0.0, Track.smooth((s - 28.0) / (crest - 28.0)))
+	return lerpf(0.0, -0.05, Track.smooth((s - crest) / 30.0))
+
+func _build_elev() -> void:
+	_elev_tab.resize(int((S1 + 140.0 - ELEV_S0) / ELEV_STEP) + 2)
+	var y := 0.0
+	var y0 := 0.0
+	for i in _elev_tab.size():
+		var s := ELEV_S0 + i * ELEV_STEP
+		if i > 0: y += grade_at(s - ELEV_STEP * 0.5) * ELEV_STEP
+		_elev_tab[i] = y
+		if absf(s) < 0.01: y0 = y
+	for i in _elev_tab.size(): _elev_tab[i] -= y0   # s = 0 at y = 0
+
+func bank_at(s: float) -> float:
+	var a0: float = S; var a1: float = S + R * A
+	var k := Track.smooth((s - (a0 - 10.0)) / 18.0) * (1.0 - Track.smooth((s - (a1 - 8.0)) / 18.0))
+	return 0.06 * k
+
+func elev(s: float, d: float) -> float:
+	if DK != "touge" or _elev_tab.is_empty(): return 0.0
+	var f := (s - ELEV_S0) / ELEV_STEP
+	var i := clampi(int(floor(f)), 0, _elev_tab.size() - 2)
+	var base := lerpf(_elev_tab[i], _elev_tab[i + 1], clampf(f - i, 0.0, 1.0))
+	return base + bank_at(s) * d * -Track.inside_sign(DIR)
 
 func _build_course() -> void:
 	var cfg: Dictionary = ArtKit.load_json("res://spec/race_config.json")
@@ -104,6 +163,7 @@ func _build_course() -> void:
 	course = tr.views[0]
 	view = course
 	S = float(course.S); R = float(course.R); A = float(course.A); E = float(course.E)
+	if DK == "touge": _build_elev()
 
 func _load_cars() -> void:
 	player_car = $WorldVP/PlayerCar
@@ -142,6 +202,7 @@ func _build_world() -> void:
 	chevrons.name = "Chevrons"
 	chevrons.width_k = float(DC.chev)
 	chevrons.spacing_k = lerpf(1.0, float(DC.chev), 0.5)
+	if DK == "touge": chevrons.elev_fn = elev
 	world_vp.add_child(chevrons)
 
 func grid_strip(s0: float, s1: float, d0: float, d1: float, mat: ShaderMaterial, col_m: float, row_m: float) -> MeshInstance3D:
@@ -153,7 +214,8 @@ func grid_strip(s0: float, s1: float, d0: float, d1: float, mat: ShaderMaterial,
 		var row: Array = []
 		for j in nc + 1:
 			var u := float(j) / nc
-			row.append([ArtKit.pp(course_full, s, d0 + (d1 - d0) * u, 0.0), Vector2(u, s)])
+			var dd := d0 + (d1 - d0) * u
+			row.append([ArtKit.pp(course_full, s, dd, elev(s, dd)), Vector2(u, s)])
 		rows.append(row); s += row_m
 	for i in range(1, rows.size()):
 		for j in nc:
@@ -178,8 +240,8 @@ func band(s0: float, s1: float, d0: float, y0: float, d1: float, y1: float, mat:
 	var s := s0
 	var prev := []
 	while s <= s1 + 1e-6:
-		var a: Vector3 = ArtKit.pp(course_full, s, d0, y0)
-		var b: Vector3 = ArtKit.pp(course_full, s, d1, y1)
+		var a: Vector3 = ArtKit.pp(course_full, s, d0, y0 + elev(s, d0))
+		var b: Vector3 = ArtKit.pp(course_full, s, d1, y1 + elev(s, d1))
 		var row := [[a, Vector2(0, s)], [b, Vector2(1, s)]]
 		if not prev.is_empty():
 			for v in [prev[0], row[0], prev[1], prev[1], row[0], row[1]]:
@@ -201,9 +263,10 @@ func prop(n: String, s: float, d: float, y := 0.0, yaw := 0.0, gain := 1.0, emit
 	var inst: Node3D = prop_cache[n].instantiate()
 	_shade(inst, gain, emit_gain)
 	var q: Dictionary = course_full.point(s, d)
-	inst.position = Vector3(q.x, y, q.z)
-	# local +X = away from the road: left side as built, right side turned round
-	inst.rotation.y = atan2(q.tx, q.tz) + (PI if d > 0.0 else 0.0) + yaw
+	inst.position = Vector3(q.x, y + elev(s, d), q.z)
+	# local +X = away from the road: left side as built, right side turned round. Pitched to the grade.
+	var gr := atan((elev(s + 1.0, d) - elev(s - 1.0, d)) * 0.5)
+	inst.rotation = Vector3(-gr * (-1.0 if d > 0.0 else 1.0), atan2(q.tx, q.tz) + (PI if d > 0.0 else 0.0) + yaw, 0.0)
 	env_root.add_child(inst)
 	return inst
 
@@ -235,7 +298,7 @@ func lamp_glow(parent: Node3D, local: Vector3, size := 1.5, strength := 0.9) -> 
 func cedar(s: float, d: float, y: float, h: float, k: int) -> void:
 	var c: Node3D = art.cross_card("touge_cedar_a" if ArtKit.hash01(k * 1.7) < 0.5 else "touge_cedar_b", h * 0.3333, h)
 	var q: Dictionary = course_full.point(s, d)
-	c.position = Vector3(q.x, y, q.z); c.rotation.y = atan2(q.tx, q.tz) + ArtKit.hash01(k * 3.1) * 0.6
+	c.position = Vector3(q.x, y + elev(s, d), q.z); c.rotation.y = atan2(q.tx, q.tz) + ArtKit.hash01(k * 3.1) * 0.6
 	env_root.add_child(c); tris += 4
 
 ## Gordon's touge lamp (post + arm + #F0C894 head) with its glow, on side sd (+1 right / -1 left)
@@ -245,7 +308,7 @@ func gordon_lamp(s: float, d: float, sd: float) -> void:
 	lamp_glow(lamp, Vector3(-1.3, 6.3, 0))
 	lamp.scale.x = sd
 	var q: Dictionary = course_full.point(s, d)
-	lamp.position = Vector3(q.x, 0, q.z); lamp.rotation.y = atan2(q.tx, q.tz)
+	lamp.position = Vector3(q.x, elev(s, d), q.z); lamp.rotation.y = atan2(q.tx, q.tz)
 	env_root.add_child(lamp); tris += 6
 
 # --- TOUGE: 6 m pass. Right = corner outside = drop side; left = inside = cut slope ---------------
@@ -490,10 +553,19 @@ func _place_camera(kind: String, player_s: float) -> void:
 		cam.look_at(Vector3(look_p.x, 0.0, look_p.z), Vector3.UP)
 		cam.fov = 54.0
 	elif kind == "chase":
+		var cm: Dictionary = disp.camera
 		var pose: Array = _chase_pose(course.point(player_s, 0.0))
-		cam.position = pose[0]
-		cam.look_at(pose[1], Vector3.UP)
-		cam.fov = float(disp.camera.fov)
+		var cpos: Vector3 = pose[0]; var tgt: Vector3 = pose[1]
+		if cam_pull:
+			# mouse test: same family, pulled back + up a little so the chaser can show behind the player
+			var q0: Dictionary = course.point(player_s, 0.0)
+			var tv := Vector3(q0.tx, 0, q0.tz)
+			cpos += -tv * 2.2 + Vector3(0, 0.9, 0)
+		cpos.y += elev(player_s - float(cm.back) - (2.2 if cam_pull else 0.0), float(cm.side))
+		tgt.y += elev(player_s + float(cm.look_ahead), float(cm.look_side))
+		cam.position = cpos
+		cam.look_at(tgt, Vector3.UP)
+		cam.fov = float(cm.fov)
 	else:
 		var stop := 1 if kind == "apex" else 2
 		var pose2: Array = _stop_pose(stop)
@@ -503,6 +575,53 @@ func _place_camera(kind: String, player_s: float) -> void:
 	glow_cam.fov = cam.fov
 	glow_cam.global_transform = cam.global_transform
 	sky_root.position = cam.position
+
+# ---------------------------------------------------------------------------------------------------
+# Cat and mouse lighting (faked, no dynamic lights). Built once, toggled per frame.
+var fx_nodes: Array = []
+var player_lit_mats: Array = []
+const CAR_LIT_SH = preload("res://shaders/car_lit.gdshader")
+
+func _set_lights(fr: Dictionary, player_s: float) -> void:
+	for n in fx_nodes: (n as Node).queue_free()
+	fx_nodes.clear()
+	for m in player_lit_mats: (m as ShaderMaterial).set_shader_parameter("rear_k", 0.0)
+	var role := String(fr.get("role", "std"))
+	if role == "mouse":
+		var near := absf(float(fr.rival_ds)) < 12.0
+		# 1) the chaser's own beam on the road, long enough to pass under the player (child of the rival, follows grade)
+		var throw: MeshInstance3D = art.decal("headlight_throw", 5.0, 17.0, 2.2 + 8.5, true, 0.95 if near else 0.4)
+		rival_car.add_child(throw); fx_nodes.append(throw)
+		# 2) bigger head glows so the chaser reads in the rear-view inset even far back
+		for x in [-0.6, 0.6]:
+			var g: MeshInstance3D = art.glow_sprite("glow_head", Color(1, 1, 1), 1.5 if near else 3.6, 0.85 if near else 1.0)
+			g.position = Vector3(x, 0.68, 2.1); rival_car.add_child(g); fx_nodes.append(g)
+		if near:
+			# 3) the player's own shadow thrown forward into the chaser's beam (dark, not additive)
+			var sh: MeshInstance3D = art.decal("blob_shadow", 1.9, 6.5, 2.1 + 3.0, false, 0.85)
+			sh.material_override.render_priority = 2
+			player_car.add_child(sh); fx_nodes.append(sh)
+			# 4) the beam lighting the player's tail / rear deck (car_lit.gdshader rear light)
+			var hp: Vector3 = rival_car.global_transform * Vector3(0, 0.68, 2.1)
+			var fwd: Vector3 = (rival_car.global_transform.basis * Vector3(0, 0, 1)).normalized()
+			_ensure_player_lit()
+			for m in player_lit_mats:
+				m.set_shader_parameter("rear_pos", hp); m.set_shader_parameter("rear_dir", fwd)
+				m.set_shader_parameter("rear_k", 1.1); m.set_shader_parameter("rear_range", 13.0)
+	elif role == "cat":
+		# taillight wash on the road just behind the leader, sitting in the chevrons
+		var tw: MeshInstance3D = art.decal("glow_tail", 2.8, 3.6, -3.0, true, 0.7)
+		rival_car.add_child(tw); fx_nodes.append(tw)
+		for x in [-0.58, 0.58]:   # slightly bigger tail glows so the leader reads down the chevrons
+			var t: MeshInstance3D = art.glow_sprite("glow_tail", Color(1, 1, 1), 1.1, 0.8)
+			t.position = Vector3(x, 0.8, -2.08); rival_car.add_child(t); fx_nodes.append(t)
+
+func _ensure_player_lit() -> void:
+	if not player_lit_mats.is_empty(): return
+	for m in player_car.mats:
+		var sm := m as ShaderMaterial
+		sm.shader = CAR_LIT_SH
+		player_lit_mats.append(sm)
 
 func _lane_d(lane: String) -> float:
 	return Track.lane_offset(LANE_OF[lane], DIR, LANE_W)
@@ -519,8 +638,10 @@ func _end_d(_start_d: float, stance: String) -> float:
 
 func _place_car(car: Node3D, s: float, d: float) -> Dictionary:
 	var p: Dictionary = course.point(s, d)
-	car.position = Vector3(p.x, 0, p.z)
-	car.rotation.y = atan2(p.tx, p.tz)
+	car.position = Vector3(p.x, elev(s, d), p.z)
+	var pitch := atan((elev(s + 1.2, d) - elev(s - 1.2, d)) / 2.4)
+	var roll := atan((elev(s, d + 0.8) - elev(s, d - 0.8)) / 1.6)   # +d = road right = car local -X
+	car.rotation = Vector3(-pitch, atan2(p.tx, p.tz), -roll)
 	return p
 
 func _apply_frame(fr: Dictionary, cam_kind: String) -> void:
@@ -534,12 +655,16 @@ func _apply_frame(fr: Dictionary, cam_kind: String) -> void:
 	# Rival only at Entry, 9 m ahead; IN so it does not stack on an OUT player and matches shots11's left-side tell.
 	rival_car.visible = cars_on and bool(fr.show_rival)
 	if rival_car.visible:
-		_place_car(rival_car, player_s + RIVAL_AHEAD, _lane_d("IN"))
+		_place_car(rival_car, player_s + float(fr.rival_ds), _lane_d(String(fr.rival_lane)) + float(fr.get("rival_d_nudge", 0.0)))
+	cam_pull = bool(fr.get("cam_pull", false))
 	_place_camera(cam_kind, player_s)
+	_set_lights(fr, player_s)
 	var t := Vector3(pp.tx, 0, pp.tz)
-	var p := Vector3(pp.x, 0, pp.z)
+	var p := Vector3(pp.x, elev(player_s, d_entry), pp.z)
 	mirror_cam.position = p + Vector3(0, float(disp.mirror.cam_up), 0)
-	mirror_cam.look_at(p - t * float(disp.mirror.look_back) + Vector3(0, float(disp.mirror.look_y), 0), Vector3.UP)
+	var mt: Vector3 = p - t * float(disp.mirror.look_back)
+	mt.y = elev(player_s - float(disp.mirror.look_back), d_entry) + float(disp.mirror.look_y)
+	mirror_cam.look_at(mt, Vector3.UP)
 	# Mirror only on the chase camera (and the overview, so that sheet keeps a rear view).
 	var mirror_on := cam_kind == "chase" or cam_kind == "overview"
 	post_mat.set_shader_parameter("mirror_on", 1.0 if mirror_on else 0.0)
@@ -622,7 +747,7 @@ func _show_hud(fr: Dictionary, lanes, turn_m: float, left: float, mirror_on: boo
 func _hud_state(fr: Dictionary, phase: int, sel_i: int, avail: Dictionary, entry_code: String, slots: Array, plate: Dictionary, plan: Dictionary, lanes, turn_m: float, left: float, mirror_on: bool = true) -> Dictionary:
 	return {
 		"phase": "SELECT", "title": "CORNER 1/2 TOUGE HP (L)", "sub": "line preview", "build": "preview",
-		"lead": 0.0, "gap": 0.0, "left": left, "total": 12.0,
+		"lead": float(fr.get("lead", 0.0)), "gap": float(fr.get("lead", 0.0)), "gap_s": float(fr.get("gap_s", 0.0)), "left": left, "total": 12.0,
 		"slots": slots, "hand": ["A", "A", "S", "S", "D", "D"], "used": [],
 		"qte": null, "line": "", "rline": "", "outs": [],
 		"plate": plate, "locked_hold": false, "mirror": mirror_on, "play_phase": 0,
