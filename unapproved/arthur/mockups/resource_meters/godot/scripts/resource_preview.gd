@@ -400,7 +400,9 @@ func _place_car(car: Node3D, s: float, d: float) -> Dictionary:
 	return p
 
 func _lane_markers(player_s: float, turn_m: float) -> Dictionary:
-	# Gordon main.gd: markers over the road ahead, 640-space unproject. Never a rival marker (B.4).
+	# Unused while the floating OUT/MID/IN labels are hidden (Austin, 2026-11-13).
+	# Kept so the overlay can be turned back on. Gordon main.gd / two-corner
+	# lanes.gd: markers over the road ahead, 640-space unproject. Never a rival marker (B.4).
 	var ahead: float = player_s + clampf(turn_m, 14.0, 40.0)
 	var ln := {"A": "outside", "S": "center", "D": "inside"}
 	var out := {}
@@ -433,7 +435,12 @@ func _apply_frame(fr: Dictionary, cam_kind: String) -> void:
 	_build_line(fr, d_entry, player_s)
 	var left: float = 4.8
 	var turn_m: float = left * SPEED_MS
-	var lanes = _lane_markers(player_s, turn_m) if cam_kind == "chase" else null
+	# Floating OUT / MID / IN labels (and their down-arrows) are off.
+	# The coloured road chevrons alone show the planned line. lanes.gd is
+	# Arthur's line-preview overlay (also copied in Gordon's two-corner HUD
+	# at unapproved/gordon/two-corner/godot/scripts/hud/lanes.gd); passing
+	# null skips it. Chevron meshes are unchanged.
+	var lanes = null
 	_show_hud(fr, lanes, turn_m, left, mirror_on)
 	_set_cedars(cam_kind)
 

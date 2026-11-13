@@ -1468,7 +1468,9 @@ func _paint_e3b(rs: Dictionary) -> void:
 	_paint_e_gap()
 	_paint_e3_sign()
 	var x0 := 8.0
-	var y0 := 408.0
+	# 4 px taller than E3 so PLAN THE LINE rows can give the selected
+	# frame 2 px clearance above OUT and a 2 px gap above the stat box.
+	var y0 := 404.0
 	var x1 := 632.0
 	var y1 := 479.0
 	_flat_panel(x0, y0, x1, y1)
@@ -1664,13 +1666,15 @@ func _paint_e3b_plan(rs: Dictionary, x0: float, y0: float, x1: float, y1: float)
 	var pad := 4.0
 	var ix0 := x0 + pad
 	var ix1 := x1 - pad
-	_ta(ix0, y0 + 9.0, "PLAN THE LINE", 10, L_WHITE, "l", true, true)
+	_ta(ix0, y0 + 8.0, "PLAN THE LINE", 10, L_WHITE, "l", true, true)
 	var cam: Dictionary = _e_cam(st.plate) if st.has("plate") else {"cur": -1, "ndone": 0, "md": "VIEW"}
 	var ph: int = int(pl.get("phase", 0))
 	var slots: Array = st.get("slots", [null, null, null])
 	var lanes: Array = ["D", "S", "A"] if String(st.get("dir", "R")) == "L" else ORDER
-	var row0 := y0 + 16.0
-	var rh: float = maxf(((y1 - 3.0) - row0) / 3.0, 16.0)
+	# Rows are 20 px so a size-9 position word, 2 px gap and 7 px stat
+	# box sit inside a 1 px frame with 2 px clearance above the letters.
+	var row0 := y0 + 14.0
+	var rh: float = 20.0
 	var letters := ["E", "A", "X"]
 	var letter_w := 16.0
 	var label_x := ix0 + letter_w + 4.0
@@ -1733,31 +1737,42 @@ func _paint_e3b_plan(rs: Dictionary, x0: float, y0: float, x1: float, y1: float)
 				var dim: bool = locked_row or off
 				var cx: float = grid_x + (col_w + gutter) * float(k_i) + col_w * 0.5
 				var cell_x: float = grid_x + (col_w + gutter) * float(k_i)
+				# Stack: 2 px under the frame top, size-9 position (top-aligned
+				# so the letters are not clipped), 2 px gap, then the 7 px stat
+				# box, then 1 px to the frame bottom.
+				var lab_sz := 9
+				var box_h := 7.0
+				var clear := 2.0
+				var gap := 2.0
+				var cap_h: float = _fb().get_ascent(lab_sz * TS) / TS
+				var frame_y := ry
+				var text_y := frame_y + 1.0 + clear
+				var box_y: float = roundf(text_y + cap_h + gap)
+				var frame_h: float = (box_y + box_h + 1.0) - frame_y
 				# Selected choice: a 1 px amber (or edge) frame hugging the
 				# position + stat stack. No filled bar over the position text.
 				if selected:
-					var stack_w := maxf(maxf(_swf(_fb(), "POW", 8) + 6.0, 22.0), _swf(_fb(), lab, 9)) + 8.0
-					var fr := Rect2(cx - stack_w * 0.5, ry + 1.0, stack_w, rh - 2.0)
+					var stack_w := maxf(maxf(_swf(_fb(), "POW", 8) + 6.0, 22.0), _swf(_fb(), lab, lab_sz)) + 8.0
+					var fr := Rect2(cx - stack_w * 0.5, frame_y, stack_w, frame_h)
 					draw_rect(fr, L_AMBER if active else EDGE, false, 1.0)
-				_tb(cx, ry + 4.0, lab, 9, (L_AMBER if active else L_WHITE) if selected else (DIMT if dim else SUB), "m", not selected, true)
+				_tb(cx, text_y, lab, lab_sz, (L_AMBER if active else L_WHITE) if selected else (DIMT if dim else SUB), "m", not selected, false)
 				if selected and locked_row:
-					check(cx + _swf(_fb(), lab, 9) * 0.5 + 2.0, ry + 1.0, INK)
-				_e3_stat_box(cx, ry + rh - 8.0, note, STANCE[k], selected, dim and not selected)
+					check(cx + _swf(_fb(), lab, lab_sz) * 0.5 + 2.0, text_y, INK)
+				_e3_stat_box(cx, box_y, note, STANCE[k], selected, dim and not selected)
 				if stance_lock:
 					# Hard strike across the lane + stat chip so the stance reads unavailable.
 					var x_a := cell_x + 3.0
 					var x_b := cell_x + col_w - 3.0
-					draw_line(Vector2(x_a, ry + rh - 3.0), Vector2(x_b, ry + 3.0), INK, 2.0)
-					draw_line(Vector2(x_a, ry + rh - 3.0), Vector2(x_b, ry + 3.0), Color8(220, 220, 224), 1.0)
+					draw_line(Vector2(x_a, box_y + box_h - 1.0), Vector2(x_b, text_y + 1.0), INK, 2.0)
+					draw_line(Vector2(x_a, box_y + box_h - 1.0), Vector2(x_b, text_y + 1.0), Color8(220, 220, 224), 1.0)
 				elif overrun_stance.has(k):
 					# Penalty badge: the stat box itself fills hot orange, label stays
 					# POW / EN / HAN in ink. No extra tab — the cell is too tight.
 					var box_w := maxf(_swf(_fb(), "POW", 8) + 6.0, 22.0)
-					var by0 := ry + rh - 8.0
 					var bx0 := cx - box_w * 0.5
-					draw_rect(Rect2(bx0, by0, box_w, 7.0), COL_OVERRUN, true)
-					draw_rect(Rect2(bx0, by0, box_w, 7.0), INK, false, 1.0)
-					_tb(cx, by0 + 3.5, note, 8, INK, "m", false, true)
+					draw_rect(Rect2(bx0, box_y, box_w, box_h), COL_OVERRUN, true)
+					draw_rect(Rect2(bx0, box_y, box_w, box_h), INK, false, 1.0)
+					_tb(cx, box_y + box_h * 0.5, note, 8, INK, "m", false, true)
 		else:
 			# Empty pending rows: a neat dash centred in each column.
 			for k_i in n_col:

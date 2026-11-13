@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: E3B drops the floating OUT/MID/IN road labels; plan box spacing
+
+- **Why:** Austin, 2026-11-13: the floating OUT/MID/IN labels with down-arrows were stacked into a smudge over the far road. After a look at spreading them, he ruled they should come off completely — the road chevrons alone show the line. Also fix the plan-box nits: the selection frame clipped the top of OUT, and the position word sat on its stat box.
+- **What (`unapproved/arthur/mockups/resource_meters/`):** The floating lane-marker overlay is skipped in this mockup (labels and down-arrows gone). Coloured road chevrons are unchanged. Touge lane lines stay off. PLAN THE LINE rows are a little taller so the 1 px selected frame has 2 px clearance above the position word and a 2 px gap above the framed stat box. `e3b_full.png`, `e3b_states.png`, `e3b_overrun.png` and `e3b_locked.png` re-rendered in Godot (state source frames too). Before/after crop of the marker area at 2×: `e3b_no_marker.png`. Concept only; not in the sim.
+- **Game file:** The overlay is Arthur's `unapproved/arthur/mockups/line_preview/godot/scripts/hud/lanes.gd`, also used in Gordon's two-corner HUD at `unapproved/gordon/two-corner/godot/scripts/hud/lanes.gd` (positions unprojected from the chase camera). Neither file was edited; the mockup just passes no lane points so the overlay does not paint.
+
 ## 2026-11-13 — Arthur [art]: E3B PLAN THE LINE grid cleanup; no lane lines on touge
 
 - **Why:** Austin, 2026-11-13: "Kinda sloppy, out/mid/in is bunched together and the plan the line box is sloppy." Also: remove the dashed centre and edge lane markings from the touge road in these mockup renders — they wobble near the camera and make the road look too wide for a tight touge pass.
