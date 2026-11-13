@@ -17,7 +17,9 @@ def _cfg(encounter: str = "wild", seed: int = 1) -> MatchConfig:
         max_turns=10,
         seed=seed,
         encounter_type=encounter,
-        rival_personality="Precise",
+        district="street",
+        corners=["N90", "HP", "CR", "DR", "IR", "N90", "CH", "ES", "SW", "N90"],
+        player_quality=0.6,
     )
 
 
@@ -37,3 +39,9 @@ def test_runner_is_reproducible_with_seed():
 def test_simulate_batch_runs_variants():
     results = simulate_batch(_cfg(), [{"seed": 2}, {"encounter_type": "boss"}])
     assert len(results) == 3
+
+
+def test_random_player_without_quality_completes():
+    cfg = _cfg()
+    cfg.player_quality = None
+    assert SimulationRunner(cfg).run().match.turns_played == 10

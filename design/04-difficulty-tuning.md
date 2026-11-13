@@ -43,6 +43,8 @@ POW_abs = total_budget × pow_pct / 100
 
 ### Archetype Targets (Level 100)
 
+> Deck bias (below) is history: since 2026-11-13 stat share sizes each heat gauge and weights the payoff of the stance played (`STAT_M_W`).
+
 | Archetype | L1 split | L100 target (POW / EN / HAN) | Deck bias | Play style |
 |---|---|---|---|---|
 | **Aggressive** | 33/33/33 | 55 / 20 / 25 | Heavy POW cards | High burst, glassy |
@@ -115,6 +117,8 @@ Trailer: damage_qte   = lerp(own QTE, 1.0, t)
 ---
 
 ## AI Difficulty — Phase-Based Personalities
+
+> **Removed from the sim 2026-11-13:** the personality card AI (`pick_ai_card`, `PERSONALITY_MAP`) went with the card draw. Opponents play their district line under the boss heat rule (`heat.boss_stance`); see `design/02-equations-reference.md` (heat/load section). Kept here as history.
 
 Difficulty is driven by the level gap (above), but opponent *behavior variety* comes from 6 phase-based AI personalities defined in `sim/velocity_shift/ai.py`. Each personality has 3 phase-indexed behaviors — which index is active depends on the encounter's phase count.
 

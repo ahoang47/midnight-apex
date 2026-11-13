@@ -9,22 +9,11 @@ from velocity_shift.match import run_match
 
 
 def _p_pick(stance: Stance):
-    """Return a per-card player callback that prefers *stance*."""
-    def fn(turn, clash_index, hand, opponent_hand, previous_clashes):
-        for c in hand:
-            if c == stance:
-                return c
-        return hand[0]
-    return fn
-
-
-def _o_pick(stance: Stance):
-    """Return a per-card opponent callback that prefers *stance*."""
-    def fn(turn, clash_index, hand, player_hand, phase_index, personality, clashes, hist):
-        for c in hand:
-            if c == stance:
-                return c
-        return hand[0]
+    """Player callback that plays *stance* while its gauge is open, else the first selectable one."""
+    def fn(turn, clash_index, ctx):
+        if ctx.gauges.selectable(stance):
+            return stance
+        return ctx.gauges.selectable_stances()[0]
     return fn
 
 
@@ -42,8 +31,8 @@ def make_default_turn_state(turn=1,
         o_cards = [Stance(s) if isinstance(s, str) else s for s in o_cards]
     return TurnState(
         turn_number=turn,
-        player_cards=p_cards,
-        opponent_cards=o_cards,
+        player_stances=p_cards,
+        opponent_stances=o_cards,
         player_qte=p_qte,
         opponent_qte=o_qte,
     )
@@ -100,8 +89,6 @@ def test_run_match_full_race():
         cfg,
         _p_pick(Stance.POW),
         lambda t: 0.7,
-        _o_pick(Stance.HAN),
-        lambda t: 0.5,
     )
 
     assert result.turns_played == result.total_turns, "Should run all turns"
@@ -127,8 +114,6 @@ def test_positions_computed():
         cfg,
         _p_pick(Stance.HAN),
         lambda t: 0.5,
-        _o_pick(Stance.HAN),
-        lambda t: 0.5,
     )
 
     assert result.player_position >= 0
@@ -138,7 +123,7 @@ def test_positions_computed():
 
 
 def test_r105_same_stances_player_leads_on_v():
-    """At r=1.05 (full window) with identical stances and perfect timing, V = r**kappa
+    """At r=1.05 with identical (even-share) stances and perfect timing, V = r**kappa
     gives the player more progress than the opponent (whose V is 1)."""
     from velocity_shift.equations import kappa_for_length, T_MAX
     player = CombatantStats(name="P", pow=105, en=105, han=105, level=50)
@@ -169,3 +154,33 @@ def test_resolve_turn_phase_mean_matches_scalar():
     assert via_phases.opponent_progress == via_scalar.opponent_progress
     assert via_phases.player_clash_progress == via_scalar.player_clash_progress
     assert via_phases.opponent_clash_progress == via_scalar.opponent_clash_progress
+
+
+def test_heat_mults_scale_clash_progress():
+    """A heat multiplier scales that clash's progress and nothing else."""
+    player = CombatantStats(name="P", pow=100, en=100, han=100)
+    opponent = CombatantStats(name="O", pow=100, en=100, han=100)
+    base = resolve_turn(make_default_turn_state(), player, opponent)
+    st = make_default_turn_state()
+    st.player_heat_mults = [1.0, 0.4, 1.0]
+    hot = resolve_turn(st, player, opponent)
+    assert abs(hot.player_clash_progress[1] - 0.4 * base.player_clash_progress[1]) < 1e-12
+    assert hot.player_clash_progress[0] == base.player_clash_progress[0]
+    assert hot.opponent_progress == base.opponent_progress
+
+
+def test_repeating_one_stance_overheats_and_locks():
+    """Spamming POW fills the engine gauge; the engine then refuses POW until it cools (callback sees it locked)."""
+    player = CombatantStats(name="P", pow=100, en=100, han=100, level=50)
+    opponent = CombatantStats(name="O", pow=100, en=100, han=100, level=50)
+    cfg = MatchConfig(player_stats=player, opponent_stats=opponent, seed=3, max_turns=10,
+                      district="wangan", corners=["SW"] * 10)
+    seen_locked = []
+
+    def pick(turn, ci, ctx):
+        seen_locked.append(not ctx.gauges.selectable(Stance.POW))
+        return Stance.POW if ctx.gauges.selectable(Stance.POW) else ctx.gauges.selectable_stances()[0]
+
+    res = run_match(cfg, pick, lambda t: 1.0)
+    assert any(seen_locked)
+    assert any(m < 1.0 for t in res.turn_results for m in t.player_heat_mults)   # overrun before the lock

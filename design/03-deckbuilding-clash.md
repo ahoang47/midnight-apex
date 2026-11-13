@@ -1,6 +1,8 @@
 # Midnight Apex — Deckbuilding & Clash Mechanics
 
 > Vocabulary follows the locked terms in 01.
+>
+> **SUPERSEDED 2026-11-13 (Austin approved the heat/load resource system, resources-v4b G2):** there is no deck, hand or card draw any more. Each clash the player picks any stance whose heat gauge (POW engine, HAN suspension, EN brakes/tires) is not locked. Rules and values: the heat/load section at the top of `design/02-equations-reference.md` and `sim/velocity_shift/equations.py` / `heat.py`. This file is kept as history only.
 
 ---
 

@@ -1,5 +1,7 @@
 # Skill Parity: play quality, stat gap and win rate
 
+> **HISTORY (2026-11-13):** `sim/scripts/parity_sweep.py` was removed with the card draw and the legacy HP/DP match path. Numbers below are from that old engine. Current targets and checks: `design/02-equations-reference.md` (heat/load section) and `sim/scripts/balance_gauntlet.py`.
+
 > Author: Barry (Chief of Systems), 2026-11-02. **Source of truth: `sim/scripts/parity_sweep.py`.** Every figure below is from a run of that script on 2026-11-02 (commands in §7). If the engine changes, re-run it; don't edit numbers here by hand.
 > Status: measurement plus **PROPOSALS**. No game constant in `sim/velocity_shift/equations.py` was changed. The only engine changes are opt-in: `MatchConfig.player_quality`, `MatchConfig.opponent_qte_ratio`, three new player-QTE constants and `RUBBER_BAND_FRACTION` (same value, moved out of `match.py`).
 

@@ -69,10 +69,10 @@ sim/
     cli.py          — Interactive match setup, prompts, display, run_cli
     models.py       — Data classes: Stance, CombatantStats, TurnState, MatchConfig, etc.
     equations.py    — Pure math + ALL game-rule constants (module-level names)
-    deck.py         — Deck construction, draw/reset (DECK_SIZE = 192, stat-proportional)
+    heat.py         — Heat/load gauges (POW engine, HAN suspension, EN brakes), calibration, boss heat rule
     combat.py       — resolve_turn, resolve_battle, battle_winner
-    match.py        — run_match, multi-turn loop, position-based decision
-    ai.py           — Opponent card selection strategies + QTE generation
+    match.py        — run_match, multi-turn loop under heat gauges, progress-total decision
+    ai.py           — Encounter laps/phases (+ legacy AI QTE)
     trace.py        — Execution trace logger
     simulation.py   — Headless batch runner for statistical analysis
     cars.py         — Archetype stat progression
@@ -80,7 +80,7 @@ sim/
   tests/, scripts/
 ```
 
-All game-rule constants are module-level names in `equations.py` (deck size/alpha in `deck.py`) — tunable in one place, never per-encounter.
+All game-rule constants are module-level names in `equations.py` — tunable in one place, never per-encounter. The card draw was removed 2026-11-13 (heat/load system).
 
 ### Gotchas
 
@@ -88,8 +88,7 @@ All game-rule constants are module-level names in `equations.py` (deck size/alph
 - `config/sample_builds.json` holds player builds only; opponents are generated from archetype + level.
 - Stats (POW, EN, HAN) have no upper bound; floor is 0.
 - Mods infrastructure was removed in a prior simplification.
-- Card type is `Stance` (enum), not a `Card` class. `Deck.draw()` returns `list[Card]`.
-- `DECK_SIZE = 192` (not 36), built from stat proportions with smoothing alpha = 0.85.
-- Win condition: after `max_turns`, the higher position wins (opponent DP / player_max_hp vs player DP / opponent_max_hp). Tie = opponent wins.
-- Difficulty is driven only by the level gap (Wild 0.35×, Lieutenant 0.75×, Boss 1.15×).
-- 6 AI personalities, each with 3 phase-indexed behaviours (up to 156 unique opponents).
+- Stances are the `Stance` enum; there is no `Card` class or deck (removed 2026-11-13). Each clash the player picks a stance whose heat gauge is not locked (`heat.HeatGauges`).
+- Win condition: after `max_turns`, the higher Phi/tau progress total wins (exact tie recorded as "Tie").
+- Difficulty: stat ratio r (`LADDER_R`), race length (`kappa_for_length`) and the heat gauges; targets checked by `scripts/balance_gauntlet.py`.
+- Opponents play their district line (`LINE_SET_C`) under the boss heat rule; the personality card AI was removed 2026-11-13.

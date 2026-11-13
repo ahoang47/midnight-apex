@@ -1,8 +1,23 @@
 from __future__ import annotations
 """Headless batch runner for statistical analysis and balance testing.
 
-Runs multiple matches with variant configs and exports results as JSON.
-Both sides use AI card selection.
+Runs matches with a simulated player against the district line tables under
+the heat/load gauges (resources-v4b G2, Austin approved 2026-11-13) and
+exports results as JSON.
+
+Simulated player (same model as resources-v4b `run_new`, mode "read"):
+  * Read: each corner, with prob q_read the player reads the boss's line (it
+    counters the most likely line, the main line for a balanced boss) and picks
+    the selectable stance with the best value: V x Phi(outcome vs the guess) x
+    stat weight x overrun multiplier - the boss's payoff - a pacing price.
+    On a misread, each clash plays a tie vs the boss's actual stance with prob
+    q_read, else the losing stance; if that gauge is locked, a random
+    selectable stance.
+  * Pacing ("reserve" rule, equations.PACE_*): on a paced turn a stance is
+    priced when it would push its gauge past a soft ceiling, lowered when the
+    next PACE_LOOKAHEAD corners need that gauge. The player paces on a share
+    player_pacing of turns (default = q_read) and plays greedy otherwise.
+  * q_read None (no quality set): a random selectable stance every clash.
 """
 
 import json
@@ -10,20 +25,16 @@ import random
 from dataclasses import dataclass, asdict
 from typing import Callable
 
-from .models import Stance, Card, ClashResult, PersonalityConfig, MatchConfig, MatchResult
-from .match import run_match
-from .combat import plan_player_cards, official_tracks
-from .trace import TraceLogger
-from .ai import pick_ai_card, get_personality, get_ai_qte, get_phase, \
-    ENCOUNTER_RATIOS
-from .equations import PLAYER_QTE_MIN, PLAYER_QTE_MAX, PERFECT_QTE
-
-# The stance that beats each stance (equations.resolve_stance rules).
-_COUNTER = {
-    Stance.POW: Stance.EN,
-    Stance.EN: Stance.HAN,
-    Stance.HAN: Stance.POW,
-}
+from .models import Stance, MatchConfig, MatchResult, ClashContext, CombatantStats
+from .match import run_match, race_setup
+from .combat import official_tracks, line_triples, parse_line, line_probs
+from .equations import (
+    OPPONENT_QTE, CORNER_HEAT_PASSIVE, STAT_M_W, PACE_RES_T, PACE_RES_K, PACE_RES_LOOK, PACE_LOOKAHEAD,
+    raw_qte_score, clash_payoff, kappa_for_length, resolve_stance, counter_stance, loser_to_stance,
+    _STANCE_INDEX, _INDEX_STANCE,
+)
+from .heat import track_wear, corner_demand, line_cost, boss_line_weights, build_shares
+from .models import StanceOutcome
 
 
 @dataclass
@@ -34,52 +45,21 @@ class SimulationResult:
     config_snapshot: dict
 
 
+def _phi(q: float) -> tuple[float, float, float]:
+    """Payoff by outcome index (loss, tie, win) at timing q."""
+    return (clash_payoff(StanceOutcome.LOSS, q), clash_payoff(StanceOutcome.DRAW, q), clash_payoff(StanceOutcome.WIN, q))
+
+
 class SimulationRunner:
-    """Executes a single match with AI-driven card selection for both sides."""
+    """Executes a single match with the simulated player (see module docstring)."""
 
     def __init__(self, cfg: MatchConfig):
         self.cfg = cfg
-        self._rng = random.Random(cfg.seed)
-        self._personality = get_personality(cfg.rival_personality)
-        self._planned_line: list[Stance] | None = None
+        self._rng = random.Random(None if cfg.seed is None else cfg.seed + 7_919)
 
-    def run(self) -> SimulationResult:
-        trace = TraceLogger()
-        result = run_match(
-            self.cfg,
-            self._make_player_card_fn(),
-            self._make_player_qte_fn(),
-            self._make_opponent_card_fn(),
-            self._make_opponent_qte_fn(),
-            trace,
-            on_line_picked=self._on_line_picked,
-            on_deal=self._on_deal,
-        )
-        return SimulationResult(
-            match=result,
-            seed=self.cfg.seed,
-            config_snapshot=self._snapshot(),
-        )
-
-    def _on_line_picked(self, turn: int, corner: str, line: list[Stance]) -> None:
-        self._planned_line = line
-        self._corner = corner
-        self._assigned: list[Card] | None = None
-
-    def _on_deal(self, turn: int, p_hand: list[Card], o_hand: list[Card]) -> None:
-        """After the hand is dealt, lock in the v4 read + assign_hand plan."""
-        if self.cfg.legacy_hp_dp:
-            return
-        pq = self._play_quality()
-        if pq is None or not (self.cfg.district and self.cfg.corners):
-            return
-        self._assigned = plan_player_cards(
-            self.cfg.district, self._corner, self._planned_line, p_hand, pq[0], self._rng,
-        )
-
+    # ── skills
     def _play_quality(self) -> tuple[float, float] | None:
-        """(q_read, q_time) for the simulated player, or None for the old
-        random player. See MatchConfig.player_read / player_timing."""
+        """(q_read, q_time) for the simulated player, or None for the random player."""
         c = self.cfg
         if c.player_quality is None and c.player_read is None and c.player_timing is None:
             return None
@@ -88,98 +68,103 @@ class SimulationRunner:
         timing = c.player_timing if c.player_timing is not None else base
         return read, timing
 
-    def _make_player_card_fn(self) -> Callable:
-        rng = self._rng
+    def run(self) -> SimulationResult:
+        c = self.cfg
+        self._district, self._lap = race_setup(c)
+        T = c.max_turns
+        p, o = c.player_stats, c.opponent_stats
+        p_tot = p.pow + p.en + p.han
+        o_tot = o.pow + o.en + o.han
+        r = p_tot / o_tot if o_tot else 1.0
         pq = self._play_quality()
-        legacy = self.cfg.legacy_hp_dp
-        use_lines = bool(self.cfg.district and self.cfg.corners)
+        self._pq = pq
+        if pq is not None:
+            q_read, q_time = pq
+            qt = raw_qte_score(r, profile=c.player_qte_profile,
+                               q_time=None if c.player_qte_profile else q_time, window_mod=c.qte_window_mod)
+            self._q_read = q_read
+            self._pace_q = c.player_pacing if c.player_pacing is not None else q_read
+            V = r ** kappa_for_length(T)
+            php, pho = _phi(qt), _phi(OPPONENT_QTE)
+            self._V, self._php, self._pho = V, php, pho
+            self._d_lock = V * (php[2] - php[1]) + (pho[1] - pho[0])
+            sh = build_shares(p.pow, p.en, p.han)
+            self._mf = [1.0 + STAT_M_W * (x - 1 / 3) for x in sh]
+            self._plan_race(T)
+        result = run_match(
+            c,
+            self._pick_stance,
+            lambda t: self._rng.uniform(0.1, 1.0),
+            on_line_picked=self._on_line_picked,
+        )
+        return SimulationResult(match=result, seed=c.seed, config_snapshot=self._snapshot())
 
-        if use_lines and pq is not None and not legacy:
-            def fn_v4(t, ci, hand, opp_hand, clashes):
-                return self._assigned[ci]
-            return fn_v4
+    # ── per-race plan: scouted guess per turn and the expected load of each turn
+    def _plan_race(self, T: int) -> None:
+        d, lap = self._district, self._lap
+        wear = track_wear(d, lap)
+        q = min(max(self._q_read, 0.0), 1.0)
+        self._guess: list[list[Stance]] = []
+        self._exp_load: list[list[float]] = []
+        for t in range(T):
+            k = lap[t % len(lap)]
+            lines = [parse_line(x) for x in line_triples(d, k)]
+            w = boss_line_weights(d, k, t, T, self.cfg.boss_style)
+            guess = lines[max(range(3), key=lambda i: (w[i], -i))]
+            self._guess.append(guess)
+            need = [x * wi for x, wi in zip(corner_demand(d, k, q), wear)]
+            pas = [x * wi for x, wi in zip(CORNER_HEAT_PASSIVE[k], wear)]
+            readpart = [0.0, 0.0, 0.0]
+            cl = [counter_stance(s) for s in guess]
+            for s, x in zip(cl, line_cost(cl, k, wear)):
+                readpart[_STANCE_INDEX[s]] += q * x
+            read0 = [0.0, 0.0, 0.0]
+            m0 = [counter_stance(s) for s in lines[0]]
+            for s, x in zip(m0, line_cost(m0, k, wear)):
+                read0[_STANCE_INDEX[s]] += q * x
+            self._exp_load.append([readpart[i] + max(0.0, need[i] - pas[i] - read0[i]) + pas[i] for i in range(3)])
 
-        if pq is None:
-            return lambda t, ci, hand, opp_hand, clashes: rng.choice(hand)
-        q = pq[0]
+    def _on_line_picked(self, turn: int, corner: str, line: list[Stance]) -> None:
+        self._actual = line
+        if self._pq is not None:
+            self._read = self._rng.random() < self._q_read
+            self._pace_on = self._rng.random() < self._pace_q
 
-        # Fallback (no district, or legacy_hp_dp): per-clash counter of the AI pick.
-        self._cached_ai_card = None
-        history: list[Stance] = []
-        personality = self._personality
-        enc = self.cfg.encounter_type
-
-        def fn(t, ci, hand, opp_hand, clashes):
-            if use_lines:
-                target_stance = self._planned_line[ci]
-                if rng.random() < q:
-                    target = _COUNTER[target_stance]
-                    pick = next((c for c in hand if c == target), None)
-                    if pick is None:
-                        pick = next((c for c in hand if c == target_stance), None)
-                    if pick is None:
-                        pick = hand[0]
-                else:
-                    pick = rng.choice(hand)
-                history.append(pick.stance)
-                return pick
-            ai_card = pick_ai_card(opp_hand, hand, get_phase(t, enc), personality,
-                                   ci, clashes, t, list(history), rng)
-            self._cached_ai_card = ai_card
-            if rng.random() < q:
-                target = _COUNTER[ai_card.stance]
-                pick = next((c for c in hand if c == target), None)
-                if pick is None:
-                    pick = next((c for c in hand if c == ai_card.stance), None)
-                if pick is None:
-                    pick = hand[0]
-            else:
-                pick = rng.choice(hand)
-            history.append(pick.stance)
-            return pick
-        return fn
-
-    def _make_player_qte_fn(self) -> Callable[[int], float]:
-        pq = self._play_quality()
-        if self.cfg.legacy_hp_dp:
-            if pq is None:
-                return lambda t: self._rng.uniform(PLAYER_QTE_MIN, PLAYER_QTE_MAX)
-            q = pq[1]
-            def fn_legacy(t):
-                if self._rng.random() < q:
-                    return PERFECT_QTE
-                return self._rng.uniform(PLAYER_QTE_MIN, PLAYER_QTE_MAX)
-            return fn_legacy
-        # Playable engine: raw QTE in [0, 1]. When a skill profile or
-        # player_timing is set, match.py evaluates raw_qte_score at the
-        # race's fixed r (visible zone + window mod) and ignores this
-        # callback. The value below is only used if those fields are unset.
-        if pq is None and self.cfg.player_qte_profile is None:
-            return lambda t: self._rng.uniform(0.1, 1.0)
-        q_time = pq[1] if pq is not None else 0.6
-        return lambda t: q_time
-
-    def _make_opponent_card_fn(self) -> Callable:
-        personality = self._personality
-        rng = self._rng
-        def fn(t: int, ci: int, hand: list[Card], player_hand: list[Card],
-               phase_index: int, personality_: PersonalityConfig | None,
-               clashes: list[ClashResult], stance_history: list[Stance]) -> Card:
-            cached = getattr(self, "_cached_ai_card", None)
-            if cached is not None:
-                self._cached_ai_card = None
-                # Return the exact object from the AI's hand (Card equality
-                # is stance-based, so remove() works either way).
-                return cached
-            return pick_ai_card(hand, player_hand, phase_index, personality,
-                                ci, clashes, t, stance_history, rng)
-        return fn
-
-    def _make_opponent_qte_fn(self) -> Callable[[int], float]:
-        ratio = self.cfg.opponent_qte_ratio
-        if ratio is None:
-            ratio = ENCOUNTER_RATIOS.get(self.cfg.encounter_type, 1.0)
-        return lambda t: get_ai_qte(ratio, self._rng, self.cfg.deterministic)
+    # ── stance choice
+    def _pick_stance(self, turn: int, ci: int, ctx: ClashContext) -> Stance:
+        g = ctx.gauges
+        sel = g.selectable_stances()
+        if self._pq is None:
+            return self._rng.choice(sel)
+        if not self._read:
+            want = self._actual[ci] if self._rng.random() < self._q_read else loser_to_stance(self._actual[ci])
+            return want if g.selectable(want) else self._rng.choice(sel)
+        t = turn - 1
+        guess = self._guess[t][ci]
+        T = ctx.race_length
+        short = [0.0, 0.0, 0.0]
+        if self._pace_on and PACE_RES_LOOK > 0:
+            end = min(T, t + 1 + PACE_LOOKAHEAD)
+            fut = [0.0, 0.0, 0.0]
+            for tt in range(t + 1, end):
+                for i in range(3):
+                    fut[i] += self._exp_load[tt][i]
+            nf = max(1, end - (t + 1))
+            short = [max(0.0, fut[i] - g.rec[i] * nf) / g.cap[i] for i in range(3)]
+        best, best_s = None, None
+        for s in _INDEX_STANCE:
+            if not g.selectable(s):
+                continue
+            i = _STANCE_INDEX[s]
+            o = resolve_stance(s, guess).value
+            gain = self._V * self._php[o + 1] * g.mult_if(s, ctx.corner) * self._mf[i] - self._pho[-o + 1]
+            if self._pace_on:
+                t_eff = PACE_RES_T - PACE_RES_LOOK * short[i]
+                over = ((g.load[i] + g.cost(s, ctx.corner)) / g.cap[i] - t_eff) / max(1 - t_eff, 0.05)
+                gain -= PACE_RES_K * self._d_lock * max(0.0, over)
+            if best is None or gain > best:
+                best, best_s = gain, s
+        return best_s
 
     def _snapshot(self) -> dict:
         return {
@@ -187,17 +172,15 @@ class SimulationRunner:
             "opponent": asdict(self.cfg.opponent_stats),
             "max_turns": self.cfg.max_turns,
             "seed": self.cfg.seed,
-            "deterministic": self.cfg.deterministic,
-            "personality": self.cfg.rival_personality,
             "player_quality": self.cfg.player_quality,
             "player_read": self.cfg.player_read,
             "player_timing": self.cfg.player_timing,
+            "player_pacing": self.cfg.player_pacing,
             "player_qte_profile": self.cfg.player_qte_profile,
             "qte_window_mod": self.cfg.qte_window_mod,
-            "opponent_qte_ratio": self.cfg.opponent_qte_ratio,
-            "district": self.cfg.district,
-            "corners": list(self.cfg.corners) if self.cfg.corners else None,
-            "legacy_hp_dp": self.cfg.legacy_hp_dp,
+            "district": self._district,
+            "corners": list(self._lap),
+            "boss_style": self.cfg.boss_style,
         }
 
 
@@ -209,23 +192,25 @@ def simulate_win_rate(
     seed: int,
     n_per_track: int = 200,
     opp_total: float = 300.0,
+    shares: tuple[float, float, float] | None = None,
+    q_time: float | None = None,
+    pacing: float | None = None,
+    boss_style: str = "balanced",
+    track_names: list[str] | None = None,
 ) -> float:
     """Win rate (%) of a SimulationRunner batch on a district's official tracks.
 
-    Balanced builds, player total = r * opp_total, q_read = q, timing skill
-    q evaluated at the visible zone for that r (raw_qte_score),
-    opponent QTE from the engine constant. Ties count as a half-win, same
-    as the winrate_n4000.json oracle. Seeds are spaced so tracks and races
-    do not share nearby Python Random() seeds (consecutive integers are
-    correlated and biased a small batch).
+    Player total = r * opp_total split by `shares` (POW, HAN, EN; default even),
+    even opponent, q_read = q, timing q_time (default q) at the visible zone for
+    that r, pacing share `pacing` (default q). Ties count as a half-win.
+    Seeds are spaced so tracks and races do not share nearby seeds.
     """
-    from .models import CombatantStats
-
     tracks = official_tracks()[district.lower()]
-    names = list(tracks)
-    p_stat = opp_total * r / 3.0
+    names = track_names or list(tracks)
+    sp, sh, se = shares or (1 / 3, 1 / 3, 1 / 3)
+    tot = opp_total * r
+    player = CombatantStats(name="Player", pow=tot * sp, en=tot * se, han=tot * sh, level=50)
     o_stat = opp_total / 3.0
-    player = CombatantStats(name="Player", pow=p_stat, en=p_stat, han=p_stat, level=50)
     opponent = CombatantStats(name="Opponent", pow=o_stat, en=o_stat, han=o_stat, level=50)
     wins = ties = n = 0
     for ti, name in enumerate(names):
@@ -239,13 +224,15 @@ def simulate_win_rate(
                 district=district,
                 corners=corners,
                 player_read=q,
-                player_timing=q,
+                player_timing=q if q_time is None else q_time,
+                player_pacing=pacing,
+                boss_style=boss_style,
                 encounter_type="boss",
             )
             m = SimulationRunner(cfg).run().match
-            if m.winner == "Player" or m.player_total_progress > m.opponent_total_progress:
+            if m.player_total_progress > m.opponent_total_progress:
                 wins += 1
-            elif m.winner == "Tie" or m.player_total_progress == m.opponent_total_progress:
+            elif m.player_total_progress == m.opponent_total_progress:
                 ties += 1
             n += 1
     return 100.0 * (wins + 0.5 * ties) / n
@@ -258,8 +245,8 @@ def simulate_batch(
     results = []
     cfgs = [base_cfg]
     if variants:
+        import copy
         for v in variants:
-            import copy
             cfg = copy.deepcopy(base_cfg)
             for key, val in v.items():
                 setattr(cfg, key, val)
@@ -279,15 +266,19 @@ def export_results(results: list[SimulationResult], path: str) -> None:
             "player_position": round(r.match.player_position, 4),
             "opponent_position": round(r.match.opponent_position, 4),
             "turns_played": r.match.turns_played,
-            "player_total_dp": round(r.match.player_total_dp, 4),
-            "opponent_total_dp": round(r.match.opponent_total_dp, 4),
+            "player_total_progress": round(r.match.player_total_progress, 4),
+            "opponent_total_progress": round(r.match.opponent_total_progress, 4),
             "turns": [
                 {
                     "turn": t.turn_number,
-                    "player_dp": round(t.player_dp, 4),
-                    "opponent_dp": round(t.opponent_dp, 4),
-                    "battle_winner": t.battle_winner,
-                    "battle_mult": round(t.battle_mult, 4),
+                    "corner": t.corner_type,
+                    "player_stances": [s.value for s in t.player_stances],
+                    "opponent_stances": [s.value for s in t.opponent_stances],
+                    "player_progress": round(t.player_progress, 4),
+                    "opponent_progress": round(t.opponent_progress, 4),
+                    "player_heat_mults": [round(x, 4) for x in t.player_heat_mults],
+                    "player_heat_fill": [round(x, 4) for x in t.player_heat_fill],
+                    "player_locked": t.player_locked,
                 }
                 for t in r.match.turn_results
             ],

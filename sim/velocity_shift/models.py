@@ -2,7 +2,6 @@ from __future__ import annotations
 """Data classes and enumerations for the combat engine.
 
 No logic — only type definitions. All stat ranges are 0+ with no upper bound.
-Card equality is stance-based (two cards with the same stance are equal).
 """
 
 from dataclasses import dataclass, field
@@ -11,31 +10,17 @@ from typing import Optional
 
 
 class Stance(Enum):
-    """The three rock-paper-scissors stances a card can hold, named by stat.
+    """The three rock-paper-scissors stances, named by stat.
 
     Backend code, data and line tables refer to stances only by stat (Austin,
-    2026-11-12). Member order (POW, EN, HAN) is the deck/iteration order.
+    2026-11-12). Each stance loads its own heat gauge: POW = engine heat,
+    HAN = suspension load, EN = brake/tire heat (heat.py). Gauge arrays use
+    equations.HEAT_ORDER (POW, HAN, EN), not this member order.
     Old -> new map: design/02-equations-reference.md §6.0.
     """
     POW = "POW"
     EN = "EN"
     HAN = "HAN"
-
-
-@dataclass(eq=False)
-class Card:
-    """A single card in a combatant's deck."""
-    stance: Stance
-
-    def __eq__(self, other: object) -> bool:
-        if isinstance(other, Stance):
-            return self.stance == other
-        if isinstance(other, Card):
-            return self.stance == other.stance
-        return NotImplemented
-
-    def __hash__(self) -> int:
-        return hash(self.stance)
 
 
 class StanceOutcome(Enum):
@@ -63,10 +48,13 @@ class CombatantStats:
 class TurnState:
     """Snapshot of all inputs for a single turn's resolution."""
     turn_number: int
-    player_cards: list = field(default_factory=list)
-    opponent_cards: list = field(default_factory=list)
+    player_stances: list = field(default_factory=list)
+    opponent_stances: list = field(default_factory=list)
     player_qte: float = 0.0
     opponent_qte: float = 0.0
+    # Per-clash heat payoff multipliers (overrun_mult or LIMP_MULT); empty = all 1.0.
+    player_heat_mults: list = field(default_factory=list)
+    opponent_heat_mults: list = field(default_factory=list)
     # Optional Entry/Apex/Exit raw scores. When set (length 3), the turn's
     # player_qte is their mean; None / unplayed counts as 0 (Austin).
     # Clash math still uses the single averaged player_qte.
@@ -77,8 +65,8 @@ class TurnState:
 class TurnResult:
     """Output produced by resolving a single turn."""
     turn_number: int
-    player_cards: list = field(default_factory=list)
-    opponent_cards: list = field(default_factory=list)
+    player_stances: list = field(default_factory=list)
+    opponent_stances: list = field(default_factory=list)
     player_dp: float = 0.0
     opponent_dp: float = 0.0
     player_progress: float = 0.0
@@ -91,8 +79,16 @@ class TurnResult:
     player_qte: float = 0.0
     opponent_qte: float = 0.0
     player_qte_phases: list[float] = field(default_factory=list)  # inputs that were averaged into player_qte
-    player_hand: list = field(default_factory=list)
-    opponent_hand: list = field(default_factory=list)
+    # Heat: per-clash payoff multipliers, and each side's gauges after the turn
+    # (load / capacity in HEAT_ORDER POW, HAN, EN; locked flags; limp clash flags).
+    player_heat_mults: list[float] = field(default_factory=list)
+    opponent_heat_mults: list[float] = field(default_factory=list)
+    player_heat_fill: list[float] = field(default_factory=list)
+    opponent_heat_fill: list[float] = field(default_factory=list)
+    player_locked: list[bool] = field(default_factory=list)
+    opponent_locked: list[bool] = field(default_factory=list)
+    player_limp: list[bool] = field(default_factory=list)
+    opponent_limp: list[bool] = field(default_factory=list)
     trace: list[dict] = field(default_factory=list)
     # Set when the match is using district line tables (LINE_SET_C).
     corner_type: Optional[str] = None
@@ -135,14 +131,14 @@ class MatchConfig:
     seed: Optional[int] = None
     deterministic: bool = True
     verbose: bool = False
-    rival_personality: str = ""
+    rival_personality: str = ""   # label only (the personality card AI was removed 2026-11-13)
     encounter_type: str = "wild"
     # Opt-in (None keeps old behaviour): simulated-player play quality q in
     # [0, 1], see equations.PERFECT_QTE and simulation.SimulationRunner.
     player_quality: Optional[float] = None
-    # Opt-in split of play quality into two independent skills, each in
-    # [0, 1]. player_read: chance per clash of reading the AI's real pick
-    # and countering it. player_timing: expected hit quality at the default
+    # Opt-in split of play quality into independent skills, each in
+    # [0, 1]. player_read: chance per corner of reading the boss's line
+    # (else each clash ties with prob q_read, else loses). player_timing: expected hit quality at the default
     # QTE zone (back-compat override). In the playable engine it is evaluated
     # at the race's fixed r via raw_qte_score (the visible zone), not used
     # as a hidden multiplier. Each one, if set, overrides player_quality for
@@ -152,6 +148,13 @@ class MatchConfig:
     # random player exactly, unless player_qte_profile is set.
     player_read: Optional[float] = None
     player_timing: Optional[float] = None
+    # Simulated player's heat pacing: share of turns it paces with the reserve
+    # rule (equations.PACE_*); other turns it plays greedy. None = same as the
+    # read skill (average player 0.6, perfect 1.0; resources-v4b).
+    player_pacing: Optional[float] = None
+    # Boss line style (sim only, PLACEHOLDER): "balanced" (live 65/21/14),
+    # "hot_early" or "conserver" (equations.BOSS_STYLES).
+    boss_style: str = "balanced"
     # Named PLACEHOLDER skill profile ("weak" / "average" / "strong").
     # When set, the playable engine uses that profile's σ at qte_zone_width
     # (r, qte_window_mod) and ignores player_timing for the raw QTE score.
@@ -163,41 +166,38 @@ class MatchConfig:
     # Opt-in (None = ENCOUNTER_RATIOS[encounter_type]): override the ratio
     # that scales the AI's QTE, e.g. 1.0 for a pure stat-parity test.
     opponent_qte_ratio: Optional[float] = None
-    # Opt-in district line tables (LINE_SET_C). When both are set, match.py
-    # picks the opponent's whole line once per corner/turn from the match
-    # RNG and plays those three stances; personality/archetype hand
-    # requirements are not used. `corners` is a lap of corner codes (typically
-    # 10) and repeats for longer races. District may be title case or lowercase.
+    # District line tables (LINE_SET_C) and the lap. Required by the playable
+    # engine: match.py picks the opponent's whole line once per corner/turn
+    # from the match RNG, and the corners set the heat costs. `corners` is a
+    # lap of corner codes (typically 10) and repeats for longer races.
+    # District may be title case or lowercase. If either is missing, match.py
+    # uses DEFAULT_DISTRICT's first official track.
     district: Optional[str] = None
     corners: Optional[list[str]] = None
-    # Default (False) is the final-v1 Phi/tau playable engine. True restores
-    # the older HP/DP + rubber-band path (resolve_turn_legacy, persistent decks).
-    legacy_hp_dp: bool = False
-
-
-class PhaseType(Enum):
-    AGGRESSIVE = "aggressive"
-    REACTIVE = "reactive"
-    UNPREDICTABLE = "unpredictable"
-
-
-@dataclass
-class PersonalityPhase:
-    phase_type: PhaseType
-    weights: dict | None = None
-    behavior_override: str | None = None
-    hand_requirements: dict | None = None
-
-
-@dataclass
-class PersonalityConfig:
-    name: str
-    phases: list[PersonalityPhase]
 
 
 @dataclass
 class ClashResult:
     clash_index: int
-    player_card: Stance
-    opponent_card: Stance
+    player_stance: Stance
+    opponent_stance: Stance
     outcome: StanceOutcome
+
+
+@dataclass
+class ClashContext:
+    """What the player knows when picking a stance for one clash (heat system).
+
+    `gauges` is the player's live heat.HeatGauges (read it, do not mutate it):
+    gauges.selectable_stances(), gauges.fill(), gauges.mult_if(stance, corner).
+    The boss's line is not included (the player must read it).
+    """
+    turn: int
+    clash_index: int
+    race_length: int
+    district: str
+    corner: str
+    lap: list
+    r: float
+    gauges: object
+    previous_clashes: list = field(default_factory=list)

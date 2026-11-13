@@ -2,6 +2,23 @@
 
 Every formula in the combat engine. All are pure functions in `sim/velocity_shift/equations.py`. All game-rule constants are module-level names — tunable in one place, never per-encounter.
 
+## Heat / load resource system (LIVE; Austin approved 2026-11-13)
+
+Source of truth: `sim/velocity_shift/equations.py` ("Heat / load resource system", `kappa_for_length`, `clash_progress`, `heat_capacity`, `overrun_mult`) and `sim/velocity_shift/heat.py`. Study: `unapproved/barry/resources-v4/RESULTS.md` (v4b, candidate **G2_slant_m10**). Names only here; read the values in the sim. This **replaces the card draw** (deck weights, hand size, `assign_hand`) and the `MU` / `ETA` share multipliers. Everything below this section that mentions decks, hands or `q_eff` with HAN is history.
+
+- **Gauges** (order `HEAT_ORDER`): POW = engine heat, HAN = suspension load, EN = brake/tire heat. All three recover every turn; the car starts cold.
+- **Picking:** each clash the player may pick any stance whose gauge is not locked. Playing stance s adds `HEAT_BASE_COST × CORNER_HEAT_COST[corner][s] × wear_s × (1 + HEAT_REPEAT_SURCHARGE × earlier uses of s this turn)`.
+- **Overrun:** a pick may push the load past capacity; that clash pays `overrun_mult(x)` (`OVERRUN_SLOPE`, `OVERRUN_FLOOR`), x = overrun / capacity.
+- **Lock + hysteresis:** load ≥ capacity locks the stance (also mid-turn); it unlocks only once load < `HEAT_RELEASE` × capacity. All three locked = limp on the least-loaded gauge at `LIMP_MULT`.
+- **End of turn:** `CORNER_HEAT_PASSIVE × wear` is added (can lock), then recovery, then the release check. Load is not capped and carries over.
+- **Size:** capacity / recovery = `HEAT_CAP_TURNS` / `HEAT_RECOVERY` × `heat.avg_heat_demand()` × `heat_share_mult(build shares)` (`HEAT_SHARE_EXP`) × r^`HEAT_R_EXP`. The stat mix sets each gauge's size and cooling.
+- **Track wear:** `heat.track_wear(district, lap)` makes every official lap ask the same total load (calibrated on a `HEAT_REF_Q` reader) and pushes each lap's mix `HEAT_DEMAND_SLANT` × further from even, so a car tuned for the track runs cooler.
+- **Payoff:** `g = V × Φ(outcome, q) × stat_payoff_mult(share of the stance played) × heat mult`, `stat_payoff_mult = 1 + STAT_M_W × (share − 1/3)` for all three stats; `V = r^kappa_for_length(T)` = `KAPPA_BY_LENGTH × KAPPA_HEAT_MULT`. No HAN timing modifier.
+- **Cap:** SP + mods cap `MOD_CAP_FRACTION`. Progression (`progression.py`) still runs on the card-draw oracle at `PROGRESSION_MOD_CAP_FRACTION` until it is refit.
+- **Bosses:** play their district line (`LINE_SET_C`) under the v3 heat rules (`BOSS_HEAT_*`): a locked stance is swapped for the least-loaded unlocked one; gauges lock only when the boss plays into them. How bosses manage heat is an open story question (Desmond / Nathaniel). Boss line styles (`BOSS_STYLES`, `BOSS_STYLE_BLEND`) are sim-only placeholders.
+- **Targets it was fitted to** (checked by `sim/scripts/balance_gauntlet.py` on the live engine, car tuned per track/length/boss style as in the G2 runs): perfect play at 80 % stats wins 10–25 % at 20/30 turns; perfect play at 100 % ≥ 85 %; average play (read 0.6, average QTE, pacing on 60 % of turns) at the cap 60–75 %. 10-turn grind races are easier on purpose.
+- **Open (Austin / Desmond):** feel (locks are frequent: see RESULTS.md "Feel"), district tuned splits (Street engine-heavy, Touge brake-heavy) before they are canon, boss heat behaviour.
+
 ---
 
 ## Decision sheet (2026-11-04, for Austin to lock)
@@ -70,6 +87,8 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 
 #### 3. Energy (EN / Endurance)
 
+> **Superseded 2026-11-13:** EN is now the brake/tire heat gauge in the heat/load system (see the section at the top).
+
 | | |
 |---|---|
 | **Current sim** | EN only mitigates incoming DP (formula above) and weights EN cards in the deck. UI label **EN**. No separate "energy resource" / mana. |
@@ -79,6 +98,8 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 | **Decision needed:** | Confirm EN stays mitigation-only (no AP/mana) for v1? Y/N |
 
 #### 4. Deck size / composition
+
+> **Superseded 2026-11-13:** the card draw was deleted; see the heat/load section at the top.
 
 | | |
 |---|---|
@@ -437,6 +458,8 @@ max_hp = level × HP_PER_LEVEL (120)
 ---
 
 ## 2. Playable turn scoring (final-v1 Phi/tau)
+
+> **Superseded in part 2026-11-13:** the clash payoff is now `V × Φ(outcome, q) × stat_payoff_mult × heat mult` (no `M`/`MU`, no HAN `ETA` on `q`), kappa is `kappa_for_length`, and hands / `assign_hand` are gone. See the heat/load section at the top. The QTE zone and rounding text below still holds.
 
 **Files:** `sim/velocity_shift/equations.py` — `timing_value()`, `clash_payoff()`, `clash_progress()`; `combat.py` — `resolve_turn()`.
 

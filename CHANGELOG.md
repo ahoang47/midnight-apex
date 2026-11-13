@@ -8,6 +8,23 @@
 
 ---
 
+## 2026-11-13 — Barry [barry]: heat/load resource system (resources-v4b G2) is live in sim/; card draw deleted
+
+- **Why:** Austin, 2026-11-13, on the v4b G2 write-up: "What version is this? I'm happy with this." and "I'm happy with this new resource system." G2_slant_m10 was the candidate that hit every target (study: `unapproved/barry/resources-v4/RESULTS.md`). `sim/` is the source of truth, so the approved model has to be the live engine before the game build ports it.
+- **What (`sim/`):**
+  - `equations.py`: new "Heat / load resource system" block with G2's values (gauges POW engine / HAN suspension / EN brakes; corner cost and passive tables; repeat surcharge, capacity, recovery, share curve, r scaling, release, overrun slope and floor, limp, demand slant, `STAT_M_W`, boss v3 heat rules); `KAPPA_HEAT_MULT` (kappa = base × mult in `kappa_for_length`); `MOD_CAP_FRACTION` → 1.07; `clash_progress` now takes the stance played and a heat multiplier, with `stat_payoff_mult` replacing `MU` and no HAN `ETA` timing modifier; `heat_capacity`, `heat_share_mult`, `overrun_mult`. Deleted `DECK_ALPHA`, `HAND_SIZE`, `deck_weights`, `assign_hand`, `MU`, `ETA`.
+  - New `heat.py`: load calibration (`corner_demand`, `track_wear`, `avg_heat_demand`), `HeatGauges` (cost, overrun, lock, release, limp), `boss_stance`, sim-only boss line styles.
+  - `match.py` rewritten around the gauges: the player callback picks a stance from the unlocked gauges each clash; the boss plays its line under its heat rule. `combat.py` / `models.py`: stances instead of cards, per-clash heat multipliers, gauge state on `TurnResult`, `ClashContext`. Deleted `deck.py`, the `Card` class, `draw_weighted_hand`, `plan_player_cards`, the legacy HP/DP match path (`legacy_hp_dp`) and the personality card AI (`pick_ai_card`). `resolve_turn_legacy` stays as a pure function.
+  - `simulation.py`: simulated player = G2's read model + "reserve" pacing (pacing share defaults to the read skill); `simulate_win_rate` takes splits, pacing and boss style. `cli.py`: stance prompt shows gauges, locks and overrun payoff.
+  - `scripts/balance_gauntlet.py` now checks the G2 targets on the live engine using `config/heat_g2_tuned.json` (G2's per-cell tuned splits) and fails CI on a miss. Removed `scripts/parity_sweep.py` (legacy HP/DP + card AI). Tests: new `tests/test_heat.py`; card-based tests rewritten; `test_playable_oracle.py` removed (it compared against the card-draw oracle).
+- **Spot check (live vs G2 full runs, G2's own tuned splits, 300 races per cell; `unapproved/barry/resources-v4/retune/live_spotcheck.json`):** 60/60 at the cap 68.6 vs 68.4 (20 / 30 turns 69.3 / 64.4 vs 69.4 / 63.9); perfect at 80 % on 20 / 30 turns 14.7 / 21.2 vs 14.9 / 20.9; perfect at 100 % 100 vs 100; 80/80 98.0 vs 98.0. Matching it needed one boss detail from the study: boss gauges don't lock from passive load (`BOSS_HEAT_LOCK_ON_PASSIVE`).
+- **Stale on purpose:** `progression.py` (ladder, grind, XP, mod tier floors) still runs on the card-draw oracle `config/winrate_n4000.json`, at a frozen `PROGRESSION_MOD_CAP_FRACTION` 1.05 so its report stays self-consistent. It needs a refit for the heat system. `test_mod_floor`'s slots-v2 oracle check is skipped for the same reason.
+- **Docs:** `design/01` (outside the canon block), `02` (new heat/load section by constant name; old deck/energy rows marked superseded), `03` / `04` / `08` marked history, one `07` row, `godot-build-guide.md` constants table + Deck section banner (port left to Gordon), `AGENTS.md` sim map.
+- **Open, needs Austin / Desmond / Nathaniel:** feel (an average player has a lock in about 2 of 3 corners); how bosses manage heat (bosses still use the v3 rules); the district tuned splits (Street engine-heavy, Touge brake-heavy, opposite to each district's load mix) before they become canon; the targets assume a retune per track, length and boss style (one fixed split per district leaves Touge at about 52 / 40 % at 20 / 30 turns).
+- **Not changed:** `design/art/`, `story/`, the Godot project, the canon block in `design/01`.
+
+---
+
 ## 2026-11-13 — Barry [barry]: commit resources-v1 to v4 (incl. v4b retune) heat/load sims to proto-build (unapproved drafts)
 
 - **Why:** Austin, 2026-11-13: commit all pending work to `proto-build` before the full merge to `main` and the new game-build branch. Then, on the v4b G2 write-up: "What version is this? I'm happy with this." (G2 goes live in `sim/` in the next commit; these folders stay as the record of how it was found.)

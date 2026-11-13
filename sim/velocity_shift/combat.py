@@ -1,46 +1,47 @@
 from __future__ import annotations
 """Turn resolution orchestration.
 
-The playable engine scores each clash with the final-v1 Phi/tau model
-(knot window, kappa, opponent QTE unscaled) and picks opponent lines
-from LINE_SET_C. The older HP/DP + rubber-band path is kept as
-`resolve_turn_legacy` for frozen checks; it is not the default.
+The playable engine scores each clash with the Phi/tau model (kappa,
+opponent QTE unscaled, stat weight on the stance played, heat payoff
+multipliers from heat.py) and picks opponent lines from LINE_SET_C.
+There is no card draw (removed 2026-11-13 for the heat/load gauges).
+The older HP/DP + rubber-band turn maths is kept as `resolve_turn_legacy`
+for frozen checks; it is not the default and has no match loop.
 """
 
 from collections.abc import Sequence
 from pathlib import Path
 from random import Random
 
-from .models import Stance, StanceOutcome, CombatantStats, TurnState, TurnResult, Card
+from .models import Stance, StanceOutcome, CombatantStats, TurnState, TurnResult
 from .equations import (
     qte_factor, clash_mult, compute_damage, resolve_stance, damage_mitigation, BATTLE_BONUS,
     LINE_SET_C, LINE_ADHERENCE, LINE_ALT_WEIGHTS,
-    clash_progress, kappa_for_length, deck_weights, assign_hand, HAND_SIZE,
+    clash_progress, kappa_for_length,
     mean_phase_qte, phase_raw_qte,
-    counter_stance, loser_to_stance, _STANCE_INDEX, _INDEX_STANCE,
 )
 from .trace import TraceLogger
 
 
 def _stance(c: object) -> Stance:
-    """Unwrap a Card or Stance to a bare Stance enum."""
-    if isinstance(c, Card):
-        return c.stance
+    """Accept a Stance or its name ("POW" / "EN" / "HAN")."""
     if isinstance(c, Stance):
         return c
-    raise TypeError(f"Expected Card or Stance, got {type(c).__name__}")
+    if isinstance(c, str):
+        return Stance(c)
+    raise TypeError(f"Expected Stance, got {type(c).__name__}")
 
 
 def resolve_battle(
-    player_cards: list[Stance],
-    opponent_cards: list[Stance],
+    player_stances: list[Stance],
+    opponent_stances: list[Stance],
 ) -> list[StanceOutcome]:
-    """Resolve three individual card clashes between player and opponent.
+    """Resolve three individual stance clashes between player and opponent.
 
     Returns outcomes from the player's perspective.
     """
     outcomes: list[StanceOutcome] = []
-    for p, o in zip(player_cards, opponent_cards):
+    for p, o in zip(player_stances, opponent_stances):
         outcomes.append(resolve_stance(_stance(p), _stance(o)))
     return outcomes
 
@@ -67,22 +68,23 @@ def resolve_turn(
     race_length: int = 10,
     boss_total: float | None = None,
 ) -> TurnResult:
-    """Resolve one turn with the final-v1 Phi/tau progress model.
+    """Resolve one turn with the Phi/tau progress model and heat multipliers.
 
     `turn_state.player_qte` / `opponent_qte` are raw timing scores in
     [0, 1], not 1–10 scores. If `player_qte_phases` is a length-3 list
     (Entry, Apex, Exit), it is averaged into that single `player_qte`
     (None / unplayed = 0; Austin, 2026-11-11); clash math is unchanged.
-    Both sides then get the HAN timing modifier. There is no
-    knot_window factor: the player's raw score already reflects the
-    visible zone at the race's fixed r. The opponent uses OPPONENT_QTE
-    (HAN still applies).
+    No HAN timing modifier and no knot_window factor: the player's raw
+    score already reflects the visible zone at the race's fixed r. The
+    opponent uses OPPONENT_QTE. Each clash pays
+    clash_progress(outcome, stance played, ...) x that side's heat
+    multiplier (`player_heat_mults` / `opponent_heat_mults`, default 1.0).
     `race_length` selects kappa. `boss_total` defaults to the opponent's
     stat sum, so the opponent's V is 1 and the player's V is r**kappa.
     """
     t = TurnResult(turn_number=turn_state.turn_number)
-    t.player_cards = list(turn_state.player_cards)
-    t.opponent_cards = list(turn_state.opponent_cards)
+    t.player_stances = [_stance(c) for c in turn_state.player_stances]
+    t.opponent_stances = [_stance(c) for c in turn_state.opponent_stances]
     if turn_state.player_qte_phases:
         t.player_qte_phases = [phase_raw_qte(v) for v in turn_state.player_qte_phases]
         t.player_qte = mean_phase_qte(turn_state.player_qte_phases)
@@ -94,12 +96,18 @@ def resolve_turn(
     local_trace = TraceLogger() if trace is None else trace
     lt = local_trace
 
-    p_stances = [_stance(c) for c in turn_state.player_cards]
-    o_stances = [_stance(c) for c in turn_state.opponent_cards]
+    p_stances = t.player_stances
+    o_stances = t.opponent_stances
+    p_mults = list(turn_state.player_heat_mults) or [1.0, 1.0, 1.0]
+    o_mults = list(turn_state.opponent_heat_mults) or [1.0, 1.0, 1.0]
+    t.player_heat_mults = p_mults
+    t.opponent_heat_mults = o_mults
 
     lt.log("turn", "Turn", turn_state.turn_number)
-    lt.log("input", "Player Cards", [s.value for s in p_stances])
-    lt.log("input", "Opponent Cards", [s.value for s in o_stances])
+    lt.log("input", "Player Stances", [s.value for s in p_stances])
+    lt.log("input", "Opponent Stances", [s.value for s in o_stances])
+    lt.log("heat", "Player heat mults", [round(m, 4) for m in p_mults])
+    lt.log("heat", "Opponent heat mults", [round(m, 4) for m in o_mults])
 
     p_outcomes = resolve_battle(p_stances, o_stances)
     t.battle_outcomes = p_outcomes
@@ -129,14 +137,14 @@ def resolve_turn(
     for i, p_outcome in enumerate(p_outcomes):
         o_outcome = StanceOutcome(-p_outcome.value)
         pg = clash_progress(
-            p_outcome, player_qte,
+            p_outcome, p_stances[i], player_qte,
             player.pow, player.en, player.han,
-            boss_total, kappa,
+            boss_total, kappa, p_mults[i],
         )
         og = clash_progress(
-            o_outcome, turn_state.opponent_qte,
+            o_outcome, o_stances[i], turn_state.opponent_qte,
             opponent.pow, opponent.en, opponent.han,
-            boss_total, kappa,
+            boss_total, kappa, o_mults[i],
         )
         p_prog += pg
         o_prog += og
@@ -177,7 +185,7 @@ def resolve_turn_legacy(
     while your offense fades.
 
     Args:
-        turn_state: Cards and QTE scores for both sides
+        turn_state: Stances and QTE scores for both sides
         player: Player's stats (used for POW/EN in damage/mitigation)
         opponent: Opponent's stats
         trace: Optional execution trace logger
@@ -188,22 +196,20 @@ def resolve_turn_legacy(
         TurnResult with per-side damage, outcomes, battle info, and trace
     """
     t = TurnResult(turn_number=turn_state.turn_number)
-    t.player_cards = list(turn_state.player_cards)
-    t.opponent_cards = list(turn_state.opponent_cards)
+    t.player_stances = [_stance(c) for c in turn_state.player_stances]
+    t.opponent_stances = [_stance(c) for c in turn_state.opponent_stances]
     t.player_qte = turn_state.player_qte
     t.opponent_qte = turn_state.opponent_qte
 
     local_trace = TraceLogger() if trace is None else trace
     lt = local_trace
 
-    p_cards_raw = list(turn_state.player_cards)
-    o_cards_raw = list(turn_state.opponent_cards)
-    p_stances = [_stance(c) for c in p_cards_raw]
-    o_stances = [_stance(c) for c in o_cards_raw]
+    p_stances = t.player_stances
+    o_stances = t.opponent_stances
 
     lt.log("turn", "Turn", turn_state.turn_number)
-    lt.log("input", "Player Cards", [s.value for s in p_stances])
-    lt.log("input", "Opponent Cards", [s.value for s in o_stances])
+    lt.log("input", "Player Stances", [s.value for s in p_stances])
+    lt.log("input", "Opponent Stances", [s.value for s in o_stances])
 
     p_outcomes = resolve_battle(p_stances, o_stances)
     o_outcomes = [StanceOutcome(-o.value) for o in p_outcomes]
@@ -255,9 +261,7 @@ def resolve_turn_legacy(
 
     p_total_dp = 0.0
     o_total_dp = 0.0
-    for i, (p_card, o_card, p_outcome, o_outcome) in enumerate(
-        zip(p_cards_raw, o_cards_raw, p_outcomes, o_outcomes)
-    ):
+    for i, (p_outcome, o_outcome) in enumerate(zip(p_outcomes, o_outcomes)):
         p_cm = clash_mult(p_outcome)
         o_cm = clash_mult(o_outcome)
 
@@ -347,8 +351,12 @@ def pick_line(
     rng: Random,
     adherence: float | None = None,
     alt_weights: dict[str, float] | None = None,
+    weights: Sequence[float] | None = None,
 ) -> list[Stance]:
     """Pick the opponent's whole line for one corner, from the match RNG.
+
+    `weights` (over [main, alt1, alt2]) overrides line_probs(), e.g. a boss style
+    from heat.boss_line_weights.
 
     One categorical draw among [main, alt1, alt2] with weights line_probs().
     This is the rule lines-v1 used (`numpy.Generator.choice(3, p=pr)`).
@@ -357,12 +365,9 @@ def pick_line(
     an adherence roll followed by a separate alt roll.
     """
     triples = line_triples(district, corner)
-    chosen = rng.choices(triples, weights=line_probs(adherence, alt_weights), k=1)[0]
+    w = line_probs(adherence, alt_weights) if weights is None else weights
+    chosen = rng.choices(triples, weights=w, k=1)[0]
     return parse_line(chosen)
-
-
-def stances_to_cards(line: Sequence[Stance]) -> list[Card]:
-    return [Card(s) for s in line]
 
 
 def corner_at_turn(corners: Sequence[str], turn_number: int) -> str:
@@ -371,60 +376,6 @@ def corner_at_turn(corners: Sequence[str], turn_number: int) -> str:
         raise ValueError("corners must be a non-empty lap or race sequence")
     return corners[(turn_number - 1) % len(corners)]
 
-
-
-def draw_weighted_hand(pow_stat: float, en_stat: float, han_stat: float, rng: Random, n: int | None = None) -> list[Card]:
-    """Draw `n` (default HAND_SIZE) cards i.i.d. from the stat-weighted deck."""
-    if n is None:
-        n = HAND_SIZE
-    w = deck_weights(pow_stat, en_stat, han_stat)
-    picks = rng.choices(_INDEX_STANCE, weights=w, k=n)
-    return [Card(s) for s in picks]
-
-
-def plan_player_cards(
-    district: str,
-    corner: str,
-    actual_line: Sequence[Stance],
-    hand: Sequence[Card],
-    q_read: float,
-    rng: Random,
-) -> list[Card]:
-    """Pick the player's three cards with the equations_v4 read model, then assign_hand.
-
-    On a correct Entry read (prob q_read), commit to the most likely table line
-    that shares that Entry (usually main, since alts share Entry and main has
-    the highest weight); wanted = its counters, fallback = the guess (tie).
-    On a misread, each clash independently wants a tie vs the actual card
-    with prob q_read, otherwise the losing stance, with no fallback.
-    """
-    triples = line_triples(district, corner)
-    pr = line_probs()
-    lines = [parse_line(s) for s in triples]
-    actual = [_stance(s) for s in actual_line]
-    if rng.random() < q_read:
-        entry = actual[0]
-        cands = [i for i in range(3) if lines[i][0] == entry]
-        guess = lines[max(cands, key=lambda i: pr[i])]
-        want = [counter_stance(x) for x in guess]
-        fb: list[Stance | None] = list(guess)
-    else:
-        want = []
-        fb = []
-        for i in range(3):
-            want.append(actual[i] if rng.random() < q_read else loser_to_stance(actual[i]))
-            fb.append(None)
-    counts = [0, 0, 0]
-    buckets: list[list[Card]] = [[], [], []]
-    for c in hand:
-        i = _STANCE_INDEX[_stance(c)]
-        counts[i] += 1
-        buckets[i].append(c)
-    assigned = assign_hand(counts, want, fb, rng)
-    out: list[Card] = []
-    for s in assigned:
-        out.append(buckets[_STANCE_INDEX[s]].pop(0))
-    return out
 
 
 def official_tracks() -> dict[str, dict[str, list[str]]]:

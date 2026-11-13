@@ -220,3 +220,20 @@ The substitution caveat from v4 still holds, a little weaker: a no-read player w
 ## Raw result files not committed
 
 `results_v4_F1_steep.npz`, `results_v4_F2_gentle.npz` and `retune/results_v4b_G1_slant_m05.npz` (≈15 MB each). Only `retune/results_v4b_G2_slant_m10.npz` (the approved candidate) is committed are not in git, to keep the repo small (all committed npz together would be ≈88 MB). The analysis JSON/tables committed here hold every number quoted above. Rebuild any of them with this folder's `run_*.py` (fixed seeds 20261112–20261120).
+
+## G2 made live in sim/ (2026-11-13, after Austin's approval)
+
+Austin approved G2_slant_m10 ("I'm happy with this new resource system"). It is now the live engine: `sim/velocity_shift/equations.py` (heat section) + `heat.py`, `match.py`, `simulation.py`; the card draw is deleted. `retune/live_spotcheck.py` races the live sim with G2's own tuned split per cell (track × length × boss style), 300 races per cell, and compares to the G2 full runs (`retune/live_spotcheck.json`):
+
+| Measure | Live | G2 full runs |
+|---|---|---|
+| 60/60 at the cap 1.07, all / 10 / 20 / 30 turns | 68.6 / 72.3 / 69.3 / 64.4 | 68.4 / 71.9 / 69.4 / 63.9 |
+| 60/60 at the cap by district (Touge / Wangan / Street) | 56.0 / 74.2 / 75.7 | 55.8 / 73.3 / 76.1 |
+| Perfect at 80 %, 10 / 20 / 30 turns | 55.6 / 14.7 / 21.2 | 55.6 / 14.9 / 20.9 |
+| Perfect at 100 % | 100 | 100 |
+| 80/80 at the cap | 98.0 | 98.0 |
+
+- One rule detail had to match the study exactly: the boss's gauges lock only when it plays into them, not from passive corner load (`BOSS_HEAT_LOCK_ON_PASSIVE = False`). With passive locking on for the boss too, Wangan came out about 1.7 pp easier.
+- `retune/export_tuned.py` writes `sim/config/heat_g2_tuned.json` (the per-cell G2 tuned splits), which `sim/scripts/balance_gauntlet.py` uses in CI.
+- **Caveat for Austin/Desmond:** the targets assume a car retuned per track, race length and boss style. One fixed split per district (best on average) gives the average player at the cap: Street 74 / 77 / 73, Touge 58 / 52 / 40, Wangan 66 / 71 / 68 (10 / 20 / 30 turns). So Touge misses 60–75 unless the player retunes per track.
+- **Tuned split vs heat demand:** Street's load mix is brake-heavy but its best car is engine-heavy (POW 0.47); Touge's load mix is engine-heavy but its best car is brake-heavy (EN 0.43). This comes from STAT_M_W and the counter stances, not from gauge size. Worth a sanity check before the splits become canon.

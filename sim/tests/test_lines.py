@@ -15,12 +15,8 @@ from velocity_shift.models import Stance, CombatantStats, MatchConfig
 from velocity_shift.match import run_match
 
 
-def _p_pick(turn, clash_index, hand, opponent_hand, previous_clashes):
-    return hand[0]
-
-
-def _o_unused(*args):
-    raise AssertionError("line-table matches must not call the personality opponent picker")
+def _p_pick(turn, clash_index, ctx):
+    return ctx.gauges.selectable_stances()[0]
 
 
 def test_line_probs_match_adherence_and_alt_weights():
@@ -77,15 +73,17 @@ def test_run_match_plays_table_lines_and_skips_personality():
         corners=corners,
         rival_personality="Aggressive",  # must be ignored for opponent cards
     )
-    result = run_match(cfg, _p_pick, lambda t: 10.0, _o_unused, lambda t: 10.0)
+    result = run_match(cfg, _p_pick, lambda t: 1.0)
     assert result.turns_played == 10
     for t, turn in enumerate(result.turn_results, start=1):
         cn = corner_at_turn(corners, t)
         assert turn.corner_type == cn
         allowed = {tuple(parse_line(s)) for s in line_triples("street", cn)}
-        played = tuple(c.stance if hasattr(c, "stance") else c for c in turn.opponent_cards)
-        assert played == tuple(turn.opponent_line)
-        assert played in allowed
+        assert tuple(turn.opponent_line) in allowed
+        # The boss plays its line unless that gauge is locked (heat.boss_stance swaps it);
+        # turn 1 starts cold, so there it plays the line exactly.
+        if t == 1:
+            assert turn.opponent_stances == list(turn.opponent_line)
 
 
 def test_run_match_line_picks_ignore_archetype():
@@ -101,15 +99,13 @@ def test_run_match_line_picks_ignore_archetype():
             corners=corners,
             rival_personality=personality,
         )
-        return run_match(cfg, _p_pick, lambda t: 5.0, _o_unused, lambda t: 5.0)
+        return run_match(cfg, _p_pick, lambda t: 0.5)
 
     a = run("Aggressive")
     b = run("Precise")
     for ta, tb in zip(a.turn_results, b.turn_results):
         assert ta.opponent_line == tb.opponent_line
-        assert [c.stance if hasattr(c, "stance") else c for c in ta.opponent_cards] == [
-            c.stance if hasattr(c, "stance") else c for c in tb.opponent_cards
-        ]
+        assert ta.opponent_stances == tb.opponent_stances
 
 
 def test_official_tracks_match_winrate_layouts():
