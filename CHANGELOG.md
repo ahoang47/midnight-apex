@@ -22,6 +22,7 @@
 - **Docs:** `design/01` (outside the canon block), `02` (new heat/load section by constant name; old deck/energy rows marked superseded), `03` / `04` / `08` marked history, one `07` row, `godot-build-guide.md` constants table + Deck section banner (port left to Gordon), `AGENTS.md` sim map.
 - **Open, needs Austin / Desmond / Nathaniel:** feel (an average player has a lock in about 2 of 3 corners); how bosses manage heat (bosses still use the v3 rules); the district tuned splits (Street engine-heavy, Touge brake-heavy, opposite to each district's load mix) before they become canon; the targets assume a retune per track, length and boss style (one fixed split per district leaves Touge at about 52 / 40 % at 20 / 30 turns).
 - **Not changed:** `design/art/`, `story/`, the Godot project, the canon block in `design/01`.
+- **Follow-up fix:** a stray `design/notes/slots-v2/__pycache__/b3_check.cpython-313.pyc` slipped into that commit; removed from git in the next commit.
 
 ---
 
