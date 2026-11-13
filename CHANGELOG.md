@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: remove superseded unapproved mockup folders
+
+- **Why:** Austin, 2026-11-13: sort `unapproved/arthur/` and delete the superseded or experiment-only studies.
+- **What:** Removed `unapproved/arthur/mockups/lane_chain/`, `line_clash/`, `psx_road_test/`, `crt/`, `race_state_study/`, and `pattern_read/` (about 55.1 MB committed). They remain in git history. `line_clash/` option A was already promoted to `art/ui/line_vs_line/`; option B was not chosen. `psx_road_test/` led to approved B.5c, already in art_direction. `crt/` and `race_state_study/resolution_test/` were experiment-only (art_direction B.4).
+- Updated `unapproved/arthur/mockups/README.md` and references in `art/ui/line_select_cam/` and `art/ui/line_vs_line/`.
+- **Left as is:** `line_preview/`, `resource_meters/`, `overworld/`, and `tones/`. Historical CHANGELOG entries still name the old paths. Gordon's two-corner docs and scripts that cite them were not edited.
+
 ## 2026-11-12 — Gordon [godot]: PLAN THE LINE stat framed under OUT/MID/IN; entry_strip no longer calls lane_stat (UNAPPROVED)
 
 - **Why:** Austin follow-up (relayed by Arthur, 769f073): "The stat should be framed under the position text." Arthur also reported that his `run.sh` symlinks our `entry_strip.gd`, which failed to parse because it called `lane_stat()` — a helper that exists only on our `hud_panel.gd`, not his.

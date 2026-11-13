@@ -1,6 +1,6 @@
 """Midnight Apex: dynamic Entry / Apex / Exit line-select camera mockup (UNAPPROVED PROPOSAL).
 Cheap Touge right hairpin built in Blender (road strip, 3 lanes, W-beam guardrail, chevron boards, cut bank, drop-off,
-cedar cards, sparse pale-sodium lamps). Same unlit pipeline as lane_chain/v5 and race_state_study/entry_matrix:
+cedar cards, sparse pale-sodium lamps). Same unlit pipeline as the earlier lane_chain/v5 and race_state_study/entry_matrix mockups (removed 2026-11-13; git history):
 texture x painted vertex light (half scale, x2) -> linear fog -> emission; hard 3-step lamp pools; glow sprites;
 game cars (MX5 player, S2000 rival) with the A.4 faked shine. Tone = blend50 (tones/work/tones.py).
 EEVEE Next 640x480, 1 sample, filter 0, Standard view. post_lsc.py does bloom (glows only) -> HUD -> RGB555 + Bayer -> 2x.
@@ -251,8 +251,8 @@ EX_S = LA * float(os.environ.get('EX_F', .75)); ep, eh = track(EX_S, float(os.en
 et, _ = track(LA + float(os.environ.get('EX_T', 24)), 1.0)
 mkcam('exit', ep + Vector((0, 0, float(os.environ.get('EX_Z', 7.5)))), et + Vector((0, 0, -1.2)), float(os.environ.get('EX_LENS', 19)))
 # B.5c pass (2026-11-11): the Exit stop now uses the same closer rear-quarter camera as the line_vs_line exit playback
-# (line_clash/build_clash.py 'pb_exit'), so the pick view and the playback view match. The old 'exit' camera is kept only so
-# the cedar keep-out set (and so the rest of the scene) stays identical to line_clash.
+# (line_clash/build_clash.py 'pb_exit', now in art/ui/line_vs_line/; the unapproved line_clash/ copy was removed 2026-11-13, git history), so the pick view and the playback view match. The old 'exit' camera is kept only so
+# the cedar keep-out set (and so the rest of the scene) stays identical to that playback scene.
 PX_S = LA + float(os.environ.get('PX_S', -5.0)); pxp, _ = track(PX_S, float(os.environ.get('PX_OFF', -5.4)))
 pxt, _ = track(LA + float(os.environ.get('PX_T', 9.0)), float(os.environ.get('PX_TOFF', 1.2)))
 mkcam('pb_exit', pxp + Vector((0, 0, float(os.environ.get('PX_Z', 3.4)))), pxt + Vector((0, 0, float(os.environ.get('PX_TZ', 0.2)))), float(os.environ.get('PX_LENS', 24)))

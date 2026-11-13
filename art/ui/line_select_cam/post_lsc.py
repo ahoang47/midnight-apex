@@ -1,6 +1,6 @@
 """Post for build_lsc.py (B.5c-checked: see b5c_composite): glow-only bloom (blend50 .22, 0) + sat 1.05 -> late-90s angular HUD drawn at native 640x480
 (1-bit text, PS1 50/50 semi-transparent panels) -> RGB555 + 4x4 Bayer -> 2x nearest. Writes the 4 frames and a contact sheet.
-Selector adapted from race_state_study/entry_matrix (PLAYER LINE LOCK). UNAPPROVED PROPOSAL.  python3 post_lsc.py"""
+Selector adapted from race_state_study/entry_matrix (PLAYER LINE LOCK; that mockup was removed 2026-11-13, git history). UNAPPROVED PROPOSAL.  python3 post_lsc.py"""
 import os, sys, json, numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__)); RAW = os.path.join(HERE, 'raw'); OUT = os.path.join(HERE, 'out'); os.makedirs(OUT, exist_ok=True)

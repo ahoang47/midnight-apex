@@ -20,11 +20,11 @@ The corner plate in the top right shows the hairpin and the three camera stops (
 ## Sample values, not specs
 - The picks (MID/NEU, IN/DEF, OUT/ATK), the timer, the hand of 6 and its counts going down are all illustrative.
 - Showing Apex and Exit picks as `lane / stance` borrows the Entry rule (outside = ATK, center = NEU, inside = DEF). No Apex or Exit lane mapping has been approved, so that part is open.
-- The player car is the yellow MX5 and the rival is the red S2000, the same as race_state_study/entry_matrix.
+- The player car is the yellow MX5 and the rival is the red S2000, the same pairing used in the race_state_study/entry_matrix mockups (removed 2026-11-13; git history).
 
 ## Art and pipeline
 - **Scene.** A cheap Touge right hairpin built in Blender: a 3-lane road strip, W-beam guardrail with posts, chevron boards, a cut bank on the inside, a drop-off on the outside, cedar cards, and ridge cards in the distance.
-- **Lighting and tone.** Same unlit vertex-light, fog and emission method as lane_chain/v5 and entry_matrix. Uses the approved `blend50` tone: fog #0B172B, ambient #5575A0, pale sodium #F0C894 lamps with hard 3-step pools, and bloom (.22, 0). The fog is closer than in the city scenes.
+- **Lighting and tone.** Same unlit vertex-light, fog and emission method as the earlier lane_chain/v5 and race_state_study/entry_matrix mockups (removed 2026-11-13; git history). Uses the approved `blend50` tone: fog #0B172B, ambient #5575A0, pale sodium #F0C894 lamps with hard 3-step pools, and bloom (.22, 0). The fog is closer than in the city scenes.
 - **Cars.** Game .glb models with the A.4 faked shine.
 - **Render.** EEVEE at 640x480, 1 sample, filter 0.
 - **Aliasing (B.5c).** Every overlay is drawn at native 640x480 with no AA: aliased polygons, lines and arcs, 1-bit text, and binary alpha. `post_lsc.py` checks this and stops if any layer has a soft alpha value. Compositing is the 50/50 semi layer, then the hard solid layer. RGB555 + 4x4 Bayer is applied once, followed by a single 2x nearest upscale. The contact sheet is built at full size: the native frames are pasted 1:1 and the whole sheet gets one 2x nearest, so each tile is pixel-identical to its frame. The bloom on the 3D glow pass is the approved B.2a post (0.22, 0), not an overlay.

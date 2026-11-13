@@ -24,7 +24,7 @@ The lines, gaps and camera numbers are illustrative. Rival Apex and Exit lanes r
 
 ## Pipeline
 - Scene: `build_clash.py`. It is the line_select_cam scene with both cars placed per phase.
-- HUD: `post_clash.py` writes option A, which is approved. It also writes option B (clash beats), which is not approved, and only its own working copy under `unapproved/arthur/mockups/line_clash/` uses it.
+- HUD: `post_clash.py` writes option A, which is approved. It also writes option B (clash beats), which is not approved. The unapproved option-B working copy lived at `unapproved/arthur/mockups/line_clash/` and was removed 2026-11-13 (git history).
 - Aliasing follows B.5c:
   - Overlays are drawn at native 640x480 with no AA and binary alpha.
   - RGB555 + 4x4 Bayer is applied once, then there is a single 2x nearest upscale.

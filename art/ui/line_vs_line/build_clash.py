@@ -3,7 +3,7 @@ Scene code is line_select_cam/build_lsc.py unchanged; only the ending differs: b
 a playback camera (chase at Entry, the corner-side apex and exit views). Variant 'a' = mid-phase, 'b' = clash beat (winner surged ~2.5 m).
 --- original header ---
 Cheap Touge right hairpin built in Blender (road strip, 3 lanes, W-beam guardrail, chevron boards, cut bank, drop-off,
-cedar cards, sparse pale-sodium lamps). Same unlit pipeline as lane_chain/v5 and race_state_study/entry_matrix:
+cedar cards, sparse pale-sodium lamps). Same unlit pipeline as the earlier lane_chain/v5 and race_state_study/entry_matrix mockups (removed 2026-11-13; git history):
 texture x painted vertex light (half scale, x2) -> linear fog -> emission; hard 3-step lamp pools; glow sprites;
 game cars (MX5 player, S2000 rival) with the A.4 faked shine. Tone = blend50 (tones/work/tones.py).
 EEVEE Next 640x480, 1 sample, filter 0, Standard view. post_lsc.py does bloom (glows only) -> HUD -> RGB555 + Bayer -> 2x.

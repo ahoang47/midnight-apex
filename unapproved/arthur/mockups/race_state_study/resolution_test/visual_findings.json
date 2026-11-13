@@ -1,7 +1,0 @@
-{
-  "03_close_behind_center": "OBSERVATION: both lamp clusters remain separate; 960 refines their shape. Forward hood clipping and the mirror roof obstruction are unchanged.",
-  "04_far_behind_outside": "OBSERVATION: 960 refines the small rival and lane edges; CRT softens them. Precise far lamp-pair / tyre placement remains limited; no forward rival.",
-  "04_far_behind_center": "OBSERVATION: far Center rival is above the roof here, NOT roof-occluded. 960 adds pixels, but the lamp pair stays tiny; no forward Entry read.",
-  "04_far_behind_inside": "OBSERVATION: 960 refines the small rival and lane edges; CRT softens them. Precise far lamp-pair / tyre placement remains limited; no forward rival.",
-  "02_ahead_room_center": "OBSERVATION: Center placement is visible at both resolutions; 960 refines body / road detail. Rear mirror correctly contains no rival."
-}

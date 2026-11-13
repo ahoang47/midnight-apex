@@ -12,6 +12,7 @@ def rgb555(a):
 def edges(m):
     p = np.pad(m, 1); n = p[:-2, 1:-1] & p[2:, 1:-1] & p[1:-1, :-2] & p[1:-1, 2:]; inner = m & ~n
     g = p[:-2, 1:-1] | p[2:, 1:-1] | p[1:-1, :-2] | p[1:-1, 2:]; ring = ~m & g; return inner, ring
+# Paths are box working copies under /workspace/mockups/. The unapproved repo copy of line_clash/ was removed 2026-11-13 (git history); approved frames are in art/ui/line_vs_line/.
 SETS = [('/workspace/mockups/line_select_cam', ['1_entry_pick', '2_apex_pick', '3_exit_pick', '4_line_locked'], 'line_select_cam_contact_sheet.png', 'sheet_layout.json'),
         ('/workspace/mockups/line_clash', ['a1_entry_line_vs_line', 'a2_apex_line_vs_line', 'a3_exit_line_vs_line'], 'line_vs_line_sheet.png', 'sheet_layout_line_vs_line.json')]
 rep = {}; ok = True
