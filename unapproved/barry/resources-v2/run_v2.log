@@ -1,0 +1,37 @@
+     37s A_scarce avg_cap avg win 44.5
+     70s A_scarce perf_0.8 avg win 3.9
+    106s A_scarce perf_1.0 avg win 99.9
+    142s A_scarce read1_cap avg win 98.5
+    168s A_scarce random_cap avg win 7.9
+    200s A_scarce noration_cap avg win 44.5
+    238s A_scarce unscouted_cap avg win 44.5
+    273s A_scarce b1_scouted_cap avg win 56.8
+    305s A_scarce b1_unscouted_cap avg win 31.8
+    337s A_mid avg_cap avg win 49.8
+    371s A_mid perf_0.8 avg win 7.7
+    408s A_mid perf_1.0 avg win 99.9
+    440s A_mid read1_cap avg win 99.4
+    467s A_mid random_cap avg win 9.6
+    499s A_mid noration_cap avg win 49.8
+    533s A_mid unscouted_cap avg win 49.8
+    568s A_mid b1_scouted_cap avg win 63.8
+    600s A_mid b1_unscouted_cap avg win 35.2
+    634s A_mid_norefill avg_cap avg win 50.6
+    667s A_mid_norefill perf_0.8 avg win 16.6
+    699s A_mid_norefill perf_1.0 avg win 99.9
+    732s A_mid_refill50 avg_cap avg win 48.5
+    766s A_mid_refill50 perf_0.8 avg win 6.1
+    799s A_mid_refill50 perf_1.0 avg win 99.9
+    844s B_generous avg_cap avg win 55.8
+   1126s B_generous perf_0.8 avg win 7.5
+   1158s B_generous perf_1.0 avg win 100.0
+   1190s B_generous read1_cap avg win 99.7
+   1213s B_generous random_cap avg win 11.7
+   1240s B_generous noration_cap avg win 55.8
+   1276s B_generous unscouted_cap avg win 55.8
+   1312s B_generous b1_scouted_cap avg win 70.2
+   1346s B_generous b1_unscouted_cap avg win 39.8
+   1360s live_read1 99.7
+   1375s live_avg 62.9
+   1380s live_random 7.7
+done 1380.4045553207397

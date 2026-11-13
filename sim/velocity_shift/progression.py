@@ -21,6 +21,9 @@ Rules (all constants in equations.py):
     is fitted once the player reaches the floor on story XP, or after grinding to the cap.
   * Finale exempt: caps lifted, FINALE_GRIND_SHARE of each finale stat rise comes from levels.
 
+STALE (2026-11-13): combat is now the heat/load system (resources-v4b G2) with a 1.07 mod cap. This model still
+uses the card-draw oracle below and the frozen PROGRESSION_MOD_CAP_FRACTION (1.05) until the ladder is refit.
+
 Win rates come from `config/winrate_n4000.json`: real output of the N=4000 race-balance
 sweep (seeds SIM_SEEDS × RACE_LENGTHS, KNOT_WINDOW_105, KAPPA_BY_LENGTH, OPPONENT_QTE,
 LINE_SET_C), pooled and per district. Exact r values the v8c run uses are stored; other
@@ -137,7 +140,7 @@ def ladder(order=None):
             L = Lp
             for j in range(7):
                 L += a[j]; ref = SP[L] / E.SP_CAP_FRACTION
-                B = Bc if j == 6 else E.MOD_CAP_FRACTION * ref / E.LADDER_R[j]
+                B = Bc if j == 6 else E.PROGRESSION_MOD_CAP_FRACTION * ref / E.LADDER_R[j]
                 R.append(dict(k=k, crew=f"R{rnd} {d}", district=d, rung=E.LADDER_RUNGS[j], j=j, B=B, mods=E.MOD_SHARE_OF_REF * ref, L=L,
                               kind="boss" if j == 6 else "lt", ro=ro, rnd=rnd, pos=pos,
                               unlocks=unlocks_after(rnd, pos) if j == 6 else [])); k += 1
@@ -145,7 +148,7 @@ def ladder(order=None):
     Lstep = Lp + alloc_levels(12, E.CAP_ALLOC_CREW)[0]       # finale story step, paid by the last crew boss
     Lf = []; spt = SP[Lstep]; Bq = Bp
     for nm, d, B in E.FINALE:
-        spt += E.FINALE_GRIND_SHARE * E.MOD_CAP_FRACTION * (B - Bq); Lf.append(nearest_level(SP, spt)); Bq = B
+        spt += E.FINALE_GRIND_SHARE * E.PROGRESSION_MOD_CAP_FRACTION * (B - Bq); Lf.append(nearest_level(SP, spt)); Bq = B
     return R, Lf, Lstep, budgets, Bp
 
 
@@ -275,7 +278,7 @@ def run(policy: str = "forced", order=None):
         if xp > XC[Lc]:
             lost += xp - XC[Lc]; xp = XC[Lc]
         L = _level(XC, xp, Lc); n, v2 = grind_to(xp, Lc, E.TAPER_FINALE_RUNG)
-        mods = E.MOD_CAP_FRACTION * B - SP[Lc] - base
+        mods = E.PROGRESSION_MOD_CAP_FRACTION * B - SP[Lc] - base
         r_skip = (SP[L] + base + mods) / B; r_tgt = (SP[Lc] + base + mods) / B
         g = n if policy == "forced" else 0
         if g:

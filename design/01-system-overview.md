@@ -26,7 +26,7 @@
 > - **Places:** Jesse (the Tuner) and Reiko (parts) work out of **Sabine's garage**; the **speakeasy** is the barkeep Malo's bar (named 2026-11-11) with the hidden wind tunnel.
 > - **Level bands** in 04 (Starter … Legend) are stat-budget labels, not race tiers.
 
-A turn-based racing combat engine. Two combatants race a 10-turn lap (1–3 laps). Each turn the player picks a 3-stance line (entry, apex, exit) from a stat-weighted hand, the opponent draws a whole district line, and each of the 3 clashes adds Phi/tau progress; the higher progress total wins. The locked rules are in the canon block above; equations and constants are in `design/02-equations-reference.md` and `sim/velocity_shift/equations.py`.
+A turn-based racing combat engine. Two combatants race a 10-turn lap (1–3 laps). Each turn the player picks a 3-stance line (entry, apex, exit) from any stance whose heat gauge is not locked (heat/load system, Austin approved 2026-11-13; the card draw is gone), the opponent draws a whole district line, and each of the 3 clashes adds Phi/tau progress; the higher progress total wins. The locked rules are in the canon block above; equations and constants are in `design/02-equations-reference.md` and `sim/velocity_shift/equations.py`.
 
 ---
 
@@ -38,12 +38,12 @@ sim/main.py
         ├─> cli.py          — Interactive match setup, prompts, display, run_cli
         ├─> models.py       — Data classes: Stance, CombatantStats, TurnState, MatchConfig, etc.
         ├─> equations.py    — Pure math and all constants: QTE zone, clash progress, kappa, line sets, progression
-        ├─> deck.py         — 192-card shoe (legacy HP/DP path only; live hands are drawn per turn)
+        ├─> heat.py         — Heat/load gauges (POW engine, HAN suspension, EN brakes), load calibration, boss heat rule
         ├─> combat.py       — resolve_turn (Phi/tau progress), pick_line, resolve_turn_legacy
         ├─> match.py        — run_match, multi-turn loop, progress-total winner
-        ├─> ai.py           — Opponent card selection strategies + QTE generation
+        ├─> ai.py           — Encounter laps/phases (+ legacy AI QTE)
         ├─> trace.py        — Structured execution logger
-        ├─> simulation.py   — Batch runner for statistical analysis
+        ├─> simulation.py   — Batch runner + simulated player (read model, heat pacing)
         ├─> progression.py  — Story ladder + XP/level/SP progression model (grind v8c)
         └─> config.py       — build_from_archetype factory
   └─> config/
@@ -57,12 +57,12 @@ sim/main.py
 |------|------|
 | `sim/velocity_shift/models.py` | All data classes and enums — no logic |
 | `sim/velocity_shift/equations.py` | Pure functions — no state, no side effects. All game constants as module-level names in equations.py — tunable in one place |
-| `sim/velocity_shift/deck.py` | Deck class — construction, draw, discard lifecycle (legacy HP/DP path; the live engine uses `combat.draw_weighted_hand`) |
+| `sim/velocity_shift/heat.py` | Heat/load gauges: `HeatGauges` (cost, overrun, lock, release, limp), `track_wear` / `avg_heat_demand` calibration, `boss_stance` |
 | `sim/velocity_shift/combat.py` | Turn resolution orchestration + clash/battle logic |
 | `sim/velocity_shift/match.py` | Multi-turn match loop with callbacks |
-| `sim/velocity_shift/ai.py` | AI card selection strategies + QTE generation |
+| `sim/velocity_shift/ai.py` | Encounter laps/phases; legacy AI QTE (HP/DP only) |
 | `sim/velocity_shift/trace.py` | Structured execution logger |
-| `sim/velocity_shift/simulation.py` | Headless batch runner + result export |
+| `sim/velocity_shift/simulation.py` | Headless batch runner, simulated player (read model + reserve pacing), result export |
 | `sim/velocity_shift/progression.py` | Story ladder (budgets, level caps, story/grind XP, walls) over the N=4000 win-rate table `sim/config/winrate_n4000.json`; report via `sim/scripts/run_progression.py` |
 | `sim/velocity_shift/cli.py` | Interactive frontend (setup, prompts, display, entry point) |
 | `sim/velocity_shift/config.py` | Factory function for archetype-based builds |
@@ -74,21 +74,27 @@ sim/main.py
 Superseded text removed 2026-11-12: the HP/DP data flow, `HP_PER_LEVEL` / `QTE_NORMALIZER` normalization, level-gap difficulty ratios, the persistent 192-card deck loop and the position (DP / max HP) win decision described the legacy path (`resolve_turn_legacy`, `MatchConfig.legacy_hp_dp`), not the live sim. The canon block wins; this is a map, not a second spec.
 
 ```
-draw_weighted_hand (HAND_SIZE, DECK_ALPHA; fresh each turn)
+Track: district + lap → heat.track_wear (HEAT_DEMAND_SLANT, normalised total); gauges sized by
+        heat_capacity (HEAT_CAP_TURNS, HEAT_RECOVERY, HEAT_SHARE_EXP, HEAT_R_EXP) from heat.avg_heat_demand
         │
-Player locks a line: entry / apex / exit stances
 Opponent: pick_line from LINE_SET_C[district][corner] (LINE_ADHERENCE, LINE_ALT_WEIGHTS)
+        │      plays it under the boss heat rule (heat.boss_stance, BOSS_HEAT_*)
+Player: per clash, any stance whose gauge is not locked; each adds CORNER_HEAT_COST × wear ×
+        │      (1 + HEAT_REPEAT_SURCHARGE × earlier uses this turn); overrun pays overrun_mult
+        │      (OVERRUN_SLOPE, OVERRUN_FLOOR); a full gauge locks until load < HEAT_RELEASE × cap;
+        │      all three locked = limp (LIMP_MULT). End of turn: CORNER_HEAT_PASSIVE, recovery, release.
 Player QTE: entry/apex/exit phases → mean_phase_qte (unplayed = PHASE_QTE_UNPLAYED)
         │      zone width = qte_zone_width(r, qte_window_mod); opponent uses OPPONENT_QTE
         ▼
-clash_progress x3: g = V × Φ(outcome, q_eff) × M,  V = r**kappa_for_length(max_turns)
-        │      q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)
+clash_progress x3: g = V × Φ(outcome, q) × stat_payoff_mult(share of the stance played) × heat mult
+        │      V = r**kappa_for_length(max_turns)  (KAPPA_BY_LENGTH × KAPPA_HEAT_MULT); STAT_M_W
         ▼
 progress totals accumulate; after max_turns the higher total wins
 (an exact tie is recorded as "Tie"; how a tie reads in game is not decided)
 ```
 
-- **Stats:** POW / EN / HAN set the hand's stance weights; the stat gap is the ratio r (opponent / player), which sets both `V` and the visible QTE zone.
-- **Difficulty:** set by r per rung (`LADDER_R`, the target r at each rung's level cap) and by race length (`KAPPA_BY_LENGTH`), not by level-gap ratios or per-encounter knobs.
-- **Progression:** levels, caps, grind walls and the mod tier floor live in `sim/velocity_shift/progression.py`; see 07 §6 and §8.
+- **Stats:** POW / EN / HAN set each gauge's capacity and recovery (stat share) and weight the payoff of the stance played (`STAT_M_W`); the stat gap is the ratio r (player / opponent), which sets `V`, gauge size and the visible QTE zone. The SP + mods cap is `MOD_CAP_FRACTION`.
+- **Heat:** POW = engine heat, HAN = suspension load, EN = brake/tire heat; all three recover during the race. Rules and values: `sim/velocity_shift/equations.py` ("Heat / load resource system") and `heat.py`; study: `unapproved/barry/resources-v4/RESULTS.md` (v4b, G2_slant_m10). Boss heat behaviour and the district tuned splits are open for Desmond / Nathaniel.
+- **Difficulty:** set by r per rung (`LADDER_R`, the target r at each rung's level cap) and by race length (`kappa_for_length`), not by level-gap ratios or per-encounter knobs. Targets the heat system was fitted to: perfect play at 80 % stats wins 10–25 % on 20/30-turn races, perfect play at 100 % ≥ 85 %, average play at the cap 60–75 % (check: `sim/scripts/balance_gauntlet.py`).
+- **Progression:** levels, caps, grind walls and the mod tier floor live in `sim/velocity_shift/progression.py`; see 07 §6 and §8. **Stale since 2026-11-13:** it still runs on the card-draw win-rate oracle at `PROGRESSION_MOD_CAP_FRACTION`; a refit for the heat system is pending.
 - **Global knobs:** every game constant is a named module-level value in `sim/velocity_shift/equations.py`; docs cite names, not copied values. Seeded RNG keeps runs reproducible.

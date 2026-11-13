@@ -1,0 +1,21 @@
+     69s F2_gentle avg_cap mean over tunes 62.4
+    123s F2_gentle perf_0.8 mean over tunes 14.0
+    180s F2_gentle perf_1.0 mean over tunes 99.9
+    245s F2_gentle c8080 mean over tunes 95.4
+    311s F2_gentle best_cap mean over tunes 73.1
+    370s F2_gentle greedy_cap mean over tunes 46.7
+    423s F2_gentle read1_best mean over tunes 100.0
+    473s F2_gentle read1_greedy mean over tunes 73.0
+    527s F2_gentle rand_best mean over tunes 70.8
+    581s F2_gentle rand_greedy mean over tunes 23.2
+    650s F1_steep avg_cap mean over tunes 64.7
+    704s F1_steep perf_0.8 mean over tunes 14.7
+    760s F1_steep perf_1.0 mean over tunes 99.9
+    824s F1_steep c8080 mean over tunes 95.9
+    886s F1_steep best_cap mean over tunes 75.4
+    944s F1_steep greedy_cap mean over tunes 48.7
+    999s F1_steep read1_best mean over tunes 100.0
+   1049s F1_steep read1_greedy mean over tunes 74.2
+   1100s F1_steep rand_best mean over tunes 75.2
+   1154s F1_steep rand_greedy mean over tunes 25.2
+done 1153.829265832901

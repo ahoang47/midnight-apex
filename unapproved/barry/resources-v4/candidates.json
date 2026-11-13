@@ -1,0 +1,10 @@
+{
+ "F1_steep": {"REC_FACTOR": 1.0, "RELEASE": 0.3, "AGG_STEP": 1.0, "PEN_SHAPE": "linear", "PEN_SLOPE": 4.0, "PEN_FLOOR": 0.4,
+              "CAP_TURNS": 3.0, "CAP_R_EXP": 1.0, "REC_R_EXP": 1.0, "KAPPA_SCALE": 1.5, "KAPPA_10": 1.5, "KAPPA_20": 2.2, "KAPPA_30": 1.9,
+              "BOSS_REC_FACTOR": 1.0, "BOSS_RELEASE": 0.8, "BOSS_CAP_TURNS": 3.0,
+              "RES_T": 0.7, "RES_K": 2.0, "RES_LOOK": 0.5, "PLAN_H": 3, "_cap": 1.10},
+ "F2_gentle": {"REC_FACTOR": 1.0, "RELEASE": 0.3, "AGG_STEP": 1.0, "PEN_SHAPE": "linear", "PEN_SLOPE": 2.0, "PEN_FLOOR": 0.4,
+              "CAP_TURNS": 3.0, "CAP_R_EXP": 1.0, "REC_R_EXP": 1.0, "KAPPA_SCALE": 1.5, "KAPPA_10": 1.5, "KAPPA_20": 2.1, "KAPPA_30": 1.85,
+              "BOSS_REC_FACTOR": 1.0, "BOSS_RELEASE": 0.8, "BOSS_CAP_TURNS": 3.0,
+              "RES_T": 0.7, "RES_K": 2.0, "RES_LOOK": 0.5, "PLAN_H": 3, "_cap": 1.10}
+}

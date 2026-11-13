@@ -1,0 +1,7576 @@
+{
+"source": "unapproved/barry/resources-v4/retune results_v4b_G2_slant_m10.npz (9 x 1000 races per cell)",
+"order": "POW, HAN, EN",
+"lengths": [
+10,
+20,
+30
+],
+"styles": [
+"balanced",
+"hot_early",
+"conserver"
+],
+"cells": [
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 76.38,
+"g2_even": 70.37
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 71.31,
+"g2_even": 63.08
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 76.23,
+"g2_even": 67.93
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 73.13,
+"g2_even": 62.81
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 70.39,
+"g2_even": 58.1
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 72.08,
+"g2_even": 60.3
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 67.02,
+"g2_even": 51.3
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 62.88,
+"g2_even": 45.6
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 65.58,
+"g2_even": 48.2
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 72.81,
+"g2_even": 70.36
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 70.7,
+"g2_even": 68.09
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 72.93,
+"g2_even": 69.9
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 68.9,
+"g2_even": 63.7
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 66.61,
+"g2_even": 60.4
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 68.39,
+"g2_even": 63.21
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 61.1,
+"g2_even": 53.94
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 58.43,
+"g2_even": 49.53
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 60.54,
+"g2_even": 52.31
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 80.53,
+"g2_even": 68.87
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 79.62,
+"g2_even": 64.99
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 80.03,
+"g2_even": 65.8
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 86.36,
+"g2_even": 65.52
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 85.43,
+"g2_even": 62.07
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 85.26,
+"g2_even": 63.1
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 83.79,
+"g2_even": 57.13
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 81.1,
+"g2_even": 51.89
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 82.53,
+"g2_even": 53.78
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 73.89,
+"g2_even": 69.98
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 72.69,
+"g2_even": 65.71
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 73.83,
+"g2_even": 67.6
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 78.69,
+"g2_even": 67.38
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 78.12,
+"g2_even": 62.48
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 78.89,
+"g2_even": 65.6
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 74.03,
+"g2_even": 58.88
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 73.52,
+"g2_even": 54.29
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 73.67,
+"g2_even": 56.19
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 77.78,
+"g2_even": 73.07
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 71.94,
+"g2_even": 66.98
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 75.76,
+"g2_even": 69.78
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 90.57,
+"g2_even": 73.76
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 88.37,
+"g2_even": 69.01
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 89.89,
+"g2_even": 70.64
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 92.53,
+"g2_even": 67.96
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 90.11,
+"g2_even": 61.92
+},
+{
+"measure": "avg_cap",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 91.33,
+"g2_even": 63.37
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 70.23,
+"g2_even": 59.97
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 69.49,
+"g2_even": 58.26
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 68.54,
+"g2_even": 59.63
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 67.43,
+"g2_even": 50.2
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 69.32,
+"g2_even": 49.86
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 67.22,
+"g2_even": 50.82
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 59.91,
+"g2_even": 36.96
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 64.44,
+"g2_even": 37.63
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 60.82,
+"g2_even": 38.23
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 63.96,
+"g2_even": 56.24
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 60.21,
+"g2_even": 49.29
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 61.94,
+"g2_even": 54.69
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 56.4,
+"g2_even": 42.14
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 54.17,
+"g2_even": 37.53
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 54.61,
+"g2_even": 40.39
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 44.12,
+"g2_even": 27.82
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 42.94,
+"g2_even": 24.74
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 41.72,
+"g2_even": 26.8
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 51.47,
+"g2_even": 42.14
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 50.18,
+"g2_even": 39.72
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 48.73,
+"g2_even": 40.93
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 42.82,
+"g2_even": 29.69
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 44.06,
+"g2_even": 28.62
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 42.09,
+"g2_even": 29.34
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 30.74,
+"g2_even": 18.11
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 32.16,
+"g2_even": 17.11
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 29.73,
+"g2_even": 17.46
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 68.89,
+"g2_even": 61.1
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 68.52,
+"g2_even": 59.34
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 65.82,
+"g2_even": 58.07
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 53.86,
+"g2_even": 50.47
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 54.46,
+"g2_even": 48.71
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 51.06,
+"g2_even": 48.06
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 41.64,
+"g2_even": 36.06
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 43.94,
+"g2_even": 36.67
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 39.88,
+"g2_even": 35.26
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 73.01,
+"g2_even": 63.86
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 68.83,
+"g2_even": 57.71
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 70.2,
+"g2_even": 59.9
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 64.1,
+"g2_even": 56.77
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 61.99,
+"g2_even": 53.82
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 61.38,
+"g2_even": 53.69
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 60.48,
+"g2_even": 44.36
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 58.5,
+"g2_even": 42.93
+},
+{
+"measure": "avg_cap",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 56.3,
+"g2_even": 41.6
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 73.8,
+"g2_even": 64.72
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 74.41,
+"g2_even": 64.06
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 73.79,
+"g2_even": 64.08
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 71.39,
+"g2_even": 55.91
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 74.13,
+"g2_even": 55.69
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 70.69,
+"g2_even": 55.42
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 68.78,
+"g2_even": 44.17
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 72.69,
+"g2_even": 44.93
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 68.22,
+"g2_even": 43.33
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 74.22,
+"g2_even": 68.34
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 73.88,
+"g2_even": 67.06
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 74.01,
+"g2_even": 67.59
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 79.04,
+"g2_even": 64.17
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 81.07,
+"g2_even": 63.97
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 79.12,
+"g2_even": 64.26
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 79.69,
+"g2_even": 56.12
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 82.56,
+"g2_even": 56.76
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 80.23,
+"g2_even": 56.04
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 81.78,
+"g2_even": 67.06
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 81.63,
+"g2_even": 66.93
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 81.49,
+"g2_even": 67.56
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.4,
+0.3
+],
+"g2_win": 68.6,
+"g2_even": 59.06
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 69.07,
+"g2_even": 57.86
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.4,
+0.3
+],
+"g2_win": 68.74,
+"g2_even": 58.6
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 59.86,
+"g2_even": 48.11
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 60.06,
+"g2_even": 47.09
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 59.76,
+"g2_even": 47.54
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 76.1,
+"g2_even": 65.63
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 77.2,
+"g2_even": 65.52
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 75.83,
+"g2_even": 65.18
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 72.23,
+"g2_even": 56.82
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 73.7,
+"g2_even": 56.33
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 71.71,
+"g2_even": 56.77
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 68.74,
+"g2_even": 47.08
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 69.86,
+"g2_even": 46.28
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 68.58,
+"g2_even": 46.68
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 77.09,
+"g2_even": 67.47
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 77.71,
+"g2_even": 66.27
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 77.32,
+"g2_even": 66.89
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 71.28,
+"g2_even": 60.5
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 74.36,
+"g2_even": 61.41
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 70.49,
+"g2_even": 59.52
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 69.49,
+"g2_even": 51.3
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 74.52,
+"g2_even": 53.5
+},
+{
+"measure": "avg_cap",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 68.81,
+"g2_even": 50.2
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 79.4,
+"g2_even": 19.86
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.4,
+0.25,
+0.35
+],
+"g2_win": 62.66,
+"g2_even": 9.81
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 78.56,
+"g2_even": 15.2
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 61.18,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 44.04,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 53.5,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 88.4,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 72.3,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 81.44,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.4,
+0.3
+],
+"g2_win": 66.41,
+"g2_even": 79.82
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 61.5,
+"g2_even": 79.28
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 68.99,
+"g2_even": 80.38
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.35,
+0.3,
+0.35
+],
+"g2_win": 1.02,
+"g2_even": 59.53
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 1.76,
+"g2_even": 50.92
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.35,
+0.3,
+0.35
+],
+"g2_win": 1.29,
+"g2_even": 57.43
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 21.43,
+"g2_even": 84.92
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 30.61,
+"g2_even": 81.63
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 23.7,
+"g2_even": 84.71
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 81.22,
+"g2_even": 44.84
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 67.36,
+"g2_even": 27.72
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 66.72,
+"g2_even": 38.71
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 26.19,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 17.7,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 19.66,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 15.14,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 7.91,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 12.3,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 75.06,
+"g2_even": 71.26
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 61.6,
+"g2_even": 57.46
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 74.27,
+"g2_even": 72.16
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 50.68,
+"g2_even": 32.29
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 36.47,
+"g2_even": 20.2
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 47.06,
+"g2_even": 34.48
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 73.67,
+"g2_even": 54.39
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 58.23,
+"g2_even": 37.18
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 71.53,
+"g2_even": 50.88
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 83.36,
+"g2_even": 85.51
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 76.99,
+"g2_even": 82.5
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 82.23,
+"g2_even": 86.21
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 46.63,
+"g2_even": 40.07
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 38.21,
+"g2_even": 39.59
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 50.16,
+"g2_even": 45.42
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 70.93,
+"g2_even": 64.39
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 63.84,
+"g2_even": 60.23
+},
+{
+"measure": "perf_0.8",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 72.33,
+"g2_even": 65.19
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 63.83,
+"g2_even": 53.62
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 52.73,
+"g2_even": 40.13
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 55.0,
+"g2_even": 46.88
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 0.18,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 0.04,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 0.22,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 53.07,
+"g2_even": 16.21
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 41.88,
+"g2_even": 8.59
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 48.22,
+"g2_even": 13.7
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 1.83,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 0.59,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 1.48,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 0.22,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 0.06,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 0.18,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 21.1,
+"g2_even": 5.29
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 13.26,
+"g2_even": 7.91
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 16.59,
+"g2_even": 5.38
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 1.62,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 0.77,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 0.43,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.4,
+0.3
+],
+"g2_win": 0.77,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.3,
+0.4,
+0.3
+],
+"g2_win": 0.41,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.4,
+0.3
+],
+"g2_win": 0.5,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 45.44,
+"g2_even": 0.42
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 39.3,
+"g2_even": 0.7
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 31.51,
+"g2_even": 0.36
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 2.81,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 3.0,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 2.36,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 4.04,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 3.54,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 3.86,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 55.41,
+"g2_even": 35.49
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 38.81,
+"g2_even": 19.03
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 42.36,
+"g2_even": 27.54
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 5.2,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 3.36,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.35,
+0.4,
+0.25
+],
+"g2_win": 3.09,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 0.28,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 0.17,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 0.14,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.45,
+0.25
+],
+"g2_win": 69.62,
+"g2_even": 10.93
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.3,
+0.45,
+0.25
+],
+"g2_win": 66.47,
+"g2_even": 8.82
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.45,
+0.25
+],
+"g2_win": 69.8,
+"g2_even": 10.47
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 2.48,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 0.94,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 1.52,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.45,
+0.25
+],
+"g2_win": 55.63,
+"g2_even": 50.87
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.3,
+0.45,
+0.25
+],
+"g2_win": 49.07,
+"g2_even": 41.71
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.45,
+0.25
+],
+"g2_win": 49.56,
+"g2_even": 46.66
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 16.07,
+"g2_even": 20.76
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 21.53,
+"g2_even": 20.13
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.35,
+0.35,
+0.3
+],
+"g2_win": 14.62,
+"g2_even": 20.12
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 28.76,
+"g2_even": 1.31
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 30.22,
+"g2_even": 1.84
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 26.03,
+"g2_even": 0.92
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 25.64,
+"g2_even": 7.08
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 34.42,
+"g2_even": 8.71
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 25.19,
+"g2_even": 7.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 0.58,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 0.49,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 0.46,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 3.22,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 2.84,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 3.14,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 49.76,
+"g2_even": 23.64
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 40.87,
+"g2_even": 20.93
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 50.19,
+"g2_even": 23.07
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 1.19,
+"g2_even": 0.14
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 0.58,
+"g2_even": 0.06
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 1.6,
+"g2_even": 0.12
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 19.81
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 15.46
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 0.0,
+"g2_even": 17.82
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.35,
+0.4,
+0.25
+],
+"g2_win": 71.18,
+"g2_even": 32.71
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 67.28,
+"g2_even": 29.99
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.35,
+0.4,
+0.25
+],
+"g2_win": 70.28,
+"g2_even": 27.2
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 28.89,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 30.6,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.4,
+0.35,
+0.25
+],
+"g2_win": 27.96,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 21.18,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 26.4,
+"g2_even": 0.0
+},
+{
+"measure": "perf_0.8",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 19.22,
+"g2_even": 0.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.97
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.35,
+0.4
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 99.98
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.45,
+0.3
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.96
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.97
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.94
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.69
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 98.36
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.6
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.93
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.92
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.45,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 99.93
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 100.0,
+"g2_even": 99.87
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.4,
+0.25,
+0.35
+],
+"g2_win": 99.98,
+"g2_even": 99.83
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.4,
+0.25,
+0.35
+],
+"g2_win": 100.0,
+"g2_even": 99.81
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.97
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.97
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 99.99
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "perf_1.0",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 100.0,
+"g2_even": 100.0
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.4,
+"g2_even": 99.04
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 98.93,
+"g2_even": 98.1
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.4,
+0.3,
+0.3
+],
+"g2_win": 99.32,
+"g2_even": 98.84
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 98.94,
+"g2_even": 96.59
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 98.63,
+"g2_even": 95.66
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 98.97,
+"g2_even": 96.58
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.21,
+"g2_even": 96.09
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 98.86,
+"g2_even": 94.89
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S1_Shibuya_Grid",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 98.93,
+"g2_even": 95.86
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 99.28,
+"g2_even": 98.48
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 99.12,
+"g2_even": 97.91
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 99.28,
+"g2_even": 98.3
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 98.36,
+"g2_even": 97.86
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 98.29,
+"g2_even": 96.96
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 98.56,
+"g2_even": 97.72
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.68,
+"g2_even": 97.7
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.13,
+"g2_even": 96.86
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S2_Ginza_Blocks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.4,
+"g2_even": 97.63
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.82,
+"g2_even": 97.87
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.71,
+"g2_even": 97.18
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.82,
+"g2_even": 97.44
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.76,
+"g2_even": 98.04
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.53,
+"g2_even": 97.52
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.72,
+"g2_even": 97.92
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.93,
+"g2_even": 97.92
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.94,
+"g2_even": 97.48
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S3_Shinjuku_Underpass",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.99,
+"g2_even": 97.63
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 99.33,
+"g2_even": 98.88
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.14,
+"g2_even": 98.26
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 99.37,
+"g2_even": 98.68
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.59,
+"g2_even": 97.78
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.53,
+"g2_even": 96.51
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.59,
+"g2_even": 97.53
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.8,
+"g2_even": 98.4
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.78,
+"g2_even": 97.67
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S4_Roppongi_Hill",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.87,
+"g2_even": 98.26
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.61,
+"g2_even": 98.8
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.42,
+"g2_even": 97.86
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.64,
+"g2_even": 98.6
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.99,
+"g2_even": 98.89
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 98.33
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 98.77
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 99.24
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 98.79
+},
+{
+"measure": "c8080",
+"district": "street",
+"track": "S5_Harbor_Warehouses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 100.0,
+"g2_even": 99.2
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.92,
+"g2_even": 92.57
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.67,
+"g2_even": 92.28
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.9,
+"g2_even": 94.28
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.26,
+"g2_even": 89.71
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.26,
+"g2_even": 89.59
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 98.11,
+"g2_even": 91.46
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 98.84,
+"g2_even": 87.37
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 99.02,
+"g2_even": 87.5
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T1_Akina_Switchbacks",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.5,
+0.25,
+0.25
+],
+"g2_win": 98.9,
+"g2_even": 89.36
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 98.43,
+"g2_even": 95.09
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 97.1,
+"g2_even": 93.1
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 98.1,
+"g2_even": 95.3
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 97.9,
+"g2_even": 91.78
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 97.0,
+"g2_even": 90.03
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 97.69,
+"g2_even": 92.34
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 97.6,
+"g2_even": 89.1
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 96.96,
+"g2_even": 87.4
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T2_Irohazaka_Ladder",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 97.38,
+"g2_even": 89.78
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 95.08,
+"g2_even": 82.01
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.45,
+0.3,
+0.25
+],
+"g2_win": 94.36,
+"g2_even": 81.28
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 94.67,
+"g2_even": 83.88
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 93.77,
+"g2_even": 80.29
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 93.73,
+"g2_even": 79.91
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 93.91,
+"g2_even": 81.44
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 93.02,
+"g2_even": 78.66
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 92.87,
+"g2_even": 78.1
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T3_Usui_Esses",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 92.9,
+"g2_even": 79.23
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 97.38,
+"g2_even": 95.73
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.26,
+"g2_even": 95.23
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.13,
+"g2_even": 95.68
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 94.97,
+"g2_even": 93.64
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 94.78,
+"g2_even": 93.07
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.3,
+0.45
+],
+"g2_win": 94.23,
+"g2_even": 93.71
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 93.48,
+"g2_even": 90.8
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 93.17,
+"g2_even": 90.54
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T4_Myogi_Descent",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.45,
+0.25,
+0.3
+],
+"g2_win": 93.14,
+"g2_even": 91.32
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.23,
+"g2_even": 97.56
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.38,
+"g2_even": 96.06
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.94,
+"g2_even": 97.23
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 96.14,
+"g2_even": 95.59
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.35,
+0.3,
+0.35
+],
+"g2_win": 95.09,
+"g2_even": 94.38
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.35,
+0.3,
+0.35
+],
+"g2_win": 96.02,
+"g2_even": 95.29
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.44,
+"g2_even": 94.42
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 96.43,
+"g2_even": 93.19
+},
+{
+"measure": "c8080",
+"district": "touge",
+"track": "T5_Hakone_Ridge",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 96.59,
+"g2_even": 93.73
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.31,
+"g2_even": 96.41
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.22,
+"g2_even": 95.57
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.34,
+"g2_even": 96.31
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.89,
+"g2_even": 94.23
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.9,
+"g2_even": 93.27
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.89,
+"g2_even": 94.16
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.61,
+"g2_even": 93.01
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 99.12,
+"g2_even": 92.71
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W1_Bayshore_Run",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.58,
+"g2_even": 92.91
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 97.81,
+"g2_even": 96.43
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.3,
+0.35,
+0.35
+],
+"g2_win": 97.81,
+"g2_even": 95.7
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.3,
+0.3,
+0.4
+],
+"g2_win": 97.83,
+"g2_even": 96.42
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 98.57,
+"g2_even": 94.76
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 98.64,
+"g2_even": 94.49
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 98.61,
+"g2_even": 94.73
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 99.41,
+"g2_even": 94.69
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 99.36,
+"g2_even": 94.38
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W2_Daikoku_Loop",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 99.29,
+"g2_even": 94.61
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 99.42,
+"g2_even": 97.11
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 99.38,
+"g2_even": 96.32
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 99.44,
+"g2_even": 97.21
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.24,
+"g2_even": 94.48
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 96.98,
+"g2_even": 93.59
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.22,
+"g2_even": 94.47
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.38,
+"g2_even": 92.89
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.2,
+"g2_even": 91.74
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W3_C1_Outer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.3,
+0.25,
+0.45
+],
+"g2_win": 97.32,
+"g2_even": 92.89
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 98.06,
+"g2_even": 95.43
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.22,
+"g2_even": 94.51
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.5,
+0.25
+],
+"g2_win": 98.12,
+"g2_even": 95.51
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.46,
+"g2_even": 92.96
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.43,
+"g2_even": 91.93
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.41,
+"g2_even": 93.04
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.28,
+"g2_even": 92.9
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.6,
+"g2_even": 91.59
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W4_Tatsumi_Sprint",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.32,
+"g2_even": 92.9
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "balanced",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 98.37,
+"g2_even": 96.21
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "hot_early",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 97.93,
+"g2_even": 94.6
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 10,
+"style": "conserver",
+"tune": [
+0.25,
+0.4,
+0.35
+],
+"g2_win": 98.41,
+"g2_even": 95.98
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.93,
+"g2_even": 93.3
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.91,
+"g2_even": 92.17
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 20,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 97.89,
+"g2_even": 93.12
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "balanced",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.8,
+"g2_even": 92.21
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "hot_early",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.76,
+"g2_even": 91.99
+},
+{
+"measure": "c8080",
+"district": "wangan",
+"track": "W5_Aqualine_Flyer",
+"length": 30,
+"style": "conserver",
+"tune": [
+0.25,
+0.25,
+0.5
+],
+"g2_win": 98.79,
+"g2_even": 92.09
+}
+]
+}

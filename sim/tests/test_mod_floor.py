@@ -50,7 +50,16 @@ def test_locked_tier_races_with_previous_mods_until_floor():
 
 def test_strong_mature2_not_decided_by_newest_mod():
     """Study check (b3): no strong-profile mature #2 (or boss) clear depends on the newest mod, balanced/window/aero10,
-    default order. Uses the share-grid oracle (numpy + banks outside the repo); skipped when those are not on the machine."""
+    default order. Uses the share-grid oracle (numpy + banks outside the repo); skipped when those are not on the machine.
+    Also skipped since 2026-11-13: that oracle (unapproved/barry/slots-v2) is the card-draw model and reads the removed
+    E.ETA; it comes back when progression is refit for the heat system."""
+    if not hasattr(E, "ETA"):
+        try:
+            import pytest
+            pytest.skip("slots-v2 oracle is the card-draw model (E.ETA removed); stale until the heat-system progression refit")
+        except ImportError:
+            print("SKIP test_strong_mature2_not_decided_by_newest_mod: card-draw oracle")
+            return
     try:
         import numpy  # noqa: F401
         sys.path.insert(0, _NOTES)

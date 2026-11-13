@@ -1,0 +1,5 @@
+{
+ "A_mid":    {"CAP_TURNS": 3.0, "REC_FACTOR": 1.0,  "CAP_R_EXP": 1.0, "REC_R_EXP": 1.0, "KAPPA_SCALE": 1.5, "RELEASE": 0.8, "PEN_SHAPE": "linear",    "PEN_SLOPE": 2.0, "PEN_FLOOR": 0.4, "_cap": 1.05},
+ "B_retune": {"CAP_TURNS": 3.0, "REC_FACTOR": 1.0,  "CAP_R_EXP": 1.0, "REC_R_EXP": 1.0, "KAPPA_SCALE": 1.5, "RELEASE": 0.8, "PEN_SHAPE": "quadratic", "PEN_SLOPE": 4.0, "PEN_FLOOR": 0.4, "_cap": 1.05},
+ "C_light":  {"CAP_TURNS": 4.5, "REC_FACTOR": 1.15, "CAP_R_EXP": 2.0, "REC_R_EXP": 2.0, "KAPPA_SCALE": 1.5, "RELEASE": 0.8, "PEN_SHAPE": "quadratic", "PEN_SLOPE": 4.0, "PEN_FLOOR": 0.4, "_cap": 1.05}
+}

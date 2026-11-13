@@ -76,7 +76,7 @@
 | Stat budget = level × 30 | `sim/velocity_shift/cars.py:32-40` |
 | `CombatantStats` = name, pow, en, han, level. No equipment field exists | `sim/velocity_shift/models.py:43-54` |
 | Constants: CLASH_STAKES 0.35, BATTLE_BONUS 0.05, MITIGATION_PER_1000 0.4, MITIGATION_FLOOR 0.1, HP_PER_LEVEL 180, QTE_NORMALIZER 10, HAN_QTE_WEIGHT 0.5 | `sim/velocity_shift/equations.py:16-22` |
-| Deck mix is weighted by stat share (POW, EN, HAN shares → POW, EN, HAN cards), so any stat change also changes the cards | `sim/velocity_shift/deck.py:4`, `:29-44` |
+| *(history: card draw removed 2026-11-13; stat share now sizes the heat gauges and weights the stance played, see 02 heat/load section)* Deck mix is weighted by stat share (POW, EN, HAN shares → POW, EN, HAN cards), so any stat change also changes the cards | `sim/velocity_shift/deck.py:4`, `:29-44` |
 | QTE factor is clamped to 0–1 | `sim/velocity_shift/combat.py:111-112` |
 | Encounter ratios: wild 0.75, lieutenant 1.1, boss 1.2 (they live in `ai.py`, not `equations.py`) | `sim/velocity_shift/ai.py:17-21` |
 | Opponent level = round(player level × ratio) | `sim/velocity_shift/cli.py:305` |

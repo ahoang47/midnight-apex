@@ -60,16 +60,14 @@ enum QteType { MASH, TIMING }
 | `QTE_SKILL_SIGMA_OVER_A0` | PLACEHOLDER skill σ (units of the default half-width a0) until playtest; used by `expected_hit_quality` / `raw_qte_score` (`equations.py:149`, marked PLACEHOLDER) |
 | `QTE_SKILL_TARGET_E` | Target E[s] at the default zone for the named placeholder profiles (`equations.py:148`) |
 | `KNOT_WINDOW_105` | LEGACY `(r, W)` knots for `knot_window(r)`: `winrate_n4000.json` / progression oracle, and the generator of the zone table. Not used by `clash_progress` / `resolve_turn` (`equations.py:125`, `knot_window` at `:256`) |
-| `KAPPA_BY_LENGTH` | Stat-gap leverage `V = r^kappa`, keyed by race length in turns |
+| `KAPPA_BY_LENGTH`, `KAPPA_HEAT_MULT` | Stat-gap leverage `V = r^kappa`, kappa = `kappa_for_length(T)` = `KAPPA_BY_LENGTH[T] × KAPPA_HEAT_MULT[T]` (heat system, 2026-11-13) |
 | `RACE_LENGTHS` | Race lengths that have a `KAPPA_BY_LENGTH` entry |
 | `OPPONENT_QTE` | Opponent raw timing; unchanged (HAN still applies; no visible-zone width) (`equations.py:129`, `combat.py:75`) |
 | `W0`, `T_MAX`, `L_MAX` | Phi payoff: win at q = 0, tie at q = 1, loss at q = 1 |
 | `TAU_BETA`, `TAU_P_TOP`, `TAU_GAMMA` | tau(q): top-bonus share, top-bonus sharpness, body shape |
-| `MU` | POW share raises the win payoff; EN share raises the tie/loss payoff |
-| `ETA` | HAN share raises effective timing (both sides) |
+| ~~`MU`~~, ~~`ETA`~~ | **Removed 2026-11-13.** Replaced by `STAT_M_W` (payoff × (1 + `STAT_M_W` × (share of the stance played − 1/3)), all three stats); no HAN timing modifier |
 | `QTE_NORMALIZER` | QTE score (1–10) → `q_time`, the same conversion as `qte_factor()` |
-| `DECK_ALPHA` | Deck-weight smoothing in `deck_weights()` |
-| `HAND_SIZE` | Cards in each turn's fresh hand |
+| ~~`DECK_ALPHA`~~, ~~`HAND_SIZE`~~ | **Removed 2026-11-13** with the card draw. Port the heat section instead: `HEAT_ORDER`, `CORNER_HEAT_COST`, `CORNER_HEAT_PASSIVE`, `HEAT_*`, `OVERRUN_*`, `LIMP_MULT`, `STAT_M_W`, `BOSS_HEAT_*`, `MOD_CAP_FRACTION`, and the derived calibration `heat.avg_heat_demand()` / `heat.track_wear()` (see `design/02-equations-reference.md`, heat/load section) |
 | `LINE_SET_C`, `LINE_ADHERENCE`, `LINE_ALT_WEIGHTS` | Opponent line tables and line-pick weights (§8.1) |
 
 **Godot-only constants** (prototype UX, tuned in Godot):
@@ -211,6 +209,8 @@ Battle (Node)                                   ← TurnManager.gd attached
 ---
 
 ## 3. Deck
+
+> **SUPERSEDED 2026-11-13 (Barry):** the card draw was deleted from the sim; Austin approved the heat/load resource system (resources-v4b G2). There is no hand: each clash the player picks any stance whose gauge is not locked. The sim reference is `sim/velocity_shift/heat.py` (`HeatGauges`, `boss_stance`, `track_wear`) and `match.py`; rules in `design/02-equations-reference.md` (heat/load section). This section is left for Gordon to replace.
 
 **Goal:** A fresh stat-weighted hand each turn. GDScript port of `deck_weights()` in `sim/velocity_shift/equations.py` and `draw_weighted_hand()` in `sim/velocity_shift/combat.py`.
 

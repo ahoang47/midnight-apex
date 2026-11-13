@@ -2,23 +2,24 @@ from __future__ import annotations
 """Interactive frontend — match setup, prompts, display, and entry point.
 
 Setup flow: pick player build → pick encounter type → pick opponent
-archetype.  Opponent stats are generated from archetype + level derived
-from the encounter type ratio.  Opponent AI behaviour is driven by the
-selected archetype's personality config.
+archetype → district and track. Opponent stats are generated from
+archetype + level derived from the encounter type ratio. The opponent
+plays its district line (LINE_SET_C) under the boss heat rule. Each
+clash the player picks any stance whose heat gauge is not locked
+(heat/load system, resources-v4b G2, 2026-11-13; no card draw).
 """
 
-import random
 import datetime
 
 from .cars import build_stats, ARCHETYPES
-from .equations import HP_PER_LEVEL, qte_factor, DISTRICTS, qte_zone_width, QTE_ZONE_BASE_MS, QTE_PHASES
+from .equations import qte_factor, DISTRICTS, qte_zone_width, QTE_ZONE_BASE_MS, QTE_PHASES
 from .combat import official_tracks
-from .models import Stance, StanceOutcome, Card, CombatantStats, MatchConfig, MatchResult, \
-    TurnResult, ClashResult, PersonalityConfig
+from .models import Stance, StanceOutcome, CombatantStats, MatchConfig, MatchResult, \
+    TurnResult, ClashResult, ClashContext
 from .match import run_match
 from .trace import TraceLogger
-from .ai import get_personality, pick_ai_card, get_ai_qte, \
-    ENCOUNTER_RATIOS, ENCOUNTER_PHASES, ENCOUNTER_LAP_SIZES
+from .ai import ENCOUNTER_RATIOS, ENCOUNTER_PHASES, ENCOUNTER_LAP_SIZES
+from .equations import HEAT_ORDER
 
 ENCOUNTER_LABELS = {
     "wild": "Wild Encounter",
@@ -37,28 +38,20 @@ def fmt(v: float, decimals: int = 4) -> str:
     return f"{v:.{decimals}f}"
 
 
-def _cards_label(cards: list) -> str:
-    if not cards:
+def _stance_label(c: object) -> str:
+    return c.value if isinstance(c, Stance) else str(c)
+
+
+def _cards_label(stances: list) -> str:
+    if not stances:
         return "???"
-    def _label(c: object) -> str:
-        if isinstance(c, Card):
-            return c.stance.value
-        if isinstance(c, Stance):
-            return c.value
-        return str(c)
-    return "-".join(_label(c) for c in cards)
+    return "-".join(_stance_label(c) for c in stances)
 
 
-def _hand_label(cards: list) -> str:
-    if not cards:
+def _heat_label(fill: list, locked: list) -> str:
+    if not fill:
         return "?"
-    def _label(c: object) -> str:
-        if isinstance(c, Card):
-            return c.stance.value
-        if isinstance(c, Stance):
-            return c.value
-        return str(c)
-    return " ".join(_label(c) for c in cards)
+    return " ".join(f"{n}:{f*100:3.0f}%{'(L)' if lk else ''}" for n, f, lk in zip(HEAT_ORDER, fill, locked))
 
 
 def _outcome_icon(outcomes: list[StanceOutcome]) -> str:
@@ -99,23 +92,23 @@ def _write_log(result: MatchResult, cfg: MatchConfig) -> None:
         for t in result.turn_results:
             cum_p += t.player_dp
             cum_o += t.opponent_dp
-            p_picks = _cards_label(t.player_cards)
-            o_picks = _cards_label(t.opponent_cards)
-            p_hand = _hand_label(t.player_hand)
-            o_hand = _hand_label(t.opponent_hand)
+            p_picks = _cards_label(t.player_stances)
+            o_picks = _cards_label(t.opponent_stances)
+            p_heat = _heat_label(t.player_heat_fill, t.player_locked)
+            o_heat = _heat_label(t.opponent_heat_fill, t.opponent_locked)
             battle = t.battle_winner or "\u2014"
             f.write(f"  {t.turn_number:>2}  {p_picks:>12} {o_picks:<12}  {battle:>14}  "
                     f"{fmt(t.player_qte, 1):>5} {fmt(t.opponent_qte, 1):>5}  "
                     f"{fmt(t.player_dp, 1):>7} {fmt(t.opponent_dp, 1):>7}  "
                     f"{fmt(cum_p, 1):>7} {fmt(cum_o, 1):>7}\n"
-                    f"  {'':>2}  {'Deal:':>12} {p_hand}  |  {o_hand}\n")
+                    f"  {'':>2}  {'Heat:':>12} {p_heat}  |  {o_heat}\n")
         f.write("\n" + "=" * 72 + "\n")
     print(f"  [Log saved to {filename}]")
 
 
 def print_turn_condensed(t: TurnResult, player_name: str = "P", opponent_name: str = "O") -> None:
-    p_s = _cards_label(t.player_cards)
-    o_s = _cards_label(t.opponent_cards)
+    p_s = _cards_label(t.player_stances)
+    o_s = _cards_label(t.opponent_stances)
     battle = _battle_icon(t.battle_winner, player_name)
     outcomes = _outcome_icon(t.battle_outcomes) if t.battle_outcomes else ""
     print(f"  T{t.turn_number:>2} | {p_s:>12} vs {o_s:<12} | {battle:>15} | "
@@ -123,8 +116,8 @@ def print_turn_condensed(t: TurnResult, player_name: str = "P", opponent_name: s
 
 
 def print_turn_verbose(t: TurnResult, player_name: str = "P", opponent_name: str = "O") -> None:
-    p_s = _cards_label(t.player_cards)
-    o_s = _cards_label(t.opponent_cards)
+    p_s = _cards_label(t.player_stances)
+    o_s = _cards_label(t.opponent_stances)
     battle = _battle_icon(t.battle_winner, player_name)
     outcomes = _outcome_icon(t.battle_outcomes) if t.battle_outcomes else ""
     print(f"\n  \u2500\u2500 Turn {t.turn_number}  {p_s} vs {o_s}  |  Battle: {battle} ({outcomes}) \u2500\u2500")
@@ -160,15 +153,15 @@ def print_result(result: MatchResult, verbose: bool = False) -> None:
     for t in result.turn_results:
         cum_p += t.player_dp
         cum_o += t.opponent_dp
-        p_picks = _cards_label(t.player_cards)
-        o_picks = _cards_label(t.opponent_cards)
-        p_hand = _hand_label(t.player_hand)
-        o_hand = _hand_label(t.opponent_hand)
+        p_picks = _cards_label(t.player_stances)
+        o_picks = _cards_label(t.opponent_stances)
+        p_heat = _heat_label(t.player_heat_fill, t.player_locked)
+        o_heat = _heat_label(t.opponent_heat_fill, t.opponent_locked)
         battle = _battle_icon(t.battle_winner, result.player_name)
         print(f"  {t.turn_number:>2}  {p_picks:>12} {o_picks:<12}  {battle:>14}  "
               f"{fmt(t.player_dp, 1):>7} {fmt(t.opponent_dp, 1):>7}  "
               f"{fmt(cum_p, 1):>7} {fmt(cum_o, 1):>7}")
-        print(f"  {'':>2}  {'Deal:':>12} {p_hand}  |  {o_hand}")
+        print(f"  {'':>2}  {'Heat:':>12} {p_heat}  |  {o_heat}")
     if verbose:
         for t in result.turn_results:
             print_turn_verbose(t, result.player_name, result.opponent_name)
@@ -360,49 +353,31 @@ def setup_match() -> MatchConfig:
     )
 
 
-def _card_label(c: object) -> str:
-    if isinstance(c, Card):
-        return c.stance.value
-    if isinstance(c, Stance):
-        return c.value
-    return str(c)
-
-
 OUTCOME_ICONS = {StanceOutcome.WIN: "\u2713", StanceOutcome.DRAW: "\u2014", StanceOutcome.LOSS: "\u2717"}
 
 
-def prompt_card_sequential(
-    turn: int,
-    clash_index: int,
-    remaining_hand: list[Card],
-    opponent_hand: list[Card],
-    previous_clashes: list[ClashResult],
-    who: str,
-) -> Card:
-    """Prompt the player to pick one card from their remaining hand.
-
-    Displays previous clash results and remaining hands for context.
-    """
-    pos_names = ["lead", "middle", "anchor"]
-    pos_name = pos_names[clash_index] if clash_index < 3 else f"slot {clash_index+1}"
-
-    if clash_index > 0:
-        print(f"  {who} hand: {_hand_label(remaining_hand)}")
-        print(f"  Opponent hand: {_hand_label(opponent_hand)}")
-
-    for prev in previous_clashes:
+def prompt_stance(ctx: ClashContext, who: str) -> Stance:
+    """Prompt the player for one stance. Locked gauges cannot be picked; overrun picks show their payoff."""
+    pos_names = ["Entry", "Apex", "Exit"]
+    pos_name = pos_names[ctx.clash_index] if ctx.clash_index < 3 else f"slot {ctx.clash_index+1}"
+    g = ctx.gauges
+    for prev in ctx.previous_clashes:
         icon = OUTCOME_ICONS[prev.outcome]
-        print(f"    Clash {prev.clash_index+1}: {_card_label(prev.player_card)} vs "
-              f"{_card_label(prev.opponent_card)} \u2192 {icon}")
-
-    labels = [_card_label(c) for c in remaining_hand]
-    available = ", ".join(f"{i+1}:{l}" for i, l in enumerate(labels))
+        print(f"    Clash {prev.clash_index+1}: {_stance_label(prev.player_stance)} vs "
+              f"{_stance_label(prev.opponent_stance)} \u2192 {icon}")
+    print(f"  {who} heat: {_heat_label(g.fill(), g.locked)}")
+    options = []
+    for s_ in (Stance.POW, Stance.HAN, Stance.EN):
+        if g.selectable(s_):
+            m = g.mult_if(s_, ctx.corner)
+            options.append((s_, f"{s_.value}" + (f" (overrun x{m:.2f})" if m < 1.0 else "")))
+    available = ", ".join(f"{i+1}:{lbl}" for i, (_, lbl) in enumerate(options))
     while True:
-        raw = input(f"  {pos_name} [{available}]: ").strip()
+        raw = input(f"  {ctx.corner} {pos_name} [{available}]: ").strip()
         try:
             idx = int(raw) - 1
-            if 0 <= idx < len(remaining_hand):
-                return remaining_hand[idx]
+            if 0 <= idx < len(options):
+                return options[idx][0]
         except ValueError:
             pass
         print("  Invalid choice.")
@@ -437,13 +412,9 @@ def prompt_qte(turn: int, who: str) -> tuple[float, float, float]:
 
 def run_cli() -> None:
     cfg = setup_match()
-    rng = random.Random(cfg.seed) if cfg.seed else random.Random()
     trace = TraceLogger()
     pn = cfg.player_stats.name
     on = cfg.opponent_stats.name
-    player_max_hp = cfg.player_stats.level * HP_PER_LEVEL
-    opponent_max_hp = cfg.opponent_stats.level * HP_PER_LEVEL
-    personality = get_personality(cfg.rival_personality)
 
     laps = _lap_count(cfg.encounter_type)
     print(f"\n  {pn} vs {on} ({laps} lap(s), max {cfg.max_turns} turns)")
@@ -454,47 +425,27 @@ def run_cli() -> None:
     print(f"  QTE zone: {zw:.2f} × default ({zw * QTE_ZONE_BASE_MS:.0f} ms at r={r:.4f}); "
           f"enter an Entry, Apex, and Exit score (blank = unplayed = 0); "
           f"the turn uses their average as the raw hit quality at this zone")
+    print("  Heat: POW = engine, HAN = suspension, EN = brakes/tires. A full gauge locks (L) until it cools.")
 
-    def get_player_card(turn: int, clash_index: int, hand: list[Card],
-                        opponent_hand: list[Card],
-                        previous_clashes: list[ClashResult]) -> Card:
-        return prompt_card_sequential(turn, clash_index, hand, opponent_hand, previous_clashes, pn)
+    def get_player_stance(turn: int, clash_index: int, ctx: ClashContext) -> Stance:
+        return prompt_stance(ctx, pn)
 
-    def get_player_qte(turn: int) -> float:
+    def get_player_qte(turn: int):
         return prompt_qte(turn, pn)
 
-    def get_opponent_card(
-        turn: int, clash_index: int, hand: list[Card],
-        player_hand: list[Card], phase_index: int,
-        personality: PersonalityConfig | None,
-        previous_clashes: list[ClashResult],
-        player_stance_history: list[Stance],
-    ) -> Card:
-        return pick_ai_card(
-            hand, player_hand, phase_index, personality,
-            clash_index, previous_clashes, turn,
-            player_stance_history, rng,
-        )
-
-    def get_opponent_qte(turn: int) -> float:
-        return get_ai_qte(ENCOUNTER_RATIOS[cfg.encounter_type],
-                          rng, cfg.deterministic)
-
-    def _on_deal(turn: int, p_hand: list, o_hand: list) -> None:
-        print(f"\n  \u2694 Turn {turn} \u2694")
-        print(f"  {pn} hand: {_hand_label(p_hand)}")
-        print(f"  {on} hand: {_hand_label(o_hand)}")
+    def _on_turn_start(turn: int, corner: str, p_heat, o_heat) -> None:
+        print(f"\n  \u2694 Turn {turn} \u2014 corner {corner} \u2694")
 
     def _on_clash_resolved(turn: int, clash_index: int,
-                           p_card: Card, o_card: Card, outcome: StanceOutcome) -> None:
+                           p_s: Stance, o_s: Stance, outcome: StanceOutcome) -> None:
         icon = OUTCOME_ICONS[outcome]
-        print(f"  \u2192 {_card_label(p_card)} vs {_card_label(o_card)} \u2192 {icon}")
+        print(f"  \u2192 {_stance_label(p_s)} vs {_stance_label(o_s)} \u2192 {icon}")
 
     def _on_clashes_complete(turn: int, clash_history: list[ClashResult]) -> None:
         outcome_strs = []
         for cr in clash_history:
             icon = OUTCOME_ICONS[cr.outcome]
-            outcome_strs.append(f"{_card_label(cr.player_card)} vs {_card_label(cr.opponent_card)} {icon}")
+            outcome_strs.append(f"{_stance_label(cr.player_stance)} vs {_stance_label(cr.opponent_stance)} {icon}")
         print(f"  Clashes: {' | '.join(outcome_strs)}")
 
     def _on_turn(turn: int, t: TurnResult, cum_p: float, cum_o: float) -> None:
@@ -516,10 +467,9 @@ def run_cli() -> None:
 
     result = run_match(
         cfg,
-        get_player_card, get_player_qte,
-        get_opponent_card, get_opponent_qte,
+        get_player_stance, get_player_qte,
         trace,
-        on_deal=_on_deal,
+        on_turn_start=_on_turn_start,
         on_clash_resolved=_on_clash_resolved,
         on_turn_complete=_on_turn,
         on_lap_complete=_on_lap_complete,

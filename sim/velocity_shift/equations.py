@@ -26,15 +26,14 @@ RUBBER_BAND_FRACTION = 0.15  # full rubber-band at a DP gap of this × average m
 
 # ── Simulated-player play quality (opt-in, MatchConfig.player_quality) ──
 # q in [0, 1] = the fraction of the race the player "plays right".
-#   * Card read: each clash, with probability q the player reads the
-#     opponent's real pick and plays its counter (else a tie card, else
-#     any card); otherwise the player picks a random card.
-#   * QTE: each turn, with probability q the player hits PERFECT_QTE;
-#     otherwise the score is uniform in [PLAYER_QTE_MIN, PLAYER_QTE_MAX].
-# q = 0 reproduces the old random player exactly (random card, uniform QTE).
-# The two parts are independent skills: MatchConfig.player_read (q_read,
-# card read) and MatchConfig.player_timing (q_time, QTE). player_quality=q
-# is shorthand for q_read = q_time = q.
+#   * Read: each corner, with probability q_read the player reads the boss's
+#     line and plays the best selectable stance against it (heat-aware); on a
+#     misread each clash ties with prob q_read, else loses (simulation.py).
+#   * QTE: q_time is the expected hit quality at the default zone, evaluated
+#     at the race's visible zone (raw_qte_score). PLAYER_QTE_* / PERFECT_QTE
+#     are the legacy 1–10 scale (HP/DP only).
+#   * Pacing: MatchConfig.player_pacing (default q_read), see PACE_*.
+# player_quality=q is shorthand for q_read = q_time = q.
 PLAYER_QTE_MIN = 1.0
 PLAYER_QTE_MAX = 10.0
 PERFECT_QTE = 10.0
@@ -125,7 +124,9 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
 # 2026-11-11 (slots-v2, Austin approved): r=1.00 knot 0.68 -> 0.67, so a +75% window mod (1.15 x w0 cap) no longer
 # clears the R2/R3 opener boss walls without grinding (avg 49.07 mid); balanced grind 141/153/121 unchanged.
 KNOT_WINDOW_105 = ((0.80, 0.41), (0.85, 0.41), (0.90, 0.41), (0.95, 0.43), (1.00, 0.67), (1.05, 1.00))
-KAPPA_BY_LENGTH = {10: 1.55, 20: 1.35, 30: 1.20}   # stat-gap leverage V = r**kappa, by race length (turns)
+KAPPA_BY_LENGTH = {10: 1.55, 20: 1.35, 30: 1.20}   # final-v1 base stat-gap leverage, by race length (turns)
+# Heat system (G2, 2026-11-13): the live kappa is KAPPA_BY_LENGTH x KAPPA_HEAT_MULT (see kappa_for_length).
+KAPPA_HEAT_MULT = {10: 1.75, 20: 2.25, 30: 2.25}
 RACE_LENGTHS = (10, 20, 30)
 SIM_SEEDS = (20261113, 20261114, 20261115)
 OPPONENT_QTE = 1.0             # story-rung opponents time perfectly (uniform across rungs)
@@ -178,23 +179,21 @@ PHASE_QTE_UNPLAYED = 0.0
 # both can give different bits. Godot mirrors with
 #   floor(x * 1000.0 + 0.5) / 1000.0
 QTE_SCORE_DECIMALS = 3
-# Phi/tau clash payoff (final-v1 / equations_v1 K, unchanged). Per clash:
-#   g = V * Phi(outcome, q_eff) * M,  V = r**kappa,
-#   q_eff = clip(raw_qte * (1 + ETA * (han_share - 1/3)), 0, 1)
-# No knot_window factor. The player's raw_qte already reflects the visible
-# zone at the race's fixed r (and any window-mod bonus). HAN still scales
-# both sides — same as equations_v2.clash_progress. The opponent uses
-# OPPONENT_QTE with HAN (window was never applied to them).
+# Phi/tau clash payoff (final-v1 / equations_v1 K). Per clash (heat system, 2026-11-13):
+#   g = V * Phi(outcome, q) * stat_payoff_mult(share of the stance played) * heat_mult,
+#   V = r**kappa (kappa_for_length), heat_mult = overrun_mult(x) or LIMP_MULT (1.0 inside capacity).
+# No knot_window factor and no HAN timing modifier: the player's raw_qte already
+# reflects the visible zone at the race's fixed r (and any window-mod bonus).
+# The opponent uses OPPONENT_QTE.
 W0 = 0.10                      # win payoff at q=0
 T_MAX = 0.75                   # tie payoff at q=1, as a fraction of a perfect win
 L_MAX = 0.25                   # loss payoff at q=1
 TAU_BETA = 0.10                # share of timing value held back as the top bonus
 TAU_P_TOP = 8.0                # sharpness of the top bonus (only bites near q=1)
 TAU_GAMMA = 0.0                # 0 = concave body 1-(1-q)**2; >0 = q**GAMMA
-MU = 0.5                       # POW share raises win payoff; EN share raises tie/loss payoff
-ETA = 0.5                      # HAN share raises effective timing (same value as HAN_QTE_WEIGHT)
-DECK_ALPHA = 0.85              # deck-weight mix: ALPHA * stat share + (1-ALPHA)/3
-HAND_SIZE = 6                  # cards drawn per turn; 3 are played (Entry/Apex/Exit)
+# MU / ETA (POW/EN/HAN share multipliers) and the card draw (DECK_ALPHA, HAND_SIZE,
+# deck_weights, assign_hand) were removed 2026-11-13: the heat/load resource
+# system below replaces them (resources-v4b G2, Austin approved).
 LINE_ADHERENCE = 0.65          # boss follows its district line with prob a; 1-a = bluff/deviation
 LINE_ALT_WEIGHTS = {"alt1": 0.6, "alt2": 0.4}
 # Line set C: per district, per corner type -> [main, alt1, alt2] lines, each "Entry Apex Exit"
@@ -210,12 +209,99 @@ LINE_SET_C = {
     "street": {"HP": ["EEP", "EPH", "EEH"], "CR": ["EHE", "EEP", "EHP"], "DR": ["EEH", "EPE", "EEE"], "IR": ["HHP", "HEH", "HHH"],
                "N90": ["HHP", "HEH", "HHH"], "CH": ["EPP", "EHH", "EPH"], "ES": ["PHP", "PEH", "PHH"], "SW": ["EEE", "EPP", "EEP"]},
 }
+
+# ══════════════════════════════════════════════════════════════════════
+# Heat / load resource system (resources-v4b candidate G2_slant_m10;
+# Austin approved 2026-11-13: "I'm happy with this new resource system").
+# Source study: unapproved/barry/resources-v4/retune/ (RESULTS.md, resources_v4b.py).
+# Replaces the card draw. Each turn the player picks any stance for each of
+# Entry / Apex / Exit, subject to three gauges that all recover during the race:
+#   POW = engine heat, HAN = suspension load, EN = brake/tire heat.
+# Gauge arrays everywhere are in HEAT_ORDER (POW, HAN, EN), same as _STANCE_INDEX.
+# Rules (heat.py implements them; equations below are the pure parts):
+#   * Playing stance s adds  cost = HEAT_BASE_COST x CORNER_HEAT_COST[corner][s] x wear_s
+#     x (1 + HEAT_REPEAT_SURCHARGE x (uses of s earlier this turn)) to gauge s.
+#   * A stance is selectable while its gauge is not locked. Playing it may push the load
+#     past capacity (overrun): that clash's payoff x overrun_mult(x), x = (load - cap) / cap.
+#   * A gauge locks when load >= cap (also mid-turn) and unlocks only once load < release x cap.
+#   * End of turn: load += CORNER_HEAT_PASSIVE x wear (can lock), then load = max(0, load - recovery),
+#     then release check. Load carries over (no cap on load). The car starts cold (load 0).
+#   * All three locked = limp: the side plays its least-loaded gauge (load / cap) at LIMP_MULT.
+#   * Capacity / recovery per turn = HEAT_CAP_TURNS / HEAT_RECOVERY x the cross-track average
+#     per-turn load (heat.avg_heat_demand()) x heat_share_mult(shares) x r**HEAT_R_EXP.
+#   * wear_s: per-track multiplier (heat.track_wear) so every official track asks the same total
+#     load (TRACK_NORMALIZE) and each track's mix is pushed HEAT_DEMAND_SLANT x further from even.
+#   * Clash payoff x stat_payoff_mult(share of the stance played) (STAT_M_W), all three stats.
+# Bosses keep the v3 heat rules (BOSS_HEAT_*): how bosses manage heat is an open story question
+# (Desmond / Nathaniel); until then they play their district line and swap a locked stance for
+# their least-loaded unlocked one.
+HEAT_ORDER = ("POW", "HAN", "EN")
+# Per-corner multiplier on what each stance costs (POW/engine, HAN/suspension, EN/brakes). PLACEHOLDER (resources-v1)
+CORNER_HEAT_COST = {
+    "HP":  (0.8, 1.2, 1.4),   # hairpin: heavy braking, big weight transfer
+    "CR":  (1.0, 1.2, 0.8),   # constant radius: sustained load
+    "DR":  (0.8, 1.1, 1.3),   # decreasing radius: trail braking
+    "IR":  (1.3, 0.9, 0.7),   # increasing radius: on the throttle early
+    "N90": (1.0, 0.8, 1.4),   # 90-degree street corner: hard stop
+    "CH":  (0.9, 1.3, 1.1),   # chicane: quick direction changes
+    "ES":  (0.8, 1.4, 0.9),   # esses: suspension working constantly
+    "SW":  (1.4, 0.9, 0.6),   # sweeper: flat out
+}
+# Passive load the corner adds each turn whatever is played (POW, HAN, EN). PLACEHOLDER (resources-v1)
+CORNER_HEAT_PASSIVE = {
+    "HP":  (0.0, 0.3, 0.3),
+    "CR":  (0.1, 0.2, 0.0),
+    "DR":  (0.0, 0.2, 0.3),
+    "IR":  (0.3, 0.1, 0.0),
+    "N90": (0.1, 0.0, 0.4),
+    "CH":  (0.0, 0.3, 0.2),
+    "ES":  (0.0, 0.4, 0.1),
+    "SW":  (0.4, 0.1, 0.0),
+}
+HEAT_BASE_COST = 1.0           # cost of one stance at a 1.0 corner
+HEAT_REPEAT_SURCHARGE = 1.0    # k-th use of the same stance in one turn costs 1 + this x (k-1)
+HEAT_CAP_TURNS = 3.0           # even build's capacity = this x average per-turn load
+HEAT_RECOVERY = 1.0            # even build's recovery per turn = this x average per-turn load
+HEAT_SHARE_EXP = 1.5           # capacity and recovery x 3 s**e / sum(s**e) (sums to 3: specialising adds no total)
+HEAT_R_EXP = 1.0               # capacity and recovery x r**HEAT_R_EXP (stat total vs the boss)
+HEAT_RELEASE = 0.3             # a locked gauge unlocks once load < HEAT_RELEASE x capacity
+OVERRUN_SLOPE = 2.0            # overrun payoff = max(OVERRUN_FLOOR, 1 - OVERRUN_SLOPE x x)
+OVERRUN_FLOOR = 0.4
+LIMP_MULT = 0.4                # payoff of a clash played with all three gauges locked
+HEAT_DEMAND_SLANT = 2.0        # 1 = the raw mix that falls out of the district lines; 2 = twice as far from even
+HEAT_REF_Q = 0.6               # loads are calibrated on a player who reads 60 % of corners
+STAT_M_W = 1.0                 # clash payoff x (1 + STAT_M_W x (share of the stance played - 1/3))
+# Boss gauges: v3 heat rules (release 0.8), even split, r = 1. PLACEHOLDER pending Desmond / Nathaniel.
+BOSS_HEAT_CAP_TURNS = 3.0
+BOSS_HEAT_RECOVERY = 1.0
+BOSS_HEAT_RELEASE = 0.8
+BOSS_HEAT_LOCK_ON_PASSIVE = False   # v3/G2 boss: a gauge locks only when the boss plays into it, not from passive load
+# Boss line styles (sim only, PLACEHOLDER; story question for Desmond / Nathaniel). "balanced" is the live
+# 65/21/14 split. "hot_early" / "conserver" blend BOSS_STYLE_BLEND of a cost ranking into it: hot_early runs
+# the dearest line first until BOSS_HOT_SWITCH of the race, then the cheapest; conserver the reverse at BOSS_CONS_SWITCH.
+BOSS_STYLES = ("balanced", "hot_early", "conserver")
+BOSS_STYLE_BLEND = 0.3
+BOSS_HOT_SWITCH = 0.5
+BOSS_CONS_SWITCH = 2 / 3
+# Simulated-player pacing (sim AI only, not a game rule). "reserve" rule: price a stance when it would push its
+# gauge past a soft ceiling PACE_RES_T x cap, lowered by PACE_RES_LOOK x the expected shortfall of the next
+# PACE_LOOKAHEAD corners; price = PACE_RES_K x (value of a win over a tie) x how far past the ceiling.
+# An average player paces on AVERAGE_PLAY_Q of turns and plays greedy otherwise (MatchConfig.player_pacing).
+PACE_RES_T = 0.7
+PACE_RES_K = 2.0
+PACE_RES_LOOK = 0.5
+PACE_LOOKAHEAD = 3
+
 BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total
 BUILD_STAT_MAX_SHARE = 0.50
 
 # ── Stat caps, reference rule, mods ──
 SP_CAP_FRACTION = 0.80         # skill points cap at 80 % of the reference budget (= level cap)
-MOD_CAP_FRACTION = 1.05        # SP + mods cap at 105 % of the reference budget before the finale
+MOD_CAP_FRACTION = 1.07        # SP + mods cap at 107 % of the reference budget before the finale (was 1.05; G2 heat system, Austin 2026-11-13)
+# STALE until the ladder is refit for the heat system: progression.py (ladder, grind, XP, MOD_TIER_LEVEL_FLOOR) still runs
+# on the card-draw win-rate oracle (config/winrate_n4000.json), which was built at a 1.05 cap. It keeps that frozen cap here
+# so its report stays self-consistent; it is NOT the game's cap. Refit pending (Barry).
+PROGRESSION_MOD_CAP_FRACTION = 1.05
 MOD_SHARE_OF_REF = 0.25        # mods available at a rung = 0.25 × reference (bought only, never earned)
 # Aero parts (design/07 §6.3; Austin approved 2026-11-11, slots-v2): a stat part with a fixed base plus a free pool
 # assigned to POW/EN/HAN at the wind tunnel. It goes in any slot, at most one is equipped, and its whole stat total
@@ -470,14 +556,14 @@ def aero_free_pool_max(part_stat_total: float) -> float:
 
 
 def kappa_for_length(race_length: int) -> float:
-    """Stat-gap leverage for a race of `race_length` turns.
+    """Stat-gap leverage for a race of `race_length` turns: KAPPA_BY_LENGTH x KAPPA_HEAT_MULT.
 
     Official table is 10/20/30 only. Any other length uses the closest key
     (no interpolated kappa — we do not invent values).
     """
-    if race_length in KAPPA_BY_LENGTH:
-        return KAPPA_BY_LENGTH[race_length]
-    return KAPPA_BY_LENGTH[min(KAPPA_BY_LENGTH, key=lambda L: abs(L - race_length))]
+    if race_length not in KAPPA_BY_LENGTH:
+        race_length = min(KAPPA_BY_LENGTH, key=lambda L: abs(L - race_length))
+    return KAPPA_BY_LENGTH[race_length] * KAPPA_HEAT_MULT[race_length]
 
 
 def timing_value(q: float) -> float:
@@ -505,43 +591,77 @@ def stat_shares(pow_stat: float, en_stat: float, han_stat: float) -> tuple[float
     return tot, pow_stat / tot, en_stat / tot, han_stat / tot
 
 
+def stat_payoff_mult(share_played: float) -> float:
+    """Stat weight on a clash: 1 + STAT_M_W x (share of the stance played - 1/3). Same for all three stats."""
+    return 1.0 + STAT_M_W * (share_played - 1 / 3)
+
+
+def stance_share(stance: Stance, pow_stat: float, en_stat: float, han_stat: float) -> float:
+    """Build share of the stat that matches `stance`."""
+    tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
+    return pow_s if stance == Stance.POW else en_s if stance == Stance.EN else han_s
+
+
 def clash_progress(
     outcome: StanceOutcome,
+    stance: Stance,
     q_time: float,
     pow_stat: float,
     en_stat: float,
     han_stat: float,
     boss_total: float,
     kappa: float,
+    heat_mult: float = 1.0,
 ) -> float:
-    """g = V * Phi(o, q_eff) * M.
+    """g = V * Phi(o, q) * stat_payoff_mult(share of `stance`) * heat_mult.
 
-    q_eff = clip(q_time * (1 + ETA * (han_share - 1/3)), 0, 1).
-    No knot_window factor: the player's q_time is already the raw score
-    at the visible zone. HAN still applies to both sides.
+    `stance` is the stance this side played. V = (stat total / boss_total)**kappa.
+    q is clipped to [0, 1]; there is no HAN timing modifier and no knot_window
+    factor (the player's q_time is already the raw score at the visible zone).
+    `heat_mult` is overrun_mult(x) for an overrun clash, LIMP_MULT when all three
+    gauges are locked, else 1.0.
     """
-    tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
+    tot = pow_stat + en_stat + han_stat
     r = tot / boss_total if boss_total else 1.0
     V = r ** kappa
-    qe = q_time * (1.0 + ETA * (han_s - 1 / 3))
-    qe = 0.0 if qe < 0.0 else 1.0 if qe > 1.0 else qe
-    if outcome == StanceOutcome.WIN:
-        M = 1.0 + MU * (pow_s - 1 / 3)
-    else:
-        M = 1.0 + MU * (en_s - 1 / 3)
-    return V * clash_payoff(outcome, qe) * M
+    q = 0.0 if q_time < 0.0 else 1.0 if q_time > 1.0 else q_time
+    m = stat_payoff_mult(stance_share(stance, pow_stat, en_stat, han_stat))
+    return V * clash_payoff(outcome, q) * m * heat_mult
 
 
-def deck_weights(pow_stat: float, en_stat: float, han_stat: float) -> tuple[float, float, float]:
-    """Multinomial weights for the (POW, HAN, EN) stances."""
-    tot, pow_s, en_s, han_s = stat_shares(pow_stat, en_stat, han_stat)
-    raw = (
-        pow_s * DECK_ALPHA + (1 - DECK_ALPHA) / 3,
-        han_s * DECK_ALPHA + (1 - DECK_ALPHA) / 3,
-        en_s * DECK_ALPHA + (1 - DECK_ALPHA) / 3,
-    )
-    s = sum(raw)
-    return (raw[0] / s, raw[1] / s, raw[2] / s)
+def heat_share_mult(shares: tuple[float, float, float]) -> tuple[float, float, float]:
+    """Capacity / recovery multipliers (HEAT_ORDER) for build shares (POW, HAN, EN): 3 s**e / sum(s**e)."""
+    se = [max(0.0, x) ** HEAT_SHARE_EXP for x in shares]
+    tot = sum(se)
+    if tot <= 0:
+        return (1.0, 1.0, 1.0)
+    return tuple(3.0 * x / tot for x in se)
+
+
+def heat_capacity(
+    shares: tuple[float, float, float],
+    r: float,
+    avg_demand: tuple[float, float, float],
+    cap_turns: float = HEAT_CAP_TURNS,
+    recovery: float = HEAT_RECOVERY,
+) -> tuple[tuple[float, float, float], tuple[float, float, float]]:
+    """(capacity, recovery per turn), each in HEAT_ORDER.
+
+    cap_s = cap_turns x avg_demand_s x heat_share_mult_s x r**HEAT_R_EXP; recovery the same with `recovery`.
+    `avg_demand` is heat.avg_heat_demand() (the cross-track average per-turn load).
+    """
+    k = heat_share_mult(shares)
+    rr = r ** HEAT_R_EXP
+    cap = tuple(cap_turns * a * m * rr for a, m in zip(avg_demand, k))
+    rec = tuple(recovery * a * m * rr for a, m in zip(avg_demand, k))
+    return cap, rec
+
+
+def overrun_mult(x: float) -> float:
+    """Payoff multiplier for overrun fraction x = (load - cap) / cap after the stance is added; 1.0 if x <= 0."""
+    if x <= 0.0:
+        return 1.0
+    return max(OVERRUN_FLOOR, 1.0 - OVERRUN_SLOPE * x)
 
 
 def counter_stance(s: Stance) -> Stance:
@@ -562,40 +682,9 @@ def loser_to_stance(s: Stance) -> Stance:
     return Stance.POW
 
 
-# Stance index order used by assign_hand / deck_weights: POW, HAN, EN.
+# Stance index order used by the heat gauges (HEAT_ORDER): POW, HAN, EN.
 _STANCE_INDEX = {Stance.POW: 0, Stance.HAN: 1, Stance.EN: 2}
 _INDEX_STANCE = (Stance.POW, Stance.HAN, Stance.EN)
-
-
-def assign_hand(
-    hand_counts: list[int],
-    wanted: list[Stance],
-    fallback: list[Stance | None],
-    rng,
-) -> list[Stance]:
-    """Greedy assign from a 6-card hand: lock wanted stances, then fallbacks, then any leftover.
-
-    Same rule as final-v1 / equations_v1._assign. `hand_counts` is [POW, HAN, EN].
-    """
-    c = list(hand_counts)
-    out = [-1, -1, -1]
-    want_i = [_STANCE_INDEX[s] for s in wanted]
-    fb_i = [None if s is None else _STANCE_INDEX[s] for s in fallback]
-    for i in range(3):
-        if c[want_i[i]] > 0:
-            out[i] = want_i[i]
-            c[want_i[i]] -= 1
-    for i in range(3):
-        if out[i] < 0 and fb_i[i] is not None and c[fb_i[i]] > 0:
-            out[i] = fb_i[i]
-            c[fb_i[i]] -= 1
-    for i in range(3):
-        if out[i] < 0:
-            left = [s for s in range(3) for _ in range(c[s])]
-            s = left[rng.randrange(len(left))]
-            out[i] = s
-            c[s] -= 1
-    return [_INDEX_STANCE[i] for i in out]
 
 
 def sp_per_level(level: int) -> float:

@@ -8,11 +8,48 @@
 
 ---
 
+## 2026-11-13 — Gordon [godot]: Second merge of proto-build into master, now with Barry's G2 resource system
+
+- **Why:** Austin, 2026-11-13: "Let's hold off until all pending work is committed to Proto-build. Then we merge it completely." Barry pushed G2 and his resource sims at 9a17baa with CI green. Arthur and Nathaniel had nothing pending.
+- **What:** merged `proto-build` (9a17baa) into `master`. `unapproved/gordon/two-corner/` stays off `master` per Austin's first instruction, and it hasn't changed on `proto-build` since the first merge. `game-build` fast-forwards to this commit.
+
 ## 2026-11-13 — Gordon [godot]: Merge proto-build into main (master), without the two-corner test
 
 - **Why:** Austin, 2026-11-13: "let's merge what we have into main (include unapproved files, but not the two corner playtest). Then, create a new branch from this new main, and build the game in the main game folder."
 - **What:** `master` fast-forwards to `proto-build` (6ded0ea) plus this commit, which removes `unapproved/gordon/two-corner/` (the two-corner Godot test) from `master`. All other `unapproved/` files are kept. `proto-build` still has the two-corner folder, and git history keeps it.
 - **Known effects on master:** `.github/workflows/ci.yml` only runs on `proto-build`, and its parity and headless-race steps use `unapproved/gordon/two-corner`. Arthur's `line_preview/run.sh`, `resource_meters` and `districts` previews link two-corner scripts, so they won't run from `master` until the game is rebuilt in the main folder.
+
+## 2026-11-13 — Barry [barry]: heat/load resource system (resources-v4b G2) is live in sim/; card draw deleted
+
+- **Why:** Austin, 2026-11-13, on the v4b G2 write-up: "What version is this? I'm happy with this." and "I'm happy with this new resource system." G2_slant_m10 was the candidate that hit every target (study: `unapproved/barry/resources-v4/RESULTS.md`). `sim/` is the source of truth, so the approved model has to be the live engine before the game build ports it.
+- **What (`sim/`):**
+  - `equations.py`: new "Heat / load resource system" block with G2's values (gauges POW engine / HAN suspension / EN brakes; corner cost and passive tables; repeat surcharge, capacity, recovery, share curve, r scaling, release, overrun slope and floor, limp, demand slant, `STAT_M_W`, boss v3 heat rules); `KAPPA_HEAT_MULT` (kappa = base × mult in `kappa_for_length`); `MOD_CAP_FRACTION` → 1.07; `clash_progress` now takes the stance played and a heat multiplier, with `stat_payoff_mult` replacing `MU` and no HAN `ETA` timing modifier; `heat_capacity`, `heat_share_mult`, `overrun_mult`. Deleted `DECK_ALPHA`, `HAND_SIZE`, `deck_weights`, `assign_hand`, `MU`, `ETA`.
+  - New `heat.py`: load calibration (`corner_demand`, `track_wear`, `avg_heat_demand`), `HeatGauges` (cost, overrun, lock, release, limp), `boss_stance`, sim-only boss line styles.
+  - `match.py` rewritten around the gauges: the player callback picks a stance from the unlocked gauges each clash; the boss plays its line under its heat rule. `combat.py` / `models.py`: stances instead of cards, per-clash heat multipliers, gauge state on `TurnResult`, `ClashContext`. Deleted `deck.py`, the `Card` class, `draw_weighted_hand`, `plan_player_cards`, the legacy HP/DP match path (`legacy_hp_dp`) and the personality card AI (`pick_ai_card`). `resolve_turn_legacy` stays as a pure function.
+  - `simulation.py`: simulated player = G2's read model + "reserve" pacing (pacing share defaults to the read skill); `simulate_win_rate` takes splits, pacing and boss style. `cli.py`: stance prompt shows gauges, locks and overrun payoff.
+  - `scripts/balance_gauntlet.py` now checks the G2 targets on the live engine using `config/heat_g2_tuned.json` (G2's per-cell tuned splits) and fails CI on a miss. Removed `scripts/parity_sweep.py` (legacy HP/DP + card AI). Tests: new `tests/test_heat.py`; card-based tests rewritten; `test_playable_oracle.py` removed (it compared against the card-draw oracle).
+- **Spot check (live vs G2 full runs, G2's own tuned splits, 300 races per cell; `unapproved/barry/resources-v4/retune/live_spotcheck.json`):** 60/60 at the cap 68.6 vs 68.4 (20 / 30 turns 69.3 / 64.4 vs 69.4 / 63.9); perfect at 80 % on 20 / 30 turns 14.7 / 21.2 vs 14.9 / 20.9; perfect at 100 % 100 vs 100; 80/80 98.0 vs 98.0. Matching it needed one boss detail from the study: boss gauges don't lock from passive load (`BOSS_HEAT_LOCK_ON_PASSIVE`).
+- **Stale on purpose:** `progression.py` (ladder, grind, XP, mod tier floors) still runs on the card-draw oracle `config/winrate_n4000.json`, at a frozen `PROGRESSION_MOD_CAP_FRACTION` 1.05 so its report stays self-consistent. It needs a refit for the heat system. `test_mod_floor`'s slots-v2 oracle check is skipped for the same reason.
+- **Docs:** `design/01` (outside the canon block), `02` (new heat/load section by constant name; old deck/energy rows marked superseded), `03` / `04` / `08` marked history, one `07` row, `godot-build-guide.md` constants table + Deck section banner (port left to Gordon), `AGENTS.md` sim map.
+- **Open, needs Austin / Desmond / Nathaniel:** feel (an average player has a lock in about 2 of 3 corners); how bosses manage heat (bosses still use the v3 rules); the district tuned splits (Street engine-heavy, Touge brake-heavy, opposite to each district's load mix) before they become canon; the targets assume a retune per track, length and boss style (one fixed split per district leaves Touge at about 52 / 40 % at 20 / 30 turns).
+- **Not changed:** `design/art/`, `story/`, the Godot project, the canon block in `design/01`.
+- **Follow-up fix:** a stray `design/notes/slots-v2/__pycache__/b3_check.cpython-313.pyc` slipped into that commit; removed from git in the next commit.
+
+---
+
+## 2026-11-13 — Barry [barry]: commit resources-v1 to v4 (incl. v4b retune) heat/load sims to proto-build (unapproved drafts)
+
+- **Why:** Austin, 2026-11-13: commit all pending work to `proto-build` before the full merge to `main` and the new game-build branch. Then, on the v4b G2 write-up: "What version is this? I'm happy with this." (G2 goes live in `sim/` in the next commit; these folders stay as the record of how it was found.)
+- **What (`unapproved/barry/resources-v1` … `resources-v4/retune/`):** model, screen, run and analysis scripts, analysis JSON/tables and `RESULTS.md` for each version. Committed from a clean worktree so the shared clone's stale index was not swept in.
+  - **v1 (2026-11-12):** raw first pass. Card draw removed; fuel / brakes / suspension tanks sized by stat share; soft penalty vs hard block. Hard block gives a real retune meta (≈19.5 pp over even), but tuned cars overshoot the targets.
+  - **v2:** hard block refit with per-lap tanks and refills. Combat targets reachable for the tuned car, but "tuned" and "rarely runs dry" conflict; pacing worth 0 pp.
+  - **v3:** Austin's rules: all three bars regenerate, overrun allowed (pays less), full bar locks with hysteresis. A_mid / B_retune hit the targets for the tuned car; retune gap +9.6 / +13.5 pp; per-length κ refit needed; Street weak retune signal.
+  - **v4:** heat stakes. Release 0.3, repeat surcharge 1.0, cap 1.10, κ per race length, look-ahead pacing players. F2 hits perfect-at-80% at 20/30 turns; pacing 15.5 pp vs reads 22.6 pp, but skills substitute; retune gaps about half of v3's. Also fixes the v3 q8080 per-district NaN bug.
+  - **v4b retune pass:** STAT_M_W (stat share of the played stance scales its payoff), DEMAND_SLANT 2, a capacity-calibration cache fix. **G2_slant_m10 hits every target:** perfect at 80% 14.9 / 20.9 (20/30 turns), perfect at 100% 100, 60/60 at cap 1.07 68.4, tuned − even 13.5, tuned − wrong 26.7, Street 13.5 / 28.1, pacing ÷ reads 0.53. Cost: locks in ~67% of corners, read counter locked 30%.
+- **Not committed:** `__pycache__/` and the raw `.npz` result files except `retune/results_v4b_G2_slant_m10.npz` (all together ≈88 MB). Each `RESULTS.md` notes which are missing and how to rebuild them (fixed seeds).
+- **Not changed:** `sim/`, `design/`, the Godot project, anyone else's files.
+
+---
 
 ## 2026-11-13 — Arthur [art]: Head-on look-back, the mirror is a rear view again
 

@@ -88,9 +88,9 @@ from velocity_shift.equations import (
     mean_phase_qte, phase_raw_qte, PHASE_QTE_UNPLAYED,
     round_qte_score, QTE_SCORE_DECIMALS,
     QTE_ZONE_WIDTH_105, AVERAGE_PLAY_Q,
-    W0, T_MAX, L_MAX, KAPPA_BY_LENGTH,
+    W0, T_MAX, L_MAX, KAPPA_BY_LENGTH, KAPPA_HEAT_MULT, STAT_M_W,
 )
-from velocity_shift.models import StanceOutcome
+from velocity_shift.models import StanceOutcome, Stance
 
 
 def test_timing_value_endpoints():
@@ -109,26 +109,33 @@ def test_clash_payoff_at_perfect_timing():
 
 
 def test_clash_progress_balanced_at_parity():
-    """Balanced stats, r=1, q=1, window off (or r=1.05 with window on): V=1, M=1, g=Phi."""
+    """Balanced stats, r=1, q=1: V=1, stat weight 1, heat mult 1, g=Phi."""
     kap = kappa_for_length(20)
     for outcome, expected in (
         (StanceOutcome.WIN, 1.0),
         (StanceOutcome.DRAW, T_MAX),
         (StanceOutcome.LOSS, L_MAX),
     ):
-        g = clash_progress(outcome, 1.0, 100, 100, 100, 300, kap)
+        g = clash_progress(outcome, Stance.HAN, 1.0, 100, 100, 100, 300, kap)
         assert abs(g - expected) < 1e-12, (outcome, g, expected)
         # r=1.05; 105+105+105 vs 300. No knot_window factor on q_time.
-        g2 = clash_progress(outcome, 1.0, 105, 105, 105, 300, kap)
+        g2 = clash_progress(outcome, Stance.POW, 1.0, 105, 105, 105, 300, kap)
         V = (315 / 300) ** kap
         assert abs(g2 - V * expected) < 1e-12, (outcome, g2, V * expected)
 
 
+def test_clash_progress_stat_weight_and_heat_mult():
+    """Payoff x (1 + STAT_M_W x (share of the stance played - 1/3)) x heat mult, all three stats."""
+    kap = kappa_for_length(10)
+    for stance, share in ((Stance.POW, 0.5), (Stance.EN, 0.25), (Stance.HAN, 0.25)):
+        g = clash_progress(StanceOutcome.WIN, stance, 1.0, 150, 75, 75, 300, kap, 0.7)
+        assert abs(g - (1 + STAT_M_W * (share - 1 / 3)) * 0.7) < 1e-12, (stance, g)
+
+
 def test_kappa_for_length_official_and_nearest():
-    assert kappa_for_length(10) == KAPPA_BY_LENGTH[10]
-    assert kappa_for_length(20) == KAPPA_BY_LENGTH[20]
-    assert kappa_for_length(30) == KAPPA_BY_LENGTH[30]
-    assert kappa_for_length(11) == KAPPA_BY_LENGTH[10]
+    for L in (10, 20, 30):
+        assert kappa_for_length(L) == KAPPA_BY_LENGTH[L] * KAPPA_HEAT_MULT[L]
+    assert kappa_for_length(11) == kappa_for_length(10)
     # Legacy hidden window (oracle / zone-table generator only).
     assert knot_window(1.05) == 1.0
     assert knot_window(0.80) == 0.41

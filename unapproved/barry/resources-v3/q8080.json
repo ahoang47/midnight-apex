@@ -1,0 +1,41 @@
+{
+ "A_mid": {
+  "tuned_all": 99.3,
+  "even_all": 99.0,
+  "tuned_10": 98.2,
+  "even_10": 97.7,
+  "tuned_20": 99.8,
+  "even_20": 99.5,
+  "tuned_30": 100.0,
+  "even_30": 99.8,
+  "tuned_street": NaN,
+  "tuned_touge": NaN,
+  "tuned_wangan": NaN
+ },
+ "B_retune": {
+  "tuned_all": 99.3,
+  "even_all": 98.7,
+  "tuned_10": 98.1,
+  "even_10": 97.2,
+  "tuned_20": 99.8,
+  "even_20": 99.3,
+  "tuned_30": 100.0,
+  "even_30": 99.7,
+  "tuned_street": NaN,
+  "tuned_touge": NaN,
+  "tuned_wangan": NaN
+ },
+ "C_light": {
+  "tuned_all": 98.8,
+  "even_all": 98.6,
+  "tuned_10": 97.2,
+  "even_10": 97.0,
+  "tuned_20": 99.3,
+  "even_20": 99.2,
+  "tuned_30": 99.8,
+  "even_30": 99.7,
+  "tuned_street": NaN,
+  "tuned_touge": NaN,
+  "tuned_wangan": NaN
+ }
+}
