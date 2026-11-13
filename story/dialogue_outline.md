@@ -150,7 +150,7 @@ The Wangan crew, raced once start to finish, covering Wangan's incident, consequ
 
 ### Wangan crew
 **Crew pre/post-race lines**
-- *Incident (professionals; the PC arrives asking about the police night)*
+- *Incident (professionals; the PC arrives from Street's clips and theories)*
 - Kids, pre (draft): "New on the highway? Keep it under control."
 - Kids, post (draft): "The promoter will want your name by tomorrow."
 - Mature members, pre (draft): "You're asking about the old days. Win first, then we'll talk."

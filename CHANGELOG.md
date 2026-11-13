@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-11-13 — Nathaniel [story]: cleanup after the round restructure 10f9499
+
+- **Why:** cleanup after the round restructure 10f9499: stale cites and leftover rematch/reputation-gate references. Draft fills (B4 and the C items) wait on Austin.
+- **What:**
+  - `story/canon.md`: Open Question 16 now cites `plot.md` §4 (the drinks scene is at the end of Round 1). Open Question 6 places Jesse's "Had one. Left." at the end of Round 1, around the speakeasy. Open Question 12 and canon 24 now include `plot.md` §4 for the Jesse/Reiko intro.
+  - `story/dialogue_outline.md`: the Wangan incident header no longer assumes the PC arrives asking about the police night because of #1; they arrive from Street's clips and theories.
+  - `story/pitch.md`: loop item 9 is now revisiting districts for wild races or the Finale Myth Driver races, not reputation unlocking rematches. Boss challenges no longer require "sufficient reputation"; they require climbing that district's crew ladder.
+  - `story/barks.md`: crew-boss purpose no longer says the same boss returns stronger each round; bosses reference the climb up their own crew, not prior rematches. A one-line note on the lieutenant Round 1–3 tiers: they map to Street, then Wangan, then Touge, not rematches with the same crew.
+
 ## 2026-11-13 — Desmond [design][story][sim]: one district per round (Street, Wangan, Touge)
 
 - **Decision (Austin, 2026-11-13, via Nathaniel's DM; plus the Finale lead-in addition):** Round 1 Street, Round 2 Wangan, Round 3 Touge. One crew per district, raced once start to finish; no rematches, no boss level-up between rounds. Each round covers its own district's incident, consequences and distortion (old per-round themes retired). One sighting per Myth Driver: #3 after Street, #2 after Wangan, #1 after Touge as a challenge only. Debt clears when the PC beats the Street crew boss at the end of Round 1, with wholesale, aero and Sabine's drinks. Reiko's warning moves to the end of the Wangan round. Canon 12 retired. After the Touge round: #1's challenge, the Mentor Confrontation and rift, then the PC goes back up the mountain to blame #1 and races him, which sets off #2 and #3 (canon 16: out of blame; truth by accident from #1's contradiction). Finale order unchanged.

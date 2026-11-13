@@ -68,7 +68,7 @@ Races move fast, so Jesse's DAQ keeps the last race for playback: the DAQ log li
 6. Increase standing across multiple racing scenes
 7. Unlock higher-tier race invitations and the next district's crew
 8. Discover Myth Drivers and hidden story events
-9. Revisit districts as reputation opens new opportunities
+9. Revisit districts for wild races, or for the Finale Myth Driver races
 
 ---
 
@@ -158,7 +158,7 @@ Players may:
 
 Boss challenges require:
 
-- sufficient reputation
+- climbing that district's crew ladder
 - crew access
 - organizer approval
 - demonstrated tactical competency

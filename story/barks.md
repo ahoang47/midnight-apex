@@ -221,7 +221,7 @@ Crew members should reference their crew, reference district politics, reference
 
 ## Initial Interaction
 
-Crew member acknowledges where the PC is in the story. Reputation is lore only (canon 12), so these tiers are keyed to story progress, not a stat.
+Crew member acknowledges where the PC is in the story. Reputation is lore only (canon 12), so these tiers are keyed to story progress, not a stat. Round 1–3 here map to Street, then Wangan, then Touge, not rematches with the same crew.
 
 ### Round 1
 - "You haven't earned the right to challenge us."
@@ -314,11 +314,11 @@ Use overheating or desperation language.
 
 These are major narrative events.
 
-**Purpose:** Mark each round’s climax in the district (the same crew boss returns stronger each round), deliver iconic personalities, reward progression, create emotional stakes.
+**Purpose:** Mark each district’s crew boss as the climax of that district’s round, deliver iconic personalities, reward progression, create emotional stakes.
 
 **Recommended Total Dialogue:** 8–15 pre-race lines, 10–20 mid-race lines, 4–8 finish lines.
 
-Bosses should have identifiable philosophies, reference prior races, adapt dialogue dynamically, and speak less frequently but more impactfully.
+Bosses should have identifiable philosophies, reference the climb up their own crew, adapt dialogue dynamically, and speak less frequently but more impactfully.
 
 ## Pre-Battle
 
