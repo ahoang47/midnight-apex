@@ -72,6 +72,17 @@ HUD overrides live in this mockup's copies, driven by state keys:
 - `scripts/hud/resource_stack.gd`: `gap_box`, `sign_cx`, `sign_y`. The big tie-gap box is now 28 px tall, so it clears the sign.
 - `shaders/post.gdshader`: `mirror_flip` (0 = forward inset).
 
+## Pass 4 (Austin, 2026-11-13): option B picked, revised to a head-on look-back
+
+Austin: "I like the look back cam, but the mirror should stay as the mirror. The mirror should stay the same size. The look back cam should be a head on, instead of this angled view."
+
+- **`mouse_lookback_headon.png` (about 10 m) and `mouse_lookback_headon_far.png` (about 24 m):**
+  - **Main view:** a centred reverse camera (mode `headon`), placed 1.0 m back from the car's centre and 1.22 m up, just above the rear deck. It looks straight back down the road along the player's line, 30 m back. The rival sits dead centre in the same lane (no lateral nudge), so it comes straight at the camera. Only a thin sliver of the yellow rear deck shows at the bottom edge, above the HUD band.
+  - **Mirror:** the original E3B mirror, at the same rect (224,16,192×64), frame and REAR VIEW label. In this mode it shows the other way: the standard forward chase view, unflipped, with the player car, chevrons and road ahead.
+  - **HUD:** turn sign, HAIRPIN L and the tie-gap box are in their standard places; the HUD band is unchanged.
+- **`lookback_vs_cat.png`:** the head-on mouse at 10 m next to `touge_cat.png`.
+- **Open:** the "REAR VIEW" label is now technically wrong in look-back mode, because the mirror shows the road ahead. I left it as asked; one option is a mode-swapped label such as "AHEAD".
+
 ## Open points
 - The course is unchanged in all three: the same 45 m straight into HP L (R 14 m), so the HUD reads HAIRPIN L everywhere. A real Wangan would more likely be a fast sweeper. That's a Design / Gordon call.
 - In the game, road width, lane lines and dressing live in Gordon's files (`display.json` lane_width_m, `touge_dressing.gd`). Nothing of his is edited here.

@@ -53,3 +53,17 @@ for r, (suf, gl) in enumerate(GAPS):
         d.text((x, y + 8), name, font=f1, fill=(240, 200, 40))
         d.text((x, y + 36), sub + '  |  ' + gl, font=f2, fill=(210, 216, 226))
 ms.save(os.path.join(HERE, 'mouse_options_sheet.png')); print('mouse options', ms.size)
+
+# lookback_vs_cat.png: head-on look-back mouse (10 m) next to the standard cat frame
+VS = [('mouse_lookback_headon', 'MOUSE  LOOK-BACK (HEAD-ON)', 'rival ~10 m behind, mirror shows the road ahead'),
+      ('touge_cat', 'CAT  STANDARD CHASE', 'rival ~11 m ahead, mirror shows behind')]
+vs = Image.new('RGB', (PAD + 2 * (W + PAD), TOP + H + PAD), (11, 23, 43))
+d = ImageDraw.Draw(vs)
+for c, (k, name, sub) in enumerate(VS):
+    im = Image.open(os.path.join(HERE, k + '.png')).convert('RGB').resize((W, H), Image.BOX)
+    x = PAD + c * (W + PAD)
+    vs.paste(im, (x, TOP))
+    d.rectangle([x - 1, TOP - 1, x + W, TOP + H], outline=(110, 127, 151))
+    d.text((x, 8), name, font=f1, fill=(240, 200, 40))
+    d.text((x, 36), sub, font=f2, fill=(210, 216, 226))
+vs.save(os.path.join(HERE, 'lookback_vs_cat.png')); print('lookback vs cat', vs.size)

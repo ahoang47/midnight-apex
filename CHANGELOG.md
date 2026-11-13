@@ -8,6 +8,18 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: Touge mouse look-back, revised to head-on (Austin picked option B)
+
+- **Why:** Austin, 2026-11-13: "I like the look back cam, but the mirror should stay as the mirror. The mirror should stay the same size. The look back cam should be a head on, instead of this angled view."
+- **What (`unapproved/arthur/mockups/districts/`):**
+  - **New frames:** `mouse_lookback_headon.png` (about 10 m) and `mouse_lookback_headon_far.png` (about 24 m).
+  - **Camera:** a centred reverse camera just above the rear deck, square to the road, with the rival dead centre in the lane.
+  - **Mirror:** the E3B mirror is unchanged in size, position, frame and label, but shows the road ahead with the chevrons.
+  - **HUD:** sign and gap box are back in their standard places.
+  - **Comparison:** `lookback_vs_cat.png` (head-on mouse vs `touge_cat.png`).
+- **Open:** "REAR VIEW" reads wrong when the mirror shows the road ahead. I kept the label as asked, pending a decision.
+- **Not changed:** Gordon's files, the sim, and the earlier A/B/C option frames.
+
 ## 2026-11-13 — Arthur [art]: Touge mouse-view options (big mirror / look-back / high cam)
 
 - **Why:** Austin, 2026-11-13, on `touge_mouse_far.png`: "The mouse cam in the last image would make it hard to read the opponent."
