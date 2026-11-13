@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: E3B EN 5-spoke rotated; HAN coilover shortened
+
+- **Why:** Austin, 2026-11-13: approved the light 5-spoke and asked to rotate it so no spoke sits on the horizontal, then: "Next is to make the coil over shorter so it doesn’t impede."
+- **What (`unapproved/arthur/mockups/resource_meters/`):** The EN star is rotated so one spoke points straight up (no horizontal spoke). The caliper stays inside the rim, now sitting in the window just below 3 o'clock. Nothing else on the wheel changed. The HAN shock is a squatter coilover — fewer coil turns, compact eyelets, same colours and line weight — so it stays inside its row and no longer crowds the EN wheel, the chips or the bars. `e3b_full.png`, `e3b_states.png`, `e3b_overrun.png` and `e3b_locked.png` re-rendered in Godot. Before/after: `en_icon_5spoke.png` (rotation) and `han_icon_short.png` (old vs short, in the band with neighbouring rows). Concept only; not in the sim.
+
 ## 2026-11-13 — Arthur [art]: E3B EN 5-spoke is light against the rotor
 
 - **Why:** Austin, 2026-11-13: approved the thin 5-spoke ("It looks better though") and asked to recolour it.
