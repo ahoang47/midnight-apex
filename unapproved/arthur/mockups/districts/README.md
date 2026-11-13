@@ -59,6 +59,19 @@ Scene triangles (env plus road grid, cars excluded; Austin has since confirmed t
 
 Rebuild the pulled-camera alternative with `MOUSE_CAM_TEST=1 ./run.sh`. Use `FRAME=touge_cat.png` to render one frame.
 
+## Pass 3 (Austin, 2026-11-13): mouse-view options
+
+Austin, looking at `touge_mouse_far.png`: "The mouse cam in the last image would make it hard to read the opponent." There are three options on the sloped touge, each with the rival about 10 m back (+0.40 s) and about 24 m back (`_far`, +0.96 s). `mouse_options_sheet.png` shows them as 3 options × 2 gaps.
+
+- **A `mouse_bigmirror(_far).png`:** the standard chase camera. While leading, the rear-view inset doubles to 384×128 at 640×480, rendered at 2×. Its lens is slightly wider (×1.12) and it uses the same rear camera. The turn sign moves below it (y 152), and the tie-gap box moves to the top right as a compact MOUSE box. The road ahead stays clear.
+- **B `mouse_lookback(_far).png`:** the main view is a low reverse camera (1.4 m up) off the player's outside rear quarter, looking back down the grade at the chaser. The player's yellow tail fills the near corner. A forward inset labelled AHEAD (240×112, not mirrored) shows the standard chase view with the chevrons and the upcoming corner. The turn sign sits top right, and the tie-gap box sits under the inset.
+- **C `mouse_highcam(_far).png`:** a higher, steeper chase camera behind the chaser. It pulls back with the gap (gap + 12 m, 22–38 m, up 6 m + 17 % of the pull-back) and aims further back as the gap grows. The HUD is unchanged.
+
+HUD overrides live in this mockup's copies, driven by state keys:
+- `scripts/hud/mirror_frame.gd`: `inset` rect and label.
+- `scripts/hud/resource_stack.gd`: `gap_box`, `sign_cx`, `sign_y`. The big tie-gap box is now 28 px tall, so it clears the sign.
+- `shaders/post.gdshader`: `mirror_flip` (0 = forward inset).
+
 ## Open points
 - The course is unchanged in all three: the same 45 m straight into HP L (R 14 m), so the HUD reads HAIRPIN L everywhere. A real Wangan would more likely be a fast sweeper. That's a Design / Gordon call.
 - In the game, road width, lane lines and dressing live in Gordon's files (`display.json` lane_width_m, `touge_dressing.gd`). Nothing of his is edited here.

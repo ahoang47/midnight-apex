@@ -1423,11 +1423,11 @@ func _paint_e3_sign() -> void:
 	# Floating upcoming-turn sign: flat amber plate, hairpin-left (U-turn) arrow,
 	# corner name under the sign. Kept short so the name sits above the OUT tell.
 	# Gap box ends at y=122; lane labels start around y=180.
-	var cx := 320.0
+	var cx := float(st.get("sign_cx", 320.0))   # district mockups: moved only for the mouse-view options
 	var w := 34.0
 	var h := 32.0
 	var x0 := cx - w * 0.5
-	var y0 := 125.0
+	var y0 := float(st.get("sign_y", 125.0))
 	var cy := y0 + h * 0.5
 	draw_rect(Rect2(x0, y0, w, h), Color8(255, 184, 56), true)
 	draw_rect(Rect2(x0, y0, w, h), INK, false, 1.0)
@@ -1809,16 +1809,19 @@ func _paint_e_gap_big() -> void:
 	# Still sits between REAR VIEW (label y=84) and the turn sign (top y=132).
 	var lead := float(st.get("lead", 0.0))
 	var gs := float(st.get("gap_s", 0.0))
-	var x := 222.0
-	var y := 96.0
-	var w := 196.0
-	var h := 31.0
+	var gb: Dictionary = st.get("gap_box", {})
+	var x := float(gb.get("x", 222.0))
+	var y := float(gb.get("y", 95.0))
+	var w := float(gb.get("w", 196.0))
+	var h := 28.0   # ends at y=123, clear of the E3B sign (top y=125)
+	var compact := bool(gb.get("compact", false))
 	_flat_panel(x, y, x + w, y + h)
 	var role := "MOUSE  LEADING" if lead > 0.0 else ("CAT  CHASING" if lead < 0.0 else "TIE")
+	if compact: role = "MOUSE" if lead > 0.0 else ("CAT" if lead < 0.0 else "TIE")
 	var rc: Color = Color8(60, 200, 255) if lead > 0.0 else (Color8(255, 60, 140) if lead < 0.0 else L_WHITE)
 	t2(x + 6.0, y + 4.0, role, 9, rc, true, "l", false, true)
 	t2(x + w - 6.0, y + 4.0, "%s%.2fs" % ["+" if lead >= 0.0 else "-", absf(gs)], 9, Color8(255, 184, 56), true, "r", false, true)
-	var by := y + 18.0
+	var by := y + 16.0
 	var bx0 := x + 34.0
 	var bx1 := x + w - 28.0
 	draw_rect(Rect2(bx0, by, bx1 - bx0, 8.0), Color8(8, 10, 16), true)
@@ -1831,5 +1834,5 @@ func _paint_e_gap_big() -> void:
 	elif lead < 0.0:
 		draw_rect(Rect2(mid - bw, by + 1.0, bw, 6.0), Color8(255, 60, 140), true)
 	draw_rect(Rect2(mid, by - 1.0, 1.0, 10.0), Color.WHITE, true)
-	t2(x + 6.0, y + 19.0, "RIVAL", 7, SUB, true, "l", false, true)
-	t2(x + w - 6.0, y + 19.0, "YOU", 7, SUB, true, "r", false, true)
+	t2(x + 6.0, y + 17.0, "RIVAL", 7, SUB, true, "l", false, true)
+	t2(x + w - 6.0, y + 17.0, "YOU", 7, SUB, true, "r", false, true)

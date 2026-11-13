@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: Touge mouse-view options (big mirror / look-back / high cam)
+
+- **Why:** Austin, 2026-11-13, on `touge_mouse_far.png`: "The mouse cam in the last image would make it hard to read the opponent."
+- **What (`unapproved/arthur/mockups/districts/`):** Three leading-view options on the sloped touge, each at about 10 m and about 24 m gaps. `mouse_options_sheet.png` shows all six.
+  - **A, big mirror:** the standard chase camera with a 2× rear-view inset. The turn sign moves below it and the gap box moves to the top right.
+  - **B, look-back:** a low reverse camera at the player's rear quarter, plus a forward AHEAD inset with the chevrons.
+  - **C, high cam:** a higher chase camera that pulls back with the gap.
+  - **HUD:** placement overrides are in this mockup's copies of `mirror_frame.gd`, `resource_stack.gd` and `post.gdshader`. The tie-gap box is now 28 px tall, so it no longer touches the sign.
+  - **Re-renders:** all earlier district frames.
+- **Not changed:** Gordon's files and the sim.
+
 ## 2026-11-13 — Arthur [art]: Touge on a grade + cat-and-mouse frames; consistency sheet
 
 - **Why:** Austin, 2026-11-13: give the touge road a real grade. Touge has no passes, so a race is half leading (mouse) and half following (cat). Two worries: mouse readability as the gap grows, and whether touge feels like a different game from Street and Wangan. Presentation only; scoring unchanged.

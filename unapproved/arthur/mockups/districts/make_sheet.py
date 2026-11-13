@@ -36,3 +36,20 @@ for i, (k, name, sub) in enumerate(CELLS):
     d.text((x, y + 8), name, font=f1, fill=(240, 200, 40))
     d.text((x, y + 36), sub, font=f2, fill=(210, 216, 226))
 cs.save(os.path.join(HERE, 'consistency_sheet.png')); print('consistency', cs.size)
+
+# mouse_options_sheet.png: 3 mouse-view options (columns) x 2 gaps (rows: ~10 m, ~24 m)
+OPTS = [('mouse_bigmirror', 'A  BIG MIRROR', 'standard chase cam, rear view 2x'),
+        ('mouse_lookback', 'B  LOOK BACK', 'reverse cam at the tail, AHEAD inset'),
+        ('mouse_highcam', 'C  HIGH CAM', 'higher, steeper chase, both cars on screen')]
+GAPS = [('', 'gap ~10 m (+0.40 s)'), ('_far', 'gap ~24 m (+0.96 s)')]
+ms = Image.new('RGB', (PAD + 3 * (W + PAD), 2 * (TOP + H) + PAD), (11, 23, 43))
+d = ImageDraw.Draw(ms)
+for r, (suf, gl) in enumerate(GAPS):
+    for c, (k, name, sub) in enumerate(OPTS):
+        im = Image.open(os.path.join(HERE, k + suf + '.png')).convert('RGB').resize((W, H), Image.BOX)
+        x = PAD + c * (W + PAD); y = r * (TOP + H)
+        ms.paste(im, (x, y + TOP))
+        d.rectangle([x - 1, y + TOP - 1, x + W, y + TOP + H], outline=(110, 127, 151))
+        d.text((x, y + 8), name, font=f1, fill=(240, 200, 40))
+        d.text((x, y + 36), sub + '  |  ' + gl, font=f2, fill=(210, 216, 226))
+ms.save(os.path.join(HERE, 'mouse_options_sheet.png')); print('mouse options', ms.size)

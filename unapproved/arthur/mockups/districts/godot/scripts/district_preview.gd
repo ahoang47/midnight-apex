@@ -91,6 +91,18 @@ func _frames() -> Array:
 		# MOUSE: rival 6.5 m behind, slightly inside so its lamps clear the player's tail. Headlights light the road + the player.
 		out.append(_fr("touge_mouse.png", L, {"rival_ds": -6.5, "rival_lane": "OUT", "rival_d_nudge": -0.9, "lead": 0.10, "gap_s": 0.26, "role": "mouse"}))
 		out.append(_fr("touge_mouse_far.png", L, {"rival_ds": -24.0, "rival_lane": "OUT", "rival_d_nudge": -0.6, "lead": 0.36, "gap_s": 0.96, "role": "mouse"}))
+		# Mouse-view options (Austin 2026-11-13: the far mouse cam "would make it hard to read the opponent").
+		# A bigmirror / B lookback / C highcam, each at a medium (10 m) and far (24 m) gap.
+		for g in [["", -10.0, 0.40, 0.11], ["_far", -24.0, 0.96, 0.36]]:
+			var base := {"rival_ds": g[1], "rival_lane": "OUT", "rival_d_nudge": -0.9, "lead": g[3], "gap_s": g[2], "role": "mouse"}
+			var a := base.duplicate(); a["mode"] = "bigmirror"
+			a["hud"] = {"inset": {"rect": [128, 6, 384, 128], "label": "REAR VIEW"}, "gap_box": {"x": 522.0, "y": 8.0, "w": 110.0, "compact": true}, "sign_y": 152.0}
+			out.append(_fr("mouse_bigmirror%s.png" % g[0], L, a))
+			var b := base.duplicate(); b["mode"] = "lookback"
+			b["hud"] = {"inset": {"rect": [200, 6, 240, 112], "label": "AHEAD"}, "gap_box": {"x": 222.0, "y": 132.0, "w": 196.0}, "sign_cx": 482.0, "sign_y": 20.0}
+			out.append(_fr("mouse_lookback%s.png" % g[0], L, b))
+			var c := base.duplicate(); c["mode"] = "highcam"
+			out.append(_fr("mouse_highcam%s.png" % g[0], L, c))
 		if OS.get_environment("MOUSE_CAM_TEST") != "":
 			out.append(_fr("touge_mouse_pulled.png", L, {"rival_ds": -6.5, "rival_lane": "OUT", "rival_d_nudge": -0.9, "lead": 0.10, "gap_s": 0.26, "role": "mouse", "cam_pull": true}))
 	return out
@@ -623,6 +635,56 @@ func _ensure_player_lit() -> void:
 		sm.shader = CAR_LIT_SH
 		player_lit_mats.append(sm)
 
+# ---------------------------------------------------------------------------------------------------
+# Mouse-view options. Inset = the second camera (mirror_vp), composited by the post shader at hud.inset.rect.
+func _apply_mode(fr: Dictionary, player_s: float, d_entry: float) -> void:
+	var mode := String(fr.get("mode", ""))
+	var r: Array = [disp.mirror.x, disp.mirror.y, disp.mirror.w, disp.mirror.h]
+	var flip := 1.0
+	mirror_cam.fov = float(disp.mirror.fov)
+	if fr.has("hud") and fr.hud.has("inset"): r = fr.hud.inset.rect
+	if mode == "bigmirror":
+		# same rear camera and lens; 2x the inset, rendered at 2x so it stays as crunchy as the main view
+		mirror_cam.fov = float(disp.mirror.fov) * 1.12
+	elif mode == "lookback":
+		# main view: low reverse camera over the player's tail, looking back down the hill at the chaser
+		# low, off the player's outside rear quarter, so the tail + taillight sit in the near corner of the frame
+		var q: Dictionary = course.point(player_s - 0.5, d_entry + 1.2)
+		var rv: Dictionary = course.point(player_s - 12.0, d_entry - 0.7)
+		cam.position = Vector3(q.x, elev(player_s - 0.5, d_entry + 1.2) + 1.38, q.z)
+		cam.look_at(Vector3(rv.x, elev(player_s - 12.0, d_entry) - 0.05, rv.z), Vector3.UP)
+		cam.fov = float(disp.camera.fov)
+		glow_cam.global_transform = cam.global_transform; glow_cam.fov = cam.fov
+		sky_root.position = cam.position
+		# inset: the standard forward chase view (same camera as every other frame), not mirrored
+		var cm: Dictionary = disp.camera
+		var pose: Array = _chase_pose(course.point(player_s, 0.0))
+		var cpos: Vector3 = pose[0]; var tgt: Vector3 = pose[1]
+		cpos.y += elev(player_s - float(cm.back), float(cm.side)); tgt.y += elev(player_s + float(cm.look_ahead), float(cm.look_side))
+		mirror_cam.position = cpos; mirror_cam.look_at(tgt, Vector3.UP)
+		mirror_cam.fov = 40.0
+		mirror_cam.near = 0.1
+		flip = 0.0
+	elif mode == "highcam":
+		# higher, steeper chase camera, pulled back behind the chaser so both cars sit on the road above the band.
+		# The pull-back follows the gap (capped), like a two-car framing cam.
+		var gap: float = absf(float(fr.rival_ds))
+		var back: float = clampf(gap + 12.0, 22.0, 38.0)
+		var up: float = 6.0 + back * 0.17
+		var ts: float = player_s + 4.0 - 0.45 * maxf(gap - 10.0, 0.0) * 1.4   # aim drifts back toward the chaser as the gap grows
+		var q0: Dictionary = course.point(player_s - back, 1.0)
+		var tg: Dictionary = course.point(ts, 0.3)
+		cam.position = Vector3(q0.x, elev(player_s - back, 1.0) + up, q0.z)
+		cam.look_at(Vector3(tg.x, elev(ts, 0.0) - 2.6, tg.z), Vector3.UP)
+		cam.fov = float(disp.camera.fov)
+		glow_cam.global_transform = cam.global_transform; glow_cam.fov = cam.fov
+		sky_root.position = cam.position
+	if mode != "lookback": mirror_cam.near = float(disp.mirror.near)
+	var sz := Vector2i(int(r[2]), int(r[3]))
+	if mirror_vp.size != sz: mirror_vp.size = sz
+	post_mat.set_shader_parameter("mirror_rect", Vector4(float(r[0]), float(r[1]), float(r[2]), float(r[3])))
+	post_mat.set_shader_parameter("mirror_flip", flip)
+
 func _lane_d(lane: String) -> float:
 	return Track.lane_offset(LANE_OF[lane], DIR, LANE_W)
 
@@ -665,6 +727,7 @@ func _apply_frame(fr: Dictionary, cam_kind: String) -> void:
 	var mt: Vector3 = p - t * float(disp.mirror.look_back)
 	mt.y = elev(player_s - float(disp.mirror.look_back), d_entry) + float(disp.mirror.look_y)
 	mirror_cam.look_at(mt, Vector3.UP)
+	_apply_mode(fr, player_s, d_entry)
 	# Mirror only on the chase camera (and the overview, so that sheet keeps a rear view).
 	var mirror_on := cam_kind == "chase" or cam_kind == "overview"
 	post_mat.set_shader_parameter("mirror_on", 1.0 if mirror_on else 0.0)
@@ -755,7 +818,7 @@ func _hud_state(fr: Dictionary, phase: int, sel_i: int, avail: Dictionary, entry
 		"result": {}, "reveal": 0, "cont_left": 8.0, "leader_changed": false,
 		"winner": "", "cum_p": 0.0, "cum_o": 0.0, "last_corner": false, "fin": null,
 		"resources": fr.get("resources", {})
-	}
+	}.merged(fr.get("hud", {}), true)
 
 func _capture(path: String) -> void:
 	await _settle(4)
