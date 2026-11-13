@@ -78,10 +78,24 @@ def build(rows, out_name):
     return out
 
 
+D_FRAMES = [
+    ("d_full.png", "D  BOTTOM LEFT  one wide plate  continuous trough bars  — all full"),
+    ("d_drain.png", "D  AFTER A POW PICK  fuel drains as a freeform fill  ghost in the trough"),
+    ("d_low.png", "D  LOW  fuel + brakes in the warning colour  FUEL LOW badge"),
+    ("d_empty.png", "D  EMPTY  fuel gone (slash + EMPTY)  brakes low  susp mid"),
+    ("d_susp_spent.png", "D  AFTER A HAN PICK  suspension spent  fuel still empty"),
+    ("d_susp_refill.png", "D  NEXT TURN  suspension recovers  fuel/brakes do not"),
+]
+
+
 def main():
     # Row 1: three style variants at full. Rows 2–3: state strip for the hero variant.
-    rows = [VARIANTS, STATES[:3], STATES[3:]]
-    build(rows, "resource_meters_sheet.png")
+    if Path(ROOT / "a_full.png").exists():
+        rows = [VARIANTS, STATES[:3], STATES[3:]]
+        build(rows, "resource_meters_sheet.png")
+    # Variant D gets its own sheet (bottom-left continuous bars).
+    if Path(ROOT / "d_full.png").exists():
+        build([D_FRAMES[:3], D_FRAMES[3:]], "resource_meters_d_sheet.png")
 
 
 if __name__ == "__main__":

@@ -88,8 +88,8 @@ func _fr(file: String, res: Dictionary, phase: String = "select") -> Dictionary:
 
 func _all_frames() -> Array:
 	var out: Array = []
-	for v in ["A", "B", "C"]:
-		var tag := "a" if v == "A" else ("b" if v == "B" else "c")
+	for v in ["A", "B", "C", "D"]:
+		var tag := String(v).to_lower()
 		out.append(_fr("%s_full.png" % tag, _res(v, 8, 8, 8), "select"))
 		out.append(_fr("%s_drain.png" % tag, _res(v, 5, 8, 8, {"ghosts": {"fuel": 3}, "spent": "fuel"}), "after_pow"))
 		out.append(_fr("%s_low.png" % tag, _res(v, 2, 3, 5, {"warn": ["fuel", "brakes"], "blink": true, "badge": {"fuel": "LOW"}}), "after_pow"))

@@ -4,9 +4,13 @@
 ## pixel-hard type, slanted pips like LINE LOCK).
 ##
 ## Variants:
-##   A — slim stack, icon + vertical segmented bar + label
+##   A — slim stack, icon + vertical segmented bar + label (top left)
 ##   B — horizontal segmented bars to the right of each icon (same pip language as LINE LOCK)
 ##   C — one combined plate with a segmented ring around each icon and a short pip track
+##   D — one wide plate at the BOTTOM LEFT (mirrors PLAN THE LINE). Icons in a left
+##       column; long thin continuous fill bars in framed troughs, no pips. Austin
+##       2026-11-13: "the bars are more 'freeform' when depleting vs discrete ticks"
+##       and "it should be in the bottom left."
 ##
 ## EN icon: a wheel (tyre + rim + spokes) with the brake rotor and caliper visible
 ## through the spoke gaps, so it reads as the wheel-and-brake package.
@@ -39,6 +43,8 @@ func paint() -> void:
 			_paint_a(rs)
 		"C":
 			_paint_c(rs)
+		"D":
+			_paint_d(rs)
 		_:
 			_paint_b(rs)
 
@@ -132,6 +138,44 @@ func _paint_c(rs: Dictionary) -> void:
 		_pips_h(136.0, y + 14, 6, s)
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Variant D: one wide framed plate at the BOTTOM LEFT, mirroring PLAN THE LINE.
+# Icons in a column on the left; long thin continuous bars in framed troughs
+# (no pips). The fill length is freeform — it can sit at any width, and the
+# depleting edge is a slight slant rather than a tick-aligned cut.
+# ─────────────────────────────────────────────────────────────────────────────
+func _paint_d(rs: Dictionary) -> void:
+	# Mirror PLAN THE LINE (424, 372, 636, 479). Left margin matches LINE LOCK.
+	# Right edge stops short of the chase MX5 (left of the car is about x=342).
+	var x0 := 14.0
+	var y0 := 372.0
+	var x1 := 316.0
+	var y1 := 479.0
+	var body := cut_panel(x0, y0, x1, y1, 8.0)
+	semi(body, PANEL)
+	plate_finish(body, x0, y0, x1, y1)
+	outline(body, EDGE)
+	outline(cut_panel(x0 + 2, y0 + 2, x1 - 2, y1 - 2, 7.0), EDGE_D)
+	for i in ITEMS.size():
+		var s: Dictionary = _item_state(rs, ITEMS[i])
+		var y := y0 + 8.0 + i * 33.0
+		if s.warn or s.blink or s.empty or s.flash or s.spent:
+			var a := 0.14 if (s.blink or s.empty or s.flash) else 0.08
+			var wash: Color = L_AMBER if (s.blink or s.warn) else (Color8(232, 40, 44) if s.empty else s.col)
+			semi(P([x0 + 5, y - 1, x1 - 5, y - 1, x1 - 7, y + 31, x0 + 3, y + 31]), wash, a)
+		# Icon column, slightly larger than A/B/C; shock is drawn bolder at this size.
+		var icx := x0 + 18.0
+		var icy := y + 16.0
+		_icon_at(icx, icy, s, 14.0 if s.key == "susp" else 12.0)
+		# Label + stat + badge sit above the trough, so the bar can span the rest of the plate.
+		var lx := x0 + 34.0
+		t2(lx, y + 1, s.label, 11, _lab_col(s), true, "l", true, false, true)
+		var tw := _stat_tag(lx + sw(s.label, 11, true, true) + 5, y + 1, s)
+		_badge_at(lx + sw(s.label, 11, true, true) + 5 + tw + 4, y + 1, s, "l")
+		# Long thin trough: from just after the icon to the right inner edge.
+		_trough(x0 + 34.0, y + 16.0, (x1 - 10.0) - (x0 + 34.0), 9.0, s)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Shared chrome
 # ─────────────────────────────────────────────────────────────────────────────
 func _plate(x0: float, y0: float, x1: float, y1: float, s: Dictionary) -> void:
@@ -204,6 +248,56 @@ func _pip_col(s: Dictionary, lit: bool, ghost: bool) -> Color:
 	if ghost:
 		return dimc(s.col, 0.55)
 	return L_SEG_OFF
+
+func _trough(x: float, y: float, w: float, h: float, s: Dictionary) -> void:
+	# Framed well. Pixel-hard, no AA, no soft gradient. The fill length is continuous
+	# (any width, not snapped to ticks). A slanted leading edge reads as freeform
+	# depletion rather than a chopped rectangle or a pip. A full bar sits flush.
+	var well := P([x, y, x + w, y, x + w, y + h, x, y + h])
+	solid(well, Color8(10, 12, 20))
+	draw_line(Vector2(x, y), Vector2(x + w, y), Color8(0, 0, 0, 200), 1.0)
+	draw_line(Vector2(x, y), Vector2(x, y + h), Color8(0, 0, 0, 180), 1.0)
+	draw_line(Vector2(x, y + h), Vector2(x + w, y + h), Color8(70, 82, 110, 140), 1.0)
+	draw_line(Vector2(x + w, y), Vector2(x + w, y + h), Color8(70, 82, 110, 120), 1.0)
+	outline(well, INK)
+	var pips: float = maxf(float(s.pips), 1.0)
+	var inner := w - 2.0
+	var fill_w := inner * (float(s.val) / pips)
+	var ghost_w := inner * (float(s.val + s.ghost) / pips)
+	var x0 := x + 1.0
+	var y0 := y + 1.0
+	var y1 := y + h - 1.0
+	# Draw the spent (ghost) wash first, full height, so the bright fill can sit on top
+	# with no gap under a slanted nose.
+	if ghost_w > fill_w + 0.5:
+		_trough_fill(x0, y0, y1, ghost_w, inner, dimc(s.col, 0.45), false)
+	if fill_w >= 1.0:
+		var col := _pip_col(s, true, false)
+		var is_full := fill_w >= inner - 0.51
+		_trough_fill(x0, y0, y1, fill_w, inner, col, not is_full)
+		# Hard 1 px highlight on the top of the fill, no soft shine.
+		var hx1 := x0 + (inner if is_full else fill_w) - 1.0
+		draw_line(Vector2(x0 + 1, y0 + 1), Vector2(maxf(hx1, x0 + 2), y0 + 1), Color(1, 1, 1, 0.22), 1.0)
+		if not is_full and (s.flash or s.spent or s.blink):
+			pass  # outline is already on the fill polygon inside _trough_fill when wanted
+		if s.flash or s.spent or s.blink:
+			# re-stroke the leading edge so a spent/flash bar stays sharp
+			var nose := 0.0 if is_full else (3.0 if fill_w > 6.0 else maxf(fill_w * 0.4, 1.0))
+			draw_line(Vector2(x0 + fill_w, y0), Vector2(x0 + fill_w - nose, y1), INK, 1.0)
+	elif s.empty:
+		draw_line(Vector2(x0 + 2, y + h / 2.0), Vector2(x + w - 3, y + h / 2.0), Color8(232, 40, 44, 120), 1.0)
+
+
+func _trough_fill(x0: float, y0: float, y1: float, fill_w: float, inner: float, col: Color, slant: bool) -> void:
+	var fx1 := x0 + minf(fill_w, inner)
+	var pts: PackedVector2Array
+	if slant and fill_w > 2.0:
+		var nose := 3.0 if fill_w > 6.0 else maxf(fill_w * 0.4, 1.0)
+		pts = P([x0, y0, fx1, y0, fx1 - nose, y1, x0, y1])
+	else:
+		pts = P([x0, y0, fx1, y0, fx1, y1, x0, y1])
+	solid(pts, col)
+
 
 func _pips_h(x: float, y: float, count: int, s: Dictionary) -> void:
 	# Slanted parallelograms, same construction as LINE LOCK (6 wide, 8 tall, stride 9).
@@ -417,39 +511,57 @@ func _disc(cx: float, cy: float, r: float, col: Color, n := 16) -> void:
 	solid(pts, col)
 
 func _icon_shock(cx: float, cy: float, r: float, col: Color) -> void:
-	# Clean shock: upper eye, short body/can, visible shaft, three separated coil loops, lower eye.
+	# Shock absorber: upper eye, body/can, shaft, coil loops, lower eye.
+	# At r >= 13 (variant D) the parts are thicker and the can is kept short so
+	# three clear coils have room. Smaller sizes keep a tighter silhouette.
+	var bold := r >= 13.0
 	var dark := dimc(col, 0.7)
+	var eye_r := 2.6 if bold else 2.2
+	var eye_in := 1.2 if bold else 1.0
+	var can_w := 5.5 if bold else 3.5
+	var coil_w := 6.0 if bold else 4.2
+	var coil_step := 3.6 if bold else 3.4
+	var coil_n := 3
 	# upper eye
-	_ring_track(cx, cy - r + 1.8, 2.2, 1.0, 0.0, TAU, col)
-	_ring_track(cx, cy - r + 1.8, 2.4, 2.2, 0.0, TAU, INK_I)
-	# body / can
-	var can_y0 := cy - r + 4.0
-	var can_y1 := cy - 0.4
-	var can := P([cx - 3.5, can_y0, cx + 3.5, can_y0, cx + 3.5, can_y1, cx - 3.5, can_y1])
+	var uy := cy - r + eye_r
+	_ring_track(cx, uy, eye_r, eye_in, 0.0, TAU, col)
+	_ring_track(cx, uy, eye_r + 0.3, eye_r, 0.0, TAU, INK_I)
+	# short body / can, leaving room for the coils
+	var can_y0 := uy + eye_r + 0.4
+	var can_h := 7.0 if bold else (r * 0.7)
+	var can_y1 := can_y0 + can_h
+	var can := P([cx - can_w, can_y0, cx + can_w, can_y0, cx + can_w, can_y1, cx - can_w, can_y1])
 	solid(can, col)
 	outline(can, INK_I)
-	rect(cx - 3.5, can_y1 - 2.0, 7, 1.2, dark)
-	# shaft behind the coils
-	var shaft_y1 := cy + r - 2.6
-	rect(cx - 0.8, can_y1, 1.6, shaft_y1 - can_y1, RIM)
-	# three clearly separated coil loops (diamond rings, not a filled scribble)
-	var coil0 := can_y1 + 0.4
-	for i in 3:
-		var y := coil0 + i * 3.4
-		var coil := P([cx, y, cx + 4.2, y + 1.6, cx, y + 3.2, cx - 4.2, y + 1.6])
-		# fill faintly so the shaft peeks through, then a hard outline
-		solid(coil, dimc(col, 0.85))
+	rect(cx - can_w, can_y0 + (2.2 if bold else 2.0), can_w * 2.0, 1.4 if bold else 1.0, dark)
+	if bold:
+		rect(cx - can_w, can_y1 - 2.2, can_w * 2.0, 1.4, dark)
+		draw_line(Vector2(cx - can_w + 1, can_y0 + 1), Vector2(cx - can_w + 1, can_y1 - 1), Color(1, 1, 1, 0.25), 1.0)
+	else:
+		rect(cx - can_w, can_y1 - 2.0, can_w * 2.0, 1.2, dark)
+	# shaft behind the coils, down to the lower cap
+	var ly := cy + r - eye_r
+	var cap_h := 1.8 if bold else 1.4
+	var shaft_y1 := ly - eye_r - 0.2
+	var shw := 2.2 if bold else 1.6
+	rect(cx - shw / 2.0, can_y1, shw, maxf(shaft_y1 - can_y1, 1.0), RIM)
+	outline(P([cx - shw / 2.0, can_y1, cx + shw / 2.0, can_y1, cx + shw / 2.0, shaft_y1, cx - shw / 2.0, shaft_y1]), INK_I)
+	# three clearly separated coil loops, shaft visible through the hole
+	var coil0 := can_y1 + 0.3
+	for i in coil_n:
+		var y := coil0 + i * coil_step
+		var coil := P([cx, y, cx + coil_w, y + coil_step * 0.5, cx, y + coil_step * 0.92, cx - coil_w, y + coil_step * 0.5])
+		solid(coil, col)
 		outline(coil, INK_I)
-		# inner diamond cut so it reads as a coil, not a solid blob
-		var inner := P([cx, y + 0.8, cx + 2.2, y + 1.6, cx, y + 2.4, cx - 2.2, y + 1.6])
+		var iw := coil_w * 0.42
+		var inner := P([cx, y + coil_step * 0.28, cx + iw, y + coil_step * 0.5, cx, y + coil_step * 0.70, cx - iw, y + coil_step * 0.5])
 		solid(inner, Color8(18, 20, 28))
-		# redraw the shaft through the hole
-		rect(cx - 0.8, y + 0.8, 1.6, 1.6, RIM)
+		rect(cx - shw / 2.0, y + coil_step * 0.28, shw, coil_step * 0.42, RIM)
 	# lower cap
-	var cap_y := cy + r - 2.6
-	var cap := P([cx - 3.0, cap_y, cx + 3.0, cap_y, cx + 3.0, cap_y + 1.4, cx - 3.0, cap_y + 1.4])
+	var cap_w := 4.2 if bold else 3.0
+	var cap := P([cx - cap_w, shaft_y1, cx + cap_w, shaft_y1, cx + cap_w, shaft_y1 + cap_h, cx - cap_w, shaft_y1 + cap_h])
 	solid(cap, dark)
 	outline(cap, INK_I)
 	# lower eye
-	_ring_track(cx, cy + r - 0.6, 2.0, 0.9, 0.0, TAU, col)
-	_ring_track(cx, cy + r - 0.6, 2.2, 2.0, 0.0, TAU, INK_I)
+	_ring_track(cx, ly, eye_r - 0.15, eye_in - 0.1, 0.0, TAU, col)
+	_ring_track(cx, ly, eye_r + 0.15, eye_r - 0.15, 0.0, TAU, INK_I)

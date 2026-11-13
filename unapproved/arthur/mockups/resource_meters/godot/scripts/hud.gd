@@ -133,8 +133,8 @@ func _ensure_resources() -> void:
 	rs.name = "ResourceStack"
 	rs.set_script(load("res://scripts/hud/resource_stack.gd"))
 	rs.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	rs.position = Vector2(14, 64)
-	rs.size = Vector2(200, 230)
+	rs.position = Vector2(0, 0)
+	rs.size = Vector2(640, 480)
 	add_child(rs)
 	rs.hud = self
 	P["resources"] = rs

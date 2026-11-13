@@ -6,7 +6,7 @@ Rendered in Godot 4.6.3 from the line-preview project (Gordon's two-corner Entry
 
 ## What the meters are
 
-Stacked on the left, under LINE LOCK, clear of the car and of PLAN THE LINE:
+Variants A–C sit on the left under LINE LOCK. Variant D sits in a single wide plate at the bottom left, mirroring PLAN THE LINE, clear of the car:
 
 1. **FUEL** (POW, green `#2CB84A`) — gas-pump icon. Does not recover during the race. Aggressive POW lines burn the most.
 2. **BRAKES** (EN, red `#E8282C`) — a wheel (tyre, rim, five spokes) with the brake rotor and caliper visible through the spokes, so it reads as the wheel-and-brake package. Does not recover during the race.
@@ -19,12 +19,13 @@ On-screen labels are FUEL / BRAKES / SUSP, each with a small framed POW / EN / H
 - `a_full.png` — **A.** Slim stack: icon + vertical segmented bar + label, each on its own plate.
 - `b_full.png` — **B.** Horizontal LINE LOCK-style slanted pips to the right of each icon. Three slim plates, same width as LINE LOCK.
 - `c_full.png` — **C.** One combined plate. Segmented ring around each icon, plus a short pip track.
+- `d_full.png` — **D.** One wide framed plate at the **bottom left**, mirroring PLAN THE LINE. Three small icons in a left column (pump, wheel+brake, shock). To the right of each icon, a long thin continuous bar in a framed trough, spanning most of the plate. No pips: the fill length is freeform (any width, with a slanted depleting edge) rather than discrete ticks. Austin, 2026-11-13: "the bars are more 'freeform' when depleting vs discrete ticks" and "it should be in the bottom left." The shock icon is drawn larger and bolder on this variant.
 
-**Strongest: B.** It shares LINE LOCK's width and pip language, so the left column reads as one family, and drain / low / empty / refill are the easiest to judge at a glance. A is the most compact, but the short vertical ticks are harder to count and the plates sit narrower than LINE LOCK. C is a good late-90s gauge alternative; the rings are distinctive, but they compete a little with the circular brake icon and the track only has six pips.
+**Strongest of A–C: B.** It shares LINE LOCK's width and pip language, so the left column reads as one family, and drain / low / empty / refill are the easiest to judge at a glance. A is the most compact, but the short vertical ticks are harder to count and the plates sit narrower than LINE LOCK. C is a good late-90s gauge alternative; the rings are distinctive, but they compete a little with the circular brake icon and the track only has six pips.
 
 ## State strip
 
-States are rendered for every variant (`a_`, `b_`, `c_` prefixes). The contact sheet uses B.
+States are rendered for every variant (`a_`, `b_`, `c_`, `d_` prefixes). The A–C contact sheet uses B. Variant D uses a continuous ghost fill in the trough instead of ghost pips.
 
 - `*_drain.png` — After locking Entry OUT/POW. Fuel drops; the lost pips stay as ghosts. Brakes and suspension stay full.
 - `*_low.png` — Fuel and brakes in the warning colour (amber outline and pips), with a LOW badge on fuel. Stands in for a blink.
@@ -35,6 +36,7 @@ States are rendered for every variant (`a_`, `b_`, `c_` prefixes). The contact s
 ## Sheet
 
 - `resource_meters_sheet.png` — row 1: A / B / C at full; rows 2–3: state strip for B (drain, low, empty, then susp spent / refill).
+- `resource_meters_d_sheet.png` — variant D at full, plus its drain / low / empty / susp spent / refill states.
 
 ## Godot paths
 
