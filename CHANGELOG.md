@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: E3B EN caliper sits inside the wheel
+
+- **Why:** Austin, 2026-11-13: "The icon of the caliper is outside the wheel. It should be inside."
+- **What (`unapproved/arthur/mockups/resource_meters/`):** The EN wheel icon's 2-piston caliper is redrawn so it sits entirely inside the rim, clamping the rotor and visible in the 3-o'clock spoke gap, the way a real caliper reads through an alloy wheel. Nothing sticks out past the rim. Style, colours and line weight are unchanged. `e3b_full.png`, `e3b_states.png`, `e3b_overrun.png` and `e3b_locked.png` re-rendered in Godot. Before/after crop at in-band and 4×: `en_icon_caliper_fix.png`. Concept only; not in the sim.
+
+
 ## 2026-11-13 — Arthur [art]: revert E3B EN/HAN icons at Austin's request
 
 - **Why:** Austin, 2026-11-13: "The icons look bad, let’s revert it."

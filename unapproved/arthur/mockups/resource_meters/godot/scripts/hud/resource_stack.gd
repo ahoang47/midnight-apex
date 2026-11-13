@@ -479,7 +479,8 @@ func _icon_pump(cx: float, cy: float, r: float, col: Color) -> void:
 
 func _icon_wheel(cx: float, cy: float, r: float, col: Color, empty: bool) -> void:
 	# Wheel package: tyre, a clearly visible steel rotor behind the spokes, caliper
-	# in the 3-o'clock spoke gap, rim, 5 spokes, hub. Drawn back-to-front.
+	# inside the rim in the 3-o'clock spoke gap (clamping the rotor; nothing
+	# sticks out past the rim), rim, 5 spokes, hub. Drawn back-to-front.
 	var rt: float = r            # tyre outer
 	var ri: float = r - 2.4      # tyre inner / rim outer
 	var rr: float = r - 3.4      # rim inner / rotor outer
@@ -504,8 +505,9 @@ func _icon_wheel(cx: float, cy: float, r: float, col: Color, empty: bool) -> voi
 	var ha := deg_to_rad(200.0)
 	var hb := deg_to_rad(280.0)
 	_ring_seg(cx, cy, rr - 0.2, rr - 1.0, ha, hb, Color8(220, 210, 205))
-	# 3. Caliper at 3 o'clock, before the spokes, so it shows through the gap
-	_caliper(cx, cy, ri, rt, col)
+	# 3. Caliper at 3 o'clock, entirely inside the rim, before the spokes
+	# so it shows through the gap, clamping the rotor.
+	_caliper(cx, cy, rr, rh, col)
 	# 4. Rim ring
 	_ring_track(cx, cy, ri, rr, 0.0, TAU, RIM)
 	# 5. Five slightly slimmer spokes, gap centred at 0° (over the caliper)
@@ -519,30 +521,43 @@ func _icon_wheel(cx: float, cy: float, r: float, col: Color, empty: bool) -> voi
 	# 7. Tyre outline
 	_ring_track(cx, cy, rt + 0.6, rt, 0.0, TAU, INK_I)
 
-func _caliper(cx: float, cy: float, r_rim: float, r_tyre: float, col: Color) -> void:
-	# Chunky 2-piston caliper at 3 o'clock. Body sits just outside the rotor, pads pinch onto it.
+func _caliper(cx: float, cy: float, r_rotor: float, r_hub: float, col: Color) -> void:
+	# Chunky 2-piston caliper at 3 o'clock, entirely inside the rim. Pads pinch
+	# the rotor; the body stays in the wheel opening, visible in the spoke gap.
+	# Same colours and 1 px ink outline as before — only the placement changed.
 	var mid := Color(minf(col.r * 1.05, 1), minf(col.g * 0.85, 1), minf(col.b * 0.85, 1))
 	var bright := Color(minf(col.r * 1.2, 1), minf(col.g * 0.95 + 0.05, 1), minf(col.b * 0.95 + 0.05, 1))
+	var x_out := cx + r_rotor - 0.2  # just inside the rim inner / rotor outer
+	var x_in := cx + r_hub + 0.7
+	if x_out - x_in < 3.2:
+		x_in = x_out - 3.2
+	var y_out := 3.9
+	var y_in := 2.8
+	# Pads sit on the rotor, just inside the outer edge.
 	var pad := P([
-		cx + r_rim - 3.5, cy - 2.4,
-		cx + r_rim + 0.4, cy - 2.4,
-		cx + r_rim + 0.4, cy + 2.4,
-		cx + r_rim - 3.5, cy + 2.4,
+		x_out - 2.7, cy - 2.2,
+		x_out - 0.1, cy - 2.2,
+		x_out - 0.1, cy + 2.2,
+		x_out - 2.7, cy + 2.2,
 	])
 	solid(pad, dimc(col, 0.7))
 	var body := P([
-		cx + r_rim - 0.2, cy - 4.0,
-		cx + r_tyre + 1.4, cy - 4.0,
-		cx + r_tyre + 2.2, cy - 2.2,
-		cx + r_tyre + 2.2, cy + 2.2,
-		cx + r_tyre + 1.4, cy + 4.0,
-		cx + r_rim - 0.2, cy + 4.0,
+		x_out, cy - y_out,
+		x_out, cy + y_out,
+		x_in, cy + y_in,
+		x_in, cy - y_in,
 	])
 	solid(body, mid)
 	outline(body, INK_I)
-	_disc(cx + r_tyre - 0.4, cy - 1.7, 1.45, bright)
-	_disc(cx + r_tyre - 0.4, cy + 1.7, 1.45, bright)
-	rect(cx + r_tyre - 1.0, cy - 0.5, 2.0, 1.0, dimc(col, 0.55))
+	# Two pistons stacked inside the body, not past the rim.
+	var pr := 1.15 if (x_out - x_in) >= 3.6 else 1.0
+	var px := x_out - pr - 0.35
+	if px - pr < x_in + 0.2:
+		px = x_in + pr + 0.2
+	var py := 1.35
+	_disc(px, cy - py, pr, bright)
+	_disc(px, cy + py, pr, bright)
+	rect(px - 0.7, cy - 0.4, 1.4, 0.8, dimc(col, 0.55))
 
 func _ring_n(cx: float, cy: float, r0: float, r1: float, a0: float, sweep: float, col: Color, n: int) -> void:
 	var segs := maxi(n, 8)
