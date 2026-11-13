@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: unapproved E3B heat/load meters and new EN/HAN icons
+
+- **Why:** Austin, 2026-11-13: work on the iconography (coolant is ok; make EN like his rotor+caliper reference; HAN like his coilover reference, drawn straight up and down). Then a final meter model: the three bars are heat/load meters that fill as load builds and drain as they recover. LIMIT at about 80%, an OVERRUN zone between LIMIT and full (still selectable, hits less), full = LOCKED, and a RELEASE mark at about 55% for lock hysteresis.
+- **What (`unapproved/arthur/mockups/resource_meters/`):** Concept only; not in the sim. E3 layout kept as variant E3B. EN icon is a cross-drilled rotor with a solid black caliper (no tyre, no wheel). HAN icon is a vertical coilover. POW coolant is unchanged. Bars use the stat colour as the base fill. LIMIT is an amber cap on the top edge; RELEASE is a blue triangle on the bottom edge, so the two marks read apart. OVERRUN uses hot-orange fill `#FF701C`, an OVERRUN tag, and a hot-orange penalty fill on that stance's PLAN THE LINE stat chip. LOCKED uses a padlock + LOCKED tag, a grey struck stat chip, and an unavailable plan chip. Locked-cooling keeps the padlock with a dim flat-hatched fill until the bar drops below RELEASE. Frames: `e3b_full.png` (mixed mids), `e3b_states.png` (cool / mid / overrun / locked / locked-cooling / unlocked), `e3b_overrun.png`, `e3b_locked.png`, plus `icons_e3_sheet.png` and standalone 16/64/128 icon files. Refs copied to `ref/`. Thresholds are placeholders, not approved.
+- **Left as is:** Earlier A–E3 frames and their depleting-headroom meter model. Nothing in the sim.
+
+
 ## 2026-11-13 — Arthur [art]: remove superseded unapproved mockup folders
 
 - **Why:** Austin, 2026-11-13: sort `unapproved/arthur/` and delete the superseded or experiment-only studies.

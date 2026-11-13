@@ -25,11 +25,22 @@
 ##       arrow). E/A/X camera stops sit next to the PLAN THE LINE rows. Middle
 ##       of the band is LINE LOCK only, with room and bigger timer digits.
 ##       Chunky Archivo Black / Nimbus Sans Bold type at readable sizes. Flat.
+##   E3B — same layout as E3. New EN rotor+caliper icon and vertical HAN coilover.
+##       All three bars are heat / load meters that fill as load builds and drain
+##       as they recover (Austin, 2026-11-13). POW = engine heat, EN = brake and
+##       tyre heat, HAN = suspension load. LIMIT tick at ~80%, RELEASE notch at
+##       ~55% (placeholder numbers, not approved). Between LIMIT and full is
+##       OVERRUN (still selectable, hits less). Full is LOCKED until the fill
+##       cools past RELEASE (hysteresis). Concept only; not in the sim.
 ##
-## EN icon: a wheel (tyre + rim + spokes) with the brake rotor and caliper visible
-## through the spoke gaps, so it reads as the wheel-and-brake package.
+## EN icon: a cross-drilled brake rotor and solid caliper (no tyre, no wheel),
+## matching Austin's rotor reference. HAN icon: a vertical coilover (the shock
+## reference, drawn straight up and down, not tilted).
 @tool
 extends "res://scripts/hud/hud_panel.gd"
+
+## Optional standalone icon render (icon_export.gd). When set, _draw skips the HUD.
+var icon_job: Dictionary = {}
 
 const COL := {
 	"fuel": Color8(44, 184, 74),    # POW
@@ -54,6 +65,13 @@ const ITEMS_E := [
 # Hot tint used only on a warning HEAT bar (overheat). The POW chip stays green.
 const COL_HOT := Color8(255, 112, 28)
 
+func _draw() -> void:
+	if not icon_job.is_empty():
+		_paint_icon_job()
+		return
+	super._draw()
+
+
 func paint() -> void:
 	var rs: Dictionary = st.get("resources", {})
 	if rs.is_empty():
@@ -72,6 +90,8 @@ func paint() -> void:
 			_paint_e(rs, true)
 		"E3":
 			_paint_e3(rs)
+		"E3B":
+			_paint_e3b(rs)
 		_:
 			_paint_b(rs)
 
@@ -415,7 +435,7 @@ func _icon_at(cx: float, cy: float, s: Dictionary, r: float) -> void:
 			else:
 				_icon_pump(cx, cy, r, col)
 		"brakes":
-			_icon_wheel(cx, cy, r, col, s.empty)
+			_icon_brake(cx, cy, r, col)
 		_:
 			_icon_shock(cx, cy, r, col)
 	if s.empty and not bool(s.get("no_slash", false)):
@@ -455,72 +475,106 @@ func _icon_pump(cx: float, cy: float, r: float, col: Color) -> void:
 	solid(noz, col)
 	outline(noz, INK_I)
 
-func _icon_wheel(cx: float, cy: float, r: float, col: Color, empty: bool) -> void:
-	# Wheel package: tyre, a clearly visible steel rotor behind the spokes, caliper
-	# in the 3-o'clock spoke gap, rim, 5 spokes, hub. Drawn back-to-front.
-	var rt: float = r            # tyre outer
-	var ri: float = r - 2.4      # tyre inner / rim outer
-	var rr: float = r - 3.4      # rim inner / rotor outer
-	var rh: float = 2.2          # hub
-	# Steel rotor, slightly warm so it still belongs with the EN red, but light enough
-	# to read through the spoke gaps (the earlier dim-red disc looked like a hole).
-	var rotor := Color8(186, 168, 162)
-	var rotor_d := Color8(132, 108, 106)
-	# 1. Tyre
-	_ring_track(cx, cy, rt, ri, 0.0, TAU, TYRE)
-	_ring_track(cx, cy, rt, rt - 1.0, 0.0, TAU, dimc(col, 0.7 if not empty else 0.4))
-	# 2. Rotor disc, plus two grooves and a few slots so it reads as a brake disc
-	_disc(cx, cy, rr, rotor)
-	_ring_track(cx, cy, rr - 0.8, rr - 1.6, 0.0, TAU, rotor_d)
-	_ring_track(cx, cy, rr * 0.58, rr * 0.58 - 0.8, 0.0, TAU, rotor_d)
-	for k in 6:
-		var sa := deg_to_rad(18.0 + k * 60.0)  # slots sit in the spoke gaps, not under a spoke
-		var p0 := Vector2(cx + cos(sa) * (rh + 1.4), cy + sin(sa) * (rh + 1.4))
-		var p1 := Vector2(cx + cos(sa) * (rr - 1.8), cy + sin(sa) * (rr - 1.8))
-		draw_line(p0, p1, rotor_d, 1.0)
-	# a 1 px highlight on the upper-left of the rotor so the disc has a surface
-	var ha := deg_to_rad(200.0)
-	var hb := deg_to_rad(280.0)
-	_ring_seg(cx, cy, rr - 0.2, rr - 1.0, ha, hb, Color8(220, 210, 205))
-	# 3. Caliper at 3 o'clock, before the spokes, so it shows through the gap
-	_caliper(cx, cy, ri, rt, col)
-	# 4. Rim ring
-	_ring_track(cx, cy, ri, rr, 0.0, TAU, RIM)
-	# 5. Five slightly slimmer spokes, gap centred at 0° (over the caliper)
-	for i in 5:
-		var a := deg_to_rad(36.0 + i * 72.0)
-		_spoke(cx, cy, a, rh + 0.4, ri - 0.3, 1.15, 1.7, RIM)
-	# 6. Hub
-	_disc(cx, cy, rh, HUB)
-	_disc(cx, cy, rh - 1.0, RIM_D)
-	_disc(cx, cy, 0.7, col)
-	# 7. Tyre outline
-	_ring_track(cx, cy, rt + 0.6, rt, 0.0, TAU, INK_I)
+func _icon_brake(cx: float, cy: float, r: float, col: Color) -> void:
+	# Cross-drilled rotor + solid black caliper (Austin ref). No tyre, no wheel.
+	# Rotor, slots and hub in the EN colour; caliper is solid ink with a 1 px
+	# colour outline so the black housing holds on the dark band. Flat, no sheen.
+	var detail := r >= 16.0
+	var n := 48 if r >= 24.0 else (32 if r >= 14.0 else 20)
+	var ring_w := maxf(1.6, r * 0.16)
+	var r_out := r
+	var r_in := r - ring_w
+	# Godot 2D: 0 = right, up = -PI/2, increasing angle is clockwise on screen.
+	# Caliper covers the top left: just below 9 o'clock, over 12, ending ~1 o'clock.
+	var cal_a0 := PI - 0.22
+	var cal_a1 := PI + 2.20
+	var cal_ro := r * 1.08
+	var cal_ri := r * 0.50
+	# Visible outer ring: gap at the top right after the caliper, then the long
+	# way around to just under the caliper's left end.
+	var ring_a0 := cal_a1 + 0.18
+	var ring_sweep := (cal_a0 - 0.04) - ring_a0
+	if ring_sweep <= 0.0:
+		ring_sweep += TAU
+	_ring_n(cx, cy, r_out + 0.7, r_in - 0.5, ring_a0, ring_sweep, INK_I, n)
+	_ring_n(cx, cy, r_out, r_in, ring_a0, ring_sweep, col, n)
+	# Inner bell ring with a small gap around 4 o'clock.
+	var b0 := r * 0.48
+	var b1 := r * 0.36
+	if b1 > 2.0:
+		var gap1 := 0.35
+		var bs := TAU - 0.60
+		_ring_n(cx, cy, b0, b1, gap1 + 0.60, bs, col, n)
+	# Radial slots. 6 at in-band size, 8 when there is room. Skip the caliper
+	# sector and the top-right ring gap.
+	var nslot := 8 if detail else 6
+	var slots: Array = []
+	for i in 16:
+		var a := -PI / 2.0 + TAU * (float(i) + 0.5) / 16.0
+		if _ang_in(a, cal_a0, cal_a1):
+			continue
+		if _ang_in(a, cal_a1, ring_a0):
+			continue
+		slots.append(a)
+		if slots.size() >= nslot:
+			break
+	var s0 := r * 0.54
+	var s1 := r * 0.76
+	var sw := (maxf(2.0, r * 0.07) if r >= 24.0 else (1.6 if detail else 1.15))
+	for a in slots:
+		draw_line(Vector2(cx + cos(a) * s0, cy + sin(a) * s0), Vector2(cx + cos(a) * s1, cy + sin(a) * s1), col, sw)
+	# Hub ring, 4 lug dots, centre bore.
+	var rh := r * 0.28
+	var rb := maxf(1.1, r * 0.13)
+	if rh > 1.6:
+		_disc(cx, cy, rh + 0.6, INK_I, n)
+		_disc(cx, cy, rh, col, n)
+		_disc(cx, cy, rb, INK_I, n)
+	if rh > 3.0:
+		var lug_r := r * 0.205
+		var lug_s := 1.0 if r < 16.0 else maxf(1.2, r * 0.055)
+		for i in 4:
+			var la := deg_to_rad(45.0 + float(i) * 90.0)
+			var lx := cx + cos(la) * lug_r
+			var ly := cy + sin(la) * lug_r
+			if r < 14.0:
+				rect(roundf(lx - 0.5), roundf(ly - 0.5), 1.0, 1.0, INK_I)
+			else:
+				_disc(lx, ly, lug_s, INK_I, 8)
+	# Caliper: colour outline first, solid ink fill, rounded end caps, highlight arc.
+	var cap_mid := (cal_ri + cal_ro) * 0.5
+	var cap_r := (cal_ro - cal_ri) * 0.5
+	var ow := maxf(1.0, r * 0.06)
+	_ring_n(cx, cy, cal_ro + ow, cal_ri - ow, cal_a0, cal_a1 - cal_a0, col, n)
+	_disc(cx + cos(cal_a0) * cap_mid, cy + sin(cal_a0) * cap_mid, cap_r + ow, col, 12)
+	_disc(cx + cos(cal_a1) * cap_mid, cy + sin(cal_a1) * cap_mid, cap_r + ow, col, 12)
+	_ring_n(cx, cy, cal_ro, cal_ri, cal_a0, cal_a1 - cal_a0, INK_I, n)
+	_disc(cx + cos(cal_a0) * cap_mid, cy + sin(cal_a0) * cap_mid, cap_r, INK_I, 12)
+	_disc(cx + cos(cal_a1) * cap_mid, cy + sin(cal_a1) * cap_mid, cap_r, INK_I, 12)
+	# Thin highlight arc inside the caliper body (the slot in the ref). Flat, not a sheen.
+	var hi: Color = icon_job.get("highlight", Color8(200, 210, 220))
+	var h_r := (cal_ri + cal_ro) * 0.55 + r * 0.06
+	var h_w := maxf(1.0, r * 0.08)
+	var h_a0 := cal_a0 + 0.32
+	var h_a1 := cal_a1 - 0.32
+	if h_a1 > h_a0:
+		_ring_n(cx, cy, h_r + h_w * 0.5, h_r - h_w * 0.5, h_a0, h_a1 - h_a0, hi, n)
 
-func _caliper(cx: float, cy: float, r_rim: float, r_tyre: float, col: Color) -> void:
-	# Chunky 2-piston caliper at 3 o'clock. Body sits just outside the rotor, pads pinch onto it.
-	var mid := Color(minf(col.r * 1.05, 1), minf(col.g * 0.85, 1), minf(col.b * 0.85, 1))
-	var bright := Color(minf(col.r * 1.2, 1), minf(col.g * 0.95 + 0.05, 1), minf(col.b * 0.95 + 0.05, 1))
-	var pad := P([
-		cx + r_rim - 3.5, cy - 2.4,
-		cx + r_rim + 0.4, cy - 2.4,
-		cx + r_rim + 0.4, cy + 2.4,
-		cx + r_rim - 3.5, cy + 2.4,
-	])
-	solid(pad, dimc(col, 0.7))
-	var body := P([
-		cx + r_rim - 0.2, cy - 4.0,
-		cx + r_tyre + 1.4, cy - 4.0,
-		cx + r_tyre + 2.2, cy - 2.2,
-		cx + r_tyre + 2.2, cy + 2.2,
-		cx + r_tyre + 1.4, cy + 4.0,
-		cx + r_rim - 0.2, cy + 4.0,
-	])
-	solid(body, mid)
-	outline(body, INK_I)
-	_disc(cx + r_tyre - 0.4, cy - 1.7, 1.45, bright)
-	_disc(cx + r_tyre - 0.4, cy + 1.7, 1.45, bright)
-	rect(cx + r_tyre - 1.0, cy - 0.5, 2.0, 1.0, dimc(col, 0.55))
+
+func _ang_in(a: float, a0: float, a1: float) -> bool:
+	var sweep := a1 - a0
+	if sweep < 0.0:
+		sweep += TAU
+	return fposmod(a - a0, TAU) <= sweep
+
+
+func _ring_n(cx: float, cy: float, r0: float, r1: float, a0: float, sweep: float, col: Color, n: int) -> void:
+	var segs := maxi(n, 8)
+	for i in segs:
+		var t0 := a0 + sweep * (float(i) / float(segs))
+		var t1 := a0 + sweep * (float(i + 1) / float(segs))
+		_ring_seg(cx, cy, r0, r1, t0, t1, col)
+
 
 func _spoke(cx: float, cy: float, a: float, r0: float, r1: float, w0: float, w1: float, col: Color) -> void:
 	var d := Vector2(cos(a), sin(a))
@@ -543,60 +597,87 @@ func _disc(cx: float, cy: float, r: float, col: Color, n := 16) -> void:
 	solid(pts, col)
 
 func _icon_shock(cx: float, cy: float, r: float, col: Color) -> void:
-	# Shock absorber: upper eye, body/can, shaft, coil loops, lower eye.
-	# At r >= 13 (variant D) the parts are thicker and the can is kept short so
-	# three clear coils have room. Smaller sizes keep a tighter silhouette.
-	var bold := r >= 13.0
-	var dark := dimc(col, 0.7)
-	var eye_r := 2.6 if bold else 2.2
-	var eye_in := 1.2 if bold else 1.0
-	var can_w := 5.5 if bold else 3.5
-	var coil_w := 6.0 if bold else 4.2
-	var coil_step := 3.6 if bold else 3.4
-	var coil_n := 3
-	# upper eye
-	var uy := cy - r + eye_r
-	_ring_track(cx, uy, eye_r, eye_in, 0.0, TAU, col)
-	_ring_track(cx, uy, eye_r + 0.3, eye_r, 0.0, TAU, INK_I)
-	# short body / can, leaving room for the coils
-	var can_y0 := uy + eye_r + 0.4
-	var can_h := 7.0 if bold else (r * 0.7)
-	var can_y1 := can_y0 + can_h
-	var can := P([cx - can_w, can_y0, cx + can_w, can_y0, cx + can_w, can_y1, cx - can_w, can_y1])
-	solid(can, col)
-	outline(can, INK_I)
-	rect(cx - can_w, can_y0 + (2.2 if bold else 2.0), can_w * 2.0, 1.4 if bold else 1.0, dark)
-	if bold:
-		rect(cx - can_w, can_y1 - 2.2, can_w * 2.0, 1.4, dark)
-		draw_line(Vector2(cx - can_w + 1, can_y0 + 1), Vector2(cx - can_w + 1, can_y1 - 1), Color(1, 1, 1, 0.25), 1.0)
-	else:
-		rect(cx - can_w, can_y1 - 2.0, can_w * 2.0, 1.2, dark)
-	# shaft behind the coils, down to the lower cap
-	var ly := cy + r - eye_r
-	var cap_h := 1.8 if bold else 1.4
-	var shaft_y1 := ly - eye_r - 0.2
-	var shw := 2.2 if bold else 1.6
-	rect(cx - shw / 2.0, can_y1, shw, maxf(shaft_y1 - can_y1, 1.0), RIM)
-	outline(P([cx - shw / 2.0, can_y1, cx + shw / 2.0, can_y1, cx + shw / 2.0, shaft_y1, cx - shw / 2.0, shaft_y1]), INK_I)
-	# three clearly separated coil loops, shaft visible through the hole
-	var coil0 := can_y1 + 0.3
-	for i in coil_n:
-		var y := coil0 + i * coil_step
-		var coil := P([cx, y, cx + coil_w, y + coil_step * 0.5, cx, y + coil_step * 0.92, cx - coil_w, y + coil_step * 0.5])
-		solid(coil, col)
-		outline(coil, INK_I)
-		var iw := coil_w * 0.42
-		var inner := P([cx, y + coil_step * 0.28, cx + iw, y + coil_step * 0.5, cx, y + coil_step * 0.70, cx - iw, y + coil_step * 0.5])
-		solid(inner, Color8(18, 20, 28))
-		rect(cx - shw / 2.0, y + coil_step * 0.28, shw, coil_step * 0.42, RIM)
-	# lower cap
-	var cap_w := 4.2 if bold else 3.0
-	var cap := P([cx - cap_w, shaft_y1, cx + cap_w, shaft_y1, cx + cap_w, shaft_y1 + cap_h, cx - cap_w, shaft_y1 + cap_h])
-	solid(cap, dark)
-	outline(cap, INK_I)
-	# lower eye
-	_ring_track(cx, ly, eye_r - 0.15, eye_in - 0.1, 0.0, TAU, col)
-	_ring_track(cx, ly, eye_r + 0.15, eye_r - 0.15, 0.0, TAU, INK_I)
+	# Vertical coilover (Austin shock reference, drawn straight up and down,
+	# not tilted). Top eye, upper perch, 3–5 sloped coils, lower perch,
+	# narrow rounded damper body with a bottom eyelet hole. Flat fill + ink.
+	var top := cy - r
+	var bot := cy + r
+	var eye_r := maxf(2.0, r * 0.20)
+	var eye_in := maxf(0.8, eye_r * 0.42)
+	var ey := top + eye_r
+	_ring_track(cx, ey, eye_r, eye_in, 0.0, TAU, col)
+	_ring_track(cx, ey, eye_r + 0.55, eye_r, 0.0, TAU, INK_I)
+	var neck_y0 := ey + eye_r - 0.15
+	var neck_h := maxf(0.9, r * 0.07)
+	var neck_w := maxf(1.2, r * 0.14)
+	solid(P([cx - neck_w, neck_y0, cx + neck_w, neck_y0, cx + neck_w, neck_y0 + neck_h, cx - neck_w, neck_y0 + neck_h]), col)
+	outline(P([cx - neck_w, neck_y0, cx + neck_w, neck_y0, cx + neck_w, neck_y0 + neck_h, cx - neck_w, neck_y0 + neck_h]), INK_I)
+	var up_y := neck_y0 + neck_h
+	var up_h := maxf(1.8, r * 0.14)
+	var up_w := maxf(3.0, r * 0.48)
+	var up := P([cx - up_w, up_y, cx + up_w, up_y, cx + up_w + 0.3, up_y + up_h, cx - up_w - 0.3, up_y + up_h])
+	solid(up, col)
+	outline(up, INK_I)
+	if up_h >= 3.0:
+		draw_line(Vector2(cx - up_w + 0.4, up_y + up_h * 0.5), Vector2(cx + up_w - 0.4, up_y + up_h * 0.5), INK_I, 1.0)
+	# Give the coils the middle of the height; keep the damper body narrow and short.
+	var body_h := maxf(4.2, r * 0.40)
+	var low_h := maxf(1.5, r * 0.11)
+	var body_y0 := bot - body_h
+	var low_y0 := body_y0 - low_h
+	var coil_y0 := up_y + up_h + 0.2
+	var coil_span := maxf(low_y0 - coil_y0, 3.0)
+	var tw := maxf(1.1, r * 0.10)
+	var min_step := tw * 2.6 + 0.6
+	var ncoil := 4
+	if r >= 18.0 and coil_span / 5.0 >= min_step:
+		ncoil = 5
+	elif coil_span / 4.0 < min_step:
+		ncoil = 3 if coil_span / 3.0 >= min_step else maxi(2, int(floor(coil_span / min_step)))
+	var step := coil_span / float(ncoil)
+	var coil_w := maxf(2.8, r * 0.46)
+	# Shaft
+	var shw := maxf(1.1, r * 0.10)
+	rect(cx - shw * 0.5, coil_y0, shw, coil_span, dimc(col, 0.7))
+	# Sloped zigzag — each leg has real vertical travel so it reads as a spring,
+	# not a stack of flat bars.
+	var pts := PackedVector2Array()
+	pts.append(Vector2(cx - coil_w, coil_y0 + 0.2))
+	for i in ncoil:
+		var mid := coil_y0 + (float(i) + 0.5) * step
+		var botc := coil_y0 + (float(i) + 1.0) * step
+		pts.append(Vector2(cx + coil_w, mid))
+		pts.append(Vector2(cx - coil_w, botc - 0.15))
+	draw_polyline(pts, INK_I, tw + 1.15, false)
+	draw_polyline(pts, col, tw, false)
+	# Lower perch.
+	var low_w := up_w * 0.90
+	var low := P([cx - low_w - 0.3, low_y0, cx + low_w + 0.3, low_y0, cx + low_w, low_y0 + low_h, cx - low_w, low_y0 + low_h])
+	solid(low, col)
+	outline(low, INK_I)
+	# Narrow stadium body (rounded only at the bottom).
+	var bw := maxf(2.2, r * 0.26)
+	var by0 := low_y0 + low_h - 0.3
+	var cap_r := bw
+	var cap_cy := bot - cap_r
+	if cap_cy < by0 + 1.2:
+		cap_r = maxf(1.6, (bot - by0) * 0.40)
+		cap_cy = bot - cap_r
+		bw = cap_r
+	rect(cx - bw, by0, bw * 2.0, maxf(cap_cy - by0, 1.0), col)
+	_disc(cx, cap_cy, cap_r, col, 16)
+	draw_line(Vector2(cx - bw, by0), Vector2(cx + bw, by0), INK_I, 1.0)
+	draw_line(Vector2(cx - bw, by0), Vector2(cx - bw, cap_cy), INK_I, 1.0)
+	draw_line(Vector2(cx + bw, by0), Vector2(cx + bw, cap_cy), INK_I, 1.0)
+	_ring_n(cx, cap_cy, cap_r, maxf(cap_r - 1.0, cap_r * 0.7), 0.0, PI, INK_I, 12)
+	var hole_r := maxf(0.9, r * 0.11)
+	var hole_cy := cap_cy + cap_r * 0.15
+	if hole_cy + hole_r > bot - 0.5:
+		hole_cy = bot - hole_r - 0.7
+	_disc(cx, hole_cy, hole_r + 0.65, INK_I, 12)
+	_disc(cx, hole_cy, maxf(0.6, hole_r * 0.42), Color8(18, 18, 24), 12)
+	_ring_n(cx, hole_cy, hole_r, maxf(0.6, hole_r * 0.42), 0.0, TAU, col, 12)
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Variant E: International Rally bottom band, flat HUD (Austin 2026-11-13:
@@ -1324,3 +1405,315 @@ func _paint_e3_sign() -> void:
 	if st.has("plate"):
 		name = String(st.plate.get("name", "HAIRPIN L"))
 	_ta(cx, y0 + h + 2.0, name, 11, L_WHITE, "m", true, false)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Variant E3B: E3 layout, heat/load meters that fill as load builds and drain
+# as they recover. LIMIT (~80%) and RELEASE (~55%) marks. OVERRUN between
+# LIMIT and full; LOCKED at full until the fill cools past RELEASE.
+# Placeholder thresholds, not approved. Concept only; not in the sim.
+# ─────────────────────────────────────────────────────────────────────────────
+const LIMIT_T := 0.80
+const RELEASE_T := 0.55
+const COL_OVERRUN := Color8(255, 112, 28)  # #FF701C
+const COL_LIM_MARK := Color8(255, 184, 56)  # amber T-cap on the top edge
+const COL_REL_MARK := Color8(140, 200, 255)  # cool triangle on the bottom edge
+const KEY_STANCE := {"fuel": "A", "brakes": "D", "susp": "S"}
+
+
+func _paint_e3b(rs: Dictionary) -> void:
+	_paint_e_gap()
+	_paint_e3_sign()
+	var x0 := 8.0
+	var y0 := 408.0
+	var x1 := 632.0
+	var y1 := 479.0
+	_flat_panel(x0, y0, x1, y1)
+	_paint_e3b_meters(rs, 12.0, y0, 210.0, y1)
+	_vdiv(216.0, y0, y1)
+	_paint_e3_lock(222.0, y0, 400.0, y1)
+	_vdiv(406.0, y0, y1)
+	_paint_e3b_plan(rs, 412.0, y0, x1 - 4.0, y1)
+
+
+func _item_state_e3b(rs: Dictionary, it: Dictionary) -> Dictionary:
+	var s: Dictionary = _item_state(rs, it)
+	if String(it.key) == "fuel":
+		s["heat"] = true
+	s["no_slash"] = true
+	var loads: Dictionary = rs.get("load", {})
+	var f: float
+	if loads.has(it.key):
+		f = clampf(float(loads[it.key]), 0.0, 1.0)
+	else:
+		f = clampf(float(s.val) / maxf(float(s.pips), 1.0), 0.0, 1.0)
+	s["load"] = f
+	var locked_keys: Array = rs.get("locked", [])
+	var is_locked: bool = locked_keys.has(it.key) or f >= 0.999
+	if is_locked and f < RELEASE_T:
+		is_locked = false
+	s["meter_locked"] = is_locked
+	s["cooling"] = is_locked and f < 0.999
+	s["overrun"] = (not is_locked) and f >= LIMIT_T
+	if is_locked:
+		s["badge"] = "LOCKED"
+	elif bool(s.overrun):
+		s["badge"] = "OVERRUN"
+	else:
+		s["badge"] = ""
+	return s
+
+
+func _paint_e3b_meters(rs: Dictionary, x0: float, y0: float, x1: float, y1: float) -> void:
+	var pad := 5.0
+	var rh: float = ((y1 - y0) - pad * 2.0) / 3.0
+	for i in ITEMS_E.size():
+		var s: Dictionary = _item_state_e3b(rs, ITEMS_E[i])
+		var y: float = y0 + pad + float(i) * rh
+		var icy: float = y + rh * 0.5
+		var r: float = 11.0 if String(s.key) == "susp" else 10.0
+		_icon_at(x0 + 12.0, icy, s, r)
+		var cx := x0 + 26.0
+		var tw: float = _e3b_stat_tag(cx, icy - 6.0, s)
+		var bx := cx + tw + 4.0
+		var badge: String = String(s.badge)
+		var badge_w := 0.0
+		if badge != "":
+			badge_w = _swf(_fb(), badge, 9) + (16.0 if badge == "LOCKED" else 10.0)
+		var bx1: float = x1 - 3.0 - (badge_w + 2.0 if badge_w > 0.0 else 0.0)
+		_e3b_trough(bx, icy - 5.0, maxf(bx1 - bx, 16.0), 10.0, s)
+		if badge_w > 0.0:
+			_e3b_badge_at(x1 - 3.0, icy - 6.0, s)
+
+
+func _e3b_stat_tag(x: float, y: float, s: Dictionary) -> float:
+	var lab: String = s.stat
+	var sz := 9
+	var w := maxf(_swf(_fb(), lab, sz) + 8.0, 24.0)
+	var h := 12.0
+	var fill: Color = s.col
+	var tc: Color = INK if s.key == "susp" else Color.WHITE
+	if bool(s.get("meter_locked", false)):
+		fill = Color8(72, 76, 86)
+		tc = Color8(200, 200, 206)
+	draw_rect(Rect2(x, y, w, h), fill, true)
+	draw_rect(Rect2(x, y, w, h), INK, false, 1.0)
+	_tb(x + w / 2.0, y + h / 2.0, lab, sz, tc, "m", false, true)
+	if bool(s.get("meter_locked", false)):
+		# Hard strike through the chip.
+		draw_line(Vector2(x + 1.0, y + h - 2.0), Vector2(x + w - 1.0, y + 2.0), INK, 2.0)
+		draw_line(Vector2(x + 1.0, y + h - 2.0), Vector2(x + w - 1.0, y + 2.0), Color8(220, 220, 224), 1.0)
+	return w
+
+
+func _e3b_badge_at(x: float, y: float, s: Dictionary) -> void:
+	var b: String = String(s.badge)
+	if b == "":
+		return
+	var sz := 9
+	var lock := b == "LOCKED"
+	var tw := _swf(_fb(), b, sz)
+	var w := tw + (16.0 if lock else 8.0)
+	var x0 := x - w
+	var col: Color = Color8(48, 50, 60) if lock else COL_OVERRUN
+	draw_rect(Rect2(x0, y, w, 12.0), col, true)
+	draw_rect(Rect2(x0, y, w, 12.0), INK, false, 1.0)
+	var tx := x0 + w / 2.0
+	if lock:
+		_padlock(x0 + 5.0, y + 6.0, 4.4, COL_OVERRUN)
+		tx += 5.0
+		_tb(tx, y + 6.0, b, sz, Color.WHITE, "m", false, true)
+	else:
+		_tb(x0 + w / 2.0, y + 6.0, b, sz, INK, "m", false, true)
+
+
+func _padlock(cx: float, cy: float, s: float, col: Color) -> void:
+	# Tiny flat padlock, stroke-built so the shackle reads at badge size.
+	var bw := s * 1.05
+	var bh := s * 0.90
+	var by := cy + s * 0.10
+	# Shackle (top half-ring) sits above the body.
+	var sr := s * 0.80
+	_ring_n(cx, by, sr, maxf(sr - 1.4, sr * 0.55), PI, PI, col, 10)
+	# Body + keyhole.
+	draw_rect(Rect2(cx - bw, by, bw * 2.0, bh), col, true)
+	draw_rect(Rect2(cx - bw, by, bw * 2.0, bh), INK, false, 1.0)
+	_disc(cx, by + bh * 0.48, maxf(0.6, s * 0.18), INK, 6)
+
+
+func _e3b_trough(x: float, y: float, w: float, h: float, s: Dictionary) -> void:
+	var well := Rect2(x, y, w, h)
+	draw_rect(well, Color8(8, 10, 16), true)
+	draw_rect(well, INK, false, 1.0)
+	var inner := w - 2.0
+	var x0 := x + 1.0
+	var y0 := y + 1.0
+	var y1 := y + h - 1.0
+	# Flat OVERRUN zone in the last 20% of the well (LIMIT to full).
+	var zone_x := x0 + inner * LIMIT_T
+	var zone_w := maxf((x0 + inner) - zone_x, 1.0)
+	draw_rect(Rect2(zone_x, y0, zone_w, y1 - y0), Color8(72, 32, 16), true)
+	var f: float = clampf(float(s.get("load", 0.0)), 0.0, 1.0)
+	var fill_w := inner * f
+	var col: Color = s.col
+	if bool(s.get("overrun", false)) or (bool(s.get("meter_locked", false)) and not bool(s.get("cooling", false))):
+		col = COL_OVERRUN
+	elif bool(s.get("cooling", false)):
+		col = dimc(s.col, 0.50)
+	if fill_w >= 1.0:
+		var slant := fill_w < inner - 0.51 and not bool(s.get("meter_locked", false))
+		_trough_fill(x0, y0, y1, fill_w, inner, col, slant)
+		if bool(s.get("cooling", false)):
+			_flat_hatch(x0, y0, y1, fill_w, Color8(10, 12, 18, 200))
+	# LIMIT: small amber block on the top edge, plus a short tick into the well.
+	# A block, not a letter-T, so it stays distinct from the RELEASE triangle.
+	var lx := x0 + inner * LIMIT_T
+	draw_rect(Rect2(lx - 3.0, y - 2.0, 7.0, 3.0), COL_LIM_MARK, true)
+	draw_rect(Rect2(lx - 3.0, y - 2.0, 7.0, 3.0), INK, false, 1.0)
+	draw_line(Vector2(lx, y + 1.0), Vector2(lx, y + 4.0), COL_LIM_MARK, 2.0)
+	# RELEASE: cool filled triangle on the bottom border, pointing up.
+	var rx := x0 + inner * RELEASE_T
+	var tri := P([rx, y + h - 5.0, rx - 3.5, y + h - 1.0, rx + 3.5, y + h - 1.0])
+	solid(tri, COL_REL_MARK)
+	outline(tri, INK)
+
+
+func _flat_hatch(x0: float, y0: float, y1: float, fill_w: float, col: Color) -> void:
+	# Flat 1 px diagonal hatch, clipped to the fill. No grain, no sheen.
+	var x1 := x0 + fill_w
+	var step := 4.0
+	var c := x0 + y0
+	var end := x1 + y1
+	while c <= end + 0.1:
+		var xa := x0
+		var ya := c - x0
+		var xb := x1
+		var yb := c - x1
+		if ya < y0:
+			xa = c - y0
+			ya = y0
+		elif ya > y1:
+			xa = c - y1
+			ya = y1
+		if yb < y0:
+			xb = c - y0
+			yb = y0
+		elif yb > y1:
+			xb = c - y1
+			yb = y1
+		if xa >= x0 - 0.2 and xa <= x1 + 0.2 and xb >= x0 - 0.2 and xb <= x1 + 0.2 and absf(xa - xb) + absf(ya - yb) > 0.6:
+			draw_line(Vector2(xa, ya), Vector2(xb, yb), col, 1.0)
+		c += step
+
+
+func _paint_e3b_plan(rs: Dictionary, x0: float, y0: float, x1: float, y1: float) -> void:
+	if not st.has("plan"):
+		return
+	var pl: Dictionary = st.plan
+	_ta(x0 + 22.0, y0 + 2.0, "PLAN THE LINE", 10, L_WHITE, "l", true, false)
+	var cam: Dictionary = _e_cam(st.plate) if st.has("plate") else {"cur": -1, "ndone": 0, "md": "VIEW"}
+	var ph: int = int(pl.get("phase", 0))
+	var slots: Array = st.get("slots", [null, null, null])
+	var lanes: Array = ["D", "S", "A"] if String(st.get("dir", "R")) == "L" else ORDER
+	var row0 := y0 + 13.0
+	var rh: float = maxf(((y1 - 2.0) - row0) / 3.0, 16.0)
+	var letters := ["E", "A", "X"]
+	# Stance keys that are locked (unavailable) or in OVERRUN (selectable, penalty).
+	var locked_stance := {}
+	var overrun_stance := {}
+	for it in ITEMS_E:
+		var s: Dictionary = _item_state_e3b(rs, it)
+		var stn: String = String(KEY_STANCE.get(it.key, ""))
+		if bool(s.get("meter_locked", false)):
+			locked_stance[stn] = true
+		elif bool(s.get("overrun", false)):
+			overrun_stance[stn] = true
+	for i in 3:
+		var ry: float = row0 + float(i) * rh
+		var active: bool = (i == ph and ph < 3)
+		var locked_row: bool = (i < ph) or (ph >= 3 and slots[i] != null)
+		var on_cam: bool = int(cam.cur) == i
+		var cam_done: bool = i < int(cam.ndone) and not on_cam
+		var lcol: Color = L_AMBER if on_cam else (L_WHITE if cam_done else L_DIMMER)
+		if on_cam:
+			draw_rect(Rect2(x0 + 3.0, ry + 2.0, 16.0, rh - 4.0), L_AMBER, true)
+			lcol = INK
+		_ta(x0 + 11.0, ry + rh * 0.5, letters[i], 11, lcol, "m", not on_cam, true)
+		if active:
+			draw_rect(Rect2(x0 + 21.0, ry + 1.0, 2.0, rh - 2.0), L_AMBER, true)
+		var nx := x0 + 26.0
+		var ncol: Color = INK if active else (EDGE if locked_row else TODO)
+		if active:
+			var nw: float = _swf(_fb(), PH[i], 10) + 6.0
+			draw_rect(Rect2(nx - 2.0, ry + 1.0, nw, 10.0), L_AMBER, true)
+		_tb(nx, ry + 1.0, PH[i], 10, ncol, "l", not active, false)
+		if locked_row:
+			check(nx + _swf(_fb(), PH[i], 10) + 3.0, ry + 2.0, CHECK_GREEN)
+		var chosen := ""
+		if locked_row and slots[i] != null:
+			chosen = String(slots[i])
+		elif locked_row and i == 0 and String(pl.get("entry", "")) != "":
+			chosen = String(pl.entry)
+		elif active:
+			chosen = ORDER[int(pl.get("sel", 0))] if int(pl.get("sel", 0)) >= 0 else ""
+		# Don't show a locked stance as the selected chip.
+		if locked_stance.has(chosen):
+			if active:
+				chosen = ""
+				# Fall back to the hovered/selected only if it isn't locked; already blanked.
+			# For a locked row that already committed this stance, still show it struck.
+		var lx := x0 + 78.0
+		if active or locked_row:
+			var w := 42.0
+			if x1 - lx < w * 3.0 + 4.0:
+				w = maxf(((x1 - 2.0) - lx) / 3.0, 34.0)
+			for k in lanes:
+				var lab: String = LANE[k]
+				var note: String = NAME[k]
+				var avail: Dictionary = pl.get("avail", {})
+				var stance_lock: bool = locked_stance.has(k)
+				var off: bool = (active and int(avail.get(k, 1)) <= 0) or stance_lock
+				var selected: bool = (k == chosen and not off)
+				var dim: bool = locked_row or off
+				var cx := lx + w * 0.5
+				if selected:
+					draw_rect(Rect2(lx, ry + 1.0, w - 3.0, 9.0), AMBER if active else EDGE, true)
+				_tb(cx, ry + 1.0, lab, 9, INK if selected else (DIMT if dim else SUB), "m", not selected, false)
+				if selected and locked_row:
+					check(cx + _swf(_fb(), lab, 9) * 0.5 + 2.0, ry + 1.0, INK)
+				_e3_stat_box(cx, ry + 11.0, note, STANCE[k], selected, dim and not selected)
+				if stance_lock:
+					# Hard strike across the lane + stat chip so the stance reads unavailable.
+					var x_a := lx + 2.0
+					var x_b := lx + w - 5.0
+					draw_line(Vector2(x_a, ry + 18.0), Vector2(x_b, ry + 3.0), INK, 2.0)
+					draw_line(Vector2(x_a, ry + 18.0), Vector2(x_b, ry + 3.0), Color8(220, 220, 224), 1.0)
+				elif overrun_stance.has(k):
+					# Penalty badge: the stat box itself fills hot orange, label stays
+					# POW / EN / HAN in ink. No extra tab — the cell is too tight.
+					var box_w := maxf(_swf(_fb(), "POW", 8) + 6.0, 22.0)
+					var bx0 := cx - box_w * 0.5
+					draw_rect(Rect2(bx0, ry + 11.0, box_w, 7.0), COL_OVERRUN, true)
+					draw_rect(Rect2(bx0, ry + 11.0, box_w, 7.0), INK, false, 1.0)
+					_tb(cx, ry + 14.5, note, 8, INK, "m", false, true)
+				lx += w
+		else:
+			_tb(lx, ry + rh * 0.5, "--  --  --", 11, TODO, "l", false, true)
+
+
+func _paint_icon_job() -> void:
+	# Standalone icon render for review sheets. Drawn in the node's local pixels.
+	var kind := String(icon_job.get("kind", "brakes"))
+	var cx := float(icon_job.get("cx", 8.0))
+	var cy := float(icon_job.get("cy", 8.0))
+	var r := float(icon_job.get("r", 7.0))
+	var col: Color = icon_job.get("col", COL.brakes)
+	if not bool(icon_job.get("transparent", false)):
+		var bg: Color = icon_job.get("bg", Color8(10, 14, 36))
+		draw_rect(Rect2(0, 0, size.x, size.y), bg, true)
+	match kind:
+		"fuel", "coolant", "pow":
+			_icon_coolant(cx, cy, r, col)
+		"brakes", "en", "brake":
+			_icon_brake(cx, cy, r, col)
+		_:
+			_icon_shock(cx, cy, r, col)

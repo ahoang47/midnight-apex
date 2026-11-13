@@ -82,8 +82,20 @@ done
 echo "import..."
 "$GODOT" --headless --path "$DEST" --import --quit || true
 
+if [[ "${ICONS:-}" == "1" ]]; then
+  echo "icons..."
+  xvfb-run -a -s "-screen 0 256x256x24" "$GODOT" --path "$DEST" --rendering-driver opengl3 --scene res://scenes/icon_export.tscn
+  python3 "$ROOT/make_e3b_sheets.py"
+  echo "done icons $ROOT"
+  exit 0
+fi
+
 echo "render..."
+if [[ -n "${ONLY:-}" ]]; then
+  export ONLY
+fi
 xvfb-run -a -s "-screen 0 1280x960x24" "$GODOT" --path "$DEST" --rendering-driver opengl3
 
 python3 "$ROOT/make_sheet.py"
+python3 "$ROOT/make_e3b_sheets.py"
 echo "done $ROOT"

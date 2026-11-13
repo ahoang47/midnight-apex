@@ -9,8 +9,8 @@ Rendered in Godot 4.6.3 from the line-preview project (Gordon's two-corner Entry
 Variants A–C sit on the left under LINE LOCK. Variant D sits in a single wide plate at the bottom left, mirroring PLAN THE LINE, clear of the car:
 
 1. **FUEL** (POW, green `#2CB84A`) — gas-pump icon on A–D. Does not recover during the race. Aggressive POW lines burn the most.
-2. **BRAKES** (EN, red `#E8282C`) — a wheel (tyre, rim, five spokes) with the brake rotor and caliper visible through the spokes, so it reads as the wheel-and-brake package. Does not recover during the race.
-3. **SUSP** (HAN, yellow `#F0C828`) — shock-absorber icon. Spent by HAN lines, recovers each turn.
+2. **BRAKES** (EN, red `#E8282C`) — on A–E3, a wheel (tyre, rim, five spokes) with the rotor and caliper visible through the spokes. E3B replaces this with a cross-drilled rotor and solid caliper, no tyre (Austin's brake-icon reference).
+3. **SUSP** (HAN, yellow `#F0C828`) — shock-absorber icon. E3B uses a vertical coilover (Austin's shock reference, drawn straight up and down, not tilted).
 
 On-screen labels on A–D are FUEL / BRAKES / SUSP, each with a small framed POW / EN / HAN stat note. Behind the screen the stats stay POW / EN / HAN.
 
@@ -25,6 +25,8 @@ Variant **E** replaces the POW/fuel row with **HEAT**: a standard dashboard cool
 - `e_full.png` — **E1.** International Rally-style layout (Austin, 2026-11-13: that GBC shot "shows a better HUD design"). One flat dark band under the play area: compact continuous HEAT / BRAKES / SUSP on the left (icon + stat chip + trough, like the T/G/E/S column), LINE LOCK (continuous bar, no pips) and the corner map in the middle, PLAN THE LINE chips on the right. The top stays minimal: rear view, a tighter tie-gap, and a floating flat turn sign (from the first reference). The road and the car stay clear. Art direction is flat: solid panel fills, 1–2 px hard borders, no plate grain, no bevels, no sheen (Austin: "the correct art direction is flatter is better"). Applied to every HUD element in E.
 - `e2_full.png` — **E2.** Same language, but LINE LOCK and the corner name sit in slim flat strips flanking the rear view, and the bottom band holds meters, the map, and the plan with a little more width. Use this if the single band in E1 feels tight.
 - `e3_full.png` — **E3.** From E1, answering Austin 2026-11-13: "if the turn indicator exists, why does the one exist in the middle of the bottom hud?" The corner map arc is gone from the band. HAIRPIN L sits under the floating turn sign, and the sign itself is a proper hairpin-left (U-turn) arrow. E / A / X camera stops move next to the PLAN THE LINE rows (E with ENTRY, A with APEX, X with EXIT). The middle of the band is LINE LOCK only, with room and bigger timer digits. Band type is Archivo Black / Nimbus Sans Bold at readable sizes, still flat.
+- `e3b_full.png` — **E3B.** Same layout as E3, with new iconography and a new meter model (Austin, 2026-11-13). Concept only; not in the sim. All three bars are heat / load meters: they fill as load builds and drain as they recover. POW = engine heat (coolant icon, unchanged), EN = brake and tyre heat (cross-drilled rotor + solid caliper, no wheel), HAN = suspension load (vertical coilover, the shock reference drawn straight up and down). The stat colour is the base fill. A LIMIT cap sits at about 80% and a RELEASE triangle at about 55% (placeholder numbers, not approved); the two marks are deliberately different. Between LIMIT and full is OVERRUN: hot-orange fill `#FF701C`, an OVERRUN tag, and a hot-orange penalty fill on that stance's PLAN THE LINE stat chip (still selectable, hits less). A full bar is LOCKED: padlock + LOCKED tag, the meter stat chip greyed and struck, and the plan chip shown unavailable. Once locked, the bar stays locked while it cools (dim, flat-hatched fill, padlock still up) until the fill drops below RELEASE; just under RELEASE it unlocks again. `e3b_full.png` shows mixed mid loads, all under LIMIT.
+
 
 **Strongest of A–C: B.** It shares LINE LOCK's width and pip language, so the left column reads as one family, and drain / low / empty / refill are the easiest to judge at a glance. A is the most compact, but the short vertical ticks are harder to count and the plates sit narrower than LINE LOCK. C is a good late-90s gauge alternative; the rings are distinctive, but they compete a little with the circular brake icon and the track only has six pips.
 
@@ -46,6 +48,9 @@ States are rendered for every variant (`a_`, `b_`, `c_`, `d_`, `e_` prefixes; E2
 - `resource_meters_d_vs_e.png` — before / after: D next to E1 and E2, so the declutter and the flat bottom-band layout can be judged together.
 - `resource_meters_e3_sheet.png` — variant E3 at full, drain, overheat and limp.
 - `resource_meters_e1_vs_e3.png` — E1 next to E3, so the map removal, hairpin-left sign, E/A/X move and chunkier type can be judged together.
+- `icons_e3_sheet.png` — POW coolant, EN rotor+caliper and HAN vertical coilover, at in-band size, HUD 2×, 64 px and 128 px, on the dark panel colour. Standalone review files: `icon_en_brake_16/64/128.png`, `icon_han_shock_16/64/128.png`, plus white-on-transparent masters.
+- `e3b_states.png` — one bar (POW heat) through cool, mid, overrun, locked (full), locked-cooling (between RELEASE and full), and unlocked (just under RELEASE).
+- `e3b_overrun.png` / `e3b_locked.png` — full frames with POW in OVERRUN and LOCKED, including the PLAN THE LINE chip treatment.
 
 **E vs D, what was trimmed or moved.** LINE LOCK, PLAN THE LINE and the HAIRPIN plate leave the play area and sit in the bottom band (E2 parks LINE LOCK and the corner name in slim top strips instead). Meter text labels drop; identity is icon + POW / EN / HAN chip. The tie-gap box is shorter. Plate grain, bevels and bar sheen are gone on every E HUD element. The floating turn sign replaces the large top-right corner plate as the upcoming-turn cue (the name, map and E/A/X stops remain, just smaller, in the band).
 
@@ -59,4 +64,4 @@ States are rendered for every variant (`a_`, `b_`, `c_`, `d_`, `e_` prefixes; E2
 - Scene: `godot/scenes/resource_preview.tscn`
 - Scripts: `godot/scripts/resource_preview.gd`, `godot/scripts/hud.gd`, `godot/scripts/hud/resource_stack.gd`
 
-Rebuild: `./run.sh` (needs `/workspace/tools/godot` 4.6.3 and the line-preview project at `../line_preview/godot`). Nothing here is approved until Austin says so.
+Rebuild: `./run.sh` (needs `/workspace/tools/godot` 4.6.3 and the line-preview project at `../line_preview/godot`). `ICONS=1 ./run.sh` exports the standalone icons. `ONLY=E3B ./run.sh` re-renders just the E3B frames. Nothing here is approved until Austin says so.

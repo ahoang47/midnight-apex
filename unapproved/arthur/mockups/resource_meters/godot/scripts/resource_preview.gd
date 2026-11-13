@@ -130,7 +130,45 @@ func _all_frames() -> Array:
 	out.append_array(_e_frames("e2", "E2", ["full", "low"]))
 	# E3: E1 minus the band map; HAIRPIN L under the sign; E/A/X next to the plan.
 	out.append_array(_e_frames("e3", "E3", ["full", "drain", "low", "empty"]))
+	# E3B: heat/load meters, new EN/HAN icons. See _e3b_frames.
+	out.append_array(_e3b_frames())
 	return out
+
+
+func _e3b_res(load: Dictionary, extra: Dictionary = {}) -> Dictionary:
+	# Heat/load fills (0 cool … 1 full). Integers on fuel/brakes/susp are unused
+	# by the E3B trough (it reads `load`) but kept so older painters stay safe.
+	var d := _e_res("E3B", 8, 8, 8, extra)
+	d["load"] = load
+	return d
+
+
+func _e3b_fr(file: String, load: Dictionary, extra: Dictionary = {}, entry: String = "A") -> Dictionary:
+	var fr: Dictionary = _fr(file, _e3b_res(load, extra), "select")
+	fr.entry = entry
+	fr.hover = 0
+	return fr
+
+
+func _e3b_frames() -> Array:
+	# Mid mixed loads, all below LIMIT. Featured stance stays OUT/POW.
+	var out: Array = []
+	out.append(_e3b_fr("e3b_full.png", {"fuel": 0.42, "brakes": 0.58, "susp": 0.30}))
+	# One bar (POW / engine heat) through the state model.
+	out.append(_e3b_fr("e3b_state_cool.png", {"fuel": 0.16, "brakes": 0.40, "susp": 0.34}))
+	out.append(_e3b_fr("e3b_state_mid.png", {"fuel": 0.45, "brakes": 0.40, "susp": 0.34}))
+	out.append(_e3b_fr("e3b_state_overrun.png", {"fuel": 0.90, "brakes": 0.40, "susp": 0.34}))
+	# Full lock: hover MID/HAN because POW is unavailable.
+	out.append(_e3b_fr("e3b_state_locked.png", {"fuel": 1.0, "brakes": 0.40, "susp": 0.34}, {"locked": ["fuel"]}, "S"))
+	# Locked, cooling (between RELEASE 0.55 and full). Still locked.
+	out.append(_e3b_fr("e3b_state_cooling.png", {"fuel": 0.68, "brakes": 0.40, "susp": 0.34}, {"locked": ["fuel"]}, "S"))
+	# Just under RELEASE: unlocked again, POW selectable.
+	out.append(_e3b_fr("e3b_state_unlocked.png", {"fuel": 0.50, "brakes": 0.40, "susp": 0.34}))
+	# Full-frame narrative shots: one stat (POW) in OVERRUN, then LOCKED.
+	out.append(_e3b_fr("e3b_overrun.png", {"fuel": 0.90, "brakes": 0.42, "susp": 0.34}))
+	out.append(_e3b_fr("e3b_locked.png", {"fuel": 1.0, "brakes": 0.42, "susp": 0.34}, {"locked": ["fuel"]}, "S"))
+	return out
+
 
 func _ready() -> void:
 	out_dir = ProjectSettings.globalize_path("res://").path_join("..")
