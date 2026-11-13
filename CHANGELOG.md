@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: E3B EN wheel is a thin 5-spoke
+
+- **Why:** Austin, 2026-11-13: "Try a thin 5 spoke like this."
+- **What (`unapproved/arthur/mockups/resource_meters/`):** The EN wheel is redrawn as a thin 5-spoke alloy (Enkei-style): five slim straight spokes from a small hub with 5 lug holes and a dark centre cap, a thin rim, and large open windows. Austin's ref is at `ref/hud_ref_wheel_5spoke.jpg`. No logos. The caliper stays inside the rim, visible through the 3-o'clock window, and is a little larger now that the windows are wider so it still reads at in-band size. Rotor, colours, line weight and flat style are unchanged. POW coolant and HAN shock are unchanged. `e3b_full.png`, `e3b_states.png`, `e3b_overrun.png` and `e3b_locked.png` re-rendered in Godot. Before/after at in-band and 4×: `en_icon_5spoke.png`. Concept only; not in the sim.
+
 ## 2026-11-13 — Arthur [art]: E3B EN caliper sits inside the wheel
 
 - **Why:** Austin, 2026-11-13: "The icon of the caliper is outside the wheel. It should be inside."

@@ -478,46 +478,58 @@ func _icon_pump(cx: float, cy: float, r: float, col: Color) -> void:
 	outline(noz, INK_I)
 
 func _icon_wheel(cx: float, cy: float, r: float, col: Color, empty: bool) -> void:
-	# Wheel package: tyre, a clearly visible steel rotor behind the spokes, caliper
-	# inside the rim in the 3-o'clock spoke gap (clamping the rotor; nothing
-	# sticks out past the rim), rim, 5 spokes, hub. Drawn back-to-front.
+	# Thin 5-spoke alloy (Austin Enkei-style ref): five slim straight spokes,
+	# thin rim, small hub with 5 lug holes and a dark centre cap, big open
+	# windows. Steel rotor behind the spokes. Caliper inside the rim, visible
+	# through the 3-o'clock window. No logos. Drawn back-to-front.
 	var rt: float = r            # tyre outer
-	var ri: float = r - 2.4      # tyre inner / rim outer
-	var rr: float = r - 3.4      # rim inner / rotor outer
-	var rh: float = 2.2          # hub
-	# Steel rotor, slightly warm so it still belongs with the EN red, but light enough
-	# to read through the spoke gaps (the earlier dim-red disc looked like a hole).
+	var tyre_w := 2.2
+	var rim_w := 0.75
+	var ri: float = r - tyre_w   # tyre inner / rim outer
+	var rr: float = ri - rim_w   # rim inner / rotor outer
+	var rh: float = maxf(2.5, r * 0.26)  # small hub, room for 5 lugs + cap
+	# Steel rotor, slightly warm so it still belongs with the EN red, but light
+	# enough to read through the open windows.
 	var rotor := Color8(186, 168, 162)
 	var rotor_d := Color8(132, 108, 106)
 	# 1. Tyre
 	_ring_track(cx, cy, rt, ri, 0.0, TAU, TYRE)
 	_ring_track(cx, cy, rt, rt - 1.0, 0.0, TAU, dimc(col, 0.7 if not empty else 0.4))
-	# 2. Rotor disc, plus two grooves and a few slots so it reads as a brake disc
+	# 2. Rotor disc, grooves and a few slots so it reads as a brake disc
 	_disc(cx, cy, rr, rotor)
 	_ring_track(cx, cy, rr - 0.8, rr - 1.6, 0.0, TAU, rotor_d)
 	_ring_track(cx, cy, rr * 0.58, rr * 0.58 - 0.8, 0.0, TAU, rotor_d)
 	for k in 6:
-		var sa := deg_to_rad(18.0 + k * 60.0)  # slots sit in the spoke gaps, not under a spoke
+		var sa := deg_to_rad(18.0 + k * 60.0)
 		var p0 := Vector2(cx + cos(sa) * (rh + 1.4), cy + sin(sa) * (rh + 1.4))
 		var p1 := Vector2(cx + cos(sa) * (rr - 1.8), cy + sin(sa) * (rr - 1.8))
 		draw_line(p0, p1, rotor_d, 1.0)
-	# a 1 px highlight on the upper-left of the rotor so the disc has a surface
 	var ha := deg_to_rad(200.0)
 	var hb := deg_to_rad(280.0)
 	_ring_seg(cx, cy, rr - 0.2, rr - 1.0, ha, hb, Color8(220, 210, 205))
-	# 3. Caliper at 3 o'clock, entirely inside the rim, before the spokes
-	# so it shows through the gap, clamping the rotor.
+	# 3. Caliper at 3 o'clock, entirely inside the rim, in the open window.
 	_caliper(cx, cy, rr, rh, col)
-	# 4. Rim ring
+	# 4. Thin rim ring
 	_ring_track(cx, cy, ri, rr, 0.0, TAU, RIM)
-	# 5. Five slightly slimmer spokes, gap centred at 0° (over the caliper)
+	# 5. Five slim straight spokes. Window centred at 0° (over the caliper).
+	# Half-widths are tight so the windows stay large (Enkei-style).
 	for i in 5:
-		var a := deg_to_rad(36.0 + i * 72.0)
-		_spoke(cx, cy, a, rh + 0.4, ri - 0.3, 1.15, 1.7, RIM)
-	# 6. Hub
-	_disc(cx, cy, rh, HUB)
-	_disc(cx, cy, rh - 1.0, RIM_D)
-	_disc(cx, cy, 0.7, col)
+		var a := deg_to_rad(36.0 + float(i) * 72.0)
+		_spoke(cx, cy, a, rh + 0.3, ri - 0.15, 0.70, 0.55, RIM)
+	# 6. Hub: light alloy flange so the 5 lug holes punch, dark centre cap, no logo.
+	_disc(cx, cy, rh, RIM)
+	var cap_r := maxf(1.0, rh * 0.40)
+	_disc(cx, cy, cap_r, HUB)
+	_disc(cx, cy, maxf(0.55, cap_r - 0.35), Color8(22, 20, 24))
+	var lug_r := (cap_r + rh) * 0.55
+	for i in 5:
+		var la := deg_to_rad(float(i) * 72.0)  # sit in the windows, around the cap
+		var lx := cx + cos(la) * lug_r
+		var ly := cy + sin(la) * lug_r
+		if r < 12.0:
+			rect(roundf(lx - 0.5), roundf(ly - 0.5), 1, 1, INK_I)
+		else:
+			_disc(lx, ly, 0.7, INK_I, 8)
 	# 7. Tyre outline
 	_ring_track(cx, cy, rt + 0.6, rt, 0.0, TAU, INK_I)
 
@@ -529,16 +541,18 @@ func _caliper(cx: float, cy: float, r_rotor: float, r_hub: float, col: Color) ->
 	var bright := Color(minf(col.r * 1.2, 1), minf(col.g * 0.95 + 0.05, 1), minf(col.b * 0.95 + 0.05, 1))
 	var x_out := cx + r_rotor - 0.2  # just inside the rim inner / rotor outer
 	var x_in := cx + r_hub + 0.7
-	if x_out - x_in < 3.2:
-		x_in = x_out - 3.2
-	var y_out := 3.9
-	var y_in := 2.8
+	if x_out - x_in < 3.6:
+		x_in = x_out - 3.6
+	# A little larger than the previous in-rim caliper — the 5-spoke windows
+	# are wide enough for it to read at in-band size, still inside the rim.
+	var y_out := maxf(4.8, (x_out - cx) * 0.70)
+	var y_in := y_out * 0.68
 	# Pads sit on the rotor, just inside the outer edge.
 	var pad := P([
-		x_out - 2.7, cy - 2.2,
-		x_out - 0.1, cy - 2.2,
-		x_out - 0.1, cy + 2.2,
-		x_out - 2.7, cy + 2.2,
+		x_out - 3.0, cy - 2.4,
+		x_out - 0.1, cy - 2.4,
+		x_out - 0.1, cy + 2.4,
+		x_out - 3.0, cy + 2.4,
 	])
 	solid(pad, dimc(col, 0.7))
 	var body := P([
@@ -550,11 +564,11 @@ func _caliper(cx: float, cy: float, r_rotor: float, r_hub: float, col: Color) ->
 	solid(body, mid)
 	outline(body, INK_I)
 	# Two pistons stacked inside the body, not past the rim.
-	var pr := 1.15 if (x_out - x_in) >= 3.6 else 1.0
+	var pr := 1.25 if (x_out - x_in) >= 3.8 else 1.1
 	var px := x_out - pr - 0.35
 	if px - pr < x_in + 0.2:
 		px = x_in + pr + 0.2
-	var py := 1.35
+	var py := 1.55
 	_disc(px, cy - py, pr, bright)
 	_disc(px, cy + py, pr, bright)
 	rect(px - 0.7, cy - 0.4, 1.4, 0.8, dimc(col, 0.55))
