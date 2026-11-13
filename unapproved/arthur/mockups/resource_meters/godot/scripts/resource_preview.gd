@@ -128,6 +128,8 @@ func _all_frames() -> Array:
 	out.append_array(_e_frames("e", "E"))
 	# E2: bottom band + slim top strip. Full + low are enough to judge the layout.
 	out.append_array(_e_frames("e2", "E2", ["full", "low"]))
+	# E3: E1 minus the band map; HAIRPIN L under the sign; E/A/X next to the plan.
+	out.append_array(_e_frames("e3", "E3", ["full", "drain", "low", "empty"]))
 	return out
 
 func _ready() -> void:

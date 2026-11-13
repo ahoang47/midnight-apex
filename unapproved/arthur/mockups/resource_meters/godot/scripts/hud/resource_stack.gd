@@ -19,6 +19,12 @@
 ##       row becomes HEAT with a coolant-temperature icon (headroom left; OVERHEAT
 ##       / LIMP tags). E1 = everything in the bottom band. E2 = bottom band + a
 ##       slim top strip for LINE LOCK and the corner name if the band is tight.
+##   E3 — from E1 (Austin 2026-11-13: "if the turn indicator exists, why does
+##       the one exist in the middle of the bottom hud?"). No corner map in the
+##       band. HAIRPIN L sits under the floating turn sign (hairpin-left U-turn
+##       arrow). E/A/X camera stops sit next to the PLAN THE LINE rows. Middle
+##       of the band is LINE LOCK only, with room and bigger timer digits.
+##       Chunky Archivo Black / Nimbus Sans Bold type at readable sizes. Flat.
 ##
 ## EN icon: a wheel (tyre + rim + spokes) with the brake rotor and caliper visible
 ## through the spoke gaps, so it reads as the wheel-and-brake package.
@@ -64,6 +70,8 @@ func paint() -> void:
 			_paint_e(rs, false)
 		"E2":
 			_paint_e(rs, true)
+		"E3":
+			_paint_e3(rs)
 		_:
 			_paint_b(rs)
 
@@ -1051,3 +1059,268 @@ func _icon_coolant(cx: float, cy: float, r: float, col: Color) -> void:
 	# Bulb — one flat fill + ink outline, no inner shading that would read as gloss.
 	_disc(cx, bulb_cy, bulb_r, INK_I)
 	_disc(cx, bulb_cy, bulb_r - 1.0, col)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Variant E3: E1 layout minus the redundant corner map. Chunkier type.
+# ─────────────────────────────────────────────────────────────────────────────
+func _fa() -> FontFile:
+	if hud != null and hud.fa != null:
+		return hud.fa
+	return _fb()
+
+
+func _fb() -> FontFile:
+	if hud != null and hud.fb != null:
+		return hud.fb
+	return hud.fn
+
+
+func _swf(f: FontFile, s: String, sz: int) -> float:
+	return f.get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz * TS).x / TS
+
+
+func _tf(f: FontFile, x: float, y: float, s: String, sz: int, col: Color, anchor := "l", shadow := true, mid := false) -> void:
+	# Same pixel-hard raster path as t2, but with an explicit font (Archivo Black or Nimbus Bold).
+	var z := sz * TS
+	var w := f.get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, z).x
+	var X := x * TS
+	var B := y * TS + (f.get_ascent(z) if not mid else (f.get_ascent(z) - f.get_descent(z)) / 2.0)
+	if anchor == "m":
+		X -= w / 2.0
+	elif anchor == "r":
+		X -= w
+	X = roundf(X)
+	B = roundf(B)
+	draw_set_transform(_o(), 0.0, Vector2(1.0 / TS, 1.0 / TS))
+	if shadow:
+		draw_string(f, Vector2(X + TS, B + TS), s, HORIZONTAL_ALIGNMENT_LEFT, -1, z, INK)
+	draw_string(f, Vector2(X, B), s, HORIZONTAL_ALIGNMENT_LEFT, -1, z, col)
+	draw_set_transform(_o(), 0.0, Vector2.ONE)
+
+
+func _ta(x: float, y: float, s: String, sz: int, col: Color, anchor := "l", shadow := true, mid := false) -> void:
+	_tf(_fa(), x, y, s, sz, col, anchor, shadow, mid)
+
+
+func _tb(x: float, y: float, s: String, sz: int, col: Color, anchor := "l", shadow := true, mid := false) -> void:
+	_tf(_fb(), x, y, s, sz, col, anchor, shadow, mid)
+
+
+func _e_cam(pl: Dictionary) -> Dictionary:
+	var md: String = String(pl.get("mode", "VIEW"))
+	var k: int = int(pl.get("stop", 0))
+	var cur := -1
+	var ndone := 0
+	match md:
+		"VIEW":
+			cur = k
+			ndone = k
+		"LOCK":
+			cur = 0
+			ndone = 3
+		"QTE", "PLAY":
+			cur = k
+			ndone = k
+		_:
+			cur = -1
+			ndone = 3
+	return {"md": md, "cur": cur, "ndone": ndone}
+
+
+func _paint_e3(rs: Dictionary) -> void:
+	_paint_e_gap()
+	_paint_e3_sign()
+	var x0 := 8.0
+	var y0 := 408.0
+	var x1 := 632.0
+	var y1 := 479.0
+	_flat_panel(x0, y0, x1, y1)
+	# Left: compact meters. Middle: LINE LOCK with room. Right: E/A/X + plan rows.
+	_paint_e3_meters(rs, 12.0, y0, 210.0, y1)
+	_vdiv(216.0, y0, y1)
+	_paint_e3_lock(222.0, y0, 400.0, y1)
+	_vdiv(406.0, y0, y1)
+	_paint_e3_plan(412.0, y0, x1 - 4.0, y1)
+
+
+func _paint_e3_meters(rs: Dictionary, x0: float, y0: float, x1: float, y1: float) -> void:
+	var pad := 5.0
+	var rh: float = ((y1 - y0) - pad * 2.0) / 3.0
+	for i in ITEMS_E.size():
+		var s: Dictionary = _item_state_e(rs, ITEMS_E[i])
+		var y: float = y0 + pad + float(i) * rh
+		var icy: float = y + rh * 0.5
+		var r: float = 11.0 if String(s.key) == "susp" else 10.0
+		_icon_at(x0 + 12.0, icy, s, r)
+		var cx := x0 + 26.0
+		var tw: float = _e3_stat_tag(cx, icy - 6.0, s)
+		var bx := cx + tw + 4.0
+		var badge: String = String(s.badge)
+		var badge_w := 0.0
+		if badge != "":
+			badge_w = _swf(_fb(), badge, 10) + 10.0
+		var bx1: float = x1 - 3.0 - (badge_w + 2.0 if badge_w > 0.0 else 0.0)
+		_e_trough(bx, icy - 5.0, maxf(bx1 - bx, 16.0), 10.0, s)
+		if badge_w > 0.0:
+			_e3_badge_at(x1 - 3.0, icy - 6.0, s)
+
+
+func _e3_stat_tag(x: float, y: float, s: Dictionary) -> float:
+	var lab: String = s.stat
+	var sz := 9
+	var w := maxf(_swf(_fb(), lab, sz) + 8.0, 24.0)
+	var h := 12.0
+	var fill: Color = s.col if not s.empty else dimc(s.col, 0.35)
+	if s.blink:
+		fill = s.col
+	draw_rect(Rect2(x, y, w, h), fill, true)
+	draw_rect(Rect2(x, y, w, h), INK, false, 1.0)
+	var tc: Color = INK if s.key == "susp" else Color.WHITE
+	if s.empty and not s.blink:
+		tc = Color8(230, 230, 235)
+	_tb(x + w / 2.0, y + h / 2.0, lab, sz, tc, "m", false, true)
+	return w
+
+
+func _e3_badge_at(x: float, y: float, s: Dictionary) -> void:
+	var b: String = s.badge
+	if b == "":
+		return
+	var sz := 10
+	var w := _swf(_fb(), b, sz) + 8.0
+	var x0 := x - w
+	var col: Color = L_AMBER if b == "LOW" else (s.col if b == "RECOVER" else Color8(232, 40, 44))
+	if b == "OVERHEAT":
+		col = COL_HOT
+	draw_rect(Rect2(x0, y, w, 12.0), col, true)
+	draw_rect(Rect2(x0, y, w, 12.0), INK, false, 1.0)
+	var tc: Color = INK if b == "LOW" or b == "RECOVER" or b == "OVERHEAT" else Color.WHITE
+	_tb(x0 + w / 2.0, y + 6.0, b, sz, tc, "m", false, true)
+
+
+func _paint_e3_lock(x0: float, y0: float, x1: float, y1: float) -> void:
+	# Middle of the band is LINE LOCK only — no map. Bigger digits, a longer bar, some air.
+	var ls: Dictionary = _lock_state()
+	_ta(x0 + 6.0, y0 + 7.0, "LINE LOCK", 12, L_WHITE, "l", true, false)
+	if bool(ls.locked):
+		_ta(x1 - 6.0, y0 + 5.0, "SET", 20, L_WHITE, "r", true, false)
+	else:
+		_ta(x1 - 6.0, y0 + 5.0, "%04.1fs" % float(ls.left), 20, L_AMBER, "r", true, false)
+	# Thick continuous trough, full column width, under the digits with some air.
+	_e_trough(x0 + 6.0, y0 + 36.0, (x1 - 6.0) - (x0 + 6.0), 14.0, ls)
+
+
+func _paint_e3_plan(x0: float, y0: float, x1: float, y1: float) -> void:
+	if not st.has("plan"):
+		return
+	var pl: Dictionary = st.plan
+	_ta(x0 + 22.0, y0 + 2.0, "PLAN THE LINE", 10, L_WHITE, "l", true, false)
+	var cam: Dictionary = _e_cam(st.plate) if st.has("plate") else {"cur": -1, "ndone": 0, "md": "VIEW"}
+	var ph: int = int(pl.get("phase", 0))
+	var slots: Array = st.get("slots", [null, null, null])
+	var lanes: Array = ["D", "S", "A"] if String(st.get("dir", "R")) == "L" else ORDER
+	var row0 := y0 + 13.0
+	var rh: float = maxf(((y1 - 2.0) - row0) / 3.0, 16.0)
+	var letters := ["E", "A", "X"]
+	for i in 3:
+		var ry: float = row0 + float(i) * rh
+		var active: bool = (i == ph and ph < 3)
+		var locked: bool = (i < ph) or (ph >= 3 and slots[i] != null)
+		# Camera-stop letter, aligned to this plan row (E=ENTRY, A=APEX, X=EXIT).
+		var on_cam: bool = int(cam.cur) == i
+		var cam_done: bool = i < int(cam.ndone) and not on_cam
+		var lcol: Color = L_AMBER if on_cam else (L_WHITE if cam_done else L_DIMMER)
+		if on_cam:
+			draw_rect(Rect2(x0 + 3.0, ry + 2.0, 16.0, rh - 4.0), L_AMBER, true)
+			lcol = INK
+		_ta(x0 + 11.0, ry + rh * 0.5, letters[i], 11, lcol, "m", not on_cam, true)
+		if active:
+			draw_rect(Rect2(x0 + 21.0, ry + 1.0, 2.0, rh - 2.0), L_AMBER, true)
+		var nx := x0 + 26.0
+		var ncol: Color = INK if active else (EDGE if locked else TODO)
+		if active:
+			var nw: float = _swf(_fb(), PH[i], 10) + 6.0
+			draw_rect(Rect2(nx - 2.0, ry + 1.0, nw, 10.0), L_AMBER, true)
+		_tb(nx, ry + 1.0, PH[i], 10, ncol, "l", not active, false)
+		if locked:
+			check(nx + _swf(_fb(), PH[i], 10) + 3.0, ry + 2.0, CHECK_GREEN)
+		var chosen := ""
+		if locked and slots[i] != null:
+			chosen = String(slots[i])
+		elif locked and i == 0 and String(pl.get("entry", "")) != "":
+			chosen = String(pl.entry)
+		elif active:
+			chosen = ORDER[int(pl.get("sel", 0))] if int(pl.get("sel", 0)) >= 0 else ""
+		var lx := x0 + 78.0
+		if active or locked:
+			var w := 42.0
+			if x1 - lx < w * 3.0 + 4.0:
+				w = maxf(((x1 - 2.0) - lx) / 3.0, 34.0)
+			for k in lanes:
+				var lab: String = LANE[k]
+				var note: String = NAME[k]
+				var avail: Dictionary = pl.get("avail", {})
+				var off: bool = active and int(avail.get(k, 1)) <= 0
+				var selected: bool = (k == chosen and not off)
+				var dim: bool = locked or off
+				var cx := lx + w * 0.5
+				if selected:
+					draw_rect(Rect2(lx, ry + 1.0, w - 3.0, 9.0), AMBER if active else EDGE, true)
+				_tb(cx, ry + 1.0, lab, 9, INK if selected else (DIMT if dim else SUB), "m", not selected, false)
+				if selected and locked:
+					check(cx + _swf(_fb(), lab, 9) * 0.5 + 2.0, ry + 1.0, INK)
+				_e3_stat_box(cx, ry + 11.0, note, STANCE[k], selected, dim and not selected)
+				lx += w
+		else:
+			_tb(lx, ry + rh * 0.5, "--  --  --", 11, TODO, "l", false, true)
+
+
+func _e3_stat_box(cx: float, y: float, label: String, col: Color, selected: bool, dim: bool) -> void:
+	var sz := 8
+	var w := maxf(_swf(_fb(), "POW", sz) + 6.0, 22.0)
+	var h := 7.0
+	var x0 := cx - w * 0.5
+	var r := Rect2(x0, y, w, h)
+	var fill: Color = col if selected else dimc(col, 0.45 if dim else 0.7)
+	draw_rect(r, fill, true)
+	draw_rect(r, INK, false, 1.0)
+	var tc: Color = INK if col == STANCE.S else Color.WHITE
+	if dim and not selected:
+		tc = INK if col == STANCE.S else Color8(230, 230, 235)
+	_tb(cx, y + h * 0.5, label, sz, tc, "m", false, true)
+
+
+func _paint_e3_sign() -> void:
+	# Floating upcoming-turn sign: flat amber plate, hairpin-left (U-turn) arrow,
+	# corner name under the sign. Kept short so the name sits above the OUT tell.
+	# Gap box ends at y=122; lane labels start around y=180.
+	var cx := 320.0
+	var w := 34.0
+	var h := 32.0
+	var x0 := cx - w * 0.5
+	var y0 := 125.0
+	var cy := y0 + h * 0.5
+	draw_rect(Rect2(x0, y0, w, h), Color8(255, 184, 56), true)
+	draw_rect(Rect2(x0, y0, w, h), INK, false, 1.0)
+	draw_rect(Rect2(x0 + 1.0, y0 + 1.0, w - 2.0, h - 2.0), INK, false, 1.0)
+	# Chunky hairpin-left / U-turn: enter up the right, hook over the top, come
+	# back down the left, arrow head pointing down. A short left vertical before
+	# the head makes the loop read as a 180, not a 90-degree left.
+	var t := 5.0
+	var rx := cx + 5.0
+	var lx := cx - 9.0
+	var top := y0 + 5.0
+	var bot := y0 + h - 5.0
+	var hook := y0 + 16.0
+	draw_rect(Rect2(rx, top, t, bot - top), INK, true)
+	draw_rect(Rect2(lx, top, (rx + t) - lx, t), INK, true)
+	draw_rect(Rect2(lx, top, t, hook - top), INK, true)
+	# Arrowhead on the left leg, pointing down.
+	var ah := P([lx - 5.0, hook, lx + t + 5.0, hook, lx + t * 0.5, hook + 9.0])
+	solid(ah, INK)
+	# Corner name under the sign, Archivo Black.
+	var name := "HAIRPIN L"
+	if st.has("plate"):
+		name = String(st.plate.get("name", "HAIRPIN L"))
+	_ta(cx, y0 + h + 2.0, name, 11, L_WHITE, "m", true, false)

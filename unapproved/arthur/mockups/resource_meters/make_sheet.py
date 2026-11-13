@@ -116,6 +116,19 @@ def main():
     if Path(ROOT / "e_full.png").exists() and Path(ROOT / "d_full.png").exists():
         row = [c for c in COMPARE if Path(ROOT / c[0]).exists()]
         build([row], "resource_meters_d_vs_e.png")
+    E3_FRAMES = [
+        ("e3_full.png", "E3  NO MAP IN THE BAND  HAIRPIN L under the sign  E/A/X by the plan  — all full"),
+        ("e3_drain.png", "E3  AFTER A POW PICK  HEAT headroom drains  ghost in the trough"),
+        ("e3_low.png", "E3  OVERHEAT  heat + brakes warning  hot tint + OVERHEAT tag"),
+        ("e3_empty.png", "E3  LIMP  heat empty (dark trough, no slash)  LIMP tag"),
+    ]
+    if Path(ROOT / "e3_full.png").exists():
+        build([E3_FRAMES[:2], E3_FRAMES[2:]], "resource_meters_e3_sheet.png")
+    if Path(ROOT / "e_full.png").exists() and Path(ROOT / "e3_full.png").exists():
+        build([[
+            ("e_full.png", "E1  map still in the middle of the band  90-degree turn sign"),
+            ("e3_full.png", "E3  map gone  HAIRPIN L under a hairpin-left sign  E/A/X by the plan  chunky type"),
+        ]], "resource_meters_e1_vs_e3.png")
 
 
 if __name__ == "__main__":
