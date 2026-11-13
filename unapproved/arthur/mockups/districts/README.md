@@ -78,10 +78,9 @@ Austin: "I like the look back cam, but the mirror should stay as the mirror. The
 
 - **`mouse_lookback_headon.png` (about 10 m) and `mouse_lookback_headon_far.png` (about 24 m):**
   - **Main view:** a centred reverse camera (mode `headon`), placed 1.0 m back from the car's centre and 1.22 m up, just above the rear deck. It looks straight back down the road along the player's line, 30 m back. The rival sits dead centre in the same lane (no lateral nudge), so it comes straight at the camera. Only a thin sliver of the yellow rear deck shows at the bottom edge, above the HUD band.
-  - **Mirror:** the original E3B mirror, at the same rect (224,16,192×64), frame and REAR VIEW label. In this mode it shows the other way: the standard forward chase view, unflipped, with the player car, chevrons and road ahead.
+  - **Mirror:** the original E3B rear view, unchanged in size, position, frame, label and direction (it shows what is behind the player, same as `touge_mouse.png`). Austin: "No, the rear view will always stay a rear view."
   - **HUD:** turn sign, HAIRPIN L and the tie-gap box are in their standard places; the HUD band is unchanged.
 - **`lookback_vs_cat.png`:** the head-on mouse at 10 m next to `touge_cat.png`.
-- **Open:** the "REAR VIEW" label is now technically wrong in look-back mode, because the mirror shows the road ahead. I left it as asked; one option is a mode-swapped label such as "AHEAD".
 
 ## Open points
 - The course is unchanged in all three: the same 45 m straight into HP L (R 14 m), so the HUD reads HAIRPIN L everywhere. A real Wangan would more likely be a fast sweeper. That's a Design / Gordon call.

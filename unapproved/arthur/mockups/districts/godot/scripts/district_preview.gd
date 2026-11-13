@@ -103,8 +103,8 @@ func _frames() -> Array:
 			out.append(_fr("mouse_lookback%s.png" % g[0], L, b))
 			var c := base.duplicate(); c["mode"] = "highcam"
 			out.append(_fr("mouse_highcam%s.png" % g[0], L, c))
-		# B revised (Austin 2026-11-13): head-on look-back. Centred reverse cam, rival dead-centre in the lane,
-		# mirror stays the E3B mirror (size/place/frame/label) but shows the road ahead. Standard sign + gap box.
+		# B revised (Austin 2026-11-13): head-on look-back. Centred reverse cam, rival dead-centre in the lane.
+		# "The rear view will always stay a rear view": the E3B mirror is untouched. Standard sign + gap box.
 		for g in [["", -10.0, 0.40, 0.11], ["_far", -24.0, 0.96, 0.36]]:
 			out.append(_fr("mouse_lookback_headon%s.png" % g[0], L, {"rival_ds": g[1], "rival_lane": "OUT", "rival_d_nudge": 0.0, "lead": g[3], "gap_s": g[2], "role": "mouse", "mode": "headon"}))
 		if OS.get_environment("MOUSE_CAM_TEST") != "":
@@ -686,15 +686,7 @@ func _apply_mode(fr: Dictionary, player_s: float, d_entry: float) -> void:
 		cam.near = 0.05
 		glow_cam.global_transform = cam.global_transform; glow_cam.fov = cam.fov; glow_cam.near = cam.near
 		sky_root.position = cam.position
-		# mirror: same E3B rect/frame, but it now looks the other way (forward chase view of the road ahead), unflipped
-		var cm2: Dictionary = disp.camera
-		var pose2: Array = _chase_pose(course.point(player_s, 0.0))
-		var cpos2: Vector3 = pose2[0]; var tgt2: Vector3 = pose2[1]
-		cpos2.y += elev(player_s - float(cm2.back), float(cm2.side)); tgt2.y += elev(player_s + float(cm2.look_ahead), float(cm2.look_side))
-		mirror_cam.position = cpos2; mirror_cam.look_at(tgt2, Vector3.UP)
-		mirror_cam.fov = float(disp.mirror.fov)
-		mirror_cam.near = 0.1
-		flip = 0.0
+		# mirror stays the normal E3B rear view (pose set in _apply_frame), same rect/frame/label/flip
 	elif mode == "highcam":
 		# higher, steeper chase camera, pulled back behind the chaser so both cars sit on the road above the band.
 		# The pull-back follows the gap (capped), like a two-car framing cam.
@@ -709,7 +701,7 @@ func _apply_mode(fr: Dictionary, player_s: float, d_entry: float) -> void:
 		cam.fov = float(disp.camera.fov)
 		glow_cam.global_transform = cam.global_transform; glow_cam.fov = cam.fov
 		sky_root.position = cam.position
-	if mode != "lookback" and mode != "headon": mirror_cam.near = float(disp.mirror.near)
+	if mode != "lookback": mirror_cam.near = float(disp.mirror.near)
 	var sz := Vector2i(int(r[2]), int(r[3]))
 	if mirror_vp.size != sz: mirror_vp.size = sz
 	post_mat.set_shader_parameter("mirror_rect", Vector4(float(r[0]), float(r[1]), float(r[2]), float(r[3])))

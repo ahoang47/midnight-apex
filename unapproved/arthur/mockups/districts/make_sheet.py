@@ -55,7 +55,7 @@ for r, (suf, gl) in enumerate(GAPS):
 ms.save(os.path.join(HERE, 'mouse_options_sheet.png')); print('mouse options', ms.size)
 
 # lookback_vs_cat.png: head-on look-back mouse (10 m) next to the standard cat frame
-VS = [('mouse_lookback_headon', 'MOUSE  LOOK-BACK (HEAD-ON)', 'rival ~10 m behind, mirror shows the road ahead'),
+VS = [('mouse_lookback_headon', 'MOUSE  LOOK-BACK (HEAD-ON)', 'rival ~10 m behind, mirror is the normal rear view'),
       ('touge_cat', 'CAT  STANDARD CHASE', 'rival ~11 m ahead, mirror shows behind')]
 vs = Image.new('RGB', (PAD + 2 * (W + PAD), TOP + H + PAD), (11, 23, 43))
 d = ImageDraw.Draw(vs)

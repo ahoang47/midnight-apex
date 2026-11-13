@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: Head-on look-back, the mirror is a rear view again
+
+- **Why:** Austin, 2026-11-13: "No, the rear view will always stay a rear view."
+- **What (`unapproved/arthur/mockups/districts/`):** In `mouse_lookback_headon(_far).png` the E3B mirror is now the normal rear view, the same as in `touge_mouse.png`. Its size, position, frame and REAR VIEW label are unchanged. I re-rendered both frames and `lookback_vs_cat.png`. Everything else from 5561df0 is unchanged, and the README no longer lists the label as open.
+- **Note:** in look-back mode, nothing on screen shows the road ahead now. Only the turn sign and the HUD hint at the corner.
+
 ## 2026-11-13 — Arthur [art]: Touge mouse look-back, revised to head-on (Austin picked option B)
 
 - **Why:** Austin, 2026-11-13: "I like the look back cam, but the mirror should stay as the mirror. The mirror should stay the same size. The look back cam should be a head on, instead of this angled view."
