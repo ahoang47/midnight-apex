@@ -511,17 +511,19 @@ func _icon_wheel(cx: float, cy: float, r: float, col: Color, empty: bool) -> voi
 	_caliper(cx, cy, rr, rh, col)
 	# 4. Thin rim ring
 	_ring_track(cx, cy, ri, rr, 0.0, TAU, RIM)
-	# 5. Five slim straight spokes. Window centred at 0° (over the caliper).
-	# Half-widths are tight so the windows stay large (Enkei-style).
+	# 5. Five slim straight spokes in the rim's light tone, so the star reads
+	# against the darker rotor at in-band size. Roots start under the hub.
+	# Window centred at 0° (over the caliper).
 	for i in 5:
 		var a := deg_to_rad(36.0 + float(i) * 72.0)
-		_spoke(cx, cy, a, rh + 0.3, ri - 0.15, 0.70, 0.55, RIM)
-	# 6. Hub: light alloy flange so the 5 lug holes punch, dark centre cap, no logo.
+		_spoke(cx, cy, a, maxf(0.4, rh - 0.6), ri - 0.15, 0.70, 0.55, RIM)
+	# 6. Light hub face (same tone as the rim/spokes) covers the spoke roots
+	# so the centre stays clean. Dark centre cap and 5 dark lug holes. No logo.
 	_disc(cx, cy, rh, RIM)
 	var cap_r := maxf(1.0, rh * 0.40)
+	var lug_r := (cap_r + rh) * 0.55
 	_disc(cx, cy, cap_r, HUB)
 	_disc(cx, cy, maxf(0.55, cap_r - 0.35), Color8(22, 20, 24))
-	var lug_r := (cap_r + rh) * 0.55
 	for i in 5:
 		var la := deg_to_rad(float(i) * 72.0)  # sit in the windows, around the cap
 		var lx := cx + cos(la) * lug_r
@@ -582,14 +584,17 @@ func _ring_n(cx: float, cy: float, r0: float, r1: float, a0: float, sweep: float
 
 
 func _spoke(cx: float, cy: float, a: float, r0: float, r1: float, w0: float, w1: float, col: Color) -> void:
+	# Outline first, then the light fill, so a thin spoke keeps a light body at
+	# in-band size instead of being swallowed by the 1 px ink stroke.
 	var d := Vector2(cos(a), sin(a))
 	var n := Vector2(-d.y, d.x)
 	var p0 := Vector2(cx, cy) + d * r0 - n * w0
 	var p1 := Vector2(cx, cy) + d * r0 + n * w0
 	var p2 := Vector2(cx, cy) + d * r1 + n * w1
 	var p3 := Vector2(cx, cy) + d * r1 - n * w1
-	solid(PackedVector2Array([p0, p1, p2, p3]), col)
-	outline(PackedVector2Array([p0, p1, p2, p3]), INK_I)
+	var pts := PackedVector2Array([p0, p1, p2, p3])
+	outline(pts, INK_I)
+	solid(pts, col)
 
 func _disc(cx: float, cy: float, r: float, col: Color, n := 16) -> void:
 	if r <= 0.6:

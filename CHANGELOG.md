@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: E3B EN 5-spoke is light against the rotor
+
+- **Why:** Austin, 2026-11-13: approved the thin 5-spoke ("It looks better though") and asked to recolour it.
+- **What (`unapproved/arthur/mockups/resource_meters/`):** The five slim spokes and the hub face use the rim's light tone so the 5-spoke star reads clearly against the darker rotor at in-band size. Lug holes and the centre cap stay dark. The hub is cleaned up so it reads as a small hub with 5 lugs. Shape, caliper (inside the rim at 3 o'clock), line weight and flat style are unchanged. `e3b_full.png`, `e3b_states.png`, `e3b_overrun.png` and `e3b_locked.png` re-rendered in Godot. Dark-spoke vs light-spoke at in-band and 4×: `en_icon_5spoke.png`. Concept only; not in the sim.
+
 ## 2026-11-13 — Arthur [art]: E3B EN wheel is a thin 5-spoke
 
 - **Why:** Austin, 2026-11-13: "Try a thin 5 spoke like this."
