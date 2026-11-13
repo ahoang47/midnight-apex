@@ -66,7 +66,7 @@ Races move fast, so Jesse's DAQ keeps the last race for playback: the DAQ log li
 4. Earn money, parts, and reputation
 5. Upgrade and tune vehicle builds
 6. Increase standing across multiple racing scenes
-7. Unlock higher-tier race invitations and crew rematches
+7. Unlock higher-tier race invitations and the next district's crew
 8. Discover Myth Drivers and hidden story events
 9. Revisit districts as reputation opens new opportunities
 
@@ -74,7 +74,7 @@ Races move fast, so Jesse's DAQ keeps the last race for playback: the DAQ log li
 
 # Progression Structure
 
-Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Rounds play in order; within each round the player freely chooses which of the three crews to challenge, and once they start a crew's ladder they're locked in until they beat its boss (the other crews won't take on someone already in a feud with another crew); each round the player runs through a whole crew (its kids, mature members, old heads, then the boss) and the boss levels up the whole crew before the next round, and the player earns the reputation for the next rematch by winning in the other districts. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
+Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Rounds play in order, one district each: Round 1 Street, Round 2 Wangan, Round 3 Touge. Each round the player runs that district's whole crew once (its kids, mature members, old heads, then the boss), with no rematches, and meets that district's Myth Driver afterward. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
 
 ---
 
@@ -133,7 +133,7 @@ The city is divided into 3 core racing districts (in-world names `<TBD>`):
 Each district contains:
 
 - crews and subcultures
-- one main crew and its crew boss, each round run from its kids to its mature members to its old heads to the boss, and leveled up for the next round
+- one main crew and its crew boss, raced once in its own round, from its kids to its mature members to its old heads to the boss
 - race organizers
 - unique tactical identities and AI behavior patterns
 - a handful of signature corners every local drives the same way, the district habit the player learns; off them, named racers each drive their own style (canon 30)
@@ -320,7 +320,7 @@ The player constantly pressures the mentor for answers throughout the game, but 
 
 Nobody tells the player about the accusation; they piece it together from clues in the crew reveals — and the clues are bad data that point toward the mentor’s guilt. At the end of Round 3, the player accuses the mentor of being the snitch. She doesn’t defend herself; she’s been accused once already and won’t waste the energy again. After a long silence: “Get out of my garage.” and the relationship blows up going into the Finale.
 
-Knowing they messed up, the player races all three Myth Drivers to find the truth and settle the story once and for all. Their accounts contradict each other, and the snitch story unravels: the police sweep was benign; there was no informant, only each Myth Driver’s personal reason. The player goes to the mentor: “I know what really happened.” She blows up at them for digging into her past, a second wound after the accusation, and the player leaves. Then the player convinces all three Myth Drivers to come and apologize too: one big apology party. It is the first time they have met since the breakup.
+Blaming the Myth Driver who challenged them on the mountain for wrecking everything, the player goes back up and races him, and that race sets off the races with the other two. The player races out of blame, not to find the truth, but the truth comes out by accident: their accounts contradict each other, and the snitch story unravels: the police sweep was benign; there was no informant, only each Myth Driver’s personal reason. The player goes to the mentor: “I know what really happened.” She blows up at them for digging into her past, a second wound after the accusation, and the player leaves. Then the player convinces all three Myth Drivers to come and apologize too: one big apology party. It is the first time they have met since the breakup.
 
 The climax is a final race between the player and the mentor at the summit of Fushigi-Yama, the Touge district’s mountain `<TODO: how the player gets her there>`. Around the race `<TODO: before, during or after>`:
 - the mentor learns the real reasons for the first time, from the Myth Drivers

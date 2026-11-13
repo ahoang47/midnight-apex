@@ -33,14 +33,14 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 - Sabine explains the rebuild debt: she fronted the engine, labor, and tow, so the PC races to pay her back until they're even (amount `<TBD: Barry>`)
 - Repayment: a share of race winnings goes toward the tab (share size `<TBD: Barry>`) — a personal repair bill, not a crew sponsorship (she stepped away from the scene, canon 14, 24)
-- Debt is settled during Round 2; after that the PC stays for the fun and the mystery (canon decision 19)
+- Debt is settled at the end of Round 1, when the PC beats the Street crew boss (canon decision 19, 2026-11-13); after that the PC stays for the fun and the mystery
 - PC formally enters the underground scene
 
 ---
 
 # DISTRICTS (REFERENCE)
 
-- One crew + one crew boss per district (3 + 3 total), re-faced every round. Each round the PC chooses which crew to take on and runs through the whole crew in rank order, locked in until its boss falls (canon 12): its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the crew boss. Next round the boss has leveled up the whole crew. Flavor text after every race reveals a little more
+- One crew + one crew boss per district (3 + 3 total), one district per round (Round 1 Street, Round 2 Wangan, Round 3 Touge; Austin, 2026-11-13). The PC runs each crew once, in rank order: its kids who inherited the myth, then its more mature members who know not everything is what it seems, then its old heads, then the crew boss. No rematches. Flavor text after every race reveals a little more
 - Racer types always use their archetype (pairing rules in `canon.md`)
 - Must-have wild-race characters (2026-11-06): tourist groups like the ones that go to Daikoku PA in real life (district placement and racer-type/archetype mapping `<TBD>`; see `canon.md`)
 - Line structure (Austin, locked framing 2026-11-11; canon 30): each district has a handful of signature corners everyone there drives the same way, with the same bluff (first pass in `corner_lines.md`, pending Barry). On every other corner wild racers share one line and bluff, and each named character drives their own style (draft, per district below)
@@ -100,94 +100,58 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 # ROUNDS 1–3
 
-- Rounds play in order (1 → 2 → 3); within each round the PC freely chooses which crew to challenge, one crew + crew boss each (Round 1 first meeting, Rounds 2–3 rematches, each round runs the whole crew: kids → mature members → old heads → boss; the crew is leveled up next round; flavor text after every race)
+- **One district per round (Austin, 2026-11-13):** Round 1 = Street, Round 2 = Wangan, Round 3 = Touge. Each district has one crew and one crew boss, raced once from start to finish: kids → mature members → old heads → boss. No rematches; flavor text after every race
+- Each round covers its own district's incident, then its consequences, then its distortion (what people misremember). This replaces the old per-round themes. Below, the earlier per-round beats for each district are kept and regrouped under its round; with one run per crew, which beats land on which rung is `<TODO: Nathaniel>`
 - Every crew defeat reveals another piece of the police sweep mystery
-- Sightings only establish that each Myth Driver knew Sabine; sweep information comes from crew reveals and post-race crew dialogue (canon decision 11)
+- One sighting per Myth Driver, after his district's round: #3 after Street, #2 after Wangan, #1 after Touge (a challenge only). Sightings only establish that each Myth Driver knew Sabine; sweep information comes from crew reveals and post-race crew dialogue (canon decision 11)
 - Nobody tells PC about the snitch accusation; PC puts it together from these reveals — and the clues are bad data that genuinely point toward Sabine’s guilt (canon decision 15)
-- Round themes (locked): 1 = the incident, 2 = consequences across the scene, 3 = distortion (what people misremember)
-- Why the lock-in (Austin, 2026-11-10): once PC starts a crew's ladder, they're locked in until they beat that crew's boss, because the other crews won't take on PC while PC is already in a feud with another crew. Between rounds, reputation still gates rematches: a beaten crew won’t grant a rematch until PC has proven themselves against the other districts' crews — not enough reputation yet (in-world flavor only, not a tracked stat)
-- Every round, in every district: wild races (random racers by racer type), reputation gating, crew boss build-up through rumor, the crew race, a story reveal
+- Every round, in its district: wild races (random racers by racer type), reputation (lore only), crew boss build-up through rumor, the crew races, a story reveal
 
-## 4. Round 1 — The Incident
+## 4. Round 1 — Street
 
-Mods unlock once the PC wins race 3: Reiko sees they're serious and finally lets them buy parts through her, at full price (canon 19). End of round: Reiko warms up and gives the PC wholesale prices ("Wholesale is for crew." payoff), though the debt isn't cleared until Round 2 `<TODO: scene>`.
+Mods unlock once the PC wins race 3: Reiko sees they're serious and finally lets them buy parts through her, at full price (canon 19). Until the debt clears, a share of each win goes to it (not all of it), so money for mods is tight.
 
-Reveals plant misleading clues toward Sabine’s guilt (the sweep’s timing matching when she walked away). Across the rounds, crew flavor text lightly mentions people caught in the sweep (a brother, an old friend) so its cost builds quietly toward Round 3 Street
+Reveals plant misleading clues toward Sabine’s guilt. Across the game, crew flavor text lightly mentions people caught in the sweep (a brother, an old friend, a cousin impounded) so its cost builds quietly.
 
-### Touge
-- Match 1 vs crew `<TBD>` / crew boss `<TBD>`
-- Reveal: PC enters the mountain scene; racers reference the touge scene’s collapse; the historical incident is introduced in a mythologized version; the crew remembers Sabine walking away without a word; she still drives but keeps clear of every crew
-- Crew boss (first pass, Austin may rewrite): he respects Sabine and is puzzled, not bitter. “Sabine? Everybody knows Sabine. She still runs the mountain some nights, alone. Used to run with the best of them. Then one night she just... walked away. Never said why.”
-- Crew kid (overhearing): “People don’t walk away like that unless they’ve got something to hide.” / Boss: “Watch your mouth.” The clue is planted by gossip, not by the boss
-- PC’s hook: PC recognizes their own story in hers — the people PC left think PC betrayed them. Implied only; nobody calls Sabine a snitch
-- Myth Driver sighting: after the Touge crew is cleared, Myth Driver #1 makes his first sighting (he talks with PC, no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-03: he spots Sabine's work on the PC's car and makes a snide comment about her bringing the cops. Tweaked 2026-11-04: the comment is slightly more specific, pointing at a past night with the police, e.g. "Hope she doesn't bring the cops again." (rough wording). The PC hears that something happened with the police and Sabine was tied to it, which sends the PC into Wangan asking. The PC reads it as a snitch hint (bad data); it's really about her detective uncle-dad, which only lands in the Finale
+- **Order note `<CHECK: Nathaniel>`:** the old chain started in Touge (the boss's "Everybody knows Sabine" and #1's cops comment sent the PC into Wangan, where the sweep was laid out straight). With Street first, the PC meets the sweep through clips and theories before anyone lays it out, and the PC's hook (canon 13: in Round 1 the PC recognizes their own story in Sabine's) needs a Street beat `<TODO: beat>`
+- **Incident:** PC enters the street scene. The influencer’s crew knows the old generation only from grainy clips; one shows Sabine’s car leaving a meet right before the sweep footage starts. Kid: “She bounced right before the cops showed. Legend.” (timing clue, played as clout). #3’s old fans in the crew call him the one who “went pro” and Sabine the one who “stayed behind,” with pity, not suspicion
+- **Consequences:** racers openly trade theories about why Sabine walked away. PC reads the crew’s group chat: she got scared, she got paid, she got a deal. The influencer boss offers to “settle it” with a content-style interview with Sabine, for views. PC refuses. Boss: “Means she’s hiding something. Clean people talk.” Also plants that #3's pro career never happened, likely through the influencer, who felt abandoned when #3 left to go pro `<TODO: beat>` (why it died is locked: the sweep, canon 9)
+- **Distortion:** conflicting, misremembered takes on why Sabine left escalate; PC keeps pressing Sabine, she deflects. An old head arrested in the sweep, flat, not accusing: “I did sixty days. Lost my car. She didn’t even get a ticket.” (This was the final straw when Street closed Round 3; in Round 1 it lands earlier, before the PC has heard the sweep’s cost all game `<CHECK: Nathaniel>`)
+- **Myth Driver #3 sighting (his only one):** after the Street crew boss falls, #3 talks with PC (no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices the PC's parts and asks where they got them. The PC says Reiko. He thinks about it ("Reiko, huh...") and remembers she still hangs around Sabine. PC: "You know Sabine?" #3: "Everybody knew everybody back then. Different time." A beat, then lightly: "She doing alright?" Before the PC can answer, a Street crew kid asks him to run one, and he grins back into golden-boy mode and peels off with the crew, leaving the question hanging. Rough wording; exact dialogue at scripting. Jesse and Reiko are off the scene like Sabine, so he connects the parts to her himself. Older drafts to fold in or drop (Open Question 14): his car is a scrap rebuild ("Lost the good one a while back.", hinting it was impounded in the sweep, canon 9); and, after the "She didn't even get a ticket" reveal, "Some of us paid for that night. Some of us didn't." (bitter, not lying)
 
-### Wangan
-- Match 1 vs crew `<TBD>` / crew boss `<TBD>`
-- Reveal: PC enters the highway scene; racers describe the old generation’s structure; the police sweep in detail: a city-wide crackdown across all three districts in one night; lots of tickets and impounds, a few arrests, stated as plain facts; Sabine left minutes before and walked away clean (canon decision 23)
-- The PC arrives in Wangan digging because of #1's comment; the Wangan crew, being mature, lays the sweep out straight
-- Myth Driver sighting: after the Wangan crew is cleared, Myth Driver #2 makes his first sighting (he talks with PC, no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices Sabine's work on the PC's car ("Her work?"). The PC asks if he knows Sabine; "Everyone did. Clean as ever..." The PC catches the past tense ("Did?"), and he closes with "Long time ago." and leaves `<PROPOSAL>` (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting). The slip on "did" is the hint of his guilt. The crowds line moved to his Round 2 sighting.
+### End of Round 1: the debt clears and wholesale (Austin, 2026-11-13)
+- The PC beats the Street crew boss. The debt to Sabine hits zero at the same moment Reiko warms up and gives the PC wholesale prices ("Wholesale is for crew." payoff) `<TODO: scene>`
+- Clearing the debt unlocks aero: parts are bought from Reiko at the garage and tuned at the speakeasy's wind tunnel (canon 24). To celebrate, Sabine takes the PC out for drinks at the speakeasy, the PC's first visit to the bar `<TODO: scene>`. From here the PC stays for the fun and to uncover her mystery
+- Around the speakeasy (first pass 2026-11-05, needs more passes): Jesse and Reiko introduce the PC to **"Sabine's crew"** — the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24)
 
-### Street
-- Match 1 vs crew `<TBD>` / crew boss `<TBD>`
-- Reveal: PC enters the street scene. The influencer’s crew knows the old generation only from grainy clips; one shows Sabine’s car leaving a meet right before the sweep footage starts. Kid: “She bounced right before the cops showed. Legend.” (timing clue, played as clout)
-- #3’s old fans in the crew call him the one who “went pro” and Sabine the one who “stayed behind,” with pity, not suspicion
-- Myth Driver sighting: after the Street crew is cleared, Myth Driver #3 makes his first sighting (he talks with PC, no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices the PC's parts and asks where they got them. The PC says Reiko. He thinks about it ("Reiko, huh...") and remembers she still hangs around Sabine. PC: "You know Sabine?" #3: "Everybody knew everybody back then. Different time." A beat, then lightly: "She doing alright?" Before the PC can answer, a Street crew kid asks him to run one, and he grins back into golden-boy mode and peels off with the crew, leaving the question hanging. Rough wording; exact dialogue at scripting. Jesse and Reiko are off the scene like Sabine, so he connects the parts to her himself.
+## 5. Round 2 — Wangan
 
-## 5. Round 2 — Consequences
+- **Incident:** PC enters the highway scene; racers describe the old generation’s structure; the mature Wangan crew lays the sweep out straight: a city-wide crackdown across all three districts in one night; lots of tickets and impounds, a few arrests, stated as plain facts; Sabine left minutes before and walked away clean (canon decision 23). (The PC used to arrive here digging because of #1's Round 1 comment; now they arrive from Street's clips and theories `<CHECK: Nathaniel>`)
+- **Consequences:** what Sabine walking away cost the highway. Most people came to the Wangan runs for her, so when she walked away, the betting went down with her. The bets recovered because the current boss, the promoter, is an excellent businessman, but it was never quite the same. Personal losses from the sweep come up lightly (someone lost a car, someone quit for good)
+- **Distortion:** the promoter, the one person who goes quiet about her, finally says, “She had her reasons. Not my place.” He’s protecting their private history (old flame, canon 21); to PC it sounds like covering for a snitch. No further thread: it pays off only at the summit
+- **Myth Driver #2 sighting (his only one):** after the Wangan crew boss falls, #2 talks with PC (no race yet; it only establishes that he knew Sabine and pushes PC to dig further; it never reveals the private accusation or lays out the sweep). Locked 2026-11-04: he notices Sabine's work on the PC's car ("Her work?"). The PC asks if he knows Sabine; "Everyone did. Clean as ever..." The PC catches the past tense ("Did?"), and he closes with "Long time ago." and leaves `<PROPOSAL>` (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting). The slip on "did" is the hint of his guilt. Older drafts to fold in or drop (Open Question 14): right after the betting reveal, "The crowds used to come out for her. `<promoter's name>` has been chasing that high ever since." (Austin: fits); and the crew's "he was sweet on her" rumor, answered with "Is that what they're saying now?"
 
-The PC pays off Sabine's debt early in Round 2, after the first crew rematch (whichever crew they take on first; exact race set by Barry's season sim); until then a share of each win goes to the debt (not all of it), so money for mods is tight early. From here they stay for the fun and to uncover her mystery. Clearing the debt unlocks aero: parts are bought from Reiko at the garage and tuned at the speakeasy's wind tunnel (canon 24). To celebrate, Sabine takes the PC out for drinks at the speakeasy, the PC's first visit to the bar `<TODO: scene>`. Around the speakeasy (first pass 2026-11-05, needs more passes): Jesse and Reiko introduce the PC to **"Sabine's crew"** — the informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24). End of round (after all three crew bosses): the promoter opens his betting side game (canon 21).
+### End of Round 2: betting opens
+- The PC has beaten the promoter on his own highway; he opens his betting side game (canon 21). Betting at "the end of Round 2" now always means right after the Wangan crew boss
 
-Reveals plant misleading clues toward Sabine’s guilt (her silence after the sweep; the theories)
+### End of Round 2 (first pass 2026-11-05, needs more passes; placed by Austin 2026-11-13): Reiko warns the PC off digging
+- Before the Touge round starts, Reiko warns the PC to stop digging into the sweep. Protective gatekeeper energy: she let the PC into the garage and into "Sabine's crew", and she doesn't want this to blow up
 
-### Touge
-- Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
-- Reveal: it turns personal. A mature racer who was a kid back then: “I texted her for weeks after. Never wrote back. Figured she didn’t want anything to do with us.” (She was at the hospital with her uncle; the missing two weeks seen from the other side)
-- As he says it, PC’s phone buzzes: a hometown number. PC lets it ring out. Nobody comments; the player sees both sides of the same silence (locked 2026-11-02)
-- Myth Driver sighting (#1) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): the fracture, shown through how thin the crew has gotten (Austin picked this over a cop dig). "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew boss name>`." He looks up the road: "I ran this mountain once. Half of them never came back after that night." Blunt; the cops stay implied by "that night," and it hints he used to lead the Touge crew
+## 6. Round 3 — Touge
 
-### Wangan
-- Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
-- Reveal: what Sabine walking away cost the highway. Most people came to the Wangan runs for her, so when she walked away, the betting went down with her. The bets recovered because the current boss, the promoter, is an excellent businessman, but it was never quite the same. Personal losses from the sweep come up lightly (someone lost a car, someone quit for good)
-- Myth Driver sighting (#2) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting), right after the betting reveal: "The crowds used to come out for her. `<promoter's name>` has been chasing that high ever since." (Austin: fits, mostly already written; moved from Round 1)
+- **Incident:** PC enters the mountain scene; racers reference the touge scene’s collapse; the historical incident is introduced in a mythologized version; the crew remembers Sabine walking away without a word; she still drives but keeps clear of every crew. Crew boss (first pass, Austin may rewrite): he respects Sabine and is puzzled, not bitter. “Sabine? Everybody knows Sabine. She still runs the mountain some nights, alone. Used to run with the best of them. Then one night she just... walked away. Never said why.” Crew kid (overhearing): “People don’t walk away like that unless they’ve got something to hide.” / Boss: “Watch your mouth.” The clue is planted by gossip, not by the boss. (This used to be Round 1's opener and the PC's hook; by Round 3 the PC already knows the story, so the beat needs reframing `<CHECK: Nathaniel>`)
+- **Consequences:** it turns personal. A mature racer who was a kid back then: “I texted her for weeks after. Never wrote back. Figured she didn’t want anything to do with us.” (She was at the hospital with her uncle; the missing two weeks seen from the other side.) As he says it, PC’s phone buzzes: a hometown number. PC lets it ring out. Nobody comments; the player sees both sides of the same silence (locked 2026-11-02)
+- **Distortion:** an old head who was there that night saw Sabine on the phone right before she left and is sure she was tipping off the cops. He’s sincere and wrong: it was her uncle’s call about his heart attack. Now the last crew reveal before the Mentor Confrontation `<CHECK: Nathaniel: final straw>`
+- **Myth Driver #1 sighting (his only one; Austin, 2026-11-13):** after the Touge crew boss falls, #1 shows up and challenges the PC. A challenge only, no race yet `<TODO: beat>`. Older drafts to fold in or drop (Open Question 14): he spots Sabine's work on the PC's car: "Hope she doesn't bring the cops again." (locked 2026-11-03/04 as his first sighting; really about her detective uncle-dad, which lands in the Finale); the fracture: "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew boss name>`." / "I ran this mountain once. Half of them never came back after that night."; and, after the phone-call reveal, "Told everyone back then. Nobody listened." / "Now you're the one asking questions." (he's sure he's right; the crew retells his distrust as foresight)
 
-### Street
-- Rematch 2 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up by the boss since last round
-- Reveal: racers openly trade theories about why Sabine walked away. PC reads the crew’s group chat: she got scared, she got paid, she got a deal
-- The influencer boss offers to “settle it” with a content-style interview with Sabine, for views. PC refuses. Boss: “Means she’s hiding something. Clean people talk.”
-- Also plants that #3's pro career never happened, likely through the influencer, who felt abandoned when #3 left to go pro `<TODO: beat>` (why it died is locked: the sweep, canon 9)
-- Myth Driver sighting (#3) (rough pass 2026-11-04, needs more work; rough wording, dialogue at scripting): his car is a scrap rebuild, nothing like what a pro would drive. He catches the PC looking: "Lost the good one a while back." Hints it was impounded in the sweep; ties to the Round 3 Street reveal ("I did sixty days. Lost my car.") and pays off the locked reason his pro career died: impounded and charged in the sweep (canon 9)
-
-## 6. Round 3 — Distortion
-
-Reveals plant misleading clues toward Sabine’s guilt (the old generation going quiet whenever she’s mentioned). Every clue is true and points the wrong way
-
-### Touge
-- Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up again
-- Reveal: an old head who was there that night saw Sabine on the phone right before she left and is sure she was tipping off the cops. He’s sincere and wrong: it was her uncle’s call about his heart attack
-- Myth Driver sighting (#1) (locked for now 2026-11-04, rough wording; beats only, dialogue at scripting): after the old head's phone-call reveal, the PC brings up the phone call. #1, blunt: "Told everyone back then. Nobody listened." Then the jab: "Now you're the one asking questions." He's sure he's right, the crew retells his distrust as foresight, and he never spells out the accusation. Underneath: he distrusted her detective uncle (lands in the Finale)
-
-### Wangan
-- Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up again
-- Reveal: the promoter, the one person who goes quiet about her, finally says, “She had her reasons. Not my place.” He’s protecting their private history (old flame, canon 21); to PC it sounds like covering for a snitch. No further thread: it pays off only at the summit
-
-### Street
-- Rematch 3 vs crew `<TBD>` / crew boss `<TBD>`; the whole crew leveled up again
-- Reveal: the mystery turns emotional and cultural; blame, identity and social fragmentation intensify; conflicting, misremembered takes on why Sabine left escalate; PC keeps pressing Sabine, she deflects
-- The final straw: an old head arrested in the sweep, flat, not accusing: “I did sixty days. Lost my car. She didn’t even get a ticket.” It lands because the PC has heard the sweep’s cost all game; Sabine is the one person who paid nothing
-- Myth Driver sighting (#3) (locked for now 2026-11-04, rough wording; beats only, dialogue at scripting): the PC brings up the crew's "She didn't even get a ticket." #3 goes cold for a second, then back to charm: "Some of us paid for that night. Some of us didn't." Bitter, not lying (the sweep took his pro career, canon 9); to the PC it sounds like confirmation
-
-### Round 3 (first pass 2026-11-05, needs more passes): Reiko warns the PC off digging
-- Before the Mentor Confrontation, Reiko warns the PC to stop digging into the sweep. Protective gatekeeper energy: she let the PC into the garage and into "Sabine's crew", and she doesn't want this to blow up
-
-### Mentor Confrontation (locked: end of Round 3, before the Finale)
+### Mentor Confrontation (locked: end of Round 3, after #1's challenge, before the Finale)
 - PC has put the (misleading) clues together and accuses Sabine of being the snitch
 - Sabine doesn’t defend herself. She’s been accused once already and won’t waste the energy again; it’s tired, not proud. After a long silence: “Get out of my garage.”
 - **Jesse and Reiko at the rift (first pass 2026-11-05, needs more passes):** Reiko is stung personally — she let the PC in, and the accusation burns her for vouching. Jesse refuses to smooth it over (subverting the Prologue beat where he softened Reiko's edge) and quietly points out that the PC decided without asking. The warmth is gone
 - **Rift changes (locked, Austin 2026-11-11; replaces the 2026-11-10 wording):** Jesse shuts the PC out and stops doing tuning or respecs for the PC; during the Finale the PC does tuning and respecs at the reverse speakeasy with Malo, and pulls the DAQ log themselves, with no Jesse line (canon 29). Reiko drops wholesale (back to full price) but still sells to the PC, because she's a business owner. The warm-up history (closed, then wholesale, then "Sabine's crew") is what she takes back with the discount; business is why the shop and the big Round 3 mods stay available during the Finale
 - The relationship blows up; the rift stands going into the Finale
 - She still believes the snitch accusation got her frozen out; she doesn’t know the real reasons
-- PC knows they messed up, which drives the Finale (canon 16)
+- The PC blames #1 for wrecking everything, which drives the Finale (canon 16, 2026-11-13)
 
 ### Round 3 complete: big finale mods (after the Mentor Confrontation)
 - Completing Round 3 unlocks the big finale mods, bought from Reiko at full price (no wholesale after the rift; she still sells because she's a business owner, see above)
@@ -196,15 +160,15 @@ Reveals plant misleading clues toward Sabine’s guilt (the old generation going
 
 # FINALE
 
-Finishing Round 3 unlocks the three Myth Driver races, one per district, and the big finale mods (bought from Reiko at full price; the shop stays open through the Finale). Jesse has shut the PC out, so tuning and respecs happen at the reverse speakeasy with Malo, and the PC pulls the DAQ log themselves (canon 15, 29). PC goes into them estranged from Sabine, knowing they messed up and wanting the truth: PC races all three to settle the story once and for all (canon decision 16). The contradictions between their accounts unravel the snitch story.
+Finishing Round 3 unlocks the three Myth Driver races, one per district, and the big finale mods (bought from Reiko at full price; the shop stays open through the Finale). Jesse has shut the PC out, so tuning and respecs happen at the reverse speakeasy with Malo, and the PC pulls the DAQ log themselves (canon 15, 29). **Back up the mountain (Austin, 2026-11-13):** estranged from Sabine, the PC goes back up the mountain to blame #1 for wrecking everything, answering his challenge, and they race. That race sets off the #2 and #3 races and leads into the final confrontation. The PC races out of blame, not to find the truth; the truth comes out by accident, starting with #1's contradiction (canon decisions 16, 18). The contradictions between their accounts unravel the snitch story.
 
 ## 7. Myth Drivers
 
 - Tone note: the scene mythologizes the Myth Drivers similarly to how SpaceX employees are in the books by Eric Berger (canon 1)
-- Each Myth Driver was first sighted in Round 1, right after his district’s crew was cleared; these are the actual races
-- Order (locked): Touge (#1) → Wangan (#2) → Street (#3), following the sightings
+- Each Myth Driver was sighted once, right after his district’s round (#3 after Street, #2 after Wangan, #1's challenge after Touge); these are the actual races
+- Order (locked): Touge (#1) → Wangan (#2) → Street (#3). The #1 race is the PC answering his challenge after the rift; it sets off the other two
 - Driving styles off the signature corners (draft, 2026-11-11; canon 30): #1 picks the line he's sure is right and never changes it; #2 drives clean and never shuts the door on you (guilt behind the wheel); #3 is the golden-boy pro who reads you and adapts, the hardest to pin down
-- **#1 Touge** (name `<TBD>`): insists Sabine *left* on her own the night of the sweep (first pass). It sounds settled until #2’s race (canon 18). Real reason (comes out to PC in the Finale `<TODO: how>`; Sabine hears it at the summit): distrust of Sabine’s uncle-dad, a detective
+- **#1 Touge** (name `<TBD>`): the PC comes up the mountain to blame him (2026-11-13). He insists Sabine *left* on her own the night of the sweep (first pass), and the truth starts coming out by accident from here (canon 16, 18). It sounds settled until #2’s race (canon 18). Real reason (comes out to PC in the Finale `<TODO: how>`; Sabine hears it at the summit): distrust of Sabine’s uncle-dad, a detective
 - **#2 Wangan** (name `<TBD>`): his guilt over ousting her leaks out as hints that she may have been a scapegoat — one of the first cracks in PC’s certainty (starts the truth unraveling, canon 16) and a foreshadow of him coming to the summit to apologize. His “pushed” clashes with #1’s “left”: the first time two Myth Driver accounts can’t both be true, canon 18. Real reason (comes out to PC in the Finale `<TODO: how>`; Sabine hears it at the summit): she turned down his date
 - **#3 Street** (name `<TBD>`): half-owns it in his race — admits he was glad she was gone, without saying why. Full reason (comes out to PC in the Finale `<TODO: how, given he only half-owns it in his race>`; Sabine hears it at the summit): he wanted out to go pro and didn’t want her hurt by him leaving, so letting her be pushed out was easier on him and harder on her. He never went pro: the sweep cost him: he was impounded and charged that night, and the team courting him wouldn't touch a street racer with a record, so the offer died (canon 9). That also gave him a reason to push her away: she walked away clean while he lost everything
 - By the end of the three races PC knows the true story: no informant; the sweep was benign and coincidental; the snitch story covered each Myth Driver’s personal reason
@@ -276,13 +240,13 @@ Finishing Round 3 unlocks the three Myth Driver races, one per district, and the
 ### "Sabine's crew"
 - Jesse, Reiko and Malo (the barkeep) are part of an informal off-grid circle of builders and tuners who reject the racing cliques and exist solely for the cars (canon 24)
 - That's how Sabine stays isolated from the crews after the sweep yet is still known across the city
-- Round 2 (around the speakeasy, early in the round): Jesse and Reiko introduce the PC to this circle
+- End of Round 1 (around the speakeasy, once the debt clears; moved 2026-11-13): Jesse and Reiko introduce the PC to this circle
 
 ### Reiko — protective gatekeeper who gets burned after vouching
 - Saw crew politics firsthand back in the day (ties to #3 recognizing her name in Round 1) and left the cliques on purpose
 - Prologue → Round 1: cool at first ("Wholesale is for crew"), opens full-price parts after the race 3 win, warms up and gives wholesale at the end of Round 1
-- Round 2: with Jesse, brings the PC into "Sabine's crew"
-- Round 3: warns the PC off digging into the sweep. When the PC accuses Sabine anyway, it stings her personally because she let the PC in
+- End of Round 1 (the speakeasy): with Jesse, brings the PC into "Sabine's crew"
+- End of Round 2 (before the Touge round, 2026-11-13): warns the PC off digging into the sweep. When the PC accuses Sabine anyway, it stings her personally because she let the PC in
 - Finale rift (locked, Austin 2026-11-11): drops wholesale, back to full price, but still sells to the PC, including the big Round 3 mods, because she's a business owner. The warm-up (closed, then wholesale, then "Sabine's crew") is what she takes back; business keeps the shop open without breaking the rift
 - Once she sees the PC rounding up the Myth Drivers to fix what they broke, she's the one who points the PC to where Sabine runs the mountain alone (first pass for Open Question 8)
 
