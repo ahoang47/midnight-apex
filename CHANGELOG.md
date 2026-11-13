@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-11-13 — Nathaniel [story]: Street hook, sightings, rung layout (Austin 2026-11-13)
+
+- **Why:** Austin approved the C1–C7 drafts and B4 from the post-restructure review. These fill the causal gaps marked after 10f9499 / a4236ce.
+- **What:**
+  - C1: the PC's Round 1 hook is the Street old head's "One day she was in every clip. Next day, gone. No post, no goodbye," hanging on the "stayed behind" beat, not the cops clip.
+  - C2: the Street kid's "She bounced right before the cops showed" is what sends the PC to Wangan; #1's cops comment is color only, not a hook.
+  - C3: "I did sixty days" stays as early evidence in Round 1; the Touge phone-call reveal is the final straw.
+  - C4: the Touge boss leads with "You came all the way up here to ask about Sabine?" then his locked "Everybody knows Sabine" speech.
+  - C5 / Open Question 14 resolved: #3 keeps the locked first sighting and folds in "Lost the good one"; "Some of us paid for that night" moves to his Finale race. #2 keeps the locked first sighting, folds in the crowds line, and closes on "Is that what they're saying now?" #1's challenge uses the fracture lines plus a glance of "Hope she doesn't bring the cops again"; "Told everyone back then" moves to his Finale race.
+  - C6: #1's challenge lines, plus the Finale blame open ("You started this. I'm back.").
+  - C7: one run per crew — kids the incident, mature members the consequences, old heads the distortion, the boss the main reveal. Line assignments landed in `dialogue_outline.md`.
+  - B4: cut the leftover Round 3 feud lines "Chat's split on you…" and "new theory: she held him back."
+- **Files:** `story/canon.md`, `story/plot.md`, `story/dialogue_outline.md`, `story/characters/myth_driver_1.md`, `story/characters/myth_driver_2.md`, `story/characters/myth_driver_3.md`.
+
 ## 2026-11-13 — Nathaniel [story]: cleanup after the round restructure 10f9499
 
 - **Why:** cleanup after the round restructure 10f9499: stale cites and leftover rematch/reputation-gate references. Draft fills (B4 and the C items) wait on Austin.

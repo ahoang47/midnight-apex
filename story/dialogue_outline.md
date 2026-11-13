@@ -82,7 +82,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Each round i
 
 ## Round 1 — Street
 
-One district per round (Austin, 2026-11-13): the Street crew, raced once start to finish, covering Street's incident, consequences and distortion. The crew lines below are the earlier per-round drafts regrouped by phase; with one run per crew, pick which survive on which rung at scripting `<OPEN: Nathaniel>`. Rematch-premise drafts were cut.
+One district per round (Austin, 2026-11-13): the Street crew, raced once start to finish, covering Street's incident, consequences and distortion. One run per crew: kids carry the incident, mature members the consequences, old heads the distortion, and the boss the main reveals (Austin, 2026-11-13).
 
 ### Wild races (Street)
 - **Must-have wild-race characters (2026-11-06):** tourist groups like the ones that go to Daikoku PA in real life (`<OPEN: barks and district/archetype mapping>`).
@@ -90,41 +90,32 @@ One district per round (Austin, 2026-11-13): the Street crew, raced once start t
 
 ### Street crew
 **Crew pre/post-race lines**
-- *Incident (clout; the old days are just clips)*
+- *Kids (incident; clout; the old days are just clips)*
 - Kids, pre (draft): "Smile, you're on stream."
 - Kids, post (draft): "Clip's gonna do numbers anyway."
-- Mature members, pre (draft): "Nice build. Not very camera-friendly though."
-- Mature members, post (draft): "You ever see the old clips? Grainy, but legendary."
-- Old heads, pre (draft): "Street's not what it was. Still worth winning."
-- Old heads, post (draft): "Half these kids think the old days were a movie."
-- Crew boss (the influencer), pre (draft): "My street, my camera. Try to look good."
-- Crew boss, post (draft): "Cut that part out of the edit."
-- *Consequences (theories in the group chat)*
-- Kids, pre (draft): "Group chat says Sabine built your motor. True?"
-- Kids, post (draft): "She got scared. She got paid. She got a deal. Pick one."
+- *Mature members (consequences; theories in the group chat)*
 - Mature members, pre (draft): "Everyone's got a theory. You got one?"
 - Mature members, post (draft): "My cousin got impounded that night. Still mad about it."
-- Old heads, post (draft): "These kids argue about it online. Nobody asks her."
-- *Distortion (takes escalate)*
-- Kids, pre (draft): "Chat's split on you. Half think you're her puppet."
-- Kids, post (draft, to cut or replace): "Okay, new theory: she held him back." `<OPEN: replacement line; it no longer leads anywhere>`
-- Mature members, pre (draft): "Everybody's got a version. They can't all be true."
-- Mature members, post (draft): "Nobody asks her. They just post."
-- Crew boss, post (draft): "Whatever. The old guys are history."
+- *Old heads (distortion)*
+- Old heads, pre (draft): "Street's not what it was. Still worth winning."
+- Old heads, post (draft): "Half these kids think the old days were a movie."
+- *Crew boss (the influencer; main reveals)*
+- Crew boss, pre (draft): "My street, my camera. Try to look good."
+- Crew boss, post (draft): "Cut that part out of the edit."
 
 **Reveals**
-- **Incident:** a clip shows Sabine's car leaving a meet right before the sweep footage starts. Kid: "She bounced right before the cops showed. Legend." (locked). #3's old fans call him the one who "went pro" and Sabine the one who "stayed behind", with pity (locked beat). Example (draft): "He went pro. She stayed behind. Kind of sad."
-- **PC's hook:** the PC recognizes their own story in Sabine's (canon 13, Round 1). It used to ride on the Touge boss's "Everybody knows Sabine" line; Street needs its own beat. `<OPEN: Nathaniel>`
+- **Incident:** a clip shows Sabine's car leaving a meet right before the sweep footage starts. Kid: "She bounced right before the cops showed. Legend." (locked). That clip is what sends the PC to Wangan asking (Austin, 2026-11-13). #3's old fans call him the one who "went pro" and Sabine the one who "stayed behind", with pity (locked beat). Example (draft): "He went pro. She stayed behind. Kind of sad."
+- **PC's hook (Austin, 2026-11-13):** hangs on the "stayed behind" beat, not the cops clip. After that line, an old head, not accusing: "One day she was in every clip. Next day, gone. No post, no goodbye." The PC recognizes their own story in hers (canon 13) and says nothing. The influencer can needle it later with "Clean people talk."
 - **Consequences:** the PC reads the crew's group chat: "she got scared, she got paid, she got a deal" (locked beat). Influencer: offers to "settle it" with an interview with Sabine for views. PC refuses. Influencer: "Means she's hiding something. Clean people talk." (locked)
-- **Plant that #3 never went pro,** likely through the influencer. Exact beat is a `plot.md` §4 TODO. Example (draft): "He left to go pro. Never even made it to a grid."
-- **Distortion:** misremembered takes escalate; the PC keeps pressing Sabine; she deflects. (locked beat) Old head, flat, not accusing: "I did sixty days. Lost my car. She didn't even get a ticket." (locked; it used to be the final straw at the end of Round 3 and now lands in Round 1 `<OPEN: Nathaniel>`)
+- **Plant that #3 never went pro,** through the influencer, who felt abandoned when #3 left to go pro. Influencer (draft): "He left to go pro. Never even made it to a grid." (why it died is locked: the sweep, canon 9)
+- **Distortion:** misremembered takes escalate; the PC keeps pressing Sabine; she deflects. (locked beat) Old head, flat, not accusing: "I did sixty days. Lost my car. She didn't even get a ticket." (locked). Early evidence, not the accusation: the first time that night feels personal. The case stays open until the Touge phone-call reveal (Austin, 2026-11-13).
 
-**Myth Driver #3 sighting (his only sighting)**
+**Myth Driver #3 sighting (his only sighting; Austin, 2026-11-13)**
 - #3: "Where'd you get your parts?" / PC: "Reiko." / #3: "Reiko, huh..." (locked beat; rough wording)
 - PC: "You know Sabine?" / #3: "Everybody knew everybody back then. Different time." (locked)
 - #3 (lightly): "She doing alright?" (locked)
-- **Beat:** a crew kid asks him to run one; he grins and peels off with the crew, leaving the question hanging.
-- Older drafts to fold in or drop `<OPEN: Q14>`: his car is a scrap rebuild; he catches the PC looking: "Lost the good one a while back." (hints the sweep impounded it, canon 9). And after "She didn't even get a ticket": #3 goes cold for a second, then back to charm: "Some of us paid for that night. Some of us didn't." (bitter, not lying; to the PC it sounds like confirmation)
+- **Beat:** a crew kid asks him to run one; he grins and peels off with the crew, leaving the question hanging. As he goes, the PC notices his car is a scrap rebuild; he catches the PC looking: "Lost the good one a while back." (hints the sweep impounded it, canon 9; sits next to "sixty days" in the same round)
+- "Some of us paid for that night. Some of us didn't." moves to his Finale race.
 
 ### End of Round 1: the debt clears, wholesale, the speakeasy
 - **Trigger:** the PC beats the Street crew boss (Austin, 2026-11-13). The debt hits zero at the same moment Reiko gives wholesale.
@@ -146,47 +137,42 @@ One district per round (Austin, 2026-11-13): the Street crew, raced once start t
 
 ## Round 2 — Wangan
 
-The Wangan crew, raced once start to finish, covering Wangan's incident, consequences and distortion (2026-11-13).
+The Wangan crew, raced once start to finish, covering Wangan's incident, consequences and distortion (2026-11-13). One run: kids carry the incident, mature members the consequences, old heads the sweep and what she cost the highway, and the boss the main reveal (Austin, 2026-11-13).
 
 ### Wangan crew
 **Crew pre/post-race lines**
-- *Incident (professionals; the PC arrives from Street's clips and theories)*
+- *Kids (incident; new on the highway)*
 - Kids, pre (draft): "New on the highway? Keep it under control."
 - Kids, post (draft): "The promoter will want your name by tomorrow."
+- Kids, post (draft, gossip that pays off at #2's sighting): "Heard one of the old guys was sweet on her."
+- *Mature members (consequences; the PC is asking about Street's clips)*
 - Mature members, pre (draft): "You're asking about the old days. Win first, then we'll talk."
 - Mature members, post (draft): "One night. Every district. That's what you're asking about."
+- Mature members, post (draft): "Someone I worked with quit for good after that night. Never raced again."
+- *Old heads (the sweep, and what she cost the highway)*
 - Old heads, pre (draft): "We've seen your type come through. Not many stay."
 - Old heads, post (draft): "Tickets, impounds, a few arrests. One car drove off clean."
-- Crew boss (the promoter), pre (draft): "A new headliner. Let's see if you sell."
-- Crew boss, post (draft): "Crowds love a fresh face. Don't disappoint them."
-- *Consequences (what she cost the highway)*
-- Kids, pre (draft): "The promoter's been talking you up. Don't make him a liar."
-- Kids, post (draft): "Crowd's bigger tonight. Because of you, I guess."
-- Mature members, post (draft): "Someone I worked with quit for good after that night. Never raced again."
 - Old heads, pre (draft): "The highway used to be loud. You remember this road full?"
 - Old heads, post (draft): "Most people came to see her. When she left, the money left too."
-- Crew boss, pre (draft): "Big night. Make it a show."
+- *Crew boss (the promoter; headliner salesman, then the distortion reveal)*
+- Crew boss, pre (draft): "A new headliner. Let's see if you sell."
+- Crew boss, post (draft): "Crowds love a fresh face. Don't disappoint them."
+- Crew boss, pre (draft, once the PC has drawn a crowd): "You're the headliner now. Act like it." / "Biggest crowd yet. Don't waste it."
 - Crew boss, post (draft): "Good for business. Keep it up."
-- *Distortion (dry rumors)*
-- Kids, pre (draft): "You're the headliner now. Act like it."
-- Kids, post (draft): "Heard one of the old guys was sweet on her."
-- Mature members, post (draft): "People remember what suits them."
-- Old heads, pre (draft): "Don't believe everything the young ones say."
-- Old heads, post (draft): "Some stories get better every year. That one did."
-- Crew boss, pre (draft): "Biggest crowd yet. Don't waste it."
 
 **Reveals**
-- **Incident:** the mature Wangan crew lays out the sweep straight: a city-wide crackdown across all three districts in one night; lots of tickets and impounds, a few arrests; Sabine left minutes before and walked away clean (locked beat). Old head (draft): "City-wide. All three districts, one night. She left minutes before it started."
+- **Incident:** the PC arrives from Street's clips and theories, asking about the kid's "She bounced right before the cops showed" line (Austin, 2026-11-13). The mature Wangan crew points at the night; the old heads lay the sweep out straight: a city-wide crackdown across all three districts in one night; lots of tickets and impounds, a few arrests; Sabine left minutes before and walked away clean (locked beat). Old head (draft): "City-wide. All three districts, one night. She left minutes before it started."
 - **Consequences:** most people came to the Wangan runs for Sabine; when she walked away, the betting went down with her. The promoter brought the bets back, but it was never quite the same. Personal losses come up lightly. (locked beat) Old head (draft): "The bets dried up when she left. `<promoter>` brought them back. Mostly."
 - **Distortion:** the promoter, the one person who goes quiet about her: "She had her reasons. Not my place." (locked) **Underneath:** he's protecting their private history (old flame); to the PC it sounds like covering for a snitch. It pays off only at the summit.
 
-**Myth Driver #2 sighting (his only sighting)**
+**Myth Driver #2 sighting (his only sighting; Austin, 2026-11-13)**
 - #2: "Her work?" (locked)
 - PC: "You know Sabine?" / #2: "Everyone did. Clean as ever..." (locked)
 - PC: "Did?" (locked)
-- #2: "Long time ago." Then he leaves. (`<PROPOSAL>`, rough pass)
+- #2: "Long time ago."
+- #2 (after the betting reveal, folded in): "The crowds used to come out for her. `<promoter>` has been chasing that high ever since." (Austin: fits)
+- **Beat:** the crew's "he was sweet on her" rumor has already come up; the PC brings it up. #2: "Is that what they're saying now?" Then he leaves.
 - **Underneath:** the slip on "did" is the hint of his guilt.
-- Older drafts to fold in or drop `<OPEN: Q14>`: right after the betting reveal, "The crowds used to come out for her. `<promoter>` has been chasing that high ever since." (Austin: fits); and the crew's "he was sweet on her" rumor, the PC brings it up, #2: "Is that what they're saying now?"
 
 ### End of Round 2: betting opens
 - **Trigger:** the PC beats the Wangan crew boss, the promoter (end of the Wangan round).
@@ -205,40 +191,43 @@ The Wangan crew, raced once start to finish, covering Wangan's incident, consequ
 
 ## Round 3 — Touge
 
-The Touge crew, raced once start to finish, covering Touge's incident, consequences and distortion (2026-11-13). It ends with #1's challenge, the Mentor Confrontation, and then the PC going back up the mountain.
+The Touge crew, raced once start to finish, covering Touge's incident, consequences and distortion (2026-11-13). One run: kids carry the incident, mature members the consequences, old heads the distortion, and the boss the main reveal (Austin, 2026-11-13). It ends with #1's challenge, the Mentor Confrontation, and then the PC going back up the mountain.
 
 ### Touge crew
 **Crew pre/post-race lines**
-- *Incident (the legend as the kids heard it)*
+- *Kids (incident)*
 - Kids, pre (draft): "This is our mountain. Outsiders run it once."
 - Kids, post (draft): "Whatever. The real legends quit before you got here."
+- Kids, post (draft): "My brother used to race here. He doesn't talk about why he stopped."
+- Kids, post (draft): "Some people said she was trouble from the start."
+- *Mature members (consequences)*
 - Mature members, pre (draft): "You drive like someone taught you. Who?"
+- Mature members, pre (draft): "You really keep digging, huh?"
 - Mature members, post (draft): "Ask around about how this mountain used to be. You'll get a different story every time."
+- Mature members, post (draft): "Depends who you ask. Everyone remembers that night different."
+- *Old heads (distortion; packed road, then the phone call)*
 - Old heads, pre (draft): "Haven't seen a line like that up here in years."
 - Old heads, post (draft): "Back then this road was packed every night. Then it wasn't."
+- Old heads, pre (draft): "I was there. You want to hear it or not?"
+- *Crew boss (main reveal)*
 - Crew boss, pre (draft): "You've earned a run. Don't make me regret it."
 - Crew boss, post (draft): "Fair race. You're welcome back up here."
-- *Consequences (what that night cost the mountain)*
-- Kids, post (draft): "My brother used to race here. He doesn't talk about why he stopped."
-- Old heads, pre (draft): "Thinner crowd than you'd think, huh?"
-- Old heads, post (draft): "Lost a lot of good drivers after that night."
-- *Distortion (misremembering; his distrust retold as foresight)*
-- Kids, post (draft): "Some people said she was trouble from the start."
-- Mature members, pre (draft): "You really keep digging, huh?"
-- Mature members, post (draft): "Depends who you ask. Everyone remembers that night different."
-- Old heads, pre (draft): "I was there. You want to hear it or not?"
 - Crew boss, post (draft): "You've got the mountain's respect. Do something good with it."
 
 **Reveals**
-- **Incident:** Crew boss: "Sabine? Everybody knows Sabine. She still runs the mountain some nights, alone. Used to run with the best of them. Then one night she just... walked away. Never said why." (locked first pass; Austin may rewrite). Crew kid (overhearing): "People don't walk away like that unless they've got something to hide." / Boss: "Watch your mouth." (locked). This was Round 1's opener; by Round 3 the PC already knows her story `<OPEN: Nathaniel: reframe>`.
+- **Incident (Austin, 2026-11-13):** the boss isn't introducing Sabine; he's the one person who still respects her after two districts of rumor, and he won't let the kid cheapen it. Crew boss (draft, lead-in): "You came all the way up here to ask about Sabine?" Then the locked speech: "Everybody knows Sabine. She still runs the mountain some nights, alone. Used to run with the best of them. Then one night she just... walked away. Never said why." (locked first pass; Austin may rewrite). Crew kid (overhearing): "People don't walk away like that unless they've got something to hide." / Boss: "Watch your mouth." (locked). To the PC, the kid now sounds like confirmation, not a first clue, which hardens the accusation.
 - **Consequences:** Mature member (a kid back then): "I texted her for weeks after. Never wrote back. Figured she didn't want anything to do with us." (locked) **Beat:** the PC's phone buzzes with a hometown number; the PC lets it ring out. Nobody comments. (locked)
-- **Distortion:** an old head saw Sabine on the phone right before she left and is sure she was tipping off the cops. He's sincere and wrong: it was her uncle's heart-attack call. (locked beat) Old head (draft): "I saw her. On the phone, right before. Then she was gone."
+- **Distortion:** an old head saw Sabine on the phone right before she left and is sure she was tipping off the cops. He's sincere and wrong: it was her uncle's heart-attack call. (locked beat) Old head (draft): "I saw her. On the phone, right before. Then she was gone." This is the final straw, the last crew reveal before the Mentor Confrontation (Austin, 2026-11-13).
 
 **PC backstory:** the PC slips "I left the week of a big race" while digging into Sabine. First pass under `<OPEN: Q6>` (was in Round 3 Street).
 
 **Myth Driver #1 sighting (his only sighting; a challenge, no race yet; Austin 2026-11-13)**
-- **Beat:** after the Touge crew boss falls, #1 shows up and challenges the PC. `<OPEN: lines>`
-- Older drafts to fold in or drop `<OPEN: Q14>`: he spots Sabine's work on the PC's car: "Hope she doesn't bring the cops again." (locked beat as his first sighting; really about her detective uncle-dad, which lands only in the Finale). "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew boss name>`." / "I ran this mountain once. Half of them never came back after that night." After the phone-call reveal: "Told everyone back then. Nobody listened." / "Now you're the one asking questions." (he's sure he's right; he never spells out the accusation)
+- **Beat:** after the Touge crew boss falls, #1 shows up and challenges the PC. No race yet. A glance at the car is color only, not a hook; it no longer leads into Wangan.
+- #1 (glances at the work): "Hope she doesn't bring the cops again."
+- #1: "You ran through this crew pretty fast. Used to be a lot harder to reach `<Touge crew boss name>`."
+- He looks up the road: "I ran this mountain once. Half of them never came back after that night."
+- Challenge: "You want the rest of it, you come find me up the road. Alone." Then he leaves. No race.
+- "Told everyone back then. Nobody listened." / "Now you're the one asking questions." moves to his Finale race, when the PC comes back and brings up the phone call.
 
 ### End of Round 3: Mentor Confrontation
 - **Who:** PC, Sabine; Jesse and Reiko in the background.
@@ -263,7 +252,8 @@ The Touge crew, raced once start to finish, covering Touge's incident, consequen
 Order (locked): Touge #1 → Wangan #2 → Street #3. **Back up the mountain (Austin, 2026-11-13):** after the rift the PC goes back up to blame #1 for wrecking everything, answering his challenge; that race sets off #2 and #3. The PC races out of blame, and the truth comes out by accident, starting with #1's contradiction (canon 16, 18). Tuning and respecs happen at the reverse speakeasy with Malo, and the PC reads the DAQ log alone (locked 2026-11-11). Like wild races, Myth Driver race results don't persist (canon 27). How each real reason comes out to the PC is `<OPEN: Q10>`.
 
 ### Myth Driver #1 race (Touge)
-- **Beat:** he insists Sabine left on her own the night of the sweep (first pass). It sounds settled until #2's race.
+- **Beat:** the PC comes back up the mountain after the rift to blame him for wrecking everything (canon 16). He insists Sabine left on her own the night of the sweep (first pass). It sounds settled until #2's race. When the PC brings up the phone call: "Told everyone back then. Nobody listened." Then: "Now you're the one asking questions."
+- PC (draft): "You started this. I'm back."
 - #1 (draft): "She left. Nobody pushed her. Ask anyone."
 - **Real reason:** distrust of her detective uncle-dad. `<OPEN: how it comes out (Q10)>`
 
@@ -275,6 +265,7 @@ Order (locked): Touge #1 → Wangan #2 → Street #3. **Back up the mountain (Au
 ### Myth Driver #3 race (Street)
 - **Beat:** he half-owns it: he admits he was glad she was gone, without saying why. (locked beat)
 - #3 (draft): "Honestly? I was glad when she was gone. Don't ask me why."
+- #3 goes cold for a second, then back to charm: "Some of us paid for that night. Some of us didn't." (moved from his old Round 3 sighting; bitter, not lying)
 - **Real reason:** he wanted out to go pro and didn't want her hurt by him leaving. `<OPEN: how it comes out (Q10)>`. The sweep cost him his pro career (locked, canon 9), which gave him a second reason to push her away: she walked away clean while he lost everything.
 
 ### After the races
