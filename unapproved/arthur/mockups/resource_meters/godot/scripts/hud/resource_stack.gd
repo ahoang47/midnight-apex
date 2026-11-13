@@ -25,17 +25,19 @@
 ##       arrow). E/A/X camera stops sit next to the PLAN THE LINE rows. Middle
 ##       of the band is LINE LOCK only, with room and bigger timer digits.
 ##       Chunky Archivo Black / Nimbus Sans Bold type at readable sizes. Flat.
-##   E3B — same layout as E3. New EN rotor+caliper icon and vertical HAN coilover.
-##       All three bars are heat / load meters that fill as load builds and drain
-##       as they recover (Austin, 2026-11-13). POW = engine heat, EN = brake and
-##       tyre heat, HAN = suspension load. LIMIT tick at ~80%, RELEASE notch at
-##       ~55% (placeholder numbers, not approved). Between LIMIT and full is
-##       OVERRUN (still selectable, hits less). Full is LOCKED until the fill
-##       cools past RELEASE (hysteresis). Concept only; not in the sim.
+##   E3B — same layout as E3, with heat / load meters that fill as load builds
+##       and drain as they recover (Austin, 2026-11-13). POW = engine heat,
+##       EN = brake and tyre heat, HAN = suspension load. LIMIT tick at ~80%,
+##       RELEASE notch at ~55% (placeholder numbers, not approved). Between
+##       LIMIT and full is OVERRUN (still selectable, hits less). Full is
+##       LOCKED until the fill cools past RELEASE (hysteresis). Concept only;
+##       not in the sim. EN and HAN band icons were reverted at Austin's
+##       request (2026-11-13) to the E3 wheel+caliper and shock from 7c69bf6.
+##       POW coolant is unchanged.
 ##
-## EN icon: a cross-drilled brake rotor and solid caliper (no tyre, no wheel),
-## matching Austin's rotor reference. HAN icon: a vertical coilover (the shock
-## reference, drawn straight up and down, not tilted).
+## EN icon: a wheel (tyre + rim + spokes) with the brake rotor and caliper
+## visible through the spoke gaps (restored from E3). HAN icon: the E3 shock
+## absorber (upper eye, can, coils, lower eye).
 @tool
 extends "res://scripts/hud/hud_panel.gd"
 
@@ -435,7 +437,7 @@ func _icon_at(cx: float, cy: float, s: Dictionary, r: float) -> void:
 			else:
 				_icon_pump(cx, cy, r, col)
 		"brakes":
-			_icon_brake(cx, cy, r, col)
+			_icon_wheel(cx, cy, r, col, s.empty)
 		_:
 			_icon_shock(cx, cy, r, col)
 	if s.empty and not bool(s.get("no_slash", false)):
@@ -475,98 +477,72 @@ func _icon_pump(cx: float, cy: float, r: float, col: Color) -> void:
 	solid(noz, col)
 	outline(noz, INK_I)
 
-func _icon_brake(cx: float, cy: float, r: float, col: Color) -> void:
-	# Cross-drilled rotor + solid black caliper (Austin ref). No tyre, no wheel.
-	# Rotor, slots and hub in the EN colour; caliper is solid ink with a 1 px
-	# colour outline so the black housing holds on the dark band. Flat, no sheen.
-	var detail := r >= 16.0
-	var n := 48 if r >= 24.0 else (32 if r >= 14.0 else 20)
-	var ring_w := maxf(1.6, r * 0.16)
-	var r_out := r
-	var r_in := r - ring_w
-	# Godot 2D: 0 = right, up = -PI/2, increasing angle is clockwise on screen.
-	# Caliper covers the top left: just below 9 o'clock, over 12, ending ~1 o'clock.
-	var cal_a0 := PI - 0.22
-	var cal_a1 := PI + 2.20
-	var cal_ro := r * 1.08
-	var cal_ri := r * 0.50
-	# Visible outer ring: gap at the top right after the caliper, then the long
-	# way around to just under the caliper's left end.
-	var ring_a0 := cal_a1 + 0.18
-	var ring_sweep := (cal_a0 - 0.04) - ring_a0
-	if ring_sweep <= 0.0:
-		ring_sweep += TAU
-	_ring_n(cx, cy, r_out + 0.7, r_in - 0.5, ring_a0, ring_sweep, INK_I, n)
-	_ring_n(cx, cy, r_out, r_in, ring_a0, ring_sweep, col, n)
-	# Inner bell ring with a small gap around 4 o'clock.
-	var b0 := r * 0.48
-	var b1 := r * 0.36
-	if b1 > 2.0:
-		var gap1 := 0.35
-		var bs := TAU - 0.60
-		_ring_n(cx, cy, b0, b1, gap1 + 0.60, bs, col, n)
-	# Radial slots. 6 at in-band size, 8 when there is room. Skip the caliper
-	# sector and the top-right ring gap.
-	var nslot := 8 if detail else 6
-	var slots: Array = []
-	for i in 16:
-		var a := -PI / 2.0 + TAU * (float(i) + 0.5) / 16.0
-		if _ang_in(a, cal_a0, cal_a1):
-			continue
-		if _ang_in(a, cal_a1, ring_a0):
-			continue
-		slots.append(a)
-		if slots.size() >= nslot:
-			break
-	var s0 := r * 0.54
-	var s1 := r * 0.76
-	var sw := (maxf(2.0, r * 0.07) if r >= 24.0 else (1.6 if detail else 1.15))
-	for a in slots:
-		draw_line(Vector2(cx + cos(a) * s0, cy + sin(a) * s0), Vector2(cx + cos(a) * s1, cy + sin(a) * s1), col, sw)
-	# Hub ring, 4 lug dots, centre bore.
-	var rh := r * 0.28
-	var rb := maxf(1.1, r * 0.13)
-	if rh > 1.6:
-		_disc(cx, cy, rh + 0.6, INK_I, n)
-		_disc(cx, cy, rh, col, n)
-		_disc(cx, cy, rb, INK_I, n)
-	if rh > 3.0:
-		var lug_r := r * 0.205
-		var lug_s := 1.0 if r < 16.0 else maxf(1.2, r * 0.055)
-		for i in 4:
-			var la := deg_to_rad(45.0 + float(i) * 90.0)
-			var lx := cx + cos(la) * lug_r
-			var ly := cy + sin(la) * lug_r
-			if r < 14.0:
-				rect(roundf(lx - 0.5), roundf(ly - 0.5), 1.0, 1.0, INK_I)
-			else:
-				_disc(lx, ly, lug_s, INK_I, 8)
-	# Caliper: colour outline first, solid ink fill, rounded end caps, highlight arc.
-	var cap_mid := (cal_ri + cal_ro) * 0.5
-	var cap_r := (cal_ro - cal_ri) * 0.5
-	var ow := maxf(1.0, r * 0.06)
-	_ring_n(cx, cy, cal_ro + ow, cal_ri - ow, cal_a0, cal_a1 - cal_a0, col, n)
-	_disc(cx + cos(cal_a0) * cap_mid, cy + sin(cal_a0) * cap_mid, cap_r + ow, col, 12)
-	_disc(cx + cos(cal_a1) * cap_mid, cy + sin(cal_a1) * cap_mid, cap_r + ow, col, 12)
-	_ring_n(cx, cy, cal_ro, cal_ri, cal_a0, cal_a1 - cal_a0, INK_I, n)
-	_disc(cx + cos(cal_a0) * cap_mid, cy + sin(cal_a0) * cap_mid, cap_r, INK_I, 12)
-	_disc(cx + cos(cal_a1) * cap_mid, cy + sin(cal_a1) * cap_mid, cap_r, INK_I, 12)
-	# Thin highlight arc inside the caliper body (the slot in the ref). Flat, not a sheen.
-	var hi: Color = icon_job.get("highlight", Color8(200, 210, 220))
-	var h_r := (cal_ri + cal_ro) * 0.55 + r * 0.06
-	var h_w := maxf(1.0, r * 0.08)
-	var h_a0 := cal_a0 + 0.32
-	var h_a1 := cal_a1 - 0.32
-	if h_a1 > h_a0:
-		_ring_n(cx, cy, h_r + h_w * 0.5, h_r - h_w * 0.5, h_a0, h_a1 - h_a0, hi, n)
+func _icon_wheel(cx: float, cy: float, r: float, col: Color, empty: bool) -> void:
+	# Wheel package: tyre, a clearly visible steel rotor behind the spokes, caliper
+	# in the 3-o'clock spoke gap, rim, 5 spokes, hub. Drawn back-to-front.
+	var rt: float = r            # tyre outer
+	var ri: float = r - 2.4      # tyre inner / rim outer
+	var rr: float = r - 3.4      # rim inner / rotor outer
+	var rh: float = 2.2          # hub
+	# Steel rotor, slightly warm so it still belongs with the EN red, but light enough
+	# to read through the spoke gaps (the earlier dim-red disc looked like a hole).
+	var rotor := Color8(186, 168, 162)
+	var rotor_d := Color8(132, 108, 106)
+	# 1. Tyre
+	_ring_track(cx, cy, rt, ri, 0.0, TAU, TYRE)
+	_ring_track(cx, cy, rt, rt - 1.0, 0.0, TAU, dimc(col, 0.7 if not empty else 0.4))
+	# 2. Rotor disc, plus two grooves and a few slots so it reads as a brake disc
+	_disc(cx, cy, rr, rotor)
+	_ring_track(cx, cy, rr - 0.8, rr - 1.6, 0.0, TAU, rotor_d)
+	_ring_track(cx, cy, rr * 0.58, rr * 0.58 - 0.8, 0.0, TAU, rotor_d)
+	for k in 6:
+		var sa := deg_to_rad(18.0 + k * 60.0)  # slots sit in the spoke gaps, not under a spoke
+		var p0 := Vector2(cx + cos(sa) * (rh + 1.4), cy + sin(sa) * (rh + 1.4))
+		var p1 := Vector2(cx + cos(sa) * (rr - 1.8), cy + sin(sa) * (rr - 1.8))
+		draw_line(p0, p1, rotor_d, 1.0)
+	# a 1 px highlight on the upper-left of the rotor so the disc has a surface
+	var ha := deg_to_rad(200.0)
+	var hb := deg_to_rad(280.0)
+	_ring_seg(cx, cy, rr - 0.2, rr - 1.0, ha, hb, Color8(220, 210, 205))
+	# 3. Caliper at 3 o'clock, before the spokes, so it shows through the gap
+	_caliper(cx, cy, ri, rt, col)
+	# 4. Rim ring
+	_ring_track(cx, cy, ri, rr, 0.0, TAU, RIM)
+	# 5. Five slightly slimmer spokes, gap centred at 0° (over the caliper)
+	for i in 5:
+		var a := deg_to_rad(36.0 + i * 72.0)
+		_spoke(cx, cy, a, rh + 0.4, ri - 0.3, 1.15, 1.7, RIM)
+	# 6. Hub
+	_disc(cx, cy, rh, HUB)
+	_disc(cx, cy, rh - 1.0, RIM_D)
+	_disc(cx, cy, 0.7, col)
+	# 7. Tyre outline
+	_ring_track(cx, cy, rt + 0.6, rt, 0.0, TAU, INK_I)
 
-
-func _ang_in(a: float, a0: float, a1: float) -> bool:
-	var sweep := a1 - a0
-	if sweep < 0.0:
-		sweep += TAU
-	return fposmod(a - a0, TAU) <= sweep
-
+func _caliper(cx: float, cy: float, r_rim: float, r_tyre: float, col: Color) -> void:
+	# Chunky 2-piston caliper at 3 o'clock. Body sits just outside the rotor, pads pinch onto it.
+	var mid := Color(minf(col.r * 1.05, 1), minf(col.g * 0.85, 1), minf(col.b * 0.85, 1))
+	var bright := Color(minf(col.r * 1.2, 1), minf(col.g * 0.95 + 0.05, 1), minf(col.b * 0.95 + 0.05, 1))
+	var pad := P([
+		cx + r_rim - 3.5, cy - 2.4,
+		cx + r_rim + 0.4, cy - 2.4,
+		cx + r_rim + 0.4, cy + 2.4,
+		cx + r_rim - 3.5, cy + 2.4,
+	])
+	solid(pad, dimc(col, 0.7))
+	var body := P([
+		cx + r_rim - 0.2, cy - 4.0,
+		cx + r_tyre + 1.4, cy - 4.0,
+		cx + r_tyre + 2.2, cy - 2.2,
+		cx + r_tyre + 2.2, cy + 2.2,
+		cx + r_tyre + 1.4, cy + 4.0,
+		cx + r_rim - 0.2, cy + 4.0,
+	])
+	solid(body, mid)
+	outline(body, INK_I)
+	_disc(cx + r_tyre - 0.4, cy - 1.7, 1.45, bright)
+	_disc(cx + r_tyre - 0.4, cy + 1.7, 1.45, bright)
+	rect(cx + r_tyre - 1.0, cy - 0.5, 2.0, 1.0, dimc(col, 0.55))
 
 func _ring_n(cx: float, cy: float, r0: float, r1: float, a0: float, sweep: float, col: Color, n: int) -> void:
 	var segs := maxi(n, 8)
@@ -597,87 +573,60 @@ func _disc(cx: float, cy: float, r: float, col: Color, n := 16) -> void:
 	solid(pts, col)
 
 func _icon_shock(cx: float, cy: float, r: float, col: Color) -> void:
-	# Vertical coilover (Austin shock reference, drawn straight up and down,
-	# not tilted). Top eye, upper perch, 3–5 sloped coils, lower perch,
-	# narrow rounded damper body with a bottom eyelet hole. Flat fill + ink.
-	var top := cy - r
-	var bot := cy + r
-	var eye_r := maxf(2.0, r * 0.20)
-	var eye_in := maxf(0.8, eye_r * 0.42)
-	var ey := top + eye_r
-	_ring_track(cx, ey, eye_r, eye_in, 0.0, TAU, col)
-	_ring_track(cx, ey, eye_r + 0.55, eye_r, 0.0, TAU, INK_I)
-	var neck_y0 := ey + eye_r - 0.15
-	var neck_h := maxf(0.9, r * 0.07)
-	var neck_w := maxf(1.2, r * 0.14)
-	solid(P([cx - neck_w, neck_y0, cx + neck_w, neck_y0, cx + neck_w, neck_y0 + neck_h, cx - neck_w, neck_y0 + neck_h]), col)
-	outline(P([cx - neck_w, neck_y0, cx + neck_w, neck_y0, cx + neck_w, neck_y0 + neck_h, cx - neck_w, neck_y0 + neck_h]), INK_I)
-	var up_y := neck_y0 + neck_h
-	var up_h := maxf(1.8, r * 0.14)
-	var up_w := maxf(3.0, r * 0.48)
-	var up := P([cx - up_w, up_y, cx + up_w, up_y, cx + up_w + 0.3, up_y + up_h, cx - up_w - 0.3, up_y + up_h])
-	solid(up, col)
-	outline(up, INK_I)
-	if up_h >= 3.0:
-		draw_line(Vector2(cx - up_w + 0.4, up_y + up_h * 0.5), Vector2(cx + up_w - 0.4, up_y + up_h * 0.5), INK_I, 1.0)
-	# Give the coils the middle of the height; keep the damper body narrow and short.
-	var body_h := maxf(4.2, r * 0.40)
-	var low_h := maxf(1.5, r * 0.11)
-	var body_y0 := bot - body_h
-	var low_y0 := body_y0 - low_h
-	var coil_y0 := up_y + up_h + 0.2
-	var coil_span := maxf(low_y0 - coil_y0, 3.0)
-	var tw := maxf(1.1, r * 0.10)
-	var min_step := tw * 2.6 + 0.6
-	var ncoil := 4
-	if r >= 18.0 and coil_span / 5.0 >= min_step:
-		ncoil = 5
-	elif coil_span / 4.0 < min_step:
-		ncoil = 3 if coil_span / 3.0 >= min_step else maxi(2, int(floor(coil_span / min_step)))
-	var step := coil_span / float(ncoil)
-	var coil_w := maxf(2.8, r * 0.46)
-	# Shaft
-	var shw := maxf(1.1, r * 0.10)
-	rect(cx - shw * 0.5, coil_y0, shw, coil_span, dimc(col, 0.7))
-	# Sloped zigzag — each leg has real vertical travel so it reads as a spring,
-	# not a stack of flat bars.
-	var pts := PackedVector2Array()
-	pts.append(Vector2(cx - coil_w, coil_y0 + 0.2))
-	for i in ncoil:
-		var mid := coil_y0 + (float(i) + 0.5) * step
-		var botc := coil_y0 + (float(i) + 1.0) * step
-		pts.append(Vector2(cx + coil_w, mid))
-		pts.append(Vector2(cx - coil_w, botc - 0.15))
-	draw_polyline(pts, INK_I, tw + 1.15, false)
-	draw_polyline(pts, col, tw, false)
-	# Lower perch.
-	var low_w := up_w * 0.90
-	var low := P([cx - low_w - 0.3, low_y0, cx + low_w + 0.3, low_y0, cx + low_w, low_y0 + low_h, cx - low_w, low_y0 + low_h])
-	solid(low, col)
-	outline(low, INK_I)
-	# Narrow stadium body (rounded only at the bottom).
-	var bw := maxf(2.2, r * 0.26)
-	var by0 := low_y0 + low_h - 0.3
-	var cap_r := bw
-	var cap_cy := bot - cap_r
-	if cap_cy < by0 + 1.2:
-		cap_r = maxf(1.6, (bot - by0) * 0.40)
-		cap_cy = bot - cap_r
-		bw = cap_r
-	rect(cx - bw, by0, bw * 2.0, maxf(cap_cy - by0, 1.0), col)
-	_disc(cx, cap_cy, cap_r, col, 16)
-	draw_line(Vector2(cx - bw, by0), Vector2(cx + bw, by0), INK_I, 1.0)
-	draw_line(Vector2(cx - bw, by0), Vector2(cx - bw, cap_cy), INK_I, 1.0)
-	draw_line(Vector2(cx + bw, by0), Vector2(cx + bw, cap_cy), INK_I, 1.0)
-	_ring_n(cx, cap_cy, cap_r, maxf(cap_r - 1.0, cap_r * 0.7), 0.0, PI, INK_I, 12)
-	var hole_r := maxf(0.9, r * 0.11)
-	var hole_cy := cap_cy + cap_r * 0.15
-	if hole_cy + hole_r > bot - 0.5:
-		hole_cy = bot - hole_r - 0.7
-	_disc(cx, hole_cy, hole_r + 0.65, INK_I, 12)
-	_disc(cx, hole_cy, maxf(0.6, hole_r * 0.42), Color8(18, 18, 24), 12)
-	_ring_n(cx, hole_cy, hole_r, maxf(0.6, hole_r * 0.42), 0.0, TAU, col, 12)
-
+	# Shock absorber: upper eye, body/can, shaft, coil loops, lower eye.
+	# At r >= 13 (variant D) the parts are thicker and the can is kept short so
+	# three clear coils have room. Smaller sizes keep a tighter silhouette.
+	var bold := r >= 13.0
+	var dark := dimc(col, 0.7)
+	var eye_r := 2.6 if bold else 2.2
+	var eye_in := 1.2 if bold else 1.0
+	var can_w := 5.5 if bold else 3.5
+	var coil_w := 6.0 if bold else 4.2
+	var coil_step := 3.6 if bold else 3.4
+	var coil_n := 3
+	# upper eye
+	var uy := cy - r + eye_r
+	_ring_track(cx, uy, eye_r, eye_in, 0.0, TAU, col)
+	_ring_track(cx, uy, eye_r + 0.3, eye_r, 0.0, TAU, INK_I)
+	# short body / can, leaving room for the coils
+	var can_y0 := uy + eye_r + 0.4
+	var can_h := 7.0 if bold else (r * 0.7)
+	var can_y1 := can_y0 + can_h
+	var can := P([cx - can_w, can_y0, cx + can_w, can_y0, cx + can_w, can_y1, cx - can_w, can_y1])
+	solid(can, col)
+	outline(can, INK_I)
+	rect(cx - can_w, can_y0 + (2.2 if bold else 2.0), can_w * 2.0, 1.4 if bold else 1.0, dark)
+	if bold:
+		rect(cx - can_w, can_y1 - 2.2, can_w * 2.0, 1.4, dark)
+		draw_line(Vector2(cx - can_w + 1, can_y0 + 1), Vector2(cx - can_w + 1, can_y1 - 1), Color(1, 1, 1, 0.25), 1.0)
+	else:
+		rect(cx - can_w, can_y1 - 2.0, can_w * 2.0, 1.2, dark)
+	# shaft behind the coils, down to the lower cap
+	var ly := cy + r - eye_r
+	var cap_h := 1.8 if bold else 1.4
+	var shaft_y1 := ly - eye_r - 0.2
+	var shw := 2.2 if bold else 1.6
+	rect(cx - shw / 2.0, can_y1, shw, maxf(shaft_y1 - can_y1, 1.0), RIM)
+	outline(P([cx - shw / 2.0, can_y1, cx + shw / 2.0, can_y1, cx + shw / 2.0, shaft_y1, cx - shw / 2.0, shaft_y1]), INK_I)
+	# three clearly separated coil loops, shaft visible through the hole
+	var coil0 := can_y1 + 0.3
+	for i in coil_n:
+		var y := coil0 + i * coil_step
+		var coil := P([cx, y, cx + coil_w, y + coil_step * 0.5, cx, y + coil_step * 0.92, cx - coil_w, y + coil_step * 0.5])
+		solid(coil, col)
+		outline(coil, INK_I)
+		var iw := coil_w * 0.42
+		var inner := P([cx, y + coil_step * 0.28, cx + iw, y + coil_step * 0.5, cx, y + coil_step * 0.70, cx - iw, y + coil_step * 0.5])
+		solid(inner, Color8(18, 20, 28))
+		rect(cx - shw / 2.0, y + coil_step * 0.28, shw, coil_step * 0.42, RIM)
+	# lower cap
+	var cap_w := 4.2 if bold else 3.0
+	var cap := P([cx - cap_w, shaft_y1, cx + cap_w, shaft_y1, cx + cap_w, shaft_y1 + cap_h, cx - cap_w, shaft_y1 + cap_h])
+	solid(cap, dark)
+	outline(cap, INK_I)
+	# lower eye
+	_ring_track(cx, ly, eye_r - 0.15, eye_in - 0.1, 0.0, TAU, col)
+	_ring_track(cx, ly, eye_r + 0.15, eye_r - 0.15, 0.0, TAU, INK_I)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Variant E: International Rally bottom band, flat HUD (Austin 2026-11-13:
@@ -1714,6 +1663,6 @@ func _paint_icon_job() -> void:
 		"fuel", "coolant", "pow":
 			_icon_coolant(cx, cy, r, col)
 		"brakes", "en", "brake":
-			_icon_brake(cx, cy, r, col)
+			_icon_wheel(cx, cy, r, col, false)
 		_:
 			_icon_shock(cx, cy, r, col)

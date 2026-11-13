@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: revert E3B EN/HAN icons at Austin's request
+
+- **Why:** Austin, 2026-11-13: "The icons look bad, let’s revert it."
+- **What (`unapproved/arthur/mockups/resource_meters/`):** EN and HAN band icons restored to exactly the E3 wheel+caliper and shock from `7c69bf6`. POW coolant is unchanged. The E3B heat/load meter model is kept (LIMIT and RELEASE marks, OVERRUN, LOCKED, locked-cooling). `e3b_full.png`, `e3b_states.png`, `e3b_overrun.png` and `e3b_locked.png` re-rendered in Godot with the restored icons. The new standalone icon files (`icon_en_brake_*`, `icon_han_shock_*`, masters, `icons_e3_sheet.png`) are removed. Austin's two icon refs stay in `ref/`. Concept only; not in the sim.
+
+
 ## 2026-11-13 — Arthur [art]: unapproved E3B heat/load meters and new EN/HAN icons
 
 - **Why:** Austin, 2026-11-13: work on the iconography (coolant is ok; make EN like his rotor+caliper reference; HAN like his coilover reference, drawn straight up and down). Then a final meter model: the three bars are heat/load meters that fill as load builds and drain as they recover. LIMIT at about 80%, an OVERRUN zone between LIMIT and full (still selectable, hits less), full = LOCKED, and a RELEASE mark at about 55% for lock hysteresis.
