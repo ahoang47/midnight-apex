@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-13 — Desmond [design][story][sim]: one district per round (Street, Wangan, Touge)
+
+- **Decision (Austin, 2026-11-13, via Nathaniel's DM; plus the Finale lead-in addition):** Round 1 Street, Round 2 Wangan, Round 3 Touge. One crew per district, raced once start to finish; no rematches, no boss level-up between rounds. Each round covers its own district's incident, consequences and distortion (old per-round themes retired). One sighting per Myth Driver: #3 after Street, #2 after Wangan, #1 after Touge as a challenge only. Debt clears when the PC beats the Street crew boss at the end of Round 1, with wholesale, aero and Sabine's drinks. Reiko's warning moves to the end of the Wangan round. Canon 12 retired. After the Touge round: #1's challenge, the Mentor Confrontation and rift, then the PC goes back up the mountain to blame #1 and races him, which sets off #2 and #3 (canon 16: out of blame; truth by accident from #1's contradiction). Finale order unchanged.
+- **Design:** 01 canon (Crew ladder, new Round structure entry, unlocks), 02, 07, 08.
+- **Story:** canon 11, 12, 16, 19, 21, 24, 27, vocabulary, timeline 5–6, OQ 4/6/12/14/16; `plot.md` and `dialogue_outline.md` Rounds regrouped by district with older beats kept as drafts, rematch-premise drafts cut, open causal gaps marked for Nathaniel; Myth Driver sheets, barkeep, pitch; `unapproved/nathaniel/open_proposals.md` item 2 resolved.
+- **Sim:** comments only. `DEFAULT_CREW_ORDER`, `check_order`/`all_orders`, unlock markers, `OPTION_A_ROUND_STEP`/`CAP_ALLOC_ROUND_OPEN` and `FINALE` budgets still model the 9-crew free-order ladder; Barry's round-order-v1 study says this structure (its reading B) needs a ladder/cap/unlock/finale refit, so no numbers were changed.
+- **Godot:** no change; the two-corner build encodes no round or district order.
+
 ## 2026-11-13 — Barry [barry]: heat/load resource system (resources-v4b G2) is live in sim/; card draw deleted
 
 - **Why:** Austin, 2026-11-13, on the v4b G2 write-up: "What version is this? I'm happy with this." and "I'm happy with this new resource system." G2_slant_m10 was the candidate that hit every target (study: `unapproved/barry/resources-v4/RESULTS.md`). `sim/` is the source of truth, so the approved model has to be the live engine before the game build ports it.
