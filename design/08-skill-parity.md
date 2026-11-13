@@ -11,7 +11,7 @@
 
 Working success criterion: **at stat parity, q50 ≈ 0.9**, where q50 is the play quality at which the player wins half their races.
 
-Context: skill points are in v1. Races 1–3 are scripted and use skill points only, Reiko's mods unlock when the PC wins race 3, wholesale at the end of Round 1, aero when the debt hits zero, and betting at the end of Round 2 (see 01). Skill points and mods should both be expressible as a stat shift in the equation in §4. That supersedes "No skill trees in v1" in `design/godot-build-guide.md` and the "deferred" status in `design/05-skill-trees.md`.
+Context: skill points are in v1. Races 1–3 are scripted and use skill points only, Reiko's mods unlock when the PC wins race 3, wholesale and aero at the end of Round 1 (the debt clears when the PC beats the Street crew boss, 2026-11-13), and betting at the end of Round 2 (see 01). Skill points and mods should both be expressible as a stat shift in the equation in §4. That supersedes "No skill trees in v1" in `design/godot-build-guide.md` and the "deferred" status in `design/05-skill-trees.md`.
 
 ## 2. Definition of play quality q
 
