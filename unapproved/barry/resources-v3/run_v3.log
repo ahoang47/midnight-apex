@@ -1,0 +1,22 @@
+     69s A_mid avg_cap avg win 52.3
+    127s A_mid perf_0.8 avg win 4.0
+    185s A_mid perf_1.0 avg win 99.8
+    247s A_mid greedy_cap avg win 50.8
+    311s A_mid ration2_cap avg win 52.8
+    369s A_mid read1_cap avg win 98.9
+    419s A_mid random_cap avg win 12.7
+    482s B_retune avg_cap avg win 51.5
+   1400s B_retune perf_0.8 avg win 4.4
+   1461s B_retune perf_1.0 avg win 99.3
+   1521s B_retune greedy_cap avg win 50.7
+   1583s B_retune ration2_cap avg win 50.7
+   1637s B_retune read1_cap avg win 98.5
+   1686s B_retune random_cap avg win 12.6
+   1744s C_light avg_cap avg win 50.5
+   1865s C_light perf_0.8 avg win 4.8
+   1920s C_light perf_1.0 avg win 99.9
+   1970s C_light greedy_cap avg win 50.5
+   2026s C_light ration2_cap avg win 50.7
+   2077s C_light read1_cap avg win 99.2
+   2122s C_light random_cap avg win 11.8
+done 2121.8357577323914

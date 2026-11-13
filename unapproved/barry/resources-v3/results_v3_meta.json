@@ -1,0 +1,607 @@
+{
+ "seeds": [
+  20261112,
+  20261113,
+  20261114,
+  20261115,
+  20261116,
+  20261117,
+  20261118,
+  20261119,
+  20261120
+ ],
+ "n": 1000,
+ "tracks": [
+  [
+   "street",
+   "S1_Shibuya_Grid"
+  ],
+  [
+   "street",
+   "S2_Ginza_Blocks"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass"
+  ],
+  [
+   "street",
+   "S4_Roppongi_Hill"
+  ],
+  [
+   "street",
+   "S5_Harbor_Warehouses"
+  ],
+  [
+   "touge",
+   "T1_Akina_Switchbacks"
+  ],
+  [
+   "touge",
+   "T2_Irohazaka_Ladder"
+  ],
+  [
+   "touge",
+   "T3_Usui_Esses"
+  ],
+  [
+   "touge",
+   "T4_Myogi_Descent"
+  ],
+  [
+   "touge",
+   "T5_Hakone_Ridge"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run"
+  ],
+  [
+   "wangan",
+   "W2_Daikoku_Loop"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer"
+  ],
+  [
+   "wangan",
+   "W4_Tatsumi_Sprint"
+  ],
+  [
+   "wangan",
+   "W5_Aqualine_Flyer"
+  ]
+ ],
+ "laps": [
+  [
+   "N90",
+   "CH",
+   "N90",
+   "CR",
+   "CH",
+   "N90",
+   "IR",
+   "DR",
+   "N90",
+   "ES"
+  ],
+  [
+   "N90",
+   "N90",
+   "CH",
+   "SW",
+   "N90",
+   "HP",
+   "CH",
+   "N90",
+   "CR",
+   "IR"
+  ],
+  [
+   "CH",
+   "N90",
+   "DR",
+   "N90",
+   "CH",
+   "ES",
+   "N90",
+   "IR",
+   "CH",
+   "CR"
+  ],
+  [
+   "N90",
+   "CR",
+   "CH",
+   "N90",
+   "DR",
+   "CH",
+   "N90",
+   "SW",
+   "N90",
+   "ES"
+  ],
+  [
+   "CH",
+   "N90",
+   "IR",
+   "CH",
+   "N90",
+   "CR",
+   "HP",
+   "N90",
+   "CH",
+   "DR"
+  ],
+  [
+   "HP",
+   "ES",
+   "HP",
+   "DR",
+   "ES",
+   "HP",
+   "N90",
+   "HP",
+   "DR",
+   "CH"
+  ],
+  [
+   "HP",
+   "HP",
+   "ES",
+   "DR",
+   "HP",
+   "HP",
+   "ES",
+   "DR",
+   "CR",
+   "ES"
+  ],
+  [
+   "ES",
+   "ES",
+   "DR",
+   "HP",
+   "CH",
+   "ES",
+   "HP",
+   "DR",
+   "DR",
+   "N90"
+  ],
+  [
+   "DR",
+   "HP",
+   "ES",
+   "DR",
+   "SW",
+   "HP",
+   "DR",
+   "ES",
+   "HP",
+   "CH"
+  ],
+  [
+   "CH",
+   "HP",
+   "DR",
+   "ES",
+   "HP",
+   "CR",
+   "DR",
+   "HP",
+   "ES",
+   "IR"
+  ],
+  [
+   "SW",
+   "IR",
+   "CR",
+   "SW",
+   "SW",
+   "IR",
+   "CR",
+   "CH",
+   "SW",
+   "IR"
+  ],
+  [
+   "IR",
+   "SW",
+   "SW",
+   "CR",
+   "IR",
+   "DR",
+   "SW",
+   "CR",
+   "SW",
+   "IR"
+  ],
+  [
+   "CR",
+   "SW",
+   "IR",
+   "IR",
+   "SW",
+   "N90",
+   "SW",
+   "CR",
+   "IR",
+   "SW"
+  ],
+  [
+   "SW",
+   "CR",
+   "CR",
+   "IR",
+   "SW",
+   "IR",
+   "HP",
+   "SW",
+   "SW",
+   "CR"
+  ],
+  [
+   "IR",
+   "IR",
+   "SW",
+   "CR",
+   "SW",
+   "CH",
+   "IR",
+   "SW",
+   "CR",
+   "SW"
+  ]
+ ],
+ "lengths": [
+  10,
+  20,
+  30
+ ],
+ "styles": [
+  "balanced",
+  "hot_early",
+  "conserver"
+ ],
+ "keys": [
+  "win",
+  "ov",
+  "ovc",
+  "lock",
+  "pen",
+  "rlock",
+  "rov",
+  "rovplay",
+  "rswitch",
+  "streak",
+  "limp"
+ ],
+ "tunes": [
+  [
+   0.25,
+   0.25,
+   0.5
+  ],
+  [
+   0.25,
+   0.3,
+   0.45
+  ],
+  [
+   0.25,
+   0.35,
+   0.4
+  ],
+  [
+   0.25,
+   0.4,
+   0.35
+  ],
+  [
+   0.25,
+   0.45,
+   0.3
+  ],
+  [
+   0.25,
+   0.5,
+   0.25
+  ],
+  [
+   0.3,
+   0.25,
+   0.45
+  ],
+  [
+   0.3,
+   0.3,
+   0.4
+  ],
+  [
+   0.3,
+   0.35,
+   0.35
+  ],
+  [
+   0.3,
+   0.4,
+   0.3
+  ],
+  [
+   0.3,
+   0.45,
+   0.25
+  ],
+  [
+   0.35,
+   0.25,
+   0.4
+  ],
+  [
+   0.35,
+   0.3,
+   0.35
+  ],
+  [
+   0.35,
+   0.35,
+   0.3
+  ],
+  [
+   0.35,
+   0.4,
+   0.25
+  ],
+  [
+   0.4,
+   0.25,
+   0.35
+  ],
+  [
+   0.4,
+   0.3,
+   0.3
+  ],
+  [
+   0.4,
+   0.35,
+   0.25
+  ],
+  [
+   0.45,
+   0.25,
+   0.3
+  ],
+  [
+   0.45,
+   0.3,
+   0.25
+  ],
+  [
+   0.5,
+   0.25,
+   0.25
+  ],
+  [
+   0.3333333333333333,
+   0.3333333333333333,
+   0.3333333333333333
+  ]
+ ],
+ "candidates": {
+  "A_mid": {
+   "CAP_TURNS": 3.0,
+   "REC_FACTOR": 1.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "RELEASE": 0.8,
+   "PEN_SHAPE": "linear",
+   "PEN_SLOPE": 2.0,
+   "PEN_FLOOR": 0.4,
+   "_cap": 1.05
+  },
+  "B_retune": {
+   "CAP_TURNS": 3.0,
+   "REC_FACTOR": 1.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "RELEASE": 0.8,
+   "PEN_SHAPE": "quadratic",
+   "PEN_SLOPE": 4.0,
+   "PEN_FLOOR": 0.4,
+   "_cap": 1.05
+  },
+  "C_light": {
+   "CAP_TURNS": 4.5,
+   "REC_FACTOR": 1.15,
+   "CAP_R_EXP": 2.0,
+   "REC_R_EXP": 2.0,
+   "KAPPA_SCALE": 1.5,
+   "RELEASE": 0.8,
+   "PEN_SHAPE": "quadratic",
+   "PEN_SLOPE": 4.0,
+   "PEN_FLOOR": 0.4,
+   "_cap": 1.05
+  }
+ },
+ "measures": {
+  "A_mid": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "greedy_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "ration": false
+    },
+    {}
+   ],
+   "ration2_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {
+     "RATION_LAMBDA": 2.0,
+     "RATION_H": 4
+    }
+   ],
+   "read1_cap": [
+    1.05,
+    1.0,
+    0.6,
+    {},
+    {}
+   ],
+   "random_cap": [
+    1.05,
+    0.0,
+    0.6,
+    {
+     "mode": "random"
+    },
+    {}
+   ]
+  },
+  "B_retune": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "greedy_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "ration": false
+    },
+    {}
+   ],
+   "ration2_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {
+     "RATION_LAMBDA": 2.0,
+     "RATION_H": 4
+    }
+   ],
+   "read1_cap": [
+    1.05,
+    1.0,
+    0.6,
+    {},
+    {}
+   ],
+   "random_cap": [
+    1.05,
+    0.0,
+    0.6,
+    {
+     "mode": "random"
+    },
+    {}
+   ]
+  },
+  "C_light": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "greedy_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "ration": false
+    },
+    {}
+   ],
+   "ration2_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {
+     "RATION_LAMBDA": 2.0,
+     "RATION_H": 4
+    }
+   ],
+   "read1_cap": [
+    1.05,
+    1.0,
+    0.6,
+    {},
+    {}
+   ],
+   "random_cap": [
+    1.05,
+    0.0,
+    0.6,
+    {
+     "mode": "random"
+    },
+    {}
+   ]
+  }
+ }
+}

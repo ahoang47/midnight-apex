@@ -1,0 +1,3794 @@
+[
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 98.4,
+  "perf0.8_range": [
+   89.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 67.6,
+  "avg1.05_range": [
+   42.0,
+   86.8
+  ],
+  "avg1.1": 77.9,
+  "avg1.1_range": [
+   56.0,
+   93.5
+  ],
+  "gap_vs_even_mean": 5.5,
+  "gap_vs_else_mean": 3.2,
+  "gap_vs_else_max": 7.1,
+  "best_tunes": {
+   "touge10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan10": [
+    0.25,
+    0.3,
+    0.45
+   ],
+   "wangan20": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "wangan30": [
+    0.25,
+    0.3,
+    0.45
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 96.3,
+  "perf0.8_range": [
+   77.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.6,
+   100.0
+  ],
+  "avg1.05": 71.0,
+  "avg1.05_range": [
+   27.8,
+   97.2
+  ],
+  "avg1.1": 77.6,
+  "avg1.1_range": [
+   42.1,
+   98.7
+  ],
+  "gap_vs_even_mean": 5.5,
+  "gap_vs_else_mean": 1.3,
+  "gap_vs_else_max": 3.7,
+  "best_tunes": {
+   "touge10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan10": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "wangan20": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "wangan30": [
+    0.25,
+    0.3,
+    0.45
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 98.4,
+  "perf0.8_range": [
+   89.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 67.6,
+  "avg1.05_range": [
+   42.0,
+   86.8
+  ],
+  "avg1.1": 77.9,
+  "avg1.1_range": [
+   56.0,
+   93.5
+  ],
+  "gap_vs_even_mean": 10.6,
+  "gap_vs_else_mean": 5.8,
+  "gap_vs_else_max": 9.5,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "wangan20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "wangan30": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 96.3,
+  "perf0.8_range": [
+   77.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.6,
+   100.0
+  ],
+  "avg1.05": 71.0,
+  "avg1.05_range": [
+   27.8,
+   97.2
+  ],
+  "avg1.1": 77.6,
+  "avg1.1_range": [
+   42.1,
+   98.7
+  ],
+  "gap_vs_even_mean": 14.4,
+  "gap_vs_else_mean": 4.4,
+  "gap_vs_else_max": 10.5,
+  "best_tunes": {
+   "touge10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan30": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 99.3,
+  "perf0.8_range": [
+   96.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 76.6,
+  "avg1.05_range": [
+   53.4,
+   94.5
+  ],
+  "avg1.1": 84.7,
+  "avg1.1_range": [
+   64.8,
+   97.9
+  ],
+  "gap_vs_even_mean": 2.3,
+  "gap_vs_else_mean": 1.8,
+  "gap_vs_else_max": 3.6,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan30": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "street30": [
+    0.45,
+    0.25,
+    0.3
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 99.0,
+  "perf0.8_range": [
+   92.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 80.2,
+  "avg1.05_range": [
+   49.2,
+   99.3
+  ],
+  "avg1.1": 86.2,
+  "avg1.1_range": [
+   60.4,
+   99.9
+  ],
+  "gap_vs_even_mean": 3.7,
+  "gap_vs_else_mean": 2.4,
+  "gap_vs_else_max": 11.0,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street10": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "street30": [
+    0.45,
+    0.25,
+    0.3
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 99.3,
+  "perf0.8_range": [
+   96.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 76.6,
+  "avg1.05_range": [
+   53.4,
+   94.5
+  ],
+  "avg1.1": 84.7,
+  "avg1.1_range": [
+   64.8,
+   97.9
+  ],
+  "gap_vs_even_mean": 3.0,
+  "gap_vs_else_mean": 3.8,
+  "gap_vs_else_max": 8.4,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street30": [
+    0.35,
+    0.25,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 99.0,
+  "perf0.8_range": [
+   92.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 80.2,
+  "avg1.05_range": [
+   49.2,
+   99.3
+  ],
+  "avg1.1": 86.2,
+  "avg1.1_range": [
+   60.4,
+   99.9
+  ],
+  "gap_vs_even_mean": 5.1,
+  "gap_vs_else_mean": 4.8,
+  "gap_vs_else_max": 18.4,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street30": [
+    0.4,
+    0.25,
+    0.35
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 99.6,
+  "perf0.8_range": [
+   97.9,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 81.0,
+  "avg1.05_range": [
+   59.8,
+   96.0
+  ],
+  "avg1.1": 88.1,
+  "avg1.1_range": [
+   70.7,
+   98.2
+  ],
+  "gap_vs_even_mean": 0.7,
+  "gap_vs_else_mean": 1.5,
+  "gap_vs_else_max": 2.4,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.4,
+    0.3
+   ],
+   "wangan10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street20": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 99.6,
+  "perf0.8_range": [
+   96.9,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 87.6,
+  "avg1.05_range": [
+   61.8,
+   99.6
+  ],
+  "avg1.1": 92.0,
+  "avg1.1_range": [
+   71.0,
+   99.9
+  ],
+  "gap_vs_even_mean": 1.3,
+  "gap_vs_else_mean": 2.4,
+  "gap_vs_else_max": 5.0,
+  "best_tunes": {
+   "touge10": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.25,
+    0.45
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 99.6,
+  "perf0.8_range": [
+   97.9,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 81.0,
+  "avg1.05_range": [
+   59.8,
+   96.0
+  ],
+  "avg1.1": 88.1,
+  "avg1.1_range": [
+   70.7,
+   98.2
+  ],
+  "gap_vs_even_mean": 0.7,
+  "gap_vs_else_mean": 1.4,
+  "gap_vs_else_max": 2.6,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street30": [
+    0.35,
+    0.25,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 99.6,
+  "perf0.8_range": [
+   96.9,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 87.6,
+  "avg1.05_range": [
+   61.8,
+   99.6
+  ],
+  "avg1.1": 92.0,
+  "avg1.1_range": [
+   71.0,
+   99.9
+  ],
+  "gap_vs_even_mean": 0.9,
+  "gap_vs_else_mean": 3.2,
+  "gap_vs_else_max": 6.5,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 95.9,
+  "perf0.8_range": [
+   76.0,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 71.7,
+  "avg1.05_range": [
+   48.4,
+   89.6
+  ],
+  "avg1.1": 83.9,
+  "avg1.1_range": [
+   65.0,
+   96.4
+  ],
+  "gap_vs_even_mean": 4.8,
+  "gap_vs_else_mean": 2.5,
+  "gap_vs_else_max": 4.9,
+  "best_tunes": {
+   "touge10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "wangan20": [
+    0.25,
+    0.3,
+    0.45
+   ],
+   "wangan30": [
+    0.25,
+    0.3,
+    0.45
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 89.1,
+  "perf0.8_range": [
+   51.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.6,
+   100.0
+  ],
+  "avg1.05": 75.5,
+  "avg1.05_range": [
+   37.0,
+   98.5
+  ],
+  "avg1.1": 85.5,
+  "avg1.1_range": [
+   61.4,
+   99.6
+  ],
+  "gap_vs_even_mean": 5.7,
+  "gap_vs_else_mean": 0.9,
+  "gap_vs_else_max": 2.4,
+  "best_tunes": {
+   "touge10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "wangan30": [
+    0.25,
+    0.3,
+    0.45
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 95.9,
+  "perf0.8_range": [
+   76.0,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 71.7,
+  "avg1.05_range": [
+   48.4,
+   89.6
+  ],
+  "avg1.1": 83.9,
+  "avg1.1_range": [
+   65.0,
+   96.4
+  ],
+  "gap_vs_even_mean": 8.8,
+  "gap_vs_else_mean": 5.1,
+  "gap_vs_else_max": 10.8,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "wangan30": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 89.1,
+  "perf0.8_range": [
+   51.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.6,
+   100.0
+  ],
+  "avg1.05": 75.5,
+  "avg1.05_range": [
+   37.0,
+   98.5
+  ],
+  "avg1.1": 85.5,
+  "avg1.1_range": [
+   61.4,
+   99.6
+  ],
+  "gap_vs_even_mean": 12.6,
+  "gap_vs_else_mean": 3.3,
+  "gap_vs_else_max": 8.3,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan30": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 97.5,
+  "perf0.8_range": [
+   86.2,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 79.7,
+  "avg1.05_range": [
+   56.6,
+   96.0
+  ],
+  "avg1.1": 88.4,
+  "avg1.1_range": [
+   70.0,
+   98.6
+  ],
+  "gap_vs_even_mean": 1.5,
+  "gap_vs_else_mean": 2.0,
+  "gap_vs_else_max": 5.7,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan30": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street10": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street20": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street30": [
+    0.4,
+    0.25,
+    0.35
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 94.6,
+  "perf0.8_range": [
+   69.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 84.0,
+  "avg1.05_range": [
+   54.6,
+   99.8
+  ],
+  "avg1.1": 91.8,
+  "avg1.1_range": [
+   69.8,
+   100.0
+  ],
+  "gap_vs_even_mean": 2.8,
+  "gap_vs_else_mean": 2.3,
+  "gap_vs_else_max": 8.0,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street10": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street20": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street30": [
+    0.4,
+    0.25,
+    0.35
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 97.5,
+  "perf0.8_range": [
+   86.2,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 79.7,
+  "avg1.05_range": [
+   56.6,
+   96.0
+  ],
+  "avg1.1": 88.4,
+  "avg1.1_range": [
+   70.0,
+   98.6
+  ],
+  "gap_vs_even_mean": 2.2,
+  "gap_vs_else_mean": 3.1,
+  "gap_vs_else_max": 4.3,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge30": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "wangan10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street30": [
+    0.35,
+    0.25,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 94.6,
+  "perf0.8_range": [
+   69.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 84.0,
+  "avg1.05_range": [
+   54.6,
+   99.8
+  ],
+  "avg1.1": 91.8,
+  "avg1.1_range": [
+   69.8,
+   100.0
+  ],
+  "gap_vs_even_mean": 3.5,
+  "gap_vs_else_mean": 2.7,
+  "gap_vs_else_max": 13.4,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street10": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street20": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street30": [
+    0.35,
+    0.25,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 98.7,
+  "perf0.8_range": [
+   93.5,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 82.7,
+  "avg1.05_range": [
+   62.4,
+   96.2
+  ],
+  "avg1.1": 90.1,
+  "avg1.1_range": [
+   74.2,
+   98.4
+  ],
+  "gap_vs_even_mean": 0.6,
+  "gap_vs_else_mean": 1.7,
+  "gap_vs_else_max": 5.4,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.25,
+    0.35,
+    0.4
+   ],
+   "wangan10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street20": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 98.2,
+  "perf0.8_range": [
+   89.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 89.6,
+  "avg1.05_range": [
+   65.8,
+   99.6
+  ],
+  "avg1.1": 94.3,
+  "avg1.1_range": [
+   77.5,
+   99.9
+  ],
+  "gap_vs_even_mean": 0.9,
+  "gap_vs_else_mean": 1.8,
+  "gap_vs_else_max": 7.4,
+  "best_tunes": {
+   "touge10": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge20": [
+    0.3,
+    0.4,
+    0.3
+   ],
+   "touge30": [
+    0.25,
+    0.35,
+    0.4
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 98.7,
+  "perf0.8_range": [
+   93.5,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 82.7,
+  "avg1.05_range": [
+   62.4,
+   96.2
+  ],
+  "avg1.1": 90.1,
+  "avg1.1_range": [
+   74.2,
+   98.4
+  ],
+  "gap_vs_even_mean": 0.3,
+  "gap_vs_else_mean": 1.3,
+  "gap_vs_else_max": 2.4,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street20": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street30": [
+    0.35,
+    0.3,
+    0.35
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "payoff",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 98.2,
+  "perf0.8_range": [
+   89.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 89.6,
+  "avg1.05_range": [
+   65.8,
+   99.6
+  ],
+  "avg1.1": 94.3,
+  "avg1.1_range": [
+   77.5,
+   99.9
+  ],
+  "gap_vs_even_mean": 0.6,
+  "gap_vs_else_mean": 2.3,
+  "gap_vs_else_max": 4.2,
+  "best_tunes": {
+   "touge10": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 94.4,
+  "perf0.8_range": [
+   73.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 59.0,
+  "avg1.05_range": [
+   15.3,
+   92.4
+  ],
+  "avg1.1": 70.7,
+  "avg1.1_range": [
+   34.5,
+   96.9
+  ],
+  "gap_vs_even_mean": 6.7,
+  "gap_vs_else_mean": 1.9,
+  "gap_vs_else_max": 4.5,
+  "best_tunes": {
+   "touge10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge30": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 96.2,
+  "perf0.8_range": [
+   78.7,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 61.6,
+  "avg1.05_range": [
+   21.9,
+   93.6
+  ],
+  "avg1.1": 72.5,
+  "avg1.1_range": [
+   38.7,
+   97.3
+  ],
+  "gap_vs_even_mean": 5.5,
+  "gap_vs_else_mean": 1.9,
+  "gap_vs_else_max": 4.3,
+  "best_tunes": {
+   "touge10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge30": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street10": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 94.4,
+  "perf0.8_range": [
+   73.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 59.0,
+  "avg1.05_range": [
+   15.3,
+   92.4
+  ],
+  "avg1.1": 70.7,
+  "avg1.1_range": [
+   34.5,
+   96.9
+  ],
+  "gap_vs_even_mean": 15.1,
+  "gap_vs_else_mean": 4.9,
+  "gap_vs_else_max": 10.2,
+  "best_tunes": {
+   "touge10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 96.2,
+  "perf0.8_range": [
+   78.7,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 61.6,
+  "avg1.05_range": [
+   21.9,
+   93.6
+  ],
+  "avg1.1": 72.5,
+  "avg1.1_range": [
+   38.7,
+   97.3
+  ],
+  "gap_vs_even_mean": 13.9,
+  "gap_vs_else_mean": 8.1,
+  "gap_vs_else_max": 25.8,
+  "best_tunes": {
+   "touge10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 97.7,
+  "perf0.8_range": [
+   86.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 71.6,
+  "avg1.05_range": [
+   34.9,
+   96.8
+  ],
+  "avg1.1": 80.8,
+  "avg1.1_range": [
+   54.6,
+   98.6
+  ],
+  "gap_vs_even_mean": 3.4,
+  "gap_vs_else_mean": 4.2,
+  "gap_vs_else_max": 11.3,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "street20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 98.5,
+  "perf0.8_range": [
+   90.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 73.3,
+  "avg1.05_range": [
+   37.8,
+   97.6
+  ],
+  "avg1.1": 81.6,
+  "avg1.1_range": [
+   56.5,
+   98.9
+  ],
+  "gap_vs_even_mean": 3.0,
+  "gap_vs_else_mean": 2.2,
+  "gap_vs_else_max": 5.9,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan30": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street10": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "street20": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 97.7,
+  "perf0.8_range": [
+   86.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 71.6,
+  "avg1.05_range": [
+   34.9,
+   96.8
+  ],
+  "avg1.1": 80.8,
+  "avg1.1_range": [
+   54.6,
+   98.6
+  ],
+  "gap_vs_even_mean": 5.5,
+  "gap_vs_else_mean": 5.5,
+  "gap_vs_else_max": 19.4,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street20": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street30": [
+    0.4,
+    0.25,
+    0.35
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 98.5,
+  "perf0.8_range": [
+   90.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 73.3,
+  "avg1.05_range": [
+   37.8,
+   97.6
+  ],
+  "avg1.1": 81.6,
+  "avg1.1_range": [
+   56.5,
+   98.9
+  ],
+  "gap_vs_even_mean": 5.0,
+  "gap_vs_else_mean": 5.1,
+  "gap_vs_else_max": 18.9,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street20": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street30": [
+    0.45,
+    0.3,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 99.4,
+  "perf0.8_range": [
+   95.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 80.5,
+  "avg1.05_range": [
+   55.4,
+   97.5
+  ],
+  "avg1.1": 88.0,
+  "avg1.1_range": [
+   67.7,
+   98.6
+  ],
+  "gap_vs_even_mean": 1.5,
+  "gap_vs_else_mean": 3.4,
+  "gap_vs_else_max": 7.8,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "street30": [
+    0.3,
+    0.25,
+    0.45
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 99.4,
+  "perf0.8_range": [
+   95.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 81.5,
+  "avg1.05_range": [
+   55.8,
+   97.9
+  ],
+  "avg1.1": 88.6,
+  "avg1.1_range": [
+   67.9,
+   99.0
+  ],
+  "gap_vs_even_mean": 1.4,
+  "gap_vs_else_mean": 3.6,
+  "gap_vs_else_max": 12.2,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "street30": [
+    0.35,
+    0.25,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 99.4,
+  "perf0.8_range": [
+   95.4,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 80.5,
+  "avg1.05_range": [
+   55.4,
+   97.5
+  ],
+  "avg1.1": 88.0,
+  "avg1.1_range": [
+   67.7,
+   98.6
+  ],
+  "gap_vs_even_mean": 1.8,
+  "gap_vs_else_mean": 5.6,
+  "gap_vs_else_max": 9.3,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": false,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 99.4,
+  "perf0.8_range": [
+   95.6,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 81.5,
+  "avg1.05_range": [
+   55.8,
+   97.9
+  ],
+  "avg1.1": 88.6,
+  "avg1.1_range": [
+   67.9,
+   99.0
+  ],
+  "gap_vs_even_mean": 1.6,
+  "gap_vs_else_mean": 5.0,
+  "gap_vs_else_max": 7.7,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 87.6,
+  "perf0.8_range": [
+   52.5,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 62.9,
+  "avg1.05_range": [
+   19.2,
+   94.4
+  ],
+  "avg1.1": 78.0,
+  "avg1.1_range": [
+   45.8,
+   98.4
+  ],
+  "gap_vs_even_mean": 7.6,
+  "gap_vs_else_mean": 1.7,
+  "gap_vs_else_max": 5.4,
+  "best_tunes": {
+   "touge10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge30": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 88.1,
+  "perf0.8_range": [
+   52.3,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 66.4,
+  "avg1.05_range": [
+   28.3,
+   95.2
+  ],
+  "avg1.1": 80.5,
+  "avg1.1_range": [
+   53.6,
+   98.7
+  ],
+  "gap_vs_even_mean": 5.7,
+  "gap_vs_else_mean": 1.2,
+  "gap_vs_else_max": 2.6,
+  "best_tunes": {
+   "touge10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "touge20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "touge30": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 87.6,
+  "perf0.8_range": [
+   52.5,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 62.9,
+  "avg1.05_range": [
+   19.2,
+   94.4
+  ],
+  "avg1.1": 78.0,
+  "avg1.1_range": [
+   45.8,
+   98.4
+  ],
+  "gap_vs_even_mean": 14.9,
+  "gap_vs_else_mean": 8.0,
+  "gap_vs_else_max": 29.6,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.6,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 88.1,
+  "perf0.8_range": [
+   52.3,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   99.8,
+   100.0
+  ],
+  "avg1.05": 66.4,
+  "avg1.05_range": [
+   28.3,
+   95.2
+  ],
+  "avg1.1": 80.5,
+  "avg1.1_range": [
+   53.6,
+   98.7
+  ],
+  "gap_vs_even_mean": 12.7,
+  "gap_vs_else_mean": 6.9,
+  "gap_vs_else_max": 24.3,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street20": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "street30": [
+    0.5,
+    0.25,
+    0.25
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 92.2,
+  "perf0.8_range": [
+   63.5,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 75.9,
+  "avg1.05_range": [
+   45.6,
+   97.6
+  ],
+  "avg1.1": 87.1,
+  "avg1.1_range": [
+   65.6,
+   99.4
+  ],
+  "gap_vs_even_mean": 3.0,
+  "gap_vs_else_mean": 4.7,
+  "gap_vs_else_max": 12.3,
+  "best_tunes": {
+   "touge10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "touge20": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wangan30": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street10": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street20": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street30": [
+    0.45,
+    0.25,
+    0.3
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 92.6,
+  "perf0.8_range": [
+   63.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 77.4,
+  "avg1.05_range": [
+   48.9,
+   98.4
+  ],
+  "avg1.1": 88.0,
+  "avg1.1_range": [
+   66.1,
+   99.6
+  ],
+  "gap_vs_even_mean": 2.6,
+  "gap_vs_else_mean": 3.1,
+  "gap_vs_else_max": 11.1,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "touge20": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan20": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.4,
+    0.25,
+    0.35
+   ],
+   "street30": [
+    0.45,
+    0.25,
+    0.3
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 92.2,
+  "perf0.8_range": [
+   63.5,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 75.9,
+  "avg1.05_range": [
+   45.6,
+   97.6
+  ],
+  "avg1.1": 87.1,
+  "avg1.1_range": [
+   65.6,
+   99.4
+  ],
+  "gap_vs_even_mean": 4.2,
+  "gap_vs_else_mean": 6.2,
+  "gap_vs_else_max": 15.0,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "touge20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street30": [
+    0.4,
+    0.25,
+    0.35
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 0.8,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 92.6,
+  "perf0.8_range": [
+   63.8,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 77.4,
+  "avg1.05_range": [
+   48.9,
+   98.4
+  ],
+  "avg1.1": 88.0,
+  "avg1.1_range": [
+   66.1,
+   99.6
+  ],
+  "gap_vs_even_mean": 3.6,
+  "gap_vs_else_mean": 5.0,
+  "gap_vs_else_max": 13.9,
+  "best_tunes": {
+   "touge10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "touge20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "touge30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street20": [
+    0.35,
+    0.25,
+    0.4
+   ],
+   "street30": [
+    0.4,
+    0.25,
+    0.35
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 96.9,
+  "perf0.8_range": [
+   83.0,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 83.1,
+  "avg1.05_range": [
+   60.2,
+   97.8
+  ],
+  "avg1.1": 91.1,
+  "avg1.1_range": [
+   73.8,
+   99.1
+  ],
+  "gap_vs_even_mean": 1.5,
+  "gap_vs_else_mean": 3.4,
+  "gap_vs_else_max": 9.9,
+  "best_tunes": {
+   "touge10": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.25,
+    0.4,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "street10": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "street20": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 1.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 97.0,
+  "perf0.8_range": [
+   83.3,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 84.3,
+  "avg1.05_range": [
+   60.7,
+   98.3
+  ],
+  "avg1.1": 91.6,
+  "avg1.1_range": [
+   73.9,
+   99.3
+  ],
+  "gap_vs_even_mean": 1.3,
+  "gap_vs_else_mean": 3.3,
+  "gap_vs_else_max": 9.2,
+  "best_tunes": {
+   "touge10": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.4,
+    0.3
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.4,
+    0.25
+   ],
+   "street10": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "street20": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.4
+  },
+  "perf0.8": 96.9,
+  "perf0.8_range": [
+   83.0,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 83.1,
+  "avg1.05_range": [
+   60.2,
+   97.8
+  ],
+  "avg1.1": 91.1,
+  "avg1.1_range": [
+   73.8,
+   99.1
+  ],
+  "gap_vs_even_mean": 1.3,
+  "gap_vs_else_mean": 4.0,
+  "gap_vs_else_max": 8.0,
+  "best_tunes": {
+   "touge10": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ },
+ {
+  "cfg": {
+   "EMPTY_RULE": "downgrade",
+   "TANK_WITH_R": true,
+   "TANK_FACTOR": 1.0,
+   "SHARE_EXPONENT": 2.0,
+   "EMPTY_MULT": 0.0
+  },
+  "perf0.8": 97.0,
+  "perf0.8_range": [
+   83.3,
+   100.0
+  ],
+  "perf1.0": 100.0,
+  "perf1.0_range": [
+   100.0,
+   100.0
+  ],
+  "avg1.05": 84.3,
+  "avg1.05_range": [
+   60.7,
+   98.3
+  ],
+  "avg1.1": 91.6,
+  "avg1.1_range": [
+   73.9,
+   99.3
+  ],
+  "gap_vs_even_mean": 1.0,
+  "gap_vs_else_mean": 3.9,
+  "gap_vs_else_max": 6.7,
+  "best_tunes": {
+   "touge10": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge20": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "touge30": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "wangan10": [
+    0.4,
+    0.35,
+    0.25
+   ],
+   "wangan20": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "wangan30": [
+    0.35,
+    0.35,
+    0.3
+   ],
+   "street10": [
+    0.35,
+    0.3,
+    0.35
+   ],
+   "street20": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "street30": [
+    0.3,
+    0.3,
+    0.4
+   ]
+  }
+ }
+]

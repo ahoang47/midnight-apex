@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-11-13 — Barry [barry]: commit resources-v1 to v4 (incl. v4b retune) heat/load sims to proto-build (unapproved drafts)
+
+- **Why:** Austin, 2026-11-13: commit all pending work to `proto-build` before the full merge to `main` and the new game-build branch. Then, on the v4b G2 write-up: "What version is this? I'm happy with this." (G2 goes live in `sim/` in the next commit; these folders stay as the record of how it was found.)
+- **What (`unapproved/barry/resources-v1` … `resources-v4/retune/`):** model, screen, run and analysis scripts, analysis JSON/tables and `RESULTS.md` for each version. Committed from a clean worktree so the shared clone's stale index was not swept in.
+  - **v1 (2026-11-12):** raw first pass. Card draw removed; fuel / brakes / suspension tanks sized by stat share; soft penalty vs hard block. Hard block gives a real retune meta (≈19.5 pp over even), but tuned cars overshoot the targets.
+  - **v2:** hard block refit with per-lap tanks and refills. Combat targets reachable for the tuned car, but "tuned" and "rarely runs dry" conflict; pacing worth 0 pp.
+  - **v3:** Austin's rules: all three bars regenerate, overrun allowed (pays less), full bar locks with hysteresis. A_mid / B_retune hit the targets for the tuned car; retune gap +9.6 / +13.5 pp; per-length κ refit needed; Street weak retune signal.
+  - **v4:** heat stakes. Release 0.3, repeat surcharge 1.0, cap 1.10, κ per race length, look-ahead pacing players. F2 hits perfect-at-80% at 20/30 turns; pacing 15.5 pp vs reads 22.6 pp, but skills substitute; retune gaps about half of v3's. Also fixes the v3 q8080 per-district NaN bug.
+  - **v4b retune pass:** STAT_M_W (stat share of the played stance scales its payoff), DEMAND_SLANT 2, a capacity-calibration cache fix. **G2_slant_m10 hits every target:** perfect at 80% 14.9 / 20.9 (20/30 turns), perfect at 100% 100, 60/60 at cap 1.07 68.4, tuned − even 13.5, tuned − wrong 26.7, Street 13.5 / 28.1, pacing ÷ reads 0.53. Cost: locks in ~67% of corners, read counter locked 30%.
+- **Not committed:** `__pycache__/` and the raw `.npz` result files except `retune/results_v4b_G2_slant_m10.npz` (all together ≈88 MB). Each `RESULTS.md` notes which are missing and how to rebuild them (fixed seeds).
+- **Not changed:** `sim/`, `design/`, the Godot project, anyone else's files.
+
+---
+
 ## 2026-11-13 — Arthur [art]: Head-on look-back, the mirror is a rear view again
 
 - **Why:** Austin, 2026-11-13: "No, the rear view will always stay a rear view."

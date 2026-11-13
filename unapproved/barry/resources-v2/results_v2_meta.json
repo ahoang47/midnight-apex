@@ -1,0 +1,554 @@
+{
+ "seeds": [
+  20261112,
+  20261113,
+  20261114,
+  20261115,
+  20261116,
+  20261117,
+  20261118,
+  20261119,
+  20261120
+ ],
+ "n": 1000,
+ "tracks": [
+  [
+   "street",
+   "S1_Shibuya_Grid"
+  ],
+  [
+   "street",
+   "S2_Ginza_Blocks"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass"
+  ],
+  [
+   "street",
+   "S4_Roppongi_Hill"
+  ],
+  [
+   "street",
+   "S5_Harbor_Warehouses"
+  ],
+  [
+   "touge",
+   "T1_Akina_Switchbacks"
+  ],
+  [
+   "touge",
+   "T2_Irohazaka_Ladder"
+  ],
+  [
+   "touge",
+   "T3_Usui_Esses"
+  ],
+  [
+   "touge",
+   "T4_Myogi_Descent"
+  ],
+  [
+   "touge",
+   "T5_Hakone_Ridge"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run"
+  ],
+  [
+   "wangan",
+   "W2_Daikoku_Loop"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer"
+  ],
+  [
+   "wangan",
+   "W4_Tatsumi_Sprint"
+  ],
+  [
+   "wangan",
+   "W5_Aqualine_Flyer"
+  ]
+ ],
+ "lengths": [
+  10,
+  20,
+  30
+ ],
+ "styles": [
+  "balanced",
+  "hot_early",
+  "conserver"
+ ],
+ "keys": [
+  "win",
+  "blk",
+  "blkr",
+  "rb",
+  "limp"
+ ],
+ "tunes": [
+  [
+   0.25,
+   0.25,
+   0.5
+  ],
+  [
+   0.25,
+   0.3,
+   0.45
+  ],
+  [
+   0.25,
+   0.35,
+   0.4
+  ],
+  [
+   0.25,
+   0.4,
+   0.35
+  ],
+  [
+   0.25,
+   0.45,
+   0.3
+  ],
+  [
+   0.25,
+   0.5,
+   0.25
+  ],
+  [
+   0.3,
+   0.25,
+   0.45
+  ],
+  [
+   0.3,
+   0.3,
+   0.4
+  ],
+  [
+   0.3,
+   0.35,
+   0.35
+  ],
+  [
+   0.3,
+   0.4,
+   0.3
+  ],
+  [
+   0.3,
+   0.45,
+   0.25
+  ],
+  [
+   0.35,
+   0.25,
+   0.4
+  ],
+  [
+   0.35,
+   0.3,
+   0.35
+  ],
+  [
+   0.35,
+   0.35,
+   0.3
+  ],
+  [
+   0.35,
+   0.4,
+   0.25
+  ],
+  [
+   0.4,
+   0.25,
+   0.35
+  ],
+  [
+   0.4,
+   0.3,
+   0.3
+  ],
+  [
+   0.4,
+   0.35,
+   0.25
+  ],
+  [
+   0.45,
+   0.25,
+   0.3
+  ],
+  [
+   0.45,
+   0.3,
+   0.25
+  ],
+  [
+   0.5,
+   0.25,
+   0.25
+  ],
+  [
+   0.3333333333333333,
+   0.3333333333333333,
+   0.3333333333333333
+  ]
+ ],
+ "candidates": {
+  "A_scarce": {
+   "SUSP_TANK_TURNS": 5.0,
+   "SUSP_REC_FACTOR": 1.1,
+   "TANK_REF_Q": 0.6,
+   "MISREAD": "live",
+   "TANK_MODE": "lap",
+   "REFILL": 0.75,
+   "TANK_FACTOR": 1.3,
+   "SHARE_EXPONENT": 1.5,
+   "DEMAND_SLANT": 1.0,
+   "KAPPA_SCALE": 1.0,
+   "TANK_R_EXP": 3.0,
+   "_cap": 1.05
+  },
+  "A_mid": {
+   "SUSP_TANK_TURNS": 5.0,
+   "SUSP_REC_FACTOR": 1.1,
+   "TANK_REF_Q": 0.6,
+   "MISREAD": "live",
+   "TANK_MODE": "lap",
+   "REFILL": 0.75,
+   "TANK_FACTOR": 1.6,
+   "SHARE_EXPONENT": 1.5,
+   "DEMAND_SLANT": 1.0,
+   "KAPPA_SCALE": 1.25,
+   "TANK_R_EXP": 3.0,
+   "_cap": 1.05
+  },
+  "A_mid_norefill": {
+   "SUSP_TANK_TURNS": 5.0,
+   "SUSP_REC_FACTOR": 1.1,
+   "TANK_REF_Q": 0.6,
+   "MISREAD": "live",
+   "TANK_MODE": "race",
+   "TANK_FACTOR": 1.6,
+   "SHARE_EXPONENT": 1.5,
+   "DEMAND_SLANT": 1.0,
+   "KAPPA_SCALE": 1.25,
+   "TANK_R_EXP": 3.0,
+   "_cap": 1.05
+  },
+  "A_mid_refill50": {
+   "SUSP_TANK_TURNS": 5.0,
+   "SUSP_REC_FACTOR": 1.1,
+   "TANK_REF_Q": 0.6,
+   "MISREAD": "live",
+   "TANK_MODE": "lap",
+   "REFILL": 0.5,
+   "TANK_FACTOR": 1.6,
+   "SHARE_EXPONENT": 1.5,
+   "DEMAND_SLANT": 1.0,
+   "KAPPA_SCALE": 1.25,
+   "TANK_R_EXP": 3.0,
+   "_cap": 1.05
+  },
+  "B_generous": {
+   "SUSP_TANK_TURNS": 5.0,
+   "SUSP_REC_FACTOR": 1.1,
+   "TANK_REF_Q": 0.6,
+   "MISREAD": "live",
+   "TANK_MODE": "race",
+   "TANK_FACTOR": 1.6,
+   "SHARE_EXPONENT": 1.0,
+   "DEMAND_SLANT": 0.5,
+   "KAPPA_SCALE": 1.5,
+   "TANK_R_EXP": 3.0,
+   "_cap": 1.05
+  }
+ },
+ "measures": {
+  "A_scarce": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "read1_cap": [
+    1.05,
+    1.0,
+    0.6,
+    {},
+    {}
+   ],
+   "random_cap": [
+    1.05,
+    0.0,
+    0.6,
+    {
+     "mode": "random"
+    },
+    {}
+   ],
+   "noration_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "ration": false
+    },
+    {}
+   ],
+   "unscouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "scouted": false
+    },
+    {}
+   ],
+   "b1_scouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {
+     "STYLE_BETA": 1.0
+    }
+   ],
+   "b1_unscouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "scouted": false
+    },
+    {
+     "STYLE_BETA": 1.0
+    }
+   ]
+  },
+  "A_mid": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "read1_cap": [
+    1.05,
+    1.0,
+    0.6,
+    {},
+    {}
+   ],
+   "random_cap": [
+    1.05,
+    0.0,
+    0.6,
+    {
+     "mode": "random"
+    },
+    {}
+   ],
+   "noration_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "ration": false
+    },
+    {}
+   ],
+   "unscouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "scouted": false
+    },
+    {}
+   ],
+   "b1_scouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {
+     "STYLE_BETA": 1.0
+    }
+   ],
+   "b1_unscouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "scouted": false
+    },
+    {
+     "STYLE_BETA": 1.0
+    }
+   ]
+  },
+  "A_mid_norefill": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ]
+  },
+  "A_mid_refill50": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ]
+  },
+  "B_generous": {
+   "avg_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {}
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {},
+    {}
+   ],
+   "read1_cap": [
+    1.05,
+    1.0,
+    0.6,
+    {},
+    {}
+   ],
+   "random_cap": [
+    1.05,
+    0.0,
+    0.6,
+    {
+     "mode": "random"
+    },
+    {}
+   ],
+   "noration_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "ration": false
+    },
+    {}
+   ],
+   "unscouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "scouted": false
+    },
+    {}
+   ],
+   "b1_scouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {},
+    {
+     "STYLE_BETA": 1.0
+    }
+   ],
+   "b1_unscouted_cap": [
+    1.05,
+    0.6,
+    0.6,
+    {
+     "scouted": false
+    },
+    {
+     "STYLE_BETA": 1.0
+    }
+   ]
+  }
+ }
+}
