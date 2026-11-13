@@ -338,6 +338,11 @@ SABINE_BUDGET = 300.0                                   # Option A base (scripte
 # ── Option A budget steps: by round POSITION, not district ──
 OPTION_A_CREW_STEP = 1.10      # every crew after the previous one
 OPTION_A_ROUND_STEP = 1.30     # whichever crew OPENS Round 2 / Round 3
+# STALE vs canon (Austin, 2026-11-13): the campaign is now one district per round, R1 Street, R2 Wangan,
+# R3 Touge, one crew each, no rematches (design/01 canon, Round structure; debt/aero now clear at the end
+# of R1 with wholesale). The constants below (budget steps, DEFAULT_CREW_ORDER, unlock markers, FINALE
+# budgets, cap raises) still model the old 9-crew free-order ladder until Barry's refit
+# (unapproved/barry/round-order-v1, reading B). Do not quote them as the new structure's numbers.
 # Crew order is FREE within a round (Austin, 2026-11-10): the player picks any crew, is locked into its
 # ladder until its boss falls, and rounds stay gated. Everything above (budget step, caps, story XP,
 # taper) is keyed by PLAY POSITION in the round, never by district.

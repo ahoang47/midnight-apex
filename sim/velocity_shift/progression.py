@@ -1,6 +1,10 @@
 from __future__ import annotations
 """Story XP / level / skill-point progression model (grind v8c, Barry 2026-11-09).
 
+STALE vs canon since 2026-11-13: the campaign is now one district per round (R1 Street, R2 Wangan,
+R3 Touge; one crew each, no rematches). This model still walks the old 9-crew free-order ladder
+until Barry's refit; see the note above DEFAULT_CREW_ORDER in equations.py.
+
 Walks Prologue → R1–R3 (a play order: any permutation of DISTRICTS per round, default
 DEFAULT_CREW_ORDER; 9 crews × 7 rungs) → Finale and
 reports, per rung, the level cap, the level a player who skips grinding would have,
