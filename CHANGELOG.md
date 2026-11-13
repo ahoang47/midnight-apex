@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-13 — Gordon [godot]: Merge proto-build into main (master), without the two-corner test
+
+- **Why:** Austin, 2026-11-13: "let's merge what we have into main (include unapproved files, but not the two corner playtest). Then, create a new branch from this new main, and build the game in the main game folder."
+- **What:** `master` fast-forwards to `proto-build` (6ded0ea) plus this commit, which removes `unapproved/gordon/two-corner/` (the two-corner Godot test) from `master`. All other `unapproved/` files are kept. `proto-build` still has the two-corner folder, and git history keeps it.
+- **Known effects on master:** `.github/workflows/ci.yml` only runs on `proto-build`, and its parity and headless-race steps use `unapproved/gordon/two-corner`. Arthur's `line_preview/run.sh`, `resource_meters` and `districts` previews link two-corner scripts, so they won't run from `master` until the game is rebuilt in the main folder.
+
 ## 2026-11-13 — Arthur [art]: Head-on look-back, the mirror is a rear view again
 
 - **Why:** Austin, 2026-11-13: "No, the rear view will always stay a rear view."
