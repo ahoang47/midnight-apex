@@ -8,6 +8,18 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: District looks draft (touge narrow, street, wangan) with the E3B HUD
+
+- **Why:** Austin, 2026-11-13: "The road also reads really wide. This works for wangan and maybe street but not for touge. Mind drafting up the looks for all 3 districts with this in mind, with the current HUD?" Follow-up: Wangan keeps the current E3B road as is, with its width, plus lane lines.
+- **What (`unapproved/arthur/mockups/districts/`):** One Godot-rendered E3B Entry chase frame per district, with the E3B HUD unchanged.
+  - Touge (`touge.png`): a 6.0 m two-lane pass with no lane lines, a close guardrail on the drop, a rock cut slope with cedars on the inside, and sparse sodium lamps. Chevrons are scaled down.
+  - Street (`street.png`): an 8.4 m two-lane lined street with shops, utility poles and wires, and vending machines.
+  - Wangan (`wangan.png`): the 11.9 m E3B road with its lane lines back, jersey barriers, tall sodium lamps and distant city towers.
+  - `districts_sheet.png` shows all three side by side.
+  - New props are built in Blender (`blender/build_assets.py` → glTF) on pack bases: cut slope, guardrail, utility pole, 4 shop blocks, vending machine, expressway lamp, the re-textured Urban Stacked jersey barrier, and towers.
+  - Road strips use a 1 m grid so painted lines don't wobble near the camera.
+- **Not changed:** Gordon's files and the game's road width (`display.json`). Concept only.
+
 ## 2026-11-13 — Arthur [art]: E3B drops the floating OUT/MID/IN road labels; plan box spacing
 
 - **Why:** Austin, 2026-11-13: the floating OUT/MID/IN labels with down-arrows were stacked into a smudge over the far road. After a look at spreading them, he ruled they should come off completely — the road chevrons alone show the line. Also fix the plan-box nits: the selection frame clipped the top of OUT, and the position word sat on its stat box.
