@@ -1,0 +1,18 @@
+{
+ "n_per_style": 3000,
+ "T": 30,
+ "win": {
+  "street|S1_Shibuya_Grid|1.043|c6060": 29.91,
+  "street|S1_Shibuya_Grid|1.043|c6080": 71.16,
+  "street|S1_Shibuya_Grid|1.043|c8060": 70.17,
+  "street|S1_Shibuya_Grid|1.043|c8080": 94.51,
+  "street|S1_Shibuya_Grid|1.044|c6060": 31.57,
+  "street|S1_Shibuya_Grid|1.044|c6080": 72.38,
+  "street|S1_Shibuya_Grid|1.044|c8060": 71.02,
+  "street|S1_Shibuya_Grid|1.044|c8080": 94.87,
+  "street|S1_Shibuya_Grid|1.045|c6060": 33.56,
+  "street|S1_Shibuya_Grid|1.045|c6080": 74.16,
+  "street|S1_Shibuya_Grid|1.045|c8060": 72.8,
+  "street|S1_Shibuya_Grid|1.045|c8080": 95.46
+ }
+}

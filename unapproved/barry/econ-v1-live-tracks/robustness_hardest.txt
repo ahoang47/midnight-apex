@@ -1,0 +1,3 @@
+street perturbations +-0.003 per rung failing: 1 /12 [(2, 0.003, ['wall 1<3', 'post 11>10'])]
+wangan perturbations +-0.003 per rung failing: 0 /12 []
+touge perturbations +-0.003 per rung failing: 5 /12 [(0, -0.003, ['wall 2<3', 'g10 c6080 60.3', 'g10 c8060 59.8', 'g10 6060 29.3']), (1, -0.003, ['wall 1<3']), (2, -0.003, ['post 6<8']), (3, -0.003, ['8080 mat2 47.9']), (4, -0.003, ['8080 oh1 46.8'])]
