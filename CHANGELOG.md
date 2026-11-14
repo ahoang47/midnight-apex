@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: T4 shop proposal removed
+
+- **Why:** Austin rejected the T4 parts-art proposal (142ef42) and said it should not have been started. T4 and shop/garage art are on hold until he provides style guides.
+- **What:** deleted `unapproved/arthur/t4_mods/` (492381e). Do not use that proposal as a direction.
+
 ## 2026-11-13 — Arthur [art]: T4 finale-mods shop language (unapproved)
 
 - **Why:** Desmond asked for a T4 parts-art scope after Austin approved T4 as the big finale mods, unlocked at P1 and sold by Reiko at full price (`design/01`, 68a1ecb).
