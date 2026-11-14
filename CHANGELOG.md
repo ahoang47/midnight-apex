@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-14 — Arthur [art]: cel-shaded experiment of the three district frames (unapproved)
+
+- **Why:** Austin, 2026-11-14: "As an experiment, could you do a pass as a cel-shaded style?" Test look only; not a direction.
+- **What (`unapproved/arthur/experiments/cel_shaded/`):** touge/street/wangan Entry frames re-rendered in Godot 4.6.3 with a 3-band toon ramp (stepped in-shader light vs one fixed key, faceted normals on props/road, smooth on cars), an edge-preserving texture flatten + posterise, and 1 px screen-space ink from normal + depth G-buffer passes (near-side silhouettes + creases, fades into fog). Two flavours: `*_cel.png` keeps RGB555 + Bayer, `*_cel_clean.png` has no dither. `cel_compare_sheet.png` = current / A / B. Camera, road widths, touge grade, palette (#F0C894 lamps) and the 1280×960 HUD unchanged; `mockups/districts/` not edited (copied scene + cel shaders; the rest symlinked at stage time).
+- **Read:** ink and flat textures carry the look; at night the bands barely show on the environment, and some asphalt speckles where the base sits on a posterise step.
+
+---
+
 ## 2026-11-13 — Desmond [design, story]: USD money pass after econ-v1 (Austin go-ahead 2026-11-13)
 
 - **Why:** econ-v1 is live (`0af2715`). Barry's money, unlock and ladder constants are in `sim/velocity_shift/equations.py`; design/ and story/ still had TBDs, old cash-unit wording, and stale 9-crew labels.
