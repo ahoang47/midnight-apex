@@ -1,0 +1,6082 @@
+{
+ "params": {
+  "xp0": 100.0,
+  "xp_growth": 1.08,
+  "story_fill": [
+   0.62,
+   0.7,
+   0.93
+  ],
+  "story_w": [
+   0.12,
+   0.12,
+   0.14,
+   0.14,
+   0.14,
+   0.14,
+   0.2
+  ],
+  "grind_frac": 0.65,
+  "grind_taper_tau": 4.0,
+  "grind_taper_floor": 0.22,
+  "payout_wild": 10.0,
+  "payout_crew": 25.0,
+  "payout_boss": 80.0,
+  "round_mult": [
+   1.0,
+   1.15,
+   1.35
+  ],
+  "grind_payout_frac": 0.55,
+  "debt_amount": 160.0,
+  "debt_share": 0.65,
+  "wholesale": 0.2,
+  "price_t1": 18.0,
+  "price_t2": 28.0,
+  "price_t3": 40.0,
+  "aero_price_mult": 1.75,
+  "aero_pool_frac": 0.1,
+  "aero_unlock_after": "R1",
+  "floor_t1": 0,
+  "floor_t2": 13,
+  "floor_t3": 30,
+  "bet_min": 5.0,
+  "bet_max": 20.0,
+  "bet_payout_odds": 1.0,
+  "r_variant": "A"
+ },
+ "results_summary": {
+  "story": [
+   {
+    "total_grind": 0,
+    "wall": null,
+    "wall_grind": 0,
+    "post": 0,
+    "L": 8,
+    "money": 70.0,
+    "debt": 30.0,
+    "reached": false,
+    "rows": [
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 294.25,
+      "target_r": 1.2,
+      "arrive_L": 0,
+      "arrive_P": 300.0,
+      "arrive_r": 1.0195,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 27.4,
+         "limp": 6.9,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 73.7,
+         "limp": 5.1,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 62.9,
+         "limp": 4.6,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 94.7,
+         "limp": 2.3,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 27.4,
+       "c6080": 73.7,
+       "c8060": 62.9,
+       "c8080": 94.7
+      },
+      "L_after": 1,
+      "money": 3.5,
+      "debt": 153.5,
+      "n_to_cap_after": 23,
+      "C_norm": 85.0
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 304.4,
+      "target_r": 1.16,
+      "arrive_L": 1,
+      "arrive_P": 323.56,
+      "arrive_r": 1.063,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 70.7,
+         "limp": 4.6,
+         "r_used": 1.0629797094465483,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 88.1,
+         "limp": 3.4,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 93.3,
+         "limp": 2.4,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 98.1,
+         "limp": 1.3,
+         "r_used": 1.0629797094465483,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 70.7,
+       "c6080": 88.1,
+       "c8060": 93.3,
+       "c8080": 98.1
+      },
+      "L_after": 2,
+      "money": 7.0,
+      "debt": 147.0,
+      "n_to_cap_after": 21,
+      "C_norm": 91.6
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 321.0,
+      "target_r": 1.1,
+      "arrive_L": 2,
+      "arrive_P": 326.14,
+      "arrive_r": 1.016,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 5.0,
+         "limp": 26.7,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 55.8,
+         "limp": 19.0,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 35.8,
+         "limp": 19.6,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 81.5,
+         "limp": 11.9,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 20.1,
+       "c6080": 73.7,
+       "c8060": 62.9,
+       "c8080": 93.6
+      },
+      "L_after": 3,
+      "money": 15.75,
+      "debt": 130.75,
+      "n_to_cap_after": 19,
+      "C_norm": 92.4
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 330.0,
+      "target_r": 1.07,
+      "arrive_L": 3,
+      "arrive_P": 328.74,
+      "arrive_r": 0.9962,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.6,
+         "limp": 31.3,
+         "r_used": 0.997538924722962,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 39.1,
+         "limp": 24.3,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 8.4,
+         "limp": 24.8,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 71.8,
+         "limp": 15.5,
+         "r_used": 0.997538924722962,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 7.2,
+       "c6080": 62.9,
+       "c8060": 30.8,
+       "c8080": 89.9
+      },
+      "L_after": 5,
+      "money": 24.5,
+      "debt": 114.5,
+      "n_to_cap_after": 17,
+      "C_norm": 93.1
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 334.69,
+      "target_r": 1.055,
+      "arrive_L": 5,
+      "arrive_P": 334.0,
+      "arrive_r": 0.9979,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.6,
+         "limp": 31.3,
+         "r_used": 0.997538924722962,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 39.1,
+         "limp": 24.3,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 8.4,
+         "limp": 24.8,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 71.8,
+         "limp": 15.5,
+         "r_used": 0.997538924722962,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 7.2,
+       "c6080": 62.9,
+       "c8060": 30.8,
+       "c8080": 89.9
+      },
+      "L_after": 6,
+      "money": 33.25,
+      "debt": 98.25,
+      "n_to_cap_after": 15,
+      "C_norm": 94.6
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 336.93,
+      "target_r": 1.048,
+      "arrive_L": 6,
+      "arrive_P": 336.67,
+      "arrive_r": 0.9992,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.8,
+         "limp": 30.4,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 39.1,
+         "limp": 24.3,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 8.4,
+         "limp": 24.8,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 74.2,
+         "limp": 14.7,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 8.4,
+       "c6080": 62.9,
+       "c8060": 30.8,
+       "c8080": 90.5
+      },
+      "L_after": 7,
+      "money": 42.0,
+      "debt": 82.0,
+      "n_to_cap_after": 13,
+      "C_norm": 95.3
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 339.52,
+      "target_r": 1.04,
+      "arrive_L": 7,
+      "arrive_P": 339.35,
+      "arrive_r": 0.9995,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.1,
+         "limp": 38.0,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CW": {
+         "win": 0.1,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CCW": {
+         "win": 0.1,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 24.4,
+         "limp": 32.2,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "S1_CW": {
+         "win": 18.8,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "S1_CCW": {
+         "win": 18.6,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 2.3,
+         "limp": 32.9,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "S1_CW": {
+         "win": 2.7,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "S1_CCW": {
+         "win": 2.4,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 62.6,
+         "limp": 21.9,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CW": {
+         "win": 55.7,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CCW": {
+         "win": 56.3,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 8.4,
+       "c6080": 62.9,
+       "c8060": 30.8,
+       "c8080": 90.5
+      },
+      "L_after": 8,
+      "money": 70.0,
+      "debt": 30.0,
+      "n_to_cap_after": 10,
+      "C_norm": 96.1
+     }
+    ]
+   },
+   {
+    "total_grind": 0,
+    "wall": null,
+    "wall_grind": 0,
+    "post": 0,
+    "L": 25,
+    "money": 270.0,
+    "debt": 0.0,
+    "reached": false,
+    "rows": [
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 342.6,
+      "target_r": 1.18,
+      "arrive_L": 12,
+      "arrive_P": 353.1,
+      "arrive_r": 1.0307,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 36.7,
+         "limp": 9.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 69.0,
+         "limp": 8.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 69.2,
+         "limp": 4.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.7,
+         "limp": 3.8,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 36.7,
+       "c6080": 69.0,
+       "c8060": 69.2,
+       "c8080": 90.7
+      },
+      "L_after": 14,
+      "money": 74.03,
+      "debt": 22.52,
+      "n_to_cap_after": 30,
+      "C_norm": 100.0
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 348.5,
+      "target_r": 1.16,
+      "arrive_L": 14,
+      "arrive_P": 358.75,
+      "arrive_r": 1.0294,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 36.5,
+         "limp": 9.3,
+         "r_used": 1.0297395963852396,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 69.0,
+         "limp": 8.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 69.2,
+         "limp": 4.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.6,
+         "limp": 3.8,
+         "r_used": 1.0297395963852396,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 36.5,
+       "c6080": 69.0,
+       "c8060": 69.2,
+       "c8080": 90.6
+      },
+      "L_after": 16,
+      "money": 78.05,
+      "debt": 15.05,
+      "n_to_cap_after": 26,
+      "C_norm": 101.6
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 360.95,
+      "target_r": 1.12,
+      "arrive_L": 16,
+      "arrive_P": 364.5,
+      "arrive_r": 1.0098,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 7.4,
+         "limp": 27.0,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 51.5,
+         "limp": 25.1,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 28.9,
+         "limp": 13.9,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 80.8,
+         "limp": 12.9,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 13.7,
+       "c6080": 61.1,
+       "c8060": 40.2,
+       "c8080": 86.7
+      },
+      "L_after": 19,
+      "money": 91.75,
+      "debt": 0.0,
+      "n_to_cap_after": 22,
+      "C_norm": 103.2
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 374.32,
+      "target_r": 1.08,
+      "arrive_L": 19,
+      "arrive_P": 373.29,
+      "arrive_r": 0.9972,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 2.8,
+         "limp": 29.1,
+         "r_used": 0.997538924722962,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 44.1,
+         "limp": 27.5,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 15.2,
+         "limp": 15.3,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 77.1,
+         "limp": 13.9,
+         "r_used": 0.997538924722962,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 6.7,
+       "c6080": 56.7,
+       "c8060": 24.6,
+       "c8080": 84.5
+      },
+      "L_after": 20,
+      "money": 120.5,
+      "debt": 0.0,
+      "n_to_cap_after": 19,
+      "C_norm": 105.7
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 385.01,
+      "target_r": 1.05,
+      "arrive_L": 20,
+      "arrive_P": 376.26,
+      "arrive_r": 0.9773,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.3,
+         "limp": 32.5,
+         "r_used": 0.9790659816725366,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 30.4,
+         "limp": 31.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 2.8,
+         "limp": 18.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 66.5,
+         "limp": 16.5,
+         "r_used": 0.9790659816725366,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 1.5,
+       "c6080": 46.1,
+       "c8060": 6.8,
+       "c8080": 77.5
+      },
+      "L_after": 22,
+      "money": 149.25,
+      "debt": 0.0,
+      "n_to_cap_after": 16,
+      "C_norm": 106.6
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 390.59,
+      "target_r": 1.035,
+      "arrive_L": 22,
+      "arrive_P": 382.29,
+      "arrive_r": 0.9787,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.3,
+         "limp": 32.5,
+         "r_used": 0.9790659816725366,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 30.4,
+         "limp": 31.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 2.8,
+         "limp": 18.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 66.5,
+         "limp": 16.5,
+         "r_used": 0.9790659816725366,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 1.5,
+       "c6080": 46.1,
+       "c8060": 6.8,
+       "c8080": 77.5
+      },
+      "L_after": 23,
+      "money": 178.0,
+      "debt": 0.0,
+      "n_to_cap_after": 14,
+      "C_norm": 108.3
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 394.4,
+      "target_r": 1.025,
+      "arrive_L": 23,
+      "arrive_P": 385.34,
+      "arrive_r": 0.977,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.1,
+         "limp": 42.6,
+         "r_used": 0.9790659816725366,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 21.2,
+         "limp": 41.2,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 1.8,
+         "limp": 27.1,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 58.4,
+         "limp": 24.9,
+         "r_used": 0.9790659816725366,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 1.5,
+       "c6080": 46.1,
+       "c8060": 6.8,
+       "c8080": 77.5
+      },
+      "L_after": 25,
+      "money": 270.0,
+      "debt": 0.0,
+      "n_to_cap_after": 10,
+      "C_norm": 109.1
+     }
+    ]
+   },
+   {
+    "total_grind": 0,
+    "wall": null,
+    "wall_grind": 0,
+    "post": 0,
+    "L": 45,
+    "money": 540.0,
+    "debt": 0.0,
+    "reached": false,
+    "rows": [
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 392.24,
+      "target_r": 1.18,
+      "arrive_L": 29,
+      "arrive_P": 404.15,
+      "arrive_r": 1.0304,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 32.1,
+         "limp": 7.5,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 27.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 36.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 67.6,
+         "limp": 6.5,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 62.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 73.0,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 68.9,
+         "limp": 3.6,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 63.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 74.4,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 91.9,
+         "limp": 2.7,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 89.1,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 94.7,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 32.1,
+       "c6080": 67.6,
+       "c8060": 68.9,
+       "c8080": 91.9
+      },
+      "L_after": 32,
+      "money": 283.5,
+      "debt": 0.0,
+      "n_to_cap_after": 28,
+      "C_norm": 114.5
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 406.0,
+      "target_r": 1.14,
+      "arrive_L": 32,
+      "arrive_P": 413.89,
+      "arrive_r": 1.0194,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 22.2,
+         "limp": 7.9,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 18.1,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 26.2,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 63.9,
+         "limp": 6.7,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 58.4,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 69.3,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 56.9,
+         "limp": 3.8,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 50.4,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 63.5,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.2,
+         "limp": 2.8,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 87.0,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 93.5,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 22.2,
+       "c6080": 63.9,
+       "c8060": 56.9,
+       "c8080": 90.2
+      },
+      "L_after": 35,
+      "money": 297.0,
+      "debt": 0.0,
+      "n_to_cap_after": 24,
+      "C_norm": 117.2
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 420.77,
+      "target_r": 1.1,
+      "arrive_L": 35,
+      "arrive_P": 423.87,
+      "arrive_r": 1.0074,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 3.0,
+         "limp": 33.9,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 1.8,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 4.2,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 36.4,
+         "limp": 28.8,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 30.8,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 42.0,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 19.0,
+         "limp": 23.8,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 16.5,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 21.6,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 67.8,
+         "limp": 18.2,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 64.1,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 71.5,
+         "r_used": 1.0079741404289038,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 11.6,
+       "c6080": 59.0,
+       "c8060": 42.6,
+       "c8080": 87.1
+      },
+      "L_after": 37,
+      "money": 330.75,
+      "debt": 0.0,
+      "n_to_cap_after": 20,
+      "C_norm": 120.0
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 428.56,
+      "target_r": 1.08,
+      "arrive_L": 37,
+      "arrive_P": 430.66,
+      "arrive_r": 1.0049,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 2.0,
+         "limp": 35.2,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 1.1,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 2.8,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 29.5,
+         "limp": 31.4,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 23.7,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 35.2,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 8.8,
+         "limp": 26.7,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 5.6,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 12.0,
+         "r_used": 1.0,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 65.0,
+         "limp": 19.2,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 62.0,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 68.0,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 9.2,
+       "c6080": 53.5,
+       "c8060": 28.3,
+       "c8080": 86.3
+      },
+      "L_after": 39,
+      "money": 364.5,
+      "debt": 0.0,
+      "n_to_cap_after": 16,
+      "C_norm": 122.0
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 434.59,
+      "target_r": 1.065,
+      "arrive_L": 39,
+      "arrive_P": 437.55,
+      "arrive_r": 1.0068,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 2.6,
+         "limp": 34.6,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 1.5,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 3.7,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 36.4,
+         "limp": 28.8,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 30.8,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 42.0,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 19.0,
+         "limp": 23.8,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 16.5,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 21.6,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 66.2,
+         "limp": 18.7,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 63.2,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 69.2,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 10.6,
+       "c6080": 59.0,
+       "c8060": 42.6,
+       "c8080": 86.8
+      },
+      "L_after": 41,
+      "money": 398.25,
+      "debt": 0.0,
+      "n_to_cap_after": 12,
+      "C_norm": 123.9
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 437.47,
+      "target_r": 1.058,
+      "arrive_L": 41,
+      "arrive_P": 444.56,
+      "arrive_r": 1.0162,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 5.0,
+         "limp": 32.5,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 3.4,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 6.6,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 43.4,
+         "limp": 26.5,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 38.0,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 48.7,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 31.6,
+         "limp": 22.4,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 30.4,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 32.8,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 70.9,
+         "limp": 17.5,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 67.5,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 74.2,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 16.2,
+       "c6080": 63.9,
+       "c8060": 56.9,
+       "c8080": 88.7
+      },
+      "L_after": 43,
+      "money": 432.0,
+      "debt": 0.0,
+      "n_to_cap_after": 9,
+      "C_norm": 125.9
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 439.55,
+      "target_r": 1.053,
+      "arrive_L": 43,
+      "arrive_P": 451.68,
+      "arrive_r": 1.0276,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 5.6,
+         "limp": 40.9,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 3.7,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 7.5,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 35.5,
+         "limp": 35.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 29.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 41.8,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 27.5,
+         "limp": 31.7,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 26.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 28.8,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 65.4,
+         "limp": 25.3,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 62.1,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 68.7,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 27.6,
+       "c6080": 67.6,
+       "c8060": 68.9,
+       "c8080": 91.4
+      },
+      "L_after": 45,
+      "money": 540.0,
+      "debt": 0.0,
+      "n_to_cap_after": 3,
+      "C_norm": 127.9
+     }
+    ]
+   }
+  ],
+  "mixed": [
+   {
+    "total_grind": 13,
+    "wall": "mat1",
+    "wall_grind": 3,
+    "post": 10,
+    "L": 12,
+    "money": 111.5,
+    "debt": 0.0,
+    "reached": true,
+    "rows": [
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 294.25,
+      "target_r": 1.2,
+      "arrive_L": 0,
+      "arrive_P": 300.0,
+      "arrive_r": 1.0195,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 27.4,
+         "limp": 6.9,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 73.7,
+         "limp": 5.1,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 62.9,
+         "limp": 4.6,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 94.7,
+         "limp": 2.3,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 27.4,
+       "c6080": 73.7,
+       "c8060": 62.9,
+       "c8080": 94.7
+      },
+      "L_after": 1,
+      "money": 3.5,
+      "debt": 153.5,
+      "n_to_cap_after": 23,
+      "C_norm": 85.0
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 304.4,
+      "target_r": 1.16,
+      "arrive_L": 1,
+      "arrive_P": 323.56,
+      "arrive_r": 1.063,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 70.7,
+         "limp": 4.6,
+         "r_used": 1.0629797094465483,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 88.1,
+         "limp": 3.4,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 93.3,
+         "limp": 2.4,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 98.1,
+         "limp": 1.3,
+         "r_used": 1.0629797094465483,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 70.7,
+       "c6080": 88.1,
+       "c8060": 93.3,
+       "c8080": 98.1
+      },
+      "L_after": 2,
+      "money": 7.0,
+      "debt": 147.0,
+      "n_to_cap_after": 21,
+      "C_norm": 91.6
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 321.0,
+      "target_r": 1.1,
+      "arrive_L": 4,
+      "arrive_P": 331.36,
+      "arrive_r": 1.0323,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 23.5,
+         "limp": 21.6,
+         "r_used": 1.0336848450571972,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 63.6,
+         "limp": 16.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 50.8,
+         "limp": 17.5,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.2,
+         "limp": 8.8,
+         "r_used": 1.0336848450571972,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 3,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 45.2,
+       "c6080": 77.5,
+       "c8060": 75.8,
+       "c8080": 96.2
+      },
+      "L_after": 5,
+      "money": 21.53,
+      "debt": 120.03,
+      "n_to_cap_after": 16,
+      "C_norm": 93.8
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 330.0,
+      "target_r": 1.07,
+      "arrive_L": 5,
+      "arrive_P": 334.0,
+      "arrive_r": 1.0121,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 5.0,
+         "limp": 26.7,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 46.8,
+         "limp": 22.0,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 19.5,
+         "limp": 23.1,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 81.5,
+         "limp": 11.9,
+         "r_used": 1.0135113860844331,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 20.1,
+       "c6080": 68.3,
+       "c8060": 47.1,
+       "c8080": 93.6
+      },
+      "L_after": 6,
+      "money": 30.28,
+      "debt": 103.78,
+      "n_to_cap_after": 14,
+      "C_norm": 94.6
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 334.69,
+      "target_r": 1.055,
+      "arrive_L": 6,
+      "arrive_P": 336.67,
+      "arrive_r": 1.0059,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 2.1,
+         "limp": 28.4,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 46.8,
+         "limp": 22.0,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 19.5,
+         "limp": 23.1,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 78.0,
+         "limp": 13.1,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 13.2,
+       "c6080": 68.3,
+       "c8060": 47.1,
+       "c8080": 92.1
+      },
+      "L_after": 7,
+      "money": 39.03,
+      "debt": 87.53,
+      "n_to_cap_after": 12,
+      "C_norm": 95.3
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 336.93,
+      "target_r": 1.048,
+      "arrive_L": 7,
+      "arrive_P": 339.35,
+      "arrive_r": 1.0072,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 2.1,
+         "limp": 28.4,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 46.8,
+         "limp": 22.0,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 19.5,
+         "limp": 23.1,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 78.0,
+         "limp": 13.1,
+         "r_used": 1.0065164297568139,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 13.2,
+       "c6080": 68.3,
+       "c8060": 47.1,
+       "c8080": 92.1
+      },
+      "L_after": 8,
+      "money": 47.78,
+      "debt": 71.28,
+      "n_to_cap_after": 10,
+      "C_norm": 96.1
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 339.52,
+      "target_r": 1.04,
+      "arrive_L": 12,
+      "arrive_P": 353.1,
+      "arrive_r": 1.04,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 19.9,
+         "limp": 24.9,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CW": {
+         "win": 15.0,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CCW": {
+         "win": 15.7,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 63.1,
+         "limp": 19.9,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CW": {
+         "win": 54.6,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CCW": {
+         "win": 55.1,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 52.7,
+         "limp": 19.9,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CW": {
+         "win": 47.6,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CCW": {
+         "win": 48.7,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 91.5,
+         "limp": 11.2,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CW": {
+         "win": 88.3,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CCW": {
+         "win": 88.2,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 10,
+      "grind10": {
+       "c6060": 53.6,
+       "c6080": 81.1,
+       "c8060": 84.9,
+       "c8080": 96.9
+      },
+      "L_after": 12,
+      "money": 111.5,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 100.0
+     }
+    ]
+   },
+   {
+    "total_grind": 14,
+    "wall": "mat1",
+    "wall_grind": 2,
+    "post": 12,
+    "L": 29,
+    "money": 430.05,
+    "debt": 0.0,
+    "reached": true,
+    "rows": [
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 342.6,
+      "target_r": 1.18,
+      "arrive_L": 12,
+      "arrive_P": 353.1,
+      "arrive_r": 1.0307,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 36.7,
+         "limp": 9.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 69.0,
+         "limp": 8.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 69.2,
+         "limp": 4.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.7,
+         "limp": 3.8,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 36.7,
+       "c6080": 69.0,
+       "c8060": 69.2,
+       "c8080": 90.7
+      },
+      "L_after": 14,
+      "money": 123.0,
+      "debt": 0.0,
+      "n_to_cap_after": 30,
+      "C_norm": 100.0
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 348.5,
+      "target_r": 1.16,
+      "arrive_L": 14,
+      "arrive_P": 358.75,
+      "arrive_r": 1.0294,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 36.5,
+         "limp": 9.3,
+         "r_used": 1.0297395963852396,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 69.0,
+         "limp": 8.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 69.2,
+         "limp": 4.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.6,
+         "limp": 3.8,
+         "r_used": 1.0297395963852396,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 36.5,
+       "c6080": 69.0,
+       "c8060": 69.2,
+       "c8080": 90.6
+      },
+      "L_after": 16,
+      "money": 134.5,
+      "debt": 0.0,
+      "n_to_cap_after": 26,
+      "C_norm": 101.6
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 360.95,
+      "target_r": 1.12,
+      "arrive_L": 18,
+      "arrive_P": 370.33,
+      "arrive_r": 1.026,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 23.2,
+         "limp": 23.7,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 59.9,
+         "limp": 22.8,
+         "r_used": 1.025,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 55.9,
+         "limp": 12.3,
+         "r_used": 1.025,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 86.7,
+         "limp": 10.9,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 2,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 31.5,
+       "c6080": 66.9,
+       "c8060": 62.4,
+       "c8080": 89.9
+      },
+      "L_after": 20,
+      "money": 175.9,
+      "debt": 0.0,
+      "n_to_cap_after": 21,
+      "C_norm": 104.9
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 374.32,
+      "target_r": 1.08,
+      "arrive_L": 20,
+      "arrive_P": 376.26,
+      "arrive_r": 1.0052,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 5.2,
+         "limp": 28.0,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 51.5,
+         "limp": 25.1,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 28.9,
+         "limp": 13.9,
+         "r_used": 1.01,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 79.4,
+         "limp": 13.3,
+         "r_used": 1.0041270213984663,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 10.6,
+       "c6080": 61.1,
+       "c8060": 40.2,
+       "c8080": 85.9
+      },
+      "L_after": 21,
+      "money": 204.65,
+      "debt": 0.0,
+      "n_to_cap_after": 18,
+      "C_norm": 106.6
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 385.01,
+      "target_r": 1.05,
+      "arrive_L": 21,
+      "arrive_P": 379.26,
+      "arrive_r": 0.9851,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.4,
+         "limp": 32.4,
+         "r_used": 0.9804839365990241,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 30.4,
+         "limp": 31.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 2.8,
+         "limp": 18.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 67.1,
+         "limp": 16.5,
+         "r_used": 0.9804839365990241,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 1.7,
+       "c6080": 46.1,
+       "c8060": 6.8,
+       "c8080": 77.9
+      },
+      "L_after": 23,
+      "money": 233.4,
+      "debt": 0.0,
+      "n_to_cap_after": 15,
+      "C_norm": 107.4
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 390.59,
+      "target_r": 1.035,
+      "arrive_L": 23,
+      "arrive_P": 385.34,
+      "arrive_r": 0.9865,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 0.4,
+         "limp": 32.4,
+         "r_used": 0.9804839365990241,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 30.4,
+         "limp": 31.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 2.8,
+         "limp": 18.3,
+         "r_used": 0.98,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 67.1,
+         "limp": 16.5,
+         "r_used": 0.9804839365990241,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 1.7,
+       "c6080": 46.1,
+       "c8060": 6.8,
+       "c8080": 77.9
+      },
+      "L_after": 24,
+      "money": 262.15,
+      "debt": 0.0,
+      "n_to_cap_after": 12,
+      "C_norm": 109.1
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 394.4,
+      "target_r": 1.025,
+      "arrive_L": 29,
+      "arrive_P": 404.15,
+      "arrive_r": 1.0247,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 15.9,
+         "limp": 30.0,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 55.7,
+         "limp": 29.0,
+         "r_used": 1.025,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 48.6,
+         "limp": 17.2,
+         "r_used": 1.025,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 85.6,
+         "limp": 15.4,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 12,
+      "grind10": {
+       "c6060": 31.5,
+       "c6080": 66.9,
+       "c8060": 62.4,
+       "c8080": 89.9
+      },
+      "L_after": 29,
+      "money": 430.05,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 114.5
+     }
+    ]
+   },
+   {
+    "total_grind": 9,
+    "wall": "mat1",
+    "wall_grind": 7,
+    "post": 2,
+    "L": 46,
+    "money": 766.87,
+    "debt": 0.0,
+    "reached": true,
+    "rows": [
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 392.24,
+      "target_r": 1.18,
+      "arrive_L": 29,
+      "arrive_P": 404.15,
+      "arrive_r": 1.0304,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 32.1,
+         "limp": 7.5,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 27.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 36.9,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 67.6,
+         "limp": 6.5,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 62.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 73.0,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 68.9,
+         "limp": 3.6,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 63.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 74.4,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 91.9,
+         "limp": 2.7,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 89.1,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 94.7,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 32.1,
+       "c6080": 67.6,
+       "c8060": 68.9,
+       "c8080": 91.9
+      },
+      "L_after": 32,
+      "money": 443.55,
+      "debt": 0.0,
+      "n_to_cap_after": 28,
+      "C_norm": 114.5
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 406.0,
+      "target_r": 1.14,
+      "arrive_L": 32,
+      "arrive_P": 413.89,
+      "arrive_r": 1.0194,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 22.2,
+         "limp": 7.9,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 18.1,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 26.2,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 63.9,
+         "limp": 6.7,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 58.4,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 69.3,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 56.9,
+         "limp": 3.8,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 50.4,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 63.5,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.2,
+         "limp": 2.8,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 87.0,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 93.5,
+         "r_used": 1.02,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 22.2,
+       "c6080": 63.9,
+       "c8060": 56.9,
+       "c8080": 90.2
+      },
+      "L_after": 35,
+      "money": 457.05,
+      "debt": 0.0,
+      "n_to_cap_after": 24,
+      "C_norm": 117.2
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 420.77,
+      "target_r": 1.1,
+      "arrive_L": 39,
+      "arrive_P": 437.55,
+      "arrive_r": 1.0399,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 28.2,
+         "limp": 24.6,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 25.0,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 31.4,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 58.2,
+         "limp": 21.0,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 53.4,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 62.9,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 61.7,
+         "limp": 16.0,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 58.3,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 65.0,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 86.5,
+         "limp": 10.6,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 84.8,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 88.3,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 7,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 45.3,
+       "c6080": 72.8,
+       "c8060": 79.7,
+       "c8080": 94.4
+      },
+      "L_after": 41,
+      "money": 542.77,
+      "debt": 0.0,
+      "n_to_cap_after": 13,
+      "C_norm": 123.9
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 428.56,
+      "target_r": 1.08,
+      "arrive_L": 41,
+      "arrive_P": 444.56,
+      "arrive_r": 1.0373,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 25.7,
+         "limp": 25.0,
+         "r_used": 1.0379508845320182,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 22.1,
+         "r_used": 1.0379508845320182,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 29.2,
+         "r_used": 1.0379508845320182,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 56.8,
+         "limp": 21.4,
+         "r_used": 1.038,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 51.8,
+         "r_used": 1.038,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 61.8,
+         "r_used": 1.038,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 59.4,
+         "limp": 16.4,
+         "r_used": 1.038,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 56.0,
+         "r_used": 1.038,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 62.7,
+         "r_used": 1.038,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 85.4,
+         "limp": 10.9,
+         "r_used": 1.0379508845320182,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 83.6,
+         "r_used": 1.0379508845320182,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 87.3,
+         "r_used": 1.0379508845320182,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 42.4,
+       "c6080": 72.0,
+       "c8060": 78.1,
+       "c8080": 94.0
+      },
+      "L_after": 42,
+      "money": 576.52,
+      "debt": 0.0,
+      "n_to_cap_after": 10,
+      "C_norm": 125.9
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 434.59,
+      "target_r": 1.065,
+      "arrive_L": 42,
+      "arrive_P": 448.1,
+      "arrive_r": 1.0311,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 15.3,
+         "limp": 29.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 12.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 18.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 48.7,
+         "limp": 25.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 43.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 54.2,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 44.8,
+         "limp": 20.5,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 45.0,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 44.7,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 78.9,
+         "limp": 15.1,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 75.5,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 82.3,
+         "r_used": 1.03,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 32.1,
+       "c6080": 67.6,
+       "c8060": 68.9,
+       "c8080": 91.9
+      },
+      "L_after": 44,
+      "money": 610.27,
+      "debt": 0.0,
+      "n_to_cap_after": 6,
+      "C_norm": 126.9
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 437.47,
+      "target_r": 1.058,
+      "arrive_L": 44,
+      "arrive_P": 455.28,
+      "arrive_r": 1.0407,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 28.2,
+         "limp": 24.6,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 25.0,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 31.4,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 58.2,
+         "limp": 21.0,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 53.4,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 62.9,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 61.7,
+         "limp": 16.0,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 58.3,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 65.0,
+         "r_used": 1.04,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 86.5,
+         "limp": 10.6,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 84.8,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 88.3,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 45.3,
+       "c6080": 72.8,
+       "c8060": 79.7,
+       "c8080": 94.4
+      },
+      "L_after": 45,
+      "money": 644.02,
+      "debt": 0.0,
+      "n_to_cap_after": 2,
+      "C_norm": 128.9
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 439.55,
+      "target_r": 1.053,
+      "arrive_L": 46,
+      "arrive_P": 462.57,
+      "arrive_r": 1.0524,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 28.3,
+         "limp": 31.9,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 24.4,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 32.1,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 56.0,
+         "limp": 27.5,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 50.9,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 61.2,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 60.3,
+         "limp": 22.4,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 56.0,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 64.6,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 85.6,
+         "limp": 15.2,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 83.3,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 88.0,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 2,
+      "grind10": {
+       "c6060": 56.8,
+       "c6080": 77.6,
+       "c8060": 87.2,
+       "c8080": 95.7
+      },
+      "L_after": 46,
+      "money": 766.87,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 131.0
+     }
+    ]
+   }
+  ],
+  "hard": [
+   {
+    "total_grind": 18,
+    "wall": "kid1",
+    "wall_grind": 2,
+    "post": 16,
+    "L": 12,
+    "money": 139.0,
+    "debt": 0.0,
+    "reached": true,
+    "rows": [
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 294.25,
+      "target_r": 1.2,
+      "arrive_L": 1,
+      "arrive_P": 323.56,
+      "arrive_r": 1.0996,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 85.9,
+         "limp": 2.5,
+         "r_used": 1.1,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 96.1,
+         "limp": 1.9,
+         "r_used": 1.1,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 98.0,
+         "limp": 1.4,
+         "r_used": 1.1,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 99.7,
+         "limp": 0.7,
+         "r_used": 1.1,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 2,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 85.9,
+       "c6080": 96.1,
+       "c8060": 98.0,
+       "c8080": 99.7
+      },
+      "L_after": 2,
+      "money": 7.35,
+      "debt": 146.35,
+      "n_to_cap_after": 22,
+      "C_norm": 91.6
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 304.4,
+      "target_r": 1.16,
+      "arrive_L": 2,
+      "arrive_P": 326.14,
+      "arrive_r": 1.0714,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 75.2,
+         "limp": 3.5,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 90.8,
+         "limp": 2.5,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 94.7,
+         "limp": 1.9,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 98.8,
+         "limp": 1.0,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 75.2,
+       "c6080": 90.8,
+       "c8060": 94.7,
+       "c8080": 98.8
+      },
+      "L_after": 3,
+      "money": 10.85,
+      "debt": 139.85,
+      "n_to_cap_after": 20,
+      "C_norm": 92.4
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 321.0,
+      "target_r": 1.1,
+      "arrive_L": 7,
+      "arrive_P": 339.35,
+      "arrive_r": 1.0572,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 56.4,
+         "limp": 15.5,
+         "r_used": 1.0571721972085373,
+         "exact": true,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 81.5,
+         "limp": 11.6,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 82.3,
+         "limp": 11.2,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 96.6,
+         "limp": 5.2,
+         "r_used": 1.0571721972085373,
+         "exact": true,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 7,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 68.3,
+       "c6080": 85.9,
+       "c8060": 91.7,
+       "c8080": 97.8
+      },
+      "L_after": 8,
+      "money": 33.08,
+      "debt": 98.58,
+      "n_to_cap_after": 11,
+      "C_norm": 96.1
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 330.0,
+      "target_r": 1.07,
+      "arrive_L": 10,
+      "arrive_P": 347.54,
+      "arrive_r": 1.0531,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 53.0,
+         "limp": 15.8,
+         "r_used": 1.0531373047294503,
+         "exact": true,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 80.4,
+         "limp": 11.8,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 81.6,
+         "limp": 11.3,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 95.9,
+         "limp": 5.4,
+         "r_used": 1.0531373047294503,
+         "exact": true,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 4,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 66.3,
+       "c6080": 85.3,
+       "c8060": 91.4,
+       "c8080": 97.6
+      },
+      "L_after": 10,
+      "money": 49.52,
+      "debt": 68.03,
+      "n_to_cap_after": 5,
+      "C_norm": 98.4
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 334.69,
+      "target_r": 1.055,
+      "arrive_L": 12,
+      "arrive_P": 353.1,
+      "arrive_r": 1.055,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 54.0,
+         "limp": 15.8,
+         "r_used": 1.0545704168504153,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 81.5,
+         "limp": 11.6,
+         "r_used": 1.055,
+         "exact": true,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 82.3,
+         "limp": 11.2,
+         "r_used": 1.055,
+         "exact": true,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 96.0,
+         "limp": 5.4,
+         "r_used": 1.0545704168504153,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 5,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 66.9,
+       "c6080": 85.9,
+       "c8060": 91.7,
+       "c8080": 97.7
+      },
+      "L_after": 12,
+      "money": 67.9,
+      "debt": 33.9,
+      "n_to_cap_after": 0,
+      "C_norm": 100.0
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 336.93,
+      "target_r": 1.048,
+      "arrive_L": 12,
+      "arrive_P": 353.1,
+      "arrive_r": 1.048,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 48.4,
+         "limp": 16.6,
+         "r_used": 1.0488088481701516,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 78.9,
+         "limp": 12.2,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 79.8,
+         "limp": 11.7,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 95.4,
+         "limp": 5.5,
+         "r_used": 1.0488088481701516,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 63.5,
+       "c6080": 84.4,
+       "c8060": 90.9,
+       "c8080": 97.4
+      },
+      "L_after": 12,
+      "money": 76.65,
+      "debt": 17.65,
+      "n_to_cap_after": 0,
+      "C_norm": 100.0
+     },
+     {
+      "rnd": 1,
+      "district": "street",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 339.52,
+      "target_r": 1.04,
+      "arrive_L": 12,
+      "arrive_P": 353.1,
+      "arrive_r": 1.04,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 19.9,
+         "limp": 24.9,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CW": {
+         "win": 15.0,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CCW": {
+         "win": 15.7,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 63.1,
+         "limp": 19.9,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CW": {
+         "win": 54.6,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CCW": {
+         "win": 55.1,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 52.7,
+         "limp": 19.9,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CW": {
+         "win": 47.6,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        },
+        "S1_CCW": {
+         "win": 48.7,
+         "r_used": 1.04,
+         "exact": true,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 91.5,
+         "limp": 11.2,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CW": {
+         "win": 88.3,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "S1_CCW": {
+         "win": 88.2,
+         "r_used": 1.0405116620589814,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 53.6,
+       "c6080": 81.1,
+       "c8060": 84.9,
+       "c8080": 96.9
+      },
+      "L_after": 12,
+      "money": 139.0,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 100.0
+     }
+    ]
+   },
+   {
+    "total_grind": 22,
+    "wall": "kid1",
+    "wall_grind": 4,
+    "post": 18,
+    "L": 29,
+    "money": 508.15,
+    "debt": 0.0,
+    "reached": true,
+    "rows": [
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 342.6,
+      "target_r": 1.18,
+      "arrive_L": 14,
+      "arrive_P": 358.75,
+      "arrive_r": 1.0472,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 55.1,
+         "limp": 8.5,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 74.4,
+         "limp": 8.2,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 82.7,
+         "limp": 3.9,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 92.6,
+         "limp": 3.4,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 4,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 55.1,
+       "c6080": 74.4,
+       "c8060": 82.7,
+       "c8080": 92.6
+      },
+      "L_after": 16,
+      "money": 175.8,
+      "debt": 0.0,
+      "n_to_cap_after": 26,
+      "C_norm": 101.6
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 348.5,
+      "target_r": 1.16,
+      "arrive_L": 16,
+      "arrive_P": 364.5,
+      "arrive_r": 1.0459,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 55.1,
+         "limp": 8.5,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 74.4,
+         "limp": 8.2,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 82.7,
+         "limp": 3.9,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 92.6,
+         "limp": 3.4,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 55.1,
+       "c6080": 74.4,
+       "c8060": 82.7,
+       "c8080": 92.6
+      },
+      "L_after": 18,
+      "money": 187.3,
+      "debt": 0.0,
+      "n_to_cap_after": 23,
+      "C_norm": 103.2
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 360.95,
+      "target_r": 1.12,
+      "arrive_L": 21,
+      "arrive_P": 379.26,
+      "arrive_r": 1.0507,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 55.7,
+         "limp": 19.1,
+         "r_used": 1.0502360701156077,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 75.1,
+         "limp": 18.3,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 84.3,
+         "limp": 10.0,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 92.5,
+         "limp": 8.8,
+         "r_used": 1.0502360701156077,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 4,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 58.9,
+       "c6080": 76.0,
+       "c8060": 85.7,
+       "c8080": 93.0
+      },
+      "L_after": 22,
+      "money": 241.35,
+      "debt": 0.0,
+      "n_to_cap_after": 16,
+      "C_norm": 107.4
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 374.32,
+      "target_r": 1.08,
+      "arrive_L": 25,
+      "arrive_P": 391.51,
+      "arrive_r": 1.0459,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 51.1,
+         "limp": 19.4,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 72.9,
+         "limp": 18.8,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 81.2,
+         "limp": 10.1,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 91.8,
+         "limp": 8.9,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 5,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 55.1,
+       "c6080": 74.4,
+       "c8060": 82.7,
+       "c8080": 92.6
+      },
+      "L_after": 26,
+      "money": 301.72,
+      "debt": 0.0,
+      "n_to_cap_after": 9,
+      "C_norm": 110.9
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 385.01,
+      "target_r": 1.05,
+      "arrive_L": 29,
+      "arrive_P": 404.15,
+      "arrive_r": 1.0497,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 55.5,
+         "limp": 19.1,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 75.1,
+         "limp": 18.3,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 84.3,
+         "limp": 10.0,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 92.5,
+         "limp": 8.8,
+         "r_used": 1.05,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 9,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 58.8,
+       "c6080": 76.0,
+       "c8060": 85.7,
+       "c8080": 92.9
+      },
+      "L_after": 29,
+      "money": 387.4,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 114.5
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 390.59,
+      "target_r": 1.035,
+      "arrive_L": 29,
+      "arrive_P": 404.15,
+      "arrive_r": 1.0347,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 33.6,
+         "limp": 21.9,
+         "r_used": 1.0336848450571972,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 66.4,
+         "limp": 20.7,
+         "r_used": 1.035,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 71.0,
+         "limp": 11.3,
+         "r_used": 1.035,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 89.1,
+         "limp": 9.9,
+         "r_used": 1.0336848450571972,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 40.9,
+       "c6080": 70.7,
+       "c8060": 74.3,
+       "c8080": 91.1
+      },
+      "L_after": 29,
+      "money": 416.15,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 114.5
+     },
+     {
+      "rnd": 2,
+      "district": "wangan",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 394.4,
+      "target_r": 1.025,
+      "arrive_L": 29,
+      "arrive_P": 404.15,
+      "arrive_r": 1.0247,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 15.9,
+         "limp": 30.0,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 55.7,
+         "limp": 29.0,
+         "r_used": 1.025,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 48.6,
+         "limp": 17.2,
+         "r_used": 1.025,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 85.6,
+         "limp": 15.4,
+         "r_used": 1.0255073057899613,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 31.5,
+       "c6080": 66.9,
+       "c8060": 62.4,
+       "c8080": 89.9
+      },
+      "L_after": 29,
+      "money": 508.15,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 114.5
+     }
+    ]
+   },
+   {
+    "total_grind": 18,
+    "wall": "kid1",
+    "wall_grind": 4,
+    "post": 14,
+    "L": 46,
+    "money": 911.8,
+    "debt": 0.0,
+    "reached": true,
+    "rows": [
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "kid1",
+      "T": 10,
+      "kind": "kid",
+      "B": 392.24,
+      "target_r": 1.18,
+      "arrive_L": 31,
+      "arrive_P": 410.62,
+      "arrive_r": 1.0469,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 51.6,
+         "limp": 5.6,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 47.7,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 55.6,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 74.6,
+         "limp": 5.0,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 71.5,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 77.7,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 83.5,
+         "limp": 2.5,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 79.8,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 87.2,
+         "r_used": 1.045,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 95.0,
+         "limp": 1.8,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 94.2,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 95.7,
+         "r_used": 1.0462276506435813,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 4,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 51.6,
+       "c6080": 74.6,
+       "c8060": 83.5,
+       "c8080": 95.0
+      },
+      "L_after": 34,
+      "money": 551.35,
+      "debt": 0.0,
+      "n_to_cap_after": 25,
+      "C_norm": 116.3
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "kid2",
+      "T": 10,
+      "kind": "kid",
+      "B": 406.0,
+      "target_r": 1.14,
+      "arrive_L": 36,
+      "arrive_P": 427.25,
+      "arrive_r": 1.0523,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 56.8,
+         "limp": 5.2,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 53.0,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 60.6,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 77.6,
+         "limp": 4.5,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 74.6,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 80.5,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 87.2,
+         "limp": 2.3,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 84.3,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 90.1,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 95.7,
+         "limp": 1.6,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 95.0,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 96.4,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 3,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 56.8,
+       "c6080": 77.6,
+       "c8060": 87.2,
+       "c8080": 95.7
+      },
+      "L_after": 38,
+      "money": 587.12,
+      "debt": 0.0,
+      "n_to_cap_after": 19,
+      "C_norm": 121.0
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "mat1",
+      "T": 20,
+      "kind": "mature",
+      "B": 420.77,
+      "target_r": 1.1,
+      "arrive_L": 43,
+      "arrive_P": 451.68,
+      "arrive_r": 1.0735,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 54.3,
+         "limp": 18.4,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 51.6,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 56.9,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 76.9,
+         "limp": 15.2,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 74.2,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 79.6,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 82.7,
+         "limp": 10.4,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 80.3,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 85.2,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 94.4,
+         "limp": 6.5,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 93.9,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 94.9,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 10,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 65.8,
+       "c6080": 83.7,
+       "c8060": 91.9,
+       "c8080": 97.6
+      },
+      "L_after": 44,
+      "money": 695.12,
+      "debt": 0.0,
+      "n_to_cap_after": 5,
+      "C_norm": 127.9
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "mat2",
+      "T": 20,
+      "kind": "mature",
+      "B": 428.56,
+      "target_r": 1.08,
+      "arrive_L": 45,
+      "arrive_P": 458.91,
+      "arrive_r": 1.0708,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 54.3,
+         "limp": 18.4,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 51.6,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 56.9,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 76.9,
+         "limp": 15.2,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 74.2,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 79.6,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 82.7,
+         "limp": 10.4,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 80.3,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 85.2,
+         "r_used": 1.07,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 94.4,
+         "limp": 6.5,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 93.9,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 94.9,
+         "r_used": 1.07145605892275,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 1,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 65.8,
+       "c6080": 83.7,
+       "c8060": 91.9,
+       "c8080": 97.6
+      },
+      "L_after": 46,
+      "money": 736.3,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 130.0
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "oh1",
+      "T": 20,
+      "kind": "old_head",
+      "B": 434.59,
+      "target_r": 1.065,
+      "arrive_L": 46,
+      "arrive_P": 462.57,
+      "arrive_r": 1.0644,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 50.0,
+         "limp": 19.4,
+         "r_used": 1.0656022367666107,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 46.8,
+         "r_used": 1.0656022367666107,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 53.3,
+         "r_used": 1.0656022367666107,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 73.6,
+         "limp": 16.3,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 70.4,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 76.8,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 79.5,
+         "limp": 11.4,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 76.4,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 82.5,
+         "r_used": 1.065,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 93.0,
+         "limp": 7.2,
+         "r_used": 1.0656022367666107,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 92.1,
+         "r_used": 1.0656022367666107,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 93.9,
+         "r_used": 1.0656022367666107,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 62.9,
+       "c6080": 81.8,
+       "c8060": 90.7,
+       "c8080": 97.1
+      },
+      "L_after": 46,
+      "money": 770.05,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 131.0
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "oh2",
+      "T": 20,
+      "kind": "old_head",
+      "B": 437.47,
+      "target_r": 1.058,
+      "arrive_L": 46,
+      "arrive_P": 462.57,
+      "arrive_r": 1.0574,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 43.5,
+         "limp": 21.7,
+         "r_used": 1.0571721972085373,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 40.3,
+         "r_used": 1.0571721972085373,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 46.7,
+         "r_used": 1.0571721972085373,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 67.3,
+         "limp": 18.5,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 63.5,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 71.1,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 73.4,
+         "limp": 13.9,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 71.0,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 75.9,
+         "r_used": 1.055,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 90.6,
+         "limp": 8.4,
+         "r_used": 1.0571721972085373,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 89.2,
+         "r_used": 1.0571721972085373,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 92.0,
+         "r_used": 1.0571721972085373,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 58.6,
+       "c6080": 78.1,
+       "c8060": 87.6,
+       "c8080": 96.1
+      },
+      "L_after": 46,
+      "money": 803.8,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 131.0
+     },
+     {
+      "rnd": 3,
+      "district": "touge",
+      "name": "boss",
+      "T": 30,
+      "kind": "boss",
+      "B": 439.55,
+      "target_r": 1.053,
+      "arrive_L": 46,
+      "arrive_P": 462.57,
+      "arrive_r": 1.0524,
+      "wr": {
+       "c6060": {
+        "district": {
+         "win": 28.3,
+         "limp": 31.9,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 24.4,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 32.1,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       },
+       "c6080": {
+        "district": {
+         "win": 56.0,
+         "limp": 27.5,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 50.9,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 61.2,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8060": {
+        "district": {
+         "win": 60.3,
+         "limp": 22.4,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "uphill": {
+         "win": 56.0,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        },
+        "downhill": {
+         "win": 64.6,
+         "r_used": 1.053,
+         "exact": false,
+         "src": "mixed-sweep"
+        }
+       },
+       "c8080": {
+        "district": {
+         "win": 85.6,
+         "limp": 15.2,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "uphill": {
+         "win": 83.3,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        },
+        "downhill": {
+         "win": 88.0,
+         "r_used": 1.0531373047294503,
+         "exact": false,
+         "src": "ladder-sweep"
+        }
+       }
+      },
+      "grind_here": 0,
+      "pre_boss_grind": 0,
+      "grind10": {
+       "c6060": 56.8,
+       "c6080": 77.6,
+       "c8060": 87.2,
+       "c8080": 95.7
+      },
+      "L_after": 46,
+      "money": 911.8,
+      "debt": 0.0,
+      "n_to_cap_after": 0,
+      "C_norm": 131.0
+     }
+    ]
+   }
+  ]
+ },
+ "criteria": {
+  "1": {
+   "pass_": true,
+   "shop": [
+    "R1 money 111.5 covers 6*T1 108.0 (remainder 3.5)",
+    "R2 pool 322.0 covers 6*T2 168.0",
+    "R3 pool 490.9 covers 6*T3 240.0"
+   ],
+   "cap_reached": true,
+   "floors": {
+    "T1": 0,
+    "T2": 13,
+    "T3": 30,
+    "caps": [
+     12,
+     29,
+     46
+    ]
+   }
+  },
+  "2": {
+   "pass_": false,
+   "per_round": [
+    {
+     "rnd": 1,
+     "wall": "mat1",
+     "wall_grind": 3,
+     "post_wall_to_cap": 10,
+     "total": 13
+    },
+    {
+     "rnd": 2,
+     "wall": "mat1",
+     "wall_grind": 2,
+     "post_wall_to_cap": 12,
+     "total": 14,
+     "fail_wall": "wall grind 2 not in 3-6",
+     "fail_post": "post-wall to cap 12 > 10"
+    },
+    {
+     "rnd": 3,
+     "wall": "mat1",
+     "wall_grind": 7,
+     "post_wall_to_cap": 2,
+     "total": 9,
+     "fail_wall": "wall grind 7 not in 3-6"
+    }
+   ],
+   "totals": [
+    13,
+    14,
+    9
+   ]
+  },
+  "3": {
+   "pass_": true,
+   "rows": [
+    {
+     "rnd": 1,
+     "name": "kid1",
+     "r": 1.0195,
+     "wr": 94.7,
+     "wr_hard": 94.7,
+     "L": 0
+    },
+    {
+     "rnd": 1,
+     "name": "kid2",
+     "r": 1.063,
+     "wr": 98.1,
+     "wr_hard": 98.1,
+     "L": 1
+    },
+    {
+     "rnd": 1,
+     "name": "mat1",
+     "r": 1.016,
+     "wr": 81.5,
+     "wr_hard": 81.5,
+     "L": 2
+    },
+    {
+     "rnd": 1,
+     "name": "mat2",
+     "r": 0.9962,
+     "wr": 71.8,
+     "wr_hard": 71.8,
+     "L": 3
+    },
+    {
+     "rnd": 1,
+     "name": "oh1",
+     "r": 0.9979,
+     "wr": 71.8,
+     "wr_hard": 71.8,
+     "L": 5
+    },
+    {
+     "rnd": 1,
+     "name": "oh2",
+     "r": 0.9992,
+     "wr": 74.2,
+     "wr_hard": 74.2,
+     "L": 6
+    },
+    {
+     "rnd": 1,
+     "name": "boss",
+     "r": 0.9995,
+     "wr": 62.6,
+     "wr_hard": 55.7,
+     "L": 7
+    },
+    {
+     "rnd": 2,
+     "name": "kid1",
+     "r": 1.0307,
+     "wr": 90.7,
+     "wr_hard": 90.7,
+     "L": 12
+    },
+    {
+     "rnd": 2,
+     "name": "kid2",
+     "r": 1.0294,
+     "wr": 90.6,
+     "wr_hard": 90.6,
+     "L": 14
+    },
+    {
+     "rnd": 2,
+     "name": "mat1",
+     "r": 1.0098,
+     "wr": 80.8,
+     "wr_hard": 80.8,
+     "L": 16
+    },
+    {
+     "rnd": 2,
+     "name": "mat2",
+     "r": 0.9972,
+     "wr": 77.1,
+     "wr_hard": 77.1,
+     "L": 19
+    },
+    {
+     "rnd": 2,
+     "name": "oh1",
+     "r": 0.9773,
+     "wr": 66.5,
+     "wr_hard": 66.5,
+     "L": 20
+    },
+    {
+     "rnd": 2,
+     "name": "oh2",
+     "r": 0.9787,
+     "wr": 66.5,
+     "wr_hard": 66.5,
+     "L": 22
+    },
+    {
+     "rnd": 2,
+     "name": "boss",
+     "r": 0.977,
+     "wr": 58.4,
+     "wr_hard": 58.4,
+     "L": 23
+    },
+    {
+     "rnd": 3,
+     "name": "kid1",
+     "r": 1.0304,
+     "wr": 91.9,
+     "wr_hard": 89.1,
+     "L": 29
+    },
+    {
+     "rnd": 3,
+     "name": "kid2",
+     "r": 1.0194,
+     "wr": 90.2,
+     "wr_hard": 87.0,
+     "L": 32
+    },
+    {
+     "rnd": 3,
+     "name": "mat1",
+     "r": 1.0074,
+     "wr": 67.8,
+     "wr_hard": 64.1,
+     "L": 35
+    },
+    {
+     "rnd": 3,
+     "name": "mat2",
+     "r": 1.0049,
+     "wr": 65.0,
+     "wr_hard": 62.0,
+     "L": 37
+    },
+    {
+     "rnd": 3,
+     "name": "oh1",
+     "r": 1.0068,
+     "wr": 66.2,
+     "wr_hard": 63.2,
+     "L": 39
+    },
+    {
+     "rnd": 3,
+     "name": "oh2",
+     "r": 1.0162,
+     "wr": 70.9,
+     "wr_hard": 67.5,
+     "L": 41
+    },
+    {
+     "rnd": 3,
+     "name": "boss",
+     "r": 1.0276,
+     "wr": 65.4,
+     "wr_hard": 62.1,
+     "L": 43
+    }
+   ]
+  },
+  "4": {
+   "pass_": false,
+   "rows": [
+    {
+     "rnd": 1,
+     "at": "mat1",
+     "r": 1.0323,
+     "pr": "c6080",
+     "wr10": 77.5
+    },
+    {
+     "rnd": 1,
+     "at": "mat1",
+     "r": 1.0323,
+     "pr": "c8060",
+     "wr10": 75.8
+    },
+    {
+     "rnd": 1,
+     "at": "mat1",
+     "r": 1.0323,
+     "pr": "c6060",
+     "wr10": 45.2
+    },
+    {
+     "rnd": 1,
+     "grind_purse": 5.5,
+     "story_wild": 10.0
+    },
+    {
+     "rnd": 2,
+     "at": "mat1",
+     "r": 1.026,
+     "pr": "c6080",
+     "wr10": 66.9
+    },
+    {
+     "rnd": 2,
+     "at": "mat1",
+     "r": 1.026,
+     "pr": "c8060",
+     "wr10": 62.4,
+     "fail": true
+    },
+    {
+     "rnd": 2,
+     "at": "mat1",
+     "r": 1.026,
+     "pr": "c6060",
+     "wr10": 31.5,
+     "fail_6060_unwinnable": true
+    },
+    {
+     "rnd": 2,
+     "grind_purse": 6.325,
+     "story_wild": 11.5
+    },
+    {
+     "rnd": 3,
+     "at": "mat1",
+     "r": 1.0399,
+     "pr": "c6080",
+     "wr10": 72.8
+    },
+    {
+     "rnd": 3,
+     "at": "mat1",
+     "r": 1.0399,
+     "pr": "c8060",
+     "wr10": 79.7
+    },
+    {
+     "rnd": 3,
+     "at": "mat1",
+     "r": 1.0399,
+     "pr": "c6060",
+     "wr10": 45.3
+    },
+    {
+     "rnd": 3,
+     "grind_purse": 7.425000000000001,
+     "story_wild": 13.5
+    }
+   ]
+  },
+  "5": {
+   "pass_": true,
+   "floors_ok": true,
+   "around": true,
+   "floors": {
+    "T1": 0,
+    "T2": 13,
+    "T3": 30
+   },
+   "parity_notes": "0.8-1.2 is opponent/player power. At cap r=1.025-1.11 => 0.90-0.98, in band."
+  },
+  "6": {
+   "pass_": true,
+   "R1_mixed_debt": 0.0,
+   "R1_mixed_money": 111.5,
+   "R1_hard_debt": 0.0,
+   "debt_amount": 160.0,
+   "bet_max": 20.0,
+   "max_gain_per_race": 20.0,
+   "max_gain_finale": 80.0,
+   "t3_total": 240.0,
+   "bet_vs_t3": 0.333
+  },
+  "7": {
+   "pass_": true,
+   "jumps": [
+    12,
+    17,
+    17
+   ],
+   "caps": [
+    12,
+    29,
+    46
+   ],
+   "dead": []
+  },
+  "8": {
+   "pass_": true,
+   "finale": [
+    {
+     "race": 1,
+     "dist": "touge",
+     "B": 494.8,
+     "r": 1.05,
+     "C": 519.5,
+     "L": 61,
+     "wr": {
+      "c6060": {
+       "district": {
+        "win": 26.0,
+        "limp": 33.0,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "uphill": {
+        "win": 21.8,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "downhill": {
+        "win": 30.2,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       }
+      },
+      "c6080": {
+       "district": {
+        "win": 53.6,
+        "limp": 28.4,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "uphill": {
+        "win": 47.9,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "downhill": {
+        "win": 59.3,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8060": {
+       "district": {
+        "win": 57.1,
+        "limp": 23.7,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "uphill": {
+        "win": 51.9,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "downhill": {
+        "win": 62.4,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8080": {
+       "district": {
+        "win": 83.7,
+        "limp": 16.2,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "uphill": {
+        "win": 80.8,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "downhill": {
+        "win": 86.5,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       }
+      }
+     },
+     "dL_from_prev": 15,
+     "c8080_hard": 80.8
+    },
+    {
+     "race": 2,
+     "dist": "wangan",
+     "B": 566.3,
+     "r": 1.025,
+     "C": 580.5,
+     "L": 75,
+     "wr": {
+      "c6060": {
+       "district": {
+        "win": 15.9,
+        "limp": 30.0,
+        "r_used": 1.0255073057899613,
+        "exact": false,
+        "src": "ladder-sweep"
+       }
+      },
+      "c6080": {
+       "district": {
+        "win": 55.7,
+        "limp": 29.0,
+        "r_used": 1.025,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8060": {
+       "district": {
+        "win": 48.6,
+        "limp": 17.2,
+        "r_used": 1.025,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8080": {
+       "district": {
+        "win": 85.6,
+        "limp": 15.4,
+        "r_used": 1.0255073057899613,
+        "exact": false,
+        "src": "ladder-sweep"
+       }
+      }
+     },
+     "dL_from_prev": 14,
+     "c8080_hard": 85.6
+    },
+    {
+     "race": 3,
+     "dist": "street",
+     "B": 648.2,
+     "r": 1.04,
+     "C": 674.1,
+     "L": 93,
+     "wr": {
+      "c6060": {
+       "district": {
+        "win": 19.9,
+        "limp": 24.9,
+        "r_used": 1.0405116620589814,
+        "exact": false,
+        "src": "ladder-sweep"
+       },
+       "S1_CW": {
+        "win": 15.0,
+        "r_used": 1.0405116620589814,
+        "exact": false,
+        "src": "ladder-sweep"
+       },
+       "S1_CCW": {
+        "win": 15.7,
+        "r_used": 1.0405116620589814,
+        "exact": false,
+        "src": "ladder-sweep"
+       }
+      },
+      "c6080": {
+       "district": {
+        "win": 63.1,
+        "limp": 19.9,
+        "r_used": 1.04,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "S1_CW": {
+        "win": 54.6,
+        "r_used": 1.04,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "S1_CCW": {
+        "win": 55.1,
+        "r_used": 1.04,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8060": {
+       "district": {
+        "win": 52.7,
+        "limp": 19.9,
+        "r_used": 1.04,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "S1_CW": {
+        "win": 47.6,
+        "r_used": 1.04,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "S1_CCW": {
+        "win": 48.7,
+        "r_used": 1.04,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8080": {
+       "district": {
+        "win": 91.5,
+        "limp": 11.2,
+        "r_used": 1.0405116620589814,
+        "exact": false,
+        "src": "ladder-sweep"
+       },
+       "S1_CW": {
+        "win": 88.3,
+        "r_used": 1.0405116620589814,
+        "exact": false,
+        "src": "ladder-sweep"
+       },
+       "S1_CCW": {
+        "win": 88.2,
+        "r_used": 1.0405116620589814,
+        "exact": false,
+        "src": "ladder-sweep"
+       }
+      }
+     },
+     "dL_from_prev": 18,
+     "c8080_hard": 88.2
+    },
+    {
+     "race": 4,
+     "dist": "touge",
+     "B": 741.9,
+     "r": 1.05,
+     "C": 779.0,
+     "L": 112,
+     "wr": {
+      "c6060": {
+       "district": {
+        "win": 26.0,
+        "limp": 33.0,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "uphill": {
+        "win": 21.8,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "downhill": {
+        "win": 30.2,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       }
+      },
+      "c6080": {
+       "district": {
+        "win": 53.6,
+        "limp": 28.4,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "uphill": {
+        "win": 47.9,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "downhill": {
+        "win": 59.3,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8060": {
+       "district": {
+        "win": 57.1,
+        "limp": 23.7,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "uphill": {
+        "win": 51.9,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       },
+       "downhill": {
+        "win": 62.4,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "mixed-sweep"
+       }
+      },
+      "c8080": {
+       "district": {
+        "win": 83.7,
+        "limp": 16.2,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "uphill": {
+        "win": 80.8,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       },
+       "downhill": {
+        "win": 86.5,
+        "r_used": 1.05,
+        "exact": true,
+        "src": "ladder-sweep"
+       }
+      }
+     },
+     "dL_from_prev": 19,
+     "c8080_hard": 80.8
+    }
+   ],
+   "campaign_cap_L": 46,
+   "summit_L": 112,
+   "finale_level_climb": 66,
+   "flag": "Finale budgets are a fixed input and sit well above C3; hitting the 85% 80/80 targets requires caps L61/75/93/112 (climb +66 from L46), more levels than the whole campaign. Taste call to cut finale B or accept a long finale grind."
+  },
+  "9": {
+   "pass_": true,
+   "bosses": [
+    {
+     "rnd": 1,
+     "district": "street",
+     "r": 1.04,
+     "c8080": 91.5,
+     "c8080_hard": 88.2,
+     "in_band": true,
+     "c6060": 19.9,
+     "c6060_hard": 15.0,
+     "c6080": 63.1,
+     "c8060": 52.7,
+     "c6080_hard": 54.6,
+     "c8060_hard": 47.6,
+     "FLAG_6060_BELOW_30_35": true
+    },
+    {
+     "rnd": 2,
+     "district": "wangan",
+     "r": 1.025,
+     "c8080": 85.6,
+     "c8080_hard": 85.6,
+     "in_band": true,
+     "c6060": 15.9,
+     "c6060_hard": 15.9,
+     "c6080": 55.7,
+     "c8060": 48.6,
+     "c6080_hard": 55.7,
+     "c8060_hard": 48.6,
+     "FLAG_6060_BELOW_30_35": true
+    },
+    {
+     "rnd": 3,
+     "district": "touge",
+     "r": 1.053,
+     "c8080": 85.6,
+     "c8080_hard": 83.3,
+     "in_band": true,
+     "c6060": 28.3,
+     "c6060_hard": 24.4,
+     "c6080": 56.0,
+     "c8060": 60.3,
+     "c6080_hard": 50.9,
+     "c8060_hard": 56.0,
+     "FLAG_6060_BELOW_30_35": true
+    }
+   ],
+   "flag_6060": [
+    {
+     "rnd": 1,
+     "district": "street",
+     "r": 1.04,
+     "c8080": 91.5,
+     "c8080_hard": 88.2,
+     "in_band": true,
+     "c6060": 19.9,
+     "c6060_hard": 15.0,
+     "c6080": 63.1,
+     "c8060": 52.7,
+     "c6080_hard": 54.6,
+     "c8060_hard": 47.6,
+     "FLAG_6060_BELOW_30_35": true
+    },
+    {
+     "rnd": 2,
+     "district": "wangan",
+     "r": 1.025,
+     "c8080": 85.6,
+     "c8080_hard": 85.6,
+     "in_band": true,
+     "c6060": 15.9,
+     "c6060_hard": 15.9,
+     "c6080": 55.7,
+     "c8060": 48.6,
+     "c6080_hard": 55.7,
+     "c8060_hard": 48.6,
+     "FLAG_6060_BELOW_30_35": true
+    },
+    {
+     "rnd": 3,
+     "district": "touge",
+     "r": 1.053,
+     "c8080": 85.6,
+     "c8080_hard": 83.3,
+     "in_band": true,
+     "c6060": 28.3,
+     "c6060_hard": 24.4,
+     "c6080": 56.0,
+     "c8060": 60.3,
+     "c6080_hard": 50.9,
+     "c8060_hard": 56.0,
+     "FLAG_6060_BELOW_30_35": true
+    }
+   ],
+   "conflict": "On live G2, the r that puts 80/80 at 85% puts 60/60 at ~16-26% (below the 30-35% floor). These two floors cannot be met on the same target r. See Variant B."
+  },
+  "10": {
+   "pass_": null,
+   "note": "filled by aero analysis"
+  }
+ }
+}

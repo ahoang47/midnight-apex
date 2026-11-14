@@ -1,0 +1,413 @@
+{
+  "status": "DRAFT \u2014 unapproved/barry/econ-v1 only. No live sim/ edits.",
+  "as_of": "2026-11-13",
+  "variant": "C",
+  "notes": "Variant C (Austin 2026-11-13 middle ground) is the default: 80/80 at cap about 90% (88-92%) and 60/60 at least 30% on every boss variant. Variant A (80/80 ~85%) and Variant B (60/60-survivable, 80/80 mid-90s) remain documented alternatives. No live r hits both 80/80 88-92 and 60/60 >=30 on Shibuya S1 CW/CCW; see ladder.street_s1_tradeoff.",
+  "structure": {
+    "DEFAULT_CREW_ORDER": [
+      "street",
+      "wangan",
+      "touge"
+    ],
+    "check_order": [
+      "street",
+      "wangan",
+      "touge"
+    ],
+    "crews_per_district": 1,
+    "rematches": false,
+    "LADDER_RUNGS": [
+      "kid1",
+      "kid2",
+      "mat1",
+      "mat2",
+      "oh1",
+      "oh2",
+      "boss"
+    ],
+    "LADDER_TURNS": [
+      10,
+      10,
+      20,
+      20,
+      20,
+      20,
+      30
+    ],
+    "DEBT_CLEAR_AFTER": "end_R1",
+    "BETTING_UNLOCK_AFTER": "end_R2",
+    "FINALE_UNLOCK_AFTER": "end_R3",
+    "OPENER_STEP_1_30": "retired \u2014 does not apply under one-district-per-round",
+    "OPENING_CREW_CAP_RAISE": "retired \u2014 replaced by ceiling = 1.07 x boss, next boss = 1.07 x prev ceiling",
+    "BETTING_UNLOCK_AFTER_OPTIONS": [
+      "end_R2",
+      "end_R3"
+    ],
+    "BETTING_UNLOCK_NOTE": "Austin 2026-11-13 ~4:00 PM PT: locked BETTING_UNLOCK_AFTER = end_R2, as originally planned. The late promoter beat and an R3-unlock betting package are dropped. Wholesale is unchanged (0.20 off list from end of R1 through end of R3) and does not apply to T4.",
+    "BETTING_UNLOCK_LOCKED": true
+  },
+  "ladder": {
+    "ANCHOR_B": 330.0,
+    "K_STEP": 1.07,
+    "MOD_CAP_FRACTION": 1.07,
+    "P_ROUND": [
+      330.0,
+      377.817,
+      432.563
+    ],
+    "C_ROUND": [
+      353.1,
+      404.264,
+      462.842
+    ],
+    "CAP_LEVEL": [
+      12,
+      29,
+      46
+    ],
+    "target_r_A": {
+      "street": [
+        1.2,
+        1.16,
+        1.1,
+        1.07,
+        1.055,
+        1.048,
+        1.04
+      ],
+      "wangan": [
+        1.18,
+        1.16,
+        1.12,
+        1.08,
+        1.05,
+        1.035,
+        1.025
+      ],
+      "touge": [
+        1.18,
+        1.14,
+        1.1,
+        1.08,
+        1.065,
+        1.058,
+        1.053
+      ]
+    },
+    "target_r_B": {
+      "street": [
+        1.2,
+        1.16,
+        1.14,
+        1.12,
+        1.1,
+        1.09,
+        1.08
+      ],
+      "wangan": [
+        1.2,
+        1.16,
+        1.13,
+        1.11,
+        1.09,
+        1.08,
+        1.07
+      ],
+      "touge": [
+        1.22,
+        1.18,
+        1.16,
+        1.14,
+        1.12,
+        1.11,
+        1.1
+      ]
+    },
+    "relative_intent": "R1 boss stays on Shibuya S1 and is eased vs other Street 30-turn cells (80/80 S1 88.3/88.2 at r=1.040, top of the 82-88 band). R3 Touge is a touch harder on the uphill cell (80/80 U 83.3 / district 85.6 at r=1.053) than R2 Wangan (80/80 85.6 at r=1.025).",
+    "opponent_budget": "B = C_round / target_r  (so at cap, arrival r = target_r). Player ceiling C is the 1.07 chain, not cut when target r moves.",
+    "target_r_C": {
+      "street": [
+        1.2,
+        1.16,
+        1.1,
+        1.07,
+        1.065,
+        1.058,
+        1.053
+      ],
+      "wangan": [
+        1.18,
+        1.16,
+        1.11,
+        1.08,
+        1.06,
+        1.048,
+        1.04
+      ],
+      "touge": [
+        1.18,
+        1.16,
+        1.12,
+        1.085,
+        1.075,
+        1.07,
+        1.066
+      ]
+    },
+    "boss_r_C": {
+      "street": 1.053,
+      "wangan": 1.04,
+      "touge": 1.066
+    },
+    "boss_r_exact_grid": {
+      "street": 1.0531373,
+      "wangan": 1.04051166,
+      "touge": 1.06560224
+    },
+    "street_s1_tradeoff": "No r satisfies both floors on S1. Closest that meets 60/60 >=30% on both S1 variants is r=1.053 (exact 1.05313730): 60/60 S1 30.9/31.2, 80/80 S1 93.9/95.4 (2-3 pp over 92). Min-max compromise r=1.050: 60/60 S1 27.4/28.2 (1.8-2.6 short), 80/80 S1 92.7/94.2 (0.7-2.2 over). We take r=1.053 so the 30% floor holds.",
+    "relative_intent_C": "Touge is a bit harder (80/80 uphill 89.6 at r=1.066) than Wangan (80/80 91.4 at r=1.040). S1 is eased just enough for 60/60 to reach 30% on both directions, which overshoots the 80/80 88-92 band."
+  },
+  "xp": {
+    "replaces": "stale sim/velocity_shift/progression.py (old 1.05 cap, card-draw oracle) \u2014 draft only, this folder",
+    "SP0": 240.0,
+    "SP_GROWTH_PER_12_LEVELS": 1.1,
+    "sp_at_L": "240 * 1.10**(L/12)",
+    "player_stats_P": "SP/0.8",
+    "ceiling": "min(C_round, 1.07*P) once T1+ is equipped; R1 L=0 is stock k=1.00",
+    "xp0": 100.0,
+    "xp_growth": 1.08,
+    "story_fill": [
+      0.62,
+      0.75,
+      0.8
+    ],
+    "story_w": [
+      0.12,
+      0.12,
+      0.14,
+      0.14,
+      0.14,
+      0.14,
+      0.2
+    ],
+    "grind_frac": 0.7,
+    "grind_taper_tau": 3.6,
+    "grind_taper_floor": 0.2,
+    "note_C": "R3 story_fill came down from 0.93 (Variant A) to 0.80 because easier bosses let 80/80 story-only still clear 50%. That leaves mixed players 8-10 grind to cap after a 3-6 mat1 wall. Grind 10-turn WR is vs a wild/kid1 opponent at the player's current power."
+  },
+  "money": {
+    "unit": "USD (Austin 2026-11-13: x100 scale; R1 wild purse = $1,000)",
+    "BASE_PAYOUT_WILD": 1000.0,
+    "BASE_PAYOUT_CREW": 2500.0,
+    "BASE_PAYOUT_BOSS": 8000.0,
+    "ROUND_PAYOUT_MULT": [
+      1.0,
+      1.15,
+      1.35
+    ],
+    "grind_payout_fraction": 0.55,
+    "DEBT_AMOUNT": 16000.0,
+    "DEBT_SHARE": 0.65,
+    "WHOLESALE_DISCOUNT": 0.2,
+    "BET_MIN": 500.0,
+    "BET_MAX": 2000.0,
+    "BET_PAYOUT_ODDS_NET": "fair_(1-p)/p_no_clamp",
+    "bet_max_finale_gain": 8000.0,
+    "note": "Debt $16,000 clears by end of R1 on the mixed modest-grind walk (about $10,600 left after debt). 6xT1 = $9,600 is covered. BET_MAX $2,000 caps a perfect 4-race finale streak at +$8,000, about a third of a T3 full-buy ($24,000).",
+    "betting_audit_2026_11_13": {
+      "question": "Can even-money bets on every race from R3 onward (grind, ladder, finale) buy a big mid-campaign T3 pile or break the 1.07 cap?",
+      "sim": "unapproved/barry/econ-v1/run_betting.py and betting_results.json; RESULTS.md Betting section",
+      "finding": "L30 floor and 1.07 cap bind. Betting does not put the player on the R3 boss or finale bosses at a higher cap, or noticeably earlier in races, than the no-bet walk. The real exploit is even-money max bets on high-WR grind races (especially the 31\u2013106 finale XP grinds), which prints on the order of $150k\u2013$240k for favorites. The existing bet_max_finale_gain=$8,000 note assumed bets on the four billed finale races only.",
+      "recommended_smallest_fix": "bets_story_ladder_finale_billed_only",
+      "recommended_fix_detail": "Allow bets only on ladder/story and billed finale races, not on grind/wild races. Keep BET_MIN $500, BET_MAX $2,000, even odds. This restores the $8,000 four-race finale cap. Alternative if grind betting should stay as flavor: post odds that depend on r (fair (1-p)/p), which zeros expected profit on the farm.",
+      "not_recommended_as_sufficient_alone": [
+        "cap bet at the purse ($742.50 on R3 wilds still prints; crew/boss purses still allow a $2,000 even-money bet)",
+        "BET_MAX $500 (still ~+$60k over the finale grind for 80/80)",
+        "3 bets per round (kills early T3 farm only partially; finale still has many rounds/steps)"
+      ],
+      "T3_best_legal_usd": 27000,
+      "T3_best_legal_note": "5 regular T3 upgrades at $4,000 plus one T3 aero at 1.75\u00d7 = $7,000. Full T1+T2+T3 path is $53,400.",
+      "finale_purse_assumption_usd": 10800,
+      "superseded_by": "betting_levers_factorial_2026_11_13 \u2014 Austin asked to treat every idea as a combinable lever, not to pick a single winner"
+    },
+    "WHOLESALE_ENDS_AFTER": "end_R3",
+    "wholesale_note": "0.20 off list from end of R1 through the Mentor Confrontation (end of R3). T4 is always full price. Applied in the betting-lever / T4 audit; earlier campaign evals priced T1-T3 at list.",
+    "betting_levers_factorial_2026_11_13": {
+      "sim": "unapproved/barry/econ-v1/run_betting_levers.py, betting_levers.json, RESULTS.md Betting levers section",
+      "n_mc": 400,
+      "likely_win": "max bet when WR >= 65% and the levers allow it",
+      "levers": {
+        "unlock": [
+          "end_R2",
+          "end_R3"
+        ],
+        "eligible": [
+          "any",
+          "story_ladder_finale",
+          "wild_only"
+        ],
+        "bet_count_cap": [
+          null,
+          4,
+          8,
+          16
+        ],
+        "t4_regular_usd": [
+          5000,
+          8000,
+          12000,
+          18000
+        ],
+        "odds": [
+          "even",
+          "fair (cap=none only in this pass)"
+        ]
+      },
+      "c6_rubric": "FAIL if likely-win mean profit >= $40,000 (printer) or betting jumps a finale-step WR by >=8 pp vs no-bet. LEAK if profit $16,000\u2013$40,000. PASS otherwise. Shop leftover near $0 is not ruin. Mixed 'worth it' if mean 60/80+80/60 profit >= one R3 crew purse ($3,375).",
+      "headline": "Uncapped even-money bets on grind/wild races print ~$150k\u2013$250k at either unlock; T4 price does not soak that printer. A bet-count cap of 4 or 8, story-only eligibility, or true fair odds all pass criterion 6. Austin picks the combination."
+    },
+    "BET_ODDS": "fair",
+    "BET_ODDS_FORMULA": "(1-p)/p of the stake, p = the player's real win probability for that race",
+    "BET_ODDS_CLAMP": false,
+    "BET_ELIGIBLE": "any",
+    "BET_COUNT_CAP": null,
+    "BET_HOUSE_EDGE": 0.0,
+    "BET_HOUSE_EDGE_COMPARISON": 0.05,
+    "austin_pick_betting_2026_11_13": {
+      "locked": {
+        "BETTING_UNLOCK_AFTER": "end_R2",
+        "BET_ODDS": "fair",
+        "BET_ODDS_CLAMP": false,
+        "BET_ELIGIBLE": "any",
+        "BET_COUNT_CAP": null,
+        "BET_MIN": 500.0,
+        "BET_MAX": 2000.0,
+        "BET_HOUSE_EDGE": 0.0
+      },
+      "dropped": [
+        "promoter_beat_late_unlock",
+        "R3_unlock_betting_package"
+      ],
+      "wholesale": "unchanged: 0.20 off list from end of R1 through end of R3; not on T4",
+      "sim": "unapproved/barry/econ-v1/run_betting_fair.py, betting_fair.json; RESULTS.md Austin betting pick",
+      "n_mc": 4000,
+      "criterion_6": "PASS for true fair odds on any race, no cap, unlock after R2. Mean profit is noise around $0. A 5% house edge was compared only and is not the locked rule.",
+      "note_on_p": "If posted p is the same model the player can see, EV is 0 except noise. Players can only get +EV if a hidden factor makes posted p understated."
+    }
+  },
+  "mods": {
+    "slots": 6,
+    "AERO_MAX_EQUIPPED": 1,
+    "aero_rule": "At most one aero. It can go in any of the 6 slots and blocks that slot's regular mod. No stacking is possible; stacking rules were not tuned.",
+    "AERO_POOL_FRACTION": 0.1,
+    "aero_price_mult": 1.75,
+    "aero_unlock_after": "end_R1",
+    "price_T1": 1600.0,
+    "price_T2_upgrade": 2800.0,
+    "price_T3_upgrade": 4000.0,
+    "MOD_TIER_LEVEL_FLOOR": {
+      "T1": 0,
+      "T2": 13,
+      "T3": 30,
+      "T4": 47
+    },
+    "floor_note": "T2 unlocks at the start of R2 (cap 29). T3 unlocks at the start of R3 (cap 46). No floor is above its round cap. 6xT1 = $9,600 is buyable from R1 mixed leftover after debt (about $11,150).",
+    "mod_budget_at_cap": "0.27 * P_round (fills 1.07 with stats = 0.80 * P)",
+    "price_T4_upgrade_sweep": [
+      5000.0,
+      8000.0,
+      12000.0,
+      18000.0
+    ],
+    "price_T4_package_sweep": [
+      33750.0,
+      54000.0,
+      81000.0,
+      121500.0
+    ],
+    "price_T4_note": "5 regular T4 + 1 T4 aero at 1.75x = 6.75 * regular. Sized so 6 T4 slots = 0.27*P(114). Floor L47, unlocks after R3. Not a locked price; see RESULTS betting-levers section.",
+    "T4_stat": "0.27 * P(L114) across 6 slots; 1.07*P clips at earlier finale caps. Two T4 regulars already fill F2; three fill F3; the full package fills F4.",
+    "T4_unlock": "After the first pre-finale story race (P1), still floor L47. See finale_arc."
+  },
+  "finale": {
+    "FINALE_B": [
+      494.8,
+      566.3,
+      648.2,
+      741.9
+    ],
+    "FINALE_DISTRICT_DRAFT": [
+      "touge",
+      "wangan",
+      "street",
+      "touge"
+    ],
+    "FINALE_R_A": [
+      1.05,
+      1.025,
+      1.04,
+      1.05
+    ],
+    "FINALE_C_A": [
+      519.54,
+      580.46,
+      674.13,
+      779.0
+    ],
+    "FINALE_L_A": [
+      61,
+      75,
+      93,
+      112
+    ],
+    "flag": "Fixed finale budgets sit well above C3=462.84. Putting 80/80 on the same 85% r targets requires caps L61/75/93/112, a +66 level climb from the campaign cap (L46) \u2014 more levels than the whole 3-round campaign. Taste call: keep this climb, or cut finale B (conflicts with the fixed-input budgets).",
+    "FINALE_R_C": [
+      1.066,
+      1.04,
+      1.053,
+      1.066
+    ],
+    "FINALE_C_C": [
+      527.5,
+      589.0,
+      682.6,
+      790.9
+    ],
+    "FINALE_L_C": [
+      63,
+      76,
+      95,
+      114
+    ],
+    "flag_C": "Fixed finale budgets still sit well above C3=462.84. Hitting Variant C's 90%/30% r targets requires caps L63/76/95/114, a +68 level climb from L46 \u2014 slightly larger than Variant A (+66 to L112) because the 90% r is a bit easier (higher r, higher C=B*r) than the 85% r. Taste call unchanged: keep the climb or cut finale B."
+  },
+  "austin_picks_2026_11_13_econ": {
+    "variant": "C",
+    "s1_boss_r": 1.053,
+    "s1_reason": "protect 60/60 >=30% over 80/80 88-92 band",
+    "finale": "keep fixed budgets; climb to ~L114 (+68 from L46)",
+    "money_scale": "x100 to USD"
+  },
+  "finale_arc": {
+    "status": "DRAFT \u2014 recommended shape, opponents are placeholders for Desmond and Nathaniel",
+    "story_fill": 0.8,
+    "n_pre_F1": 4,
+    "n_between_steps": 2,
+    "t4_unlock": "P1",
+    "t4_floor": 47,
+    "grind_r": 1.12,
+    "grind_purse_usd": 742.5,
+    "billed_purse_usd": 10800.0,
+    "xp_weights_pre": [
+      0.18,
+      0.24,
+      0.26,
+      0.32
+    ],
+    "xp_weights_mid": [
+      0.4,
+      0.6
+    ],
+    "sim": "unapproved/barry/econ-v1/run_finale_arc.py, finale_arc_recommended.json"
+  }
+}

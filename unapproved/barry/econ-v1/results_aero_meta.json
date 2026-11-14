@@ -1,0 +1,236 @@
+{
+ "seeds": [
+  20261112,
+  20261113,
+  20261114,
+  20261115,
+  20261116,
+  20261117,
+  20261118,
+  20261119,
+  20261120
+ ],
+ "n": 1000,
+ "r_grid": [
+  1.025,
+  1.04,
+  1.05,
+  1.07
+ ],
+ "measures": [
+  "avg_cap",
+  "c8080"
+ ],
+ "keys": [
+  "win",
+  "lock",
+  "rlock",
+  "limp"
+ ],
+ "lengths": [
+  10,
+  20,
+  30
+ ],
+ "styles": [
+  "balanced",
+  "hot_early",
+  "conserver"
+ ],
+ "tracks": [
+  [
+   "street",
+   "S1_Shibuya_Grid_CCW"
+  ],
+  [
+   "street",
+   "S1_Shibuya_Grid_CW"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass_CCW"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass_CW"
+  ],
+  [
+   "touge",
+   "T_Downhill"
+  ],
+  [
+   "touge",
+   "T_Uphill"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run_CCW"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run_CW"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer_CCW"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer_CW"
+  ]
+ ],
+ "aero_shift": 0.0045000000000000005,
+ "aero_tunes": {
+  "S1_Shibuya_Grid_CCW:10": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "S1_Shibuya_Grid_CCW:20": [
+   0.4955,
+   0.25,
+   0.2545
+  ],
+  "S1_Shibuya_Grid_CCW:30": [
+   0.4955,
+   0.25,
+   0.2545
+  ],
+  "S1_Shibuya_Grid_CW:10": [
+   0.4955,
+   0.2545,
+   0.25
+  ],
+  "S1_Shibuya_Grid_CW:20": [
+   0.4955,
+   0.25,
+   0.2545
+  ],
+  "S1_Shibuya_Grid_CW:30": [
+   0.4955,
+   0.25,
+   0.2545
+  ],
+  "S3_Shinjuku_Underpass_CCW:10": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "S3_Shinjuku_Underpass_CCW:20": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "S3_Shinjuku_Underpass_CCW:30": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "S3_Shinjuku_Underpass_CW:10": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "S3_Shinjuku_Underpass_CW:20": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "S3_Shinjuku_Underpass_CW:30": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "T_Downhill:10": [
+   0.3955,
+   0.3,
+   0.3045
+  ],
+  "T_Downhill:20": [
+   0.3955,
+   0.30224999999999996,
+   0.30224999999999996
+  ],
+  "T_Downhill:30": [
+   0.3955,
+   0.30224999999999996,
+   0.30224999999999996
+  ],
+  "T_Uphill:10": [
+   0.39775000000000005,
+   0.29775,
+   0.3045
+  ],
+  "T_Uphill:20": [
+   0.4,
+   0.3,
+   0.3
+  ],
+  "T_Uphill:30": [
+   0.4,
+   0.3,
+   0.3
+  ],
+  "W1_Bayshore_Run_CCW:10": [
+   0.25,
+   0.3,
+   0.45
+  ],
+  "W1_Bayshore_Run_CCW:20": [
+   0.2545,
+   0.2955,
+   0.45
+  ],
+  "W1_Bayshore_Run_CCW:30": [
+   0.2545,
+   0.2955,
+   0.45
+  ],
+  "W1_Bayshore_Run_CW:10": [
+   0.25,
+   0.3045,
+   0.4455
+  ],
+  "W1_Bayshore_Run_CW:20": [
+   0.25,
+   0.2955,
+   0.4545
+  ],
+  "W1_Bayshore_Run_CW:30": [
+   0.25,
+   0.2955,
+   0.4545
+  ],
+  "W3_C1_Outer_CCW:10": [
+   0.2545,
+   0.3,
+   0.4455
+  ],
+  "W3_C1_Outer_CCW:20": [
+   0.2545,
+   0.3,
+   0.4455
+  ],
+  "W3_C1_Outer_CCW:30": [
+   0.2545,
+   0.3,
+   0.4455
+  ],
+  "W3_C1_Outer_CW:10": [
+   0.25,
+   0.3045,
+   0.4455
+  ],
+  "W3_C1_Outer_CW:20": [
+   0.25,
+   0.3045,
+   0.4455
+  ],
+  "W3_C1_Outer_CW:30": [
+   0.25,
+   0.3045,
+   0.4455
+  ]
+ },
+ "note": "build0=0-aero district-fixed; build1=1-aero 10% of one slot toward per-race best"
+}

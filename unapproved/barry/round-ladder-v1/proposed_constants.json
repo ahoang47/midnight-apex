@@ -1,0 +1,434 @@
+{
+ "status": "DRAFT only \u2014 unapproved/barry/round-ladder-v1/. Do not copy into sim/ until Austin signs off. XP/economy not refit.",
+ "date": "2026-11-13",
+ "based_on_canon": "origin/proto-build c826ffd",
+ "study": "unapproved/barry/round-ladder-v1/RESULTS_picks.md (picks sim); RESULTS.md (pre-pick ladder)",
+ "structural": {
+  "DISTRICTS": [
+   "Touge",
+   "Wangan",
+   "Street"
+  ],
+  "CAMPAIGN_ORDER": [
+   "Street",
+   "Wangan",
+   "Touge"
+  ],
+  "DEFAULT_CREW_ORDER": {
+   "1": [
+    "Street"
+   ],
+   "2": [
+    "Wangan"
+   ],
+   "3": [
+    "Touge"
+   ]
+  },
+  "check_order": "Require each round to have exactly one crew, matching DEFAULT_CREW_ORDER. Locked; no permutations.",
+  "all_orders": "Yield the single locked order. Retire the 216-order enumerator.",
+  "DEBT_CLEAR_AFTER": [
+   1,
+   1
+  ],
+  "BETTING_UNLOCK_AFTER": [
+   2,
+   1
+  ],
+  "FINALE_UNLOCK_AFTER": [
+   3,
+   1
+  ],
+  "debt_clear_note": "End of R1 Street crew boss, same moment as wholesale (canon 2026-11-13).",
+  "betting_note": "End of R2 Wangan crew boss.",
+  "finale_unlock_note": "After R3 Touge crew boss (Mentor Confrontation / rift then Myth #1 race per c826ffd)."
+ },
+ "steps": {
+  "OPTION_A_ROUND_STEP": "RETIRE. Do not apply the \u00d71.30 opener. There is no free choice of who opens a round.",
+  "CAP_ALLOC_ROUND_OPEN": "RETIRE. Do not use the 33-level opener raise. Allocate each crew's actual dL with CAP_ALLOC_CREW weights.",
+  "OPTION_A_CREW_STEP": "KEEP only as the prologue\u2192R1 step: R1 Street boss = SABINE_BUDGET \u00d7 1.10 = 330 (same first-crew anchor as today).",
+  "ROUND_POWER_STEP_PRIMARY": 1.07,
+  "ROUND_POWER_STEP_VARIANT": 1.1,
+  "player_cap_frac_primary": 1.07,
+  "rule": "Round n boss budget = previous round's player ceiling \u00d7 1.07, snapped to the nearest level, EXCEPT Austin's picks: R1 boss B = C1/1.08; every R3 budget uses at-cap r = LADDER_R[j]*1.10/1.07 (boss 1.10) against the un-offset player ceiling. Player cap at a round end remains 1.07 \u00d7 the nominal (un-offset) snapped boss budget."
+ },
+ "primary_budgets": {
+  "k_step": 1.07,
+  "player_cap": 1.07,
+  "R1_Street": {
+   "intended_B": 330.0,
+   "snapped_B": 330.0,
+   "player_ceiling": 353.1,
+   "cap_L": 12,
+   "dL": 12,
+   "alloc": [
+    2,
+    2,
+    3,
+    3,
+    1,
+    0,
+    1
+   ]
+  },
+  "R2_Wangan": {
+   "intended_B": 377.82,
+   "snapped_B": 377.71,
+   "player_ceiling": 404.15,
+   "cap_L": 29,
+   "dL": 17,
+   "alloc": [
+    3,
+    3,
+    4,
+    4,
+    2,
+    0,
+    1
+   ],
+   "B_over_prev_C": 1.0697
+  },
+  "R3_Touge": {
+   "intended_B": 432.44,
+   "snapped_B": 432.31,
+   "player_ceiling": 462.57,
+   "cap_L": 46,
+   "dL": 17,
+   "alloc": [
+    3,
+    3,
+    4,
+    4,
+    2,
+    0,
+    1
+   ],
+   "B_over_prev_C": 1.0697
+  },
+  "note": "Campaign end cap is L46 under this rule and the current GEO curve, not L78 or L150. See RESULTS."
+ },
+ "finale_primary_recommended": {
+  "rule": "Continue ceiling\u00d71.07 from the R3 player ceiling (same step as the campaign). Absolute budgets are much smaller than today's 1086\u20131446 because the 3-crew season ends at B=432, not 988. At-cap combat r can still be 1.07 (or a Touge offset). Finale remains cap-exempt in the current rules; level caps below use the STALE FINALE_GRIND_SHARE formula and are not a refit.",
+  "budgets": {
+   "Myth #1 Touge": 494.8,
+   "Myth #2 Wangan": 566.3,
+   "Myth #3 Street": 648.2,
+   "Summit Touge": 741.9
+  },
+  "stale_grind_share_caps": {
+   "Lstep": 48,
+   "Lf": [
+    51,
+    55,
+    59,
+    63
+   ],
+   "flag": "XP-dependent, not a shipping target"
+  }
+ },
+ "xp_dependent_do_not_ship_as_refit": [
+  "All grind-to-cap counts (stale v8c XP curve, still 1.05 share in the live model).",
+  "MOD_TIER_LEVEL_FLOOR (9-crew table: R3 floor L111 is above the new L46 cap; must re-derive after XP refit).",
+  "STORY_XP_LT_ROUND_OPEN (was for 1.30 openers; used in the study walk for R2/R3 as the only crew \u2014 not a recommendation).",
+  "Finale level caps from FINALE_GRIND_SHARE / PROGRESSION_MOD_CAP_FRACTION 1.05.",
+  "DEBT_AMOUNT retarget to the end of R1 (economy deferred)."
+ ],
+ "tests_that_would_need_rewriting": [
+  "sim/tests/test_progression.py: test_default_order_reproduction, test_round_opening_by_position, test_free_order_position_keyed, test_first_crew_gets_round_step_and_unlocks, test_order_must_be_a_permutation",
+  "sim/tests/test_mod_floor.py (9-crew floors) \u2014 already skipped for G2, still stale vs 3-crew",
+  "design/07 \u00a79.5 campaign test plan (already notes live tests use old DEFAULT_CREW_ORDER)"
+ ],
+ "austin_picks_2026_11_13": {
+  "R3_touge_target_r_offset": 0.03,
+  "R3_boss_r_at_cap": 1.1,
+  "R1_street_boss_track": "S1 Shibuya",
+  "R1_street_boss_only_r_offset": 0.01,
+  "status": "draft, not live"
+ },
+ "austin_picks": {
+  "date": "2026-11-13",
+  "approved": true,
+  "R3_touge_offset": {
+   "rule": "All R3 opponent budgets cut so at-cap r = LADDER_R[j] * 1.10/1.07 for lieutenants; boss r = 1.10. Player ceiling C3 stays 1.07 \u00d7 nominal R3 boss (un-offset).",
+   "factor": 1.0280373831775702,
+   "boss_target_r": 1.1,
+   "lieutenant_target_r": [
+    1.161682242990654,
+    1.141121495327103,
+    1.1308411214953271,
+    1.1102803738317757,
+    1.1,
+    1.0897196261682243
+   ],
+   "nominal_B": 432.31,
+   "offset_B": 420.52
+  },
+  "R1_street_boss_offset": {
+   "rule": "Boss-only +0.01. R1 Street boss stays on Shibuya S1. B = C1/1.08. Lieutenants unchanged. C1 stays 1.07 \u00d7 330.",
+   "target_r": 1.08,
+   "layout": "S1_Shibuya_Grid CW and CCW",
+   "nominal_B": 330.0,
+   "offset_B": 326.94
+  },
+  "player_ceilings_unchanged": true,
+  "note": "Live constants not changed. Draft only."
+ },
+ "primary_budgets_with_picks": {
+  "k_step": 1.07,
+  "player_cap": 1.07,
+  "C1": 353.1,
+  "C2": 404.1451,
+  "C3": 462.5695,
+  "normalize": "C1 = 100",
+  "cap_L": {
+   "R1": 12,
+   "R2": 29,
+   "R3": 46
+  },
+  "rungs": [
+   {
+    "rnd": 1,
+    "district": "Street",
+    "name": "kid1",
+    "cap_L": 2,
+    "B": 288.6193,
+    "B_norm_C1_100": 81.7387,
+    "r_tgt": 1.13,
+    "length": 20,
+    "player_cap": 326.1398
+   },
+   {
+    "rnd": 1,
+    "district": "Street",
+    "name": "kid2",
+    "cap_L": 4,
+    "B": 298.5242,
+    "B_norm_C1_100": 84.5438,
+    "r_tgt": 1.11,
+    "length": 20,
+    "player_cap": 331.3619
+   },
+   {
+    "rnd": 1,
+    "district": "Street",
+    "name": "mat1",
+    "cap_L": 7,
+    "B": 308.5021,
+    "B_norm_C1_100": 87.3696,
+    "r_tgt": 1.1,
+    "length": 20,
+    "player_cap": 339.3523
+   },
+   {
+    "rnd": 1,
+    "district": "Street",
+    "name": "mat2",
+    "cap_L": 10,
+    "B": 321.792,
+    "B_norm_C1_100": 91.1334,
+    "r_tgt": 1.08,
+    "length": 20,
+    "player_cap": 347.5353
+   },
+   {
+    "rnd": 1,
+    "district": "Street",
+    "name": "OH1",
+    "cap_L": 11,
+    "B": 327.3894,
+    "B_norm_C1_100": 92.7186,
+    "r_tgt": 1.07,
+    "length": 20,
+    "player_cap": 350.3066
+   },
+   {
+    "rnd": 1,
+    "district": "Street",
+    "name": "OH2",
+    "cap_L": 11,
+    "B": 330.4779,
+    "B_norm_C1_100": 93.5933,
+    "r_tgt": 1.06,
+    "length": 20,
+    "player_cap": 350.3066
+   },
+   {
+    "rnd": 1,
+    "district": "Street",
+    "name": "boss",
+    "cap_L": 12,
+    "B": 326.9444,
+    "B_norm_C1_100": 92.5926,
+    "r_tgt": 1.08,
+    "length": 30,
+    "player_cap": 353.1
+   },
+   {
+    "rnd": 2,
+    "district": "Wangan",
+    "name": "kid1",
+    "cap_L": 15,
+    "B": 320.0129,
+    "B_norm_C1_100": 90.6295,
+    "r_tgt": 1.13,
+    "length": 20,
+    "player_cap": 361.6145
+   },
+   {
+    "rnd": 2,
+    "district": "Wangan",
+    "name": "kid2",
+    "cap_L": 18,
+    "B": 333.6346,
+    "B_norm_C1_100": 94.4873,
+    "r_tgt": 1.11,
+    "length": 20,
+    "player_cap": 370.3344
+   },
+   {
+    "rnd": 2,
+    "district": "Wangan",
+    "name": "mat1",
+    "cap_L": 22,
+    "B": 347.5353,
+    "B_norm_C1_100": 98.424,
+    "r_tgt": 1.1,
+    "length": 20,
+    "player_cap": 382.2888
+   },
+   {
+    "rnd": 2,
+    "district": "Wangan",
+    "name": "mat2",
+    "cap_L": 26,
+    "B": 365.3974,
+    "B_norm_C1_100": 103.4827,
+    "r_tgt": 1.08,
+    "length": 20,
+    "player_cap": 394.6292
+   },
+   {
+    "rnd": 2,
+    "district": "Wangan",
+    "name": "OH1",
+    "cap_L": 28,
+    "B": 374.7177,
+    "B_norm_C1_100": 106.1223,
+    "r_tgt": 1.07,
+    "length": 20,
+    "player_cap": 400.9479
+   },
+   {
+    "rnd": 2,
+    "district": "Wangan",
+    "name": "OH2",
+    "cap_L": 28,
+    "B": 378.2528,
+    "B_norm_C1_100": 107.1234,
+    "r_tgt": 1.06,
+    "length": 20,
+    "player_cap": 400.9479
+   },
+   {
+    "rnd": 2,
+    "district": "Wangan",
+    "name": "boss",
+    "cap_L": 29,
+    "B": 377.7057,
+    "B_norm_C1_100": 106.9685,
+    "r_tgt": 1.07,
+    "length": 30,
+    "player_cap": 404.1451
+   },
+   {
+    "rnd": 3,
+    "district": "Touge",
+    "name": "kid1",
+    "cap_L": 32,
+    "B": 356.2855,
+    "B_norm_C1_100": 100.9022,
+    "r_tgt": 1.1616822429906541,
+    "length": 20,
+    "player_cap": 413.8906
+   },
+   {
+    "rnd": 3,
+    "district": "Touge",
+    "name": "kid2",
+    "cap_L": 35,
+    "B": 371.4512,
+    "B_norm_C1_100": 105.1972,
+    "r_tgt": 1.141121495327103,
+    "length": 20,
+    "player_cap": 423.871
+   },
+   {
+    "rnd": 3,
+    "district": "Touge",
+    "name": "mat1",
+    "cap_L": 39,
+    "B": 386.9276,
+    "B_norm_C1_100": 109.5802,
+    "r_tgt": 1.1308411214953273,
+    "length": 20,
+    "player_cap": 437.5536
+   },
+   {
+    "rnd": 3,
+    "district": "Touge",
+    "name": "mat2",
+    "cap_L": 43,
+    "B": 406.8143,
+    "B_norm_C1_100": 115.2122,
+    "r_tgt": 1.110280373831776,
+    "length": 20,
+    "player_cap": 451.6779
+   },
+   {
+    "rnd": 3,
+    "district": "Touge",
+    "name": "OH1",
+    "cap_L": 45,
+    "B": 417.191,
+    "B_norm_C1_100": 118.1509,
+    "r_tgt": 1.1,
+    "length": 20,
+    "player_cap": 458.9101
+   },
+   {
+    "rnd": 3,
+    "district": "Touge",
+    "name": "OH2",
+    "cap_L": 45,
+    "B": 421.1268,
+    "B_norm_C1_100": 119.2656,
+    "r_tgt": 1.0897196261682245,
+    "length": 20,
+    "player_cap": 458.9101
+   },
+   {
+    "rnd": 3,
+    "district": "Touge",
+    "name": "boss",
+    "cap_L": 46,
+    "B": 420.5177,
+    "B_norm_C1_100": 119.0931,
+    "r_tgt": 1.1,
+    "length": 30,
+    "player_cap": 462.5695
+   }
+  ],
+  "R1_OH2_vs_boss_note": "R1 OH2 budget 330.48 is slightly above the offset R1 boss 326.94 (different lengths, 20 vs 30)."
+ },
+ "measured_at_cap_9x1000": {
+  "source": "RESULTS_picks.md",
+  "R3_OH2_r": 1.0897196261682243,
+  "R3_OH2_60_20": 65.5,
+  "R3_boss_60_30": 63.8,
+  "R3_boss_uphill_60": 60.3,
+  "R1_S1_boss_60_30": {
+   "CW": 57.5,
+   "CCW": 60.2
+  }
+ }
+}

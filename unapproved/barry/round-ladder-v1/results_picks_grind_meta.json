@@ -1,0 +1,116 @@
+{
+ "seeds": [
+  20261112,
+  20261113,
+  20261114,
+  20261115,
+  20261116,
+  20261117,
+  20261118,
+  20261119,
+  20261120
+ ],
+ "n": 1000,
+ "r_grid": [
+  1.0297395963852396,
+  1.0379508845320182,
+  1.0462276506435813,
+  1.0545704168504153,
+  1.07145605892275,
+  1.0488088481701516,
+  1.0571721972085373,
+  1.09129783779169,
+  1.0336848450571972,
+  1.0419275931709129,
+  1.0502360701156077,
+  1.0586108000222094,
+  1.0670523112011405,
+  1.0755611361756447,
+  1.0841378117153806,
+  1.0927828788702834,
+  1.1014968830046967
+ ],
+ "measures": [
+  "avg",
+  "c8080"
+ ],
+ "keys": [
+  "win",
+  "lock",
+  "rlock",
+  "limp"
+ ],
+ "lengths": [
+  10,
+  20,
+  30
+ ],
+ "styles": [
+  "balanced",
+  "hot_early",
+  "conserver"
+ ],
+ "tracks": [
+  [
+   "street",
+   "S1_Shibuya_Grid_CCW"
+  ],
+  [
+   "street",
+   "S1_Shibuya_Grid_CW"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass_CCW"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass_CW"
+  ],
+  [
+   "touge",
+   "T_Downhill"
+  ],
+  [
+   "touge",
+   "T_Uphill"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run_CCW"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run_CW"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer_CCW"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer_CW"
+  ]
+ ],
+ "tunes": {
+  "street": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "wangan": [
+   0.25,
+   0.3,
+   0.45
+  ],
+  "touge": [
+   0.4,
+   0.3,
+   0.3
+  ]
+ },
+ "use_gravity": true,
+ "line_edits": null,
+ "cap_constant": 1.07,
+ "note": "Picks sweep: exact target/arrival r for offset ladder + no-grind walks."
+}
