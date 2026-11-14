@@ -1,4 +1,4 @@
-# Pre-finale arc: who the 10 races are (draft v1.2, Desmond, 2026-11-13)
+# Pre-finale arc: who the 10 races are (draft v1.3, Desmond, 2026-11-13)
 
 **Status:** unapproved proposal for Austin. It answers Barry's econ-v1 brief. This recast follows Austin's direction as relayed by Barry: "we should have it be the recurring characters from the crews. They'd hear about it, respect what the PC is doing, and offer to train him." It replaces v1's plan for six new one-scene characters. Race shape and numbers are unchanged (Barry's `finale_arc_recommended.json`). Design canon is at proto-build 43eb7b4.
 
@@ -38,7 +38,8 @@ Rung names follow the crew ladder (kid, mature member, old head, boss). Exact cr
 1. **F4 is the Summit.** F1–F3 are the three Myth Drivers, and the F3→F4 pair leads into the Summit.
 2. **T4 is canon's "big finale mods",** unlocked at P1 instead of on finishing Round 3. Reiko still sells them at full price, so no new seller is needed. When this goes live, canon's "finishing Round 3 unlocks the big finale mods" lines (design/01, story/canon.md, plot.md) move to the P1 win. Arthur gets the T4 parts-art request once Austin approves the arc.
 
+3. **At the Summit (F4) the PC races Sabine.** Nathaniel is reconciling this with canon's Summit and ending beats (story/canon.md 1: "I know what really happened.", the Myth Drivers' reunion, and Sabine hearing their reasons). He drafts in unapproved/ until Austin approves the arc.
+
 ## Still open
 
-1. **Who does the PC race at the Summit (F4)?** Canon has the Summit as the Myth Drivers' first meeting since the breakup, where Sabine hears their real reasons. Is the race against one of them, against Sabine, or something else? Nathaniel and Austin to decide.
-2. **Money in USD at x100 scale:** once approved, I do the repo-wide money wording pass.
+1. **Money in USD at x100 scale:** once approved, I do the repo-wide money wording pass.
