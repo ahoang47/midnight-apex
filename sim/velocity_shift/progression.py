@@ -18,9 +18,11 @@ Rules (all constants in equations.py):
     is < 50 % (hard cell for 20/30-turn races) until both clear, then grinds to the cap before the boss; "hard"
     (60/60) grinds at every rung where 60/60 is < 50 %, then to the cap before the boss.
 
-Win rates come from config/winrate_g2_econ_v1.json: real G2 sweep output (9 seeds x 1000 races, 3 boss styles), on the
-touge-lines-v1 DRAFT track set (Street/Wangan CW+CCW, Touge uphill/downhill). The nearest sweep r is used, as in
-econ-v1 evaluate.py (its wr() call never interpolates when allow_interp is set; it takes the nearest point).
+Win rates come from config/winrate_g2_live_tracks_v1.json (Austin 2026-11-14: keep the 15 live stand-in tracks,
+config/tracks_v1.json): live engine, G2 heat, live QTE mapping, 3 boss styles, exported from
+unapproved/barry/econ-v1-live-tracks/ (N=300 grid + N=1500 30-turn confirm + N=1500-3000 exact-r point checks).
+Linear interpolation in r, flat outside the grid. Hard cells are the hardest live track per district
+(E.BOSS_HARD_TRACK: Street S1 Shibuya and Wangan W3 C1 Outer on 30-turn races, Touge T3 Usui on every length).
 """
 
 import json
@@ -31,9 +33,8 @@ from bisect import bisect_left
 from . import equations as E
 
 PROFILES = ("c6060", "c6080", "c8060", "c8080")
-_TABLE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_g2_econ_v1.json")
+_TABLE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_g2_live_tracks_v1.json")
 _TABLE = None
-HARD_TRACKS = {"touge": ("T_Uphill",), "street": ("S1_Shibuya_Grid_CW", "S1_Shibuya_Grid_CCW")}
 
 
 def _table():
@@ -44,51 +45,52 @@ def _table():
     return _TABLE
 
 
-def _cols(district=None, track=None):
-    tr = _table()["tracks"]
-    if track:
-        return [i for i, (_, n) in enumerate(tr) if n == track]
-    return [i for i, (d, _) in enumerate(tr) if d == district.lower()]
+def _track_win(profile, r, turns, track):
+    pts = _table()["q"][profile][str(int(turns))][track]
+    rs = [x[0] for x in pts]
+    if r <= rs[0]:
+        return pts[0][1]
+    if r >= rs[-1]:
+        return pts[-1][1]
+    i = bisect_left(rs, r)
+    if abs(rs[i] - r) < 1e-9:
+        return pts[i][1]
+    (r0, w0), (r1, w1) = pts[i - 1], pts[i]
+    return w0 + (w1 - w0) * (r - r0) / (r1 - r0)
+
+
+def tracks(district: str):
+    return [n for d, n in _table()["tracks"] if d == district.lower()]
 
 
 def win_rate(profile: str, r: float, turns: int, district: str | None = None, track: str | None = None) -> float:
     """Win rate (%) for a profile (c6060 / c6080 / c8060 / c8080) at stat ratio r, race length 10/20/30, averaged
-    over a district's draft tracks (or one track). Uses the nearest sweep point, as econ-v1 wr.py / evaluate.py do
-    (no interpolation; the sweep grids include every designed and walk r, so offsets are small)."""
-    t = _table()["q"][profile]
-    rs = t["r"]; rows = t["win"][str(int(turns))]; cols = _cols(district, track)
-    i = bisect_left(rs, r)
-    if i >= len(rs) or (i > 0 and abs(rs[i - 1] - r) <= abs(rs[i] - r)):
-        i -= 1
-    return sum(rows[i][c] for c in cols) / len(cols)
-
-
-def nearest_r(profile: str, r: float) -> float:
-    """The sweep r that win_rate uses for r."""
-    rs = _table()["q"][profile]["r"]
-    return min(rs, key=lambda x: abs(x - r))
+    over a district's 5 live tracks (or one track). Linear in r between sweep points."""
+    names = [track] if track else tracks(district)
+    return sum(_track_win(profile, r, turns, n) for n in names) / len(names)
 
 
 def win_pack(profile: str, r: float, turns: int, district: str) -> dict:
-    """{"district": %, plus "uphill"/"downhill" on Touge, "S1_CW"/"S1_CCW" on 30-turn Street}, each rounded to 0.1."""
+    """{"district": %} plus {"hard": %} on the district's hardest track where it applies
+    (E.HARD_TRACK_TURNS: Touge every length, Street / Wangan 30-turn), each rounded to 0.1."""
     d = district.lower()
     out = {"district": round(win_rate(profile, r, turns, d), 1)}
-    if d == "touge":
-        out["uphill"] = round(win_rate(profile, r, turns, track="T_Uphill"), 1)
-        out["downhill"] = round(win_rate(profile, r, turns, track="T_Downhill"), 1)
-    if d == "street" and turns == 30:
-        out["S1_CW"] = round(win_rate(profile, r, turns, track="S1_Shibuya_Grid_CW"), 1)
-        out["S1_CCW"] = round(win_rate(profile, r, turns, track="S1_Shibuya_Grid_CCW"), 1)
+    if int(turns) in E.HARD_TRACK_TURNS[d]:
+        out["hard"] = round(win_rate(profile, r, turns, track=E.BOSS_HARD_TRACK[d]), 1)
     return out
 
 
 def hard_win(pack: dict) -> float:
-    """The hard cell of a pack: Touge uphill, worse Shibuya S1 direction, else the district mean."""
-    if "uphill" in pack:
-        return pack["uphill"]
-    if "S1_CW" in pack:
-        return min(pack["S1_CW"], pack["S1_CCW"])
-    return pack["district"]
+    """The hard cell of a pack (hardest track), else the district mean."""
+    return pack.get("hard", pack["district"])
+
+
+def boss_check(r: float, district: str) -> dict:
+    """Criterion 9 on the hardest track at cap: 60/60 >= E.BOSS_FLOOR_6060 and 80/80 inside E.BOSS_BAND_8080."""
+    w60 = win_rate("c6060", r, 30, track=E.BOSS_HARD_TRACK[district.lower()])
+    w80 = win_rate("c8080", r, 30, track=E.BOSS_HARD_TRACK[district.lower()])
+    lo, hi = E.BOSS_BAND_8080
+    return dict(r=r, c6060=round(w60, 1), c8080=round(w80, 1), ok=w60 >= E.BOSS_FLOOR_6060 and lo <= w80 <= hi)
 
 
 # ── Level / power helpers ─────────────────────────────────────────────

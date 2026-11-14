@@ -3,7 +3,7 @@
 Usage (from sim/):  python scripts/run_progression.py [--rows] [--arc]
 Prints the at-cap boss and finale win rates (Variant C), the story / mixed / hard walks (grind, levels, USD cash and
 debt per round), and with --arc the pre-finale arc table. --rows adds every rung of every walk.
-All constants: velocity_shift/equations.py. Win rates: config/winrate_g2_econ_v1.json.
+All constants: velocity_shift/equations.py. Win rates: config/winrate_g2_live_tracks_v1.json (live stand-in tracks; hard cell = hardest track).
 """
 import sys
 sys.path.insert(0, ".")
@@ -12,15 +12,13 @@ from velocity_shift import equations as E, progression as P
 
 def fmt(pack):
     s = f"{pack['district']:5.1f}"
-    if "uphill" in pack:
-        s += f" (U {pack['uphill']:.1f} / D {pack['downhill']:.1f})"
-    if "S1_CW" in pack:
-        s += f" (S1 {pack['S1_CW']:.1f} / {pack['S1_CCW']:.1f})"
+    if "hard" in pack:
+        s += f" (hardest {pack['hard']:.1f})"
     return s
 
 
 def main(argv):
-    print("At cap, bosses and finale (60/60 | 60/80 | 80/60 | 80/80):")
+    print("At cap, bosses and finale (60/60 | 60/80 | 80/60 | 80/80; district mean (hardest track)):")
     for x in P.at_cap_table():
         if x["rung"] == "boss" or x["rnd"] == "F":
             print(f"  R{x['rnd']} {x['district']:6s} {x['rung']:26s} r={x['r']:.3f} | " + " | ".join(fmt(x["wr"][p]) for p in P.PROFILES))

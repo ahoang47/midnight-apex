@@ -8,6 +8,28 @@
 
 ---
 
+## 2026-11-14 — Barry [sim]: econ-v1 recalibrated to the 15 live stand-in tracks, bosses tuned on the hardest track per district (Austin approval 2026-11-14)
+
+- **Why:** Austin, 2026-11-13: "Keep the current stand-in tracks and recalibrate econ-v1 to them" (touge-lines-v1 draft tracks stay unapproved). Then, 2026-11-14: tune every boss to the **hardest** live track in its district; accept the finale cap L115 and a 60/60 pre-F1 grind of 11; keep the Wangan boss at r = 1.055; "make it live, commit and push".
+- **Drift that forced it** (old live constants on the live tracks, at cap, 60/60 / 80/80): Street S1 46.7 / 96.3 at r 1.053 (too easy); Touge T3 Usui 18.2 / 86.6 at r 1.066 (60/60 floor broken); Wangan W3 C1 Outer 22.8 / 86.5 at r 1.040. Walk fails: mixed R1 wall 1 and R3 wall 2, 80/80 story R3 mat2 34.6 % on T3, R3 10-turn grind 61 %, 60/60 billed F1/F2/F4 24.6 / 28.5 / 24.6.
+- **Draft committed first:** `unapproved/barry/econ-v1-live-tracks/` (sweeps, fits, RESULTS.md, proposed_constants.json; live engine, G2 heat, live QTE mapping, N=300 grid + N=1500 30-turn confirm + N=1500-3000 exact-r point checks).
+- **`sim/velocity_shift/equations.py`:**
+  - `LADDER_TARGET_R` Street 1.20 1.159 1.095 1.071 1.065 1.058 **1.044**; Wangan 1.18 1.16 1.11 1.08 1.06 **1.055 1.055** (oh2 lifted so the ladder never steps up); Touge 1.182 1.163 1.132 1.097 1.079 1.071 **1.071**. `BOSS_TARGET_R` 1.044 / 1.055 / 1.071 (boss B 338.22 / 383.19 / 432.16).
+  - New `BOSS_HARD_TRACK` (S1_Shibuya_Grid, W3_C1_Outer, T3_Usui_Esses), `HARD_TRACK_TURNS` (Street/Wangan 30-turn, Touge every length).
+  - **Check band changed:** new `BOSS_BAND_8080` = (90, 95) and `BOSS_FLOOR_6060` = 30, on the hardest track. The econ-v1 band (80/80 88-92 on the district/uphill cell) falsely fails here: on S1 and T3 the r that keeps 60/60 >= 30 puts 80/80 at 93-95 (Austin's target "80/80 ~90-95%").
+  - `FINALE_TARGET_R` (1.066, 1.040, 1.053, 1.066) -> **(1.075, 1.058, 1.044, 1.075)**; budgets unchanged, so C = 531.91 / 599.15 / 676.72 / 797.54 and `FINALE_CAP_LEVEL` 63/76/95/114 -> **64/79/94/115** (climb now ends L115, accepted). Each r* is the r actually delivered at the integer cap (F2 1.055 would round to L78 and give only r 1.053).
+  - `FINALE_ARC` B recomputed for the new caps: P2 409.03->412.29, P3 483.25->480.89 (wall r_design 1.020->1.025), P4 461.15->464.83, M11 438.11->441.61, M12 546.53->555.28, M21 485.77->497.48, M31 564.89->560.43; P1, M22, M32 unchanged.
+- **`sim/config/winrate_g2_live_tracks_v1.json`** (new): the live-track oracle the draft walks used (export script in the draft folder). `winrate_g2_econ_v1.json` (draft tracks) is kept but no longer read.
+- **`sim/velocity_shift/progression.py`:** reads the live-track table (linear in r), hard cell = hardest track (`win_pack` returns `district` + `hard`), new `boss_check()` for criterion 9. `scripts/run_progression.py` prints the hardest-track cell.
+- **Numbers (at cap, hardest track, 60/60 | 60/80 | 80/60 | 80/80):** R1 Street S1 r 1.044: 31.6 | 72.4 | 71.0 | 94.9. R2 Wangan W3 r 1.055: 39.7 | 63.0 | 80.7 | 90.7. R3 Touge T3 r 1.071: 31.9 | 69.2 | 70.2 | 93.5. F1/F4 T3 r 1.075: 34.7 | 72.6 | 74.1 | 94.7. F2 W3 r 1.058: 41.7 | 64.2 | 84.2 | 92.5. F3 = R1 cell. All pass 60/60 >= 30 and 80/80 90-95.
+- **Walks:** mixed 3+9 / 3+9 / 4+8 (12 per round, $10,600 / $41,190 / $77,100); 60/60 12 / 15 / 18; 80/80 story-only L8 / 26 / 43, worst hard-cell rung 61.6 / 54.1 / 50.4 (R3 is thin: oh1 50.4, mat2 51.1 on T3). Finale arc (wall/to-cap per step): 60/80 7/6/6/7, 80/60 6/6/6/7, 60/60 **11** / 7 / 7 / 9 (pre-F1 11 accepted), 80/80 story-only 0 grinds, min 59.3 %, ends L112 with 5 T4 + aero; mixed and 60/60 end L115.
+- **Aero rechecked on the live tracks** (`run_aero_live.py`, N=2000 paired seeds): one aero (0.42 % of the split moved toward the track's best) changes WR by -0.3 to -2.0 pp on average (range -18.7 to +3.8; best W3 60/60 +3.1, worst T3 60/60 -9.0). At 1.75x price it is **not a no-brainer**; rule unchanged.
+- **Touge sensitivity:** live T3 has sharp stat thresholds (60/60 jumps 18.2 -> 28.4 between r 1.066 and 1.069; a 0.42 % split shift moves it ~9 pp). Of the ladder rungs, Touge is the fragile one (5 of 12 +/-0.003 nudges break a walk target; Street 1, Wangan 0). Re-check T3 if tunes or mod stats change.
+- **Tests:** `sim/tests/test_progression.py` re-pinned to the new numbers (hardest-track boss/finale cells, caps 64/79/94/115, hard walk 12/15/18, arc B, monotone ladders); `test_mod_floor.py` unchanged. Ran test_progression, test_mod_floor, test_lines: 20 passed.
+- **Not changed:** money, purses, debt, betting, T4 $8,000 stand-in and P1 unlock, mod tiers/floors, aero rule and 1.75x price, campaign caps L12/29/46, XP curve, finale budgets, arc shape. **Needs owners:** `design/02-equations-reference.md` and `design/07-economy-and-mods.md` still cite the old finale caps 63/76/95/114 and boss r (Desmond's files, not edited here).
+
+---
+
 ## 2026-11-14 — Arthur [art]: cel-shaded experiment of the three district frames (unapproved)
 
 - **Why:** Austin, 2026-11-14: "As an experiment, could you do a pass as a cel-shaded style?" Test look only; not a direction.

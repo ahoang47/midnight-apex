@@ -344,14 +344,22 @@ K_STEP = 1.07
 P_ROUND = tuple(ANCHOR_B * (K_STEP * MOD_CAP_FRACTION) ** n for n in range(3))   # 330.0, 377.817, 432.563
 C_ROUND = tuple(MOD_CAP_FRACTION * p for p in P_ROUND)                           # 353.1, 404.264, 462.842
 CAP_LEVEL = (12, 29, 46)       # level caps R1 / R2 / R3 (SP(L) = 0.8 x C / 1.07)
-LADDER_TARGET_R = {            # Variant C, kid1 .. boss
-    "street": (1.20, 1.16, 1.10, 1.07, 1.065, 1.058, 1.053),
-    "wangan": (1.18, 1.16, 1.11, 1.08, 1.06, 1.048, 1.040),
-    "touge":  (1.18, 1.16, 1.12, 1.085, 1.075, 1.070, 1.066),
+LADDER_TARGET_R = {            # Variant C structure, kid1 .. boss; refit to the live stand-in tracks (Austin 2026-11-14)
+    "street": (1.20, 1.159, 1.095, 1.071, 1.065, 1.058, 1.044),
+    "wangan": (1.18, 1.16, 1.11, 1.08, 1.06, 1.055, 1.055),    # oh2 lifted to the boss r so the ladder never steps up
+    "touge":  (1.182, 1.163, 1.132, 1.097, 1.079, 1.071, 1.071),
 }
-BOSS_TARGET_R = {"street": 1.053, "wangan": 1.040, "touge": 1.066}
-# Street S1 trade-off (RESULTS Variant C): no r gives both 80/80 88-92 % and 60/60 >= 30 % on Shibuya S1; 1.053 keeps
-# the 60/60 floor (S1 30.9 / 31.2) and puts 80/80 at 93.9 / 95.4 (Austin 2026-11-13: keep 1.053).
+BOSS_TARGET_R = {"street": 1.044, "wangan": 1.055, "touge": 1.071}
+# Bosses are tuned on the HARDEST live track of their district (Austin 2026-11-14; 15 stand-in tracks kept):
+# Street S1 Shibuya, Wangan W3 C1 Outer, Touge T3 Usui. At cap (N=3000/style, 60/60 | 60/80 | 80/60 | 80/80):
+# Street 1.044 S1 31.6 | 72.4 | 71.0 | 94.9; Wangan 1.055 W3 39.7 | 63.0 | 80.7 | 90.7; Touge 1.071 T3 31.9 | 69.2 | 70.2 | 93.5.
+BOSS_HARD_TRACK = {"street": "S1_Shibuya_Grid", "wangan": "W3_C1_Outer", "touge": "T3_Usui_Esses"}
+HARD_TRACK_TURNS = {"street": (30,), "wangan": (30,), "touge": (10, 20, 30)}   # where the hard cell is reported
+# Boss check band (econ-v1 criterion 9). The draft-track band was 80/80 88-92 % on the district/hard cell. Tuned on the
+# hardest track, the r that keeps 60/60 >= 30 % puts 80/80 at 93-95 % on S1 / T3, so the band is 90-95 % on the hardest
+# track (Austin 2026-11-14: "80/80 ~90-95%"); 60/60 floor stays 30 %.
+BOSS_BAND_8080 = (90.0, 95.0)
+BOSS_FLOOR_6060 = 30.0
 SCRIPTED_BUDGETS = {2: 218.2, 3: 224.3}                  # Prologue scripted races 2/3 (not in the econ-v1 walk)
 SABINE_BUDGET = 300.0                                    # Prologue scripted race 1 opponent (not in the econ-v1 walk)
 
@@ -403,17 +411,17 @@ BET_HOUSE_EDGE = 0.0
 BET_ELIGIBLE = "any"           # any race: story, grind/wild, pre-finale arc, finale
 BET_COUNT_CAP = None           # no cap on bets
 
-# ── Finale (fixed budgets; Variant C r; caps L63/76/95/114) ──
+# ── Finale (fixed budgets; r* tuned on the hardest track; caps L64/79/94/115, Austin 2026-11-14) ──
 FINALE = (("Myth #1", "Touge", 494.8), ("Myth #2", "Wangan", 566.3),
           ("Myth #3", "Street", 648.2), ("Summit", "Touge", 741.9))   # F1-F4 opponent budgets (fixed input)
 FINALE_OPPONENT = ("Myth Driver #1", "Myth Driver #2", "Myth Driver #3", "Sabine")   # F4 Summit vs Sabine (Austin 2026-11-13)
-FINALE_TARGET_R = (1.066, 1.040, 1.053, 1.066)
-FINALE_CAP_LEVEL = (63, 76, 95, 114)   # ceiling C = B x r; SP at the cap = 0.8 x C / 1.07
+FINALE_TARGET_R = (1.075, 1.058, 1.044, 1.075)   # F1/F4 T3, F2 W3, F3 S1; each is the r delivered at the integer cap
+FINALE_CAP_LEVEL = (64, 79, 94, 115)   # ceiling C = B x r; SP at the cap = 0.8 x C / 1.07 (climb ends L115, accepted 2026-11-14)
 FINALE_TURNS = 30
 FINALE_PURSE = 10800.0         # billed finale race purse (= R3 boss purse)
 FINALE_GRIND_PURSE = 742.5     # finale-era 10-turn grind (= R3 wild x 0.55)
 
-# ── Pre-finale arc (finale_arc_recommended.json; cast in design/notes/finale-arc-cast-v1.md) ──
+# ── Pre-finale arc (econ-v1 finale_arc_recommended.json shape; budgets refit in unapproved/barry/econ-v1-live-tracks/hardest.json; cast in design/notes/finale-arc-cast-v1.md) ──
 # Four story races before F1 (P1-P4, Touge crew trainers; P1 grants T4) and two between each billed step (M11/M12
 # before F2, M21/M22 before F3, M31/M32 before F4). Arc story races pay ARC_STORY_FILL x xp_share of the XP between
 # the step's entry cap and its finale cap. Grind in the arc is 10-turn wilds at ARC_GRIND_R. B = budget, r = design r.
@@ -421,16 +429,16 @@ ARC_STORY_FILL = 0.80
 ARC_GRIND_R = 1.12
 ARC_PURSE = {10: 2500.0, 20: 3375.0, 30: 5000.0}
 FINALE_ARC = (
-    # id,   place,    district, turns, r_design, xp_share, purse, B
+    # id,   place,    district, turns, r_design, xp_share, purse, B   (B recomputed 2026-11-14 for caps L64/79/94/115)
     ("P1",  "pre_F1", "touge",  10, 1.180, 0.18, 2500.0,  382.78),   # grants T4 (T4_UNLOCK_RACE)
-    ("P2",  "pre_F1", "touge",  20, 1.149, 0.24, 3375.0,  409.03),
-    ("P3",  "pre_F1", "touge",  20, 1.020, 0.26, 3375.0,  483.25),   # pre-F1 wall
-    ("P4",  "pre_F1", "touge",  30, 1.086, 0.32, 5000.0,  461.15),   # gate
-    ("M11", "F1_F2",  "wangan", 10, 1.180, 0.40, 2500.0,  438.11),
-    ("M12", "F1_F2",  "wangan", 20, 1.000, 0.60, 3375.0,  546.53),   # wall
-    ("M21", "F2_F3",  "street", 10, 1.180, 0.40, 2500.0,  485.77),
+    ("P2",  "pre_F1", "touge",  20, 1.149, 0.24, 3375.0,  412.29),
+    ("P3",  "pre_F1", "touge",  20, 1.025, 0.26, 3375.0,  480.89),   # pre-F1 wall
+    ("P4",  "pre_F1", "touge",  30, 1.086, 0.32, 5000.0,  464.83),   # gate
+    ("M11", "F1_F2",  "wangan", 10, 1.180, 0.40, 2500.0,  441.61),
+    ("M12", "F1_F2",  "wangan", 20, 1.000, 0.60, 3375.0,  555.28),   # wall
+    ("M21", "F2_F3",  "street", 10, 1.180, 0.40, 2500.0,  497.48),
     ("M22", "F2_F3",  "street", 20, 1.000, 0.60, 3375.0,  625.54),   # wall
-    ("M31", "F3_F4",  "touge",  10, 1.180, 0.40, 2500.0,  564.89),
+    ("M31", "F3_F4",  "touge",  10, 1.180, 0.40, 2500.0,  560.43),
     ("M32", "F3_F4",  "touge",  20, 1.020, 0.60, 3375.0,  713.17),   # wall
 )
 

@@ -1,6 +1,7 @@
 """econ-v1 progression (3-round ladder, Variant C, USD) reproduction tests.
 
-Pinned numbers are unapproved/barry/econ-v1 eval_final_C.json and RESULTS.md (Variant C), money x100 to USD."""
+Pinned numbers are unapproved/barry/econ-v1-live-tracks/hardest.json and RESULTS.md (live stand-in tracks, bosses on
+the hardest track per district, Austin 2026-11-14), money in USD."""
 import sys
 sys.path.insert(0, ".")
 from velocity_shift import equations as E, progression as P
@@ -11,7 +12,7 @@ def test_curves_and_caps():
     assert abs(E.xp_to_next(0) - 100.0) < 1e-12 and abs(E.xp_to_next(10) / E.xp_to_next(9) - 1.08) < 1e-12
     assert [round(c, 1) for c in E.C_ROUND] == [353.1, 404.3, 462.8]
     assert tuple(int(round(E.level_for_sp(c * E.SP_CAP_FRACTION / E.MOD_CAP_FRACTION))) for c in E.C_ROUND) == E.CAP_LEVEL
-    assert tuple(l for _, l in P.finale_caps()) == E.FINALE_CAP_LEVEL == (63, 76, 95, 114)
+    assert tuple(l for _, l in P.finale_caps()) == E.FINALE_CAP_LEVEL == (64, 79, 94, 115)
 
 
 def test_grind_taper():
@@ -23,18 +24,26 @@ def test_ladder_targets_at_cap():
     for x in P.ladder():
         rnd = x["rnd"] - 1
         assert abs(E.C_ROUND[rnd] / x["B"] - x["target_r"]) < 1e-12
-    assert {d: E.LADDER_TARGET_R[d][6] for d in E.LADDER_TARGET_R} == E.BOSS_TARGET_R == {"street": 1.053, "wangan": 1.040, "touge": 1.066}
+    assert {d: E.LADDER_TARGET_R[d][6] for d in E.LADDER_TARGET_R} == E.BOSS_TARGET_R == {"street": 1.044, "wangan": 1.055, "touge": 1.071}
+    for d, lad in E.LADDER_TARGET_R.items():
+        assert all(a >= b for a, b in zip(lad, lad[1:])), d                         # ladders never step up
 
 
-def test_variant_c_boss_win_rates():
-    """At-cap bosses reproduce RESULTS.md Variant C (exact grid points)."""
-    got = {x["district"]: x["wr"] for x in P.at_cap_table() if x["rung"] == "boss"}
-    assert got["Street"]["c6060"] == {"district": 38.8, "S1_CW": 30.9, "S1_CCW": 31.2}
-    assert got["Street"]["c8080"] == {"district": 96.3, "S1_CW": 93.9, "S1_CCW": 95.4}
-    assert got["Wangan"]["c6060"]["district"] == 36.4 and got["Wangan"]["c8080"]["district"] == 91.4
-    assert got["Touge"]["c6060"] == {"district": 37.4, "uphill": 33.7, "downhill": 41.0}
-    assert got["Touge"]["c8080"] == {"district": 90.8, "uphill": 89.6, "downhill": 91.9}
-    assert (got["Street"]["c6080"]["district"], got["Wangan"]["c8060"]["district"], got["Touge"]["c8060"]["uphill"]) == (76.5, 73.4, 66.4)
+def test_hardest_track_boss_win_rates():
+    """At-cap bosses and finale on the hardest live track (RESULTS.md round 2; N=3000/style point checks, F2 N=1500)."""
+    got = {(x["rnd"], x["district"]): x for x in P.at_cap_table() if x["rung"] == "boss" or x["rnd"] == "F"}
+    def row(key):
+        return tuple(got[key]["wr"][pr]["hard"] for pr in P.PROFILES)
+    assert row((1, "Street")) == (31.6, 72.4, 71.0, 94.9)                             # S1 Shibuya, r 1.044
+    assert row((2, "Wangan")) == (39.7, 63.0, 80.7, 90.7)                             # W3 C1 Outer, r 1.055
+    assert row((3, "Touge")) == (31.9, 69.2, 70.2, 93.5)                              # T3 Usui, r 1.071
+    fin = [x for x in P.at_cap_table() if x["rnd"] == "F"]
+    assert [tuple(x["wr"][pr]["hard"] for pr in ("c6060", "c8080")) for x in fin] == [(34.7, 94.7), (41.7, 92.5), (31.6, 94.9), (34.7, 94.7)]
+    for d in E.BOSS_TARGET_R:
+        assert P.boss_check(E.BOSS_TARGET_R[d], d)["ok"], d
+    for (_, d, _), r in zip(E.FINALE, E.FINALE_TARGET_R):
+        assert P.boss_check(r, d)["ok"], d
+    assert E.BOSS_BAND_8080 == (90.0, 95.0) and E.BOSS_FLOOR_6060 == 30.0
 
 
 def test_walks_reproduce_eval_final_c():
@@ -43,11 +52,11 @@ def test_walks_reproduce_eval_final_c():
     assert [w["L"] for w in mixed] == [12, 29, 46] and all(w["reached_cap"] for w in mixed)
     assert [round(w["money"], 2) for w in mixed] == [10600.0, 41190.0, 77100.0] and mixed[0]["debt"] == 0.0
     hard = P.run("hard")
-    assert [w["total_grind"] for w in hard] == [13, 16, 18] and [w["L"] for w in hard] == [12, 29, 46]
+    assert [w["total_grind"] for w in hard] == [12, 15, 18] and [w["L"] for w in hard] == [12, 29, 46]
     story = P.run("story")
     assert [w["L"] for w in story] == [8, 26, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
     worst = [min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story]
-    assert min(worst) >= 50.0                                                        # criterion 3
+    assert worst == [61.6, 54.1, 50.4] and min(worst) >= 50.0                         # criterion 3 (thin on R3 T3)
 
 
 def test_money_and_shop():
@@ -75,8 +84,9 @@ def test_finale_arc():
     assert [a["id"] for a in arc] == ["P1", "P2", "P3", "P4", "F1", "M11", "M12", "F2", "M21", "M22", "F3", "M31", "M32", "F4"]
     assert [a["id"] for a in arc if a["unlock_t4"]] == ["P1"]
     f4 = arc[-1]
-    assert f4["opponent"] == "Sabine" and f4["district"] == "touge" and f4["B"] == 741.9 and f4["cap"] == 114
-    assert abs(arc[0]["xp"] - 16754.5) < 0.1                                         # finale_arc_recommended.json P1
+    assert f4["opponent"] == "Sabine" and f4["district"] == "touge" and f4["B"] == 741.9 and f4["cap"] == 115
+    assert abs(arc[0]["xp"] - 18591.3) < 0.1                                         # P1 share of the L46-L64 gap
+    assert [a["B"] for a in arc if not a["billed"]] == [382.78, 412.29, 480.89, 464.83, 441.61, 555.28, 497.48, 625.54, 560.43, 713.17]
 
 
 def test_order_is_fixed():
