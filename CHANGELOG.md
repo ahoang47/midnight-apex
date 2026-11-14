@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-14 — Barry [design]: design/02 and design/07 follow the live-track recalibration (`6d3641f`)
+
+- **Why:** Austin, 2026-11-14: "Update all and give me a summary of what a player can expect through the course of the game."
+- **What:** `design/02-equations-reference.md` and `design/07-economy-and-mods.md` now name the live oracle `sim/config/winrate_g2_live_tracks_v1.json` (15 stand-in tracks; the draft-track table is kept but unread), cite finale caps `FINALE_CAP_LEVEL` 64 / 79 / 94 / 115, and describe hardest-track boss tuning (`BOSS_HARD_TRACK`, `HARD_TRACK_TURNS`, `BOSS_BAND_8080` 90-95, `BOSS_FLOOR_6060` 30, `progression.boss_check()`) and the recomputed `FINALE_ARC` budgets by constant name rather than copying values.
+- **Not changed:** Desmond's USD money wording, the design/01 canon block, design/art.
+
+---
+
 ## 2026-11-14 — Barry [sim]: econ-v1 recalibrated to the 15 live stand-in tracks, bosses tuned on the hardest track per district (Austin approval 2026-11-14)
 
 - **Why:** Austin, 2026-11-13: "Keep the current stand-in tracks and recalibrate econ-v1 to them" (touge-lines-v1 draft tracks stay unapproved). Then, 2026-11-14: tune every boss to the **hardest** live track in its district; accept the finale cap L115 and a 60/60 pre-F1 grind of 11; keep the Wangan boss at r = 1.055; "make it live, commit and push".
