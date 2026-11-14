@@ -1,6 +1,6 @@
 # Pre-finale arc: who the 10 races are (draft v1.3, Desmond, 2026-11-13)
 
-**Status:** unapproved proposal for Austin. It answers Barry's econ-v1 brief. This recast follows Austin's direction as relayed by Barry: "we should have it be the recurring characters from the crews. They'd hear about it, respect what the PC is doing, and offer to train him." It replaces v1's plan for six new one-scene characters. Race shape and numbers are unchanged (Barry's `finale_arc_recommended.json`). Design canon is at proto-build 43eb7b4.
+**Status:** approved by Austin 2026-11-13 ("Training arc sounds fine."), folded into canon at 68a1ecb. Canon in design/01 wins over this note.
 
 ## The idea
 
