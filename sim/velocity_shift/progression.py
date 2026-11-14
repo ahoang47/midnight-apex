@@ -15,6 +15,11 @@ Rules (all constants in equations.py):
     DEBT_SHARE of every purse pays the DEBT_AMOUNT debt while it is open. The walk banks cash and buys nothing
     (as evaluate.py does); the shop / betting / T4 Monte Carlo stays in unapproved/barry/econ-v1 (run_betting_levers.py,
     run_finale_arc.py).
+  * Skill points (skill-points-v1, Austin 2026-11-14): whole points at 10x (E.skill_points), each stat 25-50 % of the
+    points spent (E.check_build), spent points lock, new points free, and at each district change at most
+    E.RETUNE_BUDGET_FRACTION (20 %) of the spent points move (E.check_retune). The walk's player places new points
+    greedily toward E.DISTRICT_TUNE (add_points) and spends the full budget toward it (retune). Win rates at a split
+    off the district tune add the delta from config/winrate_offtune_v1.json (POW share p, HAN 25 %).
   * Walk policies: "story" never grinds (80/80 criterion); "mixed" grinds once at the first rung where 60/80 or 80/60
     is < 50 % (hard cell for 20/30-turn races) until both clear, then grinds to the cap before the boss; "hard"
     (60/60) grinds at every rung where 60/60 is < 50 %, then to the cap before the boss.
@@ -36,6 +41,8 @@ from . import equations as E
 PROFILES = ("c6060", "c6080", "c8060", "c8080")
 _TABLE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_g2_live_tracks_v1.json")
 _TABLE = None
+_OFF_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_offtune_v1.json")
+_OFF = None
 
 
 def _table():
@@ -60,24 +67,79 @@ def _track_win(profile, r, turns, track):
     return w0 + (w1 - w0) * (r - r0) / (r1 - r0)
 
 
+def _off():
+    global _OFF
+    if _OFF is None:
+        with open(_OFF_PATH) as fh:
+            _OFF = json.load(fh)
+        _OFF["_rs"] = [float(x) for x in _OFF["rs"]]
+        _OFF["_ps"] = [float(x) for x in _OFF["ps"]]
+    return _OFF
+
+
+def _span(xs, x):
+    if x <= xs[0]:
+        return 0, 0, 0.0
+    if x >= xs[-1]:
+        return len(xs) - 1, len(xs) - 1, 0.0
+    i = bisect_left(xs, x)
+    if abs(xs[i] - x) < 1e-12:
+        return i, i, 0.0
+    return i - 1, i, (x - xs[i - 1]) / (xs[i] - xs[i - 1])
+
+
+def _off_win(profile, r, turns, track, p):
+    """Sweep win % at POW share p (bilinear in r and p, flat outside the grid)."""
+    t = _off(); cell = t["win"][profile][str(int(turns))][track]; rs, ps = t["_rs"], t["_ps"]
+    i0, i1, fr = _span(rs, r); j0, j1, fp = _span(ps, p)
+    g = lambda i, j: cell[f"{rs[i]:.3f}"][f"{ps[j]:.3f}"]
+    lo = g(i0, j0) * (1 - fp) + g(i0, j1) * fp
+    hi = g(i1, j0) * (1 - fp) + g(i1, j1) * fp
+    return lo * (1 - fr) + hi * fr
+
+
+_TRACK_DISTRICT = None
+
+
+def _district_of(track):
+    global _TRACK_DISTRICT
+    if _TRACK_DISTRICT is None:
+        _TRACK_DISTRICT = {n: d for d, n in _table()["tracks"]}
+    return _TRACK_DISTRICT[track]
+
+
+def track_win(profile, r, turns, track, pow_share=None):
+    """Win % on one track; at a POW share off the district tune, adds the off-tune delta (clamped to 0-100)."""
+    w = _track_win(profile, r, turns, track)
+    if pow_share is None:
+        return w
+    p0 = E.DISTRICT_TUNE[_district_of(track)][0]
+    if abs(pow_share - p0) < 1e-12:
+        return w
+    w += _off_win(profile, r, turns, track, pow_share) - _off_win(profile, r, turns, track, p0)
+    return min(100.0, max(0.0, w))
+
+
 def tracks(district: str):
     return [n for d, n in _table()["tracks"] if d == district.lower()]
 
 
-def win_rate(profile: str, r: float, turns: int, district: str | None = None, track: str | None = None) -> float:
+def win_rate(profile: str, r: float, turns: int, district: str | None = None, track: str | None = None,
+             pow_share: float | None = None) -> float:
     """Win rate (%) for a profile (c6060 / c6080 / c8060 / c8080) at stat ratio r, race length 10/20/30, averaged
-    over a district's 5 live tracks (or one track). Linear in r between sweep points."""
+    over a district's 5 live tracks (or one track). Linear in r between sweep points. pow_share = the build's POW
+    share (HAN 25 %); None = the district tune."""
     names = [track] if track else tracks(district)
-    return sum(_track_win(profile, r, turns, n) for n in names) / len(names)
+    return sum(track_win(profile, r, turns, n, pow_share) for n in names) / len(names)
 
 
-def win_pack(profile: str, r: float, turns: int, district: str) -> dict:
+def win_pack(profile: str, r: float, turns: int, district: str, pow_share: float | None = None) -> dict:
     """{"district": %} plus {"hard": %} on the district's hardest track where it applies
     (E.HARD_TRACK_TURNS: Touge every length, Street / Wangan 30-turn), each rounded to 0.1."""
     d = district.lower()
-    out = {"district": round(win_rate(profile, r, turns, d), 1)}
+    out = {"district": round(win_rate(profile, r, turns, d, pow_share=pow_share), 1)}
     if int(turns) in E.HARD_TRACK_TURNS[d]:
-        out["hard"] = round(win_rate(profile, r, turns, track=E.BOSS_HARD_TRACK[d]), 1)
+        out["hard"] = round(win_rate(profile, r, turns, track=E.BOSS_HARD_TRACK[d], pow_share=pow_share), 1)
     return out
 
 
@@ -86,10 +148,12 @@ def hard_win(pack: dict) -> float:
     return pack.get("hard", pack["district"])
 
 
-def boss_check(r: float, district: str) -> dict:
-    """Criterion 9 on the hardest track at cap: 60/60 >= E.BOSS_FLOOR_6060 and 80/80 inside E.BOSS_BAND_8080."""
-    w60 = win_rate("c6060", r, 30, track=E.BOSS_HARD_TRACK[district.lower()])
-    w80 = win_rate("c8080", r, 30, track=E.BOSS_HARD_TRACK[district.lower()])
+def boss_check(r: float, district: str, pow_share: float | None = None, pow_share_6060: float | None = None) -> dict:
+    """Criterion 9 on the hardest track at cap: 60/60 >= E.BOSS_FLOOR_6060 and 80/80 inside E.BOSS_BAND_8080.
+    pow_share (80/80) and pow_share_6060 (60/60, defaults to pow_share): the build's POW share; None = the tune."""
+    p60 = pow_share if pow_share_6060 is None else pow_share_6060
+    w60 = win_rate("c6060", r, 30, track=E.BOSS_HARD_TRACK[district.lower()], pow_share=p60)
+    w80 = win_rate("c8080", r, 30, track=E.BOSS_HARD_TRACK[district.lower()], pow_share=pow_share)
     lo, hi = E.BOSS_BAND_8080
     return dict(r=r, c6060=round(w60, 1), c8080=round(w80, 1), ok=w60 >= E.BOSS_FLOOR_6060 and lo <= w80 <= hi)
 
@@ -174,9 +238,77 @@ def t4_package_price() -> float:
     return E.T4_PACKAGE["regular"] * E.mod_price("T4") + E.T4_PACKAGE["aero"] * E.mod_price("T4", aero=True)
 
 
-def _walk_round(rnd, enter_level, enter_bag, money, debt, mode):
+# ── Skill-point build (skill-points-v1) ───────────────────────────────
+def start_build() -> tuple[int, int, int]:
+    """L0 build: the Street tune exactly (1200 / 600 / 600 of 2400)."""
+    T = E.skill_points(0); a = (int(T * E.DISTRICT_TUNE["street"][0]), int(T * E.DISTRICT_TUNE["street"][1]))
+    return E.check_build((a[0], a[1], T - a[0] - a[1]))
+
+
+def add_points(alloc, n: int, district: str) -> tuple[int, int, int]:
+    """Sim player: place n new points greedily toward E.DISTRICT_TUNE[district] inside the 25-50 % band
+    (band floors first, then the largest deficit). Spent points are not moved."""
+    a = list(alloc); T = sum(a) + n; tune = E.DISTRICT_TUNE[district]; tgt = [s * T for s in tune]
+    lo, hi = E.stat_band(T)
+    for i in range(3):
+        g = min(max(0, lo - a[i]), n); a[i] += g; n -= g
+    while n > 0:
+        cand = [i for i in range(3) if a[i] < hi]
+        i = max(cand, key=lambda k: tgt[k] - a[k])
+        if tgt[i] - a[i] < 1:                     # every stat at target: spread the rest by the tune shares
+            for k in range(3):
+                g = min(n, int(round(tune[k] * n)) if k < 2 else n, hi - a[k]); a[k] += g; n -= g
+            if n > 0:
+                k = min(range(3), key=lambda k: a[k] / T); a[k] += n; n = 0
+            break
+        step = max(1, min(n, int(tgt[i] - a[i]), hi - a[i])); a[i] += step; n -= step
+    return E.check_build(a)
+
+
+def retune(alloc, district: str, fraction: float = E.RETUNE_BUDGET_FRACTION) -> tuple[int, int, int]:
+    """Sim player at a district change: move up to E.retune_budget(spent) points from surplus to deficit stats toward
+    E.DISTRICT_TUNE[district], inside the band."""
+    a = list(alloc); T = sum(a); budget = E.retune_budget(T, fraction); lo, hi = E.stat_band(T)
+    tgt = [s * T for s in E.DISTRICT_TUNE[district]]
+    while budget > 0:
+        sur = [i for i in range(3) if a[i] - tgt[i] >= 1 and a[i] > lo]
+        dfc = [i for i in range(3) if tgt[i] - a[i] >= 1 and a[i] < hi]
+        if not sur or not dfc:
+            break
+        i = max(sur, key=lambda k: a[k] - tgt[k]); j = max(dfc, key=lambda k: tgt[k] - a[k])
+        m = min(budget, int(a[i] - tgt[i]), int(tgt[j] - a[j]), a[i] - lo, hi - a[j])
+        if m <= 0:
+            break
+        a[i] -= m; a[j] += m; budget -= m
+    return E.check_retune(alloc, a, fraction)
+
+
+class Build:
+    """A district segment of the build: the allocation entering the segment at `level`; at(L) adds the points
+    earned since then with add_points."""
+
+    def __init__(self, district: str, alloc, level: int):
+        self.district, self.alloc, self.level = district, E.check_build(alloc), int(level); self._memo = {}
+
+    def at(self, level: int) -> tuple[int, int, int]:
+        L = int(level)
+        if L <= self.level:
+            return self.alloc
+        if L not in self._memo:
+            self._memo[L] = add_points(self.alloc, E.skill_points(L) - E.skill_points(self.level), self.district)
+        return self._memo[L]
+
+    def pow_share(self, level: int) -> float:
+        a = self.at(level); return a[0] / sum(a)
+
+
+def _walk_round(rnd, enter_level, enter_bag, money, debt, mode, build: Build | None = None):
     d = E.ROUND_DISTRICTS[rnd].lower(); cap = E.CAP_LEVEL[rnd]
     L, bag = enter_level, enter_bag
+    if build is None:
+        build = Build(d, add_points(start_build(), E.skill_points(L) - E.skill_points(0), d), L) if L > 0 \
+            else Build(d, start_build(), 0)
+    ps = build.pow_share
     rows = []; wall_done = False; total = wall = post = 0; wall_name = None
 
     def credit(kind, grind):
@@ -194,9 +326,9 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode):
                 break
             L, bag = apply_xp(L, E.grind_xp(L, cap), bag, cap); credit("kid", True); total += 1
 
-    def ok(profiles, r, T):
+    def ok(profiles, r, T, lvl):
         for pr in profiles:
-            pk = win_pack(pr, r, T, d)
+            pk = win_pack(pr, r, T, d, ps(lvl))
             if pk["district"] < E.CLEAR_THRESHOLD or (T >= 20 and hard_win(pk) < E.CLEAR_THRESHOLD):
                 return False
         return True
@@ -205,7 +337,7 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode):
         Lt, bt = L, bag; n = 0
         while n < 80:
             Lt, bt = apply_xp(Lt, E.grind_xp(Lt, cap), bt, cap); n += 1
-            if ok(profiles, combat_power(Lt, rnd) / B, T) or Lt >= cap:
+            if ok(profiles, combat_power(Lt, rnd) / B, T, Lt) or Lt >= cap:
                 break
         return n
 
@@ -217,10 +349,10 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode):
                 post += pre_boss
         r = combat_power(L, rnd) / B
         if name != "boss" and L < cap:
-            if mode == "mixed" and not wall_done and not ok(("c6080", "c8060"), r, T):
+            if mode == "mixed" and not wall_done and not ok(("c6080", "c8060"), r, T, L):
                 here = grind_until(("c6080", "c8060"), B, T); do_grind(here)
                 wall = here; wall_name = name; wall_done = True
-            elif mode == "hard" and not ok(("c6060",), r, T):
+            elif mode == "hard" and not ok(("c6060",), r, T, L):
                 here = grind_until(("c6060",), B, T); do_grind(here)
                 if wall_name is None:
                     wall_name = name; wall += here
@@ -228,18 +360,19 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode):
                     post += here
             r = combat_power(L, rnd) / B
         arrive_L = L
-        packs = {pr: win_pack(pr, r, T, d) for pr in PROFILES}
+        packs = {pr: win_pack(pr, r, T, d, ps(arrive_L)) for pr in PROFILES}
         credit(E.LADDER_RUNG_KIND[j], False)
         L, bag = apply_xp(L, E.story_xp(rnd, j, enter_level, cap), bag, cap)
         r_grind = combat_power(arrive_L, rnd) / E.opponent_budget(rnd, 0)
         rows.append(dict(rnd=rnd + 1, district=E.ROUND_DISTRICTS[rnd], rung=name, turns=T, B=round(B, 2),
                          target_r=E.LADDER_TARGET_R[d][j], arrive_L=arrive_L, arrive_r=round(r, 4), wr=packs,
+                         build=build.at(arrive_L), pow_share=round(100 * ps(arrive_L), 1),
                          grind_here=here, pre_boss_grind=pre_boss,
-                         grind10={pr: round(win_rate(pr, r_grind, E.GRIND_TURNS, d), 1) for pr in PROFILES},
+                         grind10={pr: round(win_rate(pr, r_grind, E.GRIND_TURNS, d, pow_share=ps(arrive_L)), 1) for pr in PROFILES},
                          L_after=L, money=round(money, 2), debt=round(max(debt, 0.0), 2),
                          unlocks=unlocks_after(rnd + 1) if j == 6 else []))
     return dict(rows=rows, L=L, bag=bag, money=money, debt=max(debt, 0.0), total_grind=total, wall_grind=wall,
-                wall=wall_name, post_wall_to_cap=post, cap=cap, reached_cap=L >= cap)
+                wall=wall_name, post_wall_to_cap=post, cap=cap, reached_cap=L >= cap, build=build.at(L))
 
 
 def run(mode: str = "mixed", order=None):
@@ -249,12 +382,39 @@ def run(mode: str = "mixed", order=None):
         raise ValueError(mode)
     check_order(order or E.DEFAULT_CREW_ORDER)
     L, bag, money, debt = 0, 0.0, 0.0, E.DEBT_AMOUNT; out = []
+    alloc = start_build()
     for rnd in range(3):
+        d = E.ROUND_DISTRICTS[rnd].lower()
         if rnd > 0:
-            L, bag = E.CAP_LEVEL[rnd - 1], 0.0
-        w = _walk_round(rnd, L, bag, money, debt, mode); out.append(w)
-        L, bag, money, debt = w["L"], w["bag"], w["money"], w["debt"]
+            alloc = retune(alloc, d)                       # district change: at most 20 % of spent points move
+            end_L, L, bag = L, E.CAP_LEVEL[rnd - 1], 0.0
+            alloc = add_points(alloc, E.skill_points(L) - E.skill_points(end_L), d)   # points up to the entry cap are new
+        w = _walk_round(rnd, L, bag, money, debt, mode, Build(d, alloc, L)); out.append(w)
+        L, bag, money, debt = w["L"], w["bag"], w["money"], w["debt"]; alloc = w["build"]
     return out
+
+
+def cap_builds():
+    """Build entering each round and its POW share at the level cap, for a player who reaches every cap (mixed / hard
+    walks grind to the cap before each boss). Returns [Build] for R1-R3."""
+    out, L, alloc = [], 0, start_build()
+    for rnd in range(3):
+        d = E.ROUND_DISTRICTS[rnd].lower()
+        if rnd > 0:
+            alloc = retune(alloc, d); end_L, L = L, E.CAP_LEVEL[rnd - 1]
+            alloc = add_points(alloc, E.skill_points(L) - E.skill_points(end_L), d)
+        b = Build(d, alloc, L); out.append(b); L = E.CAP_LEVEL[rnd]; alloc = b.at(L)
+    return out
+
+
+def boss_check_at_cap():
+    """Criterion 9 per round at the level cap with the retune-limited build (the mixed and hard walks both reach the
+    cap before the boss, so 60/60 and 80/80 share the cap build)."""
+    rows = []
+    for rnd, (d, b) in enumerate(zip(E.ROUND_DISTRICTS, cap_builds())):
+        cap = E.CAP_LEVEL[rnd]; r = round(combat_power(cap, rnd) / E.opponent_budget(rnd, 6), 4); p = b.pow_share(cap)
+        rows.append(dict(rnd=rnd + 1, district=d, pow_share=round(100 * p, 1), build=b.at(cap), **boss_check(r, d, p)))
+    return rows
 
 
 def at_cap_table():

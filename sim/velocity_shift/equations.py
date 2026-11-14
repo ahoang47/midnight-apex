@@ -293,8 +293,24 @@ PACE_RES_K = 2.0
 PACE_RES_LOOK = 0.5
 PACE_LOOKAHEAD = 3
 
-BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total
+BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total (enforced: check_build)
 BUILD_STAT_MAX_SHARE = 0.50
+
+# ── Skill points (skill-points-v1, Austin 2026-11-14: "Great. Commit and push.") ──
+# Source study: unapproved/barry/skill-points-v1/ (RESULTS.md, RETUNE.md). Whole points at 10x resolution: the player
+# holds skill_points(L) = round(SP_POINT_SCALE x SP(L)) points (2400 at L0; 19 per level at the start, 48 at L114).
+# Points are spent on POW / HAN / EN; each stat must stay inside the 25–50 % band of the points spent. Spent points
+# lock. Newly earned points are free to place (inside the band). At each district change (R1->R2, R2->R3, and before
+# the arc races in RETUNE_ARC_RACES) the player may move at most floor(RETUNE_BUDGET_FRACTION x spent points); no other
+# retuning. The sim player places new points greedily toward DISTRICT_TUNE and spends the full retune budget toward it.
+SP_POINT_SCALE = 10
+RETUNE_BUDGET_FRACTION = 0.20
+RETUNE_ARC_RACES = ("P1", "M11", "M21", "M31")
+DISTRICT_TUNE = {               # POW, HAN, EN shares: the screened district tune (run_tune_screen.py, 25–50 % bands)
+    "street": (0.50, 0.25, 0.25),
+    "wangan": (0.25, 0.25, 0.50),
+    "touge":  (0.45, 0.25, 0.30),
+}
 
 # ── Stat caps, mods ──
 SP_CAP_FRACTION = 0.80         # skill points are 80 % of the player's stat total: P = SP / SP_CAP_FRACTION
@@ -757,13 +773,62 @@ _STANCE_INDEX = {Stance.POW: 0, Stance.HAN: 1, Stance.EN: 2}
 _INDEX_STANCE = (Stance.POW, Stance.HAN, Stance.EN)
 
 
-def sp_at_level(level: float) -> float:
-    """SP(L): total skill points at level L, SP_START x SP_GROWTH_PER_12_LEVELS ** (L / 12)."""
+def sp_curve(level: float) -> float:
+    """Continuous SP curve: SP_START x SP_GROWTH_PER_12_LEVELS ** (L / 12)."""
     return SP_START * SP_GROWTH_PER_12_LEVELS ** (level / 12.0)
 
 
+def skill_points(level: int) -> int:
+    """Whole skill points held at integer level L: round(SP_POINT_SCALE x SP(L)) (2400 at L0)."""
+    return int(round(SP_POINT_SCALE * sp_curve(int(level))))
+
+
+def skill_points_gained(level: int) -> int:
+    """Whole points granted on reaching level L (19 at L1, 48 at L114)."""
+    return skill_points(level) - skill_points(level - 1) if level > 0 else skill_points(0)
+
+
+def sp_at_level(level: float) -> float:
+    """SP(L) in SP units: whole points / SP_POINT_SCALE at integer levels, the continuous curve between them."""
+    if float(level).is_integer() and level >= 0:
+        return skill_points(int(level)) / SP_POINT_SCALE
+    return sp_curve(level)
+
+
+def stat_band(total: int) -> tuple[int, int]:
+    """Whole-point band of one stat for `total` spent points: ceil(25 %) .. floor(50 %)."""
+    return (math.ceil(BUILD_STAT_MIN_SHARE * total - 1e-9), math.floor(BUILD_STAT_MAX_SHARE * total + 1e-9))
+
+
+def check_build(alloc) -> tuple[int, int, int]:
+    """Validate a (POW, HAN, EN) whole-point allocation against the 25–50 % band; returns it as a tuple."""
+    a = tuple(int(x) for x in alloc)
+    if len(a) != 3 or any(x < 0 for x in a) or any(x != y for x, y in zip(a, alloc)):
+        raise ValueError(f"build {alloc!r} must be three whole, non-negative point counts")
+    lo, hi = stat_band(sum(a))
+    if any(x < lo or x > hi for x in a):
+        raise ValueError(f"build {a} breaks the {BUILD_STAT_MIN_SHARE:.0%}-{BUILD_STAT_MAX_SHARE:.0%} band ({lo}-{hi} of {sum(a)})")
+    return a
+
+
+def retune_budget(spent: int, fraction: float = RETUNE_BUDGET_FRACTION) -> int:
+    """Points the player may move at a district change: floor(fraction x spent)."""
+    return int(math.floor(fraction * spent + 1e-9))
+
+
+def check_retune(before, after, fraction: float = RETUNE_BUDGET_FRACTION) -> tuple[int, int, int]:
+    """Validate a district-change retune: same total, inside the band, at most retune_budget(total) points moved."""
+    b, a = check_build(before), check_build(after)
+    if sum(a) != sum(b):
+        raise ValueError("a retune moves spent points; it cannot add or remove points")
+    moved = sum(max(0, x - y) for x, y in zip(a, b))
+    if moved > retune_budget(sum(b), fraction):
+        raise ValueError(f"retune moves {moved} points; the budget is {retune_budget(sum(b), fraction)}")
+    return a
+
+
 def level_for_sp(sp: float) -> float:
-    """Inverse of sp_at_level (fractional level)."""
+    """Inverse of the continuous SP curve (fractional level)."""
     return 12.0 * math.log(sp / SP_START) / math.log(SP_GROWTH_PER_12_LEVELS)
 
 

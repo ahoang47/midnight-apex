@@ -8,7 +8,7 @@ from velocity_shift import equations as E, progression as P
 
 
 def test_curves_and_caps():
-    assert abs(E.sp_at_level(12) - E.SP_START * 1.1) < 1e-9          # SP(L) = 240 x 1.1^(L/12)
+    assert abs(E.sp_at_level(12) - E.SP_START * 1.1) < 1e-9          # SP(L) = 240 x 1.1^(L/12) (whole points / 10)
     assert abs(E.xp_to_next(0) - 100.0) < 1e-12 and abs(E.xp_to_next(10) / E.xp_to_next(9) - 1.08) < 1e-12
     assert [round(c, 1) for c in E.C_ROUND] == [353.1, 404.3, 462.8]
     assert tuple(int(round(E.level_for_sp(c * E.SP_CAP_FRACTION / E.MOD_CAP_FRACTION))) for c in E.C_ROUND) == E.CAP_LEVEL
@@ -56,11 +56,14 @@ def test_walks_reproduce_eval_final_c():
     story = P.run("story")
     assert [w["L"] for w in story] == [7, 25, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
     worst = [min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story]
-    assert worst == [53.0, 54.1, 50.4] and min(worst) >= 50.0                         # criterion 3 (thin on R3 T3)
+    assert worst == [53.0, 54.4, 50.5] and min(worst) >= 50.0                         # criterion 3 (thin on R3 T3)
     # Austin 2026-11-14 campaign story-XP cut (STORY_XP_MULT): 80/80 story-only meets each boss one level lower
     boss = [(w["rows"][-1]["arrive_L"], P.hard_win(w["rows"][-1]["wr"]["c8080"])) for w in story]
-    assert boss == [(6, 53.0), (23, 57.7), (41, 55.7)]
-    assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.6, 39.3, 30.6]   # 60/60 at cap unchanged
+    assert boss == [(6, 53.0), (23, 57.7), (41, 55.8)]
+    # skill-points-v1 (Austin 2026-11-14): whole points, 25-50 % band, 20 % retune budget; R2 arrives off the Wangan tune
+    assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.6, 40.1, 30.3]
+    assert [w["build"] for w in mixed] == [(1320, 660, 660), (792, 756, 1474), (1556, 865, 1037)]
+    assert [w["rows"][0]["pow_share"] for w in mixed] == [50.0, 30.0, 45.0]           # entry POW share R1 / R2 / R3
 
 
 def test_story_xp_mult_campaign_only():

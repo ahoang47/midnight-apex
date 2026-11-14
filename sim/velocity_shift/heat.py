@@ -141,7 +141,10 @@ class HeatGauges:
     def __init__(self, shares: Sequence[float], r: float, wear: Sequence[float],
                  cap_turns: float = HEAT_CAP_TURNS, recovery: float = HEAT_RECOVERY,
                  release: float = HEAT_RELEASE, lock_on_passive: bool = True):
-        self.cap, self.rec = heat_capacity(tuple(shares), r, avg_heat_demand(), cap_turns, recovery)
+        cap, self.rec = heat_capacity(tuple(shares), r, avg_heat_demand(), cap_turns, recovery)
+        # A zero stat gives a zero capacity; floor it so overrun_if / fill / least_loaded never divide by zero
+        # (skill-points-v1: the 25-50 % band rules zero stats out in play, but the engine accepts any split).
+        self.cap = type(cap)(max(c, _EPS) for c in cap)
         self.release = release
         self.lock_on_passive = lock_on_passive
         self.wear = tuple(wear)

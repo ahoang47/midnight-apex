@@ -8,6 +8,26 @@
 
 ---
 
+## 2026-11-14 — Barry [sim]: whole skill points (10×), enforced 25–50 % band, 20 % retune limit live
+
+- **Why:** Austin approved skill-points-v1 on 2026-11-14 ("Great. Commit and push."). Players get distributable whole points, every stat stays inside the 25–50 % band, spent points lock, and the only retune is a 20 % budget at each district change. That closes the free-respec assumption the win table used to make, and the all-in build exploit.
+- **What:**
+  - `sim/velocity_shift/equations.py` adds the constants `SP_POINT_SCALE` 10, `RETUNE_BUDGET_FRACTION` 0.20, `RETUNE_ARC_RACES` (P1, M11, M21, M31) and `DISTRICT_TUNE`.
+  - It adds the functions `skill_points(L)` (round(10 × SP(L)): 2,400 at L0, 19 to 48 per level), `skill_points_gained`, `sp_curve`, `stat_band`, `check_build`, `retune_budget` and `check_retune`.
+  - `sp_at_level` now returns whole points / 10 at whole levels.
+  - `progression.py` adds the sim player's build (`start_build`, `add_points`, `retune`, `Build`), applied between rounds in `run()`. Win rates take `pow_share`, with off-tune deltas from the new `sim/config/winrate_offtune_v1.json` (the study's rt1 sweep).
+  - Also new in `progression.py`: `cap_builds`, `boss_check_at_cap`, and `build` / `pow_share` in the walk rows.
+  - `heat.py` floors each gauge capacity at `_EPS`, so an exact zero stat no longer divides by zero.
+  - Tests: new `tests/test_skill_points.py`; updated pins in `tests/test_progression.py`.
+  - Docs: `design/02` (build-bounds, skill-point, level-curve and respec rows) and `design/07` (§6.3 respec notes marked superseded for skill points, a §8.0 bullet, Q18). No money wording changed.
+- **Numbers (live, matching the draft at B = 20 %):**
+  - 80/80 story-only bosses 53.0 / 57.7 / 55.8, story minimum 53.0 / 54.4 / 50.5.
+  - Grinds unchanged: mixed 3+10 / 3+10 / 4+8, 60/60 13 / 15 / 18.
+  - At cap, hardest track: 60/60 31.6 / 40.1 / 30.2 and 80/80 94.9 / 91.6 / 92.9. R2 reaches the boss at 26.2 % POW instead of 25 %.
+  - Finale (draft arc walker on the live build code): 80/80 billed 81.7 / 82.7 / 78.6 / 81.7, 60/60 F3 30.3; arc grinds unchanged.
+  - Previous at-cap 60/60 pins (31.6 / 39.3 / 30.6) and 80/80 (55.7 on R3) changed by noise-level amounts because of the off-tune delta and the integer points.
+- **Not changed:** the at-cap table (`at_cap_table`) still reports the district tune. Aero tunnel retunes (Q18) are still open. The pre-finale arc win walk still lives in the draft econ-v1 walker.
+
 ## 2026-11-14 — Barry [sim]: skill-points-v1 study and retune-limit draft (`unapproved/barry/skill-points-v1/`)
 
 - **Why:** Austin asked for whole skill points that give the player real options, not one point per level. He picked 10× resolution ("sounds good.") with a hard retune limit instead of a full respec, then approved the package ("Great. Commit and push.").
