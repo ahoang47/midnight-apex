@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-11-14 — Barry [barry]: story-xp-v1 draft (story-XP cut for 80/80 story-only, ~55% bosses); campaign cut chosen
+
+- **Why:** Austin asked for a sim of cutting story-race XP so an 80/80 story-only (no grind) player wins bosses on the hardest track about 55% of the time (was 61.6 / 67.2 / 64.6).
+- **What:** `unapproved/barry/story-xp-v1/`. Per-round sweeps on the live 6d3641f walk (`camp.py`, `sweep.py`, `cands.py`) and the arc/finale walk on the live table (`arc.py`, `arc_fit.py`, `arc_fit2.py`). `RESULTS.md` has all the numbers.
+- **Learned:** a flat cut breaks the 50% story-race floor (R2 ×0.925 drops oh1 to 45.0), so the cut goes on late rungs. A flat arc cut drops 80/80 to 20% at M12. Shifting arc XP keeps 80/80's arc races but costs mixed 11-13 grinds per finale step.
+- **Decision (Austin 2026-11-14, `DECISION.md`):** campaign cut only (`C_rec`). Finale settings rejected because the finale is the narrative conclusion and its pacing must not change.
+
+---
+
 ## 2026-11-14 — Arthur [art]: Cel A ported onto the two-corner test + quick playtest (unapproved experiment)
 
 - **Why:** Austin, 2026-11-14: "I like Cel A. Are you able to apply this to the two corner test and do a quick playtest?"
