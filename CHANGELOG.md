@@ -8,6 +8,18 @@
 
 ---
 
+## 2026-11-14 — Barry [sim]: skill-points-v1 study and retune-limit draft (`unapproved/barry/skill-points-v1/`)
+
+- **Why:** Austin asked for whole skill points that give the player real options, not one point per level. He picked 10× resolution ("sounds good.") with a hard retune limit instead of a full respec, then approved the package ("Great. Commit and push.").
+- **What:** draft folder only (the live change is the next entry).
+  - `schemes.py` / `balance.py`: whole-point schemes. S3 ×10 (19–48 points per level) reproduces the live campaign and finale within 0.5 pp. S1 (2–5 per level) breaks the R3 oh1 floor.
+  - `builds*.py`: engine tests of skewed and all-in builds. All-in builds (80–90 %+ in one stat) win about 100 % even for 60/60 (an exploit), so the 25–50 % band has to be enforced. An exact zero stat crashed `heat.py`.
+  - `retune_sweep.py`: off-tune win-rate sweep (POW 25–50 %, HAN 25 %, all 15 tracks, N=150/style, common random numbers; replicate rt2 gives delta noise of about 2 pp).
+  - `retune.py`: walker for retune budgets B = 0 / 5 / 10 / 15 / 20 %.
+  - `RESULTS.md`, `RETUNE.md`, `DECISION.md`.
+- **Result:** 20 % is the smallest budget that keeps every target. 15 % drops the F3 billed finale for 60/60 to 28–29 %. 10 % fails the R2 story minimum (48.0) and the R2 at-cap boss (60/60 26.2, 80/80 86.3). 0 % (locked) puts the R2 boss at 35.8 for an 80/80 story player.
+- **Reasoning:** players must change districts every round, so a locked build carries the wrong tune into Wangan. 20 % lets the player get most of the way back to the tune by the boss, while a full rebuild still takes several district changes.
+
 ## 2026-11-14 — Arthur [art]: Cel A soft locked as the render style
 
 - **Why:** Austin reviewed the Cel A soft playtest on the two-corner test and said "Let's lock this as our style choice."
