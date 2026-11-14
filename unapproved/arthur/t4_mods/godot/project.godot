@@ -1,0 +1,26 @@
+; T4 shop-tier comparison mockup (unapproved). Godot 4.6.3, GL Compatibility.
+; UI is pixel-hard at 1280x960. No 3D in this frame.
+config_version=5
+
+[application]
+config/name="T4 Shop Compare Mockup"
+run/main_scene="res://scenes/shop_compare.tscn"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=960
+window/size/window_width_override=1280
+window/size/window_height_override=960
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="integer"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/msaa_3d=0
+anti_aliasing/quality/msaa_2d=0
+anti_aliasing/quality/use_taa=false
+anti_aliasing/quality/screen_space_aa=0

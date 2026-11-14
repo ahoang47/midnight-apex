@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-13 — Arthur [art]: T4 finale-mods shop language (unapproved)
+
+- **Why:** Desmond asked for a T4 parts-art scope after Austin approved T4 as the big finale mods, unlocked at P1 and sold by Reiko at full price (`design/01`, 68a1ecb).
+- **What (`unapproved/arthur/t4_mods/`):** a decision-ready proposal and one Godot 4.6.3 shop compare frame (`t4_shop_compare.png`, 1280×960, flat E3B menu language, no prices). There is no existing T1–T3 shop or garage art, so the proposal sets a four-tier language: steel-navy / mercury / pale steel / ice teal with a T4 double rule. T4 parts are recommended as bigger meshes on the existing attach points, not a new shell. Sodium stays off the cards so it does not fight HAN yellow.
+- **Not changed:** `assets/`, `design/art/`, Gordon's files, the sim. Nothing is final until Austin approves it.
+
+---
+
 ## 2026-11-13 — Desmond [story]: trainer barks into barks.md (Austin 2026-11-13)
 
 - **Why:** Austin approved Nathaniel's trainer-barks-v1 ("let's push those lines. Always able to change them later.").
