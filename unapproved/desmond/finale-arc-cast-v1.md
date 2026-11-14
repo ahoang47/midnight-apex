@@ -1,4 +1,4 @@
-# Pre-finale arc: who the 10 races are (draft v1.1, Desmond, 2026-11-13)
+# Pre-finale arc: who the 10 races are (draft v1.2, Desmond, 2026-11-13)
 
 **Status:** unapproved proposal for Austin. It answers Barry's econ-v1 brief. This recast follows Austin's direction as relayed by Barry: "we should have it be the recurring characters from the crews. They'd hear about it, respect what the PC is doing, and offer to train him." It replaces v1's plan for six new one-scene characters. Race shape and numbers are unchanged (Barry's `finale_arc_recommended.json`). Design canon is at proto-build 43eb7b4.
 
@@ -20,7 +20,7 @@ Rung names follow the crew ladder (kid, mature member, old head, boss). Exact cr
 | P4 | Touge 30 (gate) | Touge **crew boss** | Pays off #1's "Used to be a lot harder to reach `<Touge crew boss>`". The boss knew #1 back then and decides the PC is ready. |
 | F1→F2 | Wangan 10, then Wangan 20 wall | A Wangan kid or mature member, then the **Wangan crew boss** | Word of F1 travels to the bay. The boss brings #2 the message. |
 | F2→F3 | Street 10, then Street 20 wall | A Street kid or mature member, then the **Street crew boss** | The R1 boss whose loss cleared the debt comes back as a trainer, a full-circle beat. Protective of #3's golden-boy image. |
-| F3→F4 | Touge 10, then Touge 20 wall | Depends on F4 (open question 1) | If F4 is the Summit, a Touge old head or the boss again. |
+| F3→F4 | Touge 10, then Touge 20 wall | The crews come up the mountain for the Summit: a Wangan or Street old head on Touge (10), then the Touge old head not used at P3 (20 wall) | Word that all three Myth Drivers have raced spreads, and every crew wants to see the Summit. This sets the stage for the Myth Drivers' reunion. |
 
 ## Mechanics notes for Barry
 
@@ -33,8 +33,12 @@ Rung names follow the crew ladder (kid, mature member, old head, boss). Exact cr
 - The round-structure line "one crew per district, raced once, no rematches" needs a clarifier: Finale training sessions with former crew members aren't rematches. I'll make that edit in design/01 and story/canon.md.
 - Plot §Finale gets the training-arc beats. Nathaniel writes the trainer barks.
 
-## Open questions for Austin
+## Resolved (Austin, 2026-11-13, relayed by Barry)
 
-1. **F4 Touge is not in story canon.** Is it the Summit? (Barry is asking.)
-2. **T4 at P1 vs "big finale mods".** Canon says finishing Round 3 unlocks them at Reiko's. If T4 is those mods, the unlock moves to the P1 win. If it's a separate tier, it needs a seller. Arthur may need parts art.
-3. **Money in USD at x100 scale:** once approved, I do the repo-wide money wording pass.
+1. **F4 is the Summit.** F1–F3 are the three Myth Drivers, and the F3→F4 pair leads into the Summit.
+2. **T4 is canon's "big finale mods",** unlocked at P1 instead of on finishing Round 3. Reiko still sells them at full price, so no new seller is needed. When this goes live, canon's "finishing Round 3 unlocks the big finale mods" lines (design/01, story/canon.md, plot.md) move to the P1 win. Arthur gets the T4 parts-art request once Austin approves the arc.
+
+## Still open
+
+1. **Who does the PC race at the Summit (F4)?** Canon has the Summit as the Myth Drivers' first meeting since the breakup, where Sabine hears their real reasons. Is the race against one of them, against Sabine, or something else? Nathaniel and Austin to decide.
+2. **Money in USD at x100 scale:** once approved, I do the repo-wide money wording pass.
