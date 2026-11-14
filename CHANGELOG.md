@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-14 — Arthur [art]: Cel A soft, the new Cel A default (Austin approved the fix)
+
+- **Why:** Austin on Cel A: "the lighting on cel A makes it look very compressed". He approved the fix: keep the ink and hard toon bands on cars and props, and soften the light on big surfaces before the dither.
+- **What:** in the `scroll` shader, the road, verge/terrain, gravel, paving, concrete, cut slopes and cedar cards are now soft surfaces. They get no toon ramp and no posterise, and a 16-tap de-dither blur (clamped at the strip edge) replaces the posterised flatten; painted marks are kept. The `sky` shader de-dithers the painted sky (stars kept). The lamp pools now read as falloff, not rings. Unchanged: cars, guardrail, poles and other props, the ink, the HUD, 640×480, RGB555 + Bayer, and the #F0C894 lamps.
+- **Where:**
+  - `unapproved/arthur/experiments/cel_two_corner/` (default on; `cel/soft`, `-- --cel-soft 0` or F8 for the original): `frames/cel_a_soft/`, `cel_a_soft_sheet.png`, `cel_a_soft_run.mp4`.
+  - `unapproved/arthur/experiments/cel_shaded/`: `*_cel_soft.png`. The original A/B frames re-render pixel-identical.
+- **Cost:** about +4 ms a frame on llvmpipe (61 → 65 ms).
+
+---
+
 ## 2026-11-14 — Barry [sim]: campaign story-XP cut live (`STORY_XP_MULT`); finale unchanged
 
 - **Why:** Austin 2026-11-14 approved the campaign cut only from `unapproved/barry/story-xp-v1`: an 80/80 story-only player should meet each boss about one level lower (~55% on the hardest track). The finale is the narrative conclusion, so its pacing stays as is.

@@ -1,6 +1,11 @@
 // Cel-shaded experiment (unapproved): shared toon ramp + G-buffer output for the screen-space ink pass.
 // cel_gbuf (project global): 0 = colour, 1 = view-space normal pass, 2 = linear depth pass (packed 24-bit).
 global uniform float cel_gbuf;
+// Cel A soft (Austin 2026-11-14, approved): cel_soft = 1 keeps smooth light on big surfaces and the sky (written as
+// <district>_cel_soft.png); 0 = the original Cel A frames. Shared shader code with ../cel_two_corner (CEL_GB / cel_on there).
+global uniform float cel_soft;
+#define CEL_GB cel_gbuf
+#define cel_on 1.0
 const vec3 CEL_KEY = vec3(0.4, 0.8, 0.3);          // same key direction as the car shading (display.json car_shading.key_dir)
 const vec3 CEL_SHADOW_TINT = vec3(0.80, 0.88, 1.06); // shadow band leans to TXR navy, never warm
 

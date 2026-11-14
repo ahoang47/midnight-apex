@@ -896,6 +896,30 @@ func _capture(path: String) -> void:
 		post_mat.set_shader_parameter("ink_on", 0.0 if OS.get_environment("CEL_NOINK") != "" else 1.0)
 		await _settle(3)
 		await _write(path.get_basename() + String(fl[0]) + ".png")
+	# Cel A soft (Austin 2026-11-14): big surfaces + sky keep smooth light (no toon bands, no posterise, wide de-dither
+	# blur), cars / props keep the hard bands, ink unchanged. Written as name_cel_soft.png, RGB555 + Bayer on.
+	if OS.get_environment("CEL_SOFT") != "0":
+		_soften()
+		RenderingServer.global_shader_parameter_set("cel_soft", 1.0)
+		post_mat.set_shader_parameter("dither_on", 1.0)
+		await _settle(3)
+		await _write(path.get_basename() + "_cel_soft.png")
+		RenderingServer.global_shader_parameter_set("cel_soft", 0.0)
+
+const SOFT_TEX := {"_road": [14.0, 1.0], "verge": [8.0, 0.0], "gravel": [8.0, 0.0], "paving": [8.0, 0.0], "wangan_concrete": [8.0, 0.0],
+	"cutslope": [6.0, 0.0], "cutrock": [6.0, 0.0], "grasslip": [6.0, 0.0], "cedar": [3.0, 0.0]}
+func _soften() -> void:
+	var n := 0
+	for m in art.scroll_mats + prop_cache.values():
+		if not (m is ShaderMaterial): continue
+		var t = (m as ShaderMaterial).get_shader_parameter("tex")
+		if t == null: continue
+		var p: String = (t as Texture2D).resource_path
+		for k in SOFT_TEX:
+			if p.contains(k):
+				m.set_shader_parameter("soft_surface", 1.0); m.set_shader_parameter("soft_radius", SOFT_TEX[k][0]); m.set_shader_parameter("soft_clamp_u", SOFT_TEX[k][1]); n += 1
+				break
+	print("cel soft: ", n, " big-surface materials")
 
 func _write(path: String) -> void:
 	await _settle(2)

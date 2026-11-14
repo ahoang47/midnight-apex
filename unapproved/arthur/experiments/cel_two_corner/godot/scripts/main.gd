@@ -124,6 +124,7 @@ const CEL_BIT_N := 1 << 18   # layer 19: view-normal pass (CEL_GB = 1)
 const CEL_BIT_D := 1 << 19   # layer 20: linear-depth pass (CEL_GB = 2)
 const CEL_BIT_DECAL := 1 << 17   # layer 18: car decals (blob shadow, headlight throw); seen by the colour cameras, not the G-buffer
 var cel_enabled := true
+var cel_soft := true         # CEL: Cel A soft (default, Austin 2026-11-14). Setting cel/soft, arg --cel-soft 0|1, key F8
 var cel_vps: Array = []      # [main normal, main depth, mirror normal, mirror depth]
 var cel_cams: Array = []
 var perf_on := false; var perf_dts: PackedFloat64Array = PackedFloat64Array(); var perf_last := 0; var perf_skip := 0
@@ -353,6 +354,13 @@ func _apply_district(dk: String) -> void:
 		var t = (m as ShaderMaterial).get_shader_parameter("tex")
 		if t == _tex("touge_road") or t == _tex("street_road"):
 			m.set_shader_parameter("flat_radius", 6.0); m.set_shader_parameter("poster", 9.0)
+		# CEL A SOFT: big surfaces (road, verge / terrain, cedar forest cards) keep smooth light: no toon bands, no posterise,
+		# a wide de-dither blur. Props (guardrail strip, lamp posts) and the cars keep the hard bands. Ink is unchanged.
+		var soft := { "touge_road": [14.0, 1.0], "street_road": [14.0, 1.0], "touge_verge": [8.0, 1.0], "street_walk": [8.0, 1.0],
+			"touge_cedar_a": [3.0, 0.0], "touge_cedar_b": [3.0, 0.0] }
+		for k in soft:
+			if t == _tex(k):
+				m.set_shader_parameter("soft_surface", 1.0); m.set_shader_parameter("soft_radius", soft[k][0]); m.set_shader_parameter("soft_clamp_u", soft[k][1])
 
 ## StraightRoad + CornerRoad (§13.1), dressed for the upcoming corner's district: road strips in track.tscn, props in touge_dressing.tscn
 func _build_road(dk: String) -> void:
@@ -768,6 +776,8 @@ func load_state(tok: String) -> void:
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo and (e as InputEventKey).keycode == KEY_F7:   # CEL: live toggle
 		set_cel(not cel_enabled); print("CEL ", "ON" if cel_enabled else "OFF"); return
+	if e is InputEventKey and e.pressed and not e.echo and (e as InputEventKey).keycode == KEY_F8:   # CEL: soft / original Cel A
+		set_cel_soft(not cel_soft); print("CEL SOFT ", "ON" if cel_soft else "OFF (original Cel A)"); return
 	if script_in != null or not (e is InputEventKey) or not e.pressed or e.echo: return
 	var k: int = (e as InputEventKey).keycode
 	if mode == "RACE" and k == KEY_F9: dump_state()
@@ -1234,6 +1244,10 @@ func _build_cel() -> void:
 	cel_enabled = bool(ProjectSettings.get_setting("cel/enabled", true))
 	var ca = _arg("--cel", null)
 	if ca != null: cel_enabled = String(ca) != "0"
+	cel_soft = bool(ProjectSettings.get_setting("cel/soft", true))
+	var cs = _arg("--cel-soft", null)
+	if cs != null: cel_soft = String(cs) != "0"
+	set_cel_soft(cel_soft)
 	perf_on = a.has("--perf"); perf_skip = 30
 	var clear := ~(CEL_BIT_N | CEL_BIT_D)
 	cam.cull_mask = cam.cull_mask & clear; mirror_cam.cull_mask = mirror_cam.cull_mask & clear; glow_cam.cull_mask = glow_cam.cull_mask & clear
@@ -1255,7 +1269,11 @@ func _build_cel() -> void:
 	post_mat.set_shader_parameter("mirror_flip", 1.0); post_mat.set_shader_parameter("dither_on", 1.0)
 	post_mat.set_shader_parameter("ink_debug", 1.0 if a.has("--ink-debug") else 0.0)   # playtest flicker measure only
 	set_cel(cel_enabled)
-	print("CEL ", "ON" if cel_enabled else "OFF")
+	print("CEL ", "ON" if cel_enabled else "OFF", " SOFT ", "ON" if cel_soft else "OFF")
+
+func set_cel_soft(on: bool) -> void:
+	cel_soft = on
+	RenderingServer.global_shader_parameter_set("cel_soft", 1.0 if on else 0.0)
 
 func set_cel(on: bool) -> void:
 	cel_enabled = on

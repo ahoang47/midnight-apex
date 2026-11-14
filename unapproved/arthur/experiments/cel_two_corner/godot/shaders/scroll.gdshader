@@ -18,6 +18,9 @@ uniform float flatten = 1.0;      // 0 = original texture, 1 = flattened
 uniform float flat_radius = 4.0;  // texels
 uniform float flat_keep = 0.11;   // detail above this contrast is kept (painted marks)
 uniform float poster = 10.0;      // sqrt-luma steps on the flattened base (0 = off): flat value blocks, hue kept
+uniform float soft_surface = 0.0; // 1 = big surface (road, verge/terrain, forest cards): soft light under Cel A soft
+uniform float soft_radius = 12.0; // texels, soft surfaces
+uniform float soft_clamp_u = 0.0; // 1 = strip across u (road / verge): clamp the blur at the strip edge instead of wrapping
 uniform float k_mid = 0.80;
 uniform float k_shadow = 0.60;
 varying float fog_depth; varying vec3 uvw;
@@ -40,22 +43,32 @@ void fragment() {
 	else if (CEL_GB > 0.5) { ALBEDO = cel_pack_normal(cel_face_normal(VERTEX)); }
 	else {
 		vec3 c = t.rgb;
+		float sk = soft_surface * cel_soft * cel_on;   // CEL A SOFT (Austin 2026-11-14): big surfaces keep smooth light
 		if (flatten * cel_on > 0.0) {
 			// ring of 8 taps at flat_radius texels; taps far from the ring mean are rejected (so a thin painted line
 			// near a pixel cannot halo it), the base is posterised in sqrt-luma steps, strong marks are added back.
-			vec2 ts = flat_radius / vec2(textureSize(tex, 0));
-			vec3 sm[9]; sm[0] = c; vec3 avg = c;
-			for (int i = 1; i < 9; i++) {
-				float a = float(i) * 0.7853982;
-				sm[i] = texture(tex, fract(uv + vec2(cos(a), sin(a)) * ts)).rgb; avg += sm[i];
+			// SOFT surfaces: two rings (16 taps) at soft_radius / 2 and soft_radius, NO posterise. The textures are
+			// pre-dithered 5-bit, so this de-dithers them into a smooth float gradient (the painted 3-step lamp pools
+			// melt into a falloff) and the final RGB555 + Bayer pass re-dithers it smoothly instead of stacking steps.
+			float r = mix(flat_radius, soft_radius, sk);
+			vec2 tsz = vec2(textureSize(tex, 0));
+			vec2 ts = r / tsz;
+			vec3 sm[17]; sm[0] = c; vec3 avg = c;
+			int nt = sk > 0.5 ? 17 : 9;
+			for (int i = 1; i < 17; i++) {
+				if (i >= nt) break;
+				float a = float(i) * 0.7853982 + (i > 8 ? 0.3927 : 0.0);
+				vec2 q = uv + vec2(cos(a), sin(a)) * ts * (i > 8 ? 0.5 : 1.0);
+				q = soft_clamp_u > 0.5 && sk > 0.5 ? vec2(clamp(fract(uv.x) + (q.x - uv.x), 0.5 / tsz.x, 1.0 - 0.5 / tsz.x), fract(q.y)) : fract(q);
+				sm[i] = texture(tex, q).rgb; avg += sm[i];
 			}
-			avg /= 9.0;
+			avg /= float(nt);
 			vec3 base = vec3(0.0); float wsum = 0.0;
-			for (int i = 0; i < 9; i++) { float w = step(length(sm[i] - avg), 0.12); base += sm[i] * w; wsum += w; }
+			for (int i = 0; i < 17; i++) { if (i >= nt) break; float w = step(length(sm[i] - avg), 0.12); base += sm[i] * w; wsum += w; }
 			base = wsum > 0.0 ? base / wsum : avg;
 			vec3 det = c - base;
 			float keep = smoothstep(flat_keep, flat_keep * 1.8, length(det));
-			if (poster > 0.0) {
+			if (poster > 0.0 && sk < 0.5) {
 				float l = max(dot(base, vec3(0.299, 0.587, 0.114)), 1e-4);
 				float lq = max(pow(floor(sqrt(l) * poster + 0.5) / poster, 2.0), 0.004);
 				base *= lq / l;
@@ -63,9 +76,9 @@ void fragment() {
 			c = mix(c, base + det * keep, flatten * cel_on);
 		}
 		c *= gain;
-		if (cel_k * cel_on > 0.0) {
+		if (cel_k * cel_on * (1.0 - sk) > 0.0) {
 			vec3 nw = normalize((INV_VIEW_MATRIX * vec4(cel_face_normal(VERTEX), 0.0)).xyz);
-			c = mix(c, cel_ramp(c, dot(nw, normalize(CEL_KEY)), k_mid, k_shadow), cel_k * cel_on);
+			c = mix(c, cel_ramp(c, dot(nw, normalize(CEL_KEY)), k_mid, k_shadow), cel_k * cel_on * (1.0 - sk));
 		}
 		float f = fog_amount * clamp((fog_depth - fog_near) / (fog_far - fog_near), 0.0, 1.0);
 		ALBEDO = mix(c, fog_color, f);

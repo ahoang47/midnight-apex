@@ -4,6 +4,9 @@
 // 2 linear depth pass (cull bit 19 = layer 20). No object sits on layers 19/20, and the colour/mirror/glow cameras clear them.
 // cel_on (project global, live toggle F7): 0 = Gordon's original look, 1 = Cel A.
 global uniform float cel_on;
+// cel_soft (project global, F8): 1 = Cel A soft (default, Austin 2026-11-14): big surfaces and the sky keep smooth light,
+// cars and props keep the hard bands; 0 = the original Cel A (hard bands + posterise everywhere).
+global uniform float cel_soft;
 #define CEL_GB float((CAMERA_VISIBLE_LAYERS >> 18u) & 3u)
 const vec3 CEL_KEY = vec3(0.4, 0.8, 0.3);          // same key direction as the car shading (display.json car_shading.key_dir)
 const vec3 CEL_SHADOW_TINT = vec3(0.80, 0.88, 1.06); // shadow band leans to TXR navy, never warm

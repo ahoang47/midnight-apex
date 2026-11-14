@@ -4,6 +4,20 @@ Austin, 2026-11-14: "I like Cel A. Are you able to apply this to the two corner 
 
 This is a test only, not a direction. It is Cel A from `../cel_shaded/` (commit f470dcc) ported onto Gordon's playable two-corner test. Gordon's folder (`unapproved/gordon/two-corner/`) is **not edited**: `stage.py` symlinks his Godot project in, and this folder owns only the files below. No models or textures are changed. It is all shaders, post and one script.
 
+## Cel A soft (new default, 2026-11-14)
+Austin's note on Cel A was that the lighting "makes it look very compressed". He approved this fix: keep the ink and the hard toon bands on cars and props, and soften the light on big surfaces before the dither runs.
+- **Cause:** the environment textures are already pre-dithered at 5 bits. Cel A's flatten pulled that dither out, then posterised the base (9–10 sqrt-luma steps) and added three hard toon bands. Then the RGB555 + Bayer pass quantised it all again. The painted 3-step sodium pools came out as hard rings, and large surfaces stepped.
+- **What changed:**
+  - **Road, verge/terrain and cedar forest cards are now soft surfaces** (`soft_surface` in `scroll.gdshader`). They get no toon ramp and no posterise.
+  - Flattening on those surfaces is a wider 16-tap de-dither blur: two rings at r/2 and r, with r = 14 texels on the road and 8 on the verge. It is clamped at the strip edge so the two road edges don't bleed into each other. Strong painted marks (lane lines, kerb) are still added back.
+  - The result is a smooth float gradient, so the single RGB555 + Bayer pass dithers it smoothly. The lamp pools read as a soft falloff instead of rings.
+  - **Sky:** the painted sky is de-dithered with a 15-tap blur (stars kept) before the post. The ridge band stays crisp.
+  - **Unchanged:** cars (posterised albedo, 3 bands, hard spec dab, 3-step env), the guardrail strip, lamp posts (hard bands, #F0C894 heads full-bright), the ink, the G-buffer, the HUD, 640×480, and the RGB555 + Bayer pass.
+- **Toggle:** project setting `cel/soft` (default on), `-- --cel-soft 0` or **F8** for the original Cel A. Nothing else about the original changed.
+- **Frames:** `frames/cel_a_soft/` (the same 12 key moments, cel on) and `cel_a_soft_sheet.png` (5 moments, after only). `frames/cel_on/` keeps the original Cel A frames.
+- **Video:** `cel_a_soft_run.mp4` (corner 1, 28 s, cel on, soft). The full run is at `/workspace/cel_a_soft_run.mp4` on the box.
+- **Frame time** (llvmpipe, real-time scripted race, 2 runs each): original Cel A 60.5–61.9 ms, Cel A soft 64.7–65.5 ms. That's about +4 ms (+6 %) for the wider blur on the road and verge.
+
 ## Toggle
 - Project setting `cel/enabled` (in `godot/project.godot`, default on), user arg `-- --cel 0|1`, or **F7** live in game.
 - Off is Gordon's look exactly: every cel shader branches back to his original code, and the four G-buffer viewports stop rendering.

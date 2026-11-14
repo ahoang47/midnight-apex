@@ -1,5 +1,5 @@
 ; CEL A PORT of Gordon's two-corner engine test (Arthur, unapproved experiment). Godot 4.6.3.
-; Toggle: cel/enabled below, user arg -- --cel 0|1, or F7 in game.
+; Toggle: cel/enabled below, user arg -- --cel 0|1, or F7 in game. Cel A soft (default): cel/soft, -- --cel-soft 0|1, F8.
 config_version=5
 
 [application]
@@ -24,8 +24,14 @@ anti_aliasing/quality/msaa_3d=0
 [cel]
 
 enabled=true
+soft=true
 
 [shader_globals]
+
+cel_soft={
+"type": "float",
+"value": 1.0
+}
 
 cel_on={
 "type": "float",

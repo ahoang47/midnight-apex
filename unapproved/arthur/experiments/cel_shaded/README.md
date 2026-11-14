@@ -14,6 +14,9 @@ This is a test look only. It is not a direction. The approved look is still the 
 
 Each frame keeps the E3B Entry chase frame from `../../mockups/districts/`. That means the same camera, cars, road widths, touge grade, chevrons, dressing and palette (TXR navy fog, Mercury teal, every lamp #F0C894). It's rendered in Godot 4.6.3 (GL Compatibility), with the 3D at 640×480 and a 2× nearest upscale. The E3B HUD is drawn on top at 1280×960 after the post pass, so no cel or ink code touches it. The HUD panel pixels match the originals exactly.
 
+## Cel A soft (2026-11-14)
+Austin found that Cel A's lighting looked "very compressed" and approved a softer version. `*_cel_soft.png` is that version for the three districts: dithered, with cars and props kept on hard bands and ink, and smooth light on big surfaces. Those surfaces are the road, verge, gravel, paving, Wangan concrete, cut slopes and cedars. They get no toon ramp and no posterise, plus a wide de-dither blur; the sky is de-dithered too. The lamp pools read as falloff, not rings. The shader code is shared with `../cel_two_corner/`, which has the full notes. `touge_cel.png` / `*_cel_clean.png` are unchanged, re-rendered pixel-identical. `CEL_SOFT=0 ./run.sh` skips the soft frames.
+
 ## How it's done
 - **Toon ramp (3 bands).** Everything stays `unshaded`. The light is computed in the fragment shader against one fixed key direction (the car key, 0.4/0.8/0.3), then stepped into lit 1.0 / mid / shadow bands. The shadow band leans to navy and is never warm. Props and road strips have no usable normals, so they use faceted normals from screen derivatives. Cars use their smooth normals. Emit_ surfaces (signs, windows, lamp heads) and the #F0C894 lamp heads skip the ramp and stay full-bright.
 - **Cars.** The painted albedo is posterised in sqrt-luma steps so baked gradients become flat blocks. The spec becomes one hard highlight, and the painted env reflection is stepped into 3 levels.
