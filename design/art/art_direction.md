@@ -27,6 +27,13 @@ dither. *Low poly is not low texture.* A modern/photoreal render with a retro fi
 was tried (Tokyo v1) and rejected as "a cheap simulacrum of a PS2 game". The approved reference is Tokyo v2 and the
 S2000 reference car (Appendix W).
 
+**Locked render style: Cel A soft [MUST] (Austin, 2026-11-14).** Every in-game 3D frame uses the Cel A soft shading on top of the PSX look above:
+- Cars and props (guardrails, poles, barriers, shopfronts, signs) get three hard toon bands (lit, mid, navy-leaning shadow), a single hard highlight, and flat value blocks.
+- 1 px ink outlines at 640×480, colour `#040810`, drawn by a screen-space depth/normal edge pass. Only the near side of an edge is inked, the lines fade into fog, and flat or grazing surfaces are ignored. Lane lines, chevrons, decals and car shadows get no ink.
+- Big surfaces (road, verge, terrain, forest cards, cut slopes, concrete, sky) get **no** toon bands and no brightness steps. They use smooth lighting with a wide blur, so the final dither spreads one gradient. Sodium pools fade off softly, never as rings.
+- RGB555 + Bayer dither stays as the last 3D pass. The HUD and menus are composited after it and are never shaded or inked.
+- It is shader and post only; no model or texture is changed for it. Reference build: `unapproved/arthur/experiments/cel_two_corner/` (commit 4ecffdf). Toggles there: `cel/enabled` (F7) and `cel/soft` (F8).
+
 Pitch alignment (`story/pitch.md`): cars and environments lean **Initial D** (grounded tuning
 culture, atmospheric roads); characters lean **JoJo** and are never rendered in-world (portraits/overlays only).
 

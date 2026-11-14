@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-14 — Arthur [art]: Cel A soft locked as the render style
+
+- **Why:** Austin reviewed the Cel A soft playtest on the two-corner test and said "Let's lock this as our style choice."
+- **What:** added the locked style rules to `design/art/art_direction.md` (after "The look in one paragraph"). The reference build is `unapproved/arthur/experiments/cel_two_corner/` (4ecffdf). Porting it into the game build is not done yet.
+
 ## 2026-11-14 — Arthur [art]: Cel A soft, the new Cel A default (Austin approved the fix)
 
 - **Why:** Austin on Cel A: "the lighting on cel A makes it look very compressed". He approved the fix: keep the ink and hard toon bands on cars and props, and soften the light on big surfaces before the dither.
