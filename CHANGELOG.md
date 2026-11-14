@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-13 — Nathaniel [story]: Summit race vs Sabine options + trainer barks (unapproved)
+
+- **Why:** Desmond asked for a reconciliation of the Summit race against Sabine (set by Austin, via Barry and Desmond, and now in canon 4 and 11) with the existing canon: the "I know what really happened." blowup, the Myth Drivers' reunion, and the ending. The training arc became canon at 68a1ecb, and `plot.md` marks its barks `<TBD: Nathaniel>`. Why Sabine is at the Summit is still open with Austin, so everything here is labeled as an option for Austin, with no pick.
+- **What:**
+  - `unapproved/nathaniel/summit-sabine-race-v1.md`: ten canon touchpoints with file and line cites, four "why she's there" options (W1–W4), four race-placement options (R1–R4), observations on which options fit canon most cleanly, and mechanical hand-offs to Barry via Desmond (no numbers).
+  - `unapproved/nathaniel/trainer-barks-v1.md`: barks for all 10 training races (cast and shape from canon 11 and `plot.md`), waiting on Austin's OK of the wording before anything moves into `story/barks.md`.
+- **Files:** `unapproved/nathaniel/summit-sabine-race-v1.md`, `unapproved/nathaniel/trainer-barks-v1.md` (no canon files touched).
+
 ## 2026-11-13 — Desmond [design, story]: pre-finale training arc (Austin 2026-11-13)
 
 - **Why:** Austin approved the crew-trainer pre-finale arc ("Training arc sounds fine.") and answered F4 = the summit race against Sabine, and T4 = the big finale mods unlocking at P1.
