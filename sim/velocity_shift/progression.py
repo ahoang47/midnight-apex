@@ -8,7 +8,8 @@ One district per round (R1 Street, R2 Wangan, R3 Touge), one crew each, 7 rungs 
 Rules (all constants in equations.py):
   * Levels: SP(L) = 240 x 1.1^(L/12); stats P = SP / 0.8. Combat power = min(C_ROUND, 1.07 x P) once mods are on
     (R1 at L0 is the stock car, 1.00 x P). Opponent budget B = C_ROUND / target r, so r at the cap = target r.
-  * XP: xp_to_next(L) = 100 x 1.08^L. Story wins pay STORY_FILL x STORY_W share of the round's entry-to-cap XP;
+  * XP: xp_to_next(L) = 100 x 1.08^L. Story wins pay STORY_XP_MULT x STORY_FILL x STORY_W share of the round's
+    entry-to-cap XP (STORY_XP_MULT: Austin 2026-11-14 campaign cut, R1 all x0.90, R2 oh2 x0.60, R3 oh2 x0.80);
     grind wins (10-turn wilds) pay GRIND_FRAC x xp_to_next x taper. XP past the cap is lost.
   * Money (USD): purse by rung kind x ROUND_PAYOUT_MULT; grind races pay GRIND_PAYOUT_FRACTION of a wild purse;
     DEBT_SHARE of every purse pays the DEBT_AMOUNT debt while it is open. The walk banks cash and buys nothing

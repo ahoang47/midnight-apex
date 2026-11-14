@@ -8,6 +8,19 @@
 
 ---
 
+## 2026-11-14 — Barry [sim]: campaign story-XP cut live (`STORY_XP_MULT`); finale unchanged
+
+- **Why:** Austin 2026-11-14 approved the campaign cut only from `unapproved/barry/story-xp-v1`: an 80/80 story-only player should meet each boss about one level lower (~55% on the hardest track). The finale is the narrative conclusion, so its pacing stays as is.
+- **What:** `sim/velocity_shift/equations.py` adds `STORY_XP_MULT` (per round and rung): R1 every race ×0.90 (effective `STORY_FILL` 0.558), R2 oh2 ×0.60, R3 oh2 ×0.80. `story_xp()` applies it. `ARC_STORY_FILL` and `FINALE_ARC` are untouched. `progression.py` docstring and `tests/test_progression.py` are updated (new `test_story_xp_mult_campaign_only`). `design/02` (Story XP row) and `design/07` (Story XP bullet) name the new constant.
+- **Verified (`scripts/run_progression.py --rows`):**
+  - 80/80 story-only bosses (hardest track) R1 L6 53.0, R2 L23 57.7, R3 L41 55.7 (were L7 61.6, L24 67.2, L42 64.6). Lowest story race per round 53.0 / 54.1 / 50.4. Ends L7 / L25 / L43.
+  - Mixed 3+10 / 3+10 / 4+8 (was 3+9 / 3+9 / 4+8), cash $11,150 / $42,372.50 / $78,282.50.
+  - 60/60 13 / 15 / 18 grinds (was 12 / 15 / 18), bosses at cap unchanged 31.6 / 39.3 / 30.6.
+  - Finale unchanged (draft arc walk on the live table): 80/80 billed 81.7 / 82.7 / 79.3 / 81.7.
+- **Tests:** test_progression, test_mod_floor, test_lines and test_equations pass. The rest is left to CI.
+
+---
+
 ## 2026-11-14 — Barry [barry]: story-xp-v1 draft (story-XP cut for 80/80 story-only, ~55% bosses); campaign cut chosen
 
 - **Why:** Austin asked for a sim of cutting story-race XP so an 80/80 story-only (no grind) player wins bosses on the hardest track about 55% of the time (was 61.6 / 67.2 / 64.6).

@@ -48,15 +48,27 @@ def test_hardest_track_boss_win_rates():
 
 def test_walks_reproduce_eval_final_c():
     mixed = P.run("mixed")
-    assert [(w["wall"], w["wall_grind"], w["post_wall_to_cap"], w["total_grind"]) for w in mixed] == [("mat1", 3, 9, 12), ("mat1", 3, 9, 12), ("mat1", 4, 8, 12)]
+    assert [(w["wall"], w["wall_grind"], w["post_wall_to_cap"], w["total_grind"]) for w in mixed] == [("mat1", 3, 10, 13), ("mat1", 3, 10, 13), ("mat1", 4, 8, 12)]
     assert [w["L"] for w in mixed] == [12, 29, 46] and all(w["reached_cap"] for w in mixed)
-    assert [round(w["money"], 2) for w in mixed] == [10600.0, 41190.0, 77100.0] and mixed[0]["debt"] == 0.0
+    assert [round(w["money"], 2) for w in mixed] == [11150.0, 42372.5, 78282.5] and mixed[0]["debt"] == 0.0
     hard = P.run("hard")
-    assert [w["total_grind"] for w in hard] == [12, 15, 18] and [w["L"] for w in hard] == [12, 29, 46]
+    assert [w["total_grind"] for w in hard] == [13, 15, 18] and [w["L"] for w in hard] == [12, 29, 46]
     story = P.run("story")
-    assert [w["L"] for w in story] == [8, 26, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
+    assert [w["L"] for w in story] == [7, 25, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
     worst = [min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story]
-    assert worst == [61.6, 54.1, 50.4] and min(worst) >= 50.0                         # criterion 3 (thin on R3 T3)
+    assert worst == [53.0, 54.1, 50.4] and min(worst) >= 50.0                         # criterion 3 (thin on R3 T3)
+    # Austin 2026-11-14 campaign story-XP cut (STORY_XP_MULT): 80/80 story-only meets each boss one level lower
+    boss = [(w["rows"][-1]["arrive_L"], P.hard_win(w["rows"][-1]["wr"]["c8080"])) for w in story]
+    assert boss == [(6, 53.0), (23, 57.7), (41, 55.7)]
+    assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.6, 39.3, 30.6]   # 60/60 at cap unchanged
+
+
+def test_story_xp_mult_campaign_only():
+    assert E.STORY_XP_MULT[0] == (0.90,) * 7
+    assert E.STORY_XP_MULT[1] == (1.0, 1.0, 1.0, 1.0, 1.0, 0.60, 1.0) and E.STORY_XP_MULT[2] == (1.0, 1.0, 1.0, 1.0, 1.0, 0.80, 1.0)
+    assert E.ARC_STORY_FILL == 0.80                                                  # finale pacing unchanged (Austin 2026-11-14)
+    a = E.story_xp(0, 2, 0, 12) / (E.STORY_FILL[0] * E.STORY_W[2] / sum(E.STORY_W) * sum(E.xp_to_next(L) for L in range(0, 12)))
+    assert abs(a - 0.90) < 1e-12
 
 
 def test_money_and_shop():

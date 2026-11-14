@@ -372,6 +372,15 @@ XP_GROWTH = 1.08               # xp_to_next(L) = XP_BASE x XP_GROWTH ** L
 # split over the 7 rungs by STORY_W (normalised). < 1, so story alone does not reach the cap.
 STORY_FILL = (0.62, 0.75, 0.80)
 STORY_W = (0.12, 0.12, 0.14, 0.14, 0.14, 0.14, 0.20)
+# Story XP multiplier per round and rung (kid1 kid2 mat1 mat2 oh1 oh2 boss), applied on top of STORY_FILL x STORY_W.
+# Austin 2026-11-14 (campaign cut only; unapproved/barry/story-xp-v1): an 80/80 story-only player (no grind) meets each
+# boss about one level lower, ~55 % on the hardest track. R1 every race x0.90 (effective fill 0.558), R2 oh2 x0.60,
+# R3 oh2 x0.80. The pre-finale arc and finale (ARC_STORY_FILL, FINALE_ARC) are unchanged.
+STORY_XP_MULT = (
+    (0.90, 0.90, 0.90, 0.90, 0.90, 0.90, 0.90),
+    (1.00, 1.00, 1.00, 1.00, 1.00, 0.60, 1.00),
+    (1.00, 1.00, 1.00, 1.00, 1.00, 0.80, 1.00),
+)
 # Grind: one 10-turn grind win pays GRIND_FRAC x xp_to_next(L) x taper; taper = floor + (1 - floor)(1 - exp(-d / tau)),
 # d = levels below the cap.
 GRIND_FRAC = 0.70
@@ -776,9 +785,10 @@ def grind_xp(level: int, cap: int) -> float:
 
 
 def story_xp(rnd: int, rung: int, enter_level: int, cap: int) -> float:
-    """XP of a story win at rung index `rung` of round index `rnd` (0 = R1), for a round entered at `enter_level`."""
+    """XP of a story win at rung index `rung` of round index `rnd` (0 = R1), for a round entered at `enter_level`.
+    Scaled by STORY_XP_MULT[rnd][rung]."""
     total = sum(xp_to_next(L) for L in range(enter_level, cap))
-    return STORY_FILL[rnd] * STORY_W[rung] / sum(STORY_W) * total
+    return STORY_XP_MULT[rnd][rung] * STORY_FILL[rnd] * STORY_W[rung] / sum(STORY_W) * total
 
 
 def purse(rnd: int, kind: str, grind: bool = False) -> float:
