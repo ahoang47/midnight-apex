@@ -74,7 +74,7 @@ Races move fast, so Jesse's DAQ keeps the last race for playback: the DAQ log li
 
 # Progression Structure
 
-Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Rounds play in order, one district each: Round 1 Street, Round 2 Wangan, Round 3 Touge. Each round the player runs that district's whole crew once (its kids, mature members, old heads, then the boss), with no rematches, and meets that district's Myth Driver afterward. Finishing Round 3 unlocks the Myth Drivers and the summit. See `canon.md` and `plot.md`.
+Prologue → Rounds 1–3 → Finale. Each district has one crew and crew boss. Rounds play in order, one district each: Round 1 Street, Round 2 Wangan, Round 3 Touge. Each round the player runs that district's whole crew once (its kids, mature members, old heads, then the boss), with no rematches, and meets that district's Myth Driver afterward. Finishing Round 3 unlocks the Myth Drivers and the summit, with former crew members coming back to train the player along the way. See `canon.md` and `plot.md`.
 
 ---
 

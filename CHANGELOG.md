@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-13 — Desmond [design, story]: pre-finale training arc (Austin 2026-11-13)
+
+- **Why:** Austin approved the crew-trainer pre-finale arc ("Training arc sounds fine.") and answered F4 = the summit race against Sabine, and T4 = the big finale mods unlocking at P1.
+- **What:** 01 canon has a new Pre-finale training arc entry, a no-rematch clarifier, and the big-mods unlock moved to P1. Also updated: story/canon.md 11, plot.md (Round 3 complete and the Finale), dialogue_outline.md (mods trigger), 07 §Round 3 → finale, pitch.md.
+- **Not changed:** econ-v1 (USD x100 money, arc purses, fair-odds betting) isn't live, so there's no money wording pass yet. The story reason for Sabine at the summit is still open with Austin. Trainer barks are Nathaniel's. The T4 parts-art request goes to Arthur.
+
+---
+
 ## 2026-11-13 — Nathaniel [story]: Street hook, sightings, rung layout (Austin 2026-11-13)
 
 - **Why:** Austin approved the C1–C7 drafts and B4 from the post-restructure review. These fill the causal gaps marked after 10f9499 / a4236ce.

@@ -154,14 +154,22 @@ Reveals plant misleading clues toward Sabine’s guilt. Across the game, crew fl
 - She still believes the snitch accusation got her frozen out; she doesn’t know the real reasons
 - The PC blames #1 for wrecking everything, which drives the Finale (canon 16, 2026-11-13)
 
-### Round 3 complete: big finale mods (after the Mentor Confrontation)
-- Completing Round 3 unlocks the big finale mods, bought from Reiko at full price (no wholesale after the rift; she still sells because she's a business owner, see above)
+### Round 3 complete: the training arc opens (after the Mentor Confrontation)
+- Crew members from Rounds 1–3 offer to train the PC (training sessions, not rematches; Austin, 2026-11-13; see the Finale below)
+- Winning the first training race unlocks the big finale mods, bought from Reiko at full price (no wholesale after the rift; she still sells because she's a business owner, see above)
 
 ---
 
 # FINALE
 
-Finishing Round 3 unlocks the three Myth Driver races, one per district, and the big finale mods (bought from Reiko at full price; the shop stays open through the Finale). Jesse has shut the PC out, so tuning and respecs happen at the reverse speakeasy with Malo, and the PC pulls the DAQ log themselves (canon 15, 29). **Back up the mountain (Austin, 2026-11-13):** estranged from Sabine, the PC goes back up the mountain to blame #1 for wrecking everything, answering his challenge, and they race. That race sets off the #2 and #3 races and leads into the final confrontation. The PC races out of blame, not to find the truth; the truth comes out by accident, starting with #1's contradiction (canon decisions 16, 18). The contradictions between their accounts unravel the snitch story.
+Finishing Round 3 unlocks the three Myth Driver races, one per district. The big finale mods unlock with the first training race (bought from Reiko at full price; the shop stays open through the Finale). Jesse has shut the PC out, so tuning and respecs happen at the reverse speakeasy with Malo, and the PC pulls the DAQ log themselves (canon 15, 29). **Back up the mountain (Austin, 2026-11-13):** estranged from Sabine, the PC goes back up the mountain to blame #1 for wrecking everything, answering his challenge, and they race. That race sets off the #2 and #3 races and leads into the final confrontation. The PC races out of blame, not to find the truth; the truth comes out by accident, starting with #1's contradiction (canon decisions 16, 18). The contradictions between their accounts unravel the snitch story.
+
+**Training arc (Austin, 2026-11-13):** crew members the PC beat hear what they're doing, respect it, and offer to train them. These are training sessions, not rematches, and they carry word to the next Myth Driver.
+- **Before #1 (the road up the mountain):** Touge kid (10 turns; the win unlocks the big finale mods), Touge mature member (20), the Touge old head who saw Sabine on the phone (20, wall; sincere, still feeds the PC's blame, reveals nothing), then the Touge crew boss (30, gate; he knew #1 back then).
+- **Before #2:** a Wangan lieutenant (10), then the Wangan boss (20, wall).
+- **Before #3:** a Street lieutenant (10), then the Street boss (20, wall; the boss whose loss cleared the debt, full circle).
+- **Before the summit:** the crews come up the mountain; a Wangan or Street old head on Touge (10), then the other Touge old head (20, wall).
+- On some corners a trainer drives the next Myth Driver's line and bluff so the PC can practice reading it. Barks `<TBD: Nathaniel>`.
 
 ## 7. Myth Drivers
 

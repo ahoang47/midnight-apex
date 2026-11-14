@@ -17,7 +17,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Each round i
 - **Touge:** a big-brother boss; a young, gossipy crew. **Wangan:** the promoter (always selling); a polite, cliquey crew of professionals. **Street:** the influencer (on camera); a loud, online crew.
 
 **Rules for every crew line**
-- Crew ladder: each round's crew is raced once: kids → mature members → old heads (lieutenants) → crew boss. No rematches. Kids believe the legend as told; mature members know not everything is what it seems; old heads were there.
+- Crew ladder: each round's crew is raced once: kids → mature members → old heads (lieutenants) → crew boss. No rematches (Finale training sessions aren't rematches, 2026-11-13). Kids believe the legend as told; mature members know not everything is what it seems; old heads were there.
 - Each round covers its own district's incident, consequences and distortion (2026-11-13; replaces the old per-round themes).
 - Sweep information comes from crew reveals and post-race crew dialogue. Myth Driver sightings never lay out the sweep. Detailed sweep hints per race are still `<OPEN: post-race crew dialogue that hints at the sweep (Q13)>`; the post-race lines below are first examples only.
 - Nobody says "snitch" out loud. Keep it subtle.
@@ -240,8 +240,8 @@ The Touge crew, raced once start to finish, covering Touge's incident, consequen
 - **Finale rift (locked, Austin 2026-11-11; replaces the 2026-11-10 wording):** Jesse shuts the PC out: no tuning or respecs for the PC, so the PC does those at the reverse speakeasy with Malo. Reiko drops wholesale (back to full price) but still sells to the PC, because she's a business owner. The warmth is gone.
 - **The DAQ log after the rift (locked):** the PC plugs into the logger and pulls the last race themselves. Jesse has no line.
 
-### After the Mentor Confrontation: big finale mods (Round 3 complete)
-- **Trigger:** the Touge crew boss beaten and the Mentor Confrontation played (Round 3 complete).
+### After the first training race: big finale mods
+- **Trigger:** the PC wins the first training race after the rift (Touge kid; Austin, 2026-11-13; was "Round 3 complete").
 - **Beat:** the big finale mods unlock, bought from Reiko at full price (no wholesale after the rift). She still sells to the PC because she's a business owner.
 - Reiko (draft): "New stock's in. Prices are on the tag."
 
