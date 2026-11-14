@@ -42,4 +42,4 @@ Rung names follow the crew ladder (kid, mature member, old head, boss). Exact cr
 
 ## Still open
 
-1. **Money in USD at x100 scale:** once approved, I do the repo-wide money wording pass.
+1. **Money in USD at ×100 scale:** econ-v1 is live (Austin go-ahead 2026-11-13). The repo-wide wording pass is in design/ and story/. Live sim arc purses are $2,500 / $3,375 / $5,000 for 10- / 20- / 30-turn races. The billed finale purse ($10,800) is a sim assumption, not canon. T4 $8,000 is a stand-in.

@@ -31,8 +31,8 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 
 ## 3. The Debt
 
-- Sabine explains the rebuild debt: she fronted the engine, labor, and tow, so the PC races to pay her back until they're even (amount `<TBD: Barry>`)
-- Repayment: a share of race winnings goes toward the tab (share size `<TBD: Barry>`) — a personal repair bill, not a crew sponsorship (she stepped away from the scene, canon 14, 24)
+- Sabine explains the rebuild debt: she fronted the engine, labor, and tow, so the PC races to pay her back until they're even (amount **$16,000**, econ-v1, Austin go-ahead 2026-11-13)
+- Repayment: a share of race winnings goes toward the tab (share **0.65**) — a personal repair bill, not a crew sponsorship (she stepped away from the scene, canon 14, 24)
 - Debt is settled at the end of Round 1, when the PC beats the Street crew boss (canon decision 19, 2026-11-13); after that the PC stays for the fun and the mystery
 - PC formally enters the underground scene
 
@@ -70,7 +70,7 @@ Script: [`scripts/prologue.md`](scripts/prologue.md)
 - Crew personality: grown-ups with day jobs racing for release; polite, measured, cliquey; treat the PC like a new hire who has to prove they belong; gossip comes out as dry, knowing remarks
 - Driving styles off the signature corners (draft, 2026-11-11): kids drive like new hires, with one by-the-book line; mature members change line only when it pays; old heads are patient: they sit on you all race and pounce late; the promoter drives for the crowd, and his lines look flashy even when they cost him
 - **Promoter's home base (2026-11-05):** a subsea Wangan parking area under the bay (name `<TBD>`), the narrative home for the game's "water level" music (canon 21)
-- High-stakes betting side game run by the promoter, unlocked at the end of Round 2 (mechanics `<TBD: Barry>`). Crew bosses' signature shells (cosmetic car bodies) are won only in betting races at his subsea parking-area home base—wild-race betting races award no shells—while a few standout substories also award oddball shells (canon 26, 28)
+- Betting side game run by the promoter, unlocked at the end of Round 2 (stakes **$500 to $2,000** at fair odds, econ-v1). Crew bosses' signature shells (cosmetic car bodies) are won only in betting races at his subsea parking-area home base—wild-race betting races award no shells—while a few standout substories also award oddball shells (canon 26, 28)
 
 | Racer Type | Archetype |
 |---|---|

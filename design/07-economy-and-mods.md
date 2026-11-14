@@ -1,9 +1,9 @@
 # Economy and Mod Parts: Headless Sim Specification
 
-> **DRAFT. Waiting on Austin's success criteria and approval. Nothing here has been simulated.**
-> Author: Barry (Chief of Systems), 2026-11-02. No code, constants or story files were changed to write this.
-> Rules for this document: anything stated as existing cites `file:line`. Anything else is labeled **PROPOSAL** or **OPEN QUESTION**. Every number not already in the repo is a named constant set to `TBD`.
-> Line numbers for `story/canon.md`, `story/plot.md` and `story/scripts/prologue.md` refer to the current working tree, which has uncommitted story edits.
+> **Status (2026-11-13):** econ-v1 is live in `sim/velocity_shift/equations.py` and `progression.py` (Austin go-ahead). Money is USD at ×100. Live figures are written in the sections below; remaining TBDs and proposal-only modules (the shop catalog, season runner, respec costs, substory payouts) are called out.
+> Author: Barry (Chief of Systems), 2026-11-02; money, unlock and ladder figures updated 2026-11-13 from the live sim (Desmond).
+> Rules for this document: anything stated as existing cites `file:line`. Anything else is labeled **PROPOSAL** or **OPEN QUESTION**. Every number not already in the live sim is a named constant set to `TBD`.
+> The original 2026-11-02 draft header (waiting on success criteria; nothing simulated) is superseded for the live econ-v1 constants; proposal sections that never landed are unchanged.
 
 ---
 
@@ -14,7 +14,7 @@
 **In scope (headless sim only):**
 - Money: earning it, the repair debt, and spending it in the shop.
 - Mod parts: a catalog, loadout slots, level floors, shop unlocks, and how each part changes the existing combat numbers.
-- A season runner: Prologue → Round 1 (Street) → Round 2 (Wangan) → Round 3 (Touge), one district crew per round (Austin, 2026-11-13; `DEFAULT_CREW_ORDER` still holds the old free-order example until Barry's refit), with wild races, crew races, crew boss races and retries.
+- A season runner: Prologue → Round 1 (Street) → Round 2 (Wangan) → Round 3 (Touge), one district crew per round (Austin, 2026-11-13; `DEFAULT_CREW_ORDER` is the only legal order), with wild races, crew races, crew boss races and retries.
 - Opponent mods (opponents carry their own parts).
 - Metrics output, so Austin can attach success criteria.
 
@@ -39,10 +39,10 @@
 | Reputation explains the rotation in-world only. **It is not a tracked stat** | `story/canon.md:31`, `story/plot.md:93` |
 | Beating crew members (lieutenants) expands Reiko's paid shop stock; crew boss stakes are money, reputation (lore only), rare shop mods and story progress. Losing means a retry and never losing the car | `story/canon.md`, `story/plot.md:42` (canon 28) |
 | Boss stakes in the barks: "Big cash payout" and "Rare mods unlocked in the shop" (also territory, crew respect, district unlocks, narrative reveals). No pink slips; crew bosses' signature shells come from crew boss betting races at the promoter's subsea parking-area home base, and standout substories award a small pool of oddball shells (canon 26, 28) | `story/barks.md:336-342`, `story/canon.md` |
-| Debt (decision 19): Sabine fronted the engine rebuild, labor and tow on a personal repair tab after feeling responsible for the blowout (she stepped away from the scene and isn't building a crew or garage name). A share of winnings repays it until it clears when the PC beats the Street crew boss at the end of Round 1 (Austin, 2026-11-13; `DEBT_CLEAR_AFTER` in the sim is stale). Reiko gives wholesale at the same moment, and by Round 3 the PC has plenty of parts access. Debt amount, share and discount size are Barry's TBDs | `story/canon.md` (14, 19, 24) |
+| Debt (decision 19): Sabine fronted the engine rebuild, labor and tow on a personal repair tab after feeling responsible for the blowout (she stepped away from the scene and isn't building a crew or garage name). A share of winnings repays it until it clears when the PC beats the Street crew boss at the end of Round 1 (Austin, 2026-11-13; live `DEBT_CLEAR_AFTER` = 1). Reiko gives wholesale at the same moment, and by Round 3 the PC has plenty of parts access. Live amounts (econ-v1): debt **$16,000**, share **0.65**, wholesale **20 %** off T1–T3 | `story/canon.md` (14, 19, 24) |
 | Round 1: until the debt clears, "winnings all go to the debt, so there's little money for mods" (moved from Round 2, 2026-11-13) | `story/plot.md:121` |
 | End of Round 1: Reiko gives wholesale at the same moment the debt clears (Street crew boss; 2026-11-13) | `story/plot.md:98`, `story/canon.md:96` |
-| Invoice covers "Engine, labor, tow" (amount TBD). "Winnings come here first, until we're even." On losing: "Then you owe me longer" | `story/scripts/prologue.md:89-93` |
+| Invoice covers "Engine, labor, tow" (amount **$16,000**). "Winnings come here first, until we're even." On losing: "Then you owe me longer" | `story/scripts/prologue.md:89-93` |
 | Reiko: "Wholesale is for crew. You're not crew." / "We'll see." | `story/scripts/prologue.md:74-77` |
 | Jesse (the Tuner) does mods and installs a DAQ system: "The more races you run, the more data he gets, and the better your car will be." | `story/scripts/prologue.md:72`, `story/plot.md:28` |
 | Each district has exactly one racer type per archetype (15 racer types in total) | `story/canon.md:46-54` |
@@ -84,7 +84,7 @@
 | Turn limits: wild 10, lieutenant 20, boss 30 (in `cli.py`) | `sim/velocity_shift/cli.py:28-32` |
 | Simulated player picks cards at random and rolls QTE uniformly from 1 to 10 | `sim/velocity_shift/simulation.py:52-57` |
 | The ratio counts twice (in opponent level and in QTE). A fix is pending | `CHANGELOG.md:312` |
-| **No money or part code in `sim/` yet.** XP/level/SP progression exists since 2026-11-09 as a story-ladder model (`sim/velocity_shift/progression.py`); the interactive CLI still picks levels from presets | `sim/config/sample_builds.json`, `sim/velocity_shift/cli.py:267-284`, `sim/velocity_shift/progression.py` |
+| Money, debt, purses, mod prices, betting stakes and the 3-round XP/level ladder are live in `equations.py` / `progression.py` (econ-v1, Austin go-ahead 2026-11-13). There is still no shop catalog, `economy.py` ledger or season runner; the interactive CLI still picks levels from presets | `sim/velocity_shift/equations.py`, `sim/velocity_shift/progression.py`, `sim/config/sample_builds.json`, `sim/velocity_shift/cli.py` |
 
 ### 2.4 Conflicts between sources
 
@@ -109,8 +109,8 @@
 
 | Resource | Status | Spec |
 |---|---|---|
-| **Money** (in-world currency name is TBD: `story/canon.md:19`, `:78`) | Exists in docs, not in code | One integer wallet. Everything in the sim is priced in it |
-| **Repair debt** | Story canon (`story/canon.md:40`) | A ledger separate from the wallet: `DEBT_AMOUNT`, paid down by winnings (§7) |
+| **Money** (USD at ×100, Austin 2026-11-13; in-world currency name is still TBD: `story/canon.md` decision 6) | Live in `equations.py` | One wallet. Everything in the sim is priced in USD |
+| **Repair debt** | Story canon (`story/canon.md` 19) | A ledger separate from the wallet: `DEBT_AMOUNT` **$16,000**, paid down by `DEBT_SHARE` **0.65** of each purse while open (§7) |
 | **Car level** | Exists in code (`models.py:54`) | Drives stats, HP, slot unlocks and part level floors. Grows from XP since 2026-11-09 (§8.0, `sim/velocity_shift/progression.py`); slot unlocks and part floors still TBD (Q5 answered) |
 | **Reiko standing** | Story (`story/plot.md:98`) | A boolean `wholesale_unlocked`, set by a story event, not a meter |
 | **Rep / reputation** | Conflicting (C1) | **PROPOSAL:** not tracked in v1. If Austin wants it, the sim adds a counter that gates crew races (resolved: lore only) |
@@ -139,26 +139,29 @@ The opponent's archetype comes from the district's racer-type table (`canon.md:4
 
 ### 5.1 Race payouts
 
-**PROPOSAL, formula shape:**
+**Live formula** (`equations.purse`; round index 0 = R1):
 
 ```
-payout = BASE_PAYOUT[encounter] × ROUND_PAYOUT_MULT[round] × DISTRICT_PAYOUT_MULT[district]   (on a win)
-payout = LOSS_PAYOUT_FRACTION × (the above)                                                   (on a loss)
+payout = BASE_PAYOUT[kind] × ROUND_PAYOUT_MULT[round]                  (on a win)
+payout = GRIND_PAYOUT_FRACTION × BASE_PAYOUT_WILD × ROUND_PAYOUT_MULT  (grind / 10-turn wild)
 ```
+
+Kind is `kid` (wild purse), `mature` / `old_head` (crew purse), or `boss`. `DISTRICT_PAYOUT_MULT` and `LOSS_PAYOUT_FRACTION` are not in the live code (a loss pays nothing).
 
 | Constant | Value | Tune against |
 |---|---|---|
-| `BASE_PAYOUT_WILD` | TBD ("Small", `mod_notes.md:55`) | Must be too small to make farming worthwhile (Q8) |
-| `BASE_PAYOUT_CREW` | TBD ("Moderate", `mod_notes.md:56`) | Main steady income |
-| `BASE_PAYOUT_BOSS` | TBD ("Large" / "Big cash payout", `mod_notes.md:57`, `barks.md:337`) | The race that clears the debt (§7.4) |
-| `ROUND_PAYOUT_MULT[1..3]` | TBD | Should track part prices per tier |
-| `DISTRICT_PAYOUT_MULT[touge, wangan, street]` | TBD, default 1.0 | Only if districts should differ |
-| `LOSS_PAYOUT_FRACTION` | TBD, default 0 | Nothing in the docs pays for a loss |
+| `BASE_PAYOUT_WILD` | **$1,000** | Kid rungs and wilds (R1 base) |
+| `BASE_PAYOUT_CREW` | **$2,500** | Mature and old-head rungs |
+| `BASE_PAYOUT_BOSS` | **$8,000** | Crew boss purse (R1 base) |
+| `ROUND_PAYOUT_MULT` | **1.00 / 1.15 / 1.35** (R1 / R2 / R3) | So R3 boss equals $10,800 in the sim; that billed finale-purse figure is a sim assumption, not canon |
+| `GRIND_PAYOUT_FRACTION` | **0.55** | A grind race pays 0.55 × that round's wild purse |
+| `DISTRICT_PAYOUT_MULT` | not live | Only if districts should differ |
+| `LOSS_PAYOUT_FRACTION` | not live (losses pay 0) | Nothing in the docs pays for a loss |
 | `RETRY_ENTRY_FEE[encounter]` | TBD, default 0 | mod_notes.md:32 "optional". See Q9 |
 
 ### 5.2 Story-race rewards and shop unlocks (canon 19, 28)
 - **Lieutenant win:** `BASE_PAYOUT_CREW` cash, plus horizontal part options at that round's stat budget added to Reiko's paid shop stock as her suppliers open up (`LIEUTENANT_SHOP_UNLOCKS = TBD`).
-- **Crew boss win (Austin, 2026-11-09):** XP (levels, so some skill points, paid immediately: `STORY_XP_BOSS`), `BASE_PAYOUT_BOSS` cash, a shell and a graphic, plus story progress (the next district or round unlocks). Mods are **bought only**.
+- **Crew boss win (Austin, 2026-11-09):** XP (levels, so some skill points, from `STORY_FILL` / `STORY_W`), `BASE_PAYOUT_BOSS` cash (times that round's `ROUND_PAYOUT_MULT`), a shell and a graphic, plus story progress (the next district or round unlocks). Mods are **bought only**.
 - **⚠ CONFLICT, pending Desmond's rewording:** canon 28 (and `mod_notes.md:48`, `:57`) still say crew boss wins add rare tier-jump parts to Reiko's shop, and canon 26 says crew bosses' signature shells come only from betting races. Canon is not rewritten here; Desmond owns the rewording.
 - Story races never give parts away for free (C12).
 
@@ -199,30 +202,28 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 
 **Aero parts and the wind tunnel (PROPOSAL, from the Integration room 2026-11-03; Austin agreed in principle, no numbers yet):**
 - An aero part is a stat part with a **fixed base boost** plus a **small free pool** of points the player assigns to POW, EN or HAN at the speakeasy's wind tunnel (bought from Reiko at Sabine's garage). No new stat layer.
-- The free pool makes an aero part worth more than a fixed part with the same total, so it needs a higher price or a slightly smaller total. `AERO_FREE_POINTS[tier] = TBD`, kept small relative to `TIER_STAT_BUDGET`.
-- **Caps (Austin approved 2026-11-11, slots-v2; `equations.py`):** an aero part goes in **any slot**, **at most one** is equipped (`AERO_MAX_EQUIPPED = 1`), and its whole stat total (base + pool) **counts inside the 105 % cap** (`AERO_COUNTS_IN_MOD_CAP`, `MOD_CAP_FRACTION`). The free pool is **at most 10 %** of the part's total (`AERO_FREE_POOL_MAX_FRACTION = 0.10`, `aero_free_pool_max`), so every `AERO_FREE_POINTS[tier]` must be ≤ 0.10 × that tier's total. Why: with retuning before every race, a 20–30 % pool let average players clear R3 Street's crew boss (with a window mod, 100/0/0) or the Summit (70/20/10) with no grinding; at 10 % no wall is cleared (`unapproved/barry/slots-v2/RESULTS.md` Q5/Q7). Aero is still never worse than the mod it replaces (+0.03 … +1.01 pp at 10 %), so it needs the price premium above.
+- The free pool makes an aero part worth more than a fixed part with the same total, so it needs a higher price or a slightly smaller total. Live price: `AERO_PRICE_MULT` **1.75** × the regular mod of its tier. `AERO_FREE_POINTS[tier] = TBD`, kept small relative to `TIER_STAT_BUDGET`.
+- **Caps (Austin approved 2026-11-11, slots-v2; `equations.py`):** an aero part goes in **any slot**, **at most one** is equipped (`AERO_MAX_EQUIPPED = 1`), and its whole stat total (base + pool) **counts inside the 107 % cap** (`AERO_COUNTS_IN_MOD_CAP`, `MOD_CAP_FRACTION` 1.07, was 1.05; G2 heat system, Austin 2026-11-13). The free pool is **at most 10 %** of the part's total (`AERO_FREE_POOL_MAX_FRACTION = 0.10`, `aero_free_pool_max`), so every `AERO_FREE_POINTS[tier]` must be ≤ 0.10 × that tier's total. Why: with retuning before every race, a 20–30 % pool let average players clear R3 Street's crew boss (with a window mod, 100/0/0) or the Summit (70/20/10) with no grinding; at 10 % no wall is cleared (`unapproved/barry/slots-v2/RESULTS.md` Q5/Q7). Aero is still never worse than the mod it replaces (+0.03 … +1.01 pp at 10 %), so it needs the price premium above.
 - **Tunes lock once set** (aero and regular skill/stat points alike), but a paid respec always exists so a bad build can't strand a player. Story reasons for the cost (Nathaniel): a second tunnel session burns more stolen power, Jesse has to cut and re-weld his own work, and Reiko doesn't take back fitted parts. `RESPEC_COST = TBD` (Q18).
-- **Unlock and respec (Austin, 2026-11-03):** aero unlocks when the debt reaches zero, when the PC beats the Street crew boss at the end of Round 1 (Austin, 2026-11-13; `aero_unlocked` is set by `debt == 0`; `DEBT_CLEAR_AFTER` in the sim is stale). In the story, Sabine takes the PC out for drinks at the speakeasy to celebrate. Parts are bought once and kept, so only tunes relock. A respec, whether Jesse moving skill points or a tunnel retune for aero, moves at most `RESPEC_POINTS_PER_VISIT = TBD` points per visit, at `RESPEC_COST_PER_POINT = TBD` each. A small counter-tune before a boss stays affordable, and a full rebuild costs a lot or takes several visits. Retuning between races is allowed on purpose: you scout, then build a counter.
+- **Unlock and respec (Austin, 2026-11-03):** aero unlocks when the debt reaches zero, when the PC beats the Street crew boss at the end of Round 1 (Austin, 2026-11-13; `AERO_UNLOCK_AFTER` / `DEBT_CLEAR_AFTER` = 1; `aero_unlocked` is set by `debt == 0`). In the story, Sabine takes the PC out for drinks at the speakeasy to celebrate. Parts are bought once and kept, so only tunes relock. A respec, whether Jesse moving skill points or a tunnel retune for aero, moves at most `RESPEC_POINTS_PER_VISIT = TBD` points per visit, at `RESPEC_COST_PER_POINT = TBD` each. A small counter-tune before a boss stays affordable, and a full rebuild costs a lot or takes several visits. Retuning between races is allowed on purpose: you scout, then build a counter.
 
 **Phasing PROPOSAL:** v1 of the sim has stat parts only. Unique-effect parts come in v2, once the hooks are specified separately.
 
 ### 6.4 Tiers, rarity, prices
 | Constant | Value | Notes |
 |---|---|---|
-| `PART_TIERS` | TBD (e.g. Street / Sport / Race / Rare) | Placeholder names |
-| `TIER_LEVEL_FLOOR[tier]` | TBD for the general catalog | `mod_notes.md:43` example: L25+. The mature #2 tier's floor is live, see below |
-| `TIER_BASE_PRICE[tier]` | TBD | Tune so one tier ≈ `PARTS_PER_ROUND_TARGET` purchases per round |
+| `MOD_TIERS` / `PART_TIERS` | Live: T1 / T2 / T3 / T4 | Shop names still TBD |
+| `MOD_TIER_LEVEL_FLOOR` | Live: T1 0, T2 13, T3 30, T4 47 | T2 opens with R2, T3 with R3, T4 after R3 and the P1 win. See below |
+| `MOD_PRICE` | Live: T1 **$1,600**, T2 **$2,800**, T3 **$4,000**, T4 **$8,000** (per slot; T2–T4 are the upgrade from the tier below) | **T4 $8,000 is a stand-in**, not locked. Aero is 1.75 × the regular mod of its tier |
 | `TIER_STAT_BUDGET[tier]` | TBD | Net bonus (upside minus trade-off) |
 | `TIER_UNLOCK[tier]` | TBD: round start / lieutenant ladder / boss defeated / wholesale | Shop gating (canon 28) |
 | `LIEUTENANT_PART_SOURCE[round][crew_step]` | TBD | Horizontal shop options unlocked by beating kids / mature / old heads |
 | `RARE_PART_SOURCE[boss_id]` | TBD | Which crew boss adds which rare tier-jump parts |
 
-**Mature #2 tier level floor (live; slots-v2 fix b3, Austin approved 2026-11-12, "Oh, neat. Yes approved.").** Constants in `sim/velocity_shift/equations.py`: `MOD_TIER_LEVEL_FLOOR`, `MOD_TIER_FLOOR_RUNG`, `MOD_TIER_FLOOR_MARGIN`. Logic in `sim/velocity_shift/progression.py`: `derive_mod_tier_floors`, `mod_tier_floor`, `mod_tier_available`, and `run`.
-- The mod tier a crew unlocks for its mature #2 race (`LADDER_RUNGS[MOD_TIER_FLOOR_RUNG]`) shows **"requires level N"** in the shop. It can't be fitted below level N, even when the player can afford it.
-- N is per crew, keyed by **(round, play position)** like the budget steps, so it's the same in all 216 play orders (sim still models the old 9-crew free-order ladder until Barry's refit; see 01 canon, Round structure, 2026-11-13). N = the level a player has at that rung after entering the crew at the previous boss's level cap and winning on story XP only, + `MOD_TIER_FLOOR_MARGIN`, never above the rung's level cap. `derive_mod_tier_floors()` produces the table, and `sim/tests/test_mod_floor.py` pins it.
-- The tier is fitted once the player reaches N, whether from story XP at a later rung or by grinding. Below N, the mature #2 skip state races with the previous rung's mods.
-- **Why:** without the floor, a strong player (QTE profile `strong`) clears R1 position 2 and R2 position 3's mature #2 races with no grinding, purely because of the newly unlocked tier, which makes the new mod a skip button. With the floor, no strong mature #2 or boss clear depends on the newest mod under the balanced, window or aero10 policies. Weak and average grind are unchanged, and dead wins stay the same. Evidence: `design/notes/slots-v2/README.md` (b3 section).
-- **Where players notice it:** average play only at round 1 position 1's mature #2, which is already a wall and keeps the same grind. Strong players see it at the two fixed rungs, where they now need a few grind races to reach N.
+**Mod tier level floors (live, econ-v1).** Constants in `sim/velocity_shift/equations.py`: `MOD_TIER_LEVEL_FLOOR` T1 0 / T2 13 / T3 30 / T4 47, and `T4_UNLOCK_RACE` = P1. Logic in `sim/velocity_shift/progression.py`: `mod_tier_floor`, `mod_tier_available`. `sim/tests/test_mod_floor.py` pins the floors and the P1 gate.
+- A tier shows **"requires level N"** in the shop and can't be fitted below N, even when the player can afford it. T2 opens with R2 (cap of R1 is 12), T3 with R3 (cap of R2 is 29), T4 after R3 (cap of R3 is 46) once the PC wins pre-finale race P1.
+- These replace the old per-(round, play position) floors (`MOD_TIER_FLOOR_RUNG`, `MOD_TIER_FLOOR_MARGIN`, `derive_mod_tier_floors`) from the 9-crew free-order ladder.
+- The earlier slots-v2 write-up of why a floor exists (a newly unlocked tier must not skip a wall) is in `design/notes/slots-v2/README.md` (b3 section); that evidence is from the old ladder and is not re-simmed here.
 
 The catalog itself (individual parts) lives in a data file (§9.2). **No part list is invented here.** It is authored after Q6/Q7 are answered.
 
@@ -234,10 +235,10 @@ Opponents carry archetype-matched parts (`mod_notes.md:61`). **PROPOSAL:** `OPPO
 ## 7. Repair debt and Reiko's discount
 
 ### 7.1 Rules (from canon)
-- The debt starts at `DEBT_AMOUNT = TBD` after the Prologue (`canon.md:25`, `prologue.md:89`).
-- While the debt is open, a share of each win goes to the debt and the rest to the wallet: `DEBT_SHARE = TBD` (< 1.0). Austin ruled on 2026-11-02 that not all winnings go to the debt, which overrides the "all winnings" wording in `canon.md:40` (C11, Q4).
-- It must clear **at the end of Round 1**, when the PC beats the Street crew boss (Austin, 2026-11-13; canon 19).
-- Wholesale unlocks **at the end of Round 1** (`plot.md:98`): `WHOLESALE_DISCOUNT = TBD` (a fraction off part prices).
+- The debt starts at `DEBT_AMOUNT` **$16,000** after the Prologue (`canon.md` 19, `prologue.md:89`).
+- While the debt is open, a share of each win goes to the debt and the rest to the wallet: `DEBT_SHARE` **0.65**. Austin ruled on 2026-11-02 that not all winnings go to the debt, which overrides the "all winnings" wording (C11, Q4).
+- It must clear **at the end of Round 1**, when the PC beats the Street crew boss (Austin, 2026-11-13; canon 19; live `DEBT_CLEAR_AFTER` = 1).
+- Wholesale unlocks **at the end of Round 1** (`plot.md`): `WHOLESALE_DISCOUNT` **0.20** off list on T1–T3 (`WHOLESALE_TIERS`), from `WHOLESALE_STARTS_AFTER` 1 through `WHOLESALE_ENDS_AFTER` 3 (never on T4).
 - Losing doesn't add debt. It only delays payment ("owe me longer", `prologue.md:93`), unless the retry fee (Q9) is charged against the debt.
 
 ### 7.2 Timeline
@@ -253,45 +254,45 @@ Opponents carry archetype-matched parts (`mod_notes.md:61`). **PROPOSAL:** `OPPO
 | Option | How it works | Pros | Cons |
 |---|---|---|---|
 | ~~**A. Strict**~~ (ruled out) | `DEBT_SHARE = 1.0`. Nothing is bought until the debt clears. The discount only matters afterward | Literal canon (`canon.md:40` "all") | Reiko's unlock does nothing for part of Round 2 |
-| **B. Allowance** | `DEBT_SHARE = TBD < 1.0` once wholesale unlocks, so the PC keeps a sliver | Wholesale is felt right away | Bends "all winnings". Needs Austin and Nathaniel |
+| **B. Allowance** (live) | `DEBT_SHARE` **0.65** from the Prologue | Wholesale is felt right away; the PC can buy a few parts at full price in Round 1 | Bends "all winnings", already ruled as the live baseline |
 | **C. Boss money is free** | Wild/crew winnings go to the debt, and boss payouts go to the wallet (or the reverse) | Clear rule, and boss cash feels big | Bends canon. Story needs to change |
 | **D. Reiko cuts the bill** | The wholesale unlock also reprices the remaining debt by `WHOLESALE_DISCOUNT` (she sources the rebuild parts cheaper) | Ties Reiko's arc to the debt, and the debt clears sooner | New story beat. Needs Nathaniel |
 
-**Ruled out:** A. Austin said on 2026-11-02 that not all winnings go to the debt. **Recommendation:** run **B** as the baseline, with `DEBT_SHARE` applying from the Prologue (not only after wholesale), so the PC can buy a few parts at full price in Round 1 and the wholesale unlock is felt right away. Build `DEBT_SHARE` and a `DEBT_RULE` switch so B, C and D can be compared in the same season run before anyone decides.
+**Ruled out:** A. Austin said on 2026-11-02 that not all winnings go to the debt. **Live (econ-v1):** option **B**, with `DEBT_SHARE` **0.65** applying from the Prologue (not only after wholesale), so the PC can buy a few parts at full price in Round 1. Options C and D and a `DEBT_RULE` switch are not live (07 Q4).
 
 ### 7.4 How the clearing race gets picked (once numbers exist)
-The clearing race isn't chosen by hand. It falls out of the season run: `DEBT_AMOUNT` is solved for so that the **median** clearing race (over N seeds) lands at the target race (Q1, locked 2026-11-13: the Street crew boss at the end of Round 1). The sim reports the 10th–90th percentile spread across seeds, so Austin can see how much it moves with losses and retries. **Since 2026-11-03 this is a hard target:** aero unlocks when the debt reaches zero, so tuning `DEBT_AMOUNT` also decides when the speakeasy opens (target since 2026-11-13: the Street crew boss at the end of Round 1; it was the first Round 2 crew's boss from 2026-11-10, and "mid Round 2" before that).
+**Live amount:** `DEBT_AMOUNT` is the flat **$16,000** in `equations.py`, with `DEBT_CLEAR_AFTER` = 1. Canon (Q1, locked 2026-11-13) still times the clear to the Street crew boss at the end of Round 1, the same moment wholesale unlocks and aero opens. A median-clear solve over seeds is not what set this number. (The target used to be the first Round 2 crew's boss from 2026-11-10, and "mid Round 2" before that.)
 
 ---
 
-### 7.5 The promoter's betting side game (PROPOSAL)
-Story: the Wangan crew boss is a race promoter who opens a high-stakes betting side game after Round 2 (`story/canon.md:46`, `story/plot.md:63`). Nothing about betting exists in the sim or design docs today, so everything below is a proposal with `TBD` values.
+### 7.5 The promoter's betting side game (live stakes and odds, econ-v1)
+Story: the Wangan crew boss is a race promoter who opens a betting side game after Round 2 (`story/canon.md` 21, `story/plot.md`). Shell and prompt rules stay with canon 26. Live constants are in `equations.py` (Austin go-ahead 2026-11-13: fair odds, unlock after R2, any race, no cap).
 
-- **What you bet on:** only the PC's own next race. The PC stakes wallet cash on winning before the race starts. No betting on other racers in v1.
-- **Unlock:** a story flag `betting_unlocked`, set at the **end of Round 2** (Austin and canon, 2026-11-03), separate from the aero unlock. It's available in Round 3 and after, and Round 3's difficulty jump makes risky bets more tempting. Crew bosses' signature shells (cosmetic car bodies) are a bonus prize only in crew boss betting races at the promoter's subsea Wangan parking-area home base—any wild race can become a betting race through a prompt, which never awards shells—while a few standout substories award oddball shells (canon 26, 28). The PC never stakes their own shell.
-- **Odds:** the promoter offers a line based on how likely the PC is to win: `odds = (1 - HOUSE_EDGE) / p_line`, where `p_line` is the expected win chance for that encounter type at that level, taken from the season sim. The house edge means the average bettor loses a little, while a player who reads patterns better than the sim's AI picker can beat the line. That ties betting to skill, not luck.
-- **Stakes:** `BET_MIN` and `BET_MAX_FRACTION` (a cap as a fraction of the wallet), plus a hard cap per race `BET_MAX[round]`. The caps keep one lucky streak from breaking the shop curve.
-- **High-stakes option:** the PC can raise the odds by accepting a handicap the promoter asks for to make the race a better show, such as giving the opponent a level bump or starting behind. `HANDICAP_ODDS_BONUS` is TBD. This option is what makes it "high-stakes".
-- **Risk:** a loss forfeits the whole stake. Boss races are excluded so a story retry can't be bet on and replayed.
+- **What you bet on:** the PC's own race. The PC stakes wallet cash on winning before the race starts. `BET_ELIGIBLE` is **any** race (story, grind/wild, pre-finale arc, finale). No betting on other racers in v1.
+- **Unlock:** `BETTING_UNLOCK_AFTER` = 2, set at the **end of Round 2** (Austin and canon), separate from the aero unlock. Crew bosses' signature shells (cosmetic car bodies) are a bonus prize only in crew boss betting races at the promoter's subsea Wangan parking-area home base—any wild race can become a betting race through a prompt, which never awards shells—while a few standout substories award oddball shells (canon 26, 28). The PC never stakes their own shell.
+- **Odds (live):** true fair odds, no house edge, no clamp. Net payout on a win is `stake × (1 − p) / p`, where p is the player's real win probability (`bet_net_payout`; `BET_ODDS` = "fair", `BET_HOUSE_EDGE` = 0, `BET_ODDS_CLAMP` = False). The earlier promoter house-edge line is not live.
+- **Stakes (live):** `BET_MIN` **$500** to `BET_MAX` **$2,000**. There is no wallet-fraction cap and no count cap (`BET_COUNT_CAP` is None).
+- **High-stakes option:** a handicap the promoter asks for (`HANDICAP_ODDS_BONUS`) is still TBD (Q16) and is not in the live code.
+- **Risk:** a loss forfeits the whole stake.
 - **Debt share:** by canon, the debt clears at the end of Round 1, before betting unlocks, so normally they never overlap. If a player reaches Round 3 with debt still open, `DEBT_SHARE` applies to net bet winnings the same way it applies to purses, so betting can't be used to dodge the debt.
-- **Reiko's discount:** no direct link. Bet winnings go to the wallet and are spent at the wholesale prices that unlocked after Round 1, which makes betting the main way to buy top-tier parts in Round 3.
-- **Farming guard:** betting is allowed only on races that pay a purse (and on capped wild races if Q8 caps them), so the game can't be farmed with endless low-risk bets.
-- **Sim side:** `shop_policy.py` gets a betting policy (never, flat stake, or a fraction of the wallet scaled by `p_line`), so the season run can compare income with and without betting.
+- **Reiko's discount:** no direct link. Bet winnings go to the wallet and are spent at the wholesale prices that unlocked after Round 1.
+- **Sim side:** `bet_allowed` / `bet_net_payout` in `equations.py`. A shop-policy Monte Carlo still lives in `unapproved/barry/econ-v1/` (not the live progression walk).
 
 ## 8. Progression curve
 
-### 8.0 XP → levels → skill points (locked by Austin 2026-11-09; all numbers stand-ins pending playtest)
-Code: `sim/velocity_shift/progression.py`; constants: `sim/velocity_shift/equations.py` (story race-balance + XP/level section); report: `python scripts/run_progression.py` from `sim/`.
-- **Loop.** Story wins and grind races pay XP; XP fills car levels; each level pays skill points (`sp_per_level`). Skill points come only from levels. SP per level grows with level, and XP per level grows faster (`xp_to_next`), so leveling gets harder.
-- **XP cap.** The level cap is the SP cap (`SP_CAP_FRACTION` of the reference). Each story win raises the cap by a front-loaded number of levels (`CAP_ALLOC_CREW`, `CAP_ALLOC_ROUND_OPEN`). XP earned past the cap is lost, so over-grinding can't break the curve.
-- **Grind between story characters.** Story XP alone leaves the player short of the cap at two rungs per crew: the mature #2 member and the crew boss. Those are the **walls**; the player grinds there to reach the cap. Skipping the grind gives the pattern **3 clear rungs (kid, kid, mature #1) → wall (mature #2) → 2 clear rungs (old heads) → wall (boss)**. Average play at a skipped wall wins roughly 40–55 %.
-- **Story XP.** Every story win pays visible XP, at least `STORY_XP_LT_FLOOR` of a level. Crew boss wins pay more than any lieutenant win of the crew, immediately (normally 2 levels; the boss before a round-opening crew pays its large opening step).
-- **Per-crew taper.** A grind race pays a fraction of the XP needed for the current level (`grind_payout_fraction`). The fraction falls with the rung inside a crew and slowly with level across the game, so walls grow gently: about 6–7 races in Round 1 to 8–10 in Round 3. It resets when the next crew starts.
-- **Budgets.** Opponent budgets step by round position (`OPTION_A_CREW_STEP`, `OPTION_A_ROUND_STEP`) keyed by play position (free crew order, `DISTRICTS` / `DEFAULT_CREW_ORDER`; the first crew of R2/R3 gets the round step) (sim still models the old 9-crew free-order ladder until Barry's refit; see 01 canon, Round structure, 2026-11-13), and follow the level curve (a boss's cap is the nearest whole level).
-- **Round 3 → finale.** Completing Round 3 opens the pre-finale training arc (01 canon, 2026-11-13); winning its first race (P1) unlocks the big finale mods (T4). Arc purses and race budgets are in Barry's econ-v1 draft, not live. The finale is exempt from the caps: each finale stat rise is split `FINALE_MOD_SHARE` mods / `FINALE_GRIND_SHARE` levels.
+### 8.0 XP → levels → skill points (locked by Austin 2026-11-09; all XP numbers stand-ins pending playtest)
+Code: `sim/velocity_shift/progression.py`; constants: `sim/velocity_shift/equations.py` (econ-v1 section); report: `python scripts/run_progression.py` from `sim/`. Live on the 3-round ladder and the heat-system oracle `sim/config/winrate_g2_econ_v1.json` (Austin go-ahead 2026-11-13).
+- **Loop.** Story wins and grind races pay XP; XP fills car levels; skill points come only from levels (`sp_at_level`). SP grows with level (`SP_START` × `SP_GROWTH_PER_12_LEVELS` **(L / 12)**), and XP per level grows faster (`xp_to_next(L) = XP_BASE × XP_GROWTH ** L`), so leveling gets harder.
+- **XP cap.** The level cap is the SP cap (`SP_CAP_FRACTION` 0.80 of P). Caps are per round, not raised per story win: `CAP_LEVEL` **12 / 29 / 46** (R1 / R2 / R3). Finale caps are `FINALE_CAP_LEVEL` **63 / 76 / 95 / 114**. XP earned past the current cap is lost. (`CAP_ALLOC_CREW` / `CAP_ALLOC_ROUND_OPEN` are removed.)
+- **Story XP.** A round's story races pay `STORY_FILL` (0.62 / 0.75 / 0.80) of the XP from the round's entry level to its cap, split over the 7 rungs by `STORY_W`. Story alone does not reach the cap, so the player grinds the shortfall.
+- **Grind taper.** A 10-turn grind win pays `GRIND_FRAC` (0.70) × `xp_to_next(L)` × a taper that falls toward `GRIND_TAPER_FLOOR` (0.20) as the cap nears (`GRIND_TAPER_TAU` 3.6). (`TAPER_*` and `grind_payout_fraction` are removed.)
+- **Budgets.** Opponent budget B = `C_ROUND` / `LADDER_TARGET_R` on the 1.07 cap chain (`ANCHOR_B` 330, `K_STEP` 1.07, `MOD_CAP_FRACTION` 1.07). `DEFAULT_CREW_ORDER` is the only legal order (Street, then Wangan, then Touge). (`OPTION_A_CREW_STEP` / `OPTION_A_ROUND_STEP` and the old 9-crew free-order ladder are removed.)
+- **Round 3 → finale.** Completing Round 3 opens the pre-finale training arc (01 canon, 2026-11-13); winning its first race (P1) unlocks the big finale mods (T4). Live sim arc purses (`ARC_PURSE`) are $2,500 / $3,375 / $5,000 for 10- / 20- / 30-turn races. The billed finale purse `FINALE_PURSE` ($10,800, equal to the R3 boss purse) is a sim assumption, not canon. (`FINALE_MOD_SHARE` / `FINALE_GRIND_SHARE` are removed.)
 - **Rewards.** Boss wins pay XP (some SP via levels), money, a shell and a graphic; mods are bought only (see the canon 28 conflict in §5.2).
-- **Open items:** (1) every XP number is a stand-in until playtest; (2) Street is the thinnest district on its own tracks (Round 3 old head #2 clears at only 55–57 % with the grind skipped); (3) skipped walls dip on Wangan's tracks (to 33–37 %) and at Finale Myth #2 (36–46 % pooled); (4) ~~aero has no rule yet against the SP/mod caps~~ resolved 2026-11-11 (Austin): aero counts inside the 105 % cap, free pool ≤ 10 %, any slot, max one (§6.3); (5) the finale window is extrapolated above r 1.05 (`KNOT_WINDOW_105` ends at 1.05).
+- **Open items:** (1) every XP number is a stand-in until playtest; (2) T4 $8,000 is a stand-in; (3) ~~aero has no rule yet against the SP/mod caps~~ resolved 2026-11-11 (Austin), and the live cap is 107 %: aero counts inside the cap, free pool ≤ 10 %, any slot, max one (§6.3); (4) the earlier Street / Wangan / Myth #2 skip-wall win-rate notes were from the pre-refit 9-crew ladder and are not restated here; (5) the finale window is extrapolated above r 1.05 (`KNOT_WINDOW_105` ends at 1.05).
 
+
+The bullets below are the original 2026-11-02 season-runner proposal. The "leveling barely moves win rates" finding describes the old CLI (`player × ENCOUNTER_RATIOS`), not the live ladder; the "blocker for picking a debt number" is resolved by the live econ-v1 amounts.
 
 - **Key finding from the code:** opponent level is `round(player level × ratio)` (`cli.py:305`) and opponent QTE is fixed per encounter (`ai.py:292-308`). Raising the player's level therefore barely changes win rates, because opponents scale with the player. **Under the current model, parts are the only thing that moves the player relative to opponents**, and "crews get stronger every round" (`canon.md:26`) has nothing behind it.
 - **PROPOSAL:** in season mode, opponent level and parts come from a table, `OPPONENT_LEVEL[round][district][encounter] = TBD` and `OPPONENT_PART_TIER`, instead of from the player's level. The player's car level grows through `XP_PER_RACE[encounter] = TBD` (Jesse's DAQ, Q5). The pending encounter-scaling fix (`CHANGELOG.md:312`) should be designed for this mode.
@@ -340,7 +341,7 @@ season.json ──► campaign.py ──► for each race:
 ### 9.5 Test plan outline
 - `parts`: level floors enforced, slot limits enforced, trade-offs applied, HP unchanged, bonuses additive.
 - `economy`: the debt never goes negative, overpayment flows to the wallet, wholesale applies only after the flag, nothing can be bought while the debt is open under rule A, retry fee follows Q9.
-- `campaign`: deterministic with a fixed seed, rounds run Street, Wangan, Touge with one crew each (2026-11-13; the live `progression` tests still use the old free-order `DEFAULT_CREW_ORDER` until Barry's refit), a boss loss always retries, the season always terminates (retry cap as a safety stop).
+- `campaign`: deterministic with a fixed seed, rounds run Street, Wangan, Touge with one crew each (2026-11-13; the live `progression` tests use this same `DEFAULT_CREW_ORDER`, the only legal order), a boss loss always retries, the season always terminates (retry cap as a safety stop).
 - Regression: with no parts and no economy, single-match results match today's `SimulationRunner`.
 
 ---
@@ -359,8 +360,8 @@ season.json ──► campaign.py ──► for each race:
 10. Player vs opponent effective power per round (stat totals after parts, levels, HP).
 11. How often each part is bought or equipped (dead or overpowered parts).
 12. Deck-mix shift caused by parts (POW/EN/HAN share).
-13. Betting: share of Round 3 income from bets, the bettor's average return against the house edge, and the chance of going broke under each betting policy.
-14. Substories: share of wallet cash and debt repayment from substories, how much clearing zero vs all substories shifts the Round 2 debt-clearing race, and equip rate of free substory sidegrades vs Reiko's paid shop parts.
+13. Betting: share of Round 3 income from bets, the bettor's average return at fair odds, and the chance of going broke under each betting policy.
+14. Substories: share of wallet cash and debt repayment from substories, how much clearing zero vs all substories shifts the end-of-Round-1 debt-clearing race, and equip rate of free substory sidegrades vs Reiko's paid shop parts.
 
 ---
 
@@ -368,7 +369,7 @@ season.json ──► campaign.py ──► for each race:
 
 Pull from the top, one at a time; new questions go to the bottom. Remove a question once Austin answers it and record the answer in the section it affects.
 
-1. (2026-11-01) **Encounter-scaling fix:** approve a proposal before any debt or payout numbers are set (§8)? Right now leveling barely moves win rates.
+1. (2026-11-01) ~~**Encounter-scaling fix:** approve a proposal before any debt or payout numbers are set (§8)?~~ Live purses, debt and prices are set (econ-v1, 2026-11-13). The old note that leveling barely moves win rates described the pre-ladder CLI.
 2. (2026-11-02) **Success criteria** for the economy and mods sim. Nothing runs until these arrive and this spec is approved.
 3. (2026-11-02) ~~**Which Round 2 race clears the debt?**~~ Resolved 2026-11-13: the Street crew boss at the end of Round 1.
 4. (2026-11-02) **Overlap add-ons:** a share of each win goes to the debt (canon decision 19). Do C (boss money is free) or D (Reiko cuts the bill) layer on top? Desmond's alternative: purses go fully to the debt and bonus payouts trickle to the PC.
@@ -383,7 +384,7 @@ Pull from the top, one at a time; new questions go to the bottom. Remove a quest
 13. (2026-11-02) Can the PC switch cars or archetypes, or is it one car for the whole game (`mod_notes.md:70`)?
 14. (2026-11-02) Is the Prologue race with Sabine simulated (scripted loss) or skipped?
 15. (2026-11-02) Does money matter in the Finale?
-16. (2026-11-02) **Betting (§7.5):** own races only, and handicap bets in or out of v1? The unlock is settled: end of Round 2.
+16. (2026-11-02) **Betting (§7.5):** stakes ($500–$2,000) and fair odds are live (econ-v1). Still open: own races only vs the live `BET_ELIGIBLE` = any, and handicap bets in or out of v1? The unlock is settled: end of Round 2.
 17. (2026-11-02) **Body kits and wings:** Arthur says each needs a full alternate body mesh per car. In or out? Texture swaps and stance are cheap and already possible.
 18. (2026-11-03) **Respec cost:** what are `RESPEC_POINTS_PER_VISIT` (points moved per visit) and `RESPEC_COST_PER_POINT`, for Jesse's skill points and for aero retunes? Should the two share values? Expensive but always possible.
 19. (2026-11-04) **Losing the race-3 gate:** mods need a *win* at scripted race 3 (canon 19), so what happens when the player loses race 3: an immediate rematch with the same driver, or more races until they win one? And for crew members and crew bosses (who remember losses per canon 27), should a remembered loss change the rival's difficulty or only their dialogue?
@@ -393,6 +394,6 @@ Pull from the top, one at a time; new questions go to the bottom. Remove a quest
 Resolved: rep is lore only, with no tracked number (Austin via Nathaniel, 2026-11-02). Mods may show on the car within the car rules (Arthur, 2026-11-02).
 
 **Flags:**
-- **Desmond / Nathaniel (story):** the overlap rule (Q4) and option D are story changes. Jesse's DAQ as the leveling reason, and as the fixed car-specific slot (Q5). The currency name is still TBD.
+- **Desmond / Nathaniel (story):** the overlap rule (Q4) and option D are story changes. Jesse's DAQ as the leveling reason, and as the fixed car-specific slot (Q5). The in-world currency name is still TBD (canon 6); the sim unit is USD.
 - **Arthur / Desmond (art & scope):** `Notes.md:40` says perma mods change the car's look; part categories (§6.3) will need visual variants if that holds. Canon 26/28 also adds a small pool of standout substory shells (`SUBSTORY_SHELL_COUNT = TBD`, full body meshes) alongside cheap per-shell UV livery swaps (`art_direction.md` A.3); confirm mesh budget before locking shell count. No art work is requested until approved.
-- **Blocker:** the encounter-scaling fix comes before any debt or payout numbers (§8).
+- **Blocker (resolved for live amounts):** the old encounter-scaling fix is no longer gating the live purses, debt and prices (econ-v1). Respec costs, substory cash, retry fees and the T4 stand-in are still open.

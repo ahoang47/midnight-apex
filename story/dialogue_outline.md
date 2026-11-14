@@ -56,7 +56,7 @@ All dialogue in play order, scene by scene: beats plus rough lines. Each round i
 
 ### 5. The debt
 - **Who:** Sabine, Jesse, Reiko, PC.
-- Sabine: "Engine, labor, tow. I fronted all of it." (locked; amount `<OPEN: debt amount, Barry>`)
+- Sabine: "Engine, labor, tow. I fronted all of it." (locked; amount **$16,000**, econ-v1, Austin go-ahead 2026-11-13)
 - Sabine: "So you drive it off. Winnings come here first, until we're even." (locked)
 - PC: "And if I lose?" / Sabine: "Then you owe me longer. So don't." (locked)
 - Jesse: "Translation: welcome to the team." / Reiko: "Translation: you're on probation." / PC: "...Deal." (locked)

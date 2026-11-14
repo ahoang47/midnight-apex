@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-13 — Desmond [design, story]: USD money pass after econ-v1 (Austin go-ahead 2026-11-13)
+
+- **Why:** econ-v1 is live (`0af2715`). Barry's money, unlock and ladder constants are in `sim/velocity_shift/equations.py`; design/ and story/ still had TBDs, old cash-unit wording, and stale 9-crew labels.
+- **What:** money is written in USD at ×100. Live figures used throughout: debt **$16,000** at share **0.65**, wholesale **20 %** off T1–T3, base purses **$1,000 / $2,500 / $8,000** times `ROUND_PAYOUT_MULT` 1.00 / 1.15 / 1.35, regular mods T1 **$1,600** / T2 **$2,800** / T3 **$4,000** / T4 **$8,000** (T4 is a stand-in), bets **$500–$2,000** at fair odds. The billed finale purse ($10,800) is documented as a sim assumption, not canon. `design/02` and `design/07` drop the stale 9-crew / `OPTION_A_*` / `CAP_ALLOC_*` / `DEBT_CLEAR_AFTER` labels that econ-v1 resolved, and cite the live caps (12 / 29 / 46, finale 63 / 76 / 95 / 114) and 107 % mod cap. Story debt and betting TBDs in `canon.md`, `plot.md`, `dialogue_outline.md` and `prologue.md` are filled from the same figures. The in-world currency name stays TBD (story canon 6).
+- **Not changed:** the locked canon block in `design/01` (non-money conflicts flagged, not edited); respec costs, substory cash, retry fees, shell-drop rates and handicap bets (still not live); historical study notes under `design/notes/slots-v2/` and `qte-v1/`.
+
+---
+
 ## 2026-11-13 — Barry [sim]: econ-v1 XP / mods / economy live on the 3-round ladder (Austin go-ahead 2026-11-13)
 
 - **Approval:** Austin, 2026-11-13, "Yeah works for now" — make econ-v1 live with the $8,000 T4 stand-in. Earlier picks the same day: Variant C, S1 boss r stays 1.053, keep the fixed finale budgets and climb to ~L114, money x100 to USD, betting at true fair odds / unlock after R2 / any race / no cap, T4 tier unlocking at P1, F4 = Summit vs Sabine.

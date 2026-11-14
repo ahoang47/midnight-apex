@@ -65,7 +65,7 @@ sim/main.py
 | `sim/velocity_shift/ai.py` | Encounter laps/phases; legacy AI QTE (HP/DP only) |
 | `sim/velocity_shift/trace.py` | Structured execution logger |
 | `sim/velocity_shift/simulation.py` | Headless batch runner, simulated player (read model + reserve pacing), result export |
-| `sim/velocity_shift/progression.py` | Story ladder (budgets, level caps, story/grind XP, walls) over the N=4000 win-rate table `sim/config/winrate_n4000.json`; report via `sim/scripts/run_progression.py` |
+| `sim/velocity_shift/progression.py` | Story ladder (budgets, level caps, story/grind XP, walls) over the econ-v1 heat-system win-rate table `sim/config/winrate_g2_econ_v1.json`; report via `sim/scripts/run_progression.py` |
 | `sim/velocity_shift/cli.py` | Interactive frontend (setup, prompts, display, entry point) |
 | `sim/velocity_shift/config.py` | Factory function for archetype-based builds |
 
@@ -97,6 +97,6 @@ progress totals accumulate; after max_turns the higher total wins
 
 - **Stats:** POW / EN / HAN set each gauge's capacity and recovery (stat share) and weight the payoff of the stance played (`STAT_M_W`); the stat gap is the ratio r (player / opponent), which sets `V`, gauge size and the visible QTE zone. The SP + mods cap is `MOD_CAP_FRACTION`.
 - **Heat:** POW = engine heat, HAN = suspension load, EN = brake/tire heat; all three recover during the race. Rules and values: `sim/velocity_shift/equations.py` ("Heat / load resource system") and `heat.py`; study: `unapproved/barry/resources-v4/RESULTS.md` (v4b, G2_slant_m10). Boss heat behaviour and the district tuned splits are open for Desmond / Nathaniel.
-- **Difficulty:** set by r per rung (`LADDER_R`, the target r at each rung's level cap) and by race length (`kappa_for_length`), not by level-gap ratios or per-encounter knobs. Targets the heat system was fitted to: perfect play at 80 % stats wins 10–25 % on 20/30-turn races, perfect play at 100 % ≥ 85 %, average play at the cap 60–75 % (check: `sim/scripts/balance_gauntlet.py`).
-- **Progression:** levels, caps, grind walls and the mod tier floor live in `sim/velocity_shift/progression.py`; see 07 §6 and §8. **Stale since 2026-11-13:** it still runs on the card-draw win-rate oracle at `PROGRESSION_MOD_CAP_FRACTION`; a refit for the heat system is pending.
+- **Difficulty:** set by r per rung (`LADDER_TARGET_R`, the target r at each rung's level cap) and by race length (`kappa_for_length`), not by level-gap ratios or per-encounter knobs. Targets the heat system was fitted to: perfect play at 80 % stats wins 10–25 % on 20/30-turn races, perfect play at 100 % ≥ 85 %, average play at the cap 60–75 % (check: `sim/scripts/balance_gauntlet.py`).
+- **Progression:** levels, caps, grind walls and the mod tier floor live in `sim/velocity_shift/progression.py`; see 07 §6 and §8. Live since econ-v1 (Austin go-ahead 2026-11-13): the 3-round ladder (`CAP_LEVEL` 12 / 29 / 46, finale caps `FINALE_CAP_LEVEL` 63 / 76 / 95 / 114) on the heat-system oracle `sim/config/winrate_g2_econ_v1.json`.
 - **Global knobs:** every game constant is a named module-level value in `sim/velocity_shift/equations.py`; docs cite names, not copied values. Seeded RNG keeps runs reproducible.
