@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-14 — Arthur [art]: Cel A ported onto the two-corner test + quick playtest (unapproved experiment)
+
+- **Why:** Austin, 2026-11-14: "I like Cel A. Are you able to apply this to the two corner test and do a quick playtest?"
+- **What:** `unapproved/arthur/experiments/cel_two_corner/` stages Gordon's `unapproved/gordon/two-corner/godot` by symlink (his folder is not edited) and overlays the Cel A shaders, `project.godot` and a `main.gd` copy (changes marked `# CEL:`). Toggle: `cel/enabled`, `-- --cel 0|1`, or F7. The G-buffer pass is picked per camera (cull layers 19/20), so the ink renders live in the same frame. The HUD is untouched, the 3D stays at 640×480, and the RGB555 + Bayer pass is kept.
+- **Fixes found in play:** rear-view filled solid with ink (a silhouette now needs a 1/depth break); car decals inked (moved to layer 18, out of the G-buffer); touge asphalt speckle crawl (road posterise 9 steps, radius 6).
+- **Playtest:** a full scripted race (seed 3, both corners, finish) in Godot 4.6.3 on llvmpipe. No errors in the logs. Cel on ~66 ms vs off ~47 ms a frame (software rendering, needs a GPU check). The HUD pixels are identical with cel on and off. Key frames, a compare sheet, an mp4 and the motion numbers are in the folder; see its README.
+- **Not changed:** Gordon's folder, any asset, the approved district frames, `../cel_shaded/`.
+
+---
+
 ## 2026-11-14 — Barry [design]: design/02 and design/07 follow the live-track recalibration (`6d3641f`)
 
 - **Why:** Austin, 2026-11-14: "Update all and give me a summary of what a player can expect through the course of the game."
