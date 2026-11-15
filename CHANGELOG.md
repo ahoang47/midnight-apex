@@ -8,6 +8,20 @@
 
 ---
 
+## [art] 2026-11-15 — Arthur: mountain districts, every district a pass, all three entry lanes (unapproved mockup)
+
+- **Why:** on tight_districts, Austin said: "Neither Wangan nor street give the sense of being on a mountain pass. Also, please render all three lane placements."
+- **What:** added `unapproved/arthur/mockups/mountain_districts/`, built on tight_districts, which is left untouched.
+  - It has 9 Cel A soft CAT frames: touge, wangan and street, each at entry OUT, MID and IN. It also has a 3×3 sheet.
+  - **Wangan** is now a mountain skyline / turnpike: 7.5 m wide at 6–8 %. The uphill side has a retaining wall, a drainage channel, a shotcrete cut and cedars. The downhill side has the parapet, then the bay 180 m below with city lights, the port, cranes and a bridge. It keeps the lamps, km posts and a toll-road sign.
+  - **Street** is now a hillside onsen town street: 5.8 m wide at 8–10 %. Uphill there are stone retaining walls with shops set into them and houses on the terraces. Downhill there is a handrail, house roofs below the road, steps, and town lights in the valley.
+  - Touge is unchanged.
+  - **Fixes:**
+    - `_lane_d` always resolved to OUT. It was passing outside/center/inside to `Track.lane_offset`, so every earlier district frame was on OUT.
+    - The chase camera now follows the lane.
+    - The sky cylinder is scaled so it no longer over-draws far geometry.
+  - New Blender props: retaining wall, stone wall, house, handrail, steps and toll sign, each 8–52 tris. The Godot copy is self-contained, with changes marked `# MOUNTAIN:`. Gordon's files are untouched, and nothing is approved.
+
 ## [art] 2026-11-15 — Arthur: tight district roads for cat and mouse (unapproved mockup)
 
 - **Why:** Austin is thinking of switching focus to cat-and-mouse-only gameplay while keeping each district distinct. He said the roads need to be "a little tight", asked for one frame rather than a full gameplay draft, and said street needs something too.
