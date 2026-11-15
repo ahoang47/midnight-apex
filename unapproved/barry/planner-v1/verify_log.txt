@@ -1,0 +1,8 @@
+checking published canvas 786f1da3 (byte-identical to page_source.tsx)
+compared 622 win cells; worst |js-py| = 0.100 pp
+no mismatches
+cells not exact: 17 story R1oh1 c6080 dist: js 31 py 30.9; story R1oh1 c6080 hard: js 31 py 30.9; story R2boss c8060 dist: js 13.2 py 13.3; story R3oh1 c8060 hard: js 2.9 py 2.8; mixed R3oh2 c8060 hard: js 29.1 py 29; mixed R3boss c8080 dist: js 94.4 py 94.5; hard R1kid1 c6080 dist: js 80.7 py 80.8; hard R1kid1 c6080 hard: js 80.7 py 80.8; hard R2mat2 c6080 dist: js 77.3 py 77.2; hard R2mat2 c6080 hard: js 77.3 py 77.2; hard R3oh2 c8060 dist: js 81.3 py 81.2; hard R3boss c8080 dist: js 94.4 py 94.5; arc c6080 M21 dist: js 100 py 99.9; arc c6080 M21 hard: js 100 py 99.9; arc c6080 M22 dist: js 53.2 py 53.1; arc c6080 M22 hard: js 53.2 py 53.1; arc c8080 F3 dist: js 86.3 py 86.2
+story 80/80 mins [ 53, 54.4, 50.5 ] bosses [ 53, 57.7, 55.8 ]
+at cap 60/60 [ 31.6, 40.1, 30.2 ] 80/80 [ 94.9, 91.6, 92.9 ]
+finale 80/80 [ 81.7, 82.7, 79.3, 81.7 ]
+Live sim (leftover XP carry-over live 2026-11-14); py_reference.py runs the unpatched live sim. UI-only change: section order Setup, Race inspector, Race by race, then glance/rules/verify; scroll pins kept. Engine block identical to engine.ts.
