@@ -6,15 +6,17 @@ One district per round (R1 Street, R2 Wangan, R3 Touge), one crew each, 7 rungs 
 10/10/20/20/20/20/30 turns), no rematches. Then the pre-finale arc (P1-P4, M11-M32) and the finale F1-F4.
 
 Rules (all constants in equations.py):
-  * Levels: SP(L) = 240 x 1.1^(L/12); stats P = SP / 0.8. Combat power = min(C_ROUND, 1.07 x P) once mods are on
-    (R1 at L0 is the stock car, 1.00 x P). Opponent budget B = C_ROUND / target r, so r at the cap = target r.
+  * Levels: SP(L) = 240 x 1.1^(L/12); stats P = SP / 0.8. Combat power with a full mod fill = min(C_ROUND, 1.07 x P)
+    (R1 at L0 is the stock car, 1.00 x P); with a Garage it is what the bought mods give (see Mods). Opponent budget B = C_ROUND / target r, so r at the cap = target r.
   * XP: xp_to_next(L) = 100 x 1.08^L. Story wins pay STORY_XP_MULT x STORY_FILL x STORY_W share of the round's
     entry-to-cap XP (STORY_XP_MULT: Austin 2026-11-14 campaign cut, R1 all x0.90, R2 oh2 x0.60, R3 oh2 x0.80);
     grind wins (10-turn wilds) pay GRIND_FRAC x xp_to_next x taper. XP past the cap is lost.
   * Money (USD): purse by rung kind x ROUND_PAYOUT_MULT; grind races pay GRIND_PAYOUT_FRACTION of a wild purse;
-    DEBT_SHARE of every purse pays the DEBT_AMOUNT debt while it is open. The walk banks cash and buys nothing
-    (as evaluate.py does); the shop / betting / T4 Monte Carlo stays in unapproved/barry/econ-v1 (run_betting_levers.py,
-    run_finale_arc.py).
+    DEBT_SHARE of every purse pays the DEBT_AMOUNT debt while it is open.
+  * Mods (mods-v1, Austin 2026-11-14): the walk carries a Garage (E.MOD_SLOTS = 4 slots, stock parts in empty slots)
+    and a just-in-time buyer that shops before every race, after every grind and at each round end from the
+    rung-unlocked E.MOD_CATALOG (mod_unlocked). Combat power = min(C_ROUND, 1.07 x P, (SP points + slot points) / 10).
+    Betting and the pre-finale arc walk stay in unapproved/barry/econ-v1 (run_betting_levers.py, run_finale_arc.py).
   * Skill points (skill-points-v1, Austin 2026-11-14): whole points at 10x (E.skill_points), each stat 25-50 % of the
     points spent (E.check_build), spent points lock, new points free, and at each district change at most
     E.RETUNE_BUDGET_FRACTION (20 %) of the spent points move (E.check_retune). The walk's player places new points
@@ -159,12 +161,96 @@ def boss_check(r: float, district: str, pow_share: float | None = None, pow_shar
 
 
 # ── Level / power helpers ─────────────────────────────────────────────
-def combat_power(level: int, rnd: int, mods: bool = True) -> float:
-    """Player combat power: min(C_ROUND, 1.07 x P(L)) with mods; stock car (1.00 x P) at R1 L0 or without mods."""
+def combat_power(level: int, rnd: int, mods: bool = True, garage: "Garage | None" = None, district: str | None = None) -> float:
+    """Player combat power. Without a garage: min(C_ROUND, 1.07 x P(L)) (full mod fill); stock car (1.00 x P) at R1 L0
+    or without mods. With a garage: what its equipped mods give in `district` (stage = rnd: 0-2 rounds, 3-6 arc steps)."""
+    if garage is not None:
+        return garage.power(level, rnd, district or E.ROUND_DISTRICTS[rnd].lower())
     P = E.stats_at_level(level)
     if not mods or (rnd == 0 and level <= 0):
         return P
     return min(E.C_ROUND[rnd], E.MOD_CAP_FRACTION * P)
+
+
+# ── Mods: garage and just-in-time buyer (mods-v1) ─────────────────────
+def stage_ceiling(stage: int) -> float:
+    """Power ceiling (stat units) of stage 0-2 (R1-R3) or 3-6 (arc steps toward F1-F4)."""
+    return E.C_ROUND[stage] if stage < 3 else finale_caps()[stage - 3][0]
+
+
+def mod_gap(level: int, stage: int) -> float:
+    """Slot points needed at `level` for a full fill: min(ceiling, 1.07 x P) x 10 - SP points."""
+    sp = E.skill_points(level)
+    return max(0.0, min(10 * stage_ceiling(stage), 10 * E.MOD_CAP_FRACTION * E.stats_at_level(level)) - sp)
+
+
+def mod_unlocked(mod_id: str, done) -> bool:
+    """True when the mod's unlock token (E.MOD_UNLOCK) is in `done` (tokens reached: ("open", round0),
+    (round0, rung) wins, ("arc", race id) wins)."""
+    return tuple(E.MOD_UNLOCK[mod_id.removesuffix("_AERO")]) in done
+
+
+def arc_unlock_token(race_id: str):
+    """Unlock token a pre-finale / finale win adds (MYTH1 at P1, MYTH2-4 at F1-F3)."""
+    return ("arc", race_id)
+
+
+class Garage:
+    """Owned mods (duplicates allowed; bought mods never change) and the equipped set per district: the best owned mod
+    per slot of E.MOD_SLOT_PATTERN[district]; an empty slot holds a stock part (E.MOD_STOCK_PART_POINTS)."""
+
+    STAT = {"P": "POW", "H": "HAN", "E": "EN"}
+
+    def __init__(self):
+        self.owned: list[str] = []; self.spent = 0.0; self.buys: list[tuple] = []
+
+    def equipped(self, district: str) -> list:
+        pat = E.MOD_SLOT_PATTERN[district]; eq = []
+        for k in "PHE":
+            n = pat.count(k)
+            mine = sorted((m for m in self.owned if E.MOD_CATALOG[m]["stat"] == self.STAT[k]), key=lambda m: -E.MOD_CATALOG[m]["points"])
+            eq += mine[:n] + [None] * max(0, n - len(mine))
+        return eq
+
+    def slot_points(self, district: str) -> float:
+        return sum(E.MOD_CATALOG[m]["points"] if m else E.MOD_STOCK_PART_POINTS for m in self.equipped(district))
+
+    def power(self, level: int, stage: int, district: str) -> float:
+        sp = E.skill_points(level)
+        return min(10 * stage_ceiling(stage), 10 * E.MOD_CAP_FRACTION * E.stats_at_level(level), sp + self.slot_points(district)) / 10.0
+
+    def fill(self, level: int, stage: int, district: str) -> float:
+        n = mod_gap(level, stage); return min(1.0, self.slot_points(district) / n) if n else 1.0
+
+    def shop(self, wallet: float, level: int, stage: int, district: str, done, wholesale: bool, tag: str = "") -> float:
+        """Just-in-time buyer: while under full fill, buy the unlocked affordable mod with the largest usable gain
+        (ties: cheaper); never buys power it can't use. No aero. Returns the wallet left."""
+        while True:
+            deficit = mod_gap(level, stage) - self.slot_points(district)
+            if deficit <= 1e-9:
+                return wallet
+            eq = self.equipped(district); pat = E.MOD_SLOT_PATTERN[district]; weakest = {}; i = 0
+            for k in "PHE":
+                vals = [E.MOD_CATALOG[m]["points"] if m else E.MOD_STOCK_PART_POINTS for m in eq[i:i + pat.count(k)]]
+                i += pat.count(k)
+                if vals:
+                    weakest[self.STAT[k]] = min(vals)
+            best = None
+            for mid, m in E.MOD_CATALOG.items():
+                if m["stat"] not in weakest or not mod_unlocked(mid, done):
+                    continue
+                price = E.mod_price(mid, wholesale=wholesale)
+                if price > wallet + 1e-9:
+                    continue
+                gain = min(deficit, m["points"] - weakest[m["stat"]])
+                if gain <= 0:
+                    continue
+                key = (round(gain, 6), -price)
+                if best is None or key > best[0]:
+                    best = (key, mid, price)
+            if best is None:
+                return wallet
+            _, mid, price = best; self.owned.append(mid); wallet -= price; self.spent += price; self.buys.append((tag, mid, price))
 
 
 def apply_xp(level: int, xp: float, bag: float, cap: int):
@@ -220,22 +306,10 @@ def ladder():
     return rows
 
 
-def mod_tier_floor(tier: str) -> int:
-    return E.MOD_TIER_LEVEL_FLOOR[tier]
-
-
-def mod_tier_available(tier: str, level: int, rounds_done: int = 0, t4_unlocked: bool = False) -> bool:
-    """True when `tier` can be fitted: level >= its floor ("requires level N" otherwise); T4 also needs the P1 win."""
-    if level < E.MOD_TIER_LEVEL_FLOOR[tier]:
-        return False
-    if tier == "T4":
-        return t4_unlocked and rounds_done >= E.FINALE_UNLOCK_AFTER
-    return True
-
-
 def t4_package_price() -> float:
-    """Full T4 build (5 regular + 1 aero), full price."""
-    return E.T4_PACKAGE["regular"] * E.mod_price("T4") + E.T4_PACKAGE["aero"] * E.mod_price("T4", aero=True)
+    """Full 4-slot Myth build at the stand-in price: 3 x MYTH4 + 1 MYTH4 aero (E.T4_PACKAGE), full price."""
+    mid = f"MOD_ARC_POW_{E.T4_PACKAGE['mod']}"
+    return E.T4_PACKAGE["regular"] * E.mod_price(mid) + E.T4_PACKAGE["aero"] * E.mod_price(mid, aero=True)
 
 
 # ── Skill-point build (skill-points-v1) ───────────────────────────────
@@ -302,13 +376,20 @@ class Build:
         a = self.at(level); return a[0] / sum(a)
 
 
-def _walk_round(rnd, enter_level, enter_bag, money, debt, mode, build: Build | None = None):
+def _walk_round(rnd, enter_level, enter_bag, money, debt, mode, build: Build | None = None,
+                garage: Garage | None = None, done: set | None = None):
+    """One round of the ladder with the mods-v1 garage: the buyer shops before every rung, after every grind and at
+    the round end; mods unlock on the round open and on each rung win (done tokens)."""
     d = E.ROUND_DISTRICTS[rnd].lower(); cap = E.CAP_LEVEL[rnd]
+    G = garage if garage is not None else Garage()
+    done = done if done is not None else {("open", r) for r in range(rnd)}
+    wholesale = E.wholesale_active(rnd)
     L, bag = enter_level, enter_bag
     if build is None:
         build = Build(d, add_points(start_build(), E.skill_points(L) - E.skill_points(0), d), L) if L > 0 \
             else Build(d, start_build(), 0)
     ps = build.pow_share
+    done.add(("open", rnd))
     rows = []; wall_done = False; total = wall = post = 0; wall_name = None
 
     def credit(kind, grind):
@@ -319,79 +400,92 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode, build: Build | N
         else:
             money += pay
 
-    def do_grind(n):
-        nonlocal L, bag, total
-        for _ in range(n):
-            if L >= cap:
-                break
-            L, bag = apply_xp(L, E.grind_xp(L, cap), bag, cap); credit("kid", True); total += 1
+    def shop(tag):
+        nonlocal money
+        money = G.shop(money, L, rnd, d, done, wholesale, tag)
 
-    def ok(profiles, r, T, lvl):
+    def grind1(tag):
+        nonlocal L, bag, total
+        L, bag = apply_xp(L, E.grind_xp(L, cap), bag, cap); credit("kid", True); total += 1; shop(tag)
+
+    def ok(profiles, B, T):
+        r = G.power(L, rnd, d) / B
         for pr in profiles:
-            pk = win_pack(pr, r, T, d, ps(lvl))
+            pk = win_pack(pr, r, T, d, ps(L))
             if pk["district"] < E.CLEAR_THRESHOLD or (T >= 20 and hard_win(pk) < E.CLEAR_THRESHOLD):
                 return False
         return True
 
-    def grind_until(profiles, B, T):
-        Lt, bt = L, bag; n = 0
-        while n < 80:
-            Lt, bt = apply_xp(Lt, E.grind_xp(Lt, cap), bt, cap); n += 1
-            if ok(profiles, combat_power(Lt, rnd) / B, T, Lt) or Lt >= cap:
-                break
+    def grind_until(profiles, B, T, tag):
+        n = 0
+        while n < 80 and L < cap and not ok(profiles, B, T):
+            grind1(tag); n += 1
         return n
 
     for j, name in enumerate(E.LADDER_RUNGS):
-        B = E.opponent_budget(rnd, j); T = E.LADDER_TURNS[j]; pre_boss = 0; here = 0
+        B = E.opponent_budget(rnd, j); T = E.LADDER_TURNS[j]; pre_boss = 0; here = 0; tag = f"R{rnd + 1} {name}"
+        cash_pre = money; shop(tag)
         if name == "boss" and mode in ("mixed", "hard") and L < cap:
-            before = total; do_grind(grind_to_cap(L, bag, cap)); pre_boss = total - before
+            before = total
+            while L < cap:
+                grind1(tag)
+            pre_boss = total - before
             if wall_done or mode == "hard":
                 post += pre_boss
-        r = combat_power(L, rnd) / B
         if name != "boss" and L < cap:
-            if mode == "mixed" and not wall_done and not ok(("c6080", "c8060"), r, T, L):
-                here = grind_until(("c6080", "c8060"), B, T); do_grind(here)
+            if mode == "mixed" and not wall_done and not ok(("c6080", "c8060"), B, T):
+                here = grind_until(("c6080", "c8060"), B, T, tag)
                 wall = here; wall_name = name; wall_done = True
-            elif mode == "hard" and not ok(("c6060",), r, T, L):
-                here = grind_until(("c6060",), B, T); do_grind(here)
+            elif mode == "hard" and not ok(("c6060",), B, T):
+                here = grind_until(("c6060",), B, T, tag)
                 if wall_name is None:
                     wall_name = name; wall += here
                 else:
                     post += here
-            r = combat_power(L, rnd) / B
-        arrive_L = L
+        arrive_L = L; pw = G.power(arrive_L, rnd, d); r = pw / B
         packs = {pr: win_pack(pr, r, T, d, ps(arrive_L)) for pr in PROFILES}
-        credit(E.LADDER_RUNG_KIND[j], False)
+        r_grind = pw / E.opponent_budget(rnd, 0)
+        row = dict(rnd=rnd + 1, district=E.ROUND_DISTRICTS[rnd], rung=name, turns=T, B=round(B, 2),
+                   target_r=E.LADDER_TARGET_R[d][j], arrive_L=arrive_L, arrive_r=round(r, 4), wr=packs,
+                   build=build.at(arrive_L), pow_share=round(100 * ps(arrive_L), 1),
+                   grind_here=here, pre_boss_grind=pre_boss,
+                   grind10={pr: round(win_rate(pr, r_grind, E.GRIND_TURNS, d, pow_share=ps(arrive_L)), 1) for pr in PROFILES},
+                   fill=round(100 * G.fill(arrive_L, rnd, d), 1), equipped=[m or "stock" for m in G.equipped(d)],
+                   owned=len(G.owned), cash_pre=round(cash_pre, 2), money_before=round(money, 2))
+        credit(E.LADDER_RUNG_KIND[j], False); done.add((rnd, name))
         L, bag = apply_xp(L, E.story_xp(rnd, j, enter_level, cap), bag, cap)
-        r_grind = combat_power(arrive_L, rnd) / E.opponent_budget(rnd, 0)
-        rows.append(dict(rnd=rnd + 1, district=E.ROUND_DISTRICTS[rnd], rung=name, turns=T, B=round(B, 2),
-                         target_r=E.LADDER_TARGET_R[d][j], arrive_L=arrive_L, arrive_r=round(r, 4), wr=packs,
-                         build=build.at(arrive_L), pow_share=round(100 * ps(arrive_L), 1),
-                         grind_here=here, pre_boss_grind=pre_boss,
-                         grind10={pr: round(win_rate(pr, r_grind, E.GRIND_TURNS, d, pow_share=ps(arrive_L)), 1) for pr in PROFILES},
-                         L_after=L, money=round(money, 2), debt=round(max(debt, 0.0), 2),
-                         unlocks=unlocks_after(rnd + 1) if j == 6 else []))
+        row.update(L_after=L, money=round(money, 2), debt=round(max(debt, 0.0), 2),
+                   unlocks=unlocks_after(rnd + 1) if j == 6 else [])
+        rows.append(row)
+    shop(f"R{rnd + 1} end")
     return dict(rows=rows, L=L, bag=bag, money=money, debt=max(debt, 0.0), total_grind=total, wall_grind=wall,
-                wall=wall_name, post_wall_to_cap=post, cap=cap, reached_cap=L >= cap, build=build.at(L))
+                wall=wall_name, post_wall_to_cap=post, cap=cap, reached_cap=L >= cap, build=build.at(L),
+                mods_owned=list(G.owned), mods_spent=round(G.spent, 2))
 
 
-def run(mode: str = "mixed", order=None):
-    """Walk R1-R3 for a policy ("story", "mixed", "hard"). Each round is entered at the previous round's cap (R1 at L0)
-    with cash and debt carried. Returns a list of 3 round dicts (rows + totals)."""
+def run_with_garage(mode: str = "mixed", order=None):
+    """run() plus the Garage and the unlock tokens reached (for the arc walk). Returns (rounds, garage, done)."""
     if mode not in ("story", "mixed", "hard"):
         raise ValueError(mode)
     check_order(order or E.DEFAULT_CREW_ORDER)
+    assert E.mod_shop_open(E.MOD_UNLOCK_RACE)          # R1 starts after the Prologue race-3 win: shop open, $0 cash
     L, bag, money, debt = 0, 0.0, 0.0, E.DEBT_AMOUNT; out = []
-    alloc = start_build()
+    alloc = start_build(); G = Garage(); done = set()
     for rnd in range(3):
         d = E.ROUND_DISTRICTS[rnd].lower()
         if rnd > 0:
             alloc = retune(alloc, d)                       # district change: at most 20 % of spent points move
             end_L, L, bag = L, E.CAP_LEVEL[rnd - 1], 0.0
             alloc = add_points(alloc, E.skill_points(L) - E.skill_points(end_L), d)   # points up to the entry cap are new
-        w = _walk_round(rnd, L, bag, money, debt, mode, Build(d, alloc, L)); out.append(w)
+        w = _walk_round(rnd, L, bag, money, debt, mode, Build(d, alloc, L), G, done); out.append(w)
         L, bag, money, debt = w["L"], w["bag"], w["money"], w["debt"]; alloc = w["build"]
-    return out
+    return out, G, done
+
+
+def run(mode: str = "mixed", order=None):
+    """Walk R1-R3 for a policy ("story", "mixed", "hard") with the mods-v1 garage and buyer. Each round is entered at
+    the previous round's cap (R1 at L0) with cash, debt and garage carried. Returns a list of 3 round dicts."""
+    return run_with_garage(mode, order)[0]
 
 
 def cap_builds():
@@ -449,9 +543,11 @@ def finale_arc():
         for (rid, place, d, T, r, share, purse, B) in E.FINALE_ARC:
             if place == s:
                 out.append(dict(id=rid, place=place, district=d, turns=T, r_design=r, B=B, purse=purse, billed=False,
-                                xp=E.ARC_STORY_FILL * share * gap[s], unlock_t4=rid == E.T4_UNLOCK_RACE))
+                                xp=E.ARC_STORY_FILL * share * gap[s], unlock_t4=rid == E.T4_UNLOCK_RACE,
+                                mod_unlock=[m for m, u in E.MOD_UNLOCK.items() if tuple(u) == arc_unlock_token(rid)]))
         nm, d, B = E.FINALE[i]
         out.append(dict(id=f"F{i + 1}", place=f"F{i + 1}", district=d.lower(), turns=E.FINALE_TURNS, r_design=E.FINALE_TARGET_R[i],
                         B=B, purse=E.FINALE_PURSE, billed=True, xp=0.0, unlock_t4=False,
+                        mod_unlock=[m for m, u in E.MOD_UNLOCK.items() if tuple(u) == arc_unlock_token(f"F{i + 1}")],
                         name=nm, opponent=E.FINALE_OPPONENT[i], cap=E.FINALE_CAP_LEVEL[i]))
     return out

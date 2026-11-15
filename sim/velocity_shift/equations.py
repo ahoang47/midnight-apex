@@ -335,7 +335,7 @@ GOOD_PLAY_Q = 0.8
 # round-ladder-v1 ladder. Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
 # cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_econ_v1.json (live G2 heat rules,
 # touge-lines-v1 DRAFT track set; see that file). progression.py walks this ladder. Money is USD (x100 rescale).
-# Stand-ins pending playtest: all XP numbers, MOD_PRICE["T4"] ($8,000), every finale-arc opponent.
+# Stand-ins pending playtest: all XP numbers, the MYTH4 price ($8,000, MOD_PRICE_STANDIN), every finale-arc opponent.
 
 # ── Round structure (canon 2026-11-13: one district per round, one crew each, no rematches) ──
 # DISTRICTS (match.py / cli.py district order) is unrelated to the round order; ROUND_DISTRICTS is the campaign order.
@@ -411,20 +411,47 @@ ROUND_PAYOUT_MULT = (1.00, 1.15, 1.35)
 GRIND_PAYOUT_FRACTION = 0.55   # a grind race pays 0.55 x the wild purse
 DEBT_AMOUNT = 16000.0
 DEBT_SHARE = 0.65              # share of each purse that goes to the debt while it is open
-WHOLESALE_DISCOUNT = 0.20      # off list on T1-T3, from the end of R1 through the end of R3 (never on T4)
+WHOLESALE_DISCOUNT = 0.20      # off list on R1-R3 mods, from the end of R1 through the end of R3 (never on ARC)
 WHOLESALE_STARTS_AFTER = 1
 WHOLESALE_ENDS_AFTER = 3
-WHOLESALE_TIERS = ("T1", "T2", "T3")
+WHOLESALE_TIERS = ("R1", "R2", "R3")   # mod groups (MOD_<group>_...) that wholesale applies to; never ARC
 
-# ── Mods ──
-MOD_SLOTS = 6
-MOD_TIERS = ("T1", "T2", "T3", "T4")
-MOD_PRICE = {"T1": 1600.0, "T2": 2800.0, "T3": 4000.0, "T4": 8000.0}   # per slot; T2-T4 are the upgrade from the tier below
-MOD_PRICE_STANDIN = ("T4",)    # T4 $8,000 is a stand-in (Austin 2026-11-13: "works for now"); swept 5k / 8k / 12k / 18k
-AERO_PRICE_MULT = 1.75         # an aero costs 1.75 x the regular mod of its tier
-MOD_TIER_LEVEL_FLOOR = {"T1": 0, "T2": 13, "T3": 30, "T4": 47}   # "requires level N": T2 opens with R2, T3 with R3, T4 after R3
-T4_UNLOCK_RACE = "P1"          # T4 (canon's big finale mods) unlocks by winning pre-finale race P1; Reiko sells at full price
-T4_PACKAGE = {"regular": 5, "aero": 1}   # full T4 build: 5 regular + 1 aero = 6.75 x MOD_PRICE["T4"]
+# ── Mods (mods-v1 catalog, Austin 2026-11-14: 4 slots, rung unlocks, aspire Mk3 prices, IDs only) ──
+# Every mod boosts one fixed stat by fixed points (10x skill-point scale) and never changes or levels; the player
+# rebalances only by buying / equipping new mods (plus the 20 % retune). An empty slot holds a stock part worth
+# MOD_STOCK_PART_POINTS, so SP + stock parts = the live stock car (P = SP / 0.8) at L0. Car points = SP + slot points,
+# capped at min(round or finale-step ceiling, MOD_CAP_FRACTION x P). Mk points = ceil(mod gap at fills_to / MOD_SLOTS).
+MOD_SLOTS = 4
+MOD_UNLOCK_RACE = 3            # Reiko's shop opens when the PC wins scripted Prologue race 3 (canon 19); R1 starts at $0
+MOD_STOCK_PART_POINTS = 150    # per empty slot = 600 / MOD_SLOTS
+MOD_STATS = ("POW", "HAN", "EN")
+MOD_GROUPS = ("R1", "R2", "R3", "ARC")
+MOD_SLOT_PATTERN = {"street": "PPHE", "wangan": "PHEE", "touge": "PPHE"}   # P = POW, H = HAN, E = EN slots per district
+# (group, mk, points, list price USD, unlock token, fills the mod gap through level). Unlock tokens: ("open", round0)
+# = round open (R1 open = MOD_UNLOCK_RACE won), (round0, rung) = after that ladder win, ("arc", race id) = after that win.
+MOD_SETS = (
+    ("R1", "MK1", 213, 150.0, ("open", 0), 6),
+    ("R1", "MK2", 218, 500.0, (0, "mat1"), 9),
+    ("R1", "MK3", 223, 1000.0, (0, "mat2"), 12),
+    ("R2", "MK1", 242, 700.0, ("open", 1), 22),
+    ("R2", "MK2", 249, 1500.0, (1, "mat1"), 26),
+    ("R2", "MK3", 255, 5000.0, (1, "mat2"), 29),
+    ("R3", "MK1", 279, 1200.0, ("open", 2), 40),
+    ("R3", "MK2", 288, 2500.0, (2, "mat1"), 44),
+    ("R3", "MK3", 292, 8000.0, (2, "mat2"), 46),
+    ("ARC", "MYTH1", 333, 2500.0, ("arc", "P1"), 64),
+    ("ARC", "MYTH2", 375, 4000.0, ("arc", "F1"), 79),
+    ("ARC", "MYTH3", 426, 6000.0, ("arc", "F2"), 94),
+    ("ARC", "MYTH4", 501, 8000.0, ("arc", "F3"), 114),
+)
+MOD_CATALOG = {f"MOD_{g}_{st}_{mk}": dict(group=g, mk=mk, stat=st, points=pts, price=price, unlock=u, fills_to=fl)
+               for g, mk, pts, price, u, fl in MOD_SETS for st in MOD_STATS}
+MOD_UNLOCK = {mid: m["unlock"] for mid, m in MOD_CATALOG.items()}
+MOD_PRICE = {mid: m["price"] for mid, m in MOD_CATALOG.items()}   # list price per ID (Desmond's USD wording pass pending)
+MOD_PRICE_STANDIN = tuple(f"MOD_ARC_{st}_MYTH4" for st in MOD_STATS)   # $8,000 stand-in (Austin 2026-11-13: "works for now")
+AERO_PRICE_MULT = 1.75         # an aero version (<ID>_AERO) costs 1.75 x its regular mod
+T4_UNLOCK_RACE = "P1"          # the arc's Myth mods start at the P1 win (MOD_ARC_*_MYTH1); Reiko sells at full price
+T4_PACKAGE = {"regular": 3, "aero": 1, "mod": "MYTH4"}   # full 4-slot Myth build: 3 x MYTH4 + 1 MYTH4 aero
 MOD_BUDGET_AT_CAP = 0.27       # mods fill 0.27 x P at a cap (stats 0.80 P + mods 0.27 P = 1.07 P)
 
 # ── Betting (Austin 2026-11-13: fair odds, unlock after R2, any race, no cap) ──
@@ -868,13 +895,25 @@ def opponent_budget(rnd: int, rung: int) -> float:
     return C_ROUND[rnd] / LADDER_TARGET_R[ROUND_DISTRICTS[rnd].lower()][rung]
 
 
-def mod_price(tier: str, aero: bool = False, wholesale: bool = False) -> float:
-    """USD price of one slot's `tier` mod (T2-T4: the upgrade from the tier below). Aero x AERO_PRICE_MULT.
-    Wholesale (WHOLESALE_DISCOUNT) only applies to WHOLESALE_TIERS."""
-    p = MOD_PRICE[tier] * (AERO_PRICE_MULT if aero else 1.0)
-    if wholesale and tier in WHOLESALE_TIERS:
+def mod_group(mod_id: str) -> str:
+    """Catalog group of a mod ID (R1 / R2 / R3 / ARC); accepts <ID>_AERO."""
+    return MOD_CATALOG[mod_id.removesuffix("_AERO")]["group"]
+
+
+def mod_price(mod_id: str, aero: bool = False, wholesale: bool = False) -> float:
+    """USD price of one mod by ID (MOD_CATALOG). Aero (or an <ID>_AERO id) x AERO_PRICE_MULT.
+    Wholesale (WHOLESALE_DISCOUNT) only applies to WHOLESALE_TIERS groups (R1-R3)."""
+    if mod_id.endswith("_AERO"):
+        mod_id, aero = mod_id.removesuffix("_AERO"), True
+    p = MOD_PRICE[mod_id] * (AERO_PRICE_MULT if aero else 1.0)
+    if wholesale and mod_group(mod_id) in WHOLESALE_TIERS:
         p *= 1.0 - WHOLESALE_DISCOUNT
     return p
+
+
+def mod_shop_open(prologue_wins: int) -> bool:
+    """Reiko's shop is open once the PC has won scripted Prologue race MOD_UNLOCK_RACE."""
+    return prologue_wins >= MOD_UNLOCK_RACE
 
 
 def wholesale_active(rounds_done: int) -> bool:

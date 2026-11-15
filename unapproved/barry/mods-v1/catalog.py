@@ -95,7 +95,7 @@ class Garage:
             best = None
             for m in unlocked(self.cat, done):
                 if m["stat"] not in weakest: continue
-                price = m["price"] * (1 - E.WHOLESALE_DISCOUNT if wholesale and m["tier"] in E.WHOLESALE_TIERS else 1)
+                price = m["price"] * (1 - E.WHOLESALE_DISCOUNT if wholesale and m["tier"] in ("T1", "T2", "T3") else 1)
                 if price > wallet + 1e-9: continue
                 gain = min(deficit, m["pts"] - weakest[m["stat"]])
                 if gain <= 0: continue

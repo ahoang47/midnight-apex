@@ -8,6 +8,44 @@
 
 ---
 
+## 2026-11-14 — Barry [sim]: mods-v1 live: 4 slots, 39 ID-only mods unlocked by rung, just-in-time buyer, MOD_UNLOCK_RACE = 3
+
+- **Why:** Austin said "Go live" on mods-v1 (4 slots, canon staging: Mk2 after mat1, aspire Mk3 prices, IDs only) and approved editing the design/01 canon line. Austin wanted more mods and steady progress inside each round rather than a whole tier opening at once. The old walk also assumed a full mod fill from R1 kid2, which a player with $350 can't buy. Design/07's race-3 shop unlock wasn't in the sim.
+- **What:**
+  - **`equations.py`:**
+    - `MOD_SLOTS` goes from 6 to 4.
+    - New: `MOD_UNLOCK_RACE` 3, `MOD_STOCK_PART_POINTS` 150, `MOD_STATS`, `MOD_GROUPS`, `MOD_SLOT_PATTERN` (Street PPHE, Wangan PHEE, Touge PPHE).
+    - New: `MOD_SETS` → `MOD_CATALOG` / `MOD_UNLOCK` / `MOD_PRICE` by ID, `MOD_<R1|R2|R3|ARC>_<POW|HAN|EN>_<MKn|MYTHn>`. That's 39 mods.
+    - `mod_price(mod_id, aero, wholesale)`, plus new `mod_group` and `mod_shop_open`.
+    - `WHOLESALE_TIERS` is now R1–R3.
+    - `T4_PACKAGE` is now 3 × MYTH4 + 1 aero ($38,000), and `MOD_PRICE_STANDIN` is the MYTH4 IDs.
+    - `MOD_TIER_LEVEL_FLOOR` and `MOD_TIERS` are removed.
+  - **`progression.py`:**
+    - New `Garage`: owned mods, an equipped set per district, stock parts in empty slots, and a just-in-time `shop`.
+    - New `mod_unlocked`, `mod_gap`, `stage_ceiling`, `arc_unlock_token`, and `combat_power(..., garage=)`.
+    - `_walk_round` shops before every rung, after every grind and at the round end, and its rows gain `fill`, `equipped`, `owned`, `cash_pre` and `money_before`.
+    - New `run_with_garage`. `finale_arc` rows gain `mod_unlock`.
+    - `mod_tier_floor` and `mod_tier_available` are removed.
+  - **`scripts/run_progression.py`:** prints fill, gear and cash per rung.
+  - **Tests:** `test_mod_floor.py` is rewritten for the unlock schedule; `test_mod_catalog.py` is new; the money, price, R1 kid2 and hard-split pins in `test_progression.py` are updated.
+  - **Docs:**
+    - design/02: rows 49, 190, 191 and 215 and the glossary.
+    - design/07: §6.4 table rows, the unlock paragraph and table, and the Progression bullet. Price values are updated; Desmond's USD wording pass is still pending.
+    - design/01: the canon level-floor line, now describing rung unlocks (Austin-approved).
+  - **Verification:** `unapproved/barry/mods-v1/verify_live.py` (+ `.json` / `.txt`).
+- **Numbers (live, identical to the draft `final_4` row by row: levels, fill, win %, cash, gear):**
+  - 60/60 at cap 31.6 / 40.1 / 30.2, and 80/80 at cap 94.9 / 91.6 / 92.9.
+  - Story-only minimum 53.0 / 54.4 / 50.5, with bosses 53.0 / 57.7 / 55.8.
+  - Mixed grinds 3+10 / 3+10 / 4+8. 60/60 grinds 13 / 15 / 18, with R1 going from 2+11 to 1+12.
+  - Finale 80/80 is 81.7 / 82.7 / 78.6 / 81.7 with the skill-point split (79.3 on tune). Finale grinds per step: 60/60 11 / 7 / 7 / 9 (step 1 is 11, unchanged from before), 60/80 7 / 6 / 6 / 7, 80/60 6 / 6 / 6 / 7, 80/80 0.
+  - Grind-race minimum: 50.3 % for 60/60 (was 52.1) and 85.6 % for 80/80.
+  - Changes from before: R1 kid1 runs on stock parts ($0), 80/80 R1 kid2 drops from 98.9 to 95.5, and end-of-round cash is now what's left after buying (mixed $5,050 / $15,632.50 / $16,102.50; story-only $5,900 / $17,660 / $30,420).
+- **Not changed:**
+  - The aero rules. The sim buyer never buys aero.
+  - The at-cap table, which still assumes a full fill.
+  - Betting and the arc walk, which stay in the draft econ-v1 walker.
+  - design/01 line 16 still says "6 slots"; it wasn't in the approved edit, so it's left for Austin.
+
 ## 2026-11-14 — Barry [sim/draft]: mods-v1 staged mod catalog (4 slots, rung unlocks, aspire Mk3); Austin's pick
 
 - **Why:** Austin wanted more mods and progression inside each round, not a whole tier opening at once. He picked 4 slots, the canon staging (Mk1 at round open, Mk2 after mat1, Mk3 after mat2) and the aspire Mk3 prices (R2 $5,000, R3 $8,000). Mods have IDs only for now (`MOD_<R1|R2|R3|ARC>_<POW|HAN|EN>_<MKn|MYTHn>`).

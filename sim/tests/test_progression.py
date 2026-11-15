@@ -50,9 +50,12 @@ def test_walks_reproduce_eval_final_c():
     mixed = P.run("mixed")
     assert [(w["wall"], w["wall_grind"], w["post_wall_to_cap"], w["total_grind"]) for w in mixed] == [("mat1", 3, 10, 13), ("mat1", 3, 10, 13), ("mat1", 4, 8, 12)]
     assert [w["L"] for w in mixed] == [12, 29, 46] and all(w["reached_cap"] for w in mixed)
-    assert [round(w["money"], 2) for w in mixed] == [11150.0, 42372.5, 78282.5] and mixed[0]["debt"] == 0.0
+    # mods-v1 (Austin 2026-11-14): the walk buys mods just in time, so it ends each round with the cash left after the shop
+    assert [round(w["money"], 2) for w in mixed] == [5050.0, 15632.5, 16102.5] and mixed[0]["debt"] == 0.0
+    assert mixed[-1]["mods_spent"] == 62180.0
     hard = P.run("hard")
     assert [w["total_grind"] for w in hard] == [13, 15, 18] and [w["L"] for w in hard] == [12, 29, 46]
+    assert [(w["wall_grind"], w["post_wall_to_cap"]) for w in hard] == [(1, 12), (3, 12), (6, 12)]   # R1 was 2 + 11 before mods-v1
     story = P.run("story")
     assert [w["L"] for w in story] == [7, 25, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
     worst = [min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story]
@@ -60,6 +63,9 @@ def test_walks_reproduce_eval_final_c():
     # Austin 2026-11-14 campaign story-XP cut (STORY_XP_MULT): 80/80 story-only meets each boss one level lower
     boss = [(w["rows"][-1]["arrive_L"], P.hard_win(w["rows"][-1]["wr"]["c8080"])) for w in story]
     assert boss == [(6, 53.0), (23, 57.7), (41, 55.8)]
+    assert story[0]["rows"][0]["equipped"] == ["stock"] * 4 and story[0]["rows"][0]["cash_pre"] == 0.0   # kid1 runs stock
+    assert story[0]["rows"][1]["wr"]["c8080"]["district"] == 95.5                       # kid2 at 88.9 % fill (was 98.9 at full fill)
+    assert [round(w["money"], 2) for w in story] == [5900.0, 17660.0, 30420.0] and story[-1]["mods_spent"] == 23580.0
     # skill-points-v1 (Austin 2026-11-14): whole points, 25-50 % band, 20 % retune budget; R2 arrives off the Wangan tune
     assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.6, 40.1, 30.3]
     assert [w["build"] for w in mixed] == [(1320, 660, 660), (792, 756, 1474), (1556, 865, 1037)]
@@ -76,10 +82,12 @@ def test_story_xp_mult_campaign_only():
 
 def test_money_and_shop():
     assert E.purse(0, "kid") == 1000.0 and E.purse(2, "boss") == 10800.0 and abs(E.purse(2, "kid", grind=True) - 742.5) < 1e-9
-    assert E.mod_price("T1") == 1600.0 and E.mod_price("T3", aero=True) == 7000.0
-    assert E.mod_price("T2", wholesale=True) == 2800.0 * 0.8 and E.mod_price("T4", wholesale=True) == 8000.0   # no wholesale on T4
+    assert E.mod_price("MOD_R1_POW_MK1") == 150.0 and E.mod_price("MOD_R3_POW_MK3", aero=True) == 14000.0
+    assert E.mod_price("MOD_R3_HAN_MK3_AERO") == 14000.0
+    assert E.mod_price("MOD_R2_EN_MK3", wholesale=True) == 5000.0 * 0.8
+    assert E.mod_price("MOD_ARC_EN_MYTH4", wholesale=True) == 8000.0                  # no wholesale on ARC
     assert [E.wholesale_active(n) for n in range(4)] == [False, True, True, False]
-    assert P.t4_package_price() == 54000.0 and "T4" in E.MOD_PRICE_STANDIN
+    assert P.t4_package_price() == 3 * 8000.0 + 14000.0 and "MOD_ARC_POW_MYTH4" in E.MOD_PRICE_STANDIN
 
 
 def test_betting_fair_odds():
