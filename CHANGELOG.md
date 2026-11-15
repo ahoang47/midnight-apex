@@ -8,6 +8,23 @@
 
 ---
 
+## 2026-11-14 — Barry [sim/draft]: mods-v1 staged mod catalog (4 slots, rung unlocks, aspire Mk3); Austin's pick
+
+- **Why:** Austin wanted more mods and progression inside each round, not a whole tier opening at once. He picked 4 slots, the canon staging (Mk1 at round open, Mk2 after mat1, Mk3 after mat2) and the aspire Mk3 prices (R2 $5,000, R3 $8,000). Mods have IDs only for now (`MOD_<R1|R2|R3|ARC>_<POW|HAN|EN>_<MKn|MYTHn>`).
+- **What:** `unapproved/barry/mods-v1/` adds:
+  - the catalog draft (`CATALOG.md`, `catalog_final.json`, `catalog.py`);
+  - just-in-time buyer walks for the campaign and the arc (`catalog_walk.py`, `catalog_arc.py`, `catalog_report.py`, `final_tables.py` / `.md`);
+  - `DECISION.md` and `GO_LIVE.md`;
+  - the earlier mods-v1 scheme study (`RESULTS.md`, `mod_schemes.py`, `mods_eval.py`, `unlocks.py`, sweeps).
+- **Numbers (draft, sim):**
+  - At cap: 60/60 31.6 / 40.1 / 30.2 and 80/80 94.9 / 91.6 / 92.9.
+  - Story-only minimum 53.0 / 54.4 / 50.5.
+  - Grinds: mixed 3+10 / 3+10 / 4+8, 60/60 13 / 15 / 18.
+  - Finale 80/80 81.7 / 82.7 / 79.3 / 81.7 (on tune).
+  - The only change from live is in early R1 (80/80 kid2 95.5 instead of 98.9).
+  - The 60/60 finale step-1 grind count of 11 is unchanged from live.
+- **Not changed:** no live code in this commit.
+
 ## 2026-11-14 — Barry [sim]: whole skill points (10×), enforced 25–50 % band, 20 % retune limit live
 
 - **Why:** Austin approved skill-points-v1 on 2026-11-14 ("Great. Commit and push."). Players get distributable whole points, every stat stays inside the 25–50 % band, spent points lock, and the only retune is a 20 % budget at each district change. That closes the free-respec assumption the win table used to make, and the all-in build exploit.

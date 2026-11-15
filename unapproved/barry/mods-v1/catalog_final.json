@@ -1,0 +1,557 @@
+{
+ "config": "4 slots, canon staging (Mk2 after mat1), aspire Mk3 prices (R2 $5,000, R3 $8,000); Austin 2026-11-14",
+ "slots": 4,
+ "stock_part_points_per_slot": 150,
+ "mod_cap": "min(round/finale ceiling, 1.3375 x SP) on the 10x scale (live 1.07 x P)",
+ "wholesale": "-20% on R1-R3 mods during R2-R3 (live rule)",
+ "aero": "one aero max; MOD_*_AERO at 1.75x; unlocks after the R1 boss (live AERO_UNLOCK_AFTER)",
+ "unlock_token_format": "['open', round0] | [round0, rung] | ['arc', race_id]",
+ "mods": [
+  {
+   "id": "MOD_R1_POW_MK1",
+   "stat": "P",
+   "pts": 213,
+   "price": 150.0,
+   "unlock": [
+    "open",
+    0
+   ],
+   "fills_to_L": 6,
+   "aero_id": "MOD_R1_POW_MK1_AERO",
+   "aero_price": 262.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_HAN_MK1",
+   "stat": "H",
+   "pts": 213,
+   "price": 150.0,
+   "unlock": [
+    "open",
+    0
+   ],
+   "fills_to_L": 6,
+   "aero_id": "MOD_R1_HAN_MK1_AERO",
+   "aero_price": 262.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_EN_MK1",
+   "stat": "E",
+   "pts": 213,
+   "price": 150.0,
+   "unlock": [
+    "open",
+    0
+   ],
+   "fills_to_L": 6,
+   "aero_id": "MOD_R1_EN_MK1_AERO",
+   "aero_price": 262.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_POW_MK2",
+   "stat": "P",
+   "pts": 218,
+   "price": 500.0,
+   "unlock": [
+    0,
+    "mat1"
+   ],
+   "fills_to_L": 9,
+   "aero_id": "MOD_R1_POW_MK2_AERO",
+   "aero_price": 875.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_HAN_MK2",
+   "stat": "H",
+   "pts": 218,
+   "price": 500.0,
+   "unlock": [
+    0,
+    "mat1"
+   ],
+   "fills_to_L": 9,
+   "aero_id": "MOD_R1_HAN_MK2_AERO",
+   "aero_price": 875.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_EN_MK2",
+   "stat": "E",
+   "pts": 218,
+   "price": 500.0,
+   "unlock": [
+    0,
+    "mat1"
+   ],
+   "fills_to_L": 9,
+   "aero_id": "MOD_R1_EN_MK2_AERO",
+   "aero_price": 875.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_POW_MK3",
+   "stat": "P",
+   "pts": 223,
+   "price": 1000.0,
+   "unlock": [
+    0,
+    "mat2"
+   ],
+   "fills_to_L": 12,
+   "aero_id": "MOD_R1_POW_MK3_AERO",
+   "aero_price": 1750.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_HAN_MK3",
+   "stat": "H",
+   "pts": 223,
+   "price": 1000.0,
+   "unlock": [
+    0,
+    "mat2"
+   ],
+   "fills_to_L": 12,
+   "aero_id": "MOD_R1_HAN_MK3_AERO",
+   "aero_price": 1750.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R1_EN_MK3",
+   "stat": "E",
+   "pts": 223,
+   "price": 1000.0,
+   "unlock": [
+    0,
+    "mat2"
+   ],
+   "fills_to_L": 12,
+   "aero_id": "MOD_R1_EN_MK3_AERO",
+   "aero_price": 1750.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_POW_MK1",
+   "stat": "P",
+   "pts": 242,
+   "price": 700.0,
+   "unlock": [
+    "open",
+    1
+   ],
+   "fills_to_L": 22,
+   "aero_id": "MOD_R2_POW_MK1_AERO",
+   "aero_price": 1225.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_HAN_MK1",
+   "stat": "H",
+   "pts": 242,
+   "price": 700.0,
+   "unlock": [
+    "open",
+    1
+   ],
+   "fills_to_L": 22,
+   "aero_id": "MOD_R2_HAN_MK1_AERO",
+   "aero_price": 1225.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_EN_MK1",
+   "stat": "E",
+   "pts": 242,
+   "price": 700.0,
+   "unlock": [
+    "open",
+    1
+   ],
+   "fills_to_L": 22,
+   "aero_id": "MOD_R2_EN_MK1_AERO",
+   "aero_price": 1225.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_POW_MK2",
+   "stat": "P",
+   "pts": 249,
+   "price": 1500.0,
+   "unlock": [
+    1,
+    "mat1"
+   ],
+   "fills_to_L": 26,
+   "aero_id": "MOD_R2_POW_MK2_AERO",
+   "aero_price": 2625.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_HAN_MK2",
+   "stat": "H",
+   "pts": 249,
+   "price": 1500.0,
+   "unlock": [
+    1,
+    "mat1"
+   ],
+   "fills_to_L": 26,
+   "aero_id": "MOD_R2_HAN_MK2_AERO",
+   "aero_price": 2625.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_EN_MK2",
+   "stat": "E",
+   "pts": 249,
+   "price": 1500.0,
+   "unlock": [
+    1,
+    "mat1"
+   ],
+   "fills_to_L": 26,
+   "aero_id": "MOD_R2_EN_MK2_AERO",
+   "aero_price": 2625.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_POW_MK3",
+   "stat": "P",
+   "pts": 255,
+   "price": 5000.0,
+   "unlock": [
+    1,
+    "mat2"
+   ],
+   "fills_to_L": 29,
+   "aero_id": "MOD_R2_POW_MK3_AERO",
+   "aero_price": 8750.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_HAN_MK3",
+   "stat": "H",
+   "pts": 255,
+   "price": 5000.0,
+   "unlock": [
+    1,
+    "mat2"
+   ],
+   "fills_to_L": 29,
+   "aero_id": "MOD_R2_HAN_MK3_AERO",
+   "aero_price": 8750.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R2_EN_MK3",
+   "stat": "E",
+   "pts": 255,
+   "price": 5000.0,
+   "unlock": [
+    1,
+    "mat2"
+   ],
+   "fills_to_L": 29,
+   "aero_id": "MOD_R2_EN_MK3_AERO",
+   "aero_price": 8750.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_POW_MK1",
+   "stat": "P",
+   "pts": 279,
+   "price": 1200.0,
+   "unlock": [
+    "open",
+    2
+   ],
+   "fills_to_L": 40,
+   "aero_id": "MOD_R3_POW_MK1_AERO",
+   "aero_price": 2100.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_HAN_MK1",
+   "stat": "H",
+   "pts": 279,
+   "price": 1200.0,
+   "unlock": [
+    "open",
+    2
+   ],
+   "fills_to_L": 40,
+   "aero_id": "MOD_R3_HAN_MK1_AERO",
+   "aero_price": 2100.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_EN_MK1",
+   "stat": "E",
+   "pts": 279,
+   "price": 1200.0,
+   "unlock": [
+    "open",
+    2
+   ],
+   "fills_to_L": 40,
+   "aero_id": "MOD_R3_EN_MK1_AERO",
+   "aero_price": 2100.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_POW_MK2",
+   "stat": "P",
+   "pts": 288,
+   "price": 2500.0,
+   "unlock": [
+    2,
+    "mat1"
+   ],
+   "fills_to_L": 44,
+   "aero_id": "MOD_R3_POW_MK2_AERO",
+   "aero_price": 4375.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_HAN_MK2",
+   "stat": "H",
+   "pts": 288,
+   "price": 2500.0,
+   "unlock": [
+    2,
+    "mat1"
+   ],
+   "fills_to_L": 44,
+   "aero_id": "MOD_R3_HAN_MK2_AERO",
+   "aero_price": 4375.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_EN_MK2",
+   "stat": "E",
+   "pts": 288,
+   "price": 2500.0,
+   "unlock": [
+    2,
+    "mat1"
+   ],
+   "fills_to_L": 44,
+   "aero_id": "MOD_R3_EN_MK2_AERO",
+   "aero_price": 4375.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_POW_MK3",
+   "stat": "P",
+   "pts": 292,
+   "price": 8000.0,
+   "unlock": [
+    2,
+    "mat2"
+   ],
+   "fills_to_L": 46,
+   "aero_id": "MOD_R3_POW_MK3_AERO",
+   "aero_price": 14000.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_HAN_MK3",
+   "stat": "H",
+   "pts": 292,
+   "price": 8000.0,
+   "unlock": [
+    2,
+    "mat2"
+   ],
+   "fills_to_L": 46,
+   "aero_id": "MOD_R3_HAN_MK3_AERO",
+   "aero_price": 14000.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_R3_EN_MK3",
+   "stat": "E",
+   "pts": 292,
+   "price": 8000.0,
+   "unlock": [
+    2,
+    "mat2"
+   ],
+   "fills_to_L": 46,
+   "aero_id": "MOD_R3_EN_MK3_AERO",
+   "aero_price": 14000.0,
+   "wholesale_eligible": true
+  },
+  {
+   "id": "MOD_ARC_POW_MYTH1",
+   "stat": "P",
+   "pts": 333,
+   "price": 2500.0,
+   "unlock": [
+    "arc",
+    "P1"
+   ],
+   "fills_to_L": 64,
+   "aero_id": "MOD_ARC_POW_MYTH1_AERO",
+   "aero_price": 4375.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_HAN_MYTH1",
+   "stat": "H",
+   "pts": 333,
+   "price": 2500.0,
+   "unlock": [
+    "arc",
+    "P1"
+   ],
+   "fills_to_L": 64,
+   "aero_id": "MOD_ARC_HAN_MYTH1_AERO",
+   "aero_price": 4375.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_EN_MYTH1",
+   "stat": "E",
+   "pts": 333,
+   "price": 2500.0,
+   "unlock": [
+    "arc",
+    "P1"
+   ],
+   "fills_to_L": 64,
+   "aero_id": "MOD_ARC_EN_MYTH1_AERO",
+   "aero_price": 4375.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_POW_MYTH2",
+   "stat": "P",
+   "pts": 375,
+   "price": 4000.0,
+   "unlock": [
+    "arc",
+    "F1"
+   ],
+   "fills_to_L": 79,
+   "aero_id": "MOD_ARC_POW_MYTH2_AERO",
+   "aero_price": 7000.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_HAN_MYTH2",
+   "stat": "H",
+   "pts": 375,
+   "price": 4000.0,
+   "unlock": [
+    "arc",
+    "F1"
+   ],
+   "fills_to_L": 79,
+   "aero_id": "MOD_ARC_HAN_MYTH2_AERO",
+   "aero_price": 7000.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_EN_MYTH2",
+   "stat": "E",
+   "pts": 375,
+   "price": 4000.0,
+   "unlock": [
+    "arc",
+    "F1"
+   ],
+   "fills_to_L": 79,
+   "aero_id": "MOD_ARC_EN_MYTH2_AERO",
+   "aero_price": 7000.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_POW_MYTH3",
+   "stat": "P",
+   "pts": 426,
+   "price": 6000.0,
+   "unlock": [
+    "arc",
+    "F2"
+   ],
+   "fills_to_L": 94,
+   "aero_id": "MOD_ARC_POW_MYTH3_AERO",
+   "aero_price": 10500.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_HAN_MYTH3",
+   "stat": "H",
+   "pts": 426,
+   "price": 6000.0,
+   "unlock": [
+    "arc",
+    "F2"
+   ],
+   "fills_to_L": 94,
+   "aero_id": "MOD_ARC_HAN_MYTH3_AERO",
+   "aero_price": 10500.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_EN_MYTH3",
+   "stat": "E",
+   "pts": 426,
+   "price": 6000.0,
+   "unlock": [
+    "arc",
+    "F2"
+   ],
+   "fills_to_L": 94,
+   "aero_id": "MOD_ARC_EN_MYTH3_AERO",
+   "aero_price": 10500.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_POW_MYTH4",
+   "stat": "P",
+   "pts": 501,
+   "price": 8000.0,
+   "unlock": [
+    "arc",
+    "F3"
+   ],
+   "fills_to_L": 114,
+   "aero_id": "MOD_ARC_POW_MYTH4_AERO",
+   "aero_price": 14000.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_HAN_MYTH4",
+   "stat": "H",
+   "pts": 501,
+   "price": 8000.0,
+   "unlock": [
+    "arc",
+    "F3"
+   ],
+   "fills_to_L": 114,
+   "aero_id": "MOD_ARC_HAN_MYTH4_AERO",
+   "aero_price": 14000.0,
+   "wholesale_eligible": false
+  },
+  {
+   "id": "MOD_ARC_EN_MYTH4",
+   "stat": "E",
+   "pts": 501,
+   "price": 8000.0,
+   "unlock": [
+    "arc",
+    "F3"
+   ],
+   "fills_to_L": 114,
+   "aero_id": "MOD_ARC_EN_MYTH4_AERO",
+   "aero_price": 14000.0,
+   "wholesale_eligible": false
+  }
+ ]
+}
