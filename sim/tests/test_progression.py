@@ -57,7 +57,9 @@ def test_walks_reproduce_eval_final_c():
     assert [w["total_grind"] for w in hard] == [13, 15, 18] and [w["L"] for w in hard] == [12, 29, 46]
     assert [(w["wall_grind"], w["post_wall_to_cap"]) for w in hard] == [(1, 12), (3, 12), (6, 12)]   # R1 was 2 + 11 before mods-v1
     story = P.run("story")
-    assert [w["L"] for w in story] == [7, 25, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
+    assert [w["L"] for w in story] == [7, 26, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
+    # xp-carry-v1 fix C (Austin 2026-11-14): leftover XP carries over, so story-only enters R2 at L7 and R3 at L26
+    assert [w["rows"][0]["arrive_L"] for w in story] == [0, 7, 26]
     worst = [min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story]
     assert worst == [53.0, 54.4, 50.5] and min(worst) >= 50.0                         # criterion 3 (thin on R3 T3)
     # Austin 2026-11-14 campaign story-XP cut (STORY_XP_MULT): 80/80 story-only meets each boss one level lower
@@ -65,7 +67,7 @@ def test_walks_reproduce_eval_final_c():
     assert boss == [(6, 53.0), (23, 57.7), (41, 55.8)]
     assert story[0]["rows"][0]["equipped"] == ["stock"] * 4 and story[0]["rows"][0]["cash_pre"] == 0.0   # kid1 runs stock
     assert story[0]["rows"][1]["wr"]["c8080"]["district"] == 95.5                       # kid2 at 88.9 % fill (was 98.9 at full fill)
-    assert [round(w["money"], 2) for w in story] == [5900.0, 17660.0, 30420.0] and story[-1]["mods_spent"] == 23580.0
+    assert [round(w["money"], 2) for w in story] == [5900.0, 13940.0, 26700.0] and story[-1]["mods_spent"] == 27300.0
     # skill-points-v1 (Austin 2026-11-14): whole points, 25-50 % band, 20 % retune budget; R2 arrives off the Wangan tune
     assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.6, 40.1, 30.3]
     assert [w["build"] for w in mixed] == [(1320, 660, 660), (792, 756, 1474), (1556, 865, 1037)]
@@ -74,10 +76,24 @@ def test_walks_reproduce_eval_final_c():
 
 def test_story_xp_mult_campaign_only():
     assert E.STORY_XP_MULT[0] == (0.90,) * 7
-    assert E.STORY_XP_MULT[1] == (1.0, 1.0, 1.0, 1.0, 1.0, 0.60, 1.0) and E.STORY_XP_MULT[2] == (1.0, 1.0, 1.0, 1.0, 1.0, 0.80, 1.0)
+    assert E.STORY_XP_MULT[1] == (1.0, 1.0, 1.0, 1.0, 1.0, 0.60, 1.5) and E.STORY_XP_MULT[2] == (1.0, 1.0, 1.0, 1.0, 1.0, 0.80, 1.0)
     assert E.ARC_STORY_FILL == 0.80                                                  # finale pacing unchanged (Austin 2026-11-14)
     a = E.story_xp(0, 2, 0, 12) / (E.STORY_FILL[0] * E.STORY_W[2] / sum(E.STORY_W) * sum(E.xp_to_next(L) for L in range(0, 12)))
     assert abs(a - 0.90) < 1e-12
+
+
+def test_leftover_xp_carries_over_with_catchup():
+    # xp-carry-v1 fix C (Austin 2026-11-14): entering at the previous cap pays exactly the pre-carry XP; entering below
+    # it adds CATCHUP_XP_FRAC x CATCHUP_XP_SHARE[rung] of the shortfall to that cap (kid1 / kid2 / mat1 only)
+    assert E.CATCHUP_XP_FRAC == 0.75 and E.CATCHUP_XP_SHARE == (0.40, 0.40, 0.20, 0.0, 0.0, 0.0, 0.0)
+    cap1, cap2 = E.CAP_LEVEL[0], E.CAP_LEVEL[1]
+    for j in range(7):
+        at_cap = E.STORY_XP_MULT[1][j] * E.STORY_FILL[1] * E.STORY_W[j] / sum(E.STORY_W) * sum(E.xp_to_next(L) for L in range(cap1, cap2))
+        assert abs(E.story_xp(1, j, cap1, cap2) - at_cap) < 1e-9
+        short = sum(E.xp_to_next(L) for L in range(7, cap1))
+        assert abs(E.story_xp(1, j, 7, cap2) - at_cap - 0.75 * E.CATCHUP_XP_SHARE[j] * short) < 1e-9
+    mixed = P.run("mixed")
+    assert [w["rows"][0]["arrive_L"] for w in mixed] == [0, 12, 29]                  # grinders reach every cap: no change
 
 
 def test_money_and_shop():

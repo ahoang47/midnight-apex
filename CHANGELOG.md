@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-11-14 — Barry [sim]: leftover XP carries over, with catch-up story XP (xp-carry-v1 fix C live)
+
+- **Why:** Austin decided leftover XP carries over between rounds, then picked fix C to go live (2026-11-14, 10:26 PM: "commit everything"). Carrying XP alone dropped four story-only 80/80 races under 50 % (R2 mat2 49.2, R2 oh1 45.0, R3 kid1 43.3, R3 mat2 39.5), because story-only now enters R2 at L7 and R3 at L25 instead of L12 / L29. Fix C restores every story-only minimum without touching opponents or anyone who reaches the cap. Fix B (raise R2 mat2/oh1 opponents) was rejected because it changes the ladder for everyone (hard R2 grinds 15 → 16).
+- **What (`sim/velocity_shift/`):**
+  - `progression.run_with_garage`: a round is entered at the level and XP bag the previous round ended on (the bump to the previous cap and the empty bag are gone). `cap_builds` is unchanged (it models players who reach every cap).
+  - `equations.story_xp`: base XP is computed from the nominal entry level (previous cap; L0 for R1) or the real one if higher, plus `CATCHUP_XP_FRAC` (0.75) × `CATCHUP_XP_SHARE` (kid1 0.40 / kid2 0.40 / mat1 0.20) of the XP from the real entry level to the previous cap. Entering at the cap pays exactly the old XP.
+  - `STORY_XP_MULT` R2 boss 1.00 → 1.50 (story-only enters R3 at L26, so R3 kid1 is 54.1 %).
+  - Cleared the stale "Desmond's USD wording pass pending" comment on `MOD_PRICE` (the pass landed in 50fd573).
+- **Tests:** `test_progression` story walk now expects end levels 7 / 26 / 43, entry levels 0 / 7 / 26, cash $5,900 / $13,940 / $26,700 and $27,300 on mods; new `test_leftover_xp_carries_over_with_catchup`; `STORY_XP_MULT` assert has R2 boss 1.5. `test_mod_catalog` story cash before R2 oh1 $8,470 → $8,750 and before R3 oh1 $24,230 → $20,510 (the Mk3 sets, $20,000 and $25,600 at wholesale, are still out of reach on sight there). Quick local run: 82 passed; CI is the gate.
+- **Live numbers (verified on the live sim):** story-only 80/80 minimums 53.0 / 54.4 / 50.5 and bosses 53.0 / 57.7 / 55.8 (unchanged); 60/60 at cap 31.6 / 40.1 / 30.2 and 80/80 at cap 94.9 / 91.6 / 92.9 (unchanged); finale 80/80 81.7 / 82.7 / 79.3 / 81.7 (unchanged); mixed grinds 13 / 13 / 12 (wall 3 / 3 / 4), hard 13 / 15 / 18 (unchanged).
+- **Side effects:** story-only spends about $3,700 more on mods by end of R3 ($27,300 vs $23,580) and ends the finale with $13,275 instead of $16,995. A story-only player at L7 wins an R2 10-turn grind 58.7 % (was 85.6 % worst case), so "grinds are easy" no longer holds at round start for under-levelled players; story-only doesn't grind, so no target breaks. R2 kid1 at L7 (58.7 %) is the new thinnest early story race.
+- **Docs:** design/02 Story XP row and design/07 Story XP paragraph describe the carry-over and catch-up, pointing at `story_xp` / `run_with_garage`. Study: `unapproved/barry/xp-carry-v1/`.
+- **Flag for Desmond:** players now start R2/R3 below the previous cap if they skipped grinding; any story or tutorial copy that says a round starts "at the cap" needs a look.
+
 ## 2026-11-14 — Desmond [design]: USD wording pass for mods-v1 prices
 
 - Removed the "USD wording pass pending" notes on the mods-v1 prices in design/02 and design/07. The numbers are unchanged.

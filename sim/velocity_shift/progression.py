@@ -475,8 +475,8 @@ def run_with_garage(mode: str = "mixed", order=None):
         d = E.ROUND_DISTRICTS[rnd].lower()
         if rnd > 0:
             alloc = retune(alloc, d)                       # district change: at most 20 % of spent points move
-            end_L, L, bag = L, E.CAP_LEVEL[rnd - 1], 0.0
-            alloc = add_points(alloc, E.skill_points(L) - E.skill_points(end_L), d)   # points up to the entry cap are new
+            # leftover XP carries over (Austin 2026-11-14, xp-carry-v1 fix C): enter at the level and bag reached;
+            # story_xp pays catch-up XP to a player below the previous cap
         w = _walk_round(rnd, L, bag, money, debt, mode, Build(d, alloc, L), G, done); out.append(w)
         L, bag, money, debt = w["L"], w["bag"], w["money"], w["debt"]; alloc = w["build"]
     return out, G, done
@@ -484,7 +484,8 @@ def run_with_garage(mode: str = "mixed", order=None):
 
 def run(mode: str = "mixed", order=None):
     """Walk R1-R3 for a policy ("story", "mixed", "hard") with the mods-v1 garage and buyer. Each round is entered at
-    the previous round's cap (R1 at L0) with cash, debt and garage carried. Returns a list of 3 round dicts."""
+    the level and XP bag the previous round ended on (R1 at L0; leftover XP carries over, Austin 2026-11-14) with cash,
+    debt and garage carried. Returns a list of 3 round dicts."""
     return run_with_garage(mode, order)[0]
 
 

@@ -394,9 +394,16 @@ STORY_W = (0.12, 0.12, 0.14, 0.14, 0.14, 0.14, 0.20)
 # R3 oh2 x0.80. The pre-finale arc and finale (ARC_STORY_FILL, FINALE_ARC) are unchanged.
 STORY_XP_MULT = (
     (0.90, 0.90, 0.90, 0.90, 0.90, 0.90, 0.90),
-    (1.00, 1.00, 1.00, 1.00, 1.00, 0.60, 1.00),
+    (1.00, 1.00, 1.00, 1.00, 1.00, 0.60, 1.50),
     (1.00, 1.00, 1.00, 1.00, 1.00, 0.80, 1.00),
 )
+# Leftover XP carries over (Austin 2026-11-14, xp-carry-v1 fix C): a round is entered at the level and XP bag the player
+# actually finished the previous round on (no bump to the previous cap). Story races then pay the XP they would pay at the
+# previous cap (the nominal entry level) plus CATCHUP_XP_FRAC of the XP the player is short of that cap, split over the
+# rungs by CATCHUP_XP_SHARE (kid1 40 % / kid2 40 % / mat1 20 %). A player entering at the cap gets exactly the old XP.
+# STORY_XP_MULT R2 boss is 1.50 (was 1.00) so story-only enters R3 at L26 (R3 kid1 >= 50 %).
+CATCHUP_XP_FRAC = 0.75
+CATCHUP_XP_SHARE = (0.40, 0.40, 0.20, 0.0, 0.0, 0.0, 0.0)
 # Grind: one 10-turn grind win pays GRIND_FRAC x xp_to_next(L) x taper; taper = floor + (1 - floor)(1 - exp(-d / tau)),
 # d = levels below the cap.
 GRIND_FRAC = 0.70
@@ -447,7 +454,7 @@ MOD_SETS = (
 MOD_CATALOG = {f"MOD_{g}_{st}_{mk}": dict(group=g, mk=mk, stat=st, points=pts, price=price, unlock=u, fills_to=fl)
                for g, mk, pts, price, u, fl in MOD_SETS for st in MOD_STATS}
 MOD_UNLOCK = {mid: m["unlock"] for mid, m in MOD_CATALOG.items()}
-MOD_PRICE = {mid: m["price"] for mid, m in MOD_CATALOG.items()}   # list price per ID (Desmond's USD wording pass pending)
+MOD_PRICE = {mid: m["price"] for mid, m in MOD_CATALOG.items()}   # list price per ID (USD)
 MOD_PRICE_STANDIN = tuple(f"MOD_ARC_{st}_MYTH4" for st in MOD_STATS)   # $8,000 stand-in (Austin 2026-11-13: "works for now")
 AERO_PRICE_MULT = 1.75         # an aero version (<ID>_AERO) costs 1.75 x its regular mod
 T4_UNLOCK_RACE = "P1"          # the arc's Myth mods start at the P1 win (MOD_ARC_*_MYTH1); Reiko sells at full price
@@ -878,9 +885,15 @@ def grind_xp(level: int, cap: int) -> float:
 
 def story_xp(rnd: int, rung: int, enter_level: int, cap: int) -> float:
     """XP of a story win at rung index `rung` of round index `rnd` (0 = R1), for a round entered at `enter_level`.
-    Scaled by STORY_XP_MULT[rnd][rung]."""
-    total = sum(xp_to_next(L) for L in range(enter_level, cap))
-    return STORY_XP_MULT[rnd][rung] * STORY_FILL[rnd] * STORY_W[rung] / sum(STORY_W) * total
+    Scaled by STORY_XP_MULT[rnd][rung]. The base is computed from the nominal entry level (the previous round's cap,
+    L0 for R1) or the real entry level if higher; a player entering below the previous cap (leftover XP carries over)
+    also gets CATCHUP_XP_FRAC x CATCHUP_XP_SHARE[rung] of the XP from `enter_level` to that cap."""
+    nominal = 0 if rnd == 0 else CAP_LEVEL[rnd - 1]
+    base_level = max(enter_level, nominal)
+    total = sum(xp_to_next(L) for L in range(base_level, cap))
+    short = sum(xp_to_next(L) for L in range(enter_level, nominal))
+    return (STORY_XP_MULT[rnd][rung] * STORY_FILL[rnd] * STORY_W[rung] / sum(STORY_W) * total
+            + CATCHUP_XP_FRAC * CATCHUP_XP_SHARE[rung] * short)
 
 
 def purse(rnd: int, kind: str, grind: bool = False) -> float:

@@ -28,8 +28,8 @@ def test_price_guards_and_aspire():
     assert E.mod_price("MOD_ARC_POW_MYTH4") == 8000.0                     # $12,000 broke F4
     story = [r for w in P.run("story") for r in w["rows"]]
     cash = {(r["rnd"], r["rung"]): r["cash_pre"] for r in story}
-    assert E.MOD_SLOTS * E.mod_price("MOD_R2_POW_MK3") > cash[(2, "oh1")] == 8470.0      # Mk3 set out of reach on sight
-    assert E.MOD_SLOTS * E.mod_price("MOD_R3_POW_MK3") > cash[(3, "oh1")] == 24230.0
+    assert E.MOD_SLOTS * E.mod_price("MOD_R2_POW_MK3") > cash[(2, "oh1")] == 8750.0      # Mk3 set out of reach on sight (xp-carry-v1: was 8470)
+    assert E.MOD_SLOTS * E.mod_price("MOD_R3_POW_MK3") > cash[(3, "oh1")] == 20510.0   # xp-carry-v1: was 24230
 
 
 def test_buyer_one_stat_mods_only():
