@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-14 — Barry [design]: design/01 canon mod-slot line set to 4 slots (mods-v1)
+
+- **Why:** The canon block line 16 still said "6 slots in 3 categories × 2" and "not yet in sim constants". That contradicted live mods-v1 (`MOD_SLOTS` 4, one-stat mods, stock parts in empty slots). Austin approved edits to the design/01 canon block on 2026-11-14 ("I'm ok with the edits to the design block").
+- **What:** `design/01-system-overview.md` line 16 now says:
+  - 4 slots, each holding one fixed-stat mod or a stock part;
+  - the 107 % cap (`MOD_CAP_FRACTION`, live since 2026-11-13);
+  - the mods are live in the sim constants.
+  Window mods are still marked unapproved; the aero rule is unchanged.
+- **Not changed:** sim code. No numbers moved.
+
 ## 2026-11-14 — Barry [sim]: mods-v1 live: 4 slots, 39 ID-only mods unlocked by rung, just-in-time buyer, MOD_UNLOCK_RACE = 3
 
 - **Why:** Austin said "Go live" on mods-v1 (4 slots, canon staging: Mk2 after mat1, aspire Mk3 prices, IDs only) and approved editing the design/01 canon line. Austin wanted more mods and steady progress inside each round rather than a whole tier opening at once. The old walk also assumed a full mod fill from R1 kid2, which a player with $350 can't buy. Design/07's race-3 shop unlock wasn't in the sim.
