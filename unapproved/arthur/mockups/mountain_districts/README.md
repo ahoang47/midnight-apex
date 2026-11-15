@@ -1,4 +1,4 @@
-# Mountain districts: every district is a pass, all three entry lanes (unapproved mockup)
+# Mountain districts: every district is a pass, all three entry lanes (unapproved mockup), pass 2: perspective + hillside city
 
 Arthur (Art Director), 2026-11-15. Austin on `tight_districts`: *"Neither Wangan nor street give the sense of being on a
 mountain pass. Also, please render all three lane placements."*
@@ -12,6 +12,140 @@ Built on `../tight_districts/` (left untouched). Same pipeline and look: Cel A s
 Every frame uses the same CAT chasing setup: the rival is 11 m ahead in the player's line with its taillights in the
 chevrons and the red tail wash. The CAT CHASING tie-gap box is on. Player and chevrons sit on that lane, and the plan box
 has that stance selected (OUT = A / POW, MID = S / HAN, IN = D / EN). No floating OUT / MID / IN markers.
+
+## Pass 2 (v2): perspective, and a real hillside city
+
+Austin on v1: *"The street district feels off, it doesn't feel like city in the mountains, it feels very tacked on. Also
+to help with the gradient, the side assets should be decreasing in height, to achieve perspective. Your issue is that
+there's no perspective."*
+
+**Files.** The v1 frames and `mountain_districts_sheet.png` are untouched. `MTN_V=1 ./run.sh` rebuilds them
+pixel-identically; I checked wangan MID: 0 px differ.
+- `mountain_districts_sheet_v2.png`: 3x3, rows touge / wangan / street, cols OUT / MID / IN
+- `mountain_districts_v1_v2_mid.png`: MID lane, v1 against v2, one row per district
+- `{touge,wangan,street}_{out,mid,in}_cat_v2.png`: the 9 frames
+
+### What changed for perspective (all districts)
+
+**Regular real-size verticals and hard edges**, so they shrink toward one vanishing point:
+- **Touge:**
+  - 法枠 lattice-framed cut slope in 4 m modules, with cells 2 m × 2.15 m and proud cast beams, so every cell edge is an
+    inked line converging up the road. It replaces the smooth cut-slope slab.
+  - Delineators every 8 m on both edges.
+  - Sodium lamps every 32 m (was 48 m).
+- **Wangan:**
+  - Retaining wall with a pilaster at every 4 m joint and a proud coping.
+  - The same lattice in shotcrete above the wall.
+  - Delineators on every other parapet module.
+  - Tall lamps every 32 m each side, staggered 16 m (was 48 m / 24 m).
+- **Street:**
+  - Balcony slabs every 3.1 m on the mid-rise fronts, regular window bays, and blade signs at the same height.
+  - Poles every 20 m.
+  - The footbridge.
+
+**The cut gets shallower up the hill.** The Wangan wall steps down from 3.0 m to 2.1 m between s 16 and 126 m, and the
+lattice and cedars sit on it, so the cut top drops as the road climbs away.
+
+**The grade runs on into the distance.** Touge no longer crests in frame (8.5 % rising to 9.5 %, was 8.5 % then a
+crest), so the rising road runs up to a vanishing point above the horizon in every district.
+
+**Chase camera.** It is the same B.5b family: fixed, behind and right of the player, not mirrored, following the lane.
+For all three districts it is now:
+- 2.45 m up (was 3.1)
+- 7.4 m back (was 7.6)
+- a 47° lens (was 56.7°)
+- aimed 34 m up the road (was 22 m)
+
+The longer, lower view stacks the receding verticals and shows the road rising. The HUD is unchanged.
+
+### Street v2: a city built into the mountain (Atami / Kitano / Onomichi / Mid-Levels)
+
+**Uphill side (left):** 3- to 6-floor mid-rise blocks entered from the pavement.
+- Ground-floor fronts: lit entrance, shutter, small shop, hotel lobby.
+- Balcony slabs and lit windows, about a third lit, all below the car's brightness.
+- Blade signs with generic boards only (ホテル, 旅館, ♨湯, スナック, 喫茶, 民宿), dimmed.
+- Stair alleys climb between them.
+- A **footbridge** crosses overhead from a 2nd floor to a pier 4.5 m past the downhill kerb.
+
+**Downhill side (right):** a pipe handrail on the kerb.
+- The near blocks have their roofs ~2.6 m below the road, with 6 floors going down the slope.
+- More rows step down to the right, with their lit fronts below road level.
+
+**Ahead:** past the 90 the mountain climbs straight on.
+- Rows of blocks across the view step up the hill facing the street, with rooftop boards.
+- Behind them is the dark mountain to a ridge line.
+- The mountains close round the far side of the bay on the right, over the valley.
+
+**Kept:** 5.8 m street, 8-10 %, poles and sagging wires, the curve mirror at the 90, a vending machine, generic signs
+only.
+
+**Removed:**
+- Poles are on the uphill side only, so none splits the frame.
+- No drop wires run over the camera.
+- No rooftop board stands beside the camera.
+
+### New for pass 2
+
+Blender (`blender/build_mountain.py`) tris:
+
+| Asset | Tris | Notes |
+|---|---|---|
+| `mtn_lattice_slope_g` / `_c` | 74 | |
+| `mtn_retain_wall_p` | 24 | |
+| `mtn_delineator` | 8 | |
+| `mtn_block_up_a..d` | 168-244 | |
+| `mtn_block_dn_a..d` | 226-344 | |
+| `mtn_block_tier_a..c` | 232-514 | |
+| `mtn_footbridge` | 98 | |
+| `mtn_steps_up` | 80 | |
+
+Textures (`tex_src/make_tex.py`):
+- `mtn_lattice_beam`
+- `mtn_lattice_fill_g` / `_c`
+- `emit_delineator`
+- `mtn_block_wall_a..c`
+- `mtn_roof_flat`
+- `emit_mtn_windows` (32-cell atlas)
+- `emit_mtn_ground` (4 fronts)
+- `emit_mtn_signs` (6 boards)
+- `mtn_rail` (alpha)
+- `mtn_bridge_fascia`
+
+**Code:** `godot/scripts/district_preview.gd`, marked `MOUNTAIN PASS 2` / `v2`, gated by `V2` (`MTN_V=1` = v1):
+- `_cam_cfg`
+- `_dress_touge_v2`, `_dress_wangan_v2`, `_dress_street_v2`
+- `_hill_y`, `_hill_mesh`, `_far_ridge`, `_block_far`, `_delins`
+- `shaders/scroll.gdshader`: `gb_far` writes the far mountain masses to the G-buffer as sky, so the ink pass does not net
+  their big far faces in black.
+- Street v2 fog_far is 140 (was 110). Far tiers are fogged at most 55 % (walls) and 30 % (windows / signs).
+- Wangan v2 bay sits 105 m down (was 180). The lower camera sees less over the parapet, so the light field sits nearer
+  the horizon, at bearings 8-27°, 1.1-3.3 km out.
+
+**Scene env tris (v2):** touge 9,970 / wangan 22,630 / street 44,730, plus the cars.
+
+### Pass 2 weak spots
+
+**Wangan**
+- **IN shows only a thin strip of bay lights.** On the IN lane the parapet hides most of them, and MID shows fewer than
+  v1. The lower, longer camera trades some of the drop for the climb.
+- **The IN frame still has a big near wall on the left.** The pilasters and coping give it rhythm, but it is the largest
+  surface in frame.
+
+**Street**
+- **The near uphill block reads flat close to the camera.** Its window bays are single flat panes at 4-5 m, with no
+  frames or mullions.
+- **The ridge line is mostly behind the HUD** (mirror, gap box and plate) at the centre of the frame. Only the far
+  bay-side ridge on the right reads, and it is faint.
+- **Floors below road level show mainly as lit fronts further down and to the right.** The near downhill blocks show
+  only their roofs below the rail. From a road-level camera you can't look down their faces.
+
+**Touge**
+- **The lattice is a strong, regular pattern on the touge.** It is very readable, but it is a new look there. Austin may
+  prefer it only on the Wangan skyline.
+
+**Tri budget**
+- Street v2 is about 45k env tris, mostly the far tier blocks; it could be cut with lower far LODs. It is over the old
+  guide, though Austin has said there are no hardware limits.
 
 ## The three passes
 

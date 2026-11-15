@@ -13,6 +13,7 @@ uniform float fog_near = 30.0;
 uniform float fog_far = 140.0;
 uniform float fog_amount = 1.0;
 uniform float gain = 1.0;
+uniform float gb_far = 0.0;      // MOUNTAIN v2: 1 = written to the G-buffer as sky (far mountain mass: no ink netting its big far faces)
 uniform float cel_k = 1.0;        // 0 = full-bright (Emit_ surfaces, lamp heads), 1 = toon ramp
 uniform float flatten = 1.0;      // 0 = original texture, 1 = flattened
 uniform float flat_radius = 4.0;  // texels
@@ -39,8 +40,8 @@ void fragment() {
 	vec2 uv = uvw.xy / uvw.z;
 	vec4 t = texture(tex, fract(uv));
 	if (t.a < 0.5) discard;
-	if (CEL_GB > 1.5) { ALBEDO = cel_pack_depth(fog_depth); }
-	else if (CEL_GB > 0.5) { ALBEDO = cel_pack_normal(cel_face_normal(VERTEX)); }
+	if (CEL_GB > 1.5) { ALBEDO = gb_far > 0.5 ? vec3(1.0) : cel_pack_depth(fog_depth); }
+	else if (CEL_GB > 0.5) { ALBEDO = gb_far > 0.5 ? cel_pack_normal(vec3(0.0, 0.0, 1.0)) : cel_pack_normal(cel_face_normal(VERTEX)); }
 	else {
 		vec3 c = t.rgb;
 		float sk = soft_surface * cel_soft * cel_on;   // CEL A SOFT (Austin 2026-11-14): big surfaces keep smooth light

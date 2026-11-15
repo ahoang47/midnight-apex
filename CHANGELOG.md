@@ -8,6 +8,25 @@
 
 ---
 
+## [art] 2026-11-15 — Arthur: mountain districts pass 2, perspective and a real hillside city (unapproved mockup)
+
+- **Why:** on the mountain_districts frames, Austin said: "The street district feels off, it doesn't feel like city in the mountains, it feels very tacked on. Also to help with the gradient, the side assets should be decreasing in height, to achieve perspective. Your issue is that there's no perspective."
+- **What:** pass 2 is in `unapproved/arthur/mockups/mountain_districts/`. It has 9 new `*_v2.png` frames, a 3×3 `mountain_districts_sheet_v2.png`, and a `mountain_districts_v1_v2_mid.png` strip comparing v1 and v2 on the MID lane. The v1 frames are untouched, and `MTN_V=1` rebuilds them pixel-identically.
+  - **Perspective (all districts):** regularly spaced roadside verticals and edges at real size, so they shrink toward a vanishing point above the horizon.
+    - Touge: a 法枠 lattice cut slope, delineators every 8 m, and lamps every 32 m.
+    - Wangan: pilasters every 4 m on a retaining wall that steps down from 3.0 to 2.1 m up the hill, shotcrete lattice above it, parapet delineators, and lamps every 32 m.
+    - Street: balcony slabs every 3.1 m, poles every 20 m, and a footbridge.
+    - The touge climb no longer crests in frame.
+    - Chase camera, same family for all districts: 2.45 m up (was 3.1), 47° lens (was 56.7°), aimed 34 m ahead (was 22 m).
+  - **Street becomes a city built into the mountain** (Atami / Kitano / Onomichi):
+    - Uphill: mid-rise blocks entered at road level, stair alleys, and a footbridge overhead.
+    - Downhill: blocks with roofs below the road and floors going down the slope.
+    - Ahead: tiers of lit blocks climbing to a ridge, with mountains round the bay.
+    - Generic signs only. Poles are on the uphill side only.
+  - New Blender props: lattice slopes, a pilastered wall, a delineator, 12 city blocks, a footbridge and stair-alley steps.
+  - New textures, plus a `gb_far` switch in this folder's scroll shader that keeps ink off the far mountain masses.
+  - Gordon's files are untouched, and nothing is approved.
+
 ## [art] 2026-11-15 — Arthur: mountain districts, every district a pass, all three entry lanes (unapproved mockup)
 
 - **Why:** on tight_districts, Austin said: "Neither Wangan nor street give the sense of being on a mountain pass. Also, please render all three lane placements."

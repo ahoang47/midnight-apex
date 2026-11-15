@@ -118,6 +118,126 @@ wangan_gantry_2l(); street_curvemirror()
 mtn_retain_wall('mtn_retain_wall', 'mtn_retain_concrete', 3.0, 0.35, True)
 mtn_retain_wall('mtn_stone_wall', 'mtn_stonewall', 4.5, 0.6, False)
 mtn_house(); mtn_handrail(); mtn_steps(); mtn_toll_sign()
+
+# ════ PASS 2 (Austin 2026-11-15: "the side assets should be decreasing in height, to achieve perspective"; the street
+#      "doesn't feel like city in the mountains"). Regular, real-size verticals and edges for the eye to measure the
+#      climb with, and a hillside-city block kit built into the slope.
+#   mtn_lattice_slope_g / _c : 4 m module of 法枠 lattice-framed cut slope (2 m x 2.15 m cells, proud cast beams; grass / shotcrete)
+#   mtn_retain_wall_p        : the Wangan retaining wall with a pilaster at every 4 m joint and a proud coping
+#   mtn_delineator           : 1 m white post with an amber reflector (every 8 m on the guardrail / parapet)
+#   mtn_block_up_a..d        : mid-rise blocks entered at road level on the uphill side (3-6 floors, balcony slabs, windows,
+#                              ground-floor fronts, a blade sign)
+#   mtn_block_dn_a..c        : downhill blocks whose roof or top floors are at road level and 4-6 floors go down the slope
+#   mtn_footbridge           : pedestrian bridge over the street from the uphill block's 2nd floor to a pier on the drop side
+#   mtn_steps_up             : stair alley climbing between uphill blocks, stone cheeks, pipe rail
+import random as _rnd
+def mtn_lattice_slope(name, fill):
+    reset(); b = Builder(name); f = mat(fill, fill); bm_ = mat('mtn_lattice_beam', 'mtn_lattice_beam')
+    run, rise, L = 5.0, 7.0, 4.0; sl = math.hypot(run, rise); n = (-rise / sl, 0.0, run / sl)
+    b.quad([(0, L/2, 0), (0, -L/2, 0), (run, -L/2, rise), (run, L/2, rise)], [(L, 0), (0, 0), (0, sl), (L, sl)], f)
+    b.quad([(run, L/2, rise), (run, -L/2, rise), (run + 3.0, -L/2, rise + 0.6), (run + 3.0, L/2, rise + 0.6)], [(L, 0), (0, 0), (0, 3), (L, 3)], f)
+    o = lambda x, y, z, k=0.13: (x + n[0] * k, y, z + n[2] * k)
+    for t in (0.0, 0.25, 0.5, 0.75, 1.0):
+        b.beam(o(run * t, -L/2, rise * t), o(run * t, L/2, rise * t), 0.3, bm_)
+    for y in (-L/2, 0.0):
+        b.beam(o(0, y, 0), o(run, y, rise), 0.3, bm_)
+    b.finish(); export(name)
+
+def mtn_retain_wall_p():
+    reset(); b = Builder('mtn_retain_wall_p'); m = mat('mtn_retain_concrete', 'mtn_retain_concrete'); L, H, bt = 4.0, 3.0, 0.35
+    for r in range(2):
+        ya, yb = -L/2 + L * r / 2, -L/2 + L * (r + 1) / 2; ua, ub = r / 2, (r + 1) / 2
+        b.quad([(0, yb, 0), (0, ya, 0), (bt, ya, H), (bt, yb, H)], [(ub, 1), (ua, 1), (ua, 0.02), (ub, 0.02)], m)
+        b.quad([(-0.45, yb, 0.0), (-0.45, ya, 0.0), (-0.45, ya, -0.25), (-0.45, yb, -0.25)], [(ub, 0.95), (ua, 0.95), (ua, 1), (ub, 1)], m)
+        b.quad([(-0.45, yb, -0.25), (-0.45, ya, -0.25), (0, ya, -0.25), (0, yb, -0.25)], [(ub, 1), (ua, 1), (ua, 1), (ub, 1)], m)
+    b.box((0.12, -L/2, 0), (0.5, 0.5, H + 0.3), m, faces=['-x', '-y', '+y', '+z'], uvscale=4.0)   # pilaster at the joint
+    b.box((bt * 0.5 + 0.05, 0, H), (0.7, L, 0.3), m, faces=['-x', '+z'], uvscale=4.0)            # coping
+    b.finish(tess=False); export('mtn_retain_wall_p')
+
+def mtn_delineator():
+    reset(); b = Builder('mtn_delineator'); e = mat('Emit_delineator', 'emit_delineator')
+    b.box((0, 0, 0), (0.07, 0.07, 1.0), e, faces=['-x', '+x', '-y', '+y'])
+    b.finish(tess=False); export('mtn_delineator')
+
+F = 3.1
+def _win(b, e, rng, x, ya, yb, z, side='-x'):
+    n = max(1, round(abs(yb - ya) / 1.6)); u0 = rng.randrange(32) / 32; u1 = u0 + n / 32
+    if side == '-x': b.quad([(x, yb, z + 0.95), (x, ya, z + 0.95), (x, ya, z + 2.3), (x, yb, z + 2.3)], [(u0, 0), (u1, 0), (u1, 1), (u0, 1)], e)
+    else: b.quad([(ya, x, z + 0.95), (yb, x, z + 0.95), (yb, x, z + 2.3), (ya, x, z + 2.3)], [(u0, 0), (u1, 0), (u1, 1), (u0, 1)], e)
+def _blade(b, s_, cell, x0, x1, y, z0, z1):
+    u0, u1 = cell / 6, (cell + 1) / 6
+    for yy, flip in ((y + 0.03, False), (y - 0.03, True)):
+        vs = [(x1, yy, z0), (x0, yy, z0), (x0, yy, z1), (x1, yy, z1)]
+        b.quad(vs, [(u0, 0), (u1, 0), (u1, 1), (u0, 1)] if not flip else [(u1, 0), (u0, 0), (u0, 1), (u1, 1)], s_)
+def mtn_block(name, Wd, floors, below, depth, wall, ground, sign, seed, roof_sign=None, tank=False, side_win=False):
+    reset(); b = Builder(name); rng = _rnd.Random(seed)
+    w = mat(wall, wall); r = mat('mtn_roof_flat', 'mtn_roof_flat'); e = mat('Emit_mtn_windows', 'emit_mtn_windows')
+    g = mat('Emit_mtn_ground', 'emit_mtn_ground'); s_ = mat('Emit_mtn_signs', 'emit_mtn_signs')
+    zt, zb = floors * F, -below * F
+    b.box((depth / 2, 0, zb), (depth, Wd, zt - zb), w, faces=['-x', '+x', '-y', '+y'], uvscale=4.0)
+    b.box((depth / 2, 0, zt), (depth, Wd, 0.01), r, faces=['+z'], uvscale=4.0)
+    b.box((0.15, 0, zt), (0.5, Wd + 0.1, 0.45), w, faces=['-x', '+z', '-y', '+y'], uvscale=4.0)   # roof coping
+    for f in range(-below, floors):
+        z = f * F
+        if f == 0 and ground is not None:
+            b.quad([(-0.03, Wd/2 - 0.3, 0.0), (-0.03, -Wd/2 + 0.3, 0.0), (-0.03, -Wd/2 + 0.3, 2.7), (-0.03, Wd/2 - 0.3, 2.7)],
+                   [(ground * 0.25, 0), ((ground + 1) * 0.25, 0), ((ground + 1) * 0.25, 1), (ground * 0.25, 1)], g)
+            b.quad([(0, Wd/2 - 0.2, 2.95), (0, -Wd/2 + 0.2, 2.95), (-0.9, -Wd/2 + 0.2, 2.75), (-0.9, Wd/2 - 0.2, 2.75)], [(0, 0), (1, 0), (1, 1), (0, 1)], r)
+            continue
+        _win(b, e, rng, -0.03, -Wd/2 + 0.5, Wd/2 - 0.5, z)
+        if side_win:
+            _win(b, e, rng, -Wd/2 - 0.03, 0.6, depth - 0.6, z, side='-y'); _win(b, e, rng, Wd/2 + 0.03, depth - 0.6, 0.6, z, side='+y')
+        if f >= 1 or (f < 0):
+            b.box((-0.3, 0, z - 0.12), (0.6, Wd - 0.4, 0.16), w, faces=['-x', '+z', '-z', '-y', '+y'], uvscale=4.0)   # balcony slab
+    if sign is not None and floors >= 3:
+        _blade(b, s_, sign, -0.15, -0.95, Wd/2 - 0.7, F + 0.3, F + 0.3 + 3.0)
+    if roof_sign is not None:
+        u0, u1 = roof_sign / 6, (roof_sign + 1) / 6
+        b.quad([(0.6, Wd/2 - 1.2, zt + 0.5), (0.6, Wd/2 - 2.2, zt + 0.5), (0.6, Wd/2 - 2.2, zt + 3.4), (0.6, Wd/2 - 1.2, zt + 3.4)], [(u0, 0), (u1, 0), (u1, 1), (u0, 1)], s_)
+        b.beam((0.7, Wd/2 - 1.7, zt), (0.7, Wd/2 - 1.7, zt + 0.5), 0.1, w)
+    if tank:
+        b.box((depth * 0.6, -Wd * 0.2, zt), (1.8, 1.8, 1.5), w, faces=['-x', '+x', '-y', '+y', '+z'], uvscale=4.0)
+    b.finish(); export(name)
+
+def mtn_footbridge():
+    reset(); b = Builder('mtn_footbridge'); fa = mat('mtn_bridge_fascia', 'mtn_bridge_fascia'); rl = mat('mtn_rail', 'mtn_rail')
+    w = mat('mtn_block_wall_b', 'mtn_block_wall_b'); e = mat('Emit_sodium', 'emit_sodium')
+    x0, x1, z0, z1, hw = 1.0, -12.4, 5.3, 6.0, 1.3   # pier 4.5 m past the downhill kerb, off the middle of the frame
+    b.box(((x0 + x1) / 2, 0, z0), (x0 - x1, 2 * hw, z1 - z0), w, faces=['-z', '+z', '-x'], uvscale=4.0, uvfront=None)
+    for y in (-hw, hw):
+        b.quad([(x0, y, z0), (x1, y, z0), (x1, y, z1), (x0, y, z1)], [(0, 0), (6, 0), (6, 1), (0, 1)], fa)
+        b.quad([(x0, y, z1), (x1, y, z1), (x1, y, z1 + 1.1), (x0, y, z1 + 1.1)], [(0, 0), (6, 0), (6, 1), (0, 1)], rl)
+    b.box((x1 + 0.4, 0, -14.0), (0.7, 0.9, 14.0 + z0), w, faces=['-x', '+x', '-y', '+y'], uvscale=4.0)   # pier on the drop side
+    b.quad([(-3.4, 0.25, z0 - 0.02), (-4.4, 0.25, z0 - 0.02), (-4.4, -0.25, z0 - 0.02), (-3.4, -0.25, z0 - 0.02)], [(0, 0), (1, 0), (1, 1), (0, 1)], e)
+    b.finish(); export('mtn_footbridge')
+
+def mtn_steps_up():
+    reset(); b = Builder('mtn_steps_up'); m = mat('mtn_steps', 'mtn_steps'); sw = mat('mtn_stonewall', 'mtn_stonewall'); g = mat('wangan_galv', 'wangan_galv')
+    n, run, rise, Wd = 14, 0.36, 0.3, 1.6
+    for i in range(n):
+        x0, x1, z = i * run, (i + 1) * run, (i + 1) * rise
+        b.quad([(x0, -Wd/2, z - rise), (x0, Wd/2, z - rise), (x0, Wd/2, z), (x0, -Wd/2, z)], [(0, i / n), (1, i / n), (1, (i + 0.2) / n), (0, (i + 0.2) / n)], m)
+        b.quad([(x0, -Wd/2, z), (x0, Wd/2, z), (x1, Wd/2, z), (x1, -Wd/2, z)], [(0, (i + 0.2) / n), (1, (i + 0.2) / n), (1, (i + 1) / n), (0, (i + 1) / n)], m)
+    for y in (-Wd/2 - 0.02, Wd/2 + 0.02):
+        b.quad([(0, y, 0), (n * run, y, n * rise), (n * run, y, n * rise + 2.6), (0, y, 2.6)], [(0, 0), (1.2, 0), (1.2, 0.8), (0, 0.8)], sw)
+    b.beam((0.1, Wd/2 - 0.12, 0.95), (n * run, Wd/2 - 0.12, n * rise + 0.95), 0.05, g)
+    b.finish(); export('mtn_steps_up')
+
+mtn_lattice_slope('mtn_lattice_slope_g', 'mtn_lattice_fill_g'); mtn_lattice_slope('mtn_lattice_slope_c', 'mtn_lattice_fill_c')
+mtn_retain_wall_p(); mtn_delineator()
+mtn_block('mtn_block_up_a', 9.0, 5, 0, 10.0, 'mtn_block_wall_a', 0, 0, 11, tank=True)
+mtn_block('mtn_block_up_b', 7.5, 4, 0, 9.0, 'mtn_block_wall_b', 1, 3, 12)
+mtn_block('mtn_block_up_c', 11.0, 6, 0, 11.0, 'mtn_block_wall_c', 3, 1, 13, tank=True)
+mtn_block('mtn_block_up_d', 8.0, 3, 0, 9.0, 'mtn_block_wall_a', 2, 4, 14)
+mtn_block('mtn_block_dn_a', 9.0, 1, 5, 10.0, 'mtn_block_wall_b', None, None, 21, roof_sign=0, side_win=True)
+mtn_block('mtn_block_dn_b', 10.0, 0, 6, 11.0, 'mtn_block_wall_a', None, None, 22, roof_sign=2, side_win=True)
+mtn_block('mtn_block_dn_d', 10.0, 0, 6, 11.0, 'mtn_block_wall_b', None, None, 24, side_win=True)   # roof at road level, no rooftop board (beside the camera)
+mtn_block('mtn_block_dn_c', 8.0, 2, 4, 9.0, 'mtn_block_wall_c', None, None, 23, roof_sign=5, side_win=True, tank=True)
+mtn_block('mtn_block_tier_a', 12.0, 6, 3, 10.0, 'mtn_block_wall_a', None, None, 31, roof_sign=1, side_win=True, tank=True)
+mtn_block('mtn_block_tier_b', 9.0, 4, 3, 9.0, 'mtn_block_wall_c', None, None, 32, side_win=True)
+mtn_block('mtn_block_tier_c', 14.0, 8, 3, 12.0, 'mtn_block_wall_b', None, None, 33, roof_sign=0, side_win=True, tank=True)
+mtn_footbridge(); mtn_steps_up()
+
 json.dump(dict(STATS), open(os.path.join(OUT, 'tri_counts_mountain.json'), 'w'), indent=1)
 
 print('STATS', STATS)

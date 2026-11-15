@@ -6,5 +6,22 @@
  "mtn_house": 20,
  "mtn_handrail": 24,
  "mtn_steps": 52,
- "mtn_toll_sign": 22
+ "mtn_toll_sign": 22,
+ "mtn_lattice_slope_g": 74,
+ "mtn_lattice_slope_c": 74,
+ "mtn_retain_wall_p": 24,
+ "mtn_delineator": 8,
+ "mtn_block_up_a": 202,
+ "mtn_block_up_b": 180,
+ "mtn_block_up_c": 244,
+ "mtn_block_up_d": 168,
+ "mtn_block_dn_a": 226,
+ "mtn_block_dn_b": 344,
+ "mtn_block_dn_d": 334,
+ "mtn_block_dn_c": 236,
+ "mtn_block_tier_a": 338,
+ "mtn_block_tier_b": 232,
+ "mtn_block_tier_c": 514,
+ "mtn_footbridge": 98,
+ "mtn_steps_up": 80
 }

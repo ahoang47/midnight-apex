@@ -196,3 +196,87 @@ for fn, n in [(retain_concrete, 'mtn_retain_concrete'), (stonewall, 'mtn_stonewa
     save(fn(), os.path.join(ENV, n + '.png'))
 light_palette().save(os.path.join(ENV, 'emit_valley_lights.png')); print('tex env/emit_valley_lights.png (palette, unquantised)')
 save(valley_ground(True), os.path.join(ENV, 'valley_water.png')); save(valley_ground(False), os.path.join(ENV, 'valley_land.png'))
+
+# ════ PASS 2 (Austin 2026-11-15: "the side assets should be decreasing in height, to achieve perspective"; street "doesn't
+#      feel like city in the mountains"). Lattice-framed cut slopes (法枠), delineators, the hillside-city block kit.
+# ── 法枠 lattice cut slope: the cast beams (light concrete) and the cell infill (grass for touge, shotcrete for Wangan)
+def lattice_beam():
+    a = tex_noise(32, 32, (88, 92, 98), 8, 71); a[:, :2] -= 10; a[:, -2:] -= 14
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+def lattice_fill(grass):
+    a = tex_noise(32, 32, (34, 46, 38) if grass else (54, 58, 64), 12 if grass else 8, 73 if grass else 75, 1, 6)
+    if grass:
+        rr = random.Random(9)
+        for _ in range(40): x, y = rr.randrange(32), rr.randrange(32); a[y:y + 2, x] += (10, 16, 8)
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+# ── delineator post: white post, orange-amber reflector (catches the headlights: Emit_, dimmer than the car lamps)
+def delineator():
+    im = Image.new('RGB', (8, 32), (168, 170, 172)); d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, 7, 5], fill=(208, 150, 70)); d.rectangle([0, 28, 7, 31], fill=(90, 92, 96))
+    return im
+# ── hillside-city blocks (熱海 / 北野 / 尾道): facade tile in three tints, flat roof, the window atlas (32 cells, about a
+#    third lit, all below the car's brightness), ground-floor atlas (4 x: lit entrance, shutter, small shop, hotel lobby),
+#    sign atlas (6 generic boards: ホテル 旅館 ♨ スナック 喫茶 民宿), the footbridge rail (alpha) and fascia
+def block_wall(base, seed):
+    W, H = 64, 64; a = tex_noise(W, H, base, 6, seed)
+    for y in range(0, H, 4): a[y, :] -= 5
+    for x in range(0, W, 8): a[:, x] -= 4
+    a[:, 0:2] -= 10                                              # column line at the module edge
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+def flat_roof():
+    a = tex_noise(32, 32, (40, 42, 48), 6, 81); a[:2, :] = (70, 72, 78)
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+def windows_atlas():
+    W, H = 256, 16; im = Image.new('RGB', (W, H), (34, 36, 42)); d = ImageDraw.Draw(im); rr = random.Random(13)
+    for c in range(32):
+        x = c * 8; r = rr.random()
+        if r < 0.22: g = (176, 158, 120)                         # cream room light
+        elif r < 0.32: g = (150, 116, 78)                        # warm curtain
+        elif r < 0.36: g = (96, 124, 136)                        # TV-blue, rare
+        else: g = (22, 28, 40) if rr.random() < 0.6 else (28, 34, 46)
+        d.rectangle([x + 1, 2, x + 6, 12], fill=g)
+        if g[0] > 100 and rr.random() < 0.5: d.rectangle([x + 1, 2, x + 6, 5], fill=tuple(int(v * 0.7) for v in g))   # blind half down
+        d.line([x, 13, x + 7, 13], fill=(70, 72, 78)); d.line([x, 15, x + 7, 15], fill=(58, 60, 66))   # balcony rail
+        for k in range(x, x + 8, 2): d.point((k, 14), fill=(62, 64, 70))
+    return im
+def ground_atlas():
+    W, H = 256, 32; im = Image.new('RGB', (W, H), (30, 30, 34)); d = ImageDraw.Draw(im)
+    # 0 lit glass entrance with a noren curtain
+    d.rectangle([4, 6, 60, 31], fill=(132, 118, 92)); d.rectangle([4, 6, 60, 13], fill=(74, 40, 44))
+    for x in range(10, 60, 10): d.line([x, 13, x, 31], fill=(60, 54, 46))
+    # 1 closed shutter
+    d.rectangle([66, 4, 126, 31], fill=(64, 66, 72))
+    for y in range(6, 31, 2): d.line([66, y, 126, y], fill=(50, 52, 58))
+    # 2 small shop window, goods silhouettes
+    d.rectangle([132, 8, 188, 31], fill=(118, 112, 96)); d.rectangle([132, 4, 188, 7], fill=(58, 60, 70))
+    for x in range(136, 186, 7): d.rectangle([x, 22, x + 4, 31], fill=(70, 64, 56))
+    # 3 hotel lobby, warm, revolving-door frame
+    d.rectangle([196, 4, 252, 31], fill=(150, 128, 92))
+    for x in range(204, 252, 12): d.line([x, 4, x, 31], fill=(84, 72, 56))
+    d.rectangle([196, 4, 252, 6], fill=(96, 84, 66))
+    return im
+def sign_atlas():
+    W, H = 192, 96; im = Image.new('RGB', (W, H), (20, 20, 24)); d = ImageDraw.Draw(im)
+    try: f = ImageFont.truetype(CJK, 20)
+    except OSError: f = ImageFont.load_default()
+    boards = [('ホテル', (92, 30, 34), (226, 214, 180)), ('旅館', (28, 36, 60), (220, 222, 224)), ('♨', (200, 186, 150), (120, 40, 40)),
+              ('スナック', (70, 30, 62), (220, 200, 210)), ('喫茶', (40, 58, 46), (226, 220, 196)), ('民宿', (180, 166, 132), (40, 36, 34))]
+    for i, (t, bg, fg) in enumerate(boards):
+        x = i * 32; d.rectangle([x + 1, 1, x + 30, 94], fill=bg, outline=(70, 70, 74))
+        chars = list(t) if t != '♨' else ['♨', '湯']
+        sp = min(22, 84 // len(chars)); fz = f if len(chars) < 4 else ImageFont.truetype(CJK, 18)
+        for k, ch in enumerate(chars): d.text((x + 6 if len(chars) < 4 else x + 7, 5 + k * sp), ch, font=fz, fill=fg)
+    return im
+def rail_alpha():
+    im = Image.new('RGBA', (64, 16), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, 63, 1], fill=(120, 124, 130, 255)); d.rectangle([0, 14, 63, 15], fill=(96, 98, 104, 255))
+    for x in range(0, 64, 4): d.rectangle([x, 0, x, 15], fill=(104, 108, 114, 255))
+    return im
+def bridge_fascia():
+    a = tex_noise(64, 16, (78, 80, 86), 6, 91); a[:2, :] = (96, 98, 104); a[-2:, :] = (44, 46, 52)
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+for fn, n in [(lattice_beam, 'mtn_lattice_beam'), (lambda: lattice_fill(True), 'mtn_lattice_fill_g'), (lambda: lattice_fill(False), 'mtn_lattice_fill_c'),
+              (delineator, 'emit_delineator'), (lambda: block_wall((86, 82, 74), 101), 'mtn_block_wall_a'), (lambda: block_wall((70, 74, 80), 103), 'mtn_block_wall_b'),
+              (lambda: block_wall((80, 66, 58), 105), 'mtn_block_wall_c'), (flat_roof, 'mtn_roof_flat'), (windows_atlas, 'emit_mtn_windows'),
+              (ground_atlas, 'emit_mtn_ground'), (sign_atlas, 'emit_mtn_signs'), (rail_alpha, 'mtn_rail'), (bridge_fascia, 'mtn_bridge_fascia')]:
+    save(fn(), os.path.join(ENV, n + '.png'))

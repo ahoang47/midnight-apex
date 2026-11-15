@@ -97,6 +97,14 @@ var env_root: Node3D
 var prop_cache := {}
 var tris := 0
 var cam_pull := false
+# MOUNTAIN PASS 2 (Austin 2026-11-15: "the side assets should be decreasing in height, to achieve perspective"; the street
+# "doesn't feel like city in the mountains"). MTN_V=1 rebuilds the v1 frames exactly; default is v2 (files *_v2.png).
+var V2 := OS.get_environment("MTN_V") != "1"
+## v2 chase: same B.5b family (behind + right of the player, fixed, not mirrored), a touch lower and on a longer lens, aimed
+## further up the road, so the rising road and the receding roadside run up to a vanishing point above the horizon
+const CAM_V2 := {"side": 1.4, "back": 7.4, "height": 2.45, "look_ahead": 34.0, "look_side": 2.6, "look_y": 0.4, "fov": 47.0}
+func _cam_cfg() -> Dictionary:
+	return CAM_V2 if V2 else disp.camera
 
 func _fr(file: String, load: Dictionary, extra: Dictionary = {}) -> Dictionary:
 	# E3B full frame exactly as e3b_full.png: Entry select, OUT/POW hovered, mixed mid loads under LIMIT.
@@ -117,7 +125,7 @@ func _frames() -> Array:
 	var out3 := []
 	for ls in [["OUT", "A"], ["MID", "S"], ["IN", "D"]]:
 		var dl := _lane_d(String(ls[0]))
-		out3.append(_fr("%s_%s_cat.png" % [DK, String(ls[0]).to_lower()], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
+		out3.append(_fr("%s_%s_cat%s.png" % [DK, String(ls[0]).to_lower(), "_v2" if V2 else ""], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
 			"rival_d_nudge": -signf(dl) * 0.25 * LANE_W / 1.45, "lead": -0.12, "gap_s": 0.44, "role": "cat"}))
 	return out3
 	var out := [_fr("%s.png" % DK, L)]
@@ -151,7 +159,8 @@ func _frames() -> Array:
 
 func _ready() -> void:
 	DK = OS.get_environment("DISTRICT") if OS.get_environment("DISTRICT") != "" else "touge"
-	DC = DISTRICTS[DK]
+	DC = DISTRICTS[DK].duplicate()
+	if V2 and DK == "street": DC["fog_far"] = 140.0   # MOUNTAIN v2: the city tiers climbing ahead need a little more reach
 	LANE_W = float(DC.lane)
 	fog = Color(DC.fog)
 	out_dir = ProjectSettings.globalize_path("res://").path_join("..")
@@ -183,6 +192,8 @@ const ELEV_S0 := -120.0
 const ELEV_STEP := 0.5
 
 func grade_at(s: float) -> float:
+	if V2 and DK == "touge":   # MOUNTAIN v2: no crest inside the frame, so the climb runs on to the vanishing point
+		return lerpf(0.085, 0.095, Track.smooth((s - 10.0) / 40.0))
 	if DC.has("grade"):   # MOUNTAIN: steady climb that steepens ahead of the car, so the road visibly rises in frame
 		var g: Array = DC.grade
 		return lerpf(g[0], g[1], Track.smooth((s - g[2]) / (g[3] - g[2])))
@@ -260,9 +271,9 @@ func _build_world() -> void:
 	var road := grid_strip(S0, S1, -W, W, rm, 1.0, 1.0)
 	road.name = "Road"
 	match DK:
-		"touge": _dress_touge(W)
-		"street": _dress_street_mtn(W)   # MOUNTAIN
-		"wangan": _dress_wangan_mtn(W)
+		"touge": _dress_touge_v2(W) if V2 else _dress_touge(W)
+		"street": _dress_street_v2(W) if V2 else _dress_street_mtn(W)   # MOUNTAIN
+		"wangan": _dress_wangan_v2(W) if V2 else _dress_wangan_mtn(W)
 	art.apply_fog(DK)
 	chevrons = Chevrons.new()
 	chevrons.name = "Chevrons"
@@ -757,6 +768,278 @@ func _dress_street_mtn(W: float) -> void:
 		_pln([36.0, 520.0, 14.0, 1300.0, 34, 2]), _pln([22.0, 650.0, 30.0, 1100.0, 26, 2]),
 		], 4.5, 23)
 
+
+# ==== MOUNTAIN PASS 2 ===========================================================================================
+# Perspective: every district gets rows of regular, real-size verticals and hard edges along both kerbs (delineators every
+# 8 m, lamps / poles at a fixed period, wall pilasters every 4 m, 法枠 lattice cells 2 m x 2.15 m, balcony slabs every
+# 3.1 m), so they shrink toward one vanishing point that the climb lifts above the horizon. Walls taper up the hill.
+
+## a row of delineators (1 m post, amber reflector) every `step` m on side d, from s0
+func _delins(s0: float, s1: float, d: float, y: float, step: float, sc := 1.0) -> void:
+	var s := s0
+	while s < s1:
+		var p := prop("mtn_delineator", s, d, y, 0.0, 1.0, 0.55, true)
+		p.scale = Vector3.ONE * sc
+		s += step
+
+func _dress_touge_v2(W: float) -> void:
+	var grav := tex_mat("touge_gravel", 4.0)
+	var verge: ShaderMaterial = art.strip_mat("touge_verge", 6.0)
+	band(S0, S1, -W, 0.0, -(W + 0.7), 0.02, grav)
+	# inside (left): 法枠 lattice-framed cut slope (Blender, 4 m modules), cedars on top
+	var s := S0
+	while s < S1:
+		prop("mtn_lattice_slope_g", s + 2.0, -(W + 0.7), 0.0, 0.0, 0.66)
+		s += 4.0
+	band(S0, S1, -(W + 8.7), 7.6, -(W + 18.0), 10.0, verge)
+	var k := 0; s = S0
+	while s < S1:
+		var h := lerpf(10.0, 15.0, ArtKit.hash01(k * 2.3))
+		cedar(s + ArtKit.hash01(k) * 2.0, -(W + 9.5 + ArtKit.hash01(k * 5.1) * 6.0), 7.6, h, k)
+		s += 4.0; k += 1
+	# outside (right): verge, guardrail, drop with cedar tops below (as v1)
+	band(S0, S1, W, 0.0, W + 0.55, 0.0, verge)
+	s = S0
+	while s < S1:
+		prop("touge_guardrail", s, W + 0.45, 0.0, 0.0)
+		s += 4.0
+	band(S0, S1, W + 0.55, 0.0, W + 9.0, -7.5, verge)
+	k = 0; s = S0
+	while s < S1:
+		var h2 := lerpf(11.0, 16.0, ArtKit.hash01(k * 4.7 + 1.0))
+		cedar(s + ArtKit.hash01(k * 2.0) * 4.0, W + 5.0 + ArtKit.hash01(k * 7.3) * 14.0, -h2 * 0.55 - 2.0, h2, k + 300)
+		s += 3.6; k += 1
+	# two converging rows of delineators, 8 m apart (right on the guardrail line, left on the gravel shoulder)
+	_delins(S0 + 2.0, S1, W + 0.62, 0.0, 8.0)
+	_delins(S0 + 6.0, S1, -(W + 0.5), 0.0, 8.0)
+	# sodium lamps every 32 m on the outside (v1 48 m)
+	s = -80.0
+	while s < S1:
+		if s > S0: gordon_lamp(s, W + 0.75, 1.0)
+		s += 32.0
+
+func _dress_wangan_v2(W: float) -> void:
+	# uphill (left): channel + retaining wall with a pilaster every 4 m, the wall stepping down from 3.0 to 2.1 m as the road
+	# climbs away (the cut gets shallower up the hill), 法枠 shotcrete lattice above it, cedars on the crest, the flank
+	var s := S0
+	while s < S1:
+		var sm := s + 2.0
+		var hk := lerpf(1.0, 0.7, Track.smooth((sm - 16.0) / 110.0))
+		var wl := prop("mtn_retain_wall_p", sm, -(W + 0.5), 0.0, 0.0, 0.9)
+		wl.scale = Vector3(1.0, hk, 1.0)
+		prop("mtn_lattice_slope_c", sm, -(W + 1.2), 3.0 * hk + 0.3, 0.0, 0.72)
+		s += 4.0
+	var k := 0; s = S0
+	while s < S1:
+		var hk2 := lerpf(1.0, 0.7, Track.smooth((s - 16.0) / 110.0))
+		var h := lerpf(11.0, 16.0, ArtKit.hash01(k * 2.3))
+		cedar(s + ArtKit.hash01(k) * 3.0, -(W + 10.5 + ArtKit.hash01(k * 5.1) * 7.0), 3.0 * hk2 + 7.9, h, k)
+		s += 4.0; k += 1
+	_flank(-(W + 13.0), 10.0)
+	# downhill (right): parapet, fascia, slope with cedar tops (as v1) + a delineator on every other parapet module
+	s = S0
+	while s < S1:
+		prop("wangan_parapet", s + 2.0, W, 0.0, 0.0, 1.0)
+		s += 4.0
+	_delins(S0 + 4.0, S1, W + 0.12, 1.02, 8.0, 0.55)
+	band(S0, S1, W + 0.5, -1.1, W + 0.5, -2.4, tex_mat("wangan_fascia", 6.0))
+	var vg: ShaderMaterial = art.strip_mat("touge_verge", 6.0); vg.set_shader_parameter("gain", 0.6)
+	band(S0, S1, W + 0.5, -2.4, W + 26.0, -24.0, vg, 3.0)
+	band(S0, S1, W + 26.0, -24.0, W + 70.0, -70.0, vg, 6.0)
+	k = 0; s = S0
+	while s < S1:
+		var h2 := lerpf(12.0, 17.0, ArtKit.hash01(k * 4.7 + 1.0)); var dd := W + 6.0 + ArtKit.hash01(k * 7.3) * 30.0
+		cedar(s + ArtKit.hash01(k * 2.0) * 4.0, dd, -(dd - W) * 0.92 - 2.0 - h2 * 0.35, h2, k + 300)
+		s += 4.0; k += 1
+	# tall sodium lamps every 32 m on each side, staggered 16 m (v1: 48 m / 24 m): a steady rhythm of tall verticals
+	for sd in [1.0, -1.0]:
+		var s3 := (0.0 if sd > 0 else 16.0) - 96.0
+		while s3 < S1:
+			if s3 > S0:
+				var p := prop("wangan_lamp", s3, sd * (W + 0.25), 0.1 if sd > 0 else -0.85)
+				lamp_glow(p, Vector3(-4.5, 11.6, 0), 1.8, 0.85)
+			s3 += 32.0
+	prop("wangan_kpost", 30.0, W + 0.05, 0.0)
+	prop("wangan_kpost", 130.0, W + 0.05, 0.0)
+	prop("mtn_toll_sign", 46.0, -(W - 0.15), -0.05)
+	# the bay, 105 m down (v2: the lower camera sees less over the parapet, so the light field sits nearer the horizon and
+	# inside the narrower lens: bearings 8-27 deg, 1.1-3.3 km, 2-6 deg under the horizon)
+	var Y := -105.0
+	_valley_floor(Y - 2.0, [[500.0, 2050.0, -600.0, 3200.0, "valley_land"], [2050.0, 3000.0, -600.0, 3200.0, "valley_water"], [3000.0, 4600.0, -600.0, 3200.0, "valley_land"]])
+	_valley_lights(Y, [
+		_pcl([25.0, 1150.0, 200.0, 200, [5.0, 1.5, 3.0, 0.0, 0.6]]), _pcl([19.0, 1500.0, 250.0, 200, [4.0, 1.5, 3.0, 0.0, 0.6]]),
+		_pcl([13.0, 2000.0, 180.0, 120, [0.5, 0.0, 6.0, 0.0, 0.8]]), _pcl([8.0, 3300.0, 800.0, 160, [3.0, 1.0, 2.0, 0.0, 0.0]]),
+		_pcl([22.0, 3000.0, 500.0, 90, [3.0, 1.0, 2.0, 0.0, 0.0]]),
+		], [_pln([27.0, 1000.0, 11.0, 2000.0, 50, 2]), _pln([21.0, 1100.0, 24.0, 2000.0, 36, 2]), _pln([8.0, 2060.0, 19.0, 1960.0, 30, 2])], 3.6, 11)
+	for bb in [11.5, 14.0, 16.5]:
+		var q := _pol(bb, 2030.0)
+		_far_prop("wangan_crane", Vector3(q.y, Y, -q.x), PI * 0.5, 1.3, 0.35)
+	var qb := _pol(6.0, 2800.0)
+	_far_prop("wangan_bridge", Vector3(qb.y, Y, -qb.x), PI * 0.5 + 0.15, 1.8, 0.45)
+
+## STREET v2: a city built into the mountain (熱海 / 北野 / 尾道 / Mid-Levels). Hill height in the straight frame (x = d, z = -s):
+## the street climbs ~9 % along -z; the mountain rises 50 % to the left of the uphill blocks and falls 60 % to the right.
+func _hill_y(x: float, z: float) -> float:
+	var sz := clampf(-z, S0, S1 + 100.0)
+	var base := elev(sz, 0.0) + maxf(0.0, -z - S1 - 100.0) * 0.09
+	var ahead := 0.42 * maxf(0.0, -z - (S + 22.0))   # past the 90 the mountain climbs straight ahead (the road turns up into it)
+	if x < 0.0: return base + ahead + 6.0 * clampf(-x / 14.0, 0.0, 1.0) + 0.5 * maxf(0.0, -x - 14.0)
+	return base + ahead - 0.6 * maxf(0.0, x - 5.0)
+
+## dark mountain surface behind the tiers, up to a crest (the ridge silhouette against the sky), straight frame
+func _hill_mesh(x0: float, x1: float, z0: float, z1: float, cell: float, crest: float) -> void:
+	var st := SurfaceTool.new(); st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var nx := int((x1 - x0) / cell); var nz := int((z1 - z0) / cell)
+	var P := func(i: int, j: int) -> Vector3:
+		var x := x0 + i * cell; var z := z0 + j * cell
+		var c := crest + 9.0 * sin(x * 0.011 + 1.3) + 5.0 * sin(x * 0.037 + z * 0.01)
+		return Vector3(x, minf(_hill_y(x, z) - 4.0, c), z)
+	for i in nx:
+		for j in nz:
+			var a: Vector3 = P.call(i, j); var b: Vector3 = P.call(i + 1, j); var c2: Vector3 = P.call(i, j + 1); var d2: Vector3 = P.call(i + 1, j + 1)
+			for v in [[a, Vector2(0, 0)], [b, Vector2(1, 0)], [c2, Vector2(0, 1)], [c2, Vector2(0, 1)], [b, Vector2(1, 0)], [d2, Vector2(1, 1)]]:
+				st.set_uv(v[1]); st.add_vertex(v[0])
+	var mi := MeshInstance3D.new(); mi.mesh = st.commit(); mi.extra_cull_margin = 16384.0
+	var m: ShaderMaterial = art.strip_mat("touge_verge", 30.0); m.set_shader_parameter("gain", 0.3); m.set_shader_parameter("gb_far", 1.0); m.set_shader_parameter("fog_amount", 0.5)   # stays darker than the sky: the ridge reads
+	mi.material_override = m; env_root.add_child(mi); tris += nx * nz * 2
+
+## the mountains closing round the far side of the bay: one dark band from the valley floor up to a ridge line, straight frame
+func _far_ridge(x0: float, x1: float, step: float, y0: float) -> void:
+	var st := SurfaceTool.new(); st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var P := func(x: float, top: bool) -> Vector3:
+		var z := -1250.0 + 0.32 * x
+		return Vector3(x, (125.0 + 45.0 * sin(x * 0.004 + 0.6) + 16.0 * sin(x * 0.015)) if top else y0, z)
+	var x := x0; var n := 0
+	while x < x1:
+		var a: Vector3 = P.call(x, false); var b: Vector3 = P.call(x + step, false); var c: Vector3 = P.call(x, true); var d: Vector3 = P.call(x + step, true)
+		for v in [[a, Vector2(0, 0)], [b, Vector2(1, 0)], [c, Vector2(0, 1)], [c, Vector2(0, 1)], [b, Vector2(1, 0)], [d, Vector2(1, 1)]]:
+			st.set_uv(v[1]); st.add_vertex(v[0])
+		x += step; n += 2
+	var mi := MeshInstance3D.new(); mi.mesh = st.commit(); mi.extra_cull_margin = 16384.0
+	var m: ShaderMaterial = art.strip_mat("touge_verge", 60.0); m.set_shader_parameter("gain", 0.22); m.set_shader_parameter("gb_far", 1.0); m.set_shader_parameter("fog_amount", 0.45)
+	mi.material_override = m; env_root.add_child(mi); tris += n
+
+func _block_far(n: String, x: float, z: float, y_off: float, yaw: float, emit_gain: float) -> void:
+	var inst: Node3D = (load("res://assets/env/%s.glb" % n) as PackedScene).instantiate()
+	_shade(inst, 0.34, emit_gain)
+	inst.position = Vector3(x, _hill_y(x, z) + y_off, z); inst.rotation.y = yaw
+	env_root.add_child(inst)
+	# far tiers keep some of their light through the fog (walls 55 %, windows / signs 30 % fogged at most)
+	for mi in inst.find_children("*", "MeshInstance3D", true, false):
+		for si in (mi as MeshInstance3D).mesh.get_surface_count():
+			var m = (mi as MeshInstance3D).get_surface_override_material(si)
+			if m is ShaderMaterial:
+				var ck = m.get_shader_parameter("cel_k")
+				m.set_shader_parameter("fog_amount", 0.3 if (ck != null and float(ck) == 0.0) else 0.55)
+
+func _dress_street_v2(W: float) -> void:
+	var SW := 1.0
+	var curb := tex_mat("street_curb", 1.0)
+	var pave := tex_mat("street_paving", 2.0)
+	for sd in [-1.0, 1.0]:
+		band(S0, S1, sd * W, 0.0, sd * W, 0.12, curb)
+		band(S0, S1, sd * W, 0.12, sd * (W + SW), 0.12, pave)
+	var FA := W + SW   # facade line
+	# uphill (left): mid-rise blocks entered from the pavement, stair alleys between some of them; a footbridge from the
+	# block at s ~ 34 over the street to a pier on the drop side. Lower blocks near the camera, taller up the hill.
+	var seq := [["mtn_block_up_b", 7.5], ["alley", 2.2], ["mtn_block_up_d", 8.0], ["mtn_block_up_d", 8.0], ["alley", 2.2], ["mtn_block_up_a", 9.0],
+		["mtn_block_up_c", 11.0], ["alley", 2.2], ["mtn_block_up_a", 9.0], ["mtn_block_up_b", 7.5], ["mtn_block_up_c", 11.0], ["alley", 2.2],
+		["mtn_block_up_a", 9.0], ["mtn_block_up_b", 7.5], ["mtn_block_up_c", 11.0], ["mtn_block_up_a", 9.0]]
+	var s := -14.0; var i := 0; var bridge_done := false; var vend_done := false
+	while s < S - 2.0 and i < 400:
+		var e: Array = seq[i % seq.size()]; var w: float = e[1]
+		if s + w > S - 2.0: break
+		if e[0] == "alley":
+			prop("mtn_steps_up", s + w * 0.5, -FA, 0.12, 0.0, 0.8, 1.0, true)
+		else:
+			prop(e[0], s + w * 0.5, -FA, -0.25, 0.0, 0.36, 0.5, true)
+			if not bridge_done and s + w > 30.0:
+				prop("mtn_footbridge", s + w * 0.5, -FA, -0.25, 0.0, 0.75, 0.9, true); bridge_done = true
+			if not vend_done and s > CHASE_S + 5.0 and w < 9.5:
+				prop("street_vending", s + 3.2, -(FA - 0.42), 0.12, 0.0, 0.7, 0.45, true); vend_done = true
+		s += w; i += 1
+	prop("mtn_block_up_c", s + 5.5, -FA, -0.25, 0.0, 0.36, 0.5, true)   # the block on the inside of the 90
+	# behind them: the city climbing the mountain in tiers (blocks on terraces, facing the street), to the ridge
+	var rows := 5
+	for r in rows:
+		var x := -(FA + 16.0 + r * 13.0)
+		var zz := 20.0 - ArtKit.hash01(r * 3.7) * 8.0
+		var j := 0
+		while zz > -(S1 + 80.0):
+			var hh := ArtKit.hash01(r * 11.3 + j * 1.7)
+			var n := "mtn_block_tier_c" if hh < 0.25 else ("mtn_block_tier_a" if hh < 0.6 else "mtn_block_tier_b")
+			var wd := 14.0 if hh < 0.25 else (12.0 if hh < 0.6 else 9.0)
+			if ArtKit.hash01(r * 5.1 + j * 2.9) < 0.82 and _hill_y(x, zz) < 70.0:
+				_block_far(n, x, zz - wd * 0.5, -1.0, PI, lerpf(0.62, 0.5, float(r) / rows))
+			zz -= wd + 2.0 + ArtKit.hash01(j * 3.3 + r) * 4.0; j += 1
+	# ahead, past the 90: rows across the view stepping up the mountain, facades toward the camera (+z)
+	var zr := -(S + 30.0); var rr := 0
+	while zr > -(S + 230.0):
+		var xx := -130.0 + ArtKit.hash01(rr * 2.7) * 10.0; var j2 := 0
+		while xx < 38.0:
+			var h3 := ArtKit.hash01(rr * 7.9 + j2 * 1.3 + 9.0)
+			var n3 := "mtn_block_tier_c" if h3 < 0.25 else ("mtn_block_tier_a" if h3 < 0.6 else "mtn_block_tier_b")
+			var wd3 := 14.0 if h3 < 0.25 else (12.0 if h3 < 0.6 else 9.0)
+			if xx > 2.0:   # right of the road line the city drops away: low downhill blocks, so the valley stays open over them
+				n3 = "mtn_block_dn_b" if h3 < 0.5 else "mtn_block_dn_a"; wd3 = 10.0 if h3 < 0.5 else 9.0
+			if ArtKit.hash01(rr * 3.1 + j2 * 4.3) < 0.8 and _hill_y(xx, zr) < 70.0:
+				_block_far(n3, xx + wd3 * 0.5, zr, -1.0, PI * 0.5, lerpf(0.6, 0.45, clampf((-zr - S) / 230.0, 0.0, 1.0)))
+			xx += wd3 + 3.0 + ArtKit.hash01(j2 * 2.2 + rr) * 6.0; j2 += 1
+		zr -= 17.0 + ArtKit.hash01(rr * 1.9) * 5.0; rr += 1
+	_hill_mesh(-420.0, 28.0, -(S1 + 300.0), -(S + 18.0), 14.0, 88.0)
+	_hill_mesh(-420.0, -(FA + 10.0), -(S + 18.0), 60.0, 14.0, 88.0)
+	# downhill (right): pipe handrail on the pavement edge; blocks whose roofs / top floors are at road level and whose floors
+	# go down the slope; stair alleys down between them; more rows below, stepping down to the valley
+	s = S0
+	while s < S + 12.0:
+		prop("mtn_handrail", s + 1.0, FA - 0.05, 0.12, 0.0, 0.8)
+		s += 2.0
+	var dseq := [["mtn_block_dn_d", 10.0], ["gap", 3.0], ["mtn_block_dn_d", 10.0], ["mtn_block_dn_d", 10.0], ["gap", 3.0], ["mtn_block_dn_b", 10.0]]   # roofs at road level: the drop stays open over them
+	s = -12.0; i = 0
+	while s < S + 2.0 and i < 400:   # stop at the 90 (past it the right side of the road faces the camera)
+		var e2: Array = dseq[i % dseq.size()]; var w2: float = e2[1]
+		if e2[0] == "gap":
+			prop("mtn_steps", s + w2 * 0.5, FA, 0.12, 0.0, 0.8)
+		else:
+			prop(e2[0], s + w2 * 0.5, FA + 0.4, -2.6, 0.0, 0.36, 0.52, true)   # roofs a storey-ish below the road: the drop reads at the rail
+		s += w2; i += 1
+	for r in 3:
+		var x := FA + 15.0 + r * 14.0
+		var zz := 10.0 - r * 5.0; var j := 0
+		while zz > -(S + 40.0):
+			var hh := ArtKit.hash01(r * 9.7 + j * 2.1 + 50.0)
+			var n := "mtn_block_dn_b" if hh < 0.35 else ("mtn_block_dn_a" if hh < 0.7 else "mtn_block_dn_c")
+			_block_far(n, x, zz - 5.0, 0.0, 0.0, lerpf(0.55, 0.45, r / 3.0))
+			zz -= 12.0 + ArtKit.hash01(j * 1.3 + r) * 3.0; j += 1
+	var vg: ShaderMaterial = art.strip_mat("touge_verge", 30.0); vg.set_shader_parameter("gain", 0.4)
+	band(S0, S1, FA + 0.5, -20.0, FA + 70.0, -62.0, vg, 6.0)
+	# utility poles on the uphill side only (no pole down the middle of the frame), 20 m apart; wires along, service drops
+	# across to the downhill roofs; the curve mirror on the outside of the 90
+	var poles: Array = []
+	var s2 := -60.0
+	while s2 < S1:
+		if s2 > S0 and s2 < S - 1.0:
+			var p := prop("street_pole", s2, -(W + 0.35), 0.12, 0.0, 1.0, 1.0, true)
+			lamp_glow(p, Vector3(-1.35, 5.2, 0), 1.2, 0.75)
+			poles.append(s2)
+		s2 += 20.0
+	var wire := tex_mat("street_metal", 1.0, 0.55)
+	for pi in poles.size() - 1:
+		for off in [[-0.8, 9.2], [0.8, 9.2], [0.0, 8.6]]:
+			_wire(poles[pi], -(W + 0.35) + float(off[0]), off[1], poles[pi + 1], -(W + 0.35) + float(off[0]), off[1], wire)
+	for pi in poles.size():
+		if poles[pi] > CHASE_S + 6.0:   # no drop wire slicing across the sky right over the camera
+			_wire(poles[pi], -(W + 0.35), 8.4, poles[pi] + 6.0, FA + 1.2, 1.2, wire)
+	prop("street_curvemirror", S - 1.5, W + 0.55, 0.12, 0.55, 0.9)
+	# the town lights in the valley below (as v1), the mountains round the far side of the bay behind them
+	var Y := -90.0
+	_far_ridge(-100.0, 1900.0, 50.0, Y - 2.0)
+	_valley_floor(Y - 2.0, [[300.0, 2200.0, -400.0, 1600.0, "valley_land"]])
+	_valley_lights(Y, [
+		_pcl([20.0, 600.0, 150.0, 220, [6.0, 1.0, 2.0, 0.0, 0.5]]), _pcl([32.0, 800.0, 200.0, 180, [6.0, 1.0, 2.0, 0.0, 0.5]]),
+		_pcl([12.0, 1100.0, 250.0, 150, [5.0, 1.5, 2.0, 0.0, 0.5]]), _pcl([26.0, 1650.0, 400.0, 100, [4.0, 1.0, 1.0, 0.0, 0.0]]),
+		], [_pln([36.0, 520.0, 14.0, 1300.0, 34, 2]), _pln([22.0, 650.0, 30.0, 1100.0, 26, 2])], 3.6, 23)
+
 func _settle(n: int = 6) -> void:
 	for i in n:
 		await get_tree().process_frame
@@ -857,7 +1140,7 @@ func _chase_pose(pp: Dictionary) -> Array:
 	var t := Vector3(pp.tx, 0, pp.tz)
 	var p := Vector3(pp.x, 0, pp.z)
 	var rt := Vector3(-pp.tz, 0, pp.tx)
-	var cm: Dictionary = disp.camera
+	var cm: Dictionary = _cam_cfg()   # MOUNTAIN v2
 	return [
 		p - t * float(cm.back) + rt * float(cm.side) + Vector3(0, float(cm.height), 0),
 		p + t * float(cm.look_ahead) + rt * float(cm.look_side) + Vector3(0, float(cm.look_y), 0)
@@ -884,7 +1167,7 @@ func _place_camera(kind: String, player_s: float) -> void:
 		cam.look_at(Vector3(look_p.x, 0.0, look_p.z), Vector3.UP)
 		cam.fov = 54.0
 	elif kind == "chase":
-		var cm: Dictionary = disp.camera
+		var cm: Dictionary = _cam_cfg()   # MOUNTAIN v2
 		var pose: Array = _chase_pose(course.point(player_s, _cam_d))   # MOUNTAIN: rides with the player's lane (see _cam_d)
 		var cpos: Vector3 = pose[0]; var tgt: Vector3 = pose[1]
 		if cam_pull:
