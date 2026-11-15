@@ -1,0 +1,65 @@
+{
+ "hud_bright_text_identical_on_vs_off": {
+  "line_lock": {
+   "bright_px": 6840,
+   "identical_pct": 100.0
+  },
+  "plan_panel": {
+   "bright_px": 6900,
+   "identical_pct": 100.0
+  },
+  "plate": {
+   "bright_px": 15750,
+   "identical_pct": 100.0
+  },
+  "gap_bar": {
+   "bright_px": 16464,
+   "identical_pct": 100.0
+  }
+ },
+ "mirror_ink": {
+  "frames": 124,
+  "inset_ink_pct_mean": 6.17,
+  "inset_ink_pct_max": 10.49,
+  "main_view_ink_pct_mean": 2.77
+ },
+ "decals_inked": {
+  "chevron_px": 869088,
+  "chevron_inked": 0,
+  "lane_px": 281624,
+  "lane_inked": 0,
+  "chevron_inked_pct": 0.0,
+  "lane_inked_pct": 0.0
+ },
+ "near_road_while_scrolling": {
+  "off": {
+   "speck_pct": 0.545,
+   "frame_diff_mean": 10.61
+  },
+  "on": {
+   "speck_pct": 0.955,
+   "frame_diff_mean": 8.34
+  }
+ },
+ "hard_steps_per_100_cells": {
+  "road_ahead_straight": {
+   "off": 43.76,
+   "on": 25.7
+  },
+  "sky_band_straight": {
+   "off": 24.24,
+   "on": 23.1
+  },
+  "bay_corner_playback": {
+   "off": 22.13,
+   "on": 17.04
+  }
+ },
+ "frames_used": {
+  "straight_c1": 110,
+  "straight_c2": 120,
+  "playback": 526,
+  "mirror": 372,
+  "chevron": 294
+ }
+}

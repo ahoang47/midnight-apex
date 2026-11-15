@@ -8,6 +8,17 @@
 
 ---
 
+## [art] 2026-11-15 — Arthur: two-corner Wangan playtest in Cel A soft (unapproved experiment)
+
+- **Why:** Austin asked whether we could mock up a Wangan track in Godot under the same rules, with any missing assets made in Blender. He picked a "Two-corner Wangan playtest", in the locked Cel A soft style.
+- **What:** added `unapproved/arthur/experiments/wangan_two_corner/`.
+  - It is a self-contained copy of Gordon's two-corner build with the Cel port. Every Wangan change is marked `# WANGAN:`.
+  - Same race flow, QTE, camera stops and rear view. The two corners are SW (sweeper L, R 85 m) and IR (increasing radius R, 45 m then 110 m arcs), on an elevated bay expressway.
+  - New Blender kit: parapet 28, pier 116, gantry 210, km post 10, crane 116, bridge 416 tris. Textures are hand-painted in RGB555 + Bayer.
+  - The scripted run (seed 3) passes on both corners. Checks: HUD 100% untouched, no ink on chevrons or lane paint, rear view not flooded with ink (6% ink), no added banding.
+  - llvmpipe: cel off 46 ms, Cel A soft 73–75 ms.
+  - README, frames, sheets and a 7 MB video are in the folder. Gordon's folders are untouched. Nothing is approved.
+
 ## 2026-11-14 — Desmond [repo]: new working branch `touge-race`
 
 - **Why:** Austin wants every new commit after the merge on a new branch, where the team builds and tests one full 10-turn Touge race end to end. The race has no mods and stats stay in the parity range, and the work focuses on art and the player experience.
