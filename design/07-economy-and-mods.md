@@ -39,7 +39,7 @@
 | Reputation explains the rotation in-world only. **It is not a tracked stat** | `story/canon.md:31`, `story/plot.md:93` |
 | Beating crew members (lieutenants) expands Reiko's paid shop stock; crew boss stakes are money, reputation (lore only), rare shop mods and story progress. Losing means a retry and never losing the car | `story/canon.md`, `story/plot.md:42` (canon 28) |
 | Boss stakes in the barks: "Big cash payout" and "Rare mods unlocked in the shop" (also territory, crew respect, district unlocks, narrative reveals). No pink slips; crew bosses' signature shells come from crew boss betting races at the promoter's subsea parking-area home base, and standout substories award a small pool of oddball shells (canon 26, 28) | `story/barks.md:336-342`, `story/canon.md` |
-| Debt (decision 19): Sabine fronted the engine rebuild, labor and tow on a personal repair tab after feeling responsible for the blowout (she stepped away from the scene and isn't building a crew or garage name). A share of winnings repays it until it clears when the PC beats the Street crew boss at the end of Round 1 (Austin, 2026-11-13; live `DEBT_CLEAR_AFTER` = 1). Reiko gives wholesale at the same moment, and by Round 3 the PC has plenty of parts access. Live amounts (econ-v1): debt **$16,000**, share **0.65**, wholesale **20 %** off T1–T3 | `story/canon.md` (14, 19, 24) |
+| Debt (decision 19): Sabine fronted the engine rebuild, labor and tow on a personal repair tab after feeling responsible for the blowout (she stepped away from the scene and isn't building a crew or garage name). A share of winnings repays it until it clears when the PC beats the Street crew boss at the end of Round 1 (Austin, 2026-11-13; live `DEBT_CLEAR_AFTER` = 1). Reiko gives wholesale at the same moment, and by Round 3 the PC has plenty of parts access. Live amounts (econ-v1): debt **$16,000**, share **0.65**, wholesale **20 %** off the R1–R3 mod sets | `story/canon.md` (14, 19, 24) |
 | Round 1: until the debt clears, "winnings all go to the debt, so there's little money for mods" (moved from Round 2, 2026-11-13) | `story/plot.md:121` |
 | End of Round 1: Reiko gives wholesale at the same moment the debt clears (Street crew boss; 2026-11-13) | `story/plot.md:98`, `story/canon.md:96` |
 | Invoice covers "Engine, labor, tow" (amount **$16,000**). "Winnings come here first, until we're even." On losing: "Then you owe me longer" | `story/scripts/prologue.md:89-93` |
@@ -180,7 +180,7 @@ Other repeatable non-race income (e.g. garage work) is still **OPEN QUESTION Q10
 
 ### 6.1 Shop rules (from the docs)
 - Shop catalog parts are bought with money from Reiko (`mod_notes.md:40-42`); one-off skewed-sidegrade parts can also come directly from substories into the garage stash (§5.3, canon 28).
-- Each part has a level floor (`mod_notes.md:43`, `Notes.md:11`).
+- Parts no longer have level floors; since mods-v1 (2026-11-14) they unlock by story rung (§6.4, `MOD_UNLOCK`). The older level-floor idea is in `mod_notes.md:43` and `Notes.md:11`.
 - Lieutenant wins expand horizontal shop stock and crew boss wins add rare tier-jump stock (`mod_notes.md:48`, canon 28).
 - Swapping parts between races is free (`mod_notes.md:38`). Selling parts back is not mentioned anywhere (Q11).
 
@@ -214,7 +214,7 @@ Every effect is **additive to an existing term** (`05-skill-trees.md:25-31`). No
 |---|---|---|
 | `MOD_GROUPS` / `PART_TIERS` | Live (mods-v1): R1 / R2 / R3 / ARC, with Mk1–Mk3 per round and MYTH1–4 in the arc; mods have IDs only (`MOD_R1_POW_MK1` … `MOD_ARC_EN_MYTH4`) | Shop names still TBD |
 | `MOD_UNLOCK` (replaces `MOD_TIER_LEVEL_FLOOR`) | Live (mods-v1): Mk1 at round open, Mk2 after mat1, Mk3 after mat2; MYTH1–4 after P1 / F1 / F2 / F3 | The shop opens on the Prologue race-3 win (`MOD_UNLOCK_RACE` = 3). See below |
-| `MOD_PRICE` | Live (mods-v1, per ID): R1 Mk1–3 **$150** / **$500** / **$1,000**; R2 **$700** / **$1,500** / **$5,000**; R3 **$1,200** / **$2,500** / **$8,000**; ARC MYTH1–4 **$2,500** / **$4,000** / **$6,000** / **$8,000** *(values updated; Desmond's USD wording pass pending)* | **MYTH4 $8,000 is a stand-in**, not locked. Aero is 1.75 × the regular mod |
+| `MOD_PRICE` | Live (mods-v1, per ID): R1 Mk1–3 **$150** / **$500** / **$1,000**; R2 **$700** / **$1,500** / **$5,000**; R3 **$1,200** / **$2,500** / **$8,000**; ARC MYTH1–4 **$2,500** / **$4,000** / **$6,000** / **$8,000** | **MYTH4 $8,000 is a stand-in**, not locked. Aero is 1.75 × the regular mod |
 | `TIER_STAT_BUDGET[tier]` | TBD | Net bonus (upside minus trade-off) |
 | `TIER_UNLOCK[tier]` | TBD: round start / lieutenant ladder / boss defeated / wholesale | Shop gating (canon 28) |
 | `LIEUTENANT_PART_SOURCE[round][crew_step]` | TBD | Horizontal shop options unlocked by beating kids / mature / old heads |
@@ -247,7 +247,7 @@ Opponents carry archetype-matched parts (`mod_notes.md:61`). **PROPOSAL:** `OPPO
 - The debt starts at `DEBT_AMOUNT` **$16,000** after the Prologue (`canon.md` 19, `prologue.md:89`).
 - While the debt is open, a share of each win goes to the debt and the rest to the wallet: `DEBT_SHARE` **0.65**. Austin ruled on 2026-11-02 that not all winnings go to the debt, which overrides the "all winnings" wording (C11, Q4).
 - It must clear **at the end of Round 1**, when the PC beats the Street crew boss (Austin, 2026-11-13; canon 19; live `DEBT_CLEAR_AFTER` = 1).
-- Wholesale unlocks **at the end of Round 1** (`plot.md`): `WHOLESALE_DISCOUNT` **0.20** off list on T1–T3 (`WHOLESALE_TIERS`), from `WHOLESALE_STARTS_AFTER` 1 through `WHOLESALE_ENDS_AFTER` 3 (never on T4).
+- Wholesale unlocks **at the end of Round 1** (`plot.md`): `WHOLESALE_DISCOUNT` **0.20** off list on the R1–R3 mod sets (`WHOLESALE_TIERS`), from `WHOLESALE_STARTS_AFTER` 1 through `WHOLESALE_ENDS_AFTER` 3 (never on the arc's Myth mods).
 - Losing doesn't add debt. It only delays payment ("owe me longer", `prologue.md:93`), unless the retry fee (Q9) is charged against the debt.
 
 ### 7.2 Timeline

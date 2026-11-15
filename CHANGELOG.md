@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-14 — Desmond [design]: USD wording pass for mods-v1 prices
+
+- Removed the "USD wording pass pending" notes on the mods-v1 prices in design/02 and design/07. The numbers are unchanged.
+- Re-worded wholesale from "T1–T3, never T4" to "the R1–R3 mod sets, never the arc's Myth mods" in design/02, design/07 and story/canon.md, to match `WHOLESALE_TIERS`.
+- Replaced design/07 §6 "each part has a level floor" with the mods-v1 rung unlocks, because the level floors were removed.
+- Why: Barry asked for this wording pass after mods-v1 went live (01bb2f3, e95dc6e).
+
 ## 2026-11-14 — Barry [design]: design/01 canon mod-slot line set to 4 slots (mods-v1)
 
 - **Why:** The canon block line 16 still said "6 slots in 3 categories × 2" and "not yet in sim constants". That contradicted live mods-v1 (`MOD_SLOTS` 4, one-stat mods, stock parts in empty slots). Austin approved edits to the design/01 canon block on 2026-11-14 ("I'm ok with the edits to the design block").
