@@ -8,6 +8,16 @@
 
 ---
 
+## [art] 2026-11-15 — Arthur: tight district roads for cat and mouse (unapproved mockup)
+
+- **Why:** Austin is thinking of switching focus to cat-and-mouse-only gameplay while keeping each district distinct. He said the roads need to be "a little tight", asked for one frame rather than a full gameplay draft, and said street needs something too.
+- **What:** added `unapproved/arthur/mockups/tight_districts/`. It has one Cel A soft CAT (chasing) frame per district, using the standard chase camera, the rival 11 m ahead in the player's line, and the big CAT CHASING tie-gap box. It also has a 1×3 sheet.
+  - Touge stays at 6.0 m (reference).
+  - Wangan goes from 11.9 m to 7.5 m: 2 × 3.5 m lanes plus 0.25 m strips, with parapets tight on both sides, on an R 85 m sweeper. It uses the wangan_two_corner kit.
+  - Street goes from 8.4 m to 5.8 m: a back street with no centre line, 1.0 m pavements, and shops, poles, wires and vending machines pulled in.
+  - New Blender props: `wangan_gantry_2l` (168 tris) and `street_curvemirror` (24 tris). New road textures for both districts.
+  - The Godot project is a self-contained copy of the cel_shaded district project. Changes are marked `# TIGHT:`. Gordon's files are untouched, and nothing is approved.
+
 ## [art] 2026-11-15 — Arthur: two-corner Wangan playtest in Cel A soft (unapproved experiment)
 
 - **Why:** Austin asked whether we could mock up a Wangan track in Godot under the same rules, with any missing assets made in Blender. He picked a "Two-corner Wangan playtest", in the locked Cel A soft style.
