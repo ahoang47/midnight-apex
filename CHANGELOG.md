@@ -8,6 +8,9 @@
 
 ---
 
+## [story] 2026-11-14 — Nathaniel: summit file points to barks.md §6
+- `unapproved/nathaniel/summit-sabine-race-v1.md` lines 10 and 79 now point to `story/barks.md` §6. Reason: Austin approved the trainer barks and Desmond moved them there in dd39a32, which deleted trainer-barks-v1.md.
+
 ## 2026-11-14 — Barry [sim/draft]: drafts committed (not live): planner-v1, betting-v2-mods-v1, kid-length-v1 (+ austin-v2), mods-v2-mk3-boss
 
 Austin asked to commit everything (2026-11-14, 10:26 PM). None of these change `sim/` or `design/`; they are drafts in `unapproved/barry/`. `unapproved/barry/.gitignore` keeps `__pycache__/` out.

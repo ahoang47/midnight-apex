@@ -7,7 +7,7 @@
 - **Still open with Austin:** *why* Sabine is at the Summit (canon 11 line 57, Open Question 8 at line 201), and how the race fits around the blowup, the reunion and the ending (Open Question 9, line 202).
 - Where an option fits canon most cleanly, this file says so as an **observation**. It is not a recommendation of a reason.
 - Story state: proto-build 9b0a571, which includes 68a1ecb, 43eb7b4 and a4236ce.
-- Trainer barks are in a separate file, `unapproved/nathaniel/trainer-barks-v1.md`. They wait on Austin's OK of the wording.
+- Trainer barks are approved and live in `story/barks.md` §6 (Austin, 2026-11-13).
 - Lines are POW/EN/HAN everywhere behind the screen. OUT/MID/IN is only for what's drawn on screen.
 
 ---
@@ -76,7 +76,7 @@ All of these keep the race at F4. They differ on where it falls relative to the 
 
 ## (c) Trainer barks
 
-Moved to `unapproved/nathaniel/trainer-barks-v1.md`, covering all 10 training races. They wait on Austin's approval of the wording.
+Approved and moved to `story/barks.md` §6, covering all 10 training races.
 
 ---
 
