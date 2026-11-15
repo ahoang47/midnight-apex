@@ -1,0 +1,158 @@
+{
+ "n": 150,
+ "r": 1.07,
+ "profile": "c6060",
+ "seconds": 98,
+ "best": {
+  "T1_Akina_Switchbacks": {
+   "district": "touge",
+   "tune": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "mean": 65.78,
+   "fixed_mean": 65.48
+  },
+  "T2_Irohazaka_Ladder": {
+   "district": "touge",
+   "tune": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "mean": 52.96,
+   "fixed_mean": 45.85
+  },
+  "T3_Usui_Esses": {
+   "district": "touge",
+   "tune": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "mean": 39.04,
+   "fixed_mean": 38.52
+  },
+  "T4_Myogi_Descent": {
+   "district": "touge",
+   "tune": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "mean": 53.78,
+   "fixed_mean": 47.19
+  },
+  "T5_Hakone_Ridge": {
+   "district": "touge",
+   "tune": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "mean": 64.22,
+   "fixed_mean": 43.48
+  },
+  "W1_Bayshore_Run": {
+   "district": "wangan",
+   "tune": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "mean": 71.11,
+   "fixed_mean": 71.11
+  },
+  "W2_Daikoku_Loop": {
+   "district": "wangan",
+   "tune": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "mean": 77.04,
+   "fixed_mean": 77.04
+  },
+  "W3_C1_Outer": {
+   "district": "wangan",
+   "tune": [
+    0.25,
+    0.4,
+    0.35
+   ],
+   "mean": 69.11,
+   "fixed_mean": 58.89
+  },
+  "W4_Tatsumi_Sprint": {
+   "district": "wangan",
+   "tune": [
+    0.25,
+    0.35,
+    0.4
+   ],
+   "mean": 74.3,
+   "fixed_mean": 71.33
+  },
+  "W5_Aqualine_Flyer": {
+   "district": "wangan",
+   "tune": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "mean": 69.63,
+   "fixed_mean": 69.11
+  },
+  "S1_Shibuya_Grid": {
+   "district": "street",
+   "tune": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "mean": 71.11,
+   "fixed_mean": 71.11
+  },
+  "S2_Ginza_Blocks": {
+   "district": "street",
+   "tune": [
+    0.45,
+    0.25,
+    0.3
+   ],
+   "mean": 68.44,
+   "fixed_mean": 61.04
+  },
+  "S3_Shinjuku_Underpass": {
+   "district": "street",
+   "tune": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "mean": 83.33,
+   "fixed_mean": 83.33
+  },
+  "S4_Roppongi_Hill": {
+   "district": "street",
+   "tune": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "mean": 76.74,
+   "fixed_mean": 76.74
+  },
+  "S5_Harbor_Warehouses": {
+   "district": "street",
+   "tune": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "mean": 85.56,
+   "fixed_mean": 85.56
+  }
+ }
+}

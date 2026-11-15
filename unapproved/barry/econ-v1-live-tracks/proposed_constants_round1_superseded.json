@@ -1,0 +1,285 @@
+{
+ "_status": "DRAFT - not approved. Barry 2026-11-13. Recalibration of econ-v1 to the live stand-in tracks (sim/config/tracks_v1.json). Do not copy into sim/ until Austin approves; open picks listed in RESULTS.md.",
+ "basis": {
+  "oracle": [
+   "sweep_main.json (N=300/track/style, r 0.94-1.24 step 0.01, 10/20/30 turns)",
+   "sweep_confirm30.json (N=1500, 30-turn, r 1.034-1.072)"
+  ],
+  "confirm_points": [
+   "point_confirm.json (N=1500)",
+   "point_confirm_T3.json (N=3000)",
+   "point_confirm_S1.json (N=3000)"
+  ],
+  "hard_cells": {
+   "street": "S1_Shibuya_Grid (R1 boss track, Austin pick)",
+   "touge": "T3_Usui_Esses (worst live Touge track; stand-in for the draft 'uphill' rule) - OPEN PICK",
+   "wangan": "district mean"
+  },
+  "tunes": {
+   "street": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "touge": [
+    0.45,
+    0.25,
+    0.3
+   ]
+  }
+ },
+ "LADDER_TARGET_R": {
+  "street": [
+   1.2,
+   1.159,
+   1.095,
+   1.071,
+   1.065,
+   1.058,
+   1.044
+  ],
+  "wangan": [
+   1.18,
+   1.16,
+   1.11,
+   1.08,
+   1.06,
+   1.048,
+   1.04
+  ],
+  "touge": [
+   1.182,
+   1.163,
+   1.132,
+   1.097,
+   1.079,
+   1.071,
+   1.071
+  ]
+ },
+ "LADDER_TARGET_R_live": {
+  "street": [
+   1.2,
+   1.16,
+   1.1,
+   1.07,
+   1.065,
+   1.058,
+   1.053
+  ],
+  "wangan": [
+   1.18,
+   1.16,
+   1.11,
+   1.08,
+   1.06,
+   1.048,
+   1.04
+  ],
+  "touge": [
+   1.18,
+   1.16,
+   1.12,
+   1.085,
+   1.075,
+   1.07,
+   1.066
+  ]
+ },
+ "BOSS_TARGET_R": {
+  "street": 1.044,
+  "wangan": 1.04,
+  "touge": 1.071
+ },
+ "BOSS_TARGET_R_live": {
+  "street": 1.053,
+  "wangan": 1.04,
+  "touge": 1.066
+ },
+ "boss_budget_B": {
+  "street": 338.22,
+  "wangan": 388.72,
+  "touge": 432.16
+ },
+ "boss_budget_B_live": {
+  "street": 335.33,
+  "wangan": 388.72,
+  "touge": 434.19
+ },
+ "FINALE_TARGET_R": [
+  1.07,
+  1.041,
+  1.044,
+  1.07
+ ],
+ "FINALE_TARGET_R_live": [
+  1.066,
+  1.04,
+  1.053,
+  1.066
+ ],
+ "FINALE_B_unchanged": [
+  494.8,
+  566.3,
+  648.2,
+  741.9
+ ],
+ "FINALE_C": [
+  529.44,
+  589.52,
+  676.72,
+  793.83
+ ],
+ "FINALE_CAP_LEVEL": [
+  63,
+  77,
+  94,
+  114
+ ],
+ "FINALE_CAP_LEVEL_live": [
+  63,
+  76,
+  95,
+  114
+ ],
+ "FINALE_ARC": [
+  [
+   "P1",
+   "pre_F1",
+   "touge",
+   10,
+   1.18,
+   0.18,
+   2500.0,
+   382.78
+  ],
+  [
+   "P2",
+   "pre_F1",
+   "touge",
+   20,
+   1.149,
+   0.24,
+   3375.0,
+   409.03
+  ],
+  [
+   "P3",
+   "pre_F1",
+   "touge",
+   20,
+   1.02,
+   0.26,
+   3375.0,
+   479.43
+  ],
+  [
+   "P4",
+   "pre_F1",
+   "touge",
+   30,
+   1.086,
+   0.32,
+   5000.0,
+   461.15
+  ],
+  [
+   "M11",
+   "F1_F2",
+   "wangan",
+   10,
+   1.18,
+   0.4,
+   2500.0,
+   438.11
+  ],
+  [
+   "M12",
+   "F1_F2",
+   "wangan",
+   20,
+   1.0,
+   0.6,
+   3375.0,
+   546.53
+  ],
+  [
+   "M21",
+   "F2_F3",
+   "street",
+   10,
+   1.18,
+   0.4,
+   2500.0,
+   489.64
+  ],
+  [
+   "M22",
+   "F2_F3",
+   "street",
+   20,
+   1.0,
+   0.6,
+   3375.0,
+   620.59
+  ],
+  [
+   "M31",
+   "F3_F4",
+   "touge",
+   10,
+   1.18,
+   0.4,
+   2500.0,
+   560.43
+  ],
+  [
+   "M32",
+   "F3_F4",
+   "touge",
+   20,
+   1.02,
+   0.6,
+   3375.0,
+   707.53
+  ]
+ ],
+ "FINALE_ARC_changed_B": {
+  "P3": [
+   483.25,
+   479.43
+  ],
+  "M21": [
+   485.77,
+   489.64
+  ],
+  "M22": [
+   625.54,
+   620.59
+  ],
+  "M31": [
+   564.89,
+   560.43
+  ],
+  "M32": [
+   713.17,
+   707.53
+  ]
+ },
+ "FINALE_ARC_note": "Wall/opener r_design here is relative to the 80/80 story-only reference combat (econ-v1 set_budgets_from_8080). Live P3/M32 r_design 1.020 and M12/M22 1.000 kept; B recomputed from the new finale caps.",
+ "unchanged": [
+  "USD money, purses, debt, betting rules",
+  "T4 $8,000 stand-in, unlock at P1, floor L47",
+  "mod tiers/floors (T2 L13, T3 L30, T4 L47)",
+  "aero 1.75x",
+  "campaign caps L12/29/46, C_ROUND",
+  "XP curve, story_fill, story_w, grind_frac/taper",
+  "finale budgets B",
+  "arc shape, fill 0.80, GRIND_R 1.12, arc purses"
+ ]
+}

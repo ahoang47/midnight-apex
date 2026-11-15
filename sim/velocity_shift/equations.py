@@ -104,10 +104,11 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
 # ══════════════════════════════════════════════════════════════════════
 # Story race-balance + XP/level progression model (Barry, 2026-11-09)
 # ══════════════════════════════════════════════════════════════════════
-# Final settings from the final-v1 combat sweep and the grind-v1 v8c
-# progression study (Austin's decisions of 2026-11-09). These drive the
-# story ladder model in `progression.py` and its win-rate oracle
-# (`config/winrate_n4000.json`, real N=4000 sim output). The playable engine
+# Final settings from the final-v1 combat sweep (Austin's decisions of
+# 2026-11-09). Since 2026-11-13 the story ladder model in `progression.py`
+# runs on the econ-v1 block below and its G2 oracle
+# (`config/winrate_g2_econ_v1.json`); `config/winrate_n4000.json` is the
+# legacy card-draw oracle and is no longer read by it. The playable engine
 # in combat.py / match.py uses this same model: LINE_SET_C line picks,
 # KAPPA_BY_LENGTH, OPPONENT_QTE, the visible QTE zone (`QTE_ZONE_WIDTH_105`,
 # approved qte-v1, 2026-11-11), and the Phi/tau clash payoff. The older
@@ -292,94 +293,213 @@ PACE_RES_K = 2.0
 PACE_RES_LOOK = 0.5
 PACE_LOOKAHEAD = 3
 
-BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total
+BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % of the total (enforced: check_build)
 BUILD_STAT_MAX_SHARE = 0.50
 
-# ── Stat caps, reference rule, mods ──
-SP_CAP_FRACTION = 0.80         # skill points cap at 80 % of the reference budget (= level cap)
-MOD_CAP_FRACTION = 1.07        # SP + mods cap at 107 % of the reference budget before the finale (was 1.05; G2 heat system, Austin 2026-11-13)
-# STALE until the ladder is refit for the heat system: progression.py (ladder, grind, XP, MOD_TIER_LEVEL_FLOOR) still runs
-# on the card-draw win-rate oracle (config/winrate_n4000.json), which was built at a 1.05 cap. It keeps that frozen cap here
-# so its report stays self-consistent; it is NOT the game's cap. Refit pending (Barry).
-PROGRESSION_MOD_CAP_FRACTION = 1.05
-MOD_SHARE_OF_REF = 0.25        # mods available at a rung = 0.25 × reference (bought only, never earned)
+# ── Skill points (skill-points-v1, Austin 2026-11-14: "Great. Commit and push.") ──
+# Source study: unapproved/barry/skill-points-v1/ (RESULTS.md, RETUNE.md). Whole points at 10x resolution: the player
+# holds skill_points(L) = round(SP_POINT_SCALE x SP(L)) points (2400 at L0; 19 per level at the start, 48 at L114).
+# Points are spent on POW / HAN / EN; each stat must stay inside the 25–50 % band of the points spent. Spent points
+# lock. Newly earned points are free to place (inside the band). At each district change (R1->R2, R2->R3, and before
+# the arc races in RETUNE_ARC_RACES) the player may move at most floor(RETUNE_BUDGET_FRACTION x spent points); no other
+# retuning. The sim player places new points greedily toward DISTRICT_TUNE and spends the full retune budget toward it.
+SP_POINT_SCALE = 10
+RETUNE_BUDGET_FRACTION = 0.20
+RETUNE_ARC_RACES = ("P1", "M11", "M21", "M31")
+DISTRICT_TUNE = {               # POW, HAN, EN shares: the screened district tune (run_tune_screen.py, 25–50 % bands)
+    "street": (0.50, 0.25, 0.25),
+    "wangan": (0.25, 0.25, 0.50),
+    "touge":  (0.45, 0.25, 0.30),
+}
+
+# ── Stat caps, mods ──
+SP_CAP_FRACTION = 0.80         # skill points are 80 % of the player's stat total: P = SP / SP_CAP_FRACTION
+MOD_CAP_FRACTION = 1.07        # SP + mods cap at 107 % of P before the finale (was 1.05; G2 heat system, Austin 2026-11-13)
 # Aero parts (design/07 §6.3; Austin approved 2026-11-11, slots-v2): a stat part with a fixed base plus a free pool
 # assigned to POW/EN/HAN at the wind tunnel. It goes in any slot, at most one is equipped, and its whole stat total
 # (base + pool) counts inside MOD_CAP_FRACTION like any other mod. The free pool is at most AERO_FREE_POOL_MAX_FRACTION
 # of the part's stat total (above 10%, retuned aero lets avg players clear R3 Street's boss / the Summit unground).
 # Per-tier AERO_FREE_POINTS values are still TBD; they must satisfy pool <= AERO_FREE_POOL_MAX_FRACTION x tier total.
+# econ-v1 (Austin 2026-11-13): the one aero sits in any of the MOD_SLOTS slots and blocks that slot's regular mod.
 AERO_FREE_POOL_MAX_FRACTION = 0.10
 AERO_MAX_EQUIPPED = 1
 AERO_COUNTS_IN_MOD_CAP = True
-REFERENCE_RULE = "V2"          # reference rises with each lieutenant win; crew boss = crew budget
-MOD_TIMING = "c"               # mods unlock progressively with lieutenant wins
-# Crew-local level floor on the mature #2 mod tier (slots-v2 fix b3; Austin approved 2026-11-12; design/07 §6.4).
-# The mod tier a crew unlocks for its mature #2 race (LADDER_RUNGS index MOD_TIER_FLOOR_RUNG) shows "requires level N"
-# and cannot be fitted until the player's level is >= N, even when it is affordable. N = the level at that rung of a
-# player who reached the previous crew boss's level cap and has not ground in this crew, + MOD_TIER_FLOOR_MARGIN
-# (never above the rung's level cap). Keyed by (round, 0-based play position in the round), like the budget steps:
-# the same in all 216 play orders. Values are generated by progression.derive_mod_tier_floors() and pinned by
-# tests/test_mod_floor.py; change the inputs, rerun it, and paste its output here.
-MOD_TIER_FLOOR_RUNG = 3
-MOD_TIER_FLOOR_MARGIN = 1
-MOD_TIER_LEVEL_FLOOR = {(1, 0): 4, (1, 1): 14, (1, 2): 26,
-                        (2, 0): 54, (2, 1): 71, (2, 2): 83,
-                        (3, 0): 111, (3, 1): 128, (3, 2): 140}
-CLEAR_THRESHOLD = 50.0         # a rung is "clear" when average play (q 0.6) wins >= 50 % (midpoint of seed/length range)
+CLEAR_THRESHOLD = 50.0         # a race is "clear" for a profile when its win rate is >= 50 %
 AVERAGE_PLAY_Q = 0.6
 GOOD_PLAY_Q = 0.8
 
-# ── Story ladder (per crew: kid, kid, mature, mature, old head, old head, crew boss) ──
-LADDER_RUNGS = ("kid", "kid", "mature", "mature", "old head", "old head", "crew boss")
-LADDER_R = (1.13, 1.11, 1.10, 1.08, 1.07, 1.06, 1.05)   # target r at each rung's level cap
-SCRIPTED_BUDGETS = {2: 218.2, 3: 224.3}                 # scripted races 2/3 (r 1.10 / 1.07 vs 240 SP)
-SABINE_BUDGET = 300.0                                   # Option A base (scripted race 1 opponent)
+# ══════════════════════════════════════════════════════════════════════
+# econ-v1: XP / mods / economy on the 3-round ladder (Barry; Austin go-ahead 2026-11-13, "Yeah works for now")
+# ══════════════════════════════════════════════════════════════════════
+# Source study: unapproved/barry/econ-v1/ (RESULTS.md, proposed_constants.json, finale_arc_recommended.json), on the
+# round-ladder-v1 ladder. Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
+# cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_econ_v1.json (live G2 heat rules,
+# touge-lines-v1 DRAFT track set; see that file). progression.py walks this ladder. Money is USD (x100 rescale).
+# Stand-ins pending playtest: all XP numbers, the MYTH4 price ($8,000, MOD_PRICE_STANDIN), every finale-arc opponent.
 
-# ── Option A budget steps: by round POSITION, not district ──
-OPTION_A_CREW_STEP = 1.10      # every crew after the previous one
-OPTION_A_ROUND_STEP = 1.30     # whichever crew OPENS Round 2 / Round 3
-# Crew order is FREE within a round (Austin, 2026-11-10): the player picks any crew, is locked into its
-# ladder until its boss falls, and rounds stay gated. Everything above (budget step, caps, story XP,
-# taper) is keyed by PLAY POSITION in the round, never by district.
+# ── Round structure (canon 2026-11-13: one district per round, one crew each, no rematches) ──
+# DISTRICTS (match.py / cli.py district order) is unrelated to the round order; ROUND_DISTRICTS is the campaign order.
 DISTRICTS = ("Touge", "Wangan", "Street")
-DEFAULT_CREW_ORDER = {1: ("Touge", "Wangan", "Street"),
-                      2: ("Wangan", "Street", "Touge"),
-                      3: ("Street", "Touge", "Wangan")}   # one example play order, used for reports/tests only
-# Unlock markers by (round, crews beaten in that round):
-DEBT_CLEAR_AFTER = (2, 1)      # debt hits zero + aero unlocks after the first Round 2 crew's boss
-BETTING_UNLOCK_AFTER = (2, 3)  # betting unlocks at the end of Round 2
-FINALE_UNLOCK_AFTER = (3, 3)   # finale (and its big mods) unlocks after Round 3
-FINALE = (("Myth #1", "Touge", 1086.8), ("Myth #2", "Wangan", 1195.5),
-          ("Myth #3", "Street", 1315.0), ("Summit", "Touge", 1446.5))   # finale budgets (×1.10 steps)
+ROUND_DISTRICTS = ("Street", "Wangan", "Touge")            # R1, R2, R3
+DEFAULT_CREW_ORDER = {1: ("Street",), 2: ("Wangan",), 3: ("Touge",)}   # the only legal order (crews_per_district = 1)
+LADDER_RUNGS = ("kid1", "kid2", "mat1", "mat2", "oh1", "oh2", "boss")
+LADDER_RUNG_KIND = ("kid", "kid", "mature", "mature", "old_head", "old_head", "boss")
+LADDER_TURNS = (10, 10, 20, 20, 20, 20, 30)                # race length of each rung
+GRIND_TURNS = 10                                          # grind races are 10-turn wilds at the round's kid1 budget
+# Unlock markers: the end of round N = beating that round's crew boss.
+DEBT_CLEAR_AFTER = 1           # debt is designed to clear by the end of R1; aero and wholesale unlock then
+AERO_UNLOCK_AFTER = 1
+BETTING_UNLOCK_AFTER = 2       # betting unlocks at the end of R2 (Austin 2026-11-13, as originally planned)
+FINALE_UNLOCK_AFTER = 3        # pre-finale arc and finale open at the end of R3
 
-# ── Level curve (GEO): SP(L) = 240 · 1.1^(L/12) ──
-SP_START = 240.0
+# ── Ladder geometry: anchor, 1.07 cap chain, Variant C target r ──
+# P_n = player stat total at round n's level cap (stats = SP / 0.8); ceiling C_n = MOD_CAP_FRACTION x P_n;
+# P_1 = ANCHOR_B, P_{n+1} = K_STEP x C_n. Opponent budget B = C_round / target r, so r at the cap = target r.
+ANCHOR_B = 330.0
+K_STEP = 1.07
+P_ROUND = tuple(ANCHOR_B * (K_STEP * MOD_CAP_FRACTION) ** n for n in range(3))   # 330.0, 377.817, 432.563
+C_ROUND = tuple(MOD_CAP_FRACTION * p for p in P_ROUND)                           # 353.1, 404.264, 462.842
+CAP_LEVEL = (12, 29, 46)       # level caps R1 / R2 / R3 (SP(L) = 0.8 x C / 1.07)
+LADDER_TARGET_R = {            # Variant C structure, kid1 .. boss; refit to the live stand-in tracks (Austin 2026-11-14)
+    "street": (1.20, 1.159, 1.095, 1.071, 1.065, 1.058, 1.044),
+    "wangan": (1.18, 1.16, 1.11, 1.08, 1.06, 1.055, 1.055),    # oh2 lifted to the boss r so the ladder never steps up
+    "touge":  (1.182, 1.163, 1.132, 1.097, 1.079, 1.071, 1.071),
+}
+BOSS_TARGET_R = {"street": 1.044, "wangan": 1.055, "touge": 1.071}
+# Bosses are tuned on the HARDEST live track of their district (Austin 2026-11-14; 15 stand-in tracks kept):
+# Street S1 Shibuya, Wangan W3 C1 Outer, Touge T3 Usui. At cap (N=3000/style, 60/60 | 60/80 | 80/60 | 80/80):
+# Street 1.044 S1 31.6 | 72.4 | 71.0 | 94.9; Wangan 1.055 W3 39.7 | 63.0 | 80.7 | 90.7; Touge 1.071 T3 31.9 | 69.2 | 70.2 | 93.5.
+BOSS_HARD_TRACK = {"street": "S1_Shibuya_Grid", "wangan": "W3_C1_Outer", "touge": "T3_Usui_Esses"}
+HARD_TRACK_TURNS = {"street": (30,), "wangan": (30,), "touge": (10, 20, 30)}   # where the hard cell is reported
+# Boss check band (econ-v1 criterion 9). The draft-track band was 80/80 88-92 % on the district/hard cell. Tuned on the
+# hardest track, the r that keeps 60/60 >= 30 % puts 80/80 at 93-95 % on S1 / T3, so the band is 90-95 % on the hardest
+# track (Austin 2026-11-14: "80/80 ~90-95%"); 60/60 floor stays 30 %.
+BOSS_BAND_8080 = (90.0, 95.0)
+BOSS_FLOOR_6060 = 30.0
+SCRIPTED_BUDGETS = {2: 218.2, 3: 224.3}                  # Prologue scripted races 2/3 (not in the econ-v1 walk)
+SABINE_BUDGET = 300.0                                    # Prologue scripted race 1 opponent (not in the econ-v1 walk)
+
+# ── Level curve and XP ──
+SP_START = 240.0               # SP at L0; SP(L) = SP_START x SP_GROWTH_PER_12_LEVELS ** (L / 12)
 SP_GROWTH_PER_12_LEVELS = 1.10
-XP_BASE = 100.0                # XP to go from level 0 to 1
-XP_SP_EXPONENT = 1.5           # x(L) = XP_BASE · (SP(L-1)/240)^1.5 · s(L)/s(1): leveling gets harder
+XP_BASE = 100.0                # XP to go from L0 to L1
+XP_GROWTH = 1.08               # xp_to_next(L) = XP_BASE x XP_GROWTH ** L
+# Story XP: a round's story races pay STORY_FILL[round] of the XP from the round's entry level to its cap,
+# split over the 7 rungs by STORY_W (normalised). < 1, so story alone does not reach the cap.
+STORY_FILL = (0.62, 0.75, 0.80)
+STORY_W = (0.12, 0.12, 0.14, 0.14, 0.14, 0.14, 0.20)
+# Story XP multiplier per round and rung (kid1 kid2 mat1 mat2 oh1 oh2 boss), applied on top of STORY_FILL x STORY_W.
+# Austin 2026-11-14 (campaign cut only; unapproved/barry/story-xp-v1): an 80/80 story-only player (no grind) meets each
+# boss about one level lower, ~55 % on the hardest track. R1 every race x0.90 (effective fill 0.558), R2 oh2 x0.60,
+# R3 oh2 x0.80. The pre-finale arc and finale (ARC_STORY_FILL, FINALE_ARC) are unchanged.
+STORY_XP_MULT = (
+    (0.90, 0.90, 0.90, 0.90, 0.90, 0.90, 0.90),
+    (1.00, 1.00, 1.00, 1.00, 1.00, 0.60, 1.50),
+    (1.00, 1.00, 1.00, 1.00, 1.00, 0.80, 1.00),
+)
+# Leftover XP carries over (Austin 2026-11-14, xp-carry-v1 fix C): a round is entered at the level and XP bag the player
+# actually finished the previous round on (no bump to the previous cap). Story races then pay the XP they would pay at the
+# previous cap (the nominal entry level) plus CATCHUP_XP_FRAC of the XP the player is short of that cap, split over the
+# rungs by CATCHUP_XP_SHARE (kid1 40 % / kid2 40 % / mat1 20 %). A player entering at the cap gets exactly the old XP.
+# STORY_XP_MULT R2 boss is 1.50 (was 1.00) so story-only enters R3 at L26 (R3 kid1 >= 50 %).
+CATCHUP_XP_FRAC = 0.75
+CATCHUP_XP_SHARE = (0.40, 0.40, 0.20, 0.0, 0.0, 0.0, 0.0)
+# Grind: one 10-turn grind win pays GRIND_FRAC x xp_to_next(L) x taper; taper = floor + (1 - floor)(1 - exp(-d / tau)),
+# d = levels below the cap.
+GRIND_FRAC = 0.70
+GRIND_TAPER_TAU = 3.6
+GRIND_TAPER_FLOOR = 0.20
 
-# ── Level-cap raises per win (front-loaded integer allocation of a crew's levels) ──
-CAP_ALLOC_CREW = (2, 2, 3, 3, 1, 0, 1)          # ordinary crew (12 levels)
-CAP_ALLOC_ROUND_OPEN = (12, 3, 3, 3, 1, 0, 0.5)   # first crew of R2/R3 (weights; [18,4,4,4,2,0,1] of 33). 2026-11-10: was
-                                                 # (12,3,3,3,.5,.5,.5); lifts the opener's old head #2 skip-grind dip
+# ── Money (USD; Austin 2026-11-13 x100 rescale, R1 wild purse = $1,000) ──
+BASE_PAYOUT_WILD = 1000.0      # kid rungs and wilds
+BASE_PAYOUT_CREW = 2500.0      # mature and old-head rungs
+BASE_PAYOUT_BOSS = 8000.0
+ROUND_PAYOUT_MULT = (1.00, 1.15, 1.35)
+GRIND_PAYOUT_FRACTION = 0.55   # a grind race pays 0.55 x the wild purse
+DEBT_AMOUNT = 16000.0
+DEBT_SHARE = 0.65              # share of each purse that goes to the debt while it is open
+WHOLESALE_DISCOUNT = 0.20      # off list on R1-R3 mods, from the end of R1 through the end of R3 (never on ARC)
+WHOLESALE_STARTS_AFTER = 1
+WHOLESALE_ENDS_AFTER = 3
+WHOLESALE_TIERS = ("R1", "R2", "R3")   # mod groups (MOD_<group>_...) that wholesale applies to; never ARC
 
-# ── Story XP per win ──
-STORY_XP_LT = 0.2              # lieutenant win = 0.2 × XP of the levels it unlocks (ordinary crew)
-STORY_XP_LT_ROUND_OPEN = 0.4   # ... 0.4 × in a round-opening crew
-STORY_XP_LT_FLOOR = 0.25       # every lieutenant win pays at least 0.25 level
-STORY_XP_BOSS = 1.0            # crew boss (and scripted race 3) pays 1.0 × the levels it unlocks, immediately
-                               # (2 levels normally; 18 levels when it unlocks a round-opening kid #1)
+# ── Mods (mods-v1 catalog, Austin 2026-11-14: 4 slots, rung unlocks, aspire Mk3 prices, IDs only) ──
+# Every mod boosts one fixed stat by fixed points (10x skill-point scale) and never changes or levels; the player
+# rebalances only by buying / equipping new mods (plus the 20 % retune). An empty slot holds a stock part worth
+# MOD_STOCK_PART_POINTS, so SP + stock parts = the live stock car (P = SP / 0.8) at L0. Car points = SP + slot points,
+# capped at min(round or finale-step ceiling, MOD_CAP_FRACTION x P). Mk points = ceil(mod gap at fills_to / MOD_SLOTS).
+MOD_SLOTS = 4
+MOD_UNLOCK_RACE = 3            # Reiko's shop opens when the PC wins scripted Prologue race 3 (canon 19); R1 starts at $0
+MOD_STOCK_PART_POINTS = 150    # per empty slot = 600 / MOD_SLOTS
+MOD_STATS = ("POW", "HAN", "EN")
+MOD_GROUPS = ("R1", "R2", "R3", "ARC")
+MOD_SLOT_PATTERN = {"street": "PPHE", "wangan": "PHEE", "touge": "PPHE"}   # P = POW, H = HAN, E = EN slots per district
+# (group, mk, points, list price USD, unlock token, fills the mod gap through level). Unlock tokens: ("open", round0)
+# = round open (R1 open = MOD_UNLOCK_RACE won), (round0, rung) = after that ladder win, ("arc", race id) = after that win.
+MOD_SETS = (
+    ("R1", "MK1", 213, 150.0, ("open", 0), 6),
+    ("R1", "MK2", 218, 500.0, (0, "mat1"), 9),
+    ("R1", "MK3", 223, 1000.0, (0, "mat2"), 12),
+    ("R2", "MK1", 242, 700.0, ("open", 1), 22),
+    ("R2", "MK2", 249, 1500.0, (1, "mat1"), 26),
+    ("R2", "MK3", 255, 5000.0, (1, "mat2"), 29),
+    ("R3", "MK1", 279, 1200.0, ("open", 2), 40),
+    ("R3", "MK2", 288, 2500.0, (2, "mat1"), 44),
+    ("R3", "MK3", 292, 8000.0, (2, "mat2"), 46),
+    ("ARC", "MYTH1", 333, 2500.0, ("arc", "P1"), 64),
+    ("ARC", "MYTH2", 375, 4000.0, ("arc", "F1"), 79),
+    ("ARC", "MYTH3", 426, 6000.0, ("arc", "F2"), 94),
+    ("ARC", "MYTH4", 501, 8000.0, ("arc", "F3"), 114),
+)
+MOD_CATALOG = {f"MOD_{g}_{st}_{mk}": dict(group=g, mk=mk, stat=st, points=pts, price=price, unlock=u, fills_to=fl)
+               for g, mk, pts, price, u, fl in MOD_SETS for st in MOD_STATS}
+MOD_UNLOCK = {mid: m["unlock"] for mid, m in MOD_CATALOG.items()}
+MOD_PRICE = {mid: m["price"] for mid, m in MOD_CATALOG.items()}   # list price per ID (USD)
+MOD_PRICE_STANDIN = tuple(f"MOD_ARC_{st}_MYTH4" for st in MOD_STATS)   # $8,000 stand-in (Austin 2026-11-13: "works for now")
+AERO_PRICE_MULT = 1.75         # an aero version (<ID>_AERO) costs 1.75 x its regular mod
+T4_UNLOCK_RACE = "P1"          # the arc's Myth mods start at the P1 win (MOD_ARC_*_MYTH1); Reiko sells at full price
+T4_PACKAGE = {"regular": 3, "aero": 1, "mod": "MYTH4"}   # full 4-slot Myth build: 3 x MYTH4 + 1 MYTH4 aero
+MOD_BUDGET_AT_CAP = 0.27       # mods fill 0.27 x P at a cap (stats 0.80 P + mods 0.27 P = 1.07 P)
 
-# ── Grind race XP: per-crew taper T2 ──
-# grind race XP = f(L, j) · x(L); L = level being filled, j = rung index 0..6 (finale rungs j = 4)
-TAPER_F0 = 1.9
-TAPER_RUNG = 0.88
-TAPER_LEVEL_TAU = 550.0
-TAPER_FINALE_RUNG = 4
+# ── Betting (Austin 2026-11-13: fair odds, unlock after R2, any race, no cap) ──
+BET_MIN = 500.0
+BET_MAX = 2000.0
+BET_ODDS = "fair"              # net payout on a win = stake x (1 - p) / p, p = the player's real win probability
+BET_ODDS_CLAMP = False
+BET_HOUSE_EDGE = 0.0
+BET_ELIGIBLE = "any"           # any race: story, grind/wild, pre-finale arc, finale
+BET_COUNT_CAP = None           # no cap on bets
 
-# ── Finale exemption (caps lifted) ──
-FINALE_MOD_SHARE = 0.86        # finale stat rise split: 86 % mods, 14 % grind (levels)
-FINALE_GRIND_SHARE = 0.14
+# ── Finale (fixed budgets; r* tuned on the hardest track; caps L64/79/94/115, Austin 2026-11-14) ──
+FINALE = (("Myth #1", "Touge", 494.8), ("Myth #2", "Wangan", 566.3),
+          ("Myth #3", "Street", 648.2), ("Summit", "Touge", 741.9))   # F1-F4 opponent budgets (fixed input)
+FINALE_OPPONENT = ("Myth Driver #1", "Myth Driver #2", "Myth Driver #3", "Sabine")   # F4 Summit vs Sabine (Austin 2026-11-13)
+FINALE_TARGET_R = (1.075, 1.058, 1.044, 1.075)   # F1/F4 T3, F2 W3, F3 S1; each is the r delivered at the integer cap
+FINALE_CAP_LEVEL = (64, 79, 94, 115)   # ceiling C = B x r; SP at the cap = 0.8 x C / 1.07 (climb ends L115, accepted 2026-11-14)
+FINALE_TURNS = 30
+FINALE_PURSE = 10800.0         # billed finale race purse (= R3 boss purse)
+FINALE_GRIND_PURSE = 742.5     # finale-era 10-turn grind (= R3 wild x 0.55)
+
+# ── Pre-finale arc (econ-v1 finale_arc_recommended.json shape; budgets refit in unapproved/barry/econ-v1-live-tracks/hardest.json; cast in design/notes/finale-arc-cast-v1.md) ──
+# Four story races before F1 (P1-P4, Touge crew trainers; P1 grants T4) and two between each billed step (M11/M12
+# before F2, M21/M22 before F3, M31/M32 before F4). Arc story races pay ARC_STORY_FILL x xp_share of the XP between
+# the step's entry cap and its finale cap. Grind in the arc is 10-turn wilds at ARC_GRIND_R. B = budget, r = design r.
+ARC_STORY_FILL = 0.80
+ARC_GRIND_R = 1.12
+ARC_PURSE = {10: 2500.0, 20: 3375.0, 30: 5000.0}
+FINALE_ARC = (
+    # id,   place,    district, turns, r_design, xp_share, purse, B   (B recomputed 2026-11-14 for caps L64/79/94/115)
+    ("P1",  "pre_F1", "touge",  10, 1.180, 0.18, 2500.0,  382.78),   # grants T4 (T4_UNLOCK_RACE)
+    ("P2",  "pre_F1", "touge",  20, 1.149, 0.24, 3375.0,  412.29),
+    ("P3",  "pre_F1", "touge",  20, 1.025, 0.26, 3375.0,  480.89),   # pre-F1 wall
+    ("P4",  "pre_F1", "touge",  30, 1.086, 0.32, 5000.0,  464.83),   # gate
+    ("M11", "F1_F2",  "wangan", 10, 1.180, 0.40, 2500.0,  441.61),
+    ("M12", "F1_F2",  "wangan", 20, 1.000, 0.60, 3375.0,  555.28),   # wall
+    ("M21", "F2_F3",  "street", 10, 1.180, 0.40, 2500.0,  497.48),
+    ("M22", "F2_F3",  "street", 20, 1.000, 0.60, 3375.0,  625.54),   # wall
+    ("M31", "F3_F4",  "touge",  10, 1.180, 0.40, 2500.0,  560.43),
+    ("M32", "F3_F4",  "touge",  20, 1.020, 0.60, 3375.0,  713.17),   # wall
+)
 
 
 def knot_window(r: float) -> float:
@@ -687,17 +807,142 @@ _STANCE_INDEX = {Stance.POW: 0, Stance.HAN: 1, Stance.EN: 2}
 _INDEX_STANCE = (Stance.POW, Stance.HAN, Stance.EN)
 
 
-def sp_per_level(level: int) -> float:
-    """s(L): skill points gained on reaching `level` (GEO curve)."""
-    g = SP_GROWTH_PER_12_LEVELS ** (1 / 12)
-    return SP_START * (g - 1) * g ** (level - 1)
+def sp_curve(level: float) -> float:
+    """Continuous SP curve: SP_START x SP_GROWTH_PER_12_LEVELS ** (L / 12)."""
+    return SP_START * SP_GROWTH_PER_12_LEVELS ** (level / 12.0)
 
 
-def xp_to_next(level: int, sp_before: float) -> float:
-    """x(L): XP to fill `level`, given total SP at level-1."""
-    return XP_BASE * (sp_before / SP_START) ** XP_SP_EXPONENT * sp_per_level(level) / sp_per_level(1)
+def skill_points(level: int) -> int:
+    """Whole skill points held at integer level L: round(SP_POINT_SCALE x SP(L)) (2400 at L0)."""
+    return int(round(SP_POINT_SCALE * sp_curve(int(level))))
 
 
-def grind_payout_fraction(level: int, rung: int) -> float:
-    """T2 taper: grind race XP as a fraction of x(level). Falls with rung inside a crew and with level."""
-    return TAPER_F0 * (1 - TAPER_RUNG * rung / 6) * math.exp(-level / TAPER_LEVEL_TAU)
+def skill_points_gained(level: int) -> int:
+    """Whole points granted on reaching level L (19 at L1, 48 at L114)."""
+    return skill_points(level) - skill_points(level - 1) if level > 0 else skill_points(0)
+
+
+def sp_at_level(level: float) -> float:
+    """SP(L) in SP units: whole points / SP_POINT_SCALE at integer levels, the continuous curve between them."""
+    if float(level).is_integer() and level >= 0:
+        return skill_points(int(level)) / SP_POINT_SCALE
+    return sp_curve(level)
+
+
+def stat_band(total: int) -> tuple[int, int]:
+    """Whole-point band of one stat for `total` spent points: ceil(25 %) .. floor(50 %)."""
+    return (math.ceil(BUILD_STAT_MIN_SHARE * total - 1e-9), math.floor(BUILD_STAT_MAX_SHARE * total + 1e-9))
+
+
+def check_build(alloc) -> tuple[int, int, int]:
+    """Validate a (POW, HAN, EN) whole-point allocation against the 25–50 % band; returns it as a tuple."""
+    a = tuple(int(x) for x in alloc)
+    if len(a) != 3 or any(x < 0 for x in a) or any(x != y for x, y in zip(a, alloc)):
+        raise ValueError(f"build {alloc!r} must be three whole, non-negative point counts")
+    lo, hi = stat_band(sum(a))
+    if any(x < lo or x > hi for x in a):
+        raise ValueError(f"build {a} breaks the {BUILD_STAT_MIN_SHARE:.0%}-{BUILD_STAT_MAX_SHARE:.0%} band ({lo}-{hi} of {sum(a)})")
+    return a
+
+
+def retune_budget(spent: int, fraction: float = RETUNE_BUDGET_FRACTION) -> int:
+    """Points the player may move at a district change: floor(fraction x spent)."""
+    return int(math.floor(fraction * spent + 1e-9))
+
+
+def check_retune(before, after, fraction: float = RETUNE_BUDGET_FRACTION) -> tuple[int, int, int]:
+    """Validate a district-change retune: same total, inside the band, at most retune_budget(total) points moved."""
+    b, a = check_build(before), check_build(after)
+    if sum(a) != sum(b):
+        raise ValueError("a retune moves spent points; it cannot add or remove points")
+    moved = sum(max(0, x - y) for x, y in zip(a, b))
+    if moved > retune_budget(sum(b), fraction):
+        raise ValueError(f"retune moves {moved} points; the budget is {retune_budget(sum(b), fraction)}")
+    return a
+
+
+def level_for_sp(sp: float) -> float:
+    """Inverse of the continuous SP curve (fractional level)."""
+    return 12.0 * math.log(sp / SP_START) / math.log(SP_GROWTH_PER_12_LEVELS)
+
+
+def stats_at_level(level: float) -> float:
+    """Player stat total P at level L before mods: SP / SP_CAP_FRACTION."""
+    return sp_at_level(level) / SP_CAP_FRACTION
+
+
+def xp_to_next(level: int) -> float:
+    """XP to go from `level` to `level` + 1: XP_BASE x XP_GROWTH ** level."""
+    return XP_BASE * XP_GROWTH ** max(0, level)
+
+
+def grind_xp(level: int, cap: int) -> float:
+    """XP of one grind win at `level` under level cap `cap` (tapers toward the cap, never below GRIND_TAPER_FLOOR)."""
+    d = max(0, cap - level)
+    taper = GRIND_TAPER_FLOOR + (1 - GRIND_TAPER_FLOOR) * (1 - math.exp(-d / GRIND_TAPER_TAU))
+    return GRIND_FRAC * xp_to_next(level) * taper
+
+
+def story_xp(rnd: int, rung: int, enter_level: int, cap: int) -> float:
+    """XP of a story win at rung index `rung` of round index `rnd` (0 = R1), for a round entered at `enter_level`.
+    Scaled by STORY_XP_MULT[rnd][rung]. The base is computed from the nominal entry level (the previous round's cap,
+    L0 for R1) or the real entry level if higher; a player entering below the previous cap (leftover XP carries over)
+    also gets CATCHUP_XP_FRAC x CATCHUP_XP_SHARE[rung] of the XP from `enter_level` to that cap."""
+    nominal = 0 if rnd == 0 else CAP_LEVEL[rnd - 1]
+    base_level = max(enter_level, nominal)
+    total = sum(xp_to_next(L) for L in range(base_level, cap))
+    short = sum(xp_to_next(L) for L in range(enter_level, nominal))
+    return (STORY_XP_MULT[rnd][rung] * STORY_FILL[rnd] * STORY_W[rung] / sum(STORY_W) * total
+            + CATCHUP_XP_FRAC * CATCHUP_XP_SHARE[rung] * short)
+
+
+def purse(rnd: int, kind: str, grind: bool = False) -> float:
+    """USD purse for a win in round index `rnd`; kind is a LADDER_RUNG_KIND ("kid", "mature", "old_head", "boss")."""
+    base = {"kid": BASE_PAYOUT_WILD, "mature": BASE_PAYOUT_CREW, "old_head": BASE_PAYOUT_CREW, "boss": BASE_PAYOUT_BOSS}[kind]
+    pay = base * ROUND_PAYOUT_MULT[rnd]
+    return pay * GRIND_PAYOUT_FRACTION if grind else pay
+
+
+def opponent_budget(rnd: int, rung: int) -> float:
+    """Ladder opponent budget B = C_ROUND / target r (round index `rnd`, rung index `rung`)."""
+    return C_ROUND[rnd] / LADDER_TARGET_R[ROUND_DISTRICTS[rnd].lower()][rung]
+
+
+def mod_group(mod_id: str) -> str:
+    """Catalog group of a mod ID (R1 / R2 / R3 / ARC); accepts <ID>_AERO."""
+    return MOD_CATALOG[mod_id.removesuffix("_AERO")]["group"]
+
+
+def mod_price(mod_id: str, aero: bool = False, wholesale: bool = False) -> float:
+    """USD price of one mod by ID (MOD_CATALOG). Aero (or an <ID>_AERO id) x AERO_PRICE_MULT.
+    Wholesale (WHOLESALE_DISCOUNT) only applies to WHOLESALE_TIERS groups (R1-R3)."""
+    if mod_id.endswith("_AERO"):
+        mod_id, aero = mod_id.removesuffix("_AERO"), True
+    p = MOD_PRICE[mod_id] * (AERO_PRICE_MULT if aero else 1.0)
+    if wholesale and mod_group(mod_id) in WHOLESALE_TIERS:
+        p *= 1.0 - WHOLESALE_DISCOUNT
+    return p
+
+
+def mod_shop_open(prologue_wins: int) -> bool:
+    """Reiko's shop is open once the PC has won scripted Prologue race MOD_UNLOCK_RACE."""
+    return prologue_wins >= MOD_UNLOCK_RACE
+
+
+def wholesale_active(rounds_done: int) -> bool:
+    """True from the end of round WHOLESALE_STARTS_AFTER through the end of round WHOLESALE_ENDS_AFTER.
+    `rounds_done` = crew bosses beaten (0-3): on during R2 and R3 play (1 or 2), off before (0) and in the finale era (3),
+    as in the econ-v1 betting / T4 audit (walk_R3 ends wholesale with the R3 boss)."""
+    return WHOLESALE_STARTS_AFTER <= rounds_done < WHOLESALE_ENDS_AFTER
+
+
+def bet_net_payout(stake: float, p_win: float) -> float:
+    """Net USD profit on a won bet at true fair odds: stake x (1 - p) / p (no clamp, no house edge)."""
+    if not 0.0 < p_win <= 1.0:
+        raise ValueError(f"p_win must be in (0, 1], got {p_win}")
+    return stake * (1.0 - p_win) / p_win * (1.0 - BET_HOUSE_EDGE)
+
+
+def bet_allowed(rounds_done: int, stake: float) -> bool:
+    """Betting is open once round BETTING_UNLOCK_AFTER is done, on any race, BET_MIN <= stake <= BET_MAX, no count cap."""
+    return rounds_done >= BETTING_UNLOCK_AFTER and BET_MIN <= stake <= BET_MAX

@@ -1,0 +1,50 @@
+{
+ "c1_entry_straight_scroll": {
+  "ink": {
+   "px_per_frame": 12477,
+   "one_frame_pop_pct": 59.2,
+   "upper_half_pop_pct": 63.9
+  },
+  "baseline_edges_cel_off": {
+   "px_per_frame": 15955,
+   "one_frame_pop_pct": 31.3,
+   "upper_half_pop_pct": 39.7
+  }
+ },
+ "c1_playback": {
+  "ink": {
+   "px_per_frame": 9882,
+   "one_frame_pop_pct": 65.5,
+   "upper_half_pop_pct": 70.4
+  },
+  "baseline_edges_cel_off": {
+   "px_per_frame": 11187,
+   "one_frame_pop_pct": 37.2,
+   "upper_half_pop_pct": 47.8
+  }
+ },
+ "c2_entry_straight_scroll": {
+  "ink": {
+   "px_per_frame": 12311,
+   "one_frame_pop_pct": 63.4,
+   "upper_half_pop_pct": 66.0
+  },
+  "baseline_edges_cel_off": {
+   "px_per_frame": 15253,
+   "one_frame_pop_pct": 36.4,
+   "upper_half_pop_pct": 43.1
+  }
+ },
+ "c2_playback": {
+  "ink": {
+   "px_per_frame": 10452,
+   "one_frame_pop_pct": 63.9,
+   "upper_half_pop_pct": 69.0
+  },
+  "baseline_edges_cel_off": {
+   "px_per_frame": 12199,
+   "one_frame_pop_pct": 35.9,
+   "upper_half_pop_pct": 45.9
+  }
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "meta": {
+  "n_per_track_style": 1000,
+  "live_tracks": true,
+  "sweep_qte": false,
+  "boss_r": {
+   "street": 1.0531373047294503,
+   "wangan": 1.0405116620589814,
+   "touge": 1.0656022367666107
+  },
+  "seconds": 62.3
+ },
+ "wr": {
+  "c6060": {
+   "street": {
+    "district": 57.3,
+    "S1_Shibuya_Grid": 45.0,
+    "S2_Ginza_Blocks": 36.8,
+    "S3_Shinjuku_Underpass": 65.6,
+    "S4_Roppongi_Hill": 58.5,
+    "S5_Harbor_Warehouses": 80.8
+   },
+   "wangan": {
+    "district": 40.1,
+    "W1_Bayshore_Run": 34.4,
+    "W2_Daikoku_Loop": 50.4,
+    "W3_C1_Outer": 29.2,
+    "W4_Tatsumi_Sprint": 44.8,
+    "W5_Aqualine_Flyer": 41.5
+   },
+   "touge": {
+    "district": 34.7,
+    "T1_Akina_Switchbacks": 48.7,
+    "T2_Irohazaka_Ladder": 31.6,
+    "T3_Usui_Esses": 21.0,
+    "T4_Myogi_Descent": 33.2,
+    "T5_Hakone_Ridge": 39.2
+   }
+  },
+  "c6080": {
+   "street": {
+    "district": 86.5,
+    "S1_Shibuya_Grid": 80.5,
+    "S2_Ginza_Blocks": 70.7,
+    "S3_Shinjuku_Underpass": 93.8,
+    "S4_Roppongi_Hill": 88.5,
+    "S5_Harbor_Warehouses": 98.7
+   },
+   "wangan": {
+    "district": 68.7,
+    "W1_Bayshore_Run": 70.0,
+    "W2_Daikoku_Loop": 77.1,
+    "W3_C1_Outer": 55.7,
+    "W4_Tatsumi_Sprint": 72.2,
+    "W5_Aqualine_Flyer": 68.5
+   },
+   "touge": {
+    "district": 69.1,
+    "T1_Akina_Switchbacks": 81.4,
+    "T2_Irohazaka_Ladder": 70.6,
+    "T3_Usui_Esses": 57.9,
+    "T4_Myogi_Descent": 66.3,
+    "T5_Hakone_Ridge": 69.3
+   }
+  },
+  "c8060": {
+   "street": {
+    "district": 88.0,
+    "S1_Shibuya_Grid": 82.1,
+    "S2_Ginza_Blocks": 72.5,
+    "S3_Shinjuku_Underpass": 93.0,
+    "S4_Roppongi_Hill": 93.3,
+    "S5_Harbor_Warehouses": 99.0
+   },
+   "wangan": {
+    "district": 79.2,
+    "W1_Bayshore_Run": 78.7,
+    "W2_Daikoku_Loop": 82.1,
+    "W3_C1_Outer": 72.6,
+    "W4_Tatsumi_Sprint": 85.2,
+    "W5_Aqualine_Flyer": 77.4
+   },
+   "touge": {
+    "district": 67.9,
+    "T1_Akina_Switchbacks": 81.9,
+    "T2_Irohazaka_Ladder": 69.1,
+    "T3_Usui_Esses": 50.0,
+    "T4_Myogi_Descent": 65.0,
+    "T5_Hakone_Ridge": 73.6
+   }
+  },
+  "c8080": {
+   "street": {
+    "district": 98.1,
+    "S1_Shibuya_Grid": 98.0,
+    "S2_Ginza_Blocks": 93.8,
+    "S3_Shinjuku_Underpass": 99.6,
+    "S4_Roppongi_Hill": 99.3,
+    "S5_Harbor_Warehouses": 100.0
+   },
+   "wangan": {
+    "district": 92.8,
+    "W1_Bayshore_Run": 94.2,
+    "W2_Daikoku_Loop": 94.8,
+    "W3_C1_Outer": 87.6,
+    "W4_Tatsumi_Sprint": 95.0,
+    "W5_Aqualine_Flyer": 92.4
+   },
+   "touge": {
+    "district": 91.9,
+    "T1_Akina_Switchbacks": 97.2,
+    "T2_Irohazaka_Ladder": 94.0,
+    "T3_Usui_Esses": 85.6,
+    "T4_Myogi_Descent": 90.2,
+    "T5_Hakone_Ridge": 92.6
+   }
+  }
+ }
+}

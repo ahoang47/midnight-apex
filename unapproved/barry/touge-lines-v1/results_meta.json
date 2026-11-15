@@ -1,0 +1,348 @@
+{
+ "baseline": {
+  "seeds": [
+   20261112,
+   20261113,
+   20261114,
+   20261115,
+   20261116,
+   20261117,
+   20261118,
+   20261119,
+   20261120
+  ],
+  "n": 1000,
+  "tracks": [
+   [
+    "street",
+    "S1_Shibuya_Grid_CCW"
+   ],
+   [
+    "street",
+    "S1_Shibuya_Grid_CW"
+   ],
+   [
+    "street",
+    "S3_Shinjuku_Underpass_CCW"
+   ],
+   [
+    "street",
+    "S3_Shinjuku_Underpass_CW"
+   ],
+   [
+    "touge",
+    "T_Downhill"
+   ],
+   [
+    "touge",
+    "T_Uphill"
+   ],
+   [
+    "wangan",
+    "W1_Bayshore_Run_CCW"
+   ],
+   [
+    "wangan",
+    "W1_Bayshore_Run_CW"
+   ],
+   [
+    "wangan",
+    "W3_C1_Outer_CCW"
+   ],
+   [
+    "wangan",
+    "W3_C1_Outer_CW"
+   ]
+  ],
+  "laps": [
+   [
+    "ES",
+    "N90",
+    "IR",
+    "DR",
+    "N90",
+    "CH",
+    "CR",
+    "N90",
+    "CH",
+    "N90"
+   ],
+   [
+    "N90",
+    "CH",
+    "N90",
+    "CR",
+    "CH",
+    "N90",
+    "IR",
+    "DR",
+    "N90",
+    "ES"
+   ],
+   [
+    "CR",
+    "CH",
+    "DR",
+    "N90",
+    "ES",
+    "CH",
+    "N90",
+    "IR",
+    "N90",
+    "CH"
+   ],
+   [
+    "CH",
+    "N90",
+    "DR",
+    "N90",
+    "CH",
+    "ES",
+    "N90",
+    "IR",
+    "CH",
+    "CR"
+   ],
+   [
+    "CH",
+    "IR",
+    "HP",
+    "N90",
+    "HP",
+    "ES",
+    "IR",
+    "HP",
+    "ES",
+    "HP"
+   ],
+   [
+    "HP",
+    "ES",
+    "HP",
+    "DR",
+    "ES",
+    "HP",
+    "N90",
+    "HP",
+    "DR",
+    "CH"
+   ],
+   [
+    "DR",
+    "SW",
+    "CH",
+    "CR",
+    "DR",
+    "SW",
+    "SW",
+    "CR",
+    "DR",
+    "SW"
+   ],
+   [
+    "SW",
+    "IR",
+    "CR",
+    "SW",
+    "SW",
+    "IR",
+    "CR",
+    "CH",
+    "SW",
+    "IR"
+   ],
+   [
+    "SW",
+    "DR",
+    "CR",
+    "SW",
+    "N90",
+    "SW",
+    "DR",
+    "DR",
+    "SW",
+    "CR"
+   ],
+   [
+    "CR",
+    "SW",
+    "IR",
+    "IR",
+    "SW",
+    "N90",
+    "SW",
+    "CR",
+    "IR",
+    "SW"
+   ]
+  ],
+  "lengths": [
+   10,
+   20,
+   30
+  ],
+  "styles": [
+   "balanced",
+   "hot_early",
+   "conserver"
+  ],
+  "keys": [
+   "win",
+   "ov",
+   "ovc",
+   "lock",
+   "pen",
+   "rlock",
+   "rov",
+   "rovplay",
+   "rswitch",
+   "streak",
+   "limp",
+   "lockdur"
+  ],
+  "tunes": [
+   [
+    0.25,
+    0.25,
+    0.5
+   ],
+   [
+    0.25,
+    0.3,
+    0.45
+   ],
+   [
+    0.25,
+    0.35,
+    0.4
+   ],
+   [
+    0.25,
+    0.4,
+    0.35
+   ],
+   [
+    0.25,
+    0.45,
+    0.3
+   ],
+   [
+    0.25,
+    0.5,
+    0.25
+   ],
+   [
+    0.3,
+    0.25,
+    0.45
+   ],
+   [
+    0.3,
+    0.3,
+    0.4
+   ],
+   [
+    0.3,
+    0.35,
+    0.35
+   ],
+   [
+    0.3,
+    0.4,
+    0.3
+   ],
+   [
+    0.3,
+    0.45,
+    0.25
+   ],
+   [
+    0.35,
+    0.25,
+    0.4
+   ],
+   [
+    0.35,
+    0.3,
+    0.35
+   ],
+   [
+    0.35,
+    0.35,
+    0.3
+   ],
+   [
+    0.35,
+    0.4,
+    0.25
+   ],
+   [
+    0.4,
+    0.25,
+    0.35
+   ],
+   [
+    0.4,
+    0.3,
+    0.3
+   ],
+   [
+    0.4,
+    0.35,
+    0.25
+   ],
+   [
+    0.45,
+    0.25,
+    0.3
+   ],
+   [
+    0.45,
+    0.3,
+    0.25
+   ],
+   [
+    0.5,
+    0.25,
+    0.25
+   ],
+   [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+   ]
+  ],
+  "line_edits": null,
+  "use_gravity": true,
+  "cap": 1.07,
+  "g2": {
+   "REC_FACTOR": 1.0,
+   "RELEASE": 0.3,
+   "AGG_STEP": 1.0,
+   "PEN_SHAPE": "linear",
+   "PEN_SLOPE": 2.0,
+   "PEN_FLOOR": 0.4,
+   "CAP_TURNS": 3.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "KAPPA_10": 1.75,
+   "KAPPA_20": 2.25,
+   "KAPPA_30": 2.25,
+   "BOSS_REC_FACTOR": 1.0,
+   "BOSS_RELEASE": 0.8,
+   "BOSS_CAP_TURNS": 3.0,
+   "RES_T": 0.7,
+   "RES_K": 2.0,
+   "RES_LOOK": 0.5,
+   "PLAN_H": 3,
+   "_cap": 1.07,
+   "DEMAND_SLANT": 2.0,
+   "STAT_M_W": 1.0
+  },
+  "gravity": {
+   "GRADE_UP": 0.085,
+   "GRADE_DOWN": 0.05
+  }
+ }
+}

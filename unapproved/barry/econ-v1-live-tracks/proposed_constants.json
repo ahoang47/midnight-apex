@@ -1,0 +1,341 @@
+{
+ "_status": "DRAFT - not approved. Barry 2026-11-13 (round 2, Austin pick: bosses tuned to the HARDEST live track per district). Do not copy into sim/ until Austin approves.",
+ "basis": {
+  "oracle": [
+   "sweep_main.json (N=300)",
+   "sweep_confirm30.json (N=1500, 30-turn)"
+  ],
+  "point_checks": [
+   "point_confirm.json",
+   "point_confirm_T3.json",
+   "point_confirm_S1.json",
+   "point_confirm_hardest.json"
+  ],
+  "hard_cells": {
+   "street": "S1_Shibuya_Grid",
+   "wangan": "W3_C1_Outer (30-turn)",
+   "touge": "T3_Usui_Esses (20/30-turn)"
+  },
+  "targets": "60/60 >= 30 and 80/80 ~90-95 at cap on the hardest track",
+  "tunes": {
+   "street": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wangan": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "touge": [
+    0.45,
+    0.25,
+    0.3
+   ]
+  }
+ },
+ "LADDER_TARGET_R": {
+  "street": [
+   1.2,
+   1.159,
+   1.095,
+   1.071,
+   1.065,
+   1.058,
+   1.044
+  ],
+  "wangan": [
+   1.18,
+   1.16,
+   1.11,
+   1.08,
+   1.06,
+   1.055,
+   1.055
+  ],
+  "touge": [
+   1.182,
+   1.163,
+   1.132,
+   1.097,
+   1.079,
+   1.071,
+   1.071
+  ]
+ },
+ "LADDER_TARGET_R_live": {
+  "street": [
+   1.2,
+   1.16,
+   1.1,
+   1.07,
+   1.065,
+   1.058,
+   1.053
+  ],
+  "wangan": [
+   1.18,
+   1.16,
+   1.11,
+   1.08,
+   1.06,
+   1.048,
+   1.04
+  ],
+  "touge": [
+   1.18,
+   1.16,
+   1.12,
+   1.085,
+   1.075,
+   1.07,
+   1.066
+  ]
+ },
+ "BOSS_TARGET_R": {
+  "street": 1.044,
+  "wangan": 1.055,
+  "touge": 1.071
+ },
+ "BOSS_TARGET_R_live": {
+  "street": 1.053,
+  "wangan": 1.04,
+  "touge": 1.066
+ },
+ "boss_budget_B": {
+  "street": 338.22,
+  "wangan": 383.19,
+  "touge": 432.16
+ },
+ "boss_budget_B_live": {
+  "street": 335.33,
+  "wangan": 388.72,
+  "touge": 434.19
+ },
+ "FINALE_TARGET_R": [
+  1.075,
+  1.058,
+  1.044,
+  1.075
+ ],
+ "FINALE_TARGET_R_live": [
+  1.066,
+  1.04,
+  1.053,
+  1.066
+ ],
+ "FINALE_B_unchanged": [
+  494.8,
+  566.3,
+  648.2,
+  741.9
+ ],
+ "FINALE_C": [
+  531.91,
+  599.15,
+  676.72,
+  797.54
+ ],
+ "FINALE_CAP_LEVEL": [
+  64,
+  79,
+  94,
+  115
+ ],
+ "FINALE_CAP_LEVEL_live": [
+  63,
+  76,
+  95,
+  114
+ ],
+ "FINALE_ARC": [
+  [
+   "P1",
+   "pre_F1",
+   "touge",
+   10,
+   1.18,
+   0.18,
+   2500.0,
+   382.78
+  ],
+  [
+   "P2",
+   "pre_F1",
+   "touge",
+   20,
+   1.149,
+   0.24,
+   3375.0,
+   412.29
+  ],
+  [
+   "P3",
+   "pre_F1",
+   "touge",
+   20,
+   1.025,
+   0.26,
+   3375.0,
+   480.89
+  ],
+  [
+   "P4",
+   "pre_F1",
+   "touge",
+   30,
+   1.086,
+   0.32,
+   5000.0,
+   464.83
+  ],
+  [
+   "M11",
+   "F1_F2",
+   "wangan",
+   10,
+   1.18,
+   0.4,
+   2500.0,
+   441.61
+  ],
+  [
+   "M12",
+   "F1_F2",
+   "wangan",
+   20,
+   1.0,
+   0.6,
+   3375.0,
+   555.28
+  ],
+  [
+   "M21",
+   "F2_F3",
+   "street",
+   10,
+   1.18,
+   0.4,
+   2500.0,
+   497.48
+  ],
+  [
+   "M22",
+   "F2_F3",
+   "street",
+   20,
+   1.0,
+   0.6,
+   3375.0,
+   625.54
+  ],
+  [
+   "M31",
+   "F3_F4",
+   "touge",
+   10,
+   1.18,
+   0.4,
+   2500.0,
+   560.43
+  ],
+  [
+   "M32",
+   "F3_F4",
+   "touge",
+   20,
+   1.02,
+   0.6,
+   3375.0,
+   713.17
+  ]
+ ],
+ "FINALE_ARC_changed": {
+  "P2": {
+   "B": [
+    409.03,
+    412.29
+   ],
+   "r_design": [
+    1.149,
+    1.149
+   ]
+  },
+  "P3": {
+   "B": [
+    483.25,
+    480.89
+   ],
+   "r_design": [
+    1.02,
+    1.025
+   ]
+  },
+  "P4": {
+   "B": [
+    461.15,
+    464.83
+   ],
+   "r_design": [
+    1.086,
+    1.086
+   ]
+  },
+  "M11": {
+   "B": [
+    438.11,
+    441.61
+   ],
+   "r_design": [
+    1.18,
+    1.18
+   ]
+  },
+  "M12": {
+   "B": [
+    546.53,
+    555.28
+   ],
+   "r_design": [
+    1.0,
+    1.0
+   ]
+  },
+  "M21": {
+   "B": [
+    485.77,
+    497.48
+   ],
+   "r_design": [
+    1.18,
+    1.18
+   ]
+  },
+  "M31": {
+   "B": [
+    564.89,
+    560.43
+   ],
+   "r_design": [
+    1.18,
+    1.18
+   ]
+  }
+ },
+ "FINALE_ARC_note": "r_design relative to the 80/80 story-only reference combat (econ-v1 set_budgets_from_8080); B recomputed for the new finale caps.",
+ "aero": {
+  "rule_unchanged": "AERO_MAX_EQUIPPED=1, pool 0.10, price 1.75x",
+  "result": "see aero_live.json / RESULTS.md"
+ },
+ "unchanged": [
+  "money, purses, debt, betting",
+  "T4 $8,000 stand-in, P1 unlock, floor L47",
+  "mod tiers/floors",
+  "aero rule + 1.75x price",
+  "campaign caps L12/29/46",
+  "XP curve/story/grind",
+  "finale budgets B",
+  "arc shape, fill 0.80, GRIND_R 1.12, purses"
+ ]
+}

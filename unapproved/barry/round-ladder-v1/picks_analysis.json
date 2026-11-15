@@ -1,0 +1,1195 @@
+{
+ "C1": 353.1000000000001,
+ "C": [
+  null,
+  353.1000000000001,
+  404.1451346603292,
+  462.569498356317
+ ],
+ "at_cap": [
+  {
+   "rnd": 1,
+   "name": "kid1",
+   "district": "Street",
+   "B": 288.62,
+   "B_norm": 81.74,
+   "r_tgt": 1.13,
+   "L": 2,
+   "length": 20,
+   "player_cap": 326.14,
+   "player_cap_norm": 92.36,
+   "wr60": 95.9,
+   "limp": 5.1,
+   "wr80": 99.9
+  },
+  {
+   "rnd": 1,
+   "name": "kid2",
+   "district": "Street",
+   "B": 298.52,
+   "B_norm": 84.54,
+   "r_tgt": 1.11,
+   "L": 4,
+   "length": 20,
+   "player_cap": 331.36,
+   "player_cap_norm": 93.84,
+   "wr60": 90.5,
+   "limp": 7.3,
+   "wr80": 99.8
+  },
+  {
+   "rnd": 1,
+   "name": "mat1",
+   "district": "Street",
+   "B": 308.5,
+   "B_norm": 87.37,
+   "r_tgt": 1.1,
+   "L": 7,
+   "length": 20,
+   "player_cap": 339.35,
+   "player_cap_norm": 96.11,
+   "wr60": 87.2,
+   "limp": 8.0,
+   "wr80": 99.7
+  },
+  {
+   "rnd": 1,
+   "name": "mat2",
+   "district": "Street",
+   "B": 321.79,
+   "B_norm": 91.13,
+   "r_tgt": 1.08,
+   "L": 10,
+   "length": 20,
+   "player_cap": 347.54,
+   "player_cap_norm": 98.42,
+   "wr60": 76.3,
+   "limp": 10.8,
+   "wr80": 99.0
+  },
+  {
+   "rnd": 1,
+   "name": "OH1",
+   "district": "Street",
+   "B": 327.39,
+   "B_norm": 92.72,
+   "r_tgt": 1.07,
+   "L": 11,
+   "length": 20,
+   "player_cap": 350.31,
+   "player_cap_norm": 99.21,
+   "wr60": 67.8,
+   "limp": 12.8,
+   "wr80": 98.3
+  },
+  {
+   "rnd": 1,
+   "name": "OH2",
+   "district": "Street",
+   "B": 330.48,
+   "B_norm": 93.59,
+   "r_tgt": 1.06,
+   "L": 11,
+   "length": 20,
+   "player_cap": 350.31,
+   "player_cap_norm": 99.21,
+   "wr60": 58.6,
+   "limp": 15.3,
+   "wr80": 96.9
+  },
+  {
+   "rnd": 1,
+   "name": "boss",
+   "district": "Street",
+   "B": 326.94,
+   "B_norm": 92.59,
+   "r_tgt": 1.08,
+   "L": 12,
+   "length": 30,
+   "player_cap": 353.1,
+   "player_cap_norm": 100.0,
+   "wr60": 69.0,
+   "limp": 14.3,
+   "wr80": 99.1,
+   "S1_CW": {
+    "wr60": 57.5,
+    "wr80": 98.2,
+    "limp": 21.0
+   },
+   "S1_CCW": {
+    "wr60": 60.2,
+    "wr80": 98.5,
+    "limp": 20.2
+   }
+  },
+  {
+   "rnd": 2,
+   "name": "kid1",
+   "district": "Wangan",
+   "B": 320.01,
+   "B_norm": 90.63,
+   "r_tgt": 1.13,
+   "L": 15,
+   "length": 20,
+   "player_cap": 361.61,
+   "player_cap_norm": 102.41,
+   "wr60": 94.6,
+   "limp": 7.9,
+   "wr80": 99.9
+  },
+  {
+   "rnd": 2,
+   "name": "kid2",
+   "district": "Wangan",
+   "B": 333.63,
+   "B_norm": 94.49,
+   "r_tgt": 1.11,
+   "L": 18,
+   "length": 20,
+   "player_cap": 370.33,
+   "player_cap_norm": 104.88,
+   "wr60": 89.8,
+   "limp": 9.6,
+   "wr80": 99.7
+  },
+  {
+   "rnd": 2,
+   "name": "mat1",
+   "district": "Wangan",
+   "B": 347.54,
+   "B_norm": 98.42,
+   "r_tgt": 1.1,
+   "L": 22,
+   "length": 20,
+   "player_cap": 382.29,
+   "player_cap_norm": 108.27,
+   "wr60": 86.1,
+   "limp": 11.1,
+   "wr80": 99.4
+  },
+  {
+   "rnd": 2,
+   "name": "mat2",
+   "district": "Wangan",
+   "B": 365.4,
+   "B_norm": 103.48,
+   "r_tgt": 1.08,
+   "L": 26,
+   "length": 20,
+   "player_cap": 394.63,
+   "player_cap_norm": 111.76,
+   "wr60": 76.9,
+   "limp": 13.2,
+   "wr80": 98.3
+  },
+  {
+   "rnd": 2,
+   "name": "OH1",
+   "district": "Wangan",
+   "B": 374.72,
+   "B_norm": 106.12,
+   "r_tgt": 1.07,
+   "L": 28,
+   "length": 20,
+   "player_cap": 400.95,
+   "player_cap_norm": 113.55,
+   "wr60": 70.6,
+   "limp": 14.7,
+   "wr80": 97.0
+  },
+  {
+   "rnd": 2,
+   "name": "OH2",
+   "district": "Wangan",
+   "B": 378.25,
+   "B_norm": 107.12,
+   "r_tgt": 1.06,
+   "L": 28,
+   "length": 20,
+   "player_cap": 400.95,
+   "player_cap_norm": 113.55,
+   "wr60": 62.0,
+   "limp": 17.7,
+   "wr80": 94.4
+  },
+  {
+   "rnd": 2,
+   "name": "boss",
+   "district": "Wangan",
+   "B": 377.71,
+   "B_norm": 106.97,
+   "r_tgt": 1.07,
+   "L": 29,
+   "length": 30,
+   "player_cap": 404.15,
+   "player_cap_norm": 114.46,
+   "wr60": 67.6,
+   "limp": 19.2,
+   "wr80": 97.6
+  },
+  {
+   "rnd": 3,
+   "name": "kid1",
+   "district": "Touge",
+   "B": 356.29,
+   "B_norm": 100.9,
+   "r_tgt": 1.1616822429906541,
+   "L": 32,
+   "length": 20,
+   "player_cap": 413.89,
+   "player_cap_norm": 117.22,
+   "wr60": 94.3,
+   "limp": 7.2,
+   "wr80": 99.9,
+   "up": {
+    "wr60": 94.4,
+    "wr80": 99.9,
+    "limp": 5.8
+   },
+   "dn": {
+    "wr60": 94.2,
+    "wr80": 99.9,
+    "limp": 8.6
+   }
+  },
+  {
+   "rnd": 3,
+   "name": "kid2",
+   "district": "Touge",
+   "B": 371.45,
+   "B_norm": 105.2,
+   "r_tgt": 1.141121495327103,
+   "L": 35,
+   "length": 20,
+   "player_cap": 423.87,
+   "player_cap_norm": 120.04,
+   "wr60": 89.8,
+   "limp": 8.7,
+   "wr80": 99.7,
+   "up": {
+    "wr60": 90.6,
+    "wr80": 99.8,
+    "limp": 7.1
+   },
+   "dn": {
+    "wr60": 89.0,
+    "wr80": 99.6,
+    "limp": 10.2
+   }
+  },
+  {
+   "rnd": 3,
+   "name": "mat1",
+   "district": "Touge",
+   "B": 386.93,
+   "B_norm": 109.58,
+   "r_tgt": 1.1308411214953273,
+   "L": 39,
+   "length": 20,
+   "player_cap": 437.55,
+   "player_cap_norm": 123.92,
+   "wr60": 87.0,
+   "limp": 9.2,
+   "wr80": 99.6,
+   "up": {
+    "wr60": 86.7,
+    "wr80": 99.6,
+    "limp": 8.6
+   },
+   "dn": {
+    "wr60": 87.2,
+    "wr80": 99.5,
+    "limp": 9.9
+   }
+  },
+  {
+   "rnd": 3,
+   "name": "mat2",
+   "district": "Touge",
+   "B": 406.81,
+   "B_norm": 115.21,
+   "r_tgt": 1.110280373831776,
+   "L": 43,
+   "length": 20,
+   "player_cap": 451.68,
+   "player_cap_norm": 127.92,
+   "wr60": 78.5,
+   "limp": 11.7,
+   "wr80": 98.8,
+   "up": {
+    "wr60": 76.0,
+    "wr80": 98.5,
+    "limp": 11.5
+   },
+   "dn": {
+    "wr60": 81.1,
+    "wr80": 99.0,
+    "limp": 12.0
+   }
+  },
+  {
+   "rnd": 3,
+   "name": "OH1",
+   "district": "Touge",
+   "B": 417.19,
+   "B_norm": 118.15,
+   "r_tgt": 1.1,
+   "L": 45,
+   "length": 20,
+   "player_cap": 458.91,
+   "player_cap_norm": 129.97,
+   "wr60": 71.7,
+   "limp": 13.7,
+   "wr80": 97.8,
+   "up": {
+    "wr60": 69.9,
+    "wr80": 97.8,
+    "limp": 12.8
+   },
+   "dn": {
+    "wr60": 73.6,
+    "wr80": 97.9,
+    "limp": 14.7
+   }
+  },
+  {
+   "rnd": 3,
+   "name": "OH2",
+   "district": "Touge",
+   "B": 421.13,
+   "B_norm": 119.27,
+   "r_tgt": 1.0897196261682245,
+   "L": 45,
+   "length": 20,
+   "player_cap": 458.91,
+   "player_cap_norm": 129.97,
+   "wr60": 65.5,
+   "limp": 15.6,
+   "wr80": 96.8,
+   "up": {
+    "wr60": 64.3,
+    "wr80": 96.9,
+    "limp": 14.4
+   },
+   "dn": {
+    "wr60": 66.8,
+    "wr80": 96.7,
+    "limp": 16.9
+   }
+  },
+  {
+   "rnd": 3,
+   "name": "boss",
+   "district": "Touge",
+   "B": 420.52,
+   "B_norm": 119.09,
+   "r_tgt": 1.1,
+   "L": 46,
+   "length": 30,
+   "player_cap": 462.57,
+   "player_cap_norm": 131.0,
+   "wr60": 63.8,
+   "limp": 20.0,
+   "wr80": 97.3,
+   "up": {
+    "wr60": 60.3,
+    "wr80": 96.6,
+    "limp": 19.3
+   },
+   "dn": {
+    "wr60": 67.4,
+    "wr80": 98.1,
+    "limp": 20.8
+   }
+  }
+ ],
+ "walls": [
+  {
+   "rnd": 1,
+   "district": "Street",
+   "r_arrive": 1.0629797094465483,
+   "arrive_L": 10,
+   "cap": 12,
+   "n2cap": 6,
+   "grind": 6,
+   "player_norm": 98.42,
+   "B_norm": 92.59,
+   "wr60": 48.5,
+   "limp": 19.3,
+   "wr80": 97.3,
+   "S1_CW": {
+    "wr60": 40.1,
+    "wr80": 95.9,
+    "limp": 25.1
+   },
+   "S1_CCW": {
+    "wr60": 39.8,
+    "wr80": 96.3,
+    "limp": 26.0
+   }
+  },
+  {
+   "rnd": 2,
+   "district": "Wangan",
+   "r_arrive": 1.0531373047294503,
+   "arrive_L": 27,
+   "cap": 29,
+   "n2cap": 8,
+   "grind": 8,
+   "player_norm": 112.65,
+   "B_norm": 106.97,
+   "wr60": 53.0,
+   "limp": 23.6,
+   "wr80": 93.9
+  },
+  {
+   "rnd": 3,
+   "district": "Touge",
+   "r_arrive": 1.0826645188807433,
+   "arrive_L": 44,
+   "cap": 46,
+   "n2cap": 8,
+   "grind": 8,
+   "player_norm": 128.94,
+   "B_norm": 119.09,
+   "wr60": 50.9,
+   "limp": 24.1,
+   "wr80": 95.1,
+   "up": {
+    "wr60": 47.7,
+    "wr80": 95.0,
+    "limp": 22.9
+   },
+   "dn": {
+    "wr60": 54.0,
+    "wr80": 95.3,
+    "limp": 25.3
+   }
+  }
+ ],
+ "no_grind": {
+  "1": [
+   {
+    "name": "kid1",
+    "arrive_L": 2,
+    "cap": 2,
+    "player": 326.14,
+    "player_norm": 92.36,
+    "B": 288.62,
+    "B_norm": 81.74,
+    "r_arrive": 1.13,
+    "r_tgt": 1.13,
+    "n2cap": 0,
+    "length": 20,
+    "enter_note": "prologue+story",
+    "wr60": 95.9,
+    "limp": 5.1,
+    "wr80": 99.9
+   },
+   {
+    "name": "kid2",
+    "arrive_L": 2,
+    "cap": 4,
+    "player": 326.14,
+    "player_norm": 92.36,
+    "B": 298.52,
+    "B_norm": 84.54,
+    "r_arrive": 1.0925069235978413,
+    "r_tgt": 1.11,
+    "n2cap": 2,
+    "length": 20,
+    "enter_note": "prologue+story",
+    "wr60": 83.0,
+    "limp": 9.4,
+    "wr80": 99.5
+   },
+   {
+    "name": "mat1",
+    "arrive_L": 3,
+    "cap": 7,
+    "player": 328.74,
+    "player_norm": 93.1,
+    "B": 308.5,
+    "B_norm": 87.37,
+    "r_arrive": 1.0656022367666107,
+    "r_tgt": 1.1,
+    "n2cap": 4,
+    "length": 20,
+    "enter_note": "prologue+story",
+    "wr60": 63.1,
+    "limp": 14.1,
+    "wr80": 97.8
+   },
+   {
+    "name": "mat2",
+    "arrive_L": 3,
+    "cap": 10,
+    "player": 328.74,
+    "player_norm": 93.1,
+    "B": 321.79,
+    "B_norm": 91.13,
+    "r_arrive": 1.021593268203363,
+    "r_tgt": 1.08,
+    "n2cap": 7,
+    "length": 20,
+    "enter_note": "prologue+story",
+    "wr60": 10.5,
+    "limp": 24.2,
+    "wr80": 85.7
+   },
+   {
+    "name": "OH1",
+    "arrive_L": 3,
+    "cap": 11,
+    "player": 328.74,
+    "player_norm": 93.1,
+    "B": 327.39,
+    "B_norm": 92.72,
+    "r_arrive": 1.0041270213984663,
+    "r_tgt": 1.07,
+    "n2cap": 10,
+    "length": 20,
+    "enter_note": "prologue+story",
+    "wr60": 1.5,
+    "limp": 28.9,
+    "wr80": 76.7
+   },
+   {
+    "name": "OH2",
+    "arrive_L": 4,
+    "cap": 11,
+    "player": 331.36,
+    "player_norm": 93.84,
+    "B": 330.48,
+    "B_norm": 93.59,
+    "r_arrive": 1.0026748743477456,
+    "r_tgt": 1.06,
+    "n2cap": 14,
+    "length": 20,
+    "enter_note": "prologue+story",
+    "wr60": 1.2,
+    "limp": 29.2,
+    "wr80": 75.9
+   },
+   {
+    "name": "boss",
+    "arrive_L": 4,
+    "cap": 12,
+    "player": 331.36,
+    "player_norm": 93.84,
+    "B": 326.94,
+    "B_norm": 92.59,
+    "r_arrive": 1.0135113860844331,
+    "r_tgt": 1.08,
+    "n2cap": 34,
+    "length": 30,
+    "enter_note": "prologue+story",
+    "wr60": 1.1,
+    "limp": 33.2,
+    "wr80": 74.0,
+    "S1_CW": {
+     "wr60": 0.9,
+     "wr80": 66.8,
+     "limp": 41.0
+    },
+    "S1_CCW": {
+     "wr60": 1.0,
+     "wr80": 68.9,
+     "limp": 40.5
+    }
+   }
+  ],
+  "2": [
+   {
+    "name": "kid1",
+    "arrive_L": 12,
+    "cap": 15,
+    "player": 353.1,
+    "player_norm": 100.0,
+    "B": 320.01,
+    "B_norm": 90.63,
+    "r_arrive": 1.1033931213342307,
+    "r_tgt": 1.13,
+    "n2cap": 2,
+    "length": 20,
+    "enter_note": "enter at C1 (L12), story only",
+    "wr60": 87.3,
+    "limp": 10.8,
+    "wr80": 99.5
+   },
+   {
+    "name": "kid2",
+    "arrive_L": 13,
+    "cap": 18,
+    "player": 355.92,
+    "player_norm": 100.8,
+    "B": 333.63,
+    "B_norm": 94.49,
+    "r_arrive": 1.0667828535467967,
+    "r_tgt": 1.11,
+    "n2cap": 4,
+    "length": 20,
+    "enter_note": "enter at C1 (L12), story only",
+    "wr60": 67.2,
+    "limp": 16.0,
+    "wr80": 96.2
+   },
+   {
+    "name": "mat1",
+    "arrive_L": 15,
+    "cap": 22,
+    "player": 361.61,
+    "player_norm": 102.41,
+    "B": 347.54,
+    "B_norm": 98.42,
+    "r_arrive": 1.0405116620589814,
+    "r_tgt": 1.1,
+    "n2cap": 6,
+    "length": 20,
+    "enter_note": "enter at C1 (L12), story only",
+    "wr60": 43.2,
+    "limp": 20.5,
+    "wr80": 90.8
+   },
+   {
+    "name": "mat2",
+    "arrive_L": 16,
+    "cap": 26,
+    "player": 364.5,
+    "player_norm": 103.23,
+    "B": 365.4,
+    "B_norm": 103.48,
+    "r_arrive": 0.997538924722962,
+    "r_tgt": 1.08,
+    "n2cap": 9,
+    "length": 20,
+    "enter_note": "enter at C1 (L12), story only",
+    "wr60": 2.8,
+    "limp": 29.1,
+    "wr80": 77.1
+   },
+   {
+    "name": "OH1",
+    "arrive_L": 17,
+    "cap": 28,
+    "player": 367.4,
+    "player_norm": 104.05,
+    "B": 374.72,
+    "B_norm": 106.12,
+    "r_arrive": 0.9804839365990244,
+    "r_tgt": 1.07,
+    "n2cap": 14,
+    "length": 20,
+    "enter_note": "enter at C1 (L12), story only",
+    "wr60": 0.4,
+    "limp": 32.4,
+    "wr80": 67.1
+   },
+   {
+    "name": "OH2",
+    "arrive_L": 18,
+    "cap": 28,
+    "player": 370.33,
+    "player_norm": 104.88,
+    "B": 378.25,
+    "B_norm": 107.12,
+    "r_arrive": 0.9790659816725366,
+    "r_tgt": 1.06,
+    "n2cap": 21,
+    "length": 20,
+    "enter_note": "enter at C1 (L12), story only",
+    "wr60": 0.3,
+    "limp": 32.5,
+    "wr80": 66.5
+   },
+   {
+    "name": "boss",
+    "arrive_L": 18,
+    "cap": 29,
+    "player": 370.33,
+    "player_norm": 104.88,
+    "B": 377.71,
+    "B_norm": 106.97,
+    "r_arrive": 0.9804839365990241,
+    "r_tgt": 1.07,
+    "n2cap": 48,
+    "length": 30,
+    "enter_note": "enter at C1 (L12), story only",
+    "wr60": 0.1,
+    "limp": 42.4,
+    "wr80": 59.2
+   }
+  ],
+  "3": [
+   {
+    "name": "kid1",
+    "arrive_L": 29,
+    "cap": 32,
+    "player": 404.15,
+    "player_norm": 114.46,
+    "B": 356.29,
+    "B_norm": 100.9,
+    "r_arrive": 1.1343293770725735,
+    "r_tgt": 1.1616822429906541,
+    "n2cap": 2,
+    "length": 20,
+    "enter_note": "enter at C2 (L29), story only",
+    "wr60": 87.5,
+    "limp": 9.5,
+    "wr80": 99.6,
+    "up": {
+     "wr60": 88.2,
+     "wr80": 99.7,
+     "limp": 8.0
+    },
+    "dn": {
+     "wr60": 86.9,
+     "wr80": 99.5,
+     "limp": 11.0
+    }
+   },
+   {
+    "name": "kid2",
+    "arrive_L": 30,
+    "cap": 35,
+    "player": 407.37,
+    "player_norm": 115.37,
+    "B": 371.45,
+    "B_norm": 105.2,
+    "r_arrive": 1.0966926531789496,
+    "r_tgt": 1.141121495327103,
+    "n2cap": 4,
+    "length": 20,
+    "enter_note": "enter at C2 (L29), story only",
+    "wr60": 69.8,
+    "limp": 14.4,
+    "wr80": 97.5,
+    "up": {
+     "wr60": 67.6,
+     "wr80": 97.4,
+     "limp": 13.6
+    },
+    "dn": {
+     "wr60": 72.0,
+     "wr80": 97.7,
+     "limp": 15.2
+    }
+   },
+   {
+    "name": "mat1",
+    "arrive_L": 32,
+    "cap": 39,
+    "player": 413.89,
+    "player_norm": 117.22,
+    "B": 386.93,
+    "B_norm": 109.58,
+    "r_arrive": 1.0696848862288593,
+    "r_tgt": 1.1308411214953273,
+    "n2cap": 6,
+    "length": 20,
+    "enter_note": "enter at C2 (L29), story only",
+    "wr60": 53.2,
+    "limp": 18.7,
+    "wr80": 94.1,
+    "up": {
+     "wr60": 50.4,
+     "wr80": 93.4,
+     "limp": 17.7
+    },
+    "dn": {
+     "wr60": 55.9,
+     "wr80": 94.7,
+     "limp": 19.7
+    }
+   },
+   {
+    "name": "mat2",
+    "arrive_L": 33,
+    "cap": 43,
+    "player": 417.19,
+    "player_norm": 118.15,
+    "B": 406.81,
+    "B_norm": 115.21,
+    "r_arrive": 1.0255073057899613,
+    "r_tgt": 1.110280373831776,
+    "n2cap": 10,
+    "length": 20,
+    "enter_note": "enter at C2 (L29), story only",
+    "wr60": 11.9,
+    "limp": 30.1,
+    "wr80": 77.3,
+    "up": {
+     "wr60": 9.3,
+     "wr80": 74.6,
+     "limp": 30.3
+    },
+    "dn": {
+     "wr60": 14.5,
+     "wr80": 79.9,
+     "limp": 29.9
+    }
+   },
+   {
+    "name": "OH1",
+    "arrive_L": 34,
+    "cap": 45,
+    "player": 420.52,
+    "player_norm": 119.09,
+    "B": 417.19,
+    "B_norm": 118.15,
+    "r_arrive": 1.0079741404289038,
+    "r_tgt": 1.1,
+    "n2cap": 14,
+    "length": 20,
+    "enter_note": "enter at C2 (L29), story only",
+    "wr60": 3.0,
+    "limp": 33.9,
+    "wr80": 67.8,
+    "up": {
+     "wr60": 1.8,
+     "wr80": 64.1,
+     "limp": 35.6
+    },
+    "dn": {
+     "wr60": 4.2,
+     "wr80": 71.5,
+     "limp": 32.2
+    }
+   },
+   {
+    "name": "OH2",
+    "arrive_L": 35,
+    "cap": 45,
+    "player": 423.87,
+    "player_norm": 120.04,
+    "B": 421.13,
+    "B_norm": 119.27,
+    "r_arrive": 1.0065164297568139,
+    "r_tgt": 1.0897196261682245,
+    "n2cap": 21,
+    "length": 20,
+    "enter_note": "enter at C2 (L29), story only",
+    "wr60": 2.6,
+    "limp": 34.6,
+    "wr80": 66.2,
+    "up": {
+     "wr60": 1.5,
+     "wr80": 63.2,
+     "limp": 36.4
+    },
+    "dn": {
+     "wr60": 3.7,
+     "wr80": 69.2,
+     "limp": 32.8
+    }
+   },
+   {
+    "name": "boss",
+    "arrive_L": 35,
+    "cap": 46,
+    "player": 423.87,
+    "player_norm": 120.04,
+    "B": 420.52,
+    "B_norm": 119.09,
+    "r_arrive": 1.0079741404289038,
+    "r_tgt": 1.1,
+    "n2cap": 49,
+    "length": 30,
+    "enter_note": "enter at C2 (L29), story only",
+    "wr60": 1.1,
+    "limp": 45.6,
+    "wr80": 52.7,
+    "up": {
+     "wr60": 0.4,
+     "wr80": 47.8,
+     "limp": 46.8
+    },
+    "dn": {
+     "wr60": 1.8,
+     "wr80": 57.5,
+     "limp": 44.4
+    }
+   }
+  ]
+ },
+ "stale_xp": true,
+ "grind_past_50_60": {
+  "R1_mat2": {
+   "first_k": 4,
+   "name": "mat2",
+   "rnd": 1,
+   "path": [
+    {
+     "k": 0,
+     "L": 3,
+     "r": 1.021593268203363,
+     "player_norm": 93.1,
+     "wr60": 10.5,
+     "wr80": 85.7,
+     "limp": 24.2
+    },
+    {
+     "k": 1,
+     "L": 4,
+     "r": 1.0297395963852396,
+     "player_norm": 93.84,
+     "wr60": 18.9,
+     "wr80": 89.0,
+     "limp": 22.3
+    },
+    {
+     "k": 2,
+     "L": 5,
+     "r": 1.0379508845320182,
+     "player_norm": 94.59,
+     "wr60": 30.1,
+     "wr80": 91.8,
+     "limp": 20.4
+    },
+    {
+     "k": 3,
+     "L": 6,
+     "r": 1.0462276506435813,
+     "player_norm": 95.35,
+     "wr60": 44.0,
+     "wr80": 94.9,
+     "limp": 17.5
+    },
+    {
+     "k": 4,
+     "L": 7,
+     "r": 1.0545704168504153,
+     "player_norm": 96.11,
+     "wr60": 54.0,
+     "wr80": 96.0,
+     "limp": 15.8
+    },
+    {
+     "k": 5,
+     "L": 8,
+     "r": 1.0629797094465478,
+     "player_norm": 96.87,
+     "wr60": 60.7,
+     "wr80": 97.4,
+     "limp": 14.8
+    },
+    {
+     "k": 6,
+     "L": 9,
+     "r": 1.07145605892275,
+     "player_norm": 97.65,
+     "wr60": 69.0,
+     "wr80": 98.5,
+     "limp": 12.5
+    },
+    {
+     "k": 7,
+     "L": 10,
+     "r": 1.08,
+     "player_norm": 98.42,
+     "wr60": 76.3,
+     "wr80": 99.0,
+     "limp": 10.8
+    }
+   ]
+  },
+  "R2_mat1": {
+   "first_k": 1,
+   "name": "mat1",
+   "rnd": 2,
+   "path": [
+    {
+     "k": 0,
+     "L": 15,
+     "r": 1.0405116620589814,
+     "player_norm": 102.41,
+     "wr60": 43.2,
+     "wr80": 90.8,
+     "limp": 20.5
+    },
+    {
+     "k": 1,
+     "L": 16,
+     "r": 1.0488088481701516,
+     "player_norm": 103.23,
+     "wr60": 53.9,
+     "wr80": 92.2,
+     "limp": 19.3
+    },
+    {
+     "k": 2,
+     "L": 17,
+     "r": 1.0571721972085373,
+     "player_norm": 104.05,
+     "wr60": 59.7,
+     "wr80": 94.1,
+     "limp": 18.2
+    },
+    {
+     "k": 3,
+     "L": 18,
+     "r": 1.0656022367666107,
+     "player_norm": 104.88,
+     "wr60": 66.3,
+     "wr80": 96.1,
+     "limp": 16.2
+    },
+    {
+     "k": 4,
+     "L": 20,
+     "r": 1.0826645188807436,
+     "player_norm": 106.56,
+     "wr60": 77.8,
+     "wr80": 98.4,
+     "limp": 13.2
+    },
+    {
+     "k": 5,
+     "L": 21,
+     "r": 1.09129783779169,
+     "player_norm": 107.41,
+     "wr60": 82.3,
+     "wr80": 99.1,
+     "limp": 12.0
+    },
+    {
+     "k": 6,
+     "L": 22,
+     "r": 1.1,
+     "player_norm": 108.27,
+     "wr60": 86.1,
+     "wr80": 99.4,
+     "limp": 11.1
+    }
+   ]
+  },
+  "R3_mat2": {
+   "first_k": 5,
+   "name": "mat2",
+   "rnd": 3,
+   "path": [
+    {
+     "k": 0,
+     "L": 33,
+     "r": 1.0255073057899613,
+     "player_norm": 118.15,
+     "wr60": 11.9,
+     "wr80": 77.3,
+     "limp": 30.1,
+     "up60": 9.3,
+     "dn60": 14.5
+    },
+    {
+     "k": 1,
+     "L": 34,
+     "r": 1.0336848450571972,
+     "player_norm": 119.09,
+     "wr60": 18.5,
+     "wr80": 77.8,
+     "limp": 28.4,
+     "up60": 16.1,
+     "dn60": 20.9
+    },
+    {
+     "k": 2,
+     "L": 35,
+     "r": 1.0419275931709129,
+     "player_norm": 120.04,
+     "wr60": 29.7,
+     "wr80": 86.9,
+     "limp": 24.4,
+     "up60": 26.4,
+     "dn60": 33.0
+    },
+    {
+     "k": 3,
+     "L": 36,
+     "r": 1.0502360701156077,
+     "player_norm": 121.0,
+     "wr60": 39.2,
+     "wr80": 88.9,
+     "limp": 22.7,
+     "up60": 35.6,
+     "dn60": 42.8
+    },
+    {
+     "k": 4,
+     "L": 37,
+     "r": 1.0586108000222094,
+     "player_norm": 121.96,
+     "wr60": 44.5,
+     "wr80": 90.9,
+     "limp": 21.4,
+     "up60": 41.2,
+     "dn60": 47.7
+    },
+    {
+     "k": 5,
+     "L": 38,
+     "r": 1.0670523112011405,
+     "player_norm": 122.94,
+     "wr60": 50.9,
+     "wr80": 93.3,
+     "limp": 19.2,
+     "up60": 47.7,
+     "dn60": 54.2
+    },
+    {
+     "k": 6,
+     "L": 39,
+     "r": 1.0755611361756447,
+     "player_norm": 123.92,
+     "wr60": 57.1,
+     "wr80": 94.7,
+     "limp": 17.8,
+     "up60": 54.5,
+     "dn60": 59.6
+    },
+    {
+     "k": 7,
+     "L": 40,
+     "r": 1.0841378117153806,
+     "player_norm": 124.91,
+     "wr60": 62.5,
+     "wr80": 96.4,
+     "limp": 16.4,
+     "up60": 59.9,
+     "dn60": 65.1
+    },
+    {
+     "k": 8,
+     "L": 41,
+     "r": 1.0927828788702834,
+     "player_norm": 125.9,
+     "wr60": 67.4,
+     "wr80": 97.1,
+     "limp": 15.1,
+     "up60": 65.6,
+     "dn60": 69.3
+    },
+    {
+     "k": 9,
+     "L": 42,
+     "r": 1.1014968830046967,
+     "player_norm": 126.91,
+     "wr60": 72.8,
+     "wr80": 97.9,
+     "limp": 13.5,
+     "up60": 71.0,
+     "dn60": 74.7
+    },
+    {
+     "k": 10,
+     "L": 43,
+     "r": 1.110280373831776,
+     "player_norm": 127.92,
+     "wr60": 78.5,
+     "wr80": 98.8,
+     "limp": 11.7,
+     "up60": 76.0,
+     "dn60": 81.1
+    }
+   ]
+  }
+ }
+}

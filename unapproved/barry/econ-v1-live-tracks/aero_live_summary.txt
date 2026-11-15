@@ -1,0 +1,40 @@
+mass 0.00421 N/style 2000 boss r {'street': 1.044, 'wangan': 1.055, 'touge': 1.071}
+T10 c6060: aero delta mean -0.59 min -8.32 max +1.42 | full-retune mean +3.27 max +15.49
+T10 c6080: aero delta mean -0.73 min -6.87 max +0.09 | full-retune mean +3.28 max +15.26
+T10 c8060: aero delta mean -1.17 min -15.83 max +1.37 | full-retune mean -1.90 max +3.02
+T10 c8080: aero delta mean -0.33 min -5.75 max +1.80 | full-retune mean +0.07 max +3.98
+T30 c6060: aero delta mean -1.06 min -8.95 max +3.13 | full-retune mean +2.98 max +22.13
+T30 c6080: aero delta mean -0.89 min -9.42 max +2.13 | full-retune mean +3.45 max +20.22
+T30 c8060: aero delta mean -2.01 min -18.73 max +3.83 | full-retune mean -4.50 max +11.33
+T30 c8080: aero delta mean -0.66 min -6.65 max +2.23 | full-retune mean -0.99 max +5.06
+per track, 30-turn, 60/60 and 80/80 (fixed, aero-fixed, full-fixed):
+  S1_Shibuya_Grid c6060 31.2 +0.00 +0.00
+  S1_Shibuya_Grid c8080 94.8 +0.00 +0.00
+  S2_Ginza_Blocks c6060 26.7 -4.96 +5.57
+  S2_Ginza_Blocks c8080 89.3 -1.57 +5.06
+  S3_Shinjuku_Underpass c6060 49.0 +0.00 +0.00
+  S3_Shinjuku_Underpass c8080 98.9 +0.00 +0.00
+  S4_Roppongi_Hill c6060 44.3 +0.00 +0.00
+  S4_Roppongi_Hill c8080 98.7 +0.00 +0.00
+  S5_Harbor_Warehouses c6060 66.5 +0.00 +0.00
+  S5_Harbor_Warehouses c8080 99.9 +0.00 +0.00
+  T1_Akina_Switchbacks c6060 62.9 -2.29 -0.12
+  T1_Akina_Switchbacks c8080 99.0 -0.10 +0.05
+  T2_Irohazaka_Ladder c6060 35.4 -1.02 +8.08
+  T2_Irohazaka_Ladder c8080 95.6 -1.35 -3.95
+  T3_Usui_Esses c6060 31.6 -8.95 -2.32
+  T3_Usui_Esses c8080 93.7 -6.65 -10.47
+  T4_Myogi_Descent c6060 37.6 -2.11 +1.85
+  T4_Myogi_Descent c8080 94.0 -1.74 -6.85
+  T5_Hakone_Ridge c6060 36.4 -0.27 +22.13
+  T5_Hakone_Ridge c8080 92.8 -0.57 +4.17
+  W1_Bayshore_Run c6060 55.2 +0.00 +0.00
+  W1_Bayshore_Run c8080 97.5 +0.00 +0.00
+  W2_Daikoku_Loop c6060 68.7 +0.00 +0.00
+  W2_Daikoku_Loop c8080 98.0 +0.00 +0.00
+  W3_C1_Outer c6060 38.0 +3.13 +9.41
+  W3_C1_Outer c8080 91.6 +2.23 -1.17
+  W4_Tatsumi_Sprint c6060 50.7 -0.70 +4.65
+  W4_Tatsumi_Sprint c8080 94.6 -0.80 -1.28
+  W5_Aqualine_Flyer c6060 57.2 +1.20 -4.58
+  W5_Aqualine_Flyer c8080 97.0 +0.68 -0.39

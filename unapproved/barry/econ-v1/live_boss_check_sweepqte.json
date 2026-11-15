@@ -1,0 +1,99 @@
+{
+ "meta": {
+  "n_per_track_style": 2000,
+  "live_tracks": false,
+  "sweep_qte": true,
+  "boss_r": {
+   "street": 1.0531373047294503,
+   "wangan": 1.0405116620589814,
+   "touge": 1.0656022367666107
+  },
+  "seconds": 77.4
+ },
+ "wr": {
+  "c6060": {
+   "street": {
+    "district": 39.0,
+    "S1_Shibuya_Grid_CCW": 31.4,
+    "S1_Shibuya_Grid_CW": 30.3,
+    "S3_Shinjuku_Underpass_CCW": 47.2,
+    "S3_Shinjuku_Underpass_CW": 47.2
+   },
+   "wangan": {
+    "district": 36.0,
+    "W1_Bayshore_Run_CCW": 39.5,
+    "W1_Bayshore_Run_CW": 39.1,
+    "W3_C1_Outer_CCW": 37.2,
+    "W3_C1_Outer_CW": 28.1
+   },
+   "touge": {
+    "district": 37.2,
+    "T_Downhill": 41.8,
+    "T_Uphill": 32.6
+   }
+  },
+  "c6080": {
+   "street": {
+    "district": 76.1,
+    "S1_Shibuya_Grid_CCW": 69.2,
+    "S1_Shibuya_Grid_CW": 68.2,
+    "S3_Shinjuku_Underpass_CCW": 82.0,
+    "S3_Shinjuku_Underpass_CW": 84.8
+   },
+   "wangan": {
+    "district": 68.7,
+    "W1_Bayshore_Run_CCW": 70.6,
+    "W1_Bayshore_Run_CW": 79.4,
+    "W3_C1_Outer_CCW": 63.7,
+    "W3_C1_Outer_CW": 61.0
+   },
+   "touge": {
+    "district": 66.0,
+    "T_Downhill": 70.4,
+    "T_Uphill": 61.7
+   }
+  },
+  "c8060": {
+   "street": {
+    "district": 74.0,
+    "S1_Shibuya_Grid_CCW": 70.7,
+    "S1_Shibuya_Grid_CW": 67.5,
+    "S3_Shinjuku_Underpass_CCW": 79.5,
+    "S3_Shinjuku_Underpass_CW": 78.1
+   },
+   "wangan": {
+    "district": 73.6,
+    "W1_Bayshore_Run_CCW": 71.8,
+    "W1_Bayshore_Run_CW": 80.9,
+    "W3_C1_Outer_CCW": 69.0,
+    "W3_C1_Outer_CW": 72.6
+   },
+   "touge": {
+    "district": 69.7,
+    "T_Downhill": 73.2,
+    "T_Uphill": 66.2
+   }
+  },
+  "c8080": {
+   "street": {
+    "district": 96.2,
+    "S1_Shibuya_Grid_CCW": 95.6,
+    "S1_Shibuya_Grid_CW": 93.2,
+    "S3_Shinjuku_Underpass_CCW": 97.7,
+    "S3_Shinjuku_Underpass_CW": 98.1
+   },
+   "wangan": {
+    "district": 91.5,
+    "W1_Bayshore_Run_CCW": 90.1,
+    "W1_Bayshore_Run_CW": 97.5,
+    "W3_C1_Outer_CCW": 87.1,
+    "W3_C1_Outer_CW": 91.1
+   },
+   "touge": {
+    "district": 91.1,
+    "T_Downhill": 92.6,
+    "T_Uphill": 89.5
+   }
+  }
+ }
+}

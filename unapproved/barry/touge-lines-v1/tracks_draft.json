@@ -1,0 +1,33 @@
+{
+  "_comment": "DRAFT study tracks for touge-lines-v1 (Barry, 2026-11-13). Not live: do not copy into sim/config. Replaces the 15 stand-in laps in sim/config/tracks_v1.json (5 per district) with Austin's 2026-11-13 count: Street and Wangan are 2 layouts x CW/CCW (4 variants each); Touge is 1 layout x uphill/downhill (2 variants). 10 variants total. design/01 still says 3 tracks per district (Austin 2026-11-12) and will need updating — flagged only, not edited.",
+  "sources": {
+    "touge_layout": "T1_Akina_Switchbacks",
+    "street_layouts": ["S1_Shibuya_Grid", "S3_Shinjuku_Underpass"],
+    "wangan_layouts": ["W1_Bayshore_Run", "W3_C1_Outer"],
+    "why": "T1 is the hairpin-heavy switchback stand-in (Touge signature corners HP/ES/DR). S1 is the Street grid (signature N90+CH); S3 is a second Street layout with more chicanes and mixed types. W1 is the open-highway Bayshore stand-in (signature SW/IR/CR); W3 is a second Wangan loop (adds an N90). CW/uphill = the authored tracks_v1.json order. Other stand-ins (T2-T5, S2/S4/S5, W2/W4/W5) are dropped for this study."
+  },
+  "assumptions": {
+    "reverse": "CCW and downhill reverse the corner order.",
+    "ir_dr_flip": "IR and DR swap when the lap is reversed (an increasing-radius corner is a decreasing-radius corner in the other direction). HP, ES, CH, N90, CR, SW are treated as direction-symmetric. The sim has no left/right handedness, so CW vs CCW is order plus this IR/DR flip only.",
+    "grade_source": "unapproved/arthur/mockups/districts/README.md Pass 2 (Austin 2026-11-13) and CHANGELOG 2026-11-13 Arthur: Touge climbs at 8.5% on the approach, crests in the hairpin (0% at ~75% of the arc), falls at 5% out of it, banks up to 6%. Street and Wangan stay flat. That pass was presentation-only (scoring/sim unchanged). There is no published sim rule for uphill vs downhill heat; the gravity tilt below is a PLACEHOLDER that reuses those grade percents.",
+    "gravity": "On Touge only, after track_wear and before capacity calibration, multiply wear POW/HAN/EN then renormalise so the lap's total load is unchanged. Uphill (climbing the 8.5% approach, with 5% drops still in the profile): POW*(1+0.085), HAN*1, EN*(1-0.05). Downhill (reversed hairpin: 5% local climbs, 8.5% drops): POW*(1-0.05), HAN*1, EN*(1+0.085). Street and Wangan stay flat (multiplier 1). PLACEHOLDER pending Austin."
+  },
+  "tracks": {
+    "touge": {
+      "T_Uphill": ["HP", "ES", "HP", "DR", "ES", "HP", "N90", "HP", "DR", "CH"],
+      "T_Downhill": ["CH", "IR", "HP", "N90", "HP", "ES", "IR", "HP", "ES", "HP"]
+    },
+    "street": {
+      "S1_Shibuya_Grid_CW": ["N90", "CH", "N90", "CR", "CH", "N90", "IR", "DR", "N90", "ES"],
+      "S1_Shibuya_Grid_CCW": ["ES", "N90", "IR", "DR", "N90", "CH", "CR", "N90", "CH", "N90"],
+      "S3_Shinjuku_Underpass_CW": ["CH", "N90", "DR", "N90", "CH", "ES", "N90", "IR", "CH", "CR"],
+      "S3_Shinjuku_Underpass_CCW": ["CR", "CH", "DR", "N90", "ES", "CH", "N90", "IR", "N90", "CH"]
+    },
+    "wangan": {
+      "W1_Bayshore_Run_CW": ["SW", "IR", "CR", "SW", "SW", "IR", "CR", "CH", "SW", "IR"],
+      "W1_Bayshore_Run_CCW": ["DR", "SW", "CH", "CR", "DR", "SW", "SW", "CR", "DR", "SW"],
+      "W3_C1_Outer_CW": ["CR", "SW", "IR", "IR", "SW", "N90", "SW", "CR", "IR", "SW"],
+      "W3_C1_Outer_CCW": ["SW", "DR", "CR", "SW", "N90", "SW", "DR", "DR", "SW", "CR"]
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+ "seeds": [
+  20261112,
+  20261113,
+  20261114,
+  20261115,
+  20261116,
+  20261117,
+  20261118,
+  20261119,
+  20261120
+ ],
+ "n": 1000,
+ "r_grid": [
+  0.88,
+  0.9,
+  0.91,
+  0.92,
+  0.93,
+  0.935,
+  0.94,
+  0.95,
+  0.96,
+  0.97,
+  0.98,
+  1.0,
+  1.02,
+  1.03,
+  1.05,
+  1.06,
+  1.07,
+  1.08,
+  1.1,
+  1.11,
+  1.13,
+  1.15,
+  1.18,
+  1.2,
+  1.22,
+  1.25,
+  1.3,
+  1.333
+ ],
+ "measures": [
+  "avg",
+  "c8080"
+ ],
+ "keys": [
+  "win",
+  "lock",
+  "rlock",
+  "limp"
+ ],
+ "lengths": [
+  10,
+  20,
+  30
+ ],
+ "styles": [
+  "balanced",
+  "hot_early",
+  "conserver"
+ ],
+ "tracks": [
+  [
+   "street",
+   "S1_Shibuya_Grid_CCW"
+  ],
+  [
+   "street",
+   "S1_Shibuya_Grid_CW"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass_CCW"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass_CW"
+  ],
+  [
+   "touge",
+   "T_Downhill"
+  ],
+  [
+   "touge",
+   "T_Uphill"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run_CCW"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run_CW"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer_CCW"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer_CW"
+  ]
+ ],
+ "tunes": {
+  "street": [
+   0.5,
+   0.25,
+   0.25
+  ],
+  "wangan": [
+   0.25,
+   0.3,
+   0.45
+  ],
+  "touge": [
+   0.4,
+   0.3,
+   0.3
+  ]
+ },
+ "use_gravity": true,
+ "line_edits": null,
+ "cap_constant": 1.07,
+ "g2": {
+  "REC_FACTOR": 1.0,
+  "RELEASE": 0.3,
+  "AGG_STEP": 1.0,
+  "PEN_SHAPE": "linear",
+  "PEN_SLOPE": 2.0,
+  "PEN_FLOOR": 0.4,
+  "CAP_TURNS": 3.0,
+  "CAP_R_EXP": 1.0,
+  "REC_R_EXP": 1.0,
+  "KAPPA_SCALE": 1.5,
+  "KAPPA_10": 1.75,
+  "KAPPA_20": 2.25,
+  "KAPPA_30": 2.25,
+  "BOSS_REC_FACTOR": 1.0,
+  "BOSS_RELEASE": 0.8,
+  "BOSS_CAP_TURNS": 3.0,
+  "RES_T": 0.7,
+  "RES_K": 2.0,
+  "RES_LOOK": 0.5,
+  "PLAN_H": 3,
+  "_cap": 1.07,
+  "DEMAND_SLANT": 2.0,
+  "STAT_M_W": 1.0
+ },
+ "gravity": {
+  "GRADE_UP": 0.085,
+  "GRADE_DOWN": 0.05
+ },
+ "note": "avg = q_read 0.6 + average QTE profile + PACE_Q 0.6 at the trial r; c8080 = 0.8/0.8/PACE_Q 0.8. District-fixed tunes only."
+}

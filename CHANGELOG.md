@@ -8,6 +8,321 @@
 
 ---
 
+## [story] 2026-11-14 — Nathaniel: summit file points to barks.md §6
+- `unapproved/nathaniel/summit-sabine-race-v1.md` lines 10 and 79 now point to `story/barks.md` §6. Reason: Austin approved the trainer barks and Desmond moved them there in dd39a32, which deleted trainer-barks-v1.md.
+
+## 2026-11-14 — Barry [sim/draft]: drafts committed (not live): planner-v1, betting-v2-mods-v1, kid-length-v1 (+ austin-v2), mods-v2-mk3-boss
+
+Austin asked to commit everything (2026-11-14, 10:26 PM). None of these change `sim/` or `design/`; they are drafts in `unapproved/barry/`. `unapproved/barry/.gitignore` keeps `__pycache__/` out.
+
+- **planner-v1 (draft tool, verified against the live sim):** the campaign planner Page, https://cursor.com/canvas/store-4599c40d-e855-4fb8-bc90-b1743052ccec/786f1da3-54a2-42a2-b4c6-331eb5da9579 ("Campaign planner: live sim"). Pick profile, skill points, grinds and mods race by race; it shows level, cash (with the 65 % Sabine debt share) and win chance for all 35 races through F4.
+  - **Why:** Austin asked for a page to "play" the campaign and see win rates. Then he asked for adjustable target, scroll fix, reset, inspector grind +/−, live cash panel, inspector read/QTE skill, and (today) the order Setup → Race inspector → Race by race → the rest.
+  - **Files:** `gen_constants.py` (tables from `sim/velocity_shift`), `constants.ts/.json`, `engine.ts` (JS port), `py_reference.py/.json` (now the unpatched live sim, since fix C is live), `verify.mjs`, `verify_log.txt`, `js_walks.json`, `swings.mjs` + `swings_50.*`, `page_source.tsx` (byte-identical to the published Page).
+  - **Verification:** 622 win cells vs Python, no mismatches, worst 0.1 pp (table rounding; 17 cells off by 0.1); levels, cash and grind counts identical. Story 80/80 mins 53.0 / 54.4 / 50.5, bosses 53.0 / 57.7 / 55.8, at cap 60/60 31.6 / 40.1 / 30.2 and 80/80 94.9 / 91.6 / 92.9, finale 81.7 / 82.7 / 79.3 / 81.7.
+  - **Limits (from the sim):** one grind type per stage (no track/length choice), aero adds no win chance, custom profiles 60–80, retries don't change cash.
+- **betting-v2-mods-v1 (draft):** betting re-run on the live tracks and mods-v1 economy (fair odds, $500–$2,000, unlocked after R2, any race). **Why:** Austin asked to re-run the betting numbers. **Result:** no exploit (mean profit per bet within a few dollars of zero for every profile and policy); the risk is going broke when betting max every race (60/60 54.9 %, 80/60 21.8 % fall under $500 after a loss). Suggested guard: block a bet that would leave under $500. Fair odds must come from the race's real win chance. Austin: "seems ok for now"; no betting change. Run before fix C went live.
+- **kid-length-v1 (draft):** kid story races at 20 turns (grinds stay 10). **Why:** Austin said kid story races should be 20+ turns and grinds stay 10 (2026-11-14). First pass eased kid opponents (fix K) and tested a Pokémon-style limited grind pool (6 one-time grinds per round, 2.5× XP, 2× purse). **austin-v2:** Austin's pick: 20-turn kid races, no fix K, no grind pool, grinds pay a flat 0.70 of a level until the cap (`GRIND_TAPER_FLOOR` 1.0). Result: bosses, at-cap and finale unchanged; mixed grinds 9 / 9 / 10, 60/60 11 / 14 / 16; story 80/80 R3 kid1 44.3 %; 60/60 reaches the R1 boss with $717 against the $1,000 R1 EN Mk3, so the R1 boss drops to 29.7 % without it (one cash-only grind fixes it). Not approved to go live. Run with fix C patched in memory on the pre-go-live sim: drop that patch when re-running on today's live sim.
+- **mods-v2-mk3-boss (draft):** test of forcing story-only players to grind and making Mk3 required for bosses. **Why:** Austin asked about Mk3 mattering for story-only players; after the numbers he chose "no changes". Kept for reference.
+
+## 2026-11-14 — Barry [sim]: leftover XP carries over, with catch-up story XP (xp-carry-v1 fix C live)
+
+- **Why:** Austin decided leftover XP carries over between rounds, then picked fix C to go live (2026-11-14, 10:26 PM: "commit everything"). Carrying XP alone dropped four story-only 80/80 races under 50 % (R2 mat2 49.2, R2 oh1 45.0, R3 kid1 43.3, R3 mat2 39.5), because story-only now enters R2 at L7 and R3 at L25 instead of L12 / L29. Fix C restores every story-only minimum without touching opponents or anyone who reaches the cap. Fix B (raise R2 mat2/oh1 opponents) was rejected because it changes the ladder for everyone (hard R2 grinds 15 → 16).
+- **What (`sim/velocity_shift/`):**
+  - `progression.run_with_garage`: a round is entered at the level and XP bag the previous round ended on (the bump to the previous cap and the empty bag are gone). `cap_builds` is unchanged (it models players who reach every cap).
+  - `equations.story_xp`: base XP is computed from the nominal entry level (previous cap; L0 for R1) or the real one if higher, plus `CATCHUP_XP_FRAC` (0.75) × `CATCHUP_XP_SHARE` (kid1 0.40 / kid2 0.40 / mat1 0.20) of the XP from the real entry level to the previous cap. Entering at the cap pays exactly the old XP.
+  - `STORY_XP_MULT` R2 boss 1.00 → 1.50 (story-only enters R3 at L26, so R3 kid1 is 54.1 %).
+  - Cleared the stale "Desmond's USD wording pass pending" comment on `MOD_PRICE` (the pass landed in 50fd573).
+- **Tests:** `test_progression` story walk now expects end levels 7 / 26 / 43, entry levels 0 / 7 / 26, cash $5,900 / $13,940 / $26,700 and $27,300 on mods; new `test_leftover_xp_carries_over_with_catchup`; `STORY_XP_MULT` assert has R2 boss 1.5. `test_mod_catalog` story cash before R2 oh1 $8,470 → $8,750 and before R3 oh1 $24,230 → $20,510 (the Mk3 sets, $20,000 and $25,600 at wholesale, are still out of reach on sight there). Quick local run: 82 passed; CI is the gate.
+- **Live numbers (verified on the live sim):** story-only 80/80 minimums 53.0 / 54.4 / 50.5 and bosses 53.0 / 57.7 / 55.8 (unchanged); 60/60 at cap 31.6 / 40.1 / 30.2 and 80/80 at cap 94.9 / 91.6 / 92.9 (unchanged); finale 80/80 81.7 / 82.7 / 79.3 / 81.7 (unchanged); mixed grinds 13 / 13 / 12 (wall 3 / 3 / 4), hard 13 / 15 / 18 (unchanged).
+- **Side effects:** story-only spends about $3,700 more on mods by end of R3 ($27,300 vs $23,580) and ends the finale with $13,275 instead of $16,995. A story-only player at L7 wins an R2 10-turn grind 58.7 % (was 85.6 % worst case), so "grinds are easy" no longer holds at round start for under-levelled players; story-only doesn't grind, so no target breaks. R2 kid1 at L7 (58.7 %) is the new thinnest early story race.
+- **Docs:** design/02 Story XP row and design/07 Story XP paragraph describe the carry-over and catch-up, pointing at `story_xp` / `run_with_garage`. Study: `unapproved/barry/xp-carry-v1/`.
+- **Flag for Desmond:** players now start R2/R3 below the previous cap if they skipped grinding; any story or tutorial copy that says a round starts "at the cap" needs a look.
+
+## 2026-11-14 — Desmond [design]: USD wording pass for mods-v1 prices
+
+- Removed the "USD wording pass pending" notes on the mods-v1 prices in design/02 and design/07. The numbers are unchanged.
+- Re-worded wholesale from "T1–T3, never T4" to "the R1–R3 mod sets, never the arc's Myth mods" in design/02, design/07 and story/canon.md, to match `WHOLESALE_TIERS`.
+- Replaced design/07 §6 "each part has a level floor" with the mods-v1 rung unlocks, because the level floors were removed.
+- Why: Barry asked for this wording pass after mods-v1 went live (01bb2f3, e95dc6e).
+
+## 2026-11-14 — Barry [design]: design/01 canon mod-slot line set to 4 slots (mods-v1)
+
+- **Why:** The canon block line 16 still said "6 slots in 3 categories × 2" and "not yet in sim constants". That contradicted live mods-v1 (`MOD_SLOTS` 4, one-stat mods, stock parts in empty slots). Austin approved edits to the design/01 canon block on 2026-11-14 ("I'm ok with the edits to the design block").
+- **What:** `design/01-system-overview.md` line 16 now says:
+  - 4 slots, each holding one fixed-stat mod or a stock part;
+  - the 107 % cap (`MOD_CAP_FRACTION`, live since 2026-11-13);
+  - the mods are live in the sim constants.
+  Window mods are still marked unapproved; the aero rule is unchanged.
+- **Not changed:** sim code. No numbers moved.
+
+## 2026-11-14 — Barry [sim]: mods-v1 live: 4 slots, 39 ID-only mods unlocked by rung, just-in-time buyer, MOD_UNLOCK_RACE = 3
+
+- **Why:** Austin said "Go live" on mods-v1 (4 slots, canon staging: Mk2 after mat1, aspire Mk3 prices, IDs only) and approved editing the design/01 canon line. Austin wanted more mods and steady progress inside each round rather than a whole tier opening at once. The old walk also assumed a full mod fill from R1 kid2, which a player with $350 can't buy. Design/07's race-3 shop unlock wasn't in the sim.
+- **What:**
+  - **`equations.py`:**
+    - `MOD_SLOTS` goes from 6 to 4.
+    - New: `MOD_UNLOCK_RACE` 3, `MOD_STOCK_PART_POINTS` 150, `MOD_STATS`, `MOD_GROUPS`, `MOD_SLOT_PATTERN` (Street PPHE, Wangan PHEE, Touge PPHE).
+    - New: `MOD_SETS` → `MOD_CATALOG` / `MOD_UNLOCK` / `MOD_PRICE` by ID, `MOD_<R1|R2|R3|ARC>_<POW|HAN|EN>_<MKn|MYTHn>`. That's 39 mods.
+    - `mod_price(mod_id, aero, wholesale)`, plus new `mod_group` and `mod_shop_open`.
+    - `WHOLESALE_TIERS` is now R1–R3.
+    - `T4_PACKAGE` is now 3 × MYTH4 + 1 aero ($38,000), and `MOD_PRICE_STANDIN` is the MYTH4 IDs.
+    - `MOD_TIER_LEVEL_FLOOR` and `MOD_TIERS` are removed.
+  - **`progression.py`:**
+    - New `Garage`: owned mods, an equipped set per district, stock parts in empty slots, and a just-in-time `shop`.
+    - New `mod_unlocked`, `mod_gap`, `stage_ceiling`, `arc_unlock_token`, and `combat_power(..., garage=)`.
+    - `_walk_round` shops before every rung, after every grind and at the round end, and its rows gain `fill`, `equipped`, `owned`, `cash_pre` and `money_before`.
+    - New `run_with_garage`. `finale_arc` rows gain `mod_unlock`.
+    - `mod_tier_floor` and `mod_tier_available` are removed.
+  - **`scripts/run_progression.py`:** prints fill, gear and cash per rung.
+  - **Tests:** `test_mod_floor.py` is rewritten for the unlock schedule; `test_mod_catalog.py` is new; the money, price, R1 kid2 and hard-split pins in `test_progression.py` are updated.
+  - **Docs:**
+    - design/02: rows 49, 190, 191 and 215 and the glossary.
+    - design/07: §6.4 table rows, the unlock paragraph and table, and the Progression bullet. Price values are updated; Desmond's USD wording pass is still pending.
+    - design/01: the canon level-floor line, now describing rung unlocks (Austin-approved).
+  - **Verification:** `unapproved/barry/mods-v1/verify_live.py` (+ `.json` / `.txt`).
+- **Numbers (live, identical to the draft `final_4` row by row: levels, fill, win %, cash, gear):**
+  - 60/60 at cap 31.6 / 40.1 / 30.2, and 80/80 at cap 94.9 / 91.6 / 92.9.
+  - Story-only minimum 53.0 / 54.4 / 50.5, with bosses 53.0 / 57.7 / 55.8.
+  - Mixed grinds 3+10 / 3+10 / 4+8. 60/60 grinds 13 / 15 / 18, with R1 going from 2+11 to 1+12.
+  - Finale 80/80 is 81.7 / 82.7 / 78.6 / 81.7 with the skill-point split (79.3 on tune). Finale grinds per step: 60/60 11 / 7 / 7 / 9 (step 1 is 11, unchanged from before), 60/80 7 / 6 / 6 / 7, 80/60 6 / 6 / 6 / 7, 80/80 0.
+  - Grind-race minimum: 50.3 % for 60/60 (was 52.1) and 85.6 % for 80/80.
+  - Changes from before: R1 kid1 runs on stock parts ($0), 80/80 R1 kid2 drops from 98.9 to 95.5, and end-of-round cash is now what's left after buying (mixed $5,050 / $15,632.50 / $16,102.50; story-only $5,900 / $17,660 / $30,420).
+- **Not changed:**
+  - The aero rules. The sim buyer never buys aero.
+  - The at-cap table, which still assumes a full fill.
+  - Betting and the arc walk, which stay in the draft econ-v1 walker.
+  - design/01 line 16 still says "6 slots"; it wasn't in the approved edit, so it's left for Austin.
+
+## 2026-11-14 — Barry [sim/draft]: mods-v1 staged mod catalog (4 slots, rung unlocks, aspire Mk3); Austin's pick
+
+- **Why:** Austin wanted more mods and progression inside each round, not a whole tier opening at once. He picked 4 slots, the canon staging (Mk1 at round open, Mk2 after mat1, Mk3 after mat2) and the aspire Mk3 prices (R2 $5,000, R3 $8,000). Mods have IDs only for now (`MOD_<R1|R2|R3|ARC>_<POW|HAN|EN>_<MKn|MYTHn>`).
+- **What:** `unapproved/barry/mods-v1/` adds:
+  - the catalog draft (`CATALOG.md`, `catalog_final.json`, `catalog.py`);
+  - just-in-time buyer walks for the campaign and the arc (`catalog_walk.py`, `catalog_arc.py`, `catalog_report.py`, `final_tables.py` / `.md`);
+  - `DECISION.md` and `GO_LIVE.md`;
+  - the earlier mods-v1 scheme study (`RESULTS.md`, `mod_schemes.py`, `mods_eval.py`, `unlocks.py`, sweeps).
+- **Numbers (draft, sim):**
+  - At cap: 60/60 31.6 / 40.1 / 30.2 and 80/80 94.9 / 91.6 / 92.9.
+  - Story-only minimum 53.0 / 54.4 / 50.5.
+  - Grinds: mixed 3+10 / 3+10 / 4+8, 60/60 13 / 15 / 18.
+  - Finale 80/80 81.7 / 82.7 / 79.3 / 81.7 (on tune).
+  - The only change from live is in early R1 (80/80 kid2 95.5 instead of 98.9).
+  - The 60/60 finale step-1 grind count of 11 is unchanged from live.
+- **Not changed:** no live code in this commit.
+
+## 2026-11-14 — Barry [sim]: whole skill points (10×), enforced 25–50 % band, 20 % retune limit live
+
+- **Why:** Austin approved skill-points-v1 on 2026-11-14 ("Great. Commit and push."). Players get distributable whole points, every stat stays inside the 25–50 % band, spent points lock, and the only retune is a 20 % budget at each district change. That closes the free-respec assumption the win table used to make, and the all-in build exploit.
+- **What:**
+  - `sim/velocity_shift/equations.py` adds the constants `SP_POINT_SCALE` 10, `RETUNE_BUDGET_FRACTION` 0.20, `RETUNE_ARC_RACES` (P1, M11, M21, M31) and `DISTRICT_TUNE`.
+  - It adds the functions `skill_points(L)` (round(10 × SP(L)): 2,400 at L0, 19 to 48 per level), `skill_points_gained`, `sp_curve`, `stat_band`, `check_build`, `retune_budget` and `check_retune`.
+  - `sp_at_level` now returns whole points / 10 at whole levels.
+  - `progression.py` adds the sim player's build (`start_build`, `add_points`, `retune`, `Build`), applied between rounds in `run()`. Win rates take `pow_share`, with off-tune deltas from the new `sim/config/winrate_offtune_v1.json` (the study's rt1 sweep).
+  - Also new in `progression.py`: `cap_builds`, `boss_check_at_cap`, and `build` / `pow_share` in the walk rows.
+  - `heat.py` floors each gauge capacity at `_EPS`, so an exact zero stat no longer divides by zero.
+  - Tests: new `tests/test_skill_points.py`; updated pins in `tests/test_progression.py`.
+  - Docs: `design/02` (build-bounds, skill-point, level-curve and respec rows) and `design/07` (§6.3 respec notes marked superseded for skill points, a §8.0 bullet, Q18). No money wording changed.
+- **Numbers (live, matching the draft at B = 20 %):**
+  - 80/80 story-only bosses 53.0 / 57.7 / 55.8, story minimum 53.0 / 54.4 / 50.5.
+  - Grinds unchanged: mixed 3+10 / 3+10 / 4+8, 60/60 13 / 15 / 18.
+  - At cap, hardest track: 60/60 31.6 / 40.1 / 30.2 and 80/80 94.9 / 91.6 / 92.9. R2 reaches the boss at 26.2 % POW instead of 25 %.
+  - Finale (draft arc walker on the live build code): 80/80 billed 81.7 / 82.7 / 78.6 / 81.7, 60/60 F3 30.3; arc grinds unchanged.
+  - Previous at-cap 60/60 pins (31.6 / 39.3 / 30.6) and 80/80 (55.7 on R3) changed by noise-level amounts because of the off-tune delta and the integer points.
+- **Not changed:** the at-cap table (`at_cap_table`) still reports the district tune. Aero tunnel retunes (Q18) are still open. The pre-finale arc win walk still lives in the draft econ-v1 walker.
+
+## 2026-11-14 — Barry [sim]: skill-points-v1 study and retune-limit draft (`unapproved/barry/skill-points-v1/`)
+
+- **Why:** Austin asked for whole skill points that give the player real options, not one point per level. He picked 10× resolution ("sounds good.") with a hard retune limit instead of a full respec, then approved the package ("Great. Commit and push.").
+- **What:** draft folder only (the live change is the next entry).
+  - `schemes.py` / `balance.py`: whole-point schemes. S3 ×10 (19–48 points per level) reproduces the live campaign and finale within 0.5 pp. S1 (2–5 per level) breaks the R3 oh1 floor.
+  - `builds*.py`: engine tests of skewed and all-in builds. All-in builds (80–90 %+ in one stat) win about 100 % even for 60/60 (an exploit), so the 25–50 % band has to be enforced. An exact zero stat crashed `heat.py`.
+  - `retune_sweep.py`: off-tune win-rate sweep (POW 25–50 %, HAN 25 %, all 15 tracks, N=150/style, common random numbers; replicate rt2 gives delta noise of about 2 pp).
+  - `retune.py`: walker for retune budgets B = 0 / 5 / 10 / 15 / 20 %.
+  - `RESULTS.md`, `RETUNE.md`, `DECISION.md`.
+- **Result:** 20 % is the smallest budget that keeps every target. 15 % drops the F3 billed finale for 60/60 to 28–29 %. 10 % fails the R2 story minimum (48.0) and the R2 at-cap boss (60/60 26.2, 80/80 86.3). 0 % (locked) puts the R2 boss at 35.8 for an 80/80 story player.
+- **Reasoning:** players must change districts every round, so a locked build carries the wrong tune into Wangan. 20 % lets the player get most of the way back to the tune by the boss, while a full rebuild still takes several district changes.
+
+## 2026-11-14 — Arthur [art]: Cel A soft locked as the render style
+
+- **Why:** Austin reviewed the Cel A soft playtest on the two-corner test and said "Let's lock this as our style choice."
+- **What:** added the locked style rules to `design/art/art_direction.md` (after "The look in one paragraph"). The reference build is `unapproved/arthur/experiments/cel_two_corner/` (4ecffdf). Porting it into the game build is not done yet.
+
+## 2026-11-14 — Arthur [art]: Cel A soft, the new Cel A default (Austin approved the fix)
+
+- **Why:** Austin on Cel A: "the lighting on cel A makes it look very compressed". He approved the fix: keep the ink and hard toon bands on cars and props, and soften the light on big surfaces before the dither.
+- **What:** in the `scroll` shader, the road, verge/terrain, gravel, paving, concrete, cut slopes and cedar cards are now soft surfaces. They get no toon ramp and no posterise, and a 16-tap de-dither blur (clamped at the strip edge) replaces the posterised flatten; painted marks are kept. The `sky` shader de-dithers the painted sky (stars kept). The lamp pools now read as falloff, not rings. Unchanged: cars, guardrail, poles and other props, the ink, the HUD, 640×480, RGB555 + Bayer, and the #F0C894 lamps.
+- **Where:**
+  - `unapproved/arthur/experiments/cel_two_corner/` (default on; `cel/soft`, `-- --cel-soft 0` or F8 for the original): `frames/cel_a_soft/`, `cel_a_soft_sheet.png`, `cel_a_soft_run.mp4`.
+  - `unapproved/arthur/experiments/cel_shaded/`: `*_cel_soft.png`. The original A/B frames re-render pixel-identical.
+- **Cost:** about +4 ms a frame on llvmpipe (61 → 65 ms).
+
+---
+
+## 2026-11-14 — Barry [sim]: campaign story-XP cut live (`STORY_XP_MULT`); finale unchanged
+
+- **Why:** Austin 2026-11-14 approved the campaign cut only from `unapproved/barry/story-xp-v1`: an 80/80 story-only player should meet each boss about one level lower (~55% on the hardest track). The finale is the narrative conclusion, so its pacing stays as is.
+- **What:** `sim/velocity_shift/equations.py` adds `STORY_XP_MULT` (per round and rung): R1 every race ×0.90 (effective `STORY_FILL` 0.558), R2 oh2 ×0.60, R3 oh2 ×0.80. `story_xp()` applies it. `ARC_STORY_FILL` and `FINALE_ARC` are untouched. `progression.py` docstring and `tests/test_progression.py` are updated (new `test_story_xp_mult_campaign_only`). `design/02` (Story XP row) and `design/07` (Story XP bullet) name the new constant.
+- **Verified (`scripts/run_progression.py --rows`):**
+  - 80/80 story-only bosses (hardest track) R1 L6 53.0, R2 L23 57.7, R3 L41 55.7 (were L7 61.6, L24 67.2, L42 64.6). Lowest story race per round 53.0 / 54.1 / 50.4. Ends L7 / L25 / L43.
+  - Mixed 3+10 / 3+10 / 4+8 (was 3+9 / 3+9 / 4+8), cash $11,150 / $42,372.50 / $78,282.50.
+  - 60/60 13 / 15 / 18 grinds (was 12 / 15 / 18), bosses at cap unchanged 31.6 / 39.3 / 30.6.
+  - Finale unchanged (draft arc walk on the live table): 80/80 billed 81.7 / 82.7 / 79.3 / 81.7.
+- **Tests:** test_progression, test_mod_floor, test_lines and test_equations pass. The rest is left to CI.
+
+---
+
+## 2026-11-14 — Barry [barry]: story-xp-v1 draft (story-XP cut for 80/80 story-only, ~55% bosses); campaign cut chosen
+
+- **Why:** Austin asked for a sim of cutting story-race XP so an 80/80 story-only (no grind) player wins bosses on the hardest track about 55% of the time (was 61.6 / 67.2 / 64.6).
+- **What:** `unapproved/barry/story-xp-v1/`. Per-round sweeps on the live 6d3641f walk (`camp.py`, `sweep.py`, `cands.py`) and the arc/finale walk on the live table (`arc.py`, `arc_fit.py`, `arc_fit2.py`). `RESULTS.md` has all the numbers.
+- **Learned:** a flat cut breaks the 50% story-race floor (R2 ×0.925 drops oh1 to 45.0), so the cut goes on late rungs. A flat arc cut drops 80/80 to 20% at M12. Shifting arc XP keeps 80/80's arc races but costs mixed 11-13 grinds per finale step.
+- **Decision (Austin 2026-11-14, `DECISION.md`):** campaign cut only (`C_rec`). Finale settings rejected because the finale is the narrative conclusion and its pacing must not change.
+
+---
+
+## 2026-11-14 — Arthur [art]: Cel A ported onto the two-corner test + quick playtest (unapproved experiment)
+
+- **Why:** Austin, 2026-11-14: "I like Cel A. Are you able to apply this to the two corner test and do a quick playtest?"
+- **What:** `unapproved/arthur/experiments/cel_two_corner/` stages Gordon's `unapproved/gordon/two-corner/godot` by symlink (his folder is not edited) and overlays the Cel A shaders, `project.godot` and a `main.gd` copy (changes marked `# CEL:`). Toggle: `cel/enabled`, `-- --cel 0|1`, or F7. The G-buffer pass is picked per camera (cull layers 19/20), so the ink renders live in the same frame. The HUD is untouched, the 3D stays at 640×480, and the RGB555 + Bayer pass is kept.
+- **Fixes found in play:** rear-view filled solid with ink (a silhouette now needs a 1/depth break); car decals inked (moved to layer 18, out of the G-buffer); touge asphalt speckle crawl (road posterise 9 steps, radius 6).
+- **Playtest:** a full scripted race (seed 3, both corners, finish) in Godot 4.6.3 on llvmpipe. No errors in the logs. Cel on ~66 ms vs off ~47 ms a frame (software rendering, needs a GPU check). The HUD pixels are identical with cel on and off. Key frames, a compare sheet, an mp4 and the motion numbers are in the folder; see its README.
+- **Not changed:** Gordon's folder, any asset, the approved district frames, `../cel_shaded/`.
+
+---
+
+## 2026-11-14 — Barry [design]: design/02 and design/07 follow the live-track recalibration (`6d3641f`)
+
+- **Why:** Austin, 2026-11-14: "Update all and give me a summary of what a player can expect through the course of the game."
+- **What:** `design/02-equations-reference.md` and `design/07-economy-and-mods.md` now name the live oracle `sim/config/winrate_g2_live_tracks_v1.json` (15 stand-in tracks; the draft-track table is kept but unread), cite finale caps `FINALE_CAP_LEVEL` 64 / 79 / 94 / 115, and describe hardest-track boss tuning (`BOSS_HARD_TRACK`, `HARD_TRACK_TURNS`, `BOSS_BAND_8080` 90-95, `BOSS_FLOOR_6060` 30, `progression.boss_check()`) and the recomputed `FINALE_ARC` budgets by constant name rather than copying values.
+- **Not changed:** Desmond's USD money wording, the design/01 canon block, design/art.
+
+---
+
+## 2026-11-14 — Barry [sim]: econ-v1 recalibrated to the 15 live stand-in tracks, bosses tuned on the hardest track per district (Austin approval 2026-11-14)
+
+- **Why:** Austin, 2026-11-13: "Keep the current stand-in tracks and recalibrate econ-v1 to them" (touge-lines-v1 draft tracks stay unapproved). Then, 2026-11-14: tune every boss to the **hardest** live track in its district; accept the finale cap L115 and a 60/60 pre-F1 grind of 11; keep the Wangan boss at r = 1.055; "make it live, commit and push".
+- **Drift that forced it** (old live constants on the live tracks, at cap, 60/60 / 80/80): Street S1 46.7 / 96.3 at r 1.053 (too easy); Touge T3 Usui 18.2 / 86.6 at r 1.066 (60/60 floor broken); Wangan W3 C1 Outer 22.8 / 86.5 at r 1.040. Walk fails: mixed R1 wall 1 and R3 wall 2, 80/80 story R3 mat2 34.6 % on T3, R3 10-turn grind 61 %, 60/60 billed F1/F2/F4 24.6 / 28.5 / 24.6.
+- **Draft committed first:** `unapproved/barry/econ-v1-live-tracks/` (sweeps, fits, RESULTS.md, proposed_constants.json; live engine, G2 heat, live QTE mapping, N=300 grid + N=1500 30-turn confirm + N=1500-3000 exact-r point checks).
+- **`sim/velocity_shift/equations.py`:**
+  - `LADDER_TARGET_R` Street 1.20 1.159 1.095 1.071 1.065 1.058 **1.044**; Wangan 1.18 1.16 1.11 1.08 1.06 **1.055 1.055** (oh2 lifted so the ladder never steps up); Touge 1.182 1.163 1.132 1.097 1.079 1.071 **1.071**. `BOSS_TARGET_R` 1.044 / 1.055 / 1.071 (boss B 338.22 / 383.19 / 432.16).
+  - New `BOSS_HARD_TRACK` (S1_Shibuya_Grid, W3_C1_Outer, T3_Usui_Esses), `HARD_TRACK_TURNS` (Street/Wangan 30-turn, Touge every length).
+  - **Check band changed:** new `BOSS_BAND_8080` = (90, 95) and `BOSS_FLOOR_6060` = 30, on the hardest track. The econ-v1 band (80/80 88-92 on the district/uphill cell) falsely fails here: on S1 and T3 the r that keeps 60/60 >= 30 puts 80/80 at 93-95 (Austin's target "80/80 ~90-95%").
+  - `FINALE_TARGET_R` (1.066, 1.040, 1.053, 1.066) -> **(1.075, 1.058, 1.044, 1.075)**; budgets unchanged, so C = 531.91 / 599.15 / 676.72 / 797.54 and `FINALE_CAP_LEVEL` 63/76/95/114 -> **64/79/94/115** (climb now ends L115, accepted). Each r* is the r actually delivered at the integer cap (F2 1.055 would round to L78 and give only r 1.053).
+  - `FINALE_ARC` B recomputed for the new caps: P2 409.03->412.29, P3 483.25->480.89 (wall r_design 1.020->1.025), P4 461.15->464.83, M11 438.11->441.61, M12 546.53->555.28, M21 485.77->497.48, M31 564.89->560.43; P1, M22, M32 unchanged.
+- **`sim/config/winrate_g2_live_tracks_v1.json`** (new): the live-track oracle the draft walks used (export script in the draft folder). `winrate_g2_econ_v1.json` (draft tracks) is kept but no longer read.
+- **`sim/velocity_shift/progression.py`:** reads the live-track table (linear in r), hard cell = hardest track (`win_pack` returns `district` + `hard`), new `boss_check()` for criterion 9. `scripts/run_progression.py` prints the hardest-track cell.
+- **Numbers (at cap, hardest track, 60/60 | 60/80 | 80/60 | 80/80):** R1 Street S1 r 1.044: 31.6 | 72.4 | 71.0 | 94.9. R2 Wangan W3 r 1.055: 39.7 | 63.0 | 80.7 | 90.7. R3 Touge T3 r 1.071: 31.9 | 69.2 | 70.2 | 93.5. F1/F4 T3 r 1.075: 34.7 | 72.6 | 74.1 | 94.7. F2 W3 r 1.058: 41.7 | 64.2 | 84.2 | 92.5. F3 = R1 cell. All pass 60/60 >= 30 and 80/80 90-95.
+- **Walks:** mixed 3+9 / 3+9 / 4+8 (12 per round, $10,600 / $41,190 / $77,100); 60/60 12 / 15 / 18; 80/80 story-only L8 / 26 / 43, worst hard-cell rung 61.6 / 54.1 / 50.4 (R3 is thin: oh1 50.4, mat2 51.1 on T3). Finale arc (wall/to-cap per step): 60/80 7/6/6/7, 80/60 6/6/6/7, 60/60 **11** / 7 / 7 / 9 (pre-F1 11 accepted), 80/80 story-only 0 grinds, min 59.3 %, ends L112 with 5 T4 + aero; mixed and 60/60 end L115.
+- **Aero rechecked on the live tracks** (`run_aero_live.py`, N=2000 paired seeds): one aero (0.42 % of the split moved toward the track's best) changes WR by -0.3 to -2.0 pp on average (range -18.7 to +3.8; best W3 60/60 +3.1, worst T3 60/60 -9.0). At 1.75x price it is **not a no-brainer**; rule unchanged.
+- **Touge sensitivity:** live T3 has sharp stat thresholds (60/60 jumps 18.2 -> 28.4 between r 1.066 and 1.069; a 0.42 % split shift moves it ~9 pp). Of the ladder rungs, Touge is the fragile one (5 of 12 +/-0.003 nudges break a walk target; Street 1, Wangan 0). Re-check T3 if tunes or mod stats change.
+- **Tests:** `sim/tests/test_progression.py` re-pinned to the new numbers (hardest-track boss/finale cells, caps 64/79/94/115, hard walk 12/15/18, arc B, monotone ladders); `test_mod_floor.py` unchanged. Ran test_progression, test_mod_floor, test_lines: 20 passed.
+- **Not changed:** money, purses, debt, betting, T4 $8,000 stand-in and P1 unlock, mod tiers/floors, aero rule and 1.75x price, campaign caps L12/29/46, XP curve, finale budgets, arc shape. **Needs owners:** `design/02-equations-reference.md` and `design/07-economy-and-mods.md` still cite the old finale caps 63/76/95/114 and boss r (Desmond's files, not edited here).
+
+---
+
+## 2026-11-14 — Arthur [art]: cel-shaded experiment of the three district frames (unapproved)
+
+- **Why:** Austin, 2026-11-14: "As an experiment, could you do a pass as a cel-shaded style?" Test look only; not a direction.
+- **What (`unapproved/arthur/experiments/cel_shaded/`):** touge/street/wangan Entry frames re-rendered in Godot 4.6.3 with a 3-band toon ramp (stepped in-shader light vs one fixed key, faceted normals on props/road, smooth on cars), an edge-preserving texture flatten + posterise, and 1 px screen-space ink from normal + depth G-buffer passes (near-side silhouettes + creases, fades into fog). Two flavours: `*_cel.png` keeps RGB555 + Bayer, `*_cel_clean.png` has no dither. `cel_compare_sheet.png` = current / A / B. Camera, road widths, touge grade, palette (#F0C894 lamps) and the 1280×960 HUD unchanged; `mockups/districts/` not edited (copied scene + cel shaders; the rest symlinked at stage time).
+- **Read:** ink and flat textures carry the look; at night the bands barely show on the environment, and some asphalt speckles where the base sits on a posterise step.
+
+---
+
+## 2026-11-13 — Desmond [design, story]: USD money pass after econ-v1 (Austin go-ahead 2026-11-13)
+
+- **Why:** econ-v1 is live (`0af2715`). Barry's money, unlock and ladder constants are in `sim/velocity_shift/equations.py`; design/ and story/ still had TBDs, old cash-unit wording, and stale 9-crew labels.
+- **What:** money is written in USD at ×100. Live figures used throughout: debt **$16,000** at share **0.65**, wholesale **20 %** off T1–T3, base purses **$1,000 / $2,500 / $8,000** times `ROUND_PAYOUT_MULT` 1.00 / 1.15 / 1.35, regular mods T1 **$1,600** / T2 **$2,800** / T3 **$4,000** / T4 **$8,000** (T4 is a stand-in), bets **$500–$2,000** at fair odds. The billed finale purse ($10,800) is documented as a sim assumption, not canon. `design/02` and `design/07` drop the stale 9-crew / `OPTION_A_*` / `CAP_ALLOC_*` / `DEBT_CLEAR_AFTER` labels that econ-v1 resolved, and cite the live caps (12 / 29 / 46, finale 63 / 76 / 95 / 114) and 107 % mod cap. Story debt and betting TBDs in `canon.md`, `plot.md`, `dialogue_outline.md` and `prologue.md` are filled from the same figures. The in-world currency name stays TBD (story canon 6).
+- **Not changed:** the locked canon block in `design/01` (non-money conflicts flagged, not edited); respec costs, substory cash, retry fees, shell-drop rates and handicap bets (still not live); historical study notes under `design/notes/slots-v2/` and `qte-v1/`.
+
+---
+
+## 2026-11-13 — Barry [sim]: econ-v1 XP / mods / economy live on the 3-round ladder (Austin go-ahead 2026-11-13)
+
+- **Approval:** Austin, 2026-11-13, "Yeah works for now" — make econ-v1 live with the $8,000 T4 stand-in. Earlier picks the same day: Variant C, S1 boss r stays 1.053, keep the fixed finale budgets and climb to ~L114, money x100 to USD, betting at true fair odds / unlock after R2 / any race / no cap, T4 tier unlocking at P1, F4 = Summit vs Sabine.
+- **Drafts committed as-is first** (unapproved, separate commit): `unapproved/barry/econ-v1/`, `round-ladder-v1/`, `round-order-v1/`, `touge-lines-v1/`.
+- **`sim/velocity_shift/equations.py`** (all values from `unapproved/barry/econ-v1/proposed_constants.json` and `finale_arc_recommended.json`):
+  - Round structure: `ROUND_DISTRICTS` Street / Wangan / Touge, `DEFAULT_CREW_ORDER` one crew per round (the only legal order), `LADDER_RUNGS` kid1..boss, `LADDER_RUNG_KIND`, `LADDER_TURNS` 10/10/20/20/20/20/30, `GRIND_TURNS` 10. Unlocks by round: `DEBT_CLEAR_AFTER` / `AERO_UNLOCK_AFTER` 1, `BETTING_UNLOCK_AFTER` 2, `FINALE_UNLOCK_AFTER` 3. `DISTRICTS` (engine district order for match/cli) is unchanged.
+  - Ladder: `ANCHOR_B` 330, `K_STEP` 1.07, `P_ROUND` / `C_ROUND` (353.1 / 404.26 / 462.84) on the 1.07 chain, `CAP_LEVEL` 12/29/46, `LADDER_TARGET_R` (Variant C), `BOSS_TARGET_R` Street 1.053 / Wangan 1.040 / Touge 1.066. B = C / target r.
+  - XP: `SP_START` 240, `SP_GROWTH_PER_12_LEVELS` 1.10, `XP_BASE` 100, `XP_GROWTH` 1.08, `STORY_FILL` (0.62, 0.75, 0.80), `STORY_W`, `GRIND_FRAC` 0.70, `GRIND_TAPER_TAU` 3.6, `GRIND_TAPER_FLOOR` 0.20.
+  - Money (USD): `BASE_PAYOUT_WILD/CREW/BOSS` $1,000 / $2,500 / $8,000, `ROUND_PAYOUT_MULT` 1.0/1.15/1.35, `GRIND_PAYOUT_FRACTION` 0.55, `DEBT_AMOUNT` $16,000 at `DEBT_SHARE` 0.65, `WHOLESALE_DISCOUNT` 0.20 on T1-T3 from the end of R1 through the end of R3, never T4.
+  - Mods: `MOD_SLOTS` 6, `MOD_PRICE` T1 $1,600 / T2 $2,800 / T3 $4,000 / **T4 $8,000 (stand-in, `MOD_PRICE_STANDIN`)**, `AERO_PRICE_MULT` 1.75 (max 1 aero, any slot, blocks that slot's regular mod, pool <= 10 %, unlocks after R1), `MOD_TIER_LEVEL_FLOOR` T1 0 / T2 13 / T3 30 / T4 47, `T4_UNLOCK_RACE` P1, `T4_PACKAGE` 5 regular + 1 aero ($54,000).
+  - Betting: `BET_MIN/MAX` $500-$2,000, `BET_ODDS` fair (net (1-p)/p, no clamp, no house edge), `BET_ELIGIBLE` any, `BET_COUNT_CAP` None.
+  - Finale: `FINALE` budgets 494.8 / 566.3 / 648.2 / 741.9 (F1 Touge, F2 Wangan, F3 Street, F4 Touge Summit), `FINALE_OPPONENT` (F4 = Sabine), `FINALE_TARGET_R` 1.066/1.040/1.053/1.066, `FINALE_CAP_LEVEL` 63/76/95/114, `FINALE_PURSE` $10,800, `FINALE_GRIND_PURSE` $742.50. Pre-finale arc `FINALE_ARC` (P1-P4, M11/M12, M21/M22, M31/M32 with r*, B, purses, XP shares), `ARC_STORY_FILL` 0.80, `ARC_GRIND_R` 1.12.
+  - Helpers: `sp_at_level`, `level_for_sp`, `stats_at_level`, `xp_to_next(L)`, `grind_xp`, `story_xp`, `purse`, `opponent_budget`, `mod_price`, `wholesale_active`, `bet_net_payout`, `bet_allowed`.
+  - Removed (old 9-crew card-draw progression): `PROGRESSION_MOD_CAP_FRACTION`, `MOD_SHARE_OF_REF`, `REFERENCE_RULE`, `MOD_TIMING`, `MOD_TIER_FLOOR_RUNG/MARGIN`, the (round, position) `MOD_TIER_LEVEL_FLOOR`, `LADDER_R`, `OPTION_A_*`, `CAP_ALLOC_*`, `STORY_XP_*`, `TAPER_*`, `FINALE_MOD_SHARE/GRIND_SHARE`, `XP_SP_EXPONENT`, `sp_per_level`, `grind_payout_fraction`, old `FINALE` budgets. `SCRIPTED_BUDGETS` / `SABINE_BUDGET` kept (Prologue; not in the econ-v1 walk).
+- **`sim/velocity_shift/progression.py`** rewritten: port of econ-v1 `model.py` + `evaluate.py` walk (story / mixed / hard policies), at-cap table, finale caps, pre-finale arc table, T4 package, tier availability. Win-rate oracle is the new **`sim/config/winrate_g2_econ_v1.json`** (stdlib JSON export of the econ-v1 G2 npz sweeps by `unapproved/barry/econ-v1/export_live_table.py`; nearest sweep point, as evaluate.py). `config/winrate_n4000.json` is no longer read by progression.
+- **`sim/scripts/run_progression.py`** rewritten for the new walk (CI step). **Tests:** `tests/test_progression.py` and `tests/test_mod_floor.py` rewritten (crew order is now the fixed one-district-per-round order; floors are the T1-T4 level floors + the P1 gate; walk and boss numbers pinned to eval_final_C / RESULTS Variant C).
+- **Verification:** live `progression.run()` reproduces `eval_final_C.json` exactly (mixed 3+9 / 3+9 / 4+8, hard 13 / 16 / 18, levels, USD cash and debt; only the eval's 2-dp rounding differs), and the at-cap boss table equals RESULTS Variant C. Live-engine headless check (`unapproved/barry/econ-v1/check_live_bosses.py`, SimulationRunner, 2,000 races per track x 3 boss styles, touge-lines-v1 draft tracks installed in memory only): every boss cell within 1.1 pp of RESULTS with the sweep's QTE convention (`live_boss_check_sweepqte.json`). With the live visible-zone QTE mapping, Wangan 60/80 is 66.7 vs 68.5 and 80/80 90.8 vs 91.4 (the sweep fed 0.8-timing profiles a flat 0.8; at r=1.04 the live zone gives 0.778).
+- **Open / flags:** (1) The econ-v1 win rates are calibrated on the **touge-lines-v1 draft track set**, which is not live and not approved; on today's `config/tracks_v1.json` the same bosses play very differently (Street 60/60 57.3 vs 38.8, `live_boss_check_tracks_v1.json`). The track set needs Austin's call before these WRs describe the shipped game. (2) T4 price is a stand-in. (3) Money wording in design/ and story/ is Desmond's USD pass; not edited here. (4) Gordon's two-corner spec reads `LADDER_R` / old `LADDER_RUNGS` at its pinned commit; a re-pin needs `LADDER_TARGET_R`. (5) Legacy `design/notes/slots-v2` scripts and older unapproved studies import removed names; they were already stale (card draw) and are not run by CI.
+
+---
+
+## 2026-11-13 — Arthur [art]: T4 shop proposal removed
+
+- **Why:** Austin rejected the T4 parts-art proposal (142ef42) and said it should not have been started. T4 and shop/garage art are on hold until he provides style guides.
+- **What:** deleted `unapproved/arthur/t4_mods/` (492381e). Do not use that proposal as a direction.
+
+## 2026-11-13 — Arthur [art]: T4 finale-mods shop language (unapproved)
+
+- **Why:** Desmond asked for a T4 parts-art scope after Austin approved T4 as the big finale mods, unlocked at P1 and sold by Reiko at full price (`design/01`, 68a1ecb).
+- **What (`unapproved/arthur/t4_mods/`):** a decision-ready proposal and one Godot 4.6.3 shop compare frame (`t4_shop_compare.png`, 1280×960, flat E3B menu language, no prices). There is no existing T1–T3 shop or garage art, so the proposal sets a four-tier language: steel-navy / mercury / pale steel / ice teal with a T4 double rule. T4 parts are recommended as bigger meshes on the existing attach points, not a new shell. Sodium stays off the cards so it does not fight HAN yellow.
+- **Not changed:** `assets/`, `design/art/`, Gordon's files, the sim. Nothing is final until Austin approves it.
+
+---
+
+## 2026-11-13 — Desmond [story]: trainer barks into barks.md (Austin 2026-11-13)
+
+- **Why:** Austin approved Nathaniel's trainer-barks-v1 ("let's push those lines. Always able to change them later.").
+- **What:** moved the lines for all 10 training races into a new `story/barks.md` §6 and deleted `unapproved/nathaniel/trainer-barks-v1.md`. The summit options (`unapproved/nathaniel/summit-sabine-race-v1.md`) stay unapproved.
+
+---
+
+## 2026-11-13 — Nathaniel [story]: Summit race vs Sabine options + trainer barks (unapproved)
+
+- **Why:** Desmond asked for a reconciliation of the Summit race against Sabine (set by Austin, via Barry and Desmond, and now in canon 4 and 11) with the existing canon: the "I know what really happened." blowup, the Myth Drivers' reunion, and the ending. The training arc became canon at 68a1ecb, and `plot.md` marks its barks `<TBD: Nathaniel>`. Why Sabine is at the Summit is still open with Austin, so everything here is labeled as an option for Austin, with no pick.
+- **What:**
+  - `unapproved/nathaniel/summit-sabine-race-v1.md`: ten canon touchpoints with file and line cites, four "why she's there" options (W1–W4), four race-placement options (R1–R4), observations on which options fit canon most cleanly, and mechanical hand-offs to Barry via Desmond (no numbers).
+  - `unapproved/nathaniel/trainer-barks-v1.md`: barks for all 10 training races (cast and shape from canon 11 and `plot.md`), waiting on Austin's OK of the wording before anything moves into `story/barks.md`.
+- **Files:** `unapproved/nathaniel/summit-sabine-race-v1.md`, `unapproved/nathaniel/trainer-barks-v1.md` (no canon files touched).
+
+## 2026-11-13 — Desmond [design, story]: pre-finale training arc (Austin 2026-11-13)
+
+- **Why:** Austin approved the crew-trainer pre-finale arc ("Training arc sounds fine.") and answered F4 = the summit race against Sabine, and T4 = the big finale mods unlocking at P1.
+- **What:** 01 canon has a new Pre-finale training arc entry, a no-rematch clarifier, and the big-mods unlock moved to P1. Also updated: story/canon.md 11, plot.md (Round 3 complete and the Finale), dialogue_outline.md (mods trigger), 07 §Round 3 → finale, pitch.md.
+- **Not changed:** econ-v1 (USD x100 money, arc purses, fair-odds betting) isn't live, so there's no money wording pass yet. The story reason for Sabine at the summit is still open with Austin. Trainer barks are Nathaniel's. The T4 parts-art request goes to Arthur.
+
+---
+
+## 2026-11-13 — Nathaniel [story]: Street hook, sightings, rung layout (Austin 2026-11-13)
+
+- **Why:** Austin approved the C1–C7 drafts and B4 from the post-restructure review. These fill the causal gaps marked after 10f9499 / a4236ce.
+- **What:**
+  - C1: the PC's Round 1 hook is the Street old head's "One day she was in every clip. Next day, gone. No post, no goodbye," hanging on the "stayed behind" beat, not the cops clip.
+  - C2: the Street kid's "She bounced right before the cops showed" is what sends the PC to Wangan; #1's cops comment is color only, not a hook.
+  - C3: "I did sixty days" stays as early evidence in Round 1; the Touge phone-call reveal is the final straw.
+  - C4: the Touge boss leads with "You came all the way up here to ask about Sabine?" then his locked "Everybody knows Sabine" speech.
+  - C5 / Open Question 14 resolved: #3 keeps the locked first sighting and folds in "Lost the good one"; "Some of us paid for that night" moves to his Finale race. #2 keeps the locked first sighting, folds in the crowds line, and closes on "Is that what they're saying now?" #1's challenge uses the fracture lines plus a glance of "Hope she doesn't bring the cops again"; "Told everyone back then" moves to his Finale race.
+  - C6: #1's challenge lines, plus the Finale blame open ("You started this. I'm back.").
+  - C7: one run per crew — kids the incident, mature members the consequences, old heads the distortion, the boss the main reveal. Line assignments landed in `dialogue_outline.md`.
+  - B4: cut the leftover Round 3 feud lines "Chat's split on you…" and "new theory: she held him back."
+- **Files:** `story/canon.md`, `story/plot.md`, `story/dialogue_outline.md`, `story/characters/myth_driver_1.md`, `story/characters/myth_driver_2.md`, `story/characters/myth_driver_3.md`.
+
+## 2026-11-13 — Nathaniel [story]: cleanup after the round restructure 10f9499
+
+- **Why:** cleanup after the round restructure 10f9499: stale cites and leftover rematch/reputation-gate references. Draft fills (B4 and the C items) wait on Austin.
+- **What:**
+  - `story/canon.md`: Open Question 16 now cites `plot.md` §4 (the drinks scene is at the end of Round 1). Open Question 6 places Jesse's "Had one. Left." at the end of Round 1, around the speakeasy. Open Question 12 and canon 24 now include `plot.md` §4 for the Jesse/Reiko intro.
+  - `story/dialogue_outline.md`: the Wangan incident header no longer assumes the PC arrives asking about the police night because of #1; they arrive from Street's clips and theories.
+  - `story/pitch.md`: loop item 9 is now revisiting districts for wild races or the Finale Myth Driver races, not reputation unlocking rematches. Boss challenges no longer require "sufficient reputation"; they require climbing that district's crew ladder.
+  - `story/barks.md`: crew-boss purpose no longer says the same boss returns stronger each round; bosses reference the climb up their own crew, not prior rematches. A one-line note on the lieutenant Round 1–3 tiers: they map to Street, then Wangan, then Touge, not rematches with the same crew.
+
+## 2026-11-13 — Desmond [design][story][sim]: one district per round (Street, Wangan, Touge)
+
+- **Decision (Austin, 2026-11-13, via Nathaniel's DM; plus the Finale lead-in addition):** Round 1 Street, Round 2 Wangan, Round 3 Touge. One crew per district, raced once start to finish; no rematches, no boss level-up between rounds. Each round covers its own district's incident, consequences and distortion (old per-round themes retired). One sighting per Myth Driver: #3 after Street, #2 after Wangan, #1 after Touge as a challenge only. Debt clears when the PC beats the Street crew boss at the end of Round 1, with wholesale, aero and Sabine's drinks. Reiko's warning moves to the end of the Wangan round. Canon 12 retired. After the Touge round: #1's challenge, the Mentor Confrontation and rift, then the PC goes back up the mountain to blame #1 and races him, which sets off #2 and #3 (canon 16: out of blame; truth by accident from #1's contradiction). Finale order unchanged.
+- **Design:** 01 canon (Crew ladder, new Round structure entry, unlocks), 02, 07, 08.
+- **Story:** canon 11, 12, 16, 19, 21, 24, 27, vocabulary, timeline 5–6, OQ 4/6/12/14/16; `plot.md` and `dialogue_outline.md` Rounds regrouped by district with older beats kept as drafts, rematch-premise drafts cut, open causal gaps marked for Nathaniel; Myth Driver sheets, barkeep, pitch; `unapproved/nathaniel/open_proposals.md` item 2 resolved.
+- **Sim:** comments only. `DEFAULT_CREW_ORDER`, `check_order`/`all_orders`, unlock markers, `OPTION_A_ROUND_STEP`/`CAP_ALLOC_ROUND_OPEN` and `FINALE` budgets still model the 9-crew free-order ladder; Barry's round-order-v1 study says this structure (its reading B) needs a ladder/cap/unlock/finale refit, so no numbers were changed.
+- **Godot:** no change; the two-corner build encodes no round or district order.
 ## 2026-11-13 — Gordon [godot]: Second merge of proto-build into master, now with Barry's G2 resource system
 
 - **Why:** Austin, 2026-11-13: "Let's hold off until all pending work is committed to Proto-build. Then we merge it completely." Barry pushed G2 and his resource sims at 9a17baa with CI green. Arthur and Nathaniel had nothing pending.
