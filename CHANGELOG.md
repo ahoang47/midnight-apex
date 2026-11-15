@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-14 — Desmond [repo]: new working branch `touge-race`
+
+- **Why:** Austin wants every new commit after the merge on a new branch, where the team builds and tests one full 10-turn Touge race end to end. The race has no mods and stats stay in the parity range, and the work focuses on art and the player experience.
+- **What:**
+  - Created `touge-race` from `master` (367924d).
+  - CI now runs on both `master` and `touge-race`.
+  - Updated the AGENTS.md git line.
+
 ## 2026-11-14 — Desmond [repo]: master is the only branch; CI moves to master
 
 - **Why:** Austin said to merge everything to main and delete every other branch, including `proto-build` ("Proto-build goes away after").
