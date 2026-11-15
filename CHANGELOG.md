@@ -8,6 +8,20 @@
 
 ---
 
+## [art] 2026-11-15 — Arthur: mountain districts pass 3, steeper grades and a Wangan cut of its own (unapproved mockup)
+
+- **Why:** on the v2 frames (669d864), Austin said: "The high lattice on the Wangan sections are a little high. I like it, but it feels too similar to the touge. Also, we might need to up the grade even more to really sell the height."
+- **What:** pass 3 is in `unapproved/arthur/mockups/mountain_districts/`. It has 9 new `*_v3.png` frames, a 3×3 `mountain_districts_sheet_v3.png`, and a `mountain_districts_v2_v3_mid.png` strip. The v1 and v2 outputs are untouched: `MTN_V=1` and `MTN_V=2` rebuild all 18 old frames byte-identically.
+  - **Grades:** touge 11.5→12.5 % (was 8.5–9.5), Wangan 9→10 % (was 6–8), street 11→13 % (was 8–10). All still climb to the vanishing point without cresting.
+  - **Chase pitch follows half the climb** (`CAM_PITCH_K_V3 = 0.5`). Pose, lens, aim point and HUD are unchanged. A camera pitched fully with the road made the steeper grade read flat.
+  - **Wangan cut:**
+    - The lattice is replaced by a 1.6 m louvred noise barrier on the coping, with H-posts on the pilaster joints, and a low netted shotcrete slope behind it. The cut above the wall is ~3 m (was ~7 m), and the read is horizontal-dominant.
+    - Kept: the pilasters and the stepping-down wall top.
+    - The touge keeps the lattice.
+  - **Bay lights:** at 10 % the parapet ahead reaches eye level and hides the near drop, so the bay is moved out to 2.6–4.4 km, denser and in grid rows, with the cranes moved to the new shore.
+  - **Street:** a 16×24 px window atlas with frames and mullions for the near blocks (v3 only). Blocks are sunk for the 13 % fall.
+  - Gordon's files are untouched, and nothing is approved.
+
 ## [art] 2026-11-15 — Arthur: mountain districts pass 2, perspective and a real hillside city (unapproved mockup)
 
 - **Why:** on the mountain_districts frames, Austin said: "The street district feels off, it doesn't feel like city in the mountains, it feels very tacked on. Also to help with the gradient, the side assets should be decreasing in height, to achieve perspective. Your issue is that there's no perspective."

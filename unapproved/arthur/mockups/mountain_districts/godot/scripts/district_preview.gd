@@ -99,9 +99,12 @@ var tris := 0
 var cam_pull := false
 # MOUNTAIN PASS 2 (Austin 2026-11-15: "the side assets should be decreasing in height, to achieve perspective"; the street
 # "doesn't feel like city in the mountains"). MTN_V=1 rebuilds the v1 frames exactly; default is v2 (files *_v2.png).
-var V2 := OS.get_environment("MTN_V") != "1"
+var MTN_VER := int(OS.get_environment("MTN_V")) if OS.get_environment("MTN_V") != "" else 3   # MOUNTAIN: pass 3 by default; MTN_V=1 / 2 rebuild v1 / v2
+var V2 := MTN_VER >= 2
+var V3 := MTN_VER >= 3
 ## v2 chase: same B.5b family (behind + right of the player, fixed, not mirrored), a touch lower and on a longer lens, aimed
 ## further up the road, so the rising road and the receding roadside run up to a vanishing point above the horizon
+const CAM_PITCH_K_V3 := 0.5
 const CAM_V2 := {"side": 1.4, "back": 7.4, "height": 2.45, "look_ahead": 34.0, "look_side": 2.6, "look_y": 0.4, "fov": 47.0}
 func _cam_cfg() -> Dictionary:
 	return CAM_V2 if V2 else disp.camera
@@ -125,7 +128,7 @@ func _frames() -> Array:
 	var out3 := []
 	for ls in [["OUT", "A"], ["MID", "S"], ["IN", "D"]]:
 		var dl := _lane_d(String(ls[0]))
-		out3.append(_fr("%s_%s_cat%s.png" % [DK, String(ls[0]).to_lower(), "_v2" if V2 else ""], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
+		out3.append(_fr("%s_%s_cat%s.png" % [DK, String(ls[0]).to_lower(), ("_v3" if V3 else ("_v2" if V2 else ""))], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
 			"rival_d_nudge": -signf(dl) * 0.25 * LANE_W / 1.45, "lead": -0.12, "gap_s": 0.44, "role": "cat"}))
 	return out3
 	var out := [_fr("%s.png" % DK, L)]
@@ -191,7 +194,12 @@ var _elev_tab := PackedFloat32Array()
 const ELEV_S0 := -120.0
 const ELEV_STEP := 0.5
 
+# MOUNTAIN v3 (Austin: "up the grade even more to really sell the height"): [g at the car, g ahead, ramp start s, ramp end s]
+const GRADE_V3 := {"touge": [0.115, 0.125, 10.0, 50.0], "wangan": [0.09, 0.10, 10.0, 60.0], "street": [0.11, 0.13, 6.0, 30.0]}
 func grade_at(s: float) -> float:
+	if V3 and GRADE_V3.has(DK):
+		var g3: Array = GRADE_V3[DK]
+		return lerpf(g3[0], g3[1], Track.smooth((s - g3[2]) / (g3[3] - g3[2])))
 	if V2 and DK == "touge":   # MOUNTAIN v2: no crest inside the frame, so the climb runs on to the vanishing point
 		return lerpf(0.085, 0.095, Track.smooth((s - 10.0) / 40.0))
 	if DC.has("grade"):   # MOUNTAIN: steady climb that steepens ahead of the car, so the road visibly rises in frame
@@ -360,7 +368,8 @@ func _shade(n: Node, gain: float, emit_gain: float) -> void:
 				m = prop_cache[key]
 			else:
 				m = ShaderMaterial.new(); m.shader = SCROLL_SH
-				var ep := "res://art/env/%s.png" % nm.to_lower()   # TIGHT: painted (lossless) texture by material name, else the glTF one
+				var ep := "res://art/env/%s.png" % nm.to_lower()
+				if V3 and nm == "Emit_mtn_windows": ep = "res://art/env/emit_mtn_windows_v3.png"   # MOUNTAIN v3: 16x24 cells, frames / mullions   # TIGHT: painted (lossless) texture by material name, else the glTF one
 				m.set_shader_parameter("tex", load(ep) if ResourceLoader.exists(ep) else ((src as BaseMaterial3D).albedo_texture if src is BaseMaterial3D else null))
 				if nm.begins_with("wangan_sign") or nm == "wangan_kpost": m.set_shader_parameter("flatten", 0.0)   # TIGHT: crisp lettering
 				m.set_shader_parameter("tile", 1.0); m.set_shader_parameter("scroll_m", 0.0)
@@ -827,15 +836,21 @@ func _dress_wangan_v2(W: float) -> void:
 		var hk := lerpf(1.0, 0.7, Track.smooth((sm - 16.0) / 110.0))
 		var wl := prop("mtn_retain_wall_p", sm, -(W + 0.5), 0.0, 0.0, 0.9)
 		wl.scale = Vector3(1.0, hk, 1.0)
-		prop("mtn_lattice_slope_c", sm, -(W + 1.2), 3.0 * hk + 0.3, 0.0, 0.72)
+		if V3:   # louvred noise barrier on the coping, then a low netted shotcrete slope behind it (v2: 7 m lattice)
+			prop("mtn_soundwall", sm, -(W + 0.85), 3.0 * hk + 0.3, 0.0, 0.8)
+			prop("mtn_shotcrete_net", sm, -(W + 1.25), 3.0 * hk + 0.3, 0.0, 0.62)
+		else:
+			prop("mtn_lattice_slope_c", sm, -(W + 1.2), 3.0 * hk + 0.3, 0.0, 0.72)
 		s += 4.0
 	var k := 0; s = S0
 	while s < S1:
 		var hk2 := lerpf(1.0, 0.7, Track.smooth((s - 16.0) / 110.0))
 		var h := lerpf(11.0, 16.0, ArtKit.hash01(k * 2.3))
-		cedar(s + ArtKit.hash01(k) * 3.0, -(W + 10.5 + ArtKit.hash01(k * 5.1) * 7.0), 3.0 * hk2 + 7.9, h, k)
+		if V3: cedar(s + ArtKit.hash01(k) * 3.0, -(W + 8.5 + ArtKit.hash01(k * 5.1) * 7.0), 3.0 * hk2 + 4.4, h, k)
+		else: cedar(s + ArtKit.hash01(k) * 3.0, -(W + 10.5 + ArtKit.hash01(k * 5.1) * 7.0), 3.0 * hk2 + 7.9, h, k)
 		s += 4.0; k += 1
-	_flank(-(W + 13.0), 10.0)
+	if V3: _flank(-(W + 11.0), 6.5)
+	else: _flank(-(W + 13.0), 10.0)
 	# downhill (right): parapet, fascia, slope with cedar tops (as v1) + a delineator on every other parapet module
 	s = S0
 	while s < S1:
@@ -849,7 +864,7 @@ func _dress_wangan_v2(W: float) -> void:
 	k = 0; s = S0
 	while s < S1:
 		var h2 := lerpf(12.0, 17.0, ArtKit.hash01(k * 4.7 + 1.0)); var dd := W + 6.0 + ArtKit.hash01(k * 7.3) * 30.0
-		cedar(s + ArtKit.hash01(k * 2.0) * 4.0, dd, -(dd - W) * 0.92 - 2.0 - h2 * 0.35, h2, k + 300)
+		cedar(s + ArtKit.hash01(k * 2.0) * 4.0, dd, -(dd - W) * 0.92 - 2.0 - h2 * (0.75 if V3 else 0.35), h2, k + 300)   # v3: tops under the parapet line so the town below shows
 		s += 4.0; k += 1
 	# tall sodium lamps every 32 m on each side, staggered 16 m (v1: 48 m / 24 m): a steady rhythm of tall verticals
 	for sd in [1.0, -1.0]:
@@ -865,16 +880,28 @@ func _dress_wangan_v2(W: float) -> void:
 	# the bay, 105 m down (v2: the lower camera sees less over the parapet, so the light field sits nearer the horizon and
 	# inside the narrower lens: bearings 8-27 deg, 1.1-3.3 km, 2-6 deg under the horizon)
 	var Y := -105.0
-	_valley_floor(Y - 2.0, [[500.0, 2050.0, -600.0, 3200.0, "valley_land"], [2050.0, 3000.0, -600.0, 3200.0, "valley_water"], [3000.0, 4600.0, -600.0, 3200.0, "valley_land"]])
-	_valley_lights(Y, [
-		_pcl([25.0, 1150.0, 200.0, 200, [5.0, 1.5, 3.0, 0.0, 0.6]]), _pcl([19.0, 1500.0, 250.0, 200, [4.0, 1.5, 3.0, 0.0, 0.6]]),
-		_pcl([13.0, 2000.0, 180.0, 120, [0.5, 0.0, 6.0, 0.0, 0.8]]), _pcl([8.0, 3300.0, 800.0, 160, [3.0, 1.0, 2.0, 0.0, 0.0]]),
-		_pcl([22.0, 3000.0, 500.0, 90, [3.0, 1.0, 2.0, 0.0, 0.0]]),
-		], [_pln([27.0, 1000.0, 11.0, 2000.0, 50, 2]), _pln([21.0, 1100.0, 24.0, 2000.0, 36, 2]), _pln([8.0, 2060.0, 19.0, 1960.0, 30, 2])], 3.6, 11)
+	if V3:   # v3: at 9-10 % the parapet ahead climbs to about eye level, so everything nearer than ~2.5 km down there is hidden
+		# behind it (checked with VL_DEBUG projections). The bay moves out to 2.6-4.4 km, 1-2 deg under the horizon, in the
+		# gap right of the rival (bearings 17-31 deg) where the parapet is lowest in frame; denser, in street-grid rows.
+		Y = -90.0
+		_valley_floor(Y - 2.0, [[1500.0, 2500.0, -100.0, 3200.0, "valley_land"], [2500.0, 3300.0, -100.0, 3200.0, "valley_water"], [3300.0, 4700.0, -600.0, 3200.0, "valley_land"]])
+		_valley_lights(Y, [
+			_pcl([28.0, 2700.0, 260.0, 260, [5.0, 1.5, 3.0, 0.0, 0.6]]), _pcl([24.0, 3000.0, 300.0, 300, [4.0, 1.5, 3.0, 0.0, 0.6]]),
+			_pcl([20.0, 3300.0, 220.0, 160, [0.5, 0.0, 6.0, 0.0, 0.8]]), _pcl([18.0, 4200.0, 350.0, 220, [3.0, 1.0, 2.0, 0.0, 0.0]]),
+			_pcl([26.0, 4300.0, 350.0, 220, [3.0, 1.0, 2.0, 0.0, 0.0]]), _pcl([30.5, 2600.0, 180.0, 160, [5.0, 1.5, 3.0, 0.0, 0.6]]),
+			], [_pln([31.0, 2550.0, 17.0, 3250.0, 90, 2]), _pln([22.0, 2650.0, 27.0, 4200.0, 60, 2]), _pln([16.0, 3350.0, 30.0, 3350.0, 70, 0]),
+			_pln([18.0, 4400.0, 30.0, 4400.0, 60, 2])], 4.6, 11)
+	else:
+		_valley_floor(Y - 2.0, [[500.0, 2050.0, -600.0, 3200.0, "valley_land"], [2050.0, 3000.0, -600.0, 3200.0, "valley_water"], [3000.0, 4600.0, -600.0, 3200.0, "valley_land"]])
+		_valley_lights(Y, [
+			_pcl([25.0, 1150.0, 200.0, 200, [5.0, 1.5, 3.0, 0.0, 0.6]]), _pcl([19.0, 1500.0, 250.0, 200, [4.0, 1.5, 3.0, 0.0, 0.6]]),
+			_pcl([13.0, 2000.0, 180.0, 120, [0.5, 0.0, 6.0, 0.0, 0.8]]), _pcl([8.0, 3300.0, 800.0, 160, [3.0, 1.0, 2.0, 0.0, 0.0]]),
+			_pcl([22.0, 3000.0, 500.0, 90, [3.0, 1.0, 2.0, 0.0, 0.0]]),
+			], [_pln([27.0, 1000.0, 11.0, 2000.0, 50, 2]), _pln([21.0, 1100.0, 24.0, 2000.0, 36, 2]), _pln([8.0, 2060.0, 19.0, 1960.0, 30, 2])], 3.6, 11)
 	for bb in [11.5, 14.0, 16.5]:
-		var q := _pol(bb, 2030.0)
-		_far_prop("wangan_crane", Vector3(q.y, Y, -q.x), PI * 0.5, 1.3, 0.35)
-	var qb := _pol(6.0, 2800.0)
+		var q := _pol(bb + (10.0 if V3 else 0.0), 3280.0 if V3 else 2030.0)
+		_far_prop("wangan_crane", Vector3(q.y, Y, -q.x), PI * 0.5, 2.1 if V3 else 1.3, 0.35)
+	var qb := _pol(6.0, 3650.0 if V3 else 2800.0)
 	_far_prop("wangan_bridge", Vector3(qb.y, Y, -qb.x), PI * 0.5 + 0.15, 1.8, 0.45)
 
 ## STREET v2: a city built into the mountain (熱海 / 北野 / 尾道 / Mid-Levels). Hill height in the straight frame (x = d, z = -s):
@@ -952,7 +979,7 @@ func _dress_street_v2(W: float) -> void:
 		if e[0] == "alley":
 			prop("mtn_steps_up", s + w * 0.5, -FA, 0.12, 0.0, 0.8, 1.0, true)
 		else:
-			prop(e[0], s + w * 0.5, -FA, -0.25, 0.0, 0.36, 0.5, true)
+			prop(e[0], s + w * 0.5, -FA, -0.25 - (0.065 * w if V3 else 0.0), 0.0, 0.36, 0.5, true)   # v3: sunk by half the 13 % fall across the block
 			if not bridge_done and s + w > 30.0:
 				prop("mtn_footbridge", s + w * 0.5, -FA, -0.25, 0.0, 0.75, 0.9, true); bridge_done = true
 			if not vend_done and s > CHASE_S + 5.0 and w < 9.5:
@@ -1177,6 +1204,9 @@ func _place_camera(kind: String, player_s: float) -> void:
 			cpos += -tv * 2.2 + Vector3(0, 0.9, 0)
 		cpos.y += elev(player_s - float(cm.back) - (2.2 if cam_pull else 0.0), float(cm.side) + _cam_d)
 		tgt.y += elev(player_s + float(cm.look_ahead), float(cm.look_side) + _cam_d)
+		if V3:   # MOUNTAIN v3: the chase camera only follows part of the climb in pitch (a camera pitched with the road makes a
+			# constant grade read flat), so the road and the cars visibly rise up the frame against plumb walls and the horizon
+			tgt.y -= CAM_PITCH_K_V3 * (elev(player_s + float(cm.look_ahead), 0.0) - elev(player_s - float(cm.back), 0.0))
 		cam.position = cpos
 		cam.look_at(tgt, Vector3.UP)
 		cam.fov = float(cm.fov)
@@ -1532,3 +1562,9 @@ func _write(path: String) -> void:
 	out.convert(Image.FORMAT_RGB8)
 	out.save_png(path)
 	print("wrote ", path)
+	if OS.get_environment("VL_DEBUG") != "":   # debug: where the valley-light bearings land on screen (640x480 3D)
+		print("cam ", cam.global_position, " rot ", cam.global_rotation_degrees)
+		for b in [8.0, 14.0, 20.0, 25.0, 30.0]:
+			for dist in [500.0, 1000.0, 2000.0]:
+				var q := _pol(b, dist); var wp := Vector3(q.y, -90.0, -q.x)
+				print("b %.0f D %.0f -> %s" % [b, dist, cam.unproject_position(wp)])

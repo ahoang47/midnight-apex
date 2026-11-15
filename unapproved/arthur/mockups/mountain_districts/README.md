@@ -1,4 +1,4 @@
-# Mountain districts: every district is a pass, all three entry lanes (unapproved mockup), pass 2: perspective + hillside city
+# Mountain districts: every district is a pass, all three entry lanes (unapproved mockup), pass 2: perspective + hillside city, pass 3: steeper + a Wangan cut of its own
 
 Arthur (Art Director), 2026-11-15. Austin on `tight_districts`: *"Neither Wangan nor street give the sense of being on a
 mountain pass. Also, please render all three lane placements."*
@@ -12,6 +12,95 @@ Built on `../tight_districts/` (left untouched). Same pipeline and look: Cel A s
 Every frame uses the same CAT chasing setup: the rival is 11 m ahead in the player's line with its taillights in the
 chevrons and the red tail wash. The CAT CHASING tie-gap box is on. Player and chevrons sit on that lane, and the plan box
 has that stance selected (OUT = A / POW, MID = S / HAN, IN = D / EN). No floating OUT / MID / IN markers.
+
+## Pass 3 (v3): steeper, and a Wangan cut of its own
+
+Austin on v2 (669d864): *"The high lattice on the Wangan sections are a little high. I like it, but it feels too similar
+to the touge. Also, we might need to up the grade even more to really sell the height."*
+
+**Files.** The v1 and v2 outputs are untouched. `MTN_V=2 ./run.sh` and `MTN_V=1 ./run.sh` rebuild them, and all 18 old
+frames plus the three old sheets / strips came out byte-identical after the pass-3 code went in. Plain `./run.sh` is now pass 3.
+- `mountain_districts_sheet_v3.png`: 3x3, rows touge / wangan / street, cols OUT / MID / IN, grade labels updated
+- `mountain_districts_v2_v3_mid.png`: MID lane, v2 against v3, one row per district
+- `{touge,wangan,street}_{out,mid,in}_cat_v3.png`: the 9 frames
+
+### Grades actually used (`GRADE_V3`, eased from the value at the car to the value ahead)
+
+| district | v2 | v3 at the car -> ahead | ramp (s) |
+|---|---|---|---|
+| touge | 8.5-9.5 % | **11.5 -> 12.5 %** | 10-50 m |
+| wangan | 6-8 % | **9 -> 10 %** | 10-60 m |
+| street | 8-10 % | **11 -> 13 %** | 6-30 m |
+
+All three still climb all the way to the vanishing point; none crests in frame.
+
+**Camera (one change, HUD untouched).** Steeper grades alone barely showed: the v2 chase looks at a point on the road
+34 m ahead, so it pitches up with the road and a constant grade reads as flat (the first v3 render was almost
+indistinguishable from v2). The v3 chase keeps the v2 pose, height, lens and aim point, but its pitch only follows half of
+the climb between the camera and the aim point (`CAM_PITCH_K_V3 = 0.5`). The road and the rival now visibly rise up the
+frame against plumb walls, blocks, lamps and the horizon. The player car sits a little higher in frame and shows a bit
+more of its tail.
+
+### What changed on Wangan
+
+- **The lattice is gone from Wangan.** The touge keeps the diagonal 法枠 lattice as its signature.
+- **Kept:** the pillared retaining wall, a pilaster on every 4 m joint, the wall top stepping down from 3.0 m to 2.1 m up
+  the hill, parapet delineators, 32 m lamps.
+- **New expressway / toll-road cut, horizontal-dominant:**
+  - `mtn_soundwall`: a 1.6 m louvred steel noise barrier on the coping. Slats are painted as horizontal bands, with a
+    translucent strip at the top. Its H-post lines up with each pilaster, so the vertical rhythm stays on the joints and
+    every other line in the cut runs to the vanishing point.
+  - `mtn_shotcrete_net`: a low netted shotcrete slope behind it (run 3.2 m, rise 3.0 m; the v2 lattice was 5 m / 7 m),
+    with a crest drain lip and a berm.
+  - The cut above the wall top is now about 3 m instead of about 7 m, a bit under half. The cedars come down and in to
+    match (base 4.4 m above the wall top instead of 7.9 m), and the dark flank drops from 10 m to 6.5 m.
+- **Bay lights.** At 9-10 % the parapet ahead rises to about eye level. A `VL_DEBUG=1` projection check showed it hides
+  everything closer than about 2.5 km down there, which is why v2's field had thinned out. The bay is moved out to
+  2.6-4.4 km (1-2 deg under the horizon). It is denser, with street-grid rows and the shore line, and sits in the gap
+  right of the rival where the parapet is lowest in frame. The cranes are moved to the new shore at 3.3 km and scaled up,
+  and the bridge is at 3.65 km. The downhill cedar tops sit lower so they no longer cover it.
+
+### Street
+
+- **Near block windows:** a new 512x24 window atlas (`emit_mtn_windows_v3`, 16x24 px cells instead of 8x16). It has
+  aluminium frames, a sliding-sash mullion, curtains drawn to the sides, a ceiling-light gradient, furniture silhouettes,
+  balcony rail bars, and AC units or laundry on some balconies. It is swapped in by material name for v3 only, so v2 is
+  unchanged.
+- **Blocks on the 13 % grade:** uphill blocks sink by half the fall across their width, so the downhill end of a level
+  block doesn't float above the pavement.
+
+### New for pass 3
+
+- Blender (`build_mountain.py`, end of file): `mtn_soundwall` (14 tris), `mtn_shotcrete_net` (8 tris)
+- Textures (`make_tex.py`, end of file): `mtn_soundwall`, `mtn_shotcrete_net`, `emit_mtn_windows_v3`
+- Script: `MTN_VER` / `V3` gate (default 3), `GRADE_V3`, `CAM_PITCH_K_V3`, the v3 branches in `_dress_wangan_v2` and
+  `_dress_street_v2`, the v3 window swap in `_shade`, and a `VL_DEBUG` print of where valley-light bearings land on screen
+- Env tris (MID): touge about 10.0k, wangan about 18.0k, street about 43.9k
+
+### Pass 3 weak spots
+
+**Wangan**
+- **The bay is now a far, thin band.** It is honest for a 90 m drop seen over a parapet on a 10 % climb, but it is a
+  strip, not a view down onto a city. **IN shows only a sliver at the right edge.** A see-through rail on the parapet,
+  or a gap in it, would open it up, but that would change the Wangan parapet identity, so I didn't do it.
+- **Up close, the louvre band reads a little noisy and dithered** rather than crisp slats. At distance it reads well.
+- **The netted shotcrete is mostly hidden** behind the noise barrier from the low chase. Above the barrier you mostly
+  see the cedars, so the "rock netting" is subtle.
+- **The near wall on the IN frame is still the biggest surface in frame.**
+
+**Grade / camera**
+- **The half-pitch camera is a framing choice, not a physics one.** On a real constant grade a car-mounted camera
+  would pitch with the road. The car also sits a little bigger and higher in frame than in v2. If that reads wrong,
+  `CAM_PITCH_K_V3 = 0.3` is the compromise.
+
+**Street**
+- **The near windows have structure now (frames, mullion, rail), but are still soft when magnified.** One 16 px cell
+  spans about 300 screen px on the nearest block. Real recessed window geometry would fix it; I didn't build that in this pass.
+- **The near vending machine reads greyer than in v2** (mostly its side shows at the new pitch).
+- The pass-2 street weak spots (ridge behind the HUD, downhill faces only from afar) are unchanged.
+
+**Tri budget**
+- **Street is still about 44k env tris.**
 
 ## Pass 2 (v2): perspective, and a real hillside city
 
@@ -242,7 +331,9 @@ cedars, verge, ridge band) and `wangan_sky`.
 ## Re-render
 
 ```
-./run.sh                                   # textures + Blender + import + 9 frames + sheet
+./run.sh                                   # pass 3 (default): textures + Blender + import + 9 v3 frames + sheet_v3 + v2/v3 strip
+MTN_V=2 ./run.sh                           # rebuild the v2 frames + sheet_v2 + v1/v2 strip
+MTN_V=1 ./run.sh                           # rebuild the v1 frames + sheet
 SKIP_ASSETS=1 ONLY="wangan" ./run.sh       # one district (3 frames)
 python3 make_sheet.py                      # sheet only
 ```

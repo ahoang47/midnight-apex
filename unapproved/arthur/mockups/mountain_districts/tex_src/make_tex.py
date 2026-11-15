@@ -280,3 +280,57 @@ for fn, n in [(lattice_beam, 'mtn_lattice_beam'), (lambda: lattice_fill(True), '
               (lambda: block_wall((80, 66, 58), 105), 'mtn_block_wall_c'), (flat_roof, 'mtn_roof_flat'), (windows_atlas, 'emit_mtn_windows'),
               (ground_atlas, 'emit_mtn_ground'), (sign_atlas, 'emit_mtn_signs'), (rail_alpha, 'mtn_rail'), (bridge_fascia, 'mtn_bridge_fascia')]:
     save(fn(), os.path.join(ENV, n + '.png'))
+# ── pass 3 (Austin 2026-11-15: the Wangan lattice "feels too similar to the touge"; near Street windows read flat) ──────────
+# sound wall: u = 4 m module, v = 2 m up (v 0 = top). Grey-green steel louvre panels: horizontal ribs every 2 px, a darker
+# frame, a translucent (lighter) strip near the top as on 首都高 / 有料道路 noise barriers.
+def soundwall():
+    W, H = 64, 32; a = tex_noise(W, H, (70, 80, 78), 4, 121)
+    for y in range(5, H - 2):                                           # louvre slats: 3 px lit face, 1 px dark shadow line
+        a[y, :] += (10 if (y - 5) % 4 == 0 else (-26 if (y - 5) % 4 == 3 else 0))
+    a[:4, :] = tex_noise(W, 4, (96, 110, 118), 4, 122)                  # translucent top strip
+    a[4, :] = (36, 40, 42); a[-2:, :] = (36, 40, 42)                    # rails
+    a[:, 0:2] = (44, 48, 50)                                            # the joint on the H-post only (one per 4 m)
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+# shotcrete with rock netting: u = 2 m, v = 2 m. Grey sprayed concrete, darker weep/water stains, a diamond wire net over it
+# (thin dark lines, 0.5 m mesh) and a few anchor plates.
+def shotcrete_net():
+    W, H = 32, 32; a = tex_noise(W, H, (60, 62, 66), 10, 131, 1, 5)
+    rr = random.Random(31)
+    for _ in range(3):
+        x = rr.randrange(W); a[:, x:x + 2] -= (8, 8, 6)
+    for y in range(H):
+        for x in range(W):
+            if (x + y) % 8 == 0 or (x - y) % 8 == 0: a[y, x] = a[y, x] * 0.72 + np.array((30, 32, 30)) * 0.28
+    for (x, y) in ((4, 4), (20, 20)): a[y:y + 2, x:x + 2] = (92, 92, 90)
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+# windows v3: 32 cells of 16 x 24 px (each 1.6 m x 1.35 m strip) so the near blocks keep detail: aluminium frame + mullion,
+# curtains or blinds, interior gradient and furniture silhouettes in the lit ones, an AC unit or laundry on some balconies.
+def windows_atlas_v3():
+    W, H = 512, 24; im = Image.new('RGB', (W, H), (34, 36, 42)); d = ImageDraw.Draw(im); rr = random.Random(17)
+    for c in range(32):
+        x = c * 16; r = rr.random()
+        if r < 0.24: g = (178, 160, 122)
+        elif r < 0.34: g = (152, 118, 80)
+        elif r < 0.38: g = (96, 124, 136)
+        else: g = (22, 28, 40) if rr.random() < 0.6 else (30, 36, 48)
+        lit = g[0] > 90
+        d.rectangle([x + 1, 2, x + 14, 17], fill=(58, 60, 66))                 # frame
+        for yy in range(3, 17):                                              # glass, lit ones brighter at the top (ceiling light)
+            k = 1.0 - (yy - 3) * (0.025 if lit else 0.01)
+            d.line([x + 2, yy, x + 13, yy], fill=tuple(int(v * k) for v in g))
+        if lit:
+            if rr.random() < 0.6:                                            # curtains drawn to the sides
+                cc = tuple(int(v * 0.62) for v in g); d.rectangle([x + 2, 3, x + 4, 16], fill=cc); d.rectangle([x + 11, 3, x + 13, 16], fill=cc)
+            if rr.random() < 0.5:                                            # furniture / person silhouette
+                fx = x + 5 + rr.randrange(4); d.rectangle([fx, 11, fx + 2, 16], fill=tuple(int(v * 0.45) for v in g))
+            if rr.random() < 0.3: d.rectangle([x + 2, 3, x + 13, 6], fill=tuple(int(v * 0.7) for v in g))   # blind
+        d.line([x + 7, 2, x + 8, 17], fill=(58, 60, 66))                    # mullion (sliding sash)
+        d.line([x + 1, 2, x + 14, 2], fill=(84, 86, 92))
+        d.rectangle([x, 18, x + 15, 18], fill=(76, 78, 84)); d.rectangle([x, 23, x + 15, 23], fill=(58, 60, 66))   # balcony rail
+        for k in range(x, x + 16, 2): d.line([k, 19, k, 22], fill=(62, 64, 70))
+        q = rr.random()
+        if q < 0.3: d.rectangle([x + 2, 19, x + 6, 22], fill=(118, 120, 122))                     # AC unit
+        elif q < 0.45: d.rectangle([x + 4, 15, x + 12, 19], fill=(96, 92, 84) if lit else (52, 54, 60))  # laundry
+    return im
+for fn, n in [(soundwall, 'mtn_soundwall'), (shotcrete_net, 'mtn_shotcrete_net'), (windows_atlas_v3, 'emit_mtn_windows_v3')]:
+    save(fn(), os.path.join(ENV, n + '.png'))

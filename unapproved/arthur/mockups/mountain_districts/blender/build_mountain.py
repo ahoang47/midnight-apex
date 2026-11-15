@@ -241,3 +241,25 @@ mtn_footbridge(); mtn_steps_up()
 json.dump(dict(STATS), open(os.path.join(OUT, 'tri_counts_mountain.json'), 'w'), indent=1)
 
 print('STATS', STATS)
+
+# ── pass 3 (Austin 2026-11-15): the Wangan cut gets its own expressway vocabulary, the touge keeps the 法枠 lattice.
+#   mtn_soundwall      : 4 m module of louvred steel noise barrier, 2 m, an H-post on the joint (lines up with the wall pilaster)
+#   mtn_shotcrete_net  : 4 m module of low shotcrete slope with rock netting, run 3.2 m / rise 3.0 m (v2 lattice: 5 / 7 m),
+#                        a horizontal berm strip on top and a thin crest drain lip: horizontal-dominant, no diagonal beams
+def mtn_soundwall():
+    reset(); b = Builder('mtn_soundwall'); p = mat('mtn_soundwall', 'mtn_soundwall'); st = mat('wangan_steel', 'wangan_steel'); L, H = 4.0, 1.6
+    b.quad([(0, L/2, 0), (0, -L/2, 0), (0, -L/2, H), (0, L/2, H)], [(1, 1), (0, 1), (0, 0), (1, 0)], p)
+    b.box((0.02, -L/2, 0), (0.22, 0.22, H + 0.12), st, faces=['-x', '-y', '+y', '+z'], uvscale=3.0)   # H-post on the joint
+    b.box((0.02, 0, H), (0.14, L, 0.1), st, faces=['-x', '+z'], uvscale=3.0)                          # top rail
+    b.finish(tess=False); export('mtn_soundwall')
+
+def mtn_shotcrete_net():
+    reset(); b = Builder('mtn_shotcrete_net'); f = mat('mtn_shotcrete_net', 'mtn_shotcrete_net'); c = mat('mtn_retain_concrete', 'mtn_retain_concrete')
+    run, rise, L = 3.2, 3.0, 4.0; sl = math.hypot(run, rise)
+    b.quad([(0, L/2, 0), (0, -L/2, 0), (run, -L/2, rise), (run, L/2, rise)], [(L / 2, 0), (0, 0), (0, sl / 2), (L / 2, sl / 2)], f)
+    b.box((run + 0.15, 0, rise), (0.3, L, 0.25), c, faces=['-x', '+z'], uvscale=4.0)                    # crest drain lip
+    b.quad([(run + 0.3, L/2, rise + 0.25), (run + 0.3, -L/2, rise + 0.25), (run + 4.0, -L/2, rise + 0.9), (run + 4.0, L/2, rise + 0.9)], [(L / 2, 0), (0, 0), (0, 2), (L / 2, 2)], f)
+    b.finish(tess=False); export('mtn_shotcrete_net')
+mtn_soundwall(); mtn_shotcrete_net()
+json.dump(dict(STATS), open(os.path.join(OUT, 'tri_counts_mountain.json'), 'w'), indent=1)
+print('STATS v3', {k: STATS[k] for k in ('mtn_soundwall', 'mtn_shotcrete_net') if k in STATS})

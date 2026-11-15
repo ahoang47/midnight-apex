@@ -23,5 +23,7 @@
  "mtn_block_tier_b": 232,
  "mtn_block_tier_c": 514,
  "mtn_footbridge": 98,
- "mtn_steps_up": 80
+ "mtn_steps_up": 80,
+ "mtn_soundwall": 14,
+ "mtn_shotcrete_net": 8
 }

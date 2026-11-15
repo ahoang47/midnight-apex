@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Mountain districts (Arthur, unapproved mockup): 9 Cel A soft CAT frames (touge / wangan / street x entry OUT / MID / IN)
-# + the 3x3 sheet. Pass 2 (default): *_v2.png frames, mountain_districts_sheet_v2.png, mountain_districts_v1_v2_mid.png;
-# MTN_V=1 ./run.sh rebuilds the v1 frames + sheet exactly.
+# + the 3x3 sheet. Pass 3 (default): *_v3.png frames, mountain_districts_sheet_v3.png, mountain_districts_v2_v3_mid.png;
+# MTN_V=2 ./run.sh / MTN_V=1 ./run.sh rebuild the v2 / v1 frames + sheet exactly.
 #   ./run.sh                 textures + Blender props + import + render touge / wangan / street (3 lanes each) + sheet
 #   SKIP_ASSETS=1 ./run.sh   renders + sheet only        ONLY="wangan" ./run.sh   one district
 # The Godot project here is self-contained (a dereferenced copy of experiments/cel_shaded/godot as staged on the box,
@@ -21,4 +21,4 @@ sed -i 's/detect_3d\/compress_to=1/detect_3d\/compress_to=0/' "$ROOT"/godot/art/
 for d in ${ONLY:-touge wangan street}; do
   DISTRICT="$d" timeout 900 xvfb-run -a -s "-screen 0 1280x960x24" "$GODOT" --path "$ROOT/godot" --rendering-driver opengl3 2>&1 | grep -E "DISTRICT_OK|wrote|ERROR|SCRIPT ERROR|Parse|error" || true
 done
-if [[ "${MTN_V:-}" == "1" ]]; then python3 "$ROOT/make_sheet.py"; else python3 "$ROOT/make_sheet.py" v2; fi
+case "${MTN_V:-3}" in 1) python3 "$ROOT/make_sheet.py" ;; 2) python3 "$ROOT/make_sheet.py" v2 ;; *) python3 "$ROOT/make_sheet.py" v3 ;; esac
