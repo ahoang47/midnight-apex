@@ -31,7 +31,7 @@ Nathaniel flags anything that touches mechanics (archetype, lie rate, turn-type 
 ## Godot project
 
 - Godot 4.6.3, Mobile renderer, Jolt Physics 3D, Direct3D 12 on Windows. GDScript only (no Mono/C#).
-- Git: `proto-build` is the working branch; remote `github.com/ahoang47/midnight-apex.git`.
+- Git: `master` is the only branch and the working branch (Austin 2026-11-14: `proto-build` merged and deleted); pull with rebase, never force-push; remote `github.com/ahoang47/midnight-apex.git`.
 - `.gitignore` covers `.godot/` and `/android/`.
 - 27 scripts + 1 scene (`scenes/Battle.tscn`): the full prototype built per `design/godot-build-guide.md` (15-step guide: bootstrap → deck → combat → AI → tells → animation → tuning).
 - The GDScript is a port of the Python model in `sim/velocity_shift/`. Tune in `sim/` first, then port the settled values to `scripts/globals.gd` and friends.

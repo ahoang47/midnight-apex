@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-14 — Desmond [repo]: master is the only branch; CI moves to master
+
+- **Why:** Austin said to merge everything to main and delete every other branch, including `proto-build` ("Proto-build goes away after").
+- **What:**
+  - Merged `proto-build` into `master` (ba78d31), keeping `unapproved/gordon/two-corner/` off `master`.
+  - Deleted `game-build` and `proto-build`.
+  - `.github/workflows/ci.yml` now runs on pushes and PRs to `master`.
+  - Removed the Godot CI job, because it only ran the two-corner prototype, which isn't on `master`. Gordon will re-add Godot steps for the main project.
+  - Updated the AGENTS.md git line.
+
 ## [story] 2026-11-14 — Nathaniel: summit file points to barks.md §6
 - `unapproved/nathaniel/summit-sabine-race-v1.md` lines 10 and 79 now point to `story/barks.md` §6. Reason: Austin approved the trainer barks and Desmond moved them there in dd39a32, which deleted trainer-barks-v1.md.
 
