@@ -1,4 +1,4 @@
-# Mountain districts: every district is a pass, all three entry lanes (unapproved mockup), pass 2: perspective + hillside city, pass 3: steeper + a Wangan cut of its own
+# Mountain districts: every district is a pass, all three entry lanes (unapproved mockup), pass 2: perspective + hillside city, pass 3: steeper + a Wangan cut of its own, pass 4: guardrails, sea bridge, canyon street
 
 Arthur (Art Director), 2026-11-15. Austin on `tight_districts`: *"Neither Wangan nor street give the sense of being on a
 mountain pass. Also, please render all three lane placements."*
@@ -12,6 +12,74 @@ Built on `../tight_districts/` (left untouched). Same pipeline and look: Cel A s
 Every frame uses the same CAT chasing setup: the rival is 11 m ahead in the player's line with its taillights in the
 chevrons and the red tail wash. The CAT CHASING tie-gap box is on. Player and chevrons sit on that lane, and the plan box
 has that stance selected (OUT = A / POW, MID = S / HAN, IN = D / EN). No floating OUT / MID / IN markers.
+
+## Pass 4 (v4): touge guardrail on Wangan, a sea bridge, a canyon street
+
+Austin on v3 (fe8b0e1): *"Wangan should use the same guardrails as touge. How about making a few more frames for each
+district? Wangan should have a bridge over the water, similar to Key West. You had something pretty close already. For
+street, a similar idea but more tight and narrow streets within the city, such as buildings lining both sides. Touge can
+stay as it is because it is a classic mountain pass, we can add more flora later."*
+
+**Files.** v1, v2 and v3 are untouched. `MTN_V=3 / 2 / 1 ./run.sh` rebuild them, and all 27 old frames and 5 old sheets /
+strips came out byte-identical after the pass-4 code went in. Touge and the street main section are not re-rendered; the
+sheet reuses their v3 frames.
+- `mountain_districts_sheet_v4.png`: 5 rows (touge v3, wangan skyline v4, wangan sea bridge, street main v3, street canyon)
+  x OUT / MID / IN
+- `wangan_{out,mid,in}_cat_v4.png`, `wangan_bridge_{out,mid,in}_cat_v4.png`, `street_alley_{out,mid,in}_cat_v4.png`
+- Same v3 chase camera (half-pitch), same HUD. Sections are picked with `SECTION=bridge` / `SECTION=alley`
+  (`ONLY="wangan:bridge" ./run.sh`).
+
+| section | road | grade | env tris (MID) |
+|---|---|---|---|
+| wangan skyline v4 | 7.5 m | 9 -> 10 % | ~20.8k |
+| wangan sea bridge | 7.5 m deck, ~9 m over the water at the car | 3 -> 4.5 % onto the hump | ~20.7k |
+| street canyon | 4.8 m kerb to kerb + 0.35 m kerb strip each side | 11 -> 13 % | ~37.2k |
+
+**Wangan skyline v4.**
+- The parapet is replaced by the touge guardrail: the same `touge_guardrail` asset and material, 4 m modules at
+  W + 0.45, the touge verge strip, and delineators on the rail line.
+- The right-hand lamps step back behind the rail.
+- With a see-through rail the near city 0.9-2 km down shows again, so the v2-style field is added back under the v3 far
+  bay. The whole drop now reads under the rail.
+
+**Wangan sea bridge** (`_dress_wangan_bridge`)
+- **Deck:** 7.5 m road with a 0.6 m concrete edge strip and a girder fascia down to the soffit, the touge guardrail on
+  both sides, and delineators. Sodium lamps every 30 m on each side, staggered 15 m.
+- **Piers:** `mtn_sea_pier` replaces `wangan_pier`. It has twin battered columns stood just outboard of the deck edge
+  (a bit of licence), a hammerhead crosshead, and a `mtn_sea_pilecap` at the waterline, every 30 m.
+- **Old bridge:** `mtn_old_span`, the old Overseas-railway arch bridge, 60 m off on the right, with one span missing.
+  Its arches march to the vanishing point alongside.
+- **Water:** a tiled `wangan_water` strip along the course, then the open bay.
+- **Far shore:** a waterfront town 0.65-1 km out, with a promenade lamp line and hotel windows, and the dark range behind
+  it. The rear view shows the mountain behind.
+- **Reflections:** `_glints` streaks under the promenade lamps, stretched as if by ripples.
+- The SWEEPER L carries the deck round to the left, so its curve shows ahead with its piers.
+
+**Street canyon** (`_alley_side`, the `AL` branches in `_dress_street_v2`)
+- **Blocks:** both sides are lined to a 0.35 m kerb strip with 4 new narrow-frontage blocks (`mtn_block_al_a..d`,
+  5-7 m wide, 3-6 floors, every one with a lit shopfront and a blade sign) mixed with the v2 uphill blocks. They are
+  5-6 floors near the camera, 4-5 in the middle and 3-4 up the hill. Each block is level and sunk for the 13 % fall, so
+  the roofline steps up the slope.
+- **Branches off:** a stair alley climbs off on the left, stairs go down between the right-hand blocks, and there is a
+  vending machine on each side.
+- **Overhead:** an enclosed lit walkway (`mtn_alley_walkway`) crosses at the 2nd floor. Poles stand in the kerb strip,
+  with wires along, drops to both facades and cables strung across.
+- **Corner:** the curve mirror is on the 90, and the right-hand row runs on round the outside of the 90, so the street
+  turns in front of a wall of buildings.
+- **Signs:** the right-hand blocks are mirrored along the street so their blade signs read the right way round.
+
+**Pass 4 weak spots**
+- **Bridge piers near the camera are hidden under the deck edge.** From a deck-height chase you can't see under your own
+  girder. The pier rhythm reads mainly on the old bridge alongside and on the curve ahead, not right beside the car.
+- **Bridge lamp reflections:** the bridge's own lamps can't reflect into view. Geometrically their reflections fall
+  under the deck. The streaks are under the far-shore lamps instead, and they are short (a few px at 640x480).
+- **The bay is fairly flat and empty between the bridge and the shore** (one water texture, no boats or channel markers).
+  The far range is faint.
+- **Canyon street:** the facades nearest the camera are big and dark, and the near blade signs are huge. The walkway and
+  the cross wires mostly sit behind the HUD (mirror and plate) at the top centre. With buildings both sides the climb
+  reads from the road and roofline more than from the horizon. The vending machines stand out only a little.
+- **Wangan skyline v4:** the near city lights are a dot field again, with no street structure up close.
+- **Tris:** the canyon street is ~37k env tris (the far tiers are kept, though mostly hidden).
 
 ## Pass 3 (v3): steeper, and a Wangan cut of its own
 
@@ -331,7 +399,8 @@ cedars, verge, ridge band) and `wangan_sky`.
 ## Re-render
 
 ```
-./run.sh                                   # pass 3 (default): textures + Blender + import + 9 v3 frames + sheet_v3 + v2/v3 strip
+./run.sh                                   # pass 4 (default): wangan skyline + wangan:bridge + street:alley (9 v4 frames) + sheet_v4
+MTN_V=3 ./run.sh                           # rebuild the v3 frames + sheet_v3 + v2/v3 strip
 MTN_V=2 ./run.sh                           # rebuild the v2 frames + sheet_v2 + v1/v2 strip
 MTN_V=1 ./run.sh                           # rebuild the v1 frames + sheet
 SKIP_ASSETS=1 ONLY="wangan" ./run.sh       # one district (3 frames)

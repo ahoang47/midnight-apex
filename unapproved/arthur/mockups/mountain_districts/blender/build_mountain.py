@@ -263,3 +263,62 @@ def mtn_shotcrete_net():
 mtn_soundwall(); mtn_shotcrete_net()
 json.dump(dict(STATS), open(os.path.join(OUT, 'tri_counts_mountain.json'), 'w'), indent=1)
 print('STATS v3', {k: STATS[k] for k in ('mtn_soundwall', 'mtn_shotcrete_net') if k in STATS})
+
+# ── pass 4 (Austin 2026-11-15: a Key West sea bridge for Wangan, tight canyon streets for Street) ─────────────────────────
+#   mtn_sea_pier      : improved wangan_pier for the 7.5 m deck: twin battered columns, a crosshead under the girder (top at
+#                       the soffit, -1.8 m), columns run 40 m down (the water plane cuts them at whatever height the deck is)
+#   mtn_sea_pilecap   : the pile cap at the waterline (placed at the water level, not the deck), a lighter tide band
+#   mtn_old_span      : one 20 m span of the old Overseas-railway bridge alongside (concrete arch faces, pier at one end)
+#   mtn_alley_walkway : enclosed lit walkway across the 4.8 m canyon street between the 2nd floors
+#   mtn_block_al_a..d : narrow-frontage (5-7 m) canyon blocks, 3-6 floors, every one with a lit shopfront and a blade sign
+def mtn_sea_pier():
+    # hammerhead crosshead 11.6 m wide under the 8.7 m deck, twin columns stood just outboard of the deck edge so they read beside
+    # the girder from the deck (a little artistic licence on the Seven Mile Bridge's under-deck piers)
+    reset(); b = Builder('mtn_sea_pier'); m = mat('wangan_pier', 'wangan_pier')
+    soffit = -1.8; X = 5.0
+    for x in (-X, X):
+        b.quad([(x - 0.75, 0.75, -40.0), (x - 0.75, -0.75, -40.0), (x - 0.6, -0.6, soffit - 1.3), (x - 0.6, 0.6, soffit - 1.3)], [(0, 6), (0.4, 6), (0.4, 0), (0, 0)], m)
+        b.quad([(x + 0.75, -0.75, -40.0), (x + 0.75, 0.75, -40.0), (x + 0.6, 0.6, soffit - 1.3), (x + 0.6, -0.6, soffit - 1.3)], [(0, 6), (0.4, 6), (0.4, 0), (0, 0)], m)
+        b.quad([(x - 0.75, -0.75, -40.0), (x + 0.75, -0.75, -40.0), (x + 0.6, -0.6, soffit - 1.3), (x - 0.6, -0.6, soffit - 1.3)], [(0, 6), (0.4, 6), (0.4, 0), (0, 0)], m)
+        b.quad([(x + 0.75, 0.75, -40.0), (x - 0.75, 0.75, -40.0), (x - 0.6, 0.6, soffit - 1.3), (x + 0.6, 0.6, soffit - 1.3)], [(0, 6), (0.4, 6), (0.4, 0), (0, 0)], m)
+    b.box((0, 0, soffit - 1.3), (2 * X + 1.6, 2.0, 1.3), m, faces=['-x', '+x', '-y', '+y', '-z', '+z'], uvscale=6.0)   # crosshead
+    b.finish(tess=False); export('mtn_sea_pier')
+
+def mtn_sea_pilecap():
+    reset(); b = Builder('mtn_sea_pilecap'); m = mat('wangan_pier', 'wangan_pier'); c = mat('mtn_retain_concrete', 'mtn_retain_concrete')
+    b.box((0, 0, -0.6), (12.4, 3.0, 1.5), c, faces=['-x', '+x', '-y', '+y', '+z'], uvscale=4.0)
+    b.finish(tess=False); export('mtn_sea_pilecap')
+
+def mtn_old_span():
+    reset(); b = Builder('mtn_old_span'); m = mat('mtn_retain_concrete', 'mtn_retain_concrete'); L, hw = 20.0, 3.0
+    b.box((0, 0, -1.0), (2 * hw, L, 1.0), m, faces=['-x', '+x', '+z'], uvscale=4.0)   # deck slab
+    n = 8
+    for i in range(n):   # arch faces both sides: wall from the deck down to the intrados (springing -7 m, crown -1.2 m)
+        ya, yb = -L/2 + L * i / n, -L/2 + L * (i + 1) / n
+        za, zb = -7.0 + 5.8 * (1 - (ya / (L/2)) ** 2), -7.0 + 5.8 * (1 - (yb / (L/2)) ** 2)
+        for x, flip in ((-hw, False), (hw, True)):
+            vs = [(x, ya, za), (x, yb, zb), (x, yb, -1.0), (x, ya, -1.0)]
+            if flip: vs = [vs[1], vs[0], vs[3], vs[2]]
+            b.quad(vs, [(0, 1), (1, 1), (1, 0), (0, 0)], m)
+        b.quad([(-hw, yb, zb), (-hw, ya, za), (hw, ya, za), (hw, yb, zb)], [(0, 0), (1, 0), (1, 1), (0, 1)], m)   # soffit
+    b.box((0, -L/2, -30.0), (2 * hw + 0.6, 2.2, 23.0), m, faces=['-x', '+x', '-y', '+y'], uvscale=4.0)   # pier
+    b.finish(tess=False); export('mtn_old_span')
+
+def mtn_alley_walkway():
+    reset(); b = Builder('mtn_alley_walkway'); w = mat('mtn_block_wall_b', 'mtn_block_wall_b'); e = mat('Emit_mtn_windows', 'emit_mtn_windows')
+    x0, x1, z0, hw = 0.4, -5.9, 6.2, 1.2
+    b.box(((x0 + x1) / 2, 0, z0), (x0 - x1, 2 * hw, 0.6), w, faces=['-z', '-y', '+y'], uvscale=4.0)
+    b.box(((x0 + x1) / 2, 0, z0 + 2.6), (x0 - x1, 2 * hw + 0.2, 0.4), w, faces=['-z', '+z', '-y', '+y'], uvscale=4.0)
+    for y in (-hw, hw):   # glazed sides: window strip between the slabs
+        u1 = 3 / 32
+        vs = [(x0, y, z0 + 0.6), (x1, y, z0 + 0.6), (x1, y, z0 + 2.6), (x0, y, z0 + 2.6)]
+        if y > 0: vs = [vs[1], vs[0], vs[3], vs[2]]
+        b.quad(vs, [(0, 0), (u1, 0), (u1, 1), (0, 1)], e)
+    b.finish(tess=False); export('mtn_alley_walkway')
+
+mtn_sea_pier(); mtn_sea_pilecap(); mtn_old_span(); mtn_alley_walkway()
+mtn_block('mtn_block_al_a', 5.5, 6, 0, 9.0, 'mtn_block_wall_a', 0, 0, 41)
+mtn_block('mtn_block_al_b', 6.5, 5, 0, 9.0, 'mtn_block_wall_b', 2, 3, 42, tank=True)
+mtn_block('mtn_block_al_c', 5.0, 4, 0, 8.0, 'mtn_block_wall_c', 3, 5, 43)
+mtn_block('mtn_block_al_d', 7.0, 3, 0, 8.0, 'mtn_block_wall_a', 1, 4, 44)
+json.dump(dict(STATS), open(os.path.join(OUT, 'tri_counts_mountain.json'), 'w'), indent=1)

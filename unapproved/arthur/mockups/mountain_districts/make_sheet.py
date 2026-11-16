@@ -23,9 +23,9 @@ if V3: ROWS = ROWS3
 COLS = [('out', 'OUT  (A / POW)'), ('mid', 'MID  (S / HAN)'), ('in', 'IN  (D / EN)')]
 W, Hh, G, LW, top = 640, 480, 10, 250, 52
 sh = Image.new('RGB', (LW + 3 * W + 2 * G, top + 3 * Hh + 2 * G + 44), (11, 23, 43)); d = ImageDraw.Draw(sh)
-for j, (_, lab) in enumerate(COLS):
+for j, (_, lab) in enumerate(COLS if ARG != 'v4' else []):
     d.text((LW + j * (W + G) + 10, 10), lab, font=font(32), fill=(220, 228, 240))
-for i, (k, name, w, g) in enumerate(ROWS):
+for i, (k, name, w, g) in enumerate(ROWS if ARG != 'v4' else []):
     y = top + i * (Hh + G)
     d.multiline_text((12, y + 12), '\n'.join(name.split('  ')), font=font(30), fill=(220, 228, 240), spacing=6)
     d.multiline_text((12, y + 110), 'road %s\ngrade %s' % (w, g), font=font(26), fill=(240, 200, 148), spacing=8)
@@ -34,7 +34,7 @@ for i, (k, name, w, g) in enumerate(ROWS):
         sh.paste(im, (LW + j * (W + G), y))
 d.text((12, top + 3 * Hh + 2 * G + 10), 'Cat and mouse, CAT (chasing) view per entry lane, rival 11 m ahead in the same line. Cel A soft, Godot 4.6.3 GL Compatibility: 3D 640x480 RGB555 + Bayer, HUD 1280x960.',
        font=font(22), fill=(150, 165, 190))
-sh.save(os.path.join(H, 'mountain_districts_sheet%s.png' % SUF)); print('sheet written')
+if ARG != 'v4': sh.save(os.path.join(H, 'mountain_districts_sheet%s.png' % SUF)); print('sheet written')
 if V2:   # v1 vs v2, MID lane, one row per district
     W2, H2 = 800, 600
     st = Image.new('RGB', (LW + 2 * W2 + G, top + 3 * H2 + 2 * G + 44), (11, 23, 43)); d = ImageDraw.Draw(st)
@@ -62,3 +62,22 @@ if V3:   # v2 vs v3, MID lane, one row per district
             st.paste(Image.open(os.path.join(H, f)).convert('RGB').resize((W2, H2), Image.LANCZOS), (LW + j * (W2 + G), y))
     d.text((12, top + 3 * H2 + 2 * G + 10), 'v3 chase: same pose and lens as v2; pitch follows half the climb, so the grade reads against plumb walls and the horizon.', font=font(22), fill=(150, 165, 190))
     st.save(os.path.join(H, 'mountain_districts_v2_v3_mid.png')); print('strip written')
+if ARG == 'v4':   # pass 4: 5 rows (touge + street main reuse v3 as-is), cols OUT / MID / IN
+    ROWS4 = [('touge_%s_cat_v3.png', 'TOUGE', '(v3, unchanged)', '6.0 m', '11.5-12.5 %'),
+             ('wangan_%s_cat_v4.png', 'WANGAN  mountain skyline', 'v4: touge guardrail', '7.5 m', '9-10 %'),
+             ('wangan_bridge_%s_cat_v4.png', 'WANGAN  sea bridge', 'v4: new section', '7.5 m', '3-4.5 %'),
+             ('street_%s_cat_v3.png', 'STREET  hillside city', '(v3, unchanged)', '5.8 m', '11-13 %'),
+             ('street_alley_%s_cat_v4.png', 'STREET  canyon street', 'v4: new section', '4.8 m', '11-13 %')]
+    sh = Image.new('RGB', (LW + 3 * W + 2 * G, top + 5 * Hh + 4 * G + 44), (11, 23, 43)); d = ImageDraw.Draw(sh)
+    for j, (_, lab) in enumerate(COLS):
+        d.text((LW + j * (W + G) + 10, 10), lab, font=font(32), fill=(220, 228, 240))
+    for i, (pat, name, note, w, g) in enumerate(ROWS4):
+        y = top + i * (Hh + G)
+        d.multiline_text((12, y + 12), '\n'.join(name.split('  ')), font=font(30), fill=(220, 228, 240), spacing=6)
+        d.text((12, y + 92), note, font=font(22), fill=(150, 165, 190))
+        d.multiline_text((12, y + 140), 'road %s\ngrade %s' % (w, g), font=font(26), fill=(240, 200, 148), spacing=8)
+        for j, (c, _) in enumerate(COLS):
+            sh.paste(Image.open(os.path.join(H, pat % c)).convert('RGB').resize((W, Hh), Image.LANCZOS), (LW + j * (W + G), y))
+    d.text((12, top + 5 * Hh + 4 * G + 10), 'Cat and mouse, CAT (chasing) view per entry lane, rival 11 m ahead in the same line. Cel A soft, Godot 4.6.3 GL Compatibility: 3D 640x480 RGB555 + Bayer, HUD 1280x960. Same v3 chase camera and HUD.',
+           font=font(22), fill=(150, 165, 190))
+    sh.save(os.path.join(H, 'mountain_districts_sheet_v4.png')); print('sheet v4 written')

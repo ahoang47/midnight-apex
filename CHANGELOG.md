@@ -8,6 +8,21 @@
 
 ---
 
+## [art] 2026-11-15 — Arthur: mountain districts pass 4, touge guardrail on Wangan, a Key West sea bridge, a canyon street (unapproved mockup)
+
+- **Why:** on the v3 frames (fe8b0e1), Austin said: "Wangan should use the same guardrails as touge. How about making a few more frames for each district? Wangan should have a bridge over the water, similar to Key West. You had something pretty close already. For street, a similar idea but more tight and narrow streets within the city, such as buildings lining both sides. Touge can stay as it is because it is a classic mountain pass, we can add more flora later."
+- **What:** pass 4 is in `unapproved/arthur/mockups/mountain_districts/`. It has 9 new frames, `wangan_*_cat_v4`, `wangan_bridge_*_cat_v4` and `street_alley_*_cat_v4`, plus a 5-row `mountain_districts_sheet_v4.png` (touge and street main reuse v3). v1, v2 and v3 are untouched: `MTN_V=1/2/3` rebuild all 27 old frames byte-identically.
+  - **Wangan skyline:** the parapet is swapped for the exact touge guardrail (same asset, material and placement). The near city down the drop shows again through it.
+  - **Wangan sea bridge** (`SECTION=bridge`), Seven Mile Bridge feel:
+    - Deck: 7.5 m, ~9 m over the water, climbing 3→4.5 % onto the hump, with the touge guardrail both sides and sodium lamps every 30 m.
+    - Piers: improved twin-column piers with pile caps every 30 m, plus the old arch bridge alongside with one span missing.
+    - Shore: a far-shore town whose lamp reflections streak on the water, and the range behind it.
+  - **Street canyon** (`SECTION=alley`):
+    - Road: 4.8 m with a 0.35 m kerb strip, at 11→13 %.
+    - Blocks: both sides lined with narrow 3–6 floor blocks (4 new narrow-frontage ones), taller near and shorter up the hill, each sunk so the roofline steps up the slope.
+    - Dressing: lit shopfronts, blade signs, a stair alley off the left, stairs down on the right, two vending machines, an enclosed walkway across, wires and cross cables.
+  - Same v3 camera and HUD. Gordon's files are untouched, and nothing is approved.
+
 ## [art] 2026-11-15 — Arthur: mountain districts pass 3, steeper grades and a Wangan cut of its own (unapproved mockup)
 
 - **Why:** on the v2 frames (669d864), Austin said: "The high lattice on the Wangan sections are a little high. I like it, but it feels too similar to the touge. Also, we might need to up the grade even more to really sell the height."

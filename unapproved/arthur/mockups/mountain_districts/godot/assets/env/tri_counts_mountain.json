@@ -25,5 +25,13 @@
  "mtn_footbridge": 98,
  "mtn_steps_up": 80,
  "mtn_soundwall": 14,
- "mtn_shotcrete_net": 8
+ "mtn_shotcrete_net": 8,
+ "mtn_sea_pier": 28,
+ "mtn_sea_pilecap": 10,
+ "mtn_old_span": 62,
+ "mtn_alley_walkway": 18,
+ "mtn_block_al_a": 204,
+ "mtn_block_al_b": 202,
+ "mtn_block_al_c": 174,
+ "mtn_block_al_d": 168
 }

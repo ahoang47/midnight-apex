@@ -99,9 +99,13 @@ var tris := 0
 var cam_pull := false
 # MOUNTAIN PASS 2 (Austin 2026-11-15: "the side assets should be decreasing in height, to achieve perspective"; the street
 # "doesn't feel like city in the mountains"). MTN_V=1 rebuilds the v1 frames exactly; default is v2 (files *_v2.png).
-var MTN_VER := int(OS.get_environment("MTN_V")) if OS.get_environment("MTN_V") != "" else 3   # MOUNTAIN: pass 3 by default; MTN_V=1 / 2 rebuild v1 / v2
+var MTN_VER := int(OS.get_environment("MTN_V")) if OS.get_environment("MTN_V") != "" else 4   # MOUNTAIN: pass 4 by default; MTN_V=1 / 2 / 3 rebuild v1 / v2 / v3
 var V2 := MTN_VER >= 2
 var V3 := MTN_VER >= 3
+var V4 := MTN_VER >= 4
+## MOUNTAIN v4: SECTION="bridge" (Wangan, Key West sea bridge) / "alley" (Street, canyon street inside the city); "" = the
+## district's main section (Wangan skyline, Street main street)
+var SECTION := OS.get_environment("SECTION") if V4 else ""
 ## v2 chase: same B.5b family (behind + right of the player, fixed, not mirrored), a touch lower and on a longer lens, aimed
 ## further up the road, so the rising road and the receding roadside run up to a vanishing point above the horizon
 const CAM_PITCH_K_V3 := 0.5
@@ -128,7 +132,8 @@ func _frames() -> Array:
 	var out3 := []
 	for ls in [["OUT", "A"], ["MID", "S"], ["IN", "D"]]:
 		var dl := _lane_d(String(ls[0]))
-		out3.append(_fr("%s_%s_cat%s.png" % [DK, String(ls[0]).to_lower(), ("_v3" if V3 else ("_v2" if V2 else ""))], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
+		var nm := DK + ("_" + SECTION if SECTION != "" else "")
+		out3.append(_fr("%s_%s_cat%s.png" % [nm, String(ls[0]).to_lower(), ("_v4" if V4 else ("_v3" if V3 else ("_v2" if V2 else "")))], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
 			"rival_d_nudge": -signf(dl) * 0.25 * LANE_W / 1.45, "lead": -0.12, "gap_s": 0.44, "role": "cat"}))
 	return out3
 	var out := [_fr("%s.png" % DK, L)]
@@ -164,6 +169,9 @@ func _ready() -> void:
 	DK = OS.get_environment("DISTRICT") if OS.get_environment("DISTRICT") != "" else "touge"
 	DC = DISTRICTS[DK].duplicate()
 	if V2 and DK == "street": DC["fog_far"] = 140.0   # MOUNTAIN v2: the city tiers climbing ahead need a little more reach
+	if SECTION == "alley":   # MOUNTAIN v4: 4.8 m kerb to kerb (v3 main street 5.8 m), lanes and chevrons scaled to it
+		DC["road_half"] = 2.4; DC["lane"] = 1.0; DC["chev"] = 0.48
+	if SECTION == "bridge": DC["fog_far"] = 300.0   # MOUNTAIN v4: the piers and lamps run out ~300 m over the water
 	LANE_W = float(DC.lane)
 	fog = Color(DC.fog)
 	out_dir = ProjectSettings.globalize_path("res://").path_join("..")
@@ -197,6 +205,8 @@ const ELEV_STEP := 0.5
 # MOUNTAIN v3 (Austin: "up the grade even more to really sell the height"): [g at the car, g ahead, ramp start s, ramp end s]
 const GRADE_V3 := {"touge": [0.115, 0.125, 10.0, 50.0], "wangan": [0.09, 0.10, 10.0, 60.0], "street": [0.11, 0.13, 6.0, 30.0]}
 func grade_at(s: float) -> float:
+	if SECTION == "bridge":   # MOUNTAIN v4: gentle climb onto the navigation hump, 3 % at the car to 4.5 % ahead
+		return lerpf(0.03, 0.045, Track.smooth((s - 10.0) / 70.0))
 	if V3 and GRADE_V3.has(DK):
 		var g3: Array = GRADE_V3[DK]
 		return lerpf(g3[0], g3[1], Track.smooth((s - g3[2]) / (g3[3] - g3[2])))
@@ -281,7 +291,7 @@ func _build_world() -> void:
 	match DK:
 		"touge": _dress_touge_v2(W) if V2 else _dress_touge(W)
 		"street": _dress_street_v2(W) if V2 else _dress_street_mtn(W)   # MOUNTAIN
-		"wangan": _dress_wangan_v2(W) if V2 else _dress_wangan_mtn(W)
+		"wangan": _dress_wangan_bridge(W) if SECTION == "bridge" else (_dress_wangan_v2(W) if V2 else _dress_wangan_mtn(W))
 	art.apply_fog(DK)
 	chevrons = Chevrons.new()
 	chevrons.name = "Chevrons"
@@ -853,13 +863,23 @@ func _dress_wangan_v2(W: float) -> void:
 	else: _flank(-(W + 13.0), 10.0)
 	# downhill (right): parapet, fascia, slope with cedar tops (as v1) + a delineator on every other parapet module
 	s = S0
-	while s < S1:
-		prop("wangan_parapet", s + 2.0, W, 0.0, 0.0, 1.0)
-		s += 4.0
-	_delins(S0 + 4.0, S1, W + 0.12, 1.02, 8.0, 0.55)
-	band(S0, S1, W + 0.5, -1.1, W + 0.5, -2.4, tex_mat("wangan_fascia", 6.0))
 	var vg: ShaderMaterial = art.strip_mat("touge_verge", 6.0); vg.set_shader_parameter("gain", 0.6)
-	band(S0, S1, W + 0.5, -2.4, W + 26.0, -24.0, vg, 3.0)
+	if V4:   # MOUNTAIN v4 (Austin: "Wangan should use the same guardrails as touge"): the touge guardrail exactly as on the
+		# touge (asset, material, 4 m modules, W + 0.45, verge strip, delineators on the rail line); the drop opens under it
+		var verge: ShaderMaterial = art.strip_mat("touge_verge", 6.0)
+		band(S0, S1, W, 0.0, W + 0.55, 0.0, verge)
+		while s < S1:
+			prop("touge_guardrail", s, W + 0.45, 0.0, 0.0)
+			s += 4.0
+		_delins(S0 + 2.0, S1, W + 0.62, 0.0, 8.0)
+		band(S0, S1, W + 0.55, 0.0, W + 26.0, -24.0, vg, 3.0)
+	else:
+		while s < S1:
+			prop("wangan_parapet", s + 2.0, W, 0.0, 0.0, 1.0)
+			s += 4.0
+		_delins(S0 + 4.0, S1, W + 0.12, 1.02, 8.0, 0.55)
+		band(S0, S1, W + 0.5, -1.1, W + 0.5, -2.4, tex_mat("wangan_fascia", 6.0))
+		band(S0, S1, W + 0.5, -2.4, W + 26.0, -24.0, vg, 3.0)
 	band(S0, S1, W + 26.0, -24.0, W + 70.0, -70.0, vg, 6.0)
 	k = 0; s = S0
 	while s < S1:
@@ -871,7 +891,7 @@ func _dress_wangan_v2(W: float) -> void:
 		var s3 := (0.0 if sd > 0 else 16.0) - 96.0
 		while s3 < S1:
 			if s3 > S0:
-				var p := prop("wangan_lamp", s3, sd * (W + 0.25), 0.1 if sd > 0 else -0.85)
+				var p := prop("wangan_lamp", s3, sd * ((W + 0.75) if (V4 and sd > 0) else (W + 0.25)), 0.1 if sd > 0 else -0.85)   # v4: behind the rail
 				lamp_glow(p, Vector3(-4.5, 11.6, 0), 1.8, 0.85)
 			s3 += 32.0
 	prop("wangan_kpost", 30.0, W + 0.05, 0.0)
@@ -891,6 +911,12 @@ func _dress_wangan_v2(W: float) -> void:
 			_pcl([26.0, 4300.0, 350.0, 220, [3.0, 1.0, 2.0, 0.0, 0.0]]), _pcl([30.5, 2600.0, 180.0, 160, [5.0, 1.5, 3.0, 0.0, 0.6]]),
 			], [_pln([31.0, 2550.0, 17.0, 3250.0, 90, 2]), _pln([22.0, 2650.0, 27.0, 4200.0, 60, 2]), _pln([16.0, 3350.0, 30.0, 3350.0, 70, 0]),
 			_pln([18.0, 4400.0, 30.0, 4400.0, 60, 2])], 4.6, 11)
+		if V4:   # v4: with a see-through rail the near city 1-2 km down shows again (the v2 field, nearer and lower)
+			_valley_floor(Y - 2.0, [[400.0, 1500.0, -100.0, 3200.0, "valley_land"]])
+			_valley_lights(Y, [
+				_pcl([25.0, 1150.0, 200.0, 220, [5.0, 1.5, 3.0, 0.0, 0.6]]), _pcl([19.0, 1500.0, 250.0, 220, [4.0, 1.5, 3.0, 0.0, 0.6]]),
+				_pcl([13.0, 2000.0, 180.0, 120, [0.5, 0.0, 6.0, 0.0, 0.8]]), _pcl([29.0, 900.0, 140.0, 160, [5.0, 1.5, 3.0, 0.0, 0.6]]),
+				], [_pln([27.0, 1000.0, 11.0, 2000.0, 50, 2]), _pln([21.0, 1100.0, 24.0, 2000.0, 36, 2])], 3.8, 12)
 	else:
 		_valley_floor(Y - 2.0, [[500.0, 2050.0, -600.0, 3200.0, "valley_land"], [2050.0, 3000.0, -600.0, 3200.0, "valley_water"], [3000.0, 4600.0, -600.0, 3200.0, "valley_land"]])
 		_valley_lights(Y, [
@@ -903,6 +929,127 @@ func _dress_wangan_v2(W: float) -> void:
 		_far_prop("wangan_crane", Vector3(q.y, Y, -q.x), PI * 0.5, 2.1 if V3 else 1.3, 0.35)
 	var qb := _pol(6.0, 3650.0 if V3 else 2800.0)
 	_far_prop("wangan_bridge", Vector3(qb.y, Y, -qb.x), PI * 0.5 + 0.15, 1.8, 0.45)
+
+# --- WANGAN v4 (MOUNTAIN pass 4): the Key West section. Off the mountain onto a long, low concrete sea bridge (Seven Mile
+# Bridge feel): 7.5 m deck ~9 m over the water at the car, climbing 3 -> 4.5 % onto the navigation hump; twin-column piers every
+# 30 m marching off over open water, the touge guardrail both sides, sodium lamps every 30 m staggered 15 m, the old arch
+# bridge running alongside on the right (one span missing), a far-shore town with its lights' reflections on the water and the
+# dark range behind it. Everything in the bay is absolute (water at YW), the deck follows elev(s, d).
+const BR_YW := -9.0
+func _dress_wangan_bridge(W: float) -> void:
+	var conc := tex_mat("mtn_retain_concrete", 4.0, 0.8)
+	var fas := tex_mat("wangan_fascia", 6.0)
+	for sd in [-1.0, 1.0]:
+		band(S0, S1, sd * W, 0.0, sd * (W + 0.6), 0.0, conc)            # edge strip the rail stands on
+		band(S0, S1, sd * (W + 0.6), 0.0, sd * (W + 0.6), -1.8, fas)    # girder fascia down to the soffit
+		var s := S0
+		while s < S1:
+			prop("touge_guardrail", s, sd * (W + 0.45), 0.0, 0.0)
+			s += 4.0
+		_delins(S0 + (2.0 if sd > 0.0 else 6.0), S1, sd * (W + 0.62), 0.0, 8.0)
+		var s3 := (0.0 if sd > 0.0 else 15.0) - 90.0
+		while s3 < S1:
+			if s3 > S0:
+				var p := prop("wangan_lamp", s3, sd * (W + 0.75), 0.0)
+				lamp_glow(p, Vector3(-4.5, 11.6, 0), 1.8, 0.85)
+			s3 += 30.0
+	var sp := S0 + 0.0
+	while sp < S1 + 1.0:   # piers: the crosshead under the girder, the pile cap at the waterline
+		prop("mtn_sea_pier", sp, 0.0, 0.0, 0.0, 0.8, 1.0, true)
+		prop("mtn_sea_pilecap", sp, 0.0, BR_YW - elev(sp, 0.0), 0.0, 0.7, 1.0, true)
+		sp += 30.0
+	# the old bridge alongside, 60 m off on the right, deck 7 m over the water, arches every 20 m, one span gone
+	var so := S0; var k := 0
+	while so < S1 + 120.0:
+		if k % 9 != 5:
+			prop("mtn_old_span", so, 60.0, BR_YW + 7.0 - elev(so, 60.0), 0.0, 0.75, 1.0, true)
+		so += 20.0; k += 1
+	# water: a tiled strip along the course (absolute height), then the open bay out to the far shore
+	_water_strip(S0 - 40.0, S1 + 400.0, [-900.0, -200.0, -60.0, -20.0, 0.0, 20.0, 60.0, 200.0, 900.0])
+	_valley_floor(BR_YW - 0.1, [[-1500.0, 5000.0, -4000.0, 4000.0, "valley_water"]])
+	# far shore: a waterfront town ~0.65-0.9 km out (promenade lamp line, hotel windows up to 14 m), the range behind it
+	_far_ridge(-1600.0, 2600.0, 50.0, BR_YW - 1.0)
+	_valley_floor(BR_YW + 0.5, [[900.0, 1300.0, -1400.0, 1400.0, "valley_land"]])
+	var lines := [_pln([-26.0, 760.0, -8.0, 700.0, 46, 2]), _pln([-8.0, 700.0, 10.0, 690.0, 46, 2]), _pln([10.0, 690.0, 28.0, 760.0, 40, 2])]
+	_valley_lights(BR_YW + 6.0, [], lines, 3.6, 31)
+	_valley_lights(BR_YW + 10.0, [
+		_pcl([-18.0, 820.0, 60.0, 140, [5.0, 1.5, 3.0, 0.0, 0.6]]), _pcl([-2.0, 790.0, 70.0, 180, [5.0, 1.5, 3.0, 0.0, 0.6]]),
+		_pcl([16.0, 800.0, 60.0, 120, [4.0, 1.5, 3.0, 0.0, 0.6]]), _pcl([-34.0, 1000.0, 90.0, 90, [3.0, 1.0, 2.0, 0.0, 0.0]]),
+		_pcl([30.0, 1050.0, 90.0, 90, [3.0, 1.0, 2.0, 0.0, 0.0]]),
+		], [], 3.6, 32)
+	var gp := []
+	for ln in lines:
+		for i in int(ln[4]):
+			if i % 2 == 0:
+				var tt := float(i) / maxf(1.0, float(ln[4]) - 1.0)
+				gp.append([lerpf(ln[1], ln[3], tt), -lerpf(ln[0], ln[2], tt), 22.0, 6.0])   # ripples stretch the streak well past the mirror length (6 m lamps -> as if 22 m)
+	_glints(gp, 11.5, BR_YW + 0.8)   # 0.8 m up: clear of the water planes in the depth buffer at 0.4-0.8 km
+	# behind (the rear view): the mountain the road came down from
+	_far_ridge(-1600.0, 2600.0, 50.0, BR_YW - 1.0, 1900.0)
+
+## water strip along the course at the absolute bay level, tiled wangan_water (8 m), columns at the given offsets
+func _water_strip(s0: float, s1: float, ds: Array) -> void:
+	var st := SurfaceTool.new(); st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var s := s0; var n := 0
+	while s < s1:
+		for j in ds.size() - 1:
+			var c := [ArtKit.pp(course_full, s, ds[j], BR_YW), ArtKit.pp(course_full, s, ds[j + 1], BR_YW), ArtKit.pp(course_full, s + 8.0, ds[j], BR_YW), ArtKit.pp(course_full, s + 8.0, ds[j + 1], BR_YW)]
+			var uv := [Vector2(ds[j] / 8.0, s / 8.0), Vector2(ds[j + 1] / 8.0, s / 8.0), Vector2(ds[j] / 8.0, s / 8.0 + 1.0), Vector2(ds[j + 1] / 8.0, s / 8.0 + 1.0)]
+			for q in [0, 2, 1, 1, 2, 3, 0, 1, 2, 1, 3, 2]: st.set_uv(uv[q]); st.add_vertex(c[q])
+			n += 4
+		s += 8.0
+	var mi := MeshInstance3D.new(); mi.mesh = st.commit(); mi.extra_cull_margin = 16384.0
+	var m := tex_mat("wangan_water", 1.0, 0.9); m.set_shader_parameter("cel_k", 0.0)
+	mi.material_override = m; env_root.add_child(mi); tris += n
+
+## reflections of far lights on the water: for a light hl above the water, seen from hc above it, the streak runs on the
+## water from the light's foot (D) back to the reflection point of its top (D * hc / (hc + hl)); quads lying on the water
+func _glints(pts: Array, hc: float, yw: float) -> void:
+	var st := SurfaceTool.new(); st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var o := Vector2(1.4, -0.6); var n := 0
+	for p in pts:
+		var c := Vector2(float(p[0]), float(p[1])); var dv := c - o; var D := dv.length(); var dir := dv / D
+		var nr := Vector2(-dir.y, dir.x) * float(p[3]) * 0.5
+		var a := o + dir * (D * hc / (hc + float(p[2])))
+		var v := [Vector3(c.x - nr.x, yw, c.y - nr.y), Vector3(c.x + nr.x, yw, c.y + nr.y), Vector3(a.x - nr.x, yw, a.y - nr.y), Vector3(a.x + nr.x, yw, a.y + nr.y)]
+		var uv := [Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]
+		for q in [0, 2, 1, 1, 2, 3, 0, 1, 2, 1, 3, 2]: st.set_uv(uv[q]); st.add_vertex(v[q])
+		n += 4
+	var mi := MeshInstance3D.new(); mi.name = "Glints"; mi.mesh = st.commit(); mi.extra_cull_margin = 16384.0
+	var m := tex_mat("emit_water_glint", 1.0)
+	m.set_shader_parameter("cel_k", 0.0); m.set_shader_parameter("flatten", 0.0); m.set_shader_parameter("fog_amount", 0.25)
+	mi.material_override = m; env_root.add_child(mi); tris += n
+	_fog_keep.append([m, 0.25])
+
+## STREET v4 canyon street: one side of blocks to the 0.35 m kerb strip. Taller near (5-6 floors), shorter up the hill (3-4),
+## narrow 5-7 m frontages, each level and sunk for the 13 % fall so the roofline steps up the slope. Left: a stair alley
+## climbing off, the enclosed walkway across at the 2nd floor; right: stairs down between blocks; a vending machine each side.
+## Left stops at the inside of the 90, right runs on round its outside (the wall the street turns in front of).
+func _alley_side(FA: float, sd: float) -> void:
+	var tall := ["mtn_block_al_a", "mtn_block_up_c", "mtn_block_al_b", "mtn_block_up_a"]
+	var mid := ["mtn_block_al_b", "mtn_block_up_a", "mtn_block_al_c", "mtn_block_up_b"]
+	var low := ["mtn_block_al_c", "mtn_block_up_b", "mtn_block_al_d", "mtn_block_up_d"]
+	var WD := {"mtn_block_al_a": 5.5, "mtn_block_al_b": 6.5, "mtn_block_al_c": 5.0, "mtn_block_al_d": 7.0,
+		"mtn_block_up_a": 9.0, "mtn_block_up_b": 7.5, "mtn_block_up_c": 11.0, "mtn_block_up_d": 8.0}
+	var s := -16.0 + (0.0 if sd < 0.0 else 2.7); var i := 0
+	var s_end := (S - 2.0) if sd < 0.0 else (S + 40.0)
+	var stair_done := false; var vend_done := false; var walk_done := false
+	while s < s_end and i < 200:
+		var hh := ArtKit.hash01(i * 3.7 + sd * 11.0 + 5.0)
+		var pick: Array = tall if s < 14.0 else (mid if s < 34.0 else low)
+		var n: String = pick[int(hh * 4.0) % 4]; var w: float = WD[n]
+		if s + w > s_end: break
+		if sd < 0.0 and not stair_done and s > 20.0:
+			prop("mtn_steps_up", s + 1.1, -FA, 0.12, 0.0, 0.8, 1.0, true); s += 2.2; stair_done = true; continue
+		if sd > 0.0 and not stair_done and s > 30.0:
+			prop("mtn_steps", s + 1.5, FA, 0.12, 0.0, 0.8); s += 3.0; stair_done = true; continue
+		var bl := prop(n, s + w * 0.5, sd * FA, -0.25 - 0.065 * w, 0.0, 0.36, 0.5, true)
+		if sd > 0.0: bl.scale = Vector3(1.0, 1.0, -1.0)   # mirrored along the street, so the right-hand blade signs read the right way round
+		if not vend_done and s > CHASE_S + (4.0 if sd < 0.0 else 12.0):
+			prop("street_vending", s + 1.2, sd * (FA - 0.1), 0.12, 0.0, 0.7, 0.45, true); vend_done = true
+		if sd < 0.0 and not walk_done and s + w > 26.0:
+			prop("mtn_alley_walkway", s + w * 0.5, -FA, 0.0, 0.0, 0.75, 0.9, true); walk_done = true
+		s += w + (0.3 if hh < 0.5 else 0.0); i += 1
 
 ## STREET v2: a city built into the mountain (熱海 / 北野 / 尾道 / Mid-Levels). Hill height in the straight frame (x = d, z = -s):
 ## the street climbs ~9 % along -z; the mountain rises 50 % to the left of the uphill blocks and falls 60 % to the right.
@@ -931,10 +1078,10 @@ func _hill_mesh(x0: float, x1: float, z0: float, z1: float, cell: float, crest: 
 	mi.material_override = m; env_root.add_child(mi); tris += nx * nz * 2
 
 ## the mountains closing round the far side of the bay: one dark band from the valley floor up to a ridge line, straight frame
-func _far_ridge(x0: float, x1: float, step: float, y0: float) -> void:
+func _far_ridge(x0: float, x1: float, step: float, y0: float, zc := -1250.0) -> void:
 	var st := SurfaceTool.new(); st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var P := func(x: float, top: bool) -> Vector3:
-		var z := -1250.0 + 0.32 * x
+		var z := zc + 0.32 * x
 		return Vector3(x, (125.0 + 45.0 * sin(x * 0.004 + 0.6) + 16.0 * sin(x * 0.015)) if top else y0, z)
 	var x := x0; var n := 0
 	while x < x1:
@@ -960,7 +1107,8 @@ func _block_far(n: String, x: float, z: float, y_off: float, yaw: float, emit_ga
 				m.set_shader_parameter("fog_amount", 0.3 if (ck != null and float(ck) == 0.0) else 0.55)
 
 func _dress_street_v2(W: float) -> void:
-	var SW := 1.0
+	var AL := SECTION == "alley"   # MOUNTAIN v4: the canyon street (blocks both sides to a 0.35 m kerb strip, no drop side)
+	var SW := 0.35 if AL else 1.0
 	var curb := tex_mat("street_curb", 1.0)
 	var pave := tex_mat("street_paving", 2.0)
 	for sd in [-1.0, 1.0]:
@@ -973,6 +1121,9 @@ func _dress_street_v2(W: float) -> void:
 		["mtn_block_up_c", 11.0], ["alley", 2.2], ["mtn_block_up_a", 9.0], ["mtn_block_up_b", 7.5], ["mtn_block_up_c", 11.0], ["alley", 2.2],
 		["mtn_block_up_a", 9.0], ["mtn_block_up_b", 7.5], ["mtn_block_up_c", 11.0], ["mtn_block_up_a", 9.0]]
 	var s := -14.0; var i := 0; var bridge_done := false; var vend_done := false
+	if AL:
+		_alley_side(FA, -1.0); _alley_side(FA, 1.0)
+		s = S + 1.0; i = 400
 	while s < S - 2.0 and i < 400:
 		var e: Array = seq[i % seq.size()]; var w: float = e[1]
 		if s + w > S - 2.0: break
@@ -985,7 +1136,7 @@ func _dress_street_v2(W: float) -> void:
 			if not vend_done and s > CHASE_S + 5.0 and w < 9.5:
 				prop("street_vending", s + 3.2, -(FA - 0.42), 0.12, 0.0, 0.7, 0.45, true); vend_done = true
 		s += w; i += 1
-	prop("mtn_block_up_c", s + 5.5, -FA, -0.25, 0.0, 0.36, 0.5, true)   # the block on the inside of the 90
+	if not AL: prop("mtn_block_up_c", s + 5.5, -FA, -0.25, 0.0, 0.36, 0.5, true)   # the block on the inside of the 90
 	# behind them: the city climbing the mountain in tiers (blocks on terraces, facing the street), to the ridge
 	var rows := 5
 	for r in rows:
@@ -1018,11 +1169,11 @@ func _dress_street_v2(W: float) -> void:
 	# downhill (right): pipe handrail on the pavement edge; blocks whose roofs / top floors are at road level and whose floors
 	# go down the slope; stair alleys down between them; more rows below, stepping down to the valley
 	s = S0
-	while s < S + 12.0:
+	while s < S + 12.0 and not AL:
 		prop("mtn_handrail", s + 1.0, FA - 0.05, 0.12, 0.0, 0.8)
 		s += 2.0
 	var dseq := [["mtn_block_dn_d", 10.0], ["gap", 3.0], ["mtn_block_dn_d", 10.0], ["mtn_block_dn_d", 10.0], ["gap", 3.0], ["mtn_block_dn_b", 10.0]]   # roofs at road level: the drop stays open over them
-	s = -12.0; i = 0
+	s = -12.0; i = 400 if AL else 0
 	while s < S + 2.0 and i < 400:   # stop at the 90 (past it the right side of the road faces the camera)
 		var e2: Array = dseq[i % dseq.size()]; var w2: float = e2[1]
 		if e2[0] == "gap":
@@ -1030,7 +1181,7 @@ func _dress_street_v2(W: float) -> void:
 		else:
 			prop(e2[0], s + w2 * 0.5, FA + 0.4, -2.6, 0.0, 0.36, 0.52, true)   # roofs a storey-ish below the road: the drop reads at the rail
 		s += w2; i += 1
-	for r in 3:
+	for r in (0 if AL else 3):
 		var x := FA + 15.0 + r * 14.0
 		var zz := 10.0 - r * 5.0; var j := 0
 		while zz > -(S + 40.0):
@@ -1046,18 +1197,23 @@ func _dress_street_v2(W: float) -> void:
 	var s2 := -60.0
 	while s2 < S1:
 		if s2 > S0 and s2 < S - 1.0:
-			var p := prop("street_pole", s2, -(W + 0.35), 0.12, 0.0, 1.0, 1.0, true)
+			var p := prop("street_pole", s2, -(W + (0.18 if AL else 0.35)), 0.12, 0.0, 1.0, 1.0, true)
 			lamp_glow(p, Vector3(-1.35, 5.2, 0), 1.2, 0.75)
 			poles.append(s2)
 		s2 += 20.0
 	var wire := tex_mat("street_metal", 1.0, 0.55)
+	var pd := -(W + (0.18 if AL else 0.35))
 	for pi in poles.size() - 1:
 		for off in [[-0.8, 9.2], [0.8, 9.2], [0.0, 8.6]]:
-			_wire(poles[pi], -(W + 0.35) + float(off[0]), off[1], poles[pi + 1], -(W + 0.35) + float(off[0]), off[1], wire)
+			_wire(poles[pi], pd + float(off[0]), off[1], poles[pi + 1], pd + float(off[0]), off[1], wire)
 	for pi in poles.size():
 		if poles[pi] > CHASE_S + 6.0:   # no drop wire slicing across the sky right over the camera
-			_wire(poles[pi], -(W + 0.35), 8.4, poles[pi] + 6.0, FA + 1.2, 1.2, wire)
-	prop("street_curvemirror", S - 1.5, W + 0.55, 0.12, 0.55, 0.9)
+			if AL:   # canyon: drops to both facades + a cable strung across between the blocks
+				_wire(poles[pi], pd, 8.4, poles[pi] + 4.0, FA - 0.1, 6.6, wire)
+				_wire(poles[pi] + 9.0, -FA + 0.1, 7.2, poles[pi] + 11.0, FA - 0.1, 6.0, wire)
+			else:
+				_wire(poles[pi], -(W + 0.35), 8.4, poles[pi] + 6.0, FA + 1.2, 1.2, wire)
+	prop("street_curvemirror", S - 1.5, W + (0.2 if AL else 0.55), 0.12, 0.55, 0.9)
 	# the town lights in the valley below (as v1), the mountains round the far side of the bay behind them
 	var Y := -90.0
 	_far_ridge(-100.0, 1900.0, 50.0, Y - 2.0)

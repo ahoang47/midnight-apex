@@ -334,3 +334,16 @@ def windows_atlas_v3():
     return im
 for fn, n in [(soundwall, 'mtn_soundwall'), (shotcrete_net, 'mtn_shotcrete_net'), (windows_atlas_v3, 'emit_mtn_windows_v3')]:
     save(fn(), os.path.join(ENV, n + '.png'))
+# ── pass 4: water glint streak (the far-shore lights' reflections on the bay): v 0 at the light, 1 toward the camera.
+#    Broken horizontal dashes of sodium on the water base, thinning out toward the camera.
+def water_glint():
+    W, H = 16, 64; base = np.asarray(Image.open(os.path.join(ENV, 'valley_water.png')).convert('RGB')).reshape(-1, 3).mean(0)
+    a = np.tile(base, (H, W, 1)).astype(np.float32); rr = random.Random(41)
+    for y in range(H):
+        k = (1.0 - y / H) ** 1.4
+        for _ in range(int(1 + 5 * k)):
+            x0 = rr.randrange(W); ln = rr.randrange(2, 6)
+            if rr.random() < 0.35 + 0.6 * k:
+                a[y, x0:x0 + ln] = base * (1 - k * 0.9) + SOD * 255 * k * 0.9
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+save(water_glint(), os.path.join(ENV, 'emit_water_glint.png'))
