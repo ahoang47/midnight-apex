@@ -1,0 +1,4 @@
+ - The mods don't seemingly add a ton of flavor, seems like we can get away with just MK1 mods each round, the additional mods are unnecessary. I know I asked for that, but nothing incentivizes players to get new mods. 
+    - How about instead, mods are required to get skill points, and each mod has a ceiling of skill points it can get? For instance, MOD_R2_POW_MK2 has a total of 249 points, how about we make 249 the ceiling and set it to a floor that is balanced? We remove the skill points from solely leveling. 
+    - Proposed update: You have a stock car, no mods. Grinding doesn't gain you any XP, but it earns you some cash. You use the cash to buy mods. Each mod starts at 0 XP, and has a ceiling of skill points. Each pool of skill points is freely assignable, but in a ratio. I.e., POW mod gets a pool of stat points that you can assign to POW/EN/HAN, but the majority of points need to be applied to POW. This may mess with the retuning spec. 
+ 
