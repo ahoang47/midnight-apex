@@ -48,3 +48,6 @@ python3 run_all.py && python3 debt_check.py && python3 make_tables.py` (a few se
 - The off-tune table varies only the POW share (HAN fixed at 25 %). A HAN-heavy wrong kit is therefore not priced, and the
   "wrong kit" costs below use POW-share kits (PPPP in Wangan, EEEE in Street).
 - Pre-finale arc and finale: only the ceilings were derived (results.json `finale_ceil`). The arc was not walked.
+
+## Decision (Austin 2026-11-18)
+- Mod slots must NOT change per district: one fixed kit layout across all rounds. Layout: POW, HAN, EN + 1 flex slot (any stat), every round. Ceilings re-derived in FIXED_LAYOUT.md: unchanged at 133 / 261 / 407; grind XP 13 / 12 / 14; R1 boss story XP 26.5; spirit off.

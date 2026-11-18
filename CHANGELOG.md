@@ -8,6 +8,21 @@
 
 ---
 
+## 2026-11-18 — Barry [sim]: skill_tree shelved, spirit meter cut, mod_skill fixed slot layout (UNAPPROVED)
+- **skill_tree SHELVED** (Austin, after the sims in `unapproved/barry/skill-tree-v1/SIM_RESULTS.md` + `sim/`). Reason: not suited to the intended gameplay. The sims found that the driver tree pushes 80/80 above 95 at the Street and Touge bosses, and that mandatory gyms only work if opponent budgets are rebuilt. Back to mod_skill.
+- **Spirit meter CUT** (Austin). Reason: it doesn't add anything. The ×1.25 and additive versions measured within noise of each other, and with spirit on, no Street boss ratio passes both checks. `spirit-meter-v1` is kept for reference only.
+- **mod_skill fixed slot layout:** POW, HAN, EN + 1 flex slot in every round. This replaces the per-district kits (PPHE Street, PHEE Wangan/Touge).
+  - The flex mod's own stat is set per round: POW in Street, EN in Wangan, EN in Touge. Reason: it is one slot, so its points carry over and nothing is stranded at district changes. A full build is exactly on tune in every round.
+  - Files: `unapproved/barry/mod-skill-v1/FIXED_LAYOUT.md`, `fixed_layout.py`, `run_fixed.py`, `boss_engine_check.py` (+ json).
+- **Ceilings unchanged at 133 / 261 / 407** (caps 3532 / 4044 / 4628). Reason: total points don't depend on the layout, and every round has an on-tune full build. R3 at 407 falls 0.0001 short of r 1.071 unclamped (408 would hit it), but the live cap power of 462.51 clamps both to 1.0702.
+- **Grind XP R2 15 -> 12** (now 13 / 12 / 14). Reason: this recalibration matches the live mixed grind counts of 13 / 13 / 12. With the old value, R2 mixed grinds drop to 11.
+- **R1 boss story XP 154.3 -> 26.5.** Reason: the old value paid to refill the Wangan E2 mod after the Street P2 points were stranded; with the fixed layout nothing is stranded. Keeping it would inflate R2 (story 80/80 low 62.8 vs 54.2).
+- **All bosses pass with spirit off** (60/60 >= 30, 80/80 <= 95). Live engine, 9000 races per cell:
+  - Street (r 1.044): 32.26 / 94.74. Tight: 80/80 is about 1 SE under 95.
+  - Wangan (r 1.0548): 38.82 / 90.99.
+  - Touge (r 1.0702): 30.73 / 92.72.
+  - Street engine scan: 1.042 gives 28.48, 1.040 gives 25.34 and 1.036 gives 18.83 on 60/60, so 1.044 is the only Street r tested that passes both checks.
+
 ## 2026-11-18 — Barry [design]: skill-tree-v1 decisions recorded (THOUGHT EXPERIMENT, UNAPPROVED)
 - Austin answered the 9 skill-tree questions: two XP currencies, front-loaded driver points, explore both next-tier stock options, one-Myth-car Elite-4 gauntlet idea, 2-3 car classes per round, no driver respec (car respec free), free mastered techniques, driver owns spirit meter / car sets buff, explore both multiplicative and additive spirit.
 - Added §8 gym structure (crews as gyms, mandatory road races, optional grinds kept, mandatory loss blocks progress).

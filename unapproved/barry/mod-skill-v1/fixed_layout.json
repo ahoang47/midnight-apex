@@ -1,0 +1,632 @@
+{
+ "ceil": [
+  133,
+  261,
+  407
+ ],
+ "cap_points": [
+  3532,
+  4044,
+  4628
+ ],
+ "configs": {
+  "PEE": {
+   "story_table": [
+    [
+     145.0,
+     115.8,
+     26.9,
+     25.1,
+     27.0,
+     26.8,
+     26.5
+    ],
+    [
+     96.6,
+     72.1,
+     67.9,
+     60.1,
+     29.5,
+     30.6,
+     92.2
+    ],
+    [
+     99.6,
+     102.3,
+     52.2,
+     69.5,
+     69.6,
+     35.0,
+     70.5
+    ]
+   ],
+   "grind_xp": [
+    13.0,
+    12.0,
+    14.0
+   ],
+   "story_shortfall": {
+    "R1 kid1": 0.0,
+    "R1 kid2": 0.0,
+    "R1 mat1": 0.0,
+    "R1 mat2": 0.0,
+    "R1 oh1": 0.0,
+    "R1 oh2": 0.0,
+    "R1 boss": 0.0,
+    "R2 kid1": 0.0,
+    "R2 kid2": 0.0,
+    "R2 mat1": 0.0,
+    "R2 mat2": 0.0,
+    "R2 oh1": 0.0,
+    "R2 oh2": 0.0,
+    "R2 boss": 0.0,
+    "R3 kid1": 0.0,
+    "R3 kid2": 0.0,
+    "R3 mat1": 0.0,
+    "R3 mat2": 0.0,
+    "R3 oh1": 0.0,
+    "R3 oh2": 0.0,
+    "R3 boss": 0.0
+   },
+   "walks": {
+    "story": [
+     {
+      "rnd": 1,
+      "grind": 0,
+      "low8080": 52.9,
+      "boss8080": 52.9,
+      "boss6060": 0.2,
+      "boss_r": 0.9954,
+      "boss_pow_share": 50.0,
+      "end_points": 3393,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 2,
+      "grind": 0,
+      "low8080": 54.2,
+      "boss8080": 57.7,
+      "boss6060": 0.7,
+      "boss_r": 1.0056,
+      "boss_pow_share": 25.0,
+      "end_points": 3946,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 3,
+      "grind": 0,
+      "low8080": 50.5,
+      "boss8080": 55.9,
+      "boss6060": 1.5,
+      "boss_r": 1.0288,
+      "boss_pow_share": 45.0,
+      "end_points": 4517,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     }
+    ],
+    "mixed": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 81.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 30.1,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 13,
+      "low8080": 73.7,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 93.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 12,
+      "low8080": 73.3,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 82.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ],
+    "hard": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 94.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 30.1,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 14,
+      "low8080": 90.6,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 105.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 18,
+      "low8080": 88.2,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 166.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ]
+   },
+   "walks_old_calib": {
+    "story": [
+     {
+      "rnd": 1,
+      "grind": 0,
+      "low8080": 52.9,
+      "boss8080": 52.9,
+      "boss6060": 0.2,
+      "boss_r": 0.9954,
+      "boss_pow_share": 50.0,
+      "end_points": 3521,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 2,
+      "grind": 0,
+      "low8080": 62.8,
+      "boss8080": 67.5,
+      "boss6060": 1.6,
+      "boss_r": 1.0139,
+      "boss_pow_share": 25.0,
+      "end_points": 3977,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 3,
+      "grind": 0,
+      "low8080": 52.6,
+      "boss8080": 58.0,
+      "boss6060": 1.8,
+      "boss_r": 1.0306,
+      "boss_pow_share": 45.0,
+      "end_points": 4525,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     }
+    ],
+    "mixed": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 81.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 157.9,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 11,
+      "low8080": 75.7,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 102.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 12,
+      "low8080": 73.3,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 82.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ],
+    "hard": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 94.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 157.9,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 11,
+      "low8080": 90.6,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 102.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 18,
+      "low8080": 88.2,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 166.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ]
+   }
+  },
+  "free": {
+   "story_table": [
+    [
+     145.0,
+     115.8,
+     26.9,
+     25.1,
+     27.0,
+     26.8,
+     26.5
+    ],
+    [
+     96.6,
+     72.1,
+     67.9,
+     60.1,
+     29.5,
+     30.6,
+     92.2
+    ],
+    [
+     99.6,
+     102.3,
+     52.2,
+     69.5,
+     69.6,
+     35.0,
+     70.5
+    ]
+   ],
+   "grind_xp": [
+    13.0,
+    12.0,
+    14.0
+   ],
+   "story_shortfall": {
+    "R1 kid1": 0.0,
+    "R1 kid2": 0.0,
+    "R1 mat1": 0.0,
+    "R1 mat2": 0.0,
+    "R1 oh1": 0.0,
+    "R1 oh2": 0.0,
+    "R1 boss": 0.0,
+    "R2 kid1": 0.0,
+    "R2 kid2": 0.0,
+    "R2 mat1": 0.0,
+    "R2 mat2": 0.0,
+    "R2 oh1": 0.0,
+    "R2 oh2": 0.0,
+    "R2 boss": 0.0,
+    "R3 kid1": 0.0,
+    "R3 kid2": 0.0,
+    "R3 mat1": 0.0,
+    "R3 mat2": 0.0,
+    "R3 oh1": 0.0,
+    "R3 oh2": 0.0,
+    "R3 boss": 0.0
+   },
+   "walks": {
+    "story": [
+     {
+      "rnd": 1,
+      "grind": 0,
+      "low8080": 52.9,
+      "boss8080": 52.9,
+      "boss6060": 0.2,
+      "boss_r": 0.9954,
+      "boss_pow_share": 50.0,
+      "end_points": 3393,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 2,
+      "grind": 0,
+      "low8080": 54.2,
+      "boss8080": 57.7,
+      "boss6060": 0.7,
+      "boss_r": 1.0056,
+      "boss_pow_share": 25.0,
+      "end_points": 3946,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 3,
+      "grind": 0,
+      "low8080": 50.5,
+      "boss8080": 55.9,
+      "boss6060": 1.5,
+      "boss_r": 1.0288,
+      "boss_pow_share": 45.0,
+      "end_points": 4517,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     }
+    ],
+    "mixed": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 81.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 30.1,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 13,
+      "low8080": 73.7,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 93.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 12,
+      "low8080": 73.3,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 82.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ],
+    "hard": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 94.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 30.1,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 14,
+      "low8080": 90.6,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 105.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 18,
+      "low8080": 88.2,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 166.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ]
+   },
+   "walks_old_calib": {
+    "story": [
+     {
+      "rnd": 1,
+      "grind": 0,
+      "low8080": 52.9,
+      "boss8080": 52.9,
+      "boss6060": 0.2,
+      "boss_r": 0.9954,
+      "boss_pow_share": 50.0,
+      "end_points": 3521,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 2,
+      "grind": 0,
+      "low8080": 62.8,
+      "boss8080": 67.5,
+      "boss6060": 1.6,
+      "boss_r": 1.0139,
+      "boss_pow_share": 25.0,
+      "end_points": 3977,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     },
+     {
+      "rnd": 3,
+      "grind": 0,
+      "low8080": 52.6,
+      "boss8080": 58.0,
+      "boss6060": 1.8,
+      "boss_r": 1.0306,
+      "boss_pow_share": 45.0,
+      "end_points": 4525,
+      "xp_lost": 0.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": false
+     }
+    ],
+    "mixed": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 81.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 157.9,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 11,
+      "low8080": 75.7,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 102.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 12,
+      "low8080": 73.3,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 82.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ],
+    "hard": [
+     {
+      "rnd": 1,
+      "grind": 13,
+      "low8080": 94.9,
+      "boss8080": 94.9,
+      "boss6060": 31.6,
+      "boss_r": 1.044,
+      "boss_pow_share": 50.0,
+      "end_points": 3532,
+      "xp_lost": 157.9,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 2,
+      "grind": 11,
+      "low8080": 90.6,
+      "boss8080": 90.6,
+      "boss6060": 39.5,
+      "boss_r": 1.0548,
+      "boss_pow_share": 25.0,
+      "end_points": 4044,
+      "xp_lost": 102.0,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     },
+     {
+      "rnd": 3,
+      "grind": 18,
+      "low8080": 88.2,
+      "boss8080": 92.9,
+      "boss6060": 30.3,
+      "boss_r": 1.0702,
+      "boss_pow_share": 45.0,
+      "end_points": 4628,
+      "xp_lost": 166.7,
+      "max_tune_dist": 0.0,
+      "at_cap_end": true
+     }
+    ]
+   }
+  }
+ }
+}

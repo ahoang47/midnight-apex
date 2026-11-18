@@ -1,3 +1,5 @@
+> **CUT (Austin 2026-11-18):** spirit meter removed; it does not add anything. Kept for reference only.
+
 # spirit-meter-v1 RESULTS (Barry DRAFT, 2026-11-18, touge-race @ bbdda07, mod_skill)
 
 Every number comes from the scripts in this folder, run on the live match engine (sim/velocity_shift, imported

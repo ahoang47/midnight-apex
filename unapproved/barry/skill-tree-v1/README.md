@@ -1,3 +1,5 @@
+> **SHELVED (Austin 2026-11-18, after sims):** skill-tree not suited to the intended gameplay; back to mod_skill.
+
 > **THOUGHT EXPERIMENT ONLY (Austin 2026-11-18):** skill_tree is a side experiment, not the current build. The build direction is mod_skill.
 
 # skill-tree-v1: driver tree + car trees (Barry DRAFT, 2026-11-18, touge-race @ bbdda07)

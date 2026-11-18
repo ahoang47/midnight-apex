@@ -1,0 +1,223 @@
+[
+ {
+  "prof": "c6060",
+  "tune": "on",
+  "carry": false,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   62.3,
+   61.8,
+   59.3
+  ],
+  "clear": 22.5
+ },
+ {
+  "prof": "c6060",
+  "tune": "on",
+  "carry": true,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   62.3,
+   48.8,
+   25.5
+  ],
+  "clear": 9.0
+ },
+ {
+  "prof": "c6060",
+  "tune": "one",
+  "carry": false,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   51.7,
+   37.3,
+   49.5
+  ],
+  "clear": 9.7
+ },
+ {
+  "prof": "c6060",
+  "tune": "one",
+  "carry": true,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   51.7,
+   18.7,
+   20.2
+  ],
+  "clear": 2.8
+ },
+ {
+  "prof": "c8080",
+  "tune": "on",
+  "carry": false,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   97.7,
+   94.8,
+   97.8
+  ],
+  "clear": 90.5
+ },
+ {
+  "prof": "c8080",
+  "tune": "on",
+  "carry": true,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   97.7,
+   87.8,
+   83.8
+  ],
+  "clear": 72.3
+ },
+ {
+  "prof": "c8080",
+  "tune": "one",
+  "carry": false,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   89.7,
+   88.5,
+   96.3
+  ],
+  "clear": 77.3
+ },
+ {
+  "prof": "c8080",
+  "tune": "one",
+  "carry": true,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   89.7,
+   64.5,
+   84.8
+  ],
+  "clear": 52.8
+ },
+ {
+  "prof": "curve",
+  "tune": "on",
+  "carry": false,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   87.5,
+   83.5,
+   89.7
+  ],
+  "clear": 64.3
+ },
+ {
+  "prof": "curve",
+  "tune": "on",
+  "carry": true,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   87.5,
+   70.5,
+   57.8
+  ],
+  "clear": 38.2
+ },
+ {
+  "prof": "curve",
+  "tune": "one",
+  "carry": false,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   79.2,
+   67.8,
+   84.3
+  ],
+  "clear": 44.7
+ },
+ {
+  "prof": "curve",
+  "tune": "one",
+  "carry": true,
+  "f": 1.0,
+  "n": 600,
+  "win": [
+   79.2,
+   42.0,
+   54.8
+  ],
+  "clear": 22.0
+ },
+ {
+  "prof": "curve",
+  "tune": "one",
+  "carry": true,
+  "f": 1.02,
+  "n": 300,
+  "win": [
+   90.7,
+   62.0,
+   74.0
+  ],
+  "clear": 45.0
+ },
+ {
+  "prof": "curve",
+  "tune": "one",
+  "carry": true,
+  "f": 1.04,
+  "n": 300,
+  "win": [
+   97.0,
+   78.0,
+   86.0
+  ],
+  "clear": 65.0
+ },
+ {
+  "prof": "curve",
+  "tune": "one",
+  "carry": true,
+  "f": 1.06,
+  "n": 300,
+  "win": [
+   98.7,
+   91.0,
+   94.7
+  ],
+  "clear": 85.7
+ },
+ {
+  "prof": "curve",
+  "tune": "one",
+  "carry": true,
+  "f": 1.08,
+  "n": 300,
+  "win": [
+   99.3,
+   96.3,
+   99.0
+  ],
+  "clear": 95.0
+ },
+ {
+  "prof": "curve",
+  "tune": "one",
+  "carry": true,
+  "f": 1.1,
+  "n": 300,
+  "win": [
+   100.0,
+   99.3,
+   99.7
+  ],
+  "clear": 99.0
+ }
+]
