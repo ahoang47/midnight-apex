@@ -99,10 +99,11 @@ var tris := 0
 var cam_pull := false
 # MOUNTAIN PASS 2 (Austin 2026-11-15: "the side assets should be decreasing in height, to achieve perspective"; the street
 # "doesn't feel like city in the mountains"). MTN_V=1 rebuilds the v1 frames exactly; default is v2 (files *_v2.png).
-var MTN_VER := int(OS.get_environment("MTN_V")) if OS.get_environment("MTN_V") != "" else 4   # MOUNTAIN: pass 4 by default; MTN_V=1 / 2 / 3 rebuild v1 / v2 / v3
+var MTN_VER := int(OS.get_environment("MTN_V")) if OS.get_environment("MTN_V") != "" else 5   # MOUNTAIN: pass 5 by default; MTN_V=1 / 2 / 3 / 4 rebuild v1 - v4
 var V2 := MTN_VER >= 2
 var V3 := MTN_VER >= 3
 var V4 := MTN_VER >= 4
+var V5 := MTN_VER >= 5   # MOUNTAIN v5 (Austin 2026-11-18: "Just make all 7.5meters."): every road 7.5 m, the Wangan lane set
 ## MOUNTAIN v4: SECTION="bridge" (Wangan, Key West sea bridge) / "alley" (Street, canyon street inside the city); "" = the
 ## district's main section (Wangan skyline, Street main street)
 var SECTION := OS.get_environment("SECTION") if V4 else ""
@@ -133,7 +134,7 @@ func _frames() -> Array:
 	for ls in [["OUT", "A"], ["MID", "S"], ["IN", "D"]]:
 		var dl := _lane_d(String(ls[0]))
 		var nm := DK + ("_" + SECTION if SECTION != "" else "")
-		out3.append(_fr("%s_%s_cat%s.png" % [nm, String(ls[0]).to_lower(), ("_v4" if V4 else ("_v3" if V3 else ("_v2" if V2 else "")))], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
+		out3.append(_fr("%s_%s_cat%s.png" % [nm, String(ls[0]).to_lower(), ("_v5" if V5 else ("_v4" if V4 else ("_v3" if V3 else ("_v2" if V2 else ""))))], L, {"entry_lane": ls[0], "entry": ls[1], "rival_ds": 11.0, "rival_lane": ls[0],
 			"rival_d_nudge": -signf(dl) * 0.25 * LANE_W / 1.45, "lead": -0.12, "gap_s": 0.44, "role": "cat"}))
 	return out3
 	var out := [_fr("%s.png" % DK, L)]
@@ -171,6 +172,8 @@ func _ready() -> void:
 	if V2 and DK == "street": DC["fog_far"] = 140.0   # MOUNTAIN v2: the city tiers climbing ahead need a little more reach
 	if SECTION == "alley":   # MOUNTAIN v4: 4.8 m kerb to kerb (v3 main street 5.8 m), lanes and chevrons scaled to it
 		DC["road_half"] = 2.4; DC["lane"] = 1.0; DC["chev"] = 0.48
+	if V5:   # MOUNTAIN v5: 7.5 m kerb to kerb everywhere, with the Wangan lanes (1.75 m offsets) and chevron width
+		DC["road_half"] = 3.75; DC["lane"] = 1.75; DC["chev"] = 0.68
 	if SECTION == "bridge": DC["fog_far"] = 300.0   # MOUNTAIN v4: the piers and lamps run out ~300 m over the water
 	LANE_W = float(DC.lane)
 	fog = Color(DC.fog)
@@ -1048,7 +1051,8 @@ func _alley_side(FA: float, sd: float) -> void:
 		if not vend_done and s > CHASE_S + (4.0 if sd < 0.0 else 12.0):
 			prop("street_vending", s + 1.2, sd * (FA - 0.1), 0.12, 0.0, 0.7, 0.45, true); vend_done = true
 		if sd < 0.0 and not walk_done and s + w > 26.0:
-			prop("mtn_alley_walkway", s + w * 0.5, -FA, 0.0, 0.0, 0.75, 0.9, true); walk_done = true
+			var wk := prop("mtn_alley_walkway", s + w * 0.5, -FA, 0.0, 0.0, 0.75, 0.9, true); walk_done = true
+			if V5: wk.scale.x = (2.0 * FA + 0.8) / 6.3   # built for the 4.8 m canyon: stretched facade to facade
 		s += w + (0.3 if hh < 0.5 else 0.0); i += 1
 
 ## STREET v2: a city built into the mountain (熱海 / 北野 / 尾道 / Mid-Levels). Hill height in the straight frame (x = d, z = -s):

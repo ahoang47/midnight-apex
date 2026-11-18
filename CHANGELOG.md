@@ -8,6 +8,16 @@
 
 ---
 
+## [art] 2026-11-18 — Arthur: mountain districts pass 5, every road 7.5 m (unapproved mockup)
+
+- **Why:** Austin said: "Actually. Just make all 7.5meters." and "7.5 meter roads."
+- **What:** pass 5 is in `unapproved/arthur/mockups/mountain_districts/`.
+  - Every road is now 7.5 m: touge 6.0 → 7.5, main street 5.8 → 7.5, canyon street 4.8 → 7.5 with the blocks still tight to the kerb. Wangan was already 7.5 m.
+  - All roads use the Wangan lane offsets and chevrons. OUT / MID / IN read distinct, and the rival is in the player's lane in each.
+  - 15 `*_v5.png` frames (the Wangan ones are byte-identical to v4) and a 5-row `mountain_districts_sheet_v5.png` with width labels.
+  - v1–v4 are untouched (`MTN_V=1–4` rebuild them).
+  - Gordon's files are untouched, and nothing is approved.
+
 ## [art] 2026-11-15 — Arthur: mountain districts pass 4, touge guardrail on Wangan, a Key West sea bridge, a canyon street (unapproved mockup)
 
 - **Why:** on the v3 frames (fe8b0e1), Austin said: "Wangan should use the same guardrails as touge. How about making a few more frames for each district? Wangan should have a bridge over the water, similar to Key West. You had something pretty close already. For street, a similar idea but more tight and narrow streets within the city, such as buildings lining both sides. Touge can stay as it is because it is a classic mountain pass, we can add more flora later."

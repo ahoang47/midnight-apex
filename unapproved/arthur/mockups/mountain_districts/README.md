@@ -13,6 +13,25 @@ Every frame uses the same CAT chasing setup: the rival is 11 m ahead in the play
 chevrons and the red tail wash. The CAT CHASING tie-gap box is on. Player and chevrons sit on that lane, and the plan box
 has that stance selected (OUT = A / POW, MID = S / HAN, IN = D / EN). No floating OUT / MID / IN markers.
 
+## Pass 5 (v5): every road 7.5 m
+
+Austin, 2026-11-18: *"Actually. Just make all 7.5meters."* / *"7.5 meter roads."*
+
+- **Width:** every road is now 7.5 m kerb to kerb. The touge was 6.0 m, the main street 5.8 m and the canyon street
+  4.8 m; Wangan was already 7.5 m. All use the Wangan lane offsets (1.75 m) and chevron width, so OUT / MID / IN sit
+  1.75 m apart and the rival sits in the player's lane in every frame.
+- **What follows the width:** all dressing hangs off the road edge, so the guardrails, walls, facades and poles move out
+  with it. The canyon blocks stay tight to a 0.35 m kerb strip, and the walkway is stretched facade to facade.
+- **Unchanged:** grades, the v3 camera and the HUD.
+- **Files:** all 15 frames are `*_v5.png`, and `mountain_districts_sheet_v5.png` has the same 5 rows as v4 with width
+  labels. The six Wangan v5 frames are byte-identical to their v4 frames.
+- **Rebuilding:** `./run.sh` builds v5, and `MTN_V=1-4` still rebuild v1-v4 unchanged.
+- **Weak spots:**
+  - At 7.5 m the canyon street reads as a narrow city street, not an alley. It is more open overhead and the near facades
+    are less dominant.
+  - The touge's hairpin now feels wider and less tight.
+  - The road textures for touge and street are stretched to the new width, so their painted edge lines are a little wider.
+
 ## Pass 4 (v4): touge guardrail on Wangan, a sea bridge, a canyon street
 
 Austin on v3 (fe8b0e1): *"Wangan should use the same guardrails as touge. How about making a few more frames for each
