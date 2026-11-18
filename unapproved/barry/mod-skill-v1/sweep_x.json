@@ -1,0 +1,1715 @@
+{
+ "ceil": [
+  133,
+  261,
+  407
+ ],
+ "cap_power": [
+  353.1,
+  404.19249999999994,
+  462.50750000000005
+ ],
+ "rows": [
+  {
+   "base": "B1_locked_street",
+   "X": 0.34,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 1.36,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 30.9,
+      "c8080": 94.8,
+      "ok": true
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 14.29,
+     "pattern_band": false,
+     "best": "HHEE",
+     "best_dist": 12.09,
+     "worst": "PPPP",
+     "worst_dist": 20.87,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 16.37,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 19.4,
+      "c8080": 80.4,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 8.9,
+      "c8080": 68.3,
+      "ok": false
+     },
+     "entry_dist": 20.46
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPH",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 3.17,
+     "kits_on_tune": 14,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 30.7,
+      "c8080": 92.1,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B1_locked_street",
+   "X": 0.4,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 2.26,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 30.4,
+      "c8080": 94.7,
+      "ok": true
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 14.67,
+     "pattern_band": false,
+     "best": "EEEE",
+     "best_dist": 12.09,
+     "worst": "PPPP",
+     "worst_dist": 22.42,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 16.68,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 18.8,
+      "c8080": 79.8,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 7.7,
+      "c8080": 65.9,
+      "ok": false
+     },
+     "entry_dist": 20.7
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPH",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 5.28,
+     "kits_on_tune": 10,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 31.0,
+      "c8080": 91.5,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B1_locked_street",
+   "X": 0.5,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 3.77,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 29.7,
+      "c8080": 94.6,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 15.32,
+     "pattern_band": false,
+     "best": "HEEE",
+     "best_dist": 12.09,
+     "worst": "PPPP",
+     "worst_dist": 25.0,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 17.2,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 17.7,
+      "c8080": 78.8,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 5.8,
+      "c8080": 62.0,
+      "ok": false
+     },
+     "entry_dist": 21.09
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHH",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 8.79,
+     "kits_on_tune": 8,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 31.4,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B1_locked_street",
+   "X": 0.6,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPH",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 5.27,
+     "kits_on_tune": 3,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 28.9,
+      "c8080": 94.4,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 15.96,
+     "pattern_band": false,
+     "best": "HEEE",
+     "best_dist": 12.09,
+     "worst": "PPPP",
+     "worst_dist": 27.58,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 17.72,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 16.6,
+      "c8080": 77.5,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 5.8,
+      "c8080": 62.0,
+      "ok": false
+     },
+     "entry_dist": 21.48
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHE",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 12.31,
+     "kits_on_tune": 3,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 31.2,
+      "c8080": 89.4,
+      "ok": false
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B1_locked_street",
+   "X": 0.7,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHE",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 6.78,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 28.1,
+      "c8080": 94.3,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 16.61,
+     "pattern_band": false,
+     "best": "EEEE",
+     "best_dist": 12.09,
+     "worst": "PPPP",
+     "worst_dist": 30.16,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 18.24,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 15.5,
+      "c8080": 76.2,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 5.8,
+      "c8080": 62.0,
+      "ok": false
+     },
+     "entry_dist": 21.87
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHE",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 15.83,
+     "kits_on_tune": 3,
+     "kits": 15,
+     "mid_round_dist": 0.38,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 30.2,
+      "c8080": 88.0,
+      "ok": false
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B1_locked_street",
+   "X": 0.8,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHE",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 8.28,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 27.7,
+      "c8080": 93.9,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 17.26,
+     "pattern_band": false,
+     "best": "HEEE",
+     "best_dist": 12.09,
+     "worst": "PPPP",
+     "worst_dist": 32.74,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 18.76,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 14.3,
+      "c8080": 75.0,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 5.8,
+      "c8080": 62.0,
+      "ok": false
+     },
+     "entry_dist": 22.46
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 1.48,
+     "pattern_band": false,
+     "best": "PHEE",
+     "best_dist": 0.28,
+     "worst": "HHHH",
+     "worst_dist": 19.35,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 1.92,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 29.3,
+      "c8080": 86.6,
+      "ok": false
+     },
+     "entry_dist": 0.52
+    }
+   }
+  },
+  {
+   "base": "B1_locked_street",
+   "X": 1.0,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHE",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 11.3,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 27.6,
+      "c8080": 92.7,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 18.55,
+     "pattern_band": true,
+     "best": "HEEE",
+     "best_dist": 12.09,
+     "worst": "PPPP",
+     "worst_dist": 37.91,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 19.8,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 12.1,
+      "c8080": 72.5,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 5.8,
+      "c8080": 62.0,
+      "ok": false
+     },
+     "entry_dist": 24.02
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 5.0,
+     "pattern_band": true,
+     "best": "PHEE",
+     "best_dist": 3.79,
+     "worst": "HHHH",
+     "worst_dist": 26.38,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 5.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 29.8,
+      "c8080": 82.7,
+      "ok": false
+     },
+     "entry_dist": 3.28
+    }
+   }
+  },
+  {
+   "base": "B2_locked_even",
+   "X": 0.34,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 9.19,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 6.63,
+     "worst": "HHHH",
+     "worst_dist": 11.75,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 12.62,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 27.6,
+      "c8080": 91.6,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 27.2,
+      "c8080": 89.6,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 3.84,
+     "pattern_band": true,
+     "best": "EEEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 8.51,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 6.33,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 40.4,
+      "c8080": 92.2,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 30.8,
+      "c8080": 88.7,
+      "ok": false
+     },
+     "entry_dist": 11.5
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 8.57,
+     "kits_on_tune": 6,
+     "kits": 15,
+     "mid_round_dist": 0.68,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 30.9,
+      "c8080": 89.0,
+      "ok": false
+     },
+     "entry_dist": 3.78
+    }
+   }
+  },
+  {
+   "base": "B2_locked_even",
+   "X": 0.4,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 9.64,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 6.63,
+     "worst": "HHHH",
+     "worst_dist": 12.65,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 12.87,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 27.5,
+      "c8080": 91.3,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 27.0,
+      "c8080": 88.9,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 4.62,
+     "pattern_band": true,
+     "best": "EEEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 10.05,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 6.96,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 40.6,
+      "c8080": 92.5,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 26.0,
+      "c8080": 86.1,
+      "ok": false
+     },
+     "entry_dist": 11.97
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.13,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 10.68,
+     "kits_on_tune": 6,
+     "kits": 15,
+     "mid_round_dist": 1.14,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 30.0,
+      "c8080": 87.7,
+      "ok": false
+     },
+     "entry_dist": 4.19
+    }
+   }
+  },
+  {
+   "base": "B2_locked_even",
+   "X": 0.5,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 10.39,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 6.63,
+     "worst": "HHHH",
+     "worst_dist": 14.16,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 13.27,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 27.4,
+      "c8080": 90.8,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 26.6,
+      "c8080": 87.6,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 5.91,
+     "pattern_band": true,
+     "best": "EEEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 12.64,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 8.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 41.0,
+      "c8080": 93.1,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 21.9,
+      "c8080": 82.6,
+      "ok": false
+     },
+     "entry_dist": 12.75
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 1.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 14.2,
+     "kits_on_tune": 2,
+     "kits": 15,
+     "mid_round_dist": 1.91,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.5,
+      "c8080": 92.5,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 29.0,
+      "c8080": 85.3,
+      "ok": false
+     },
+     "entry_dist": 4.88
+    }
+   }
+  },
+  {
+   "base": "B2_locked_even",
+   "X": 0.6,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 11.14,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 6.63,
+     "worst": "HHEE",
+     "worst_dist": 15.66,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 13.68,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 27.3,
+      "c8080": 90.1,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 25.7,
+      "c8080": 86.4,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 7.2,
+     "pattern_band": true,
+     "best": "EEEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 15.22,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 9.04,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 41.3,
+      "c8080": 93.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 17.9,
+      "c8080": 79.0,
+      "ok": false
+     },
+     "entry_dist": 13.54
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 1.88,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 17.71,
+     "kits_on_tune": 2,
+     "kits": 15,
+     "mid_round_dist": 2.68,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.7,
+      "c8080": 92.1,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 30.0,
+      "c8080": 82.1,
+      "ok": false
+     },
+     "entry_dist": 6.15
+    }
+   }
+  },
+  {
+   "base": "B2_locked_even",
+   "X": 0.7,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 11.9,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 6.63,
+     "worst": "HHHE",
+     "worst_dist": 17.17,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 14.09,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 27.1,
+      "c8080": 89.5,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 24.0,
+      "c8080": 85.3,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 8.49,
+     "pattern_band": true,
+     "best": "EEEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 17.8,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 10.08,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 41.6,
+      "c8080": 94.1,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 13.4,
+      "c8080": 73.9,
+      "ok": false
+     },
+     "entry_dist": 14.32
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 2.76,
+     "pattern_band": true,
+     "best": "PPPE",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 21.23,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 3.45,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.9,
+      "c8080": 91.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 31.2,
+      "c8080": 81.0,
+      "ok": false
+     },
+     "entry_dist": 7.53
+    }
+   }
+  },
+  {
+   "base": "B2_locked_even",
+   "X": 0.8,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 12.65,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 6.63,
+     "worst": "HHHH",
+     "worst_dist": 18.67,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 14.49,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 27.0,
+      "c8080": 88.9,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 22.3,
+      "c8080": 84.2,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 9.78,
+     "pattern_band": true,
+     "best": "EEEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 20.38,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 11.12,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 41.9,
+      "c8080": 94.7,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 9.3,
+      "c8080": 69.0,
+      "ok": false
+     },
+     "entry_dist": 15.1
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 3.64,
+     "pattern_band": true,
+     "best": "PPPE",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 24.75,
+     "kits_on_tune": 1,
+     "kits": 15,
+     "mid_round_dist": 4.23,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 31.2,
+      "c8080": 91.1,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 33.1,
+      "c8080": 86.7,
+      "ok": false
+     },
+     "entry_dist": 8.91
+    }
+   }
+  },
+  {
+   "base": "B2_locked_even",
+   "X": 1.0,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 14.16,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 6.63,
+     "worst": "HHEE",
+     "worst_dist": 21.69,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 15.31,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 26.6,
+      "c8080": 87.6,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 17.0,
+      "c8080": 77.5,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 12.36,
+     "pattern_band": true,
+     "best": "EEEE",
+     "best_dist": 0.54,
+     "worst": "PPPP",
+     "worst_dist": 25.54,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 13.2,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 38.2,
+      "c8080": 92.7,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 5.8,
+      "c8080": 62.0,
+      "ok": false
+     },
+     "entry_dist": 16.67
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 5.8,
+     "pattern_band": true,
+     "best": "PPPE",
+     "best_dist": 3.39,
+     "worst": "HHHH",
+     "worst_dist": 31.78,
+     "kits_on_tune": 0,
+     "kits": 15,
+     "mid_round_dist": 6.53,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 31.2,
+      "c8080": 89.5,
+      "ok": false
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 34.5,
+      "c8080": 90.7,
+      "ok": true
+     },
+     "entry_dist": 11.67
+    }
+   }
+  },
+  {
+   "base": "B3_setup",
+   "X": 0.34,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 1.36,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 30.7,
+      "c8080": 94.7,
+      "ok": true
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHH",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 2.32,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 39.5,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 40.6,
+      "c8080": 92.5,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 3.17,
+     "kits_on_tune": 14,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 30.9,
+      "c8080": 91.7,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B3_setup",
+   "X": 0.4,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 2.26,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 30.0,
+      "c8080": 94.6,
+      "ok": true
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHH",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 3.87,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 39.5,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 41.4,
+      "c8080": 93.8,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 5.28,
+     "kits_on_tune": 11,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 31.3,
+      "c8080": 90.9,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B3_setup",
+   "X": 0.5,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 3.77,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 29.0,
+      "c8080": 94.5,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPHH",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 6.45,
+     "kits_on_tune": 9,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 39.5,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 37.3,
+      "c8080": 92.2,
+      "ok": true
+     },
+     "entry_dist": 0.0
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 8.79,
+     "kits_on_tune": 11,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 31.1,
+      "c8080": 89.3,
+      "ok": false
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B3_setup",
+   "X": 0.6,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 5.27,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 28.0,
+      "c8080": 94.3,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PHEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 9.04,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 39.5,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 29.1,
+      "c8080": 87.8,
+      "ok": false
+     },
+     "entry_dist": 0.0
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 12.31,
+     "kits_on_tune": 6,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 29.8,
+      "c8080": 87.3,
+      "ok": false
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B3_setup",
+   "X": 0.7,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPH",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 6.78,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 27.7,
+      "c8080": 93.6,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PHEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 11.62,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 39.5,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 23.5,
+      "c8080": 84.0,
+      "ok": false
+     },
+     "entry_dist": 0.0
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 15.83,
+     "kits_on_tune": 6,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 29.1,
+      "c8080": 85.0,
+      "ok": false
+     },
+     "entry_dist": 0.0
+    }
+   }
+  },
+  {
+   "base": "B3_setup",
+   "X": 0.8,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPH",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 8.28,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 27.6,
+      "c8080": 92.8,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PHEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 14.2,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 39.5,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 19.5,
+      "c8080": 80.5,
+      "ok": false
+     },
+     "entry_dist": 0.39
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 19.35,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 30.0,
+      "c8080": 82.0,
+      "ok": false
+     },
+     "entry_dist": 0.34
+    }
+   }
+  },
+  {
+   "base": "B3_setup",
+   "X": 1.0,
+   "d": {
+    "street": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPP",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 11.3,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.044,
+      "c6060": 31.6,
+      "c8080": 94.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.044,
+      "c6060": 27.5,
+      "c8080": 91.1,
+      "ok": false
+     },
+     "entry_dist": null
+    },
+    "wangan": {
+     "pattern": "PHEE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PHEE",
+     "best_dist": 0.0,
+     "worst": "PPPP",
+     "worst_dist": 19.36,
+     "kits_on_tune": 4,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0548129120711875,
+      "c6060": 39.5,
+      "c8080": 90.6,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0548129120711875,
+      "c6060": 10.7,
+      "c8080": 70.9,
+      "ok": false
+     },
+     "entry_dist": 1.96
+    },
+    "touge": {
+     "pattern": "PPHE",
+     "pattern_dist": 0.0,
+     "pattern_band": true,
+     "best": "PPPH",
+     "best_dist": 0.0,
+     "worst": "HHHH",
+     "worst_dist": 26.38,
+     "kits_on_tune": 3,
+     "kits": 15,
+     "mid_round_dist": 0.0,
+     "boss_pattern": {
+      "r": 1.0702258143681163,
+      "c6060": 30.3,
+      "c8080": 92.9,
+      "ok": true
+     },
+     "boss_worst": {
+      "r": 1.0702258143681163,
+      "c6060": 32.9,
+      "c8080": 85.9,
+      "ok": false
+     },
+     "entry_dist": 1.72
+    }
+   }
+  }
+ ]
+}

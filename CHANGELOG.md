@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-18 — Barry [sim]: mod_skill study, manual planner, spirit meter and skill-tree drafts (UNAPPROVED)
+
+- **mod_skill (`unapproved/barry/mod-skill-v1/`):** Austin's proposal from notes.md. The player never levels; race XP goes into one mod the player picks, and grinding pays cash plus mod XP. Ceilings are re-derived per round (133 / 261 / 407 above the stock part) so a full kit equals today's cap power, and XP is retuned so ceilings land at today's caps. The own-stat share is 60%: at 50% or below, mod type barely matters; at 70% or above, wrong kits cost 16 points and carried kits miss the tune. It reproduces the live campaign within about 1 point (e.g. story-only bosses 52.9 / 57.7 / 55.9 vs live 53.0 / 57.7 / 55.8). Open calls for Austin: free base setup at Reiko's, overflow spilling to the next mod, Touge on PHEE.
+- **Planner page:** at Austin's request, the live planner canvas is now "Campaign planner: mod_skill", with every choice manual (no profiles, auto-buy, auto-grind or auto targets) and one standard reading curve (0.6 to 0.8 per district, a placeholder). Its engine matches the Python model on 543 of 543 values. Source is in `mod-skill-v1/planner/`; `planner-v1/` keeps the old version.
+- **Spirit meter (`unapproved/barry/spirit-meter-v1/`):** a Yakuza-style meter, filled by won clashes and scaled by build match, run on a copy of the match path (identical to live with spirit off, 120 of 120 races). The placeholder setting (+25% clash payoff for 3 turns, once per race) adds about 5.5 points per story race without a snowball. It pushes the Street boss at the cap for 80/80 to 96.1; lowering the boss target from 1.044 to about 1.040 fixes that.
+- **Skill trees (`unapproved/barry/skill-tree-v1/`):** driver execution tree plus car "weapon" trees that the driver outgrows each round, with mastery carry-over. All numbers are placeholders unless they come from the sim. Story and art impacts are flagged for Desmond once Austin likes the direction.
+- **Why:** Austin's notes.md (2026-11-18). Mk tiers barely differed (R2 Mk1 to Mk3 is +52 points on about 3,800), so mods added no real choice. Nothing here is live.
+
 ## [art] 2026-11-18 — Arthur: mountain districts pass 5, every road 7.5 m (unapproved mockup)
 
 - **Why:** Austin said: "Actually. Just make all 7.5meters." and "7.5 meter roads."

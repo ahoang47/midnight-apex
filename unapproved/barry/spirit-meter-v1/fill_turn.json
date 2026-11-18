@@ -1,0 +1,1016 @@
+{
+ "N": 180,
+ "races": {
+  "Street kid1 story (10t, r 1.0195)": [
+   "street",
+   "S1_Shibuya_Grid",
+   10,
+   1.0195,
+   [
+    0.5,
+    0.25,
+    0.25
+   ]
+  ],
+  "Wangan mat1 mixed (20t, r 1.0302)": [
+   "wangan",
+   "W3_C1_Outer",
+   20,
+   1.0302,
+   [
+    0.25,
+    0.25,
+    0.5
+   ]
+  ],
+  "Wangan boss cap (30t, r 1.0548)": [
+   "wangan",
+   "W3_C1_Outer",
+   30,
+   1.0548,
+   [
+    0.25,
+    0.25,
+    0.5
+   ]
+  ]
+ },
+ "results": {
+  "Street kid1 story (10t, r 1.0195) | c6060 | on tune": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 1.7,
+    "mean_turn": 10.0
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 2.8,
+    "mean_turn": 10.0
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 18.9,
+    "mean_turn": 9.44
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 31.1,
+    "mean_turn": 9.55
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 5.0,
+    "mean_turn": 9.67
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 8.9,
+    "mean_turn": 9.75
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 30.0,
+    "mean_turn": 9.48
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 48.9,
+    "mean_turn": 9.38
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 61.7,
+    "mean_turn": 8.84
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 73.9,
+    "mean_turn": 8.59
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 30.0,
+    "mean_turn": 9.5
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 48.3,
+    "mean_turn": 9.4
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 61.1,
+    "mean_turn": 8.74
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 81.1,
+    "mean_turn": 8.49
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 80.6,
+    "mean_turn": 8.1
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 87.8,
+    "mean_turn": 7.63
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 80.0,
+    "mean_turn": 8.34
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 88.9,
+    "mean_turn": 7.86
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 87.8,
+    "mean_turn": 7.39
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 95.6,
+    "mean_turn": 7.04
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 95.6,
+    "mean_turn": 6.69
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 98.9,
+    "mean_turn": 6.39
+   }
+  },
+  "Street kid1 story (10t, r 1.0195) | c8080 | on tune": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 0.0,
+    "mean_turn": null
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 15.0,
+    "mean_turn": 10.0
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 24.4,
+    "mean_turn": 9.98
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 55.6,
+    "mean_turn": 9.45
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 66.1,
+    "mean_turn": 9.34
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 23.9,
+    "mean_turn": 9.93
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 36.7,
+    "mean_turn": 9.85
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 65.6,
+    "mean_turn": 9.23
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 84.4,
+    "mean_turn": 9.12
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 88.9,
+    "mean_turn": 8.41
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 93.9,
+    "mean_turn": 8.13
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 64.4,
+    "mean_turn": 9.26
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 83.3,
+    "mean_turn": 9.04
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 90.0,
+    "mean_turn": 8.31
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 95.6,
+    "mean_turn": 7.92
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 95.6,
+    "mean_turn": 7.44
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 97.8,
+    "mean_turn": 7.19
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 95.6,
+    "mean_turn": 7.6
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 97.8,
+    "mean_turn": 7.31
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 97.2,
+    "mean_turn": 6.69
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 97.8,
+    "mean_turn": 6.37
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 98.9,
+    "mean_turn": 5.87
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 5.68
+   }
+  },
+  "Wangan mat1 mixed (20t, r 1.0302) | c6060 | on tune": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 6.1,
+    "mean_turn": 19.55
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 21.7,
+    "mean_turn": 19.13
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 20.0,
+    "mean_turn": 19.03
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 46.7,
+    "mean_turn": 17.37
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 37.8,
+    "mean_turn": 17.68
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 63.3,
+    "mean_turn": 15.63
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 42.2,
+    "mean_turn": 16.82
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 62.2,
+    "mean_turn": 15.53
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 60.0,
+    "mean_turn": 15.48
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 68.9,
+    "mean_turn": 13.75
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 67.8,
+    "mean_turn": 13.98
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 72.8,
+    "mean_turn": 12.24
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 66.7,
+    "mean_turn": 14.33
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 70.6,
+    "mean_turn": 12.95
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 70.0,
+    "mean_turn": 12.9
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 73.3,
+    "mean_turn": 11.31
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 72.8,
+    "mean_turn": 11.66
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 75.0,
+    "mean_turn": 10.34
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 70.0,
+    "mean_turn": 12.42
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 74.4,
+    "mean_turn": 11.09
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 73.3,
+    "mean_turn": 11.1
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 76.1,
+    "mean_turn": 9.88
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 74.4,
+    "mean_turn": 10.15
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 80.0,
+    "mean_turn": 9.04
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 78.3,
+    "mean_turn": 9.9
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 83.9,
+    "mean_turn": 8.85
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 80.0,
+    "mean_turn": 8.89
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 91.1,
+    "mean_turn": 7.91
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 86.7,
+    "mean_turn": 7.89
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 96.7,
+    "mean_turn": 6.84
+   }
+  },
+  "Wangan mat1 mixed (20t, r 1.0302) | c8080 | on tune": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 22.2,
+    "mean_turn": 19.48
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 65.0,
+    "mean_turn": 18.93
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 66.1,
+    "mean_turn": 18.66
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 86.1,
+    "mean_turn": 16.74
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 83.3,
+    "mean_turn": 17.13
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 86.7,
+    "mean_turn": 14.75
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 85.0,
+    "mean_turn": 16.16
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 86.7,
+    "mean_turn": 14.65
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 86.7,
+    "mean_turn": 14.46
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 87.8,
+    "mean_turn": 12.73
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 88.3,
+    "mean_turn": 12.8
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 90.0,
+    "mean_turn": 11.39
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 87.8,
+    "mean_turn": 13.01
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 90.0,
+    "mean_turn": 11.94
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 90.0,
+    "mean_turn": 11.81
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 90.0,
+    "mean_turn": 10.36
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 90.6,
+    "mean_turn": 10.48
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 91.1,
+    "mean_turn": 9.29
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 90.0,
+    "mean_turn": 11.23
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 90.6,
+    "mean_turn": 10.08
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 90.6,
+    "mean_turn": 9.86
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 92.8,
+    "mean_turn": 9.04
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 91.7,
+    "mean_turn": 9.13
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 94.4,
+    "mean_turn": 8.26
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 93.9,
+    "mean_turn": 8.56
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 95.0,
+    "mean_turn": 7.98
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 94.4,
+    "mean_turn": 7.89
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 98.3,
+    "mean_turn": 6.9
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 96.7,
+    "mean_turn": 6.85
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 98.9,
+    "mean_turn": 5.91
+   }
+  },
+  "Wangan boss cap (30t, r 1.0548) | c6060 | on tune": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 53.9,
+    "mean_turn": 24.21
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 67.8,
+    "mean_turn": 22.4
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 67.2,
+    "mean_turn": 22.32
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 78.3,
+    "mean_turn": 19.84
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 73.3,
+    "mean_turn": 20.39
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 86.7,
+    "mean_turn": 17.47
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 77.8,
+    "mean_turn": 19.72
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 88.3,
+    "mean_turn": 17.69
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 86.1,
+    "mean_turn": 17.7
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 92.2,
+    "mean_turn": 15.81
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 90.6,
+    "mean_turn": 15.91
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 94.4,
+    "mean_turn": 14.24
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 91.1,
+    "mean_turn": 16.48
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 93.9,
+    "mean_turn": 14.92
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 92.2,
+    "mean_turn": 14.93
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 94.4,
+    "mean_turn": 13.12
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 94.4,
+    "mean_turn": 13.64
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 95.0,
+    "mean_turn": 11.99
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 92.8,
+    "mean_turn": 14.46
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 94.4,
+    "mean_turn": 12.75
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 95.0,
+    "mean_turn": 13.01
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 95.0,
+    "mean_turn": 11.33
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 95.0,
+    "mean_turn": 11.85
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 96.7,
+    "mean_turn": 10.35
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 95.6,
+    "mean_turn": 11.26
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 98.9,
+    "mean_turn": 10.2
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 97.2,
+    "mean_turn": 10.39
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 98.9,
+    "mean_turn": 8.88
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 98.3,
+    "mean_turn": 9.23
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 99.4,
+    "mean_turn": 7.28
+   }
+  },
+  "Wangan boss cap (30t, r 1.0548) | c8080 | on tune": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 86.7,
+    "mean_turn": 22.31
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 88.9,
+    "mean_turn": 20.0
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 88.3,
+    "mean_turn": 19.7
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 94.4,
+    "mean_turn": 17.44
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 92.8,
+    "mean_turn": 17.72
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 97.8,
+    "mean_turn": 15.85
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 93.9,
+    "mean_turn": 16.85
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 97.8,
+    "mean_turn": 15.64
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 97.8,
+    "mean_turn": 15.48
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 98.3,
+    "mean_turn": 13.62
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 98.3,
+    "mean_turn": 13.72
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 12.29
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 98.3,
+    "mean_turn": 14.11
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 98.9,
+    "mean_turn": 12.67
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 98.3,
+    "mean_turn": 12.56
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 11.23
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 100.0,
+    "mean_turn": 11.27
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 10.02
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 98.9,
+    "mean_turn": 12.03
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 10.91
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 100.0,
+    "mean_turn": 10.65
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 9.6
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 100.0,
+    "mean_turn": 9.8
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 8.71
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 100.0,
+    "mean_turn": 9.09
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 8.49
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 100.0,
+    "mean_turn": 8.42
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 7.23
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 100.0,
+    "mean_turn": 7.33
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 100.0,
+    "mean_turn": 6.15
+   }
+  },
+  "Wangan boss cap (30t, r 1.0548) | c6060 | off tune (Street build in Wangan)": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 9.4,
+    "mean_turn": 22.06
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 15.6,
+    "mean_turn": 20.54
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 12.8,
+    "mean_turn": 21.7
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 20.0,
+    "mean_turn": 19.92
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 14.4,
+    "mean_turn": 20.35
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 23.3,
+    "mean_turn": 19.74
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 28.9,
+    "mean_turn": 18.37
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 39.4,
+    "mean_turn": 17.85
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 32.8,
+    "mean_turn": 18.22
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 42.2,
+    "mean_turn": 17.09
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 36.7,
+    "mean_turn": 17.7
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 46.7,
+    "mean_turn": 16.48
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 47.2,
+    "mean_turn": 16.74
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 57.8,
+    "mean_turn": 15.91
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 48.9,
+    "mean_turn": 16.34
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 61.7,
+    "mean_turn": 15.36
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 51.7,
+    "mean_turn": 15.1
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 66.7,
+    "mean_turn": 14.15
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 59.4,
+    "mean_turn": 15.42
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 73.9,
+    "mean_turn": 13.29
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 63.3,
+    "mean_turn": 14.39
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 73.9,
+    "mean_turn": 12.14
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 66.7,
+    "mean_turn": 13.43
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 74.4,
+    "mean_turn": 11.77
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 77.8,
+    "mean_turn": 10.44
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 82.2,
+    "mean_turn": 9.73
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 77.8,
+    "mean_turn": 10.66
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 84.4,
+    "mean_turn": 9.31
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 79.4,
+    "mean_turn": 10.06
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 85.0,
+    "mean_turn": 9.16
+   }
+  },
+  "Wangan boss cap (30t, r 1.0548) | c8080 | off tune (Street build in Wangan)": {
+   "base 3 k 0.0 loss 0.0": {
+    "activated": 46.7,
+    "mean_turn": 20.14
+   },
+   "base 3 k 0.0 loss 0.25": {
+    "activated": 53.9,
+    "mean_turn": 18.62
+   },
+   "base 3 k 1.0 loss 0.0": {
+    "activated": 49.4,
+    "mean_turn": 19.24
+   },
+   "base 3 k 1.0 loss 0.25": {
+    "activated": 58.3,
+    "mean_turn": 17.9
+   },
+   "base 3 k 2.0 loss 0.0": {
+    "activated": 53.3,
+    "mean_turn": 18.62
+   },
+   "base 3 k 2.0 loss 0.25": {
+    "activated": 60.6,
+    "mean_turn": 17.3
+   },
+   "base 4 k 0.0 loss 0.0": {
+    "activated": 65.6,
+    "mean_turn": 15.97
+   },
+   "base 4 k 0.0 loss 0.25": {
+    "activated": 71.1,
+    "mean_turn": 14.81
+   },
+   "base 4 k 1.0 loss 0.0": {
+    "activated": 66.1,
+    "mean_turn": 15.28
+   },
+   "base 4 k 1.0 loss 0.25": {
+    "activated": 76.7,
+    "mean_turn": 14.57
+   },
+   "base 4 k 2.0 loss 0.0": {
+    "activated": 71.7,
+    "mean_turn": 15.12
+   },
+   "base 4 k 2.0 loss 0.25": {
+    "activated": 80.0,
+    "mean_turn": 14.06
+   },
+   "base 5 k 0.0 loss 0.0": {
+    "activated": 79.4,
+    "mean_turn": 13.57
+   },
+   "base 5 k 0.0 loss 0.25": {
+    "activated": 83.9,
+    "mean_turn": 12.74
+   },
+   "base 5 k 1.0 loss 0.0": {
+    "activated": 81.7,
+    "mean_turn": 13.32
+   },
+   "base 5 k 1.0 loss 0.25": {
+    "activated": 87.2,
+    "mean_turn": 12.22
+   },
+   "base 5 k 2.0 loss 0.0": {
+    "activated": 83.3,
+    "mean_turn": 12.46
+   },
+   "base 5 k 2.0 loss 0.25": {
+    "activated": 88.9,
+    "mean_turn": 11.12
+   },
+   "base 6 k 0.0 loss 0.0": {
+    "activated": 87.2,
+    "mean_turn": 11.92
+   },
+   "base 6 k 0.0 loss 0.25": {
+    "activated": 90.6,
+    "mean_turn": 10.5
+   },
+   "base 6 k 1.0 loss 0.0": {
+    "activated": 88.3,
+    "mean_turn": 11.08
+   },
+   "base 6 k 1.0 loss 0.25": {
+    "activated": 90.6,
+    "mean_turn": 9.75
+   },
+   "base 6 k 2.0 loss 0.0": {
+    "activated": 90.0,
+    "mean_turn": 10.36
+   },
+   "base 6 k 2.0 loss 0.25": {
+    "activated": 92.2,
+    "mean_turn": 9.33
+   },
+   "base 8 k 0.0 loss 0.0": {
+    "activated": 93.3,
+    "mean_turn": 8.4
+   },
+   "base 8 k 0.0 loss 0.25": {
+    "activated": 96.7,
+    "mean_turn": 7.78
+   },
+   "base 8 k 1.0 loss 0.0": {
+    "activated": 94.4,
+    "mean_turn": 8.29
+   },
+   "base 8 k 1.0 loss 0.25": {
+    "activated": 97.2,
+    "mean_turn": 7.69
+   },
+   "base 8 k 2.0 loss 0.0": {
+    "activated": 93.9,
+    "mean_turn": 7.88
+   },
+   "base 8 k 2.0 loss 0.25": {
+    "activated": 97.8,
+    "mean_turn": 7.45
+   }
+  }
+ }
+}

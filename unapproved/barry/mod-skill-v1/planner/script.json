@@ -1,0 +1,197 @@
+{
+ "base": {
+  "street": [
+   1250,
+   875,
+   875
+  ],
+  "wangan": [
+   900,
+   900,
+   1200
+  ],
+  "touge": [
+   1200,
+   950,
+   850
+  ]
+ },
+ "splits": {
+  "street": {
+   "P1": [
+    100,
+    0,
+    0
+   ],
+   "P2": [
+    100,
+    0,
+    0
+   ],
+   "H1": [
+    40,
+    60,
+    0
+   ],
+   "E1": [
+    40,
+    0,
+    60
+   ]
+  },
+  "wangan": {
+   "P1": [
+    60,
+    0,
+    40
+   ],
+   "H1": [
+    0,
+    60,
+    40
+   ],
+   "E1": [
+    0,
+    0,
+    100
+   ],
+   "E2": [
+    0,
+    0,
+    100
+   ]
+  },
+  "touge": {
+   "P1": [
+    100,
+    0,
+    0
+   ],
+   "H1": [
+    20,
+    60,
+    20
+   ],
+   "E1": [
+    30,
+    0,
+    70
+   ],
+   "E2": [
+    30,
+    0,
+    70
+   ]
+  }
+ },
+ "grinds": {
+  "R1 mat1": 3,
+  "R1 boss": 10,
+  "R2 kid1": 7,
+  "R2 boss": 6,
+  "R3 mat1": 5,
+  "R3 boss": 7
+ },
+ "buys": [
+  {
+   "at": "R1 kid1",
+   "phase": "pre",
+   "key": "P1"
+  },
+  {
+   "at": "R1 kid1",
+   "phase": "post",
+   "key": "P1"
+  },
+  {
+   "at": "R1 kid1",
+   "phase": "post",
+   "key": "P2"
+  },
+  {
+   "at": "R1 kid2",
+   "phase": "post",
+   "key": "H1"
+  },
+  {
+   "at": "R1 kid2",
+   "phase": "post",
+   "key": "E1"
+  },
+  {
+   "at": "R1 kid2",
+   "phase": "post",
+   "key": "E1"
+  },
+  {
+   "at": "R2 kid1",
+   "phase": "pre",
+   "key": "P1"
+  },
+  {
+   "at": "R2 kid1",
+   "phase": "pre",
+   "key": "H1"
+  },
+  {
+   "at": "R2 kid1",
+   "phase": "pre",
+   "key": "E1"
+  },
+  {
+   "at": "R2 kid1",
+   "phase": "pre",
+   "key": "E2"
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "key": "P1"
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "key": "H1"
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "key": "E1"
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "key": "E2"
+  }
+ ],
+ "pickG": {
+  "R1 mat1": "E1",
+  "R1 boss": "E1",
+  "R2 kid1": "E1",
+  "R2 boss": "H1",
+  "R3 mat1": "E2",
+  "R3 boss": "E2"
+ },
+ "pickW": {
+  "R1 kid1": "P1",
+  "R1 kid2": "P2",
+  "R1 mat1": "H1",
+  "R1 mat2": "E1",
+  "R1 oh2": "P2",
+  "R1 boss": "H1",
+  "R2 kid1": "E2",
+  "R2 kid2": "E1",
+  "R2 mat1": "P1",
+  "R2 mat2": "H1",
+  "R2 oh1": "E2",
+  "R2 oh2": "E1",
+  "R2 boss": "P1",
+  "R3 kid1": "P1",
+  "R3 kid2": "E1",
+  "R3 mat1": "H1",
+  "R3 mat2": "E2",
+  "R3 oh1": "P1",
+  "R3 oh2": "E1",
+  "R3 boss": "H1"
+ }
+}

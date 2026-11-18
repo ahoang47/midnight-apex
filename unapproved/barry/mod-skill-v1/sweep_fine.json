@@ -1,0 +1,153 @@
+{
+ "rows": [
+  {
+   "X": 0.5,
+   "street": 9,
+   "wangan": 9,
+   "touge": 11,
+   "shared_sw": 6,
+   "all3": 6,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.52,
+   "street": 5,
+   "wangan": 4,
+   "touge": 11,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.54,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.56,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.58,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.6,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.62,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.64,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.66,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.68,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.7,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.72,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.74,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.76,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.78,
+   "street": 4,
+   "wangan": 4,
+   "touge": 6,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  },
+  {
+   "X": 0.8,
+   "street": 4,
+   "wangan": 4,
+   "touge": 4,
+   "shared_sw": 0,
+   "all3": 0,
+   "pattern_ok": true
+  }
+ ],
+ "pattern_xmax": {
+  "street": 1.0,
+  "wangan": 1.0,
+  "touge": 1.0
+ }
+}

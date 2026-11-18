@@ -1,0 +1,50 @@
+{
+ "debt16000_x1": {
+  "story_R1_low": 52.9,
+  "story_R1_boss": 52.9,
+  "mixed_R1_grind": 13,
+  "story_R2_boss": 57.7
+ },
+ "debt16000_x2": {
+  "story_R1_low": 47.9,
+  "story_R1_boss": 47.9,
+  "mixed_R1_grind": 14,
+  "story_R2_boss": 57.7
+ },
+ "debt16000_x3": {
+  "story_R1_low": 4.3,
+  "story_R1_boss": 4.3,
+  "mixed_R1_grind": 24,
+  "story_R2_boss": 48.6
+ },
+ "debt16000_x4": {
+  "story_R1_low": 4.3,
+  "story_R1_boss": 4.3,
+  "mixed_R1_grind": 25,
+  "story_R2_boss": 44.3
+ },
+ "debt0_x1": {
+  "story_R1_low": 52.9,
+  "story_R1_boss": 52.9,
+  "mixed_R1_grind": 13,
+  "story_R2_boss": 58.3
+ },
+ "debt0_x2": {
+  "story_R1_low": 52.9,
+  "story_R1_boss": 52.9,
+  "mixed_R1_grind": 13,
+  "story_R2_boss": 58.3
+ },
+ "debt0_x3": {
+  "story_R1_low": 52.9,
+  "story_R1_boss": 52.9,
+  "mixed_R1_grind": 13,
+  "story_R2_boss": 57.7
+ },
+ "debt0_x4": {
+  "story_R1_low": 47.9,
+  "story_R1_boss": 47.9,
+  "mixed_R1_grind": 14,
+  "story_R2_boss": 57.7
+ }
+}
