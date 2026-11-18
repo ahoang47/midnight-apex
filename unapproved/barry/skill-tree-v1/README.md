@@ -1,3 +1,5 @@
+> **THOUGHT EXPERIMENT ONLY (Austin 2026-11-18):** skill_tree is a side experiment, not the current build. The build direction is mod_skill.
+
 # skill-tree-v1: driver tree + car trees (Barry DRAFT, 2026-11-18, touge-race @ bbdda07)
 
 Austin's direction: the **driver** is the persistent character, with an EXECUTION tree. **Cars are RPG weapons**: each car
@@ -72,16 +74,16 @@ text is a proposal.
 - **Kept:** the old car stays in the garage for show and for substory races with a level cap (art reuse) [PH].
 
 ## 6. Open questions
-1. One XP pool split f vs two currencies (recommended two). If one pool, what f?
-2. Driver points per level: 1 [PH], or front-loaded so R1 gets a real choice (12 points by R1 is thin)?
-3. Do T2/T3 stock totals equal the previous cap (no power dip), or a little lower so the old car's mods matter at the start of a round?
-4. Finale tiers: one T4 Myth car or several? Finale budgets are 494.8 / 566.3 / … [sim: FINALE]; ARC MYTH mods already exist.
-5. Car choice inside a tier: one class per round (story-led), or 2-3 per tier with an off-tune option? (An even locked base is
+1. ~~One XP pool split f vs two currencies~~ **DECIDED (Austin 2026-11-18): two currencies**, driver XP and car points earned separately.
+2. **DECIDED (Austin 2026-11-18): front-loaded** so R1 gets real choices. Exact curve TBD [PH].
+3. **EXPLORE BOTH (Austin 2026-11-18):** sim both A (stock = previous cap) and B (stock a bit lower). Original question: Do T2/T3 stock totals equal the previous cap (no power dip), or a little lower so the old car's mods matter at the start of a round?
+4. **LEANING (Austin 2026-11-18):** one Myth car plus an Elite-4-style gauntlet: race all 3 Myth drivers back to back with no stop between races. Not final; sim the gauntlet odds. Original question: Finale tiers: one T4 Myth car or several? Finale budgets are 494.8 / 566.3 / … [sim: FINALE]; ARC MYTH mods already exist.
+5. **DECIDED (Austin 2026-11-18): a choice of 2-3 car classes per round**; one story car would cheapen car-as-weapon. Original question: Car choice inside a tier: one class per round (story-led), or 2-3 per tier with an off-tune option? (An even locked base is
    9.2-14.2 share points off the Street tune [sim: mod-skill-v1]; the starter is that cost made visible.)
-6. Respec: the car-tree split is free (mod_skill), while the driver tree follows the 20 % retune rule [sim: RETUNE_BUDGET_FRACTION]?
-7. Should a mastered technique cost driver points or come free?
-8. Spirit meter ownership: the driver (meter, fill, activations) and the car (what the buff is)? Proposed in DRIVER_TREE §E and CAR_TREE §2.
-9. Additive-only rule (design/05 §1): spirit's payoff buff is multiplicative in the prototype. Recast it as an additive
+6. **DECIDED (Austin 2026-11-18): no driver respec; car respec is OK (free).** Original question: Respec: the car-tree split is free (mod_skill), while the driver tree follows the 20 % retune rule [sim: RETUNE_BUDGET_FRACTION]?
+7. **DECIDED (Austin 2026-11-18): mastered techniques are free.**
+8. **DECIDED (Austin 2026-11-18): the driver owns the meter (fill, activations); the car sets what the buff does.** Original question: Spirit meter ownership: the driver (meter, fill, activations) and the car (what the buff is)? Proposed in DRIVER_TREE §E and CAR_TREE §2.
+9. **EXPLORE BOTH (Austin 2026-11-18):** test spirit as multiplicative (x1.25) and as an additive clash_stakes bonus. Do not sim yet. Original question: Additive-only rule (design/05 §1): spirit's payoff buff is multiplicative in the prototype. Recast it as an additive
    `clash_stakes` bonus before shipping?
 
 ## 7. Story and art impacts
@@ -94,3 +96,10 @@ text is a proposal.
   - The car should feel like a partner, Initial D style. Mastery techniques need names and one line of lore each.
   - Who gives the PC each car, and does the Prologue car come back (in the finale or as a keepsake)?
 - **UI:** a garage screen, a car tree screen, a driver tree screen and a mastery bar.
+
+## 8. Gym structure (Austin 2026-11-18, proposal direction)
+- Pokemon-style rounds: multiple crews per round = gyms; each crew boss = gym leader, lieutenants = trainers. Mandatory road races between crews (free roam: drivers approach the player).
+- Crews per round and mandatory races between crews: **set by sim** (not run yet).
+- Optional grind races: **stay optional**, alongside the mandatory ones.
+- Losing a mandatory race: **blocks progress**.
+- Needs Desmond / Nathaniel / Arthur before build (round structure, rosters, art count).

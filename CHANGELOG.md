@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-18 — Barry [design]: skill-tree-v1 decisions recorded (THOUGHT EXPERIMENT, UNAPPROVED)
+- Austin answered the 9 skill-tree questions: two XP currencies, front-loaded driver points, explore both next-tier stock options, one-Myth-car Elite-4 gauntlet idea, 2-3 car classes per round, no driver respec (car respec free), free mastered techniques, driver owns spirit meter / car sets buff, explore both multiplicative and additive spirit.
+- Added §8 gym structure (crews as gyms, mandatory road races, optional grinds kept, mandatory loss blocks progress).
+- Marked skill_tree a side thought experiment; build direction is mod_skill. Potions cut entirely (draft deleted, never committed).
+- Correction to the 2026-11-18 spirit entry: Street boss r=1.040 does NOT satisfy both checks with spirit on (measured 31.7 / 95.8); no Street ratio meets 60/60 >= 30 and 80/80 <= 95.
+
 ## 2026-11-18 — Barry [sim]: mod_skill study, manual planner, spirit meter and skill-tree drafts (UNAPPROVED)
 
 - **mod_skill (`unapproved/barry/mod-skill-v1/`):** Austin's proposal from notes.md. The player never levels; race XP goes into one mod the player picks, and grinding pays cash plus mod XP. Ceilings are re-derived per round (133 / 261 / 407 above the stock part) so a full kit equals today's cap power, and XP is retuned so ceilings land at today's caps. The own-stat share is 60%: at 50% or below, mod type barely matters; at 70% or above, wrong kits cost 16 points and carried kits miss the tune. It reproduces the live campaign within about 1 point (e.g. story-only bosses 52.9 / 57.7 / 55.9 vs live 53.0 / 57.7 / 55.8). Open calls for Austin: free base setup at Reiko's, overflow spilling to the next mod, Touge on PHEE.
