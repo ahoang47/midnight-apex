@@ -11,15 +11,23 @@ config_version=5
 [application]
 
 config/name="Midnight Apex"
-config/features=PackedStringArray("4.6", "Mobile")
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
-window/stretch/mode="viewport"
+window/size/viewport_width=1280
+window/size/viewport_height=960
+window/size/window_width_override=1280
+window/size/window_height_override=960
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
@@ -131,4 +139,7 @@ qte_timing={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/msaa_3d=0

@@ -8,6 +8,23 @@
 
 ---
 
+## 2026-11-19 — Gordon [godot]: two-corner test promoted to the root Godot project (Austin go-ahead 2026-11-19)
+- **Approval:** Austin, on a card in Arthur's chat: "Yes, Gordon can promote the two-corner test into the root Godot project, remove the unapproved copy, log it and push."
+- **Why:** the two-corner test is the approved base for the 10-turn Touge race, and Arthur's Cel A reference build (`art/mockups/cel_two_corner/`) needs a stable, approved path to stage from. The repo root already had a `project.godot` with no scenes or scripts, so the test becomes that project (its `godot/` folder becomes `res://`, so every `res://` path inside the code keeps working except the ones moved below).
+- **Moves (`git mv`, history kept), from `unapproved/gordon/two-corner/`:**
+  - `godot/scenes/`, `godot/scripts/`, `godot/shaders/`, `godot/fonts/`, `godot/spec/`, `godot/export_presets.cfg` → root `scenes/`, `scripts/`, `shaders/`, `fonts/`, `spec/`, `export_presets.cfg`.
+  - `godot/art/` (stand-in HUD/env textures) → `assets/tex/kit/`, because root `art/` is Arthur's source art. `godot/assets/tex/` → `assets/tex/`; `godot/assets/cars/{mx5,s2000}_env.png` → `assets/tex/cars/`. `res://art/…` references in scripts and `.import` files now point at `res://assets/tex/kit/…`.
+  - `godot/assets/cars/car_mx5.glb` and `car_s2000.glb` were byte-identical to Arthur's, so they (and their extracted textures) are removed and the scenes load `res://assets/cars/mx5/car_mx5.glb` and `res://assets/cars/s2000/car_s2000.glb`. No file of Arthur's was changed.
+  - `tools/` and the generators `spec/gen_{art,constants,textures}.py` → `tools/two_corner/`. They now `cd` to the repo root, write output to `.out/two_corner/`, and read the pinned sim from `.pin/` (or `$TWO_CORNER_PIN`). Both dirs are hidden (Godot skips them) and added to `.gitignore`.
+  - The test's top-level `spec/constants.json` → root `spec/constants.json`. Its other spec files copies (`spec/inputs/*`, `spec/display.json`, `spec/race_config.json`, `spec/art/`, `spec/tex/`) were byte-identical to the `godot/` ones and are dropped; scripted inputs now sit in `spec/`.
+  - `out/` (kept playtest shots and reports that the docs cite) → `unapproved/gordon/two-corner-media/`.
+  - `README.md` folded into `design/godot-build-guide.md` as **Appendix I** with an old→new path table. `unapproved/gordon/two-corner/` is gone.
+- **`project.godot` merged:** kept `config/name="Midnight Apex"`, the icon, Jolt Physics, every `[input]` action and the Windows D3D12 driver; took the test's main scene (`res://scenes/main.tscn`), display (1280×960 window, `canvas_items` stretch, keep aspect), nearest canvas filter and no 3D MSAA. Added `filesystem/import/blender/enabled=false`: the `.blend` sources in `art/` made the headless import fail with no Blender path set.
+- **Renderer: root switches from Mobile to GL Compatibility.** The test was built, shot and parity-checked on Compatibility, and it's the renderer the Godot web export needs for mobile browsers (Austin wants the Touge race to run on mobile web with touch).
+- **Other edits:** `main.gd` key-test output and `headless_run.gd`'s default config path no longer reach outside `res://`; `export_presets.cfg` include filter and export path follow the moves. `AGENTS.md` Godot project section rewritten for the new root project. `art/mockups/cel_two_corner/README.md`: one plain-text path mention updated; Arthur's `stage.py` is untouched (he repoints it).
+- **Checks (box):** `godot --headless --path . --import` clean; main scene runs 600 frames headless and windowed (xvfb, opengl3) with no script errors; `tools/two_corner/run_parity.sh` against sim 50928ed: QTE function bits 0 mismatches, all 5 input sets + fuzz300 Godot vs sim PASS, dump/load PASS, restart test PASS, Plan the Line key test PASS. Build id is now `aee201ac1b` (scripts changed), so older TC3 tokens replay on their own build.
+- **Known, not fixed here:** importing the root project generates `.import` files and extracted textures next to Arthur's files in `art/` and `assets/`; they are left uncommitted. `tools/two_corner/check_driver_vs_run_match.py` already failed before the move (`run()` lost its `provisional_w1` argument).
+
 ## 2026-11-19 — 7-rung ladder confirmed approved via econ-v1 (Barry, Systems)
 - `sim/velocity_shift/equations.py` comment: the 7-rung opponent ladder (first drafted in round-ladder-v1) is now cited as approved as part of econ-v1 (0af2715). Comment only, no code or numbers changed.
 - Why: Austin chose to keep the ladder and treat it as approved via econ-v1 (2026-11-19), so the reference points at an approved version.

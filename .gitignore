@@ -24,3 +24,7 @@ art/vehicles/mx5/detail/bp/*.npy
 art/vehicles/mx5/detail/tex/body_texels.npz
 art/vehicles/mx5/detail/mx5_geo.blend
 art/vehicles/mx5/lineup/lineup_mx5_raw.png
+
+# tools/two_corner/: pinned sim checkout (git worktree add .pin <sha>) and generated test output. Hidden dirs, so Godot skips them.
+/.pin/
+/.out/

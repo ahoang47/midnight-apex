@@ -30,13 +30,17 @@ Nathaniel flags anything that touches mechanics (archetype, lie rate, turn-type 
 
 ## Godot project
 
-- Godot 4.6.3, Mobile renderer, Jolt Physics 3D, Direct3D 12 on Windows. GDScript only (no Mono/C#).
+- Godot 4.6.3, **GL Compatibility** renderer (switched from Mobile 2026-11-19 for the mobile web export), Jolt Physics 3D, Direct3D 12 on Windows. GDScript only (no Mono/C#). Blender import is off (`filesystem/import/blender/enabled=false`) so the `.blend` sources in `art/` don't block a headless import.
 - Git: `touge-race` is the working branch for all new commits (Austin 2026-11-14: build a full 10-turn Touge race end to end, no mods, stats in the parity range, focused on art and player experience). `master` holds the merged history (`proto-build` merged and deleted). Pull with rebase, never force-push; remote `github.com/ahoang47/midnight-apex.git`.
-- `.gitignore` covers `.godot/` and `/android/`.
-- 27 scripts + 1 scene (`scenes/Battle.tscn`): the full prototype built per `design/godot-build-guide.md` (15-step guide: bootstrap → deck → combat → AI → tells → animation → tuning).
-- The GDScript is a port of the Python model in `sim/velocity_shift/`. Tune in `sim/` first, then port the settled values to `scripts/globals.gd` and friends.
-- User handoffs: register `globals.gd` and `SignalBus.gd` as autoloads in Project Settings; colour cubes, position camera, arrange UI in the editor.
-- No Godot tests, CI, or lint config yet.
+- `.gitignore` covers `.godot/`, `/android/`, `/.pin/` (pinned sim checkout for the parity tools) and `/.out/` (tool output and the web export).
+- The root project is Gordon's two-corner engine test, promoted from `unapproved/gordon/two-corner/godot/` on 2026-11-19 (Austin). Main scene `scenes/main.tscn` (menu → two Touge corners → finish screen), drawn at 640×480 internal and upscaled to a 1280×960 window.
+  - `scenes/`: `main.tscn` plus sub-scenes `camera_rig`, `car`, `hud`, `sky`, `track`, `touge_dressing`.
+  - `scripts/`: `race_core.gd` (race state, RNG, TC3 state token), `combat.gd` and `sim_constants.gd` (generated from the pinned sim; do not hand-edit), `py_random.gd` (exact CPython MT19937 port), `main.gd` (flow, cameras, input), `hud.gd` + `hud/` (one script per HUD widget), track/road/sky/dressing/car scripts, `headless_run.gd` (headless parity runner).
+  - `shaders/` (car, env, sky, glow, post, chevron, scroll, fx), `fonts/` (HUD fonts + licences), `spec/` (`race_config.json`, display-only `display.json`, `constants.json`, `build.json`, scripted test inputs), `export_presets.cfg` (Web).
+  - Stand-in textures live at `assets/tex/` (`kit/` HUD/env stand-ins, `cars/` env maps, road/verge/barrier). Cars are Arthur's `assets/cars/<car>/car_<car>.glb`.
+  - Tests: `tools/two_corner/run_parity.sh` (QTE function bits, Godot vs pinned sim, dump/load, restart test, key test) needs a sim checkout at the pin in `.pin/` (or `TWO_CORNER_PIN=`). Details: `design/godot-build-guide.md` Appendix I.
+- The GDScript ports the Python model in `sim/velocity_shift/`. Tune in `sim/` first, then regenerate `scripts/sim_constants.gd` with `tools/two_corner/gen_constants.py` from the pinned sim.
+- No Godot CI job yet (Gordon adds one when the Touge race build lands); no lint config.
 
 ## Sim (`sim/`) — Python math model
 
