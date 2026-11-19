@@ -1,0 +1,492 @@
+{
+ "variant": "V0",
+ "n": 6000,
+ "rows": [
+  {
+   "rung": "boss",
+   "build": "expected",
+   "d": "street",
+   "prof": "60/60",
+   "r": 1.0023,
+   "n": 6000,
+   "win": 0.23
+  },
+  {
+   "rung": "boss",
+   "build": "expected",
+   "d": "street",
+   "prof": "80/80",
+   "r": 1.0023,
+   "n": 6000,
+   "win": 49.18
+  },
+  {
+   "rung": "boss",
+   "build": "full",
+   "d": "street",
+   "prof": "60/60",
+   "r": 1.0581,
+   "n": 6000,
+   "win": 44.57
+  },
+  {
+   "rung": "boss",
+   "build": "full",
+   "d": "street",
+   "prof": "80/80",
+   "r": 1.0581,
+   "n": 6000,
+   "win": 96.47
+  },
+  {
+   "rung": "boss",
+   "build": "60%",
+   "d": "street",
+   "prof": "80/80",
+   "r": 0.9943,
+   "n": 6000,
+   "win": 36.68
+  },
+  {
+   "rung": "boss",
+   "build": "70%",
+   "d": "street",
+   "prof": "80/80",
+   "r": 1.0102,
+   "n": 6000,
+   "win": 56.33
+  },
+  {
+   "rung": "boss",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 0.9856,
+   "n": 6000,
+   "win": 0.1
+  },
+  {
+   "rung": "boss",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 0.9856,
+   "n": 6000,
+   "win": 51.25
+  },
+  {
+   "rung": "boss",
+   "build": "full",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 1.0313,
+   "n": 6000,
+   "win": 27.08
+  },
+  {
+   "rung": "boss",
+   "build": "full",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 1.0313,
+   "n": 6000,
+   "win": 86.07
+  },
+  {
+   "rung": "boss",
+   "build": "60%",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 0.979,
+   "n": 6000,
+   "win": 44.12
+  },
+  {
+   "rung": "boss",
+   "build": "70%",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 0.9921,
+   "n": 6000,
+   "win": 57.58
+  },
+  {
+   "rung": "boss",
+   "build": "expected",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.0121,
+   "n": 6000,
+   "win": 0.75
+  },
+  {
+   "rung": "boss",
+   "build": "expected",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0121,
+   "n": 6000,
+   "win": 53.57
+  },
+  {
+   "rung": "boss",
+   "build": "full",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.0589,
+   "n": 6000,
+   "win": 37.58
+  },
+  {
+   "rung": "boss",
+   "build": "full",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0589,
+   "n": 6000,
+   "win": 93.98
+  },
+  {
+   "rung": "boss",
+   "build": "60%",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0053,
+   "n": 6000,
+   "win": 41.4
+  },
+  {
+   "rung": "boss",
+   "build": "70%",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0187,
+   "n": 6000,
+   "win": 59.82
+  },
+  {
+   "rung": "mat1",
+   "build": "expected",
+   "d": "street",
+   "prof": "60/60",
+   "r": 1.0058,
+   "n": 6000,
+   "win": 9.88
+  },
+  {
+   "rung": "mat1",
+   "build": "expected",
+   "d": "street",
+   "prof": "80/80",
+   "r": 1.0058,
+   "n": 6000,
+   "win": 85.33
+  },
+  {
+   "rung": "mat2",
+   "build": "expected",
+   "d": "street",
+   "prof": "60/60",
+   "r": 0.9968,
+   "n": 6000,
+   "win": 4.27
+  },
+  {
+   "rung": "mat2",
+   "build": "expected",
+   "d": "street",
+   "prof": "80/80",
+   "r": 0.9968,
+   "n": 6000,
+   "win": 79.48
+  },
+  {
+   "rung": "oh1",
+   "build": "expected",
+   "d": "street",
+   "prof": "60/60",
+   "r": 0.99,
+   "n": 6000,
+   "win": 1.78
+  },
+  {
+   "rung": "oh1",
+   "build": "expected",
+   "d": "street",
+   "prof": "80/80",
+   "r": 0.99,
+   "n": 6000,
+   "win": 74.65
+  },
+  {
+   "rung": "oh2",
+   "build": "expected",
+   "d": "street",
+   "prof": "60/60",
+   "r": 0.9831,
+   "n": 6000,
+   "win": 0.4
+  },
+  {
+   "rung": "oh2",
+   "build": "expected",
+   "d": "street",
+   "prof": "80/80",
+   "r": 0.9831,
+   "n": 6000,
+   "win": 64.2
+  },
+  {
+   "rung": "mat1",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 1.019,
+   "n": 6000,
+   "win": 19.33
+  },
+  {
+   "rung": "mat1",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 1.019,
+   "n": 6000,
+   "win": 85.35
+  },
+  {
+   "rung": "mat2",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 1.0048,
+   "n": 6000,
+   "win": 5.57
+  },
+  {
+   "rung": "mat2",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 1.0048,
+   "n": 6000,
+   "win": 78.27
+  },
+  {
+   "rung": "oh1",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 0.9952,
+   "n": 6000,
+   "win": 1.83
+  },
+  {
+   "rung": "oh1",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 0.9952,
+   "n": 6000,
+   "win": 70.9
+  },
+  {
+   "rung": "oh2",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 0.9888,
+   "n": 6000,
+   "win": 0.93
+  },
+  {
+   "rung": "oh2",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 0.9888,
+   "n": 6000,
+   "win": 65.47
+  },
+  {
+   "rung": "mat1",
+   "build": "expected",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.0361,
+   "n": 6000,
+   "win": 20.83
+  },
+  {
+   "rung": "mat1",
+   "build": "expected",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0361,
+   "n": 6000,
+   "win": 83.58
+  },
+  {
+   "rung": "mat2",
+   "build": "expected",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.0297,
+   "n": 6000,
+   "win": 14.6
+  },
+  {
+   "rung": "mat2",
+   "build": "expected",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0297,
+   "n": 6000,
+   "win": 79.1
+  },
+  {
+   "rung": "oh1",
+   "build": "expected",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.0212,
+   "n": 6000,
+   "win": 6.87
+  },
+  {
+   "rung": "oh1",
+   "build": "expected",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0212,
+   "n": 6000,
+   "win": 71.3
+  },
+  {
+   "rung": "oh2",
+   "build": "expected",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.0127,
+   "n": 6000,
+   "win": 2.7
+  },
+  {
+   "rung": "oh2",
+   "build": "expected",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0127,
+   "n": 6000,
+   "win": 66.05
+  },
+  {
+   "rung": "kid1",
+   "build": "expected",
+   "d": "street",
+   "prof": "60/60",
+   "r": 1.0205,
+   "n": 6000,
+   "win": 47.48
+  },
+  {
+   "rung": "kid1",
+   "build": "expected",
+   "d": "street",
+   "prof": "80/80",
+   "r": 1.0205,
+   "n": 6000,
+   "win": 97.38
+  },
+  {
+   "rung": "kid2",
+   "build": "expected",
+   "d": "street",
+   "prof": "60/60",
+   "r": 0.9977,
+   "n": 6000,
+   "win": 16.62
+  },
+  {
+   "rung": "kid2",
+   "build": "expected",
+   "d": "street",
+   "prof": "80/80",
+   "r": 0.9977,
+   "n": 6000,
+   "win": 90.13
+  },
+  {
+   "rung": "kid1",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 1.046,
+   "n": 6000,
+   "win": 62.25
+  },
+  {
+   "rung": "kid1",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 1.046,
+   "n": 6000,
+   "win": 94.95
+  },
+  {
+   "rung": "kid2",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "60/60",
+   "r": 1.02,
+   "n": 6000,
+   "win": 31.53
+  },
+  {
+   "rung": "kid2",
+   "build": "expected",
+   "d": "wangan",
+   "prof": "80/80",
+   "r": 1.02,
+   "n": 6000,
+   "win": 89.22
+  },
+  {
+   "rung": "kid1",
+   "build": "expected",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.0635,
+   "n": 6000,
+   "win": 56.28
+  },
+  {
+   "rung": "kid1",
+   "build": "expected",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.0635,
+   "n": 6000,
+   "win": 92.4
+  },
+  {
+   "rung": "kid2",
+   "build": "expected",
+   "d": "touge",
+   "prof": "60/60",
+   "r": 1.04,
+   "n": 6000,
+   "win": 38.72
+  },
+  {
+   "rung": "kid2",
+   "build": "expected",
+   "d": "touge",
+   "prof": "80/80",
+   "r": 1.04,
+   "n": 6000,
+   "win": 88.0
+  }
+ ]
+}

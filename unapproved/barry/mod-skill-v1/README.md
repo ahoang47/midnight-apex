@@ -1,6 +1,12 @@
 # mod-skill-v1: Austin's "mod_skill" progression, simulated (Barry DRAFT, 2026-11-18)
 
-> **2026-11-19 DRAFT (Austin direction, unapproved): mandatory 20 races per round, see [GATE.md](GATE.md) top.**
+> **2026-11-19 DRAFT (Austin direction, unapproved): THE CLIMB, see [GATE.md](GATE.md) top.** Austin rejected the mandatory-20
+> "no retune" result as "cheap". Draft: keep 20 mandatory races, but the mandatory path lands at 65 % of round mod XP at the boss
+> (full build needs ~15 optional wins); rung budgets make a climb (80/80 kid1 ~95 → boss ~52-56); live combat, plus kappa × 0.5
+> on the Street boss race only. Engine: 80/80 at 60-70 % build wins 42-62, full-build 60/60 32-38, full 80/80 88.6-94.0.
+> Underdog bonus proposed (+25 % purse, +1 wild encounter XP for lieutenant/boss wins below cap).
+
+> ~~**2026-11-19 DRAFT (Austin direction, unapproved): mandatory 20 races per round**~~ (REJECTED by Austin as "cheap"; 20 mandatory races kept), see [GATE.md](GATE.md).
 > - 7 story races + 13 required wild-encounter wins per round.
 > - The mandatory path reaches the cap at every boss (3,532 / 4,044 / 4,628), so the bosses pass at the live r with no retune.
 >   Engine: 32.0 / 93.8, 40.7 / 92.2, 30.8 / 91.8.

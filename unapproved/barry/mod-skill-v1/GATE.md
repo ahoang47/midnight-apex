@@ -1,4 +1,124 @@
+# mod_skill: THE CLIMB (Austin 2026-11-19), Barry DRAFT
+
+> **Direction (Austin, direct, 2026-11-19):** "Hmm, that seems cheap. The boss needs to be a difficult build up, and you've taken
+> the easiest way to the top. The gameplay feel should be the player learning how to read the lines of the district, the
+> lieutenants and bosses need to feel like a climb, and the player should be encouraged to fight them even without full stats."
+> **This rejects the mandatory-20 "no retune" finding below (042a725)**, which is kept and marked rejected. Kept from it: 20
+> mandatory races per round (7 story + 13 required wild encounters), 0.80 random AI QTE, AI heat rules, the fixed mod layout.
+> **Unapproved and nothing live. Nothing in `sim/` changed.** Code: `climb_grid.py` → `climb_grid.json` (engine grid, n 600/cell),
+> `climb_eval.py` → `climb_eval.json` (rung budgets), `climb_verify.py` → `climb_verify.json` (V0) and `climb_verify_K50.json`
+> (K50), `climb_boss_fix.py` → `climb_boss_fix.json` and `climb_street_check.py` → `climb_street_check.json` (boss searches).
+> All numbers marked "engine" are the live SimulationRunner at n = 6,000 (2,000 per boss style, hard track, ties = half).
+
+## C1. Why the old answer was cheap, and the design model
+- In 042a725 the mandatory 20 alone reach the round cap at every boss, so the boss is met fully built and the ladder before it
+  is a walk (lowest non-boss 60/60 was 23-38). Stats, not reading, carried the player.
+- **New model ("expected build"):** the mandatory path lands at **65 % of the round's mod XP at the boss** (F = 0.65), not the cap.
+  Points rise linearly over the 20 mandatory slots; rungs sit at slots 1, 4, 7, 10, 13, 16, 20. Round entry = previous cap −
+  0.35 × previous room (a player who did no optionals). **Full build = the round cap, reached only with ~15 optional wild-encounter
+  wins per round.**
+- **XP retune this needs (draft):** mandatory XP per round = **346 / 519 / 559** points (3,000→3,346, 3,346→3,865, 3,865→4,424).
+  Keep wild-encounter XP 13 / 12 / 14 (13 required wins = 169 / 156 / 182), so **pre-boss story XP drops to ≈177 / 363 / 377**.
+  The catch-up rule must be off or folded into these numbers. Gap to full build: 186 / 179 / 204 points = **15 / 15 / 15
+  optional wins** at 13 / 12 / 14 XP.
+- **Rung budgets** (budget = points / 10 / r) are set so 80/80 at the expected build falls along a climb:
+  **kid1 95, kid2 90, mat1 84, mat2 78, oh1 70, oh2 62, boss ~50**. The boss is then placed by its **full-build** r under the
+  boss window (full 80/80 ≤ 95, full 60/60 ≥ 30).
+
+## C2. Options (per-rung win %, 60/60 / 80/80 at the expected build; engine n = 6,000 unless marked grid)
+**Option A, "build climb": live combat (V0), only XP and budgets change.** Engine (`climb_verify.json`, boss from `climb_boss_fix.json`).
+
+| Rung | Street (R1) | Wangan (R2) | Touge (R3) |
+|---|---|---|---|
+| kid1 | 47.5 / 97.4 | 62.3 / 95.0 | 56.3 / 92.4 |
+| kid2 | 16.6 / 90.1 | 31.5 / 89.2 | 38.7 / 88.0 |
+| mat1 | 9.9 / 85.3 | 19.3 / 85.4 | 20.8 / 83.6 |
+| mat2 | 4.3 / 79.5 | 5.6 / 78.3 | 14.6 / 79.1 |
+| oh1 | 1.8 / 74.7 | 1.8 / 70.9 | 6.9 / 71.3 |
+| oh2 | 0.4 / 64.2 | 0.9 / 65.5 | 2.7 / 66.1 |
+| boss, expected (65 %) | 0.05 / 37.2 | ≈0 / 56.1 | 0.75 / 53.6 |
+| boss 80/80 at 60 % / 70 % | 25.0 / 49.5 | 49.4 / 61.9 | 41.7 / 60.1 |
+| **boss full build** | 36.8 / 94.3 (r 1.050) | 33.2 / 88.6 (r 1.036) | 37.6 / 94.0 (r 1.0589) |
+
+- Rung r (kid1 … oh2): Street 1.0205 / 0.9977 / 1.0058 / 0.9968 / 0.99 / 0.9831; Wangan 1.046 / 1.02 / 1.019 / 1.0048 /
+  0.9952 / 0.9888; Touge 1.0635 / 1.04 / 1.0361 / 1.0297 / 1.0212 / 1.0127.
+- **Street problem:** its EN-heavy boss curve is steep. The full-build ceiling caps r at 1.050 (engine: r 1.052 gives 95.07),
+  which leaves an under-built strong reader only 25-49 %. Relaxing Street to r 1.058 (full 80/80 96.5) gets ≈37 / 56.
+
+**Option B, "reader's climb": kappa × 0.5 on all story races (K50)** (less stat weight per point, so lines decide more).
+Engine (`climb_verify_K50.json`); boss full r Street 1.062, Wangan 1.045, Touge 1.068.
+
+| Rung | Street | Wangan | Touge |
+|---|---|---|---|
+| kid1 | 46.0 / 96.2 | 61.9 / 95.3 | 55.4 / 95.3 |
+| kid2 | 16.2 / 89.9 | 28.8 / 88.5 | 40.0 / 87.0 |
+| mat1 | 9.5 / 85.1 | 16.8 / 84.2 | 18.4 / 82.3 |
+| mat2 | 4.2 / 79.4 | 5.2 / 77.8 | 11.5 / 77.7 |
+| oh1 | 1.8 / 74.9 | 1.8 / 70.7 | 6.3 / 70.0 |
+| oh2 | 0.5 / 64.3 | 0.7 / 63.9 | 2.5 / 64.4 |
+| boss, expected | 0.4 / 52.3 | 1.2 / **64.0** | 1.9 / 58.7 |
+| boss 80/80 at 60 % / 70 % | 43.2 / 60.5 | 58.5 / 70.2 | 53.2 / 68.4 |
+| **boss full build** | 31.8 / 93.4 | 37.8 / 90.4 | 35.8 / 94.6 |
+
+- Fixes Street, but **flattens the top in Wangan and Touge**: the Wangan boss (64.0) is no harder than oh2 (63.9) for a good
+  reader, and both exceed 60 at 70 %. Lowering their boss r runs into the full 60/60 ≥ 30 floor (grid: r 1.039 / 1.062 sit at
+  30.0), so the boss stays ≈ 59-60. B is a global combat-tuning change (`KAPPA_BY_LENGTH`).
+
+**Option C, "driver climb": AI QTE rises per rung (kid 0.70 / mat 0.76 / oh 0.82 / boss 0.86)**, alone (Q) or with kappa × 0.7
+(K70Q). **Grid only (n 600/cell, interpolated, not engine-verified).** Rung r at the expected build barely moves, except kids get
+easier r (Q kid1 1.006 / 1.036 / 1.053 vs V0 1.021 / 1.046 / 1.064). Boss 80/80 at 60 % / 70 %: Q 40.7 / 59.5, 42.9 / 58.0,
+41.4 / 58.6; K70Q 41.3 / 58.8, 51.4 / 64.3, 42.0 / 58.1. It reads as "the bosses drive better", which is **per-character AI skill:
+story/character territory, flag for Desmond.** Plain K70 (grid) behaves like a milder B.
+
+## C3. Recommendation: Option A, plus kappa × 0.5 on the Street boss race only
+- **Everything is engine-verified at n = 6,000.** Live combat for every rung and for the Wangan and Touge bosses (Option A
+  table), and **K50 only for the Street boss** at full r **1.062** (`climb_street_check.json`):
+
+| Boss | full 60/60 / 80/80 | 80/80 at 60 % / 65 % / 70 % | 60/60 at 65 % | budget (full r) | live budget |
+|---|---|---|---|---|---|
+| Street (K50) | **31.8 / 93.35** | **43.2 / 52.3 / 60.5** | 0.4 | 332.58 (1.062) | 337.57 |
+| Wangan (V0) | **33.2 / 88.57** | **49.4 / 56.1 / 61.9** | ≈0 | 390.35 (1.036) | 388.72 |
+| Touge (V0) | **37.6 / 93.98** | **41.7 / 53.6 / 60.1** | 0.75 | 437.05 (1.0589) | 440.80 |
+
+- **(a) Climb:** 80/80 at the expected build falls kid1 → boss 97 → 52 (Street), 95 → 56 (Wangan), 92 → 54 (Touge), every step
+  down. 60/60 at the expected build falls to ≈0-3 by oh2: a weak reader has to build (optionals) to pass the lieutenants.
+- **(b) Reading beats stats:** an 80/80 reader at 60-70 % of the round's XP wins **42-62 %**; a 60/60 driver at full build wins
+  **32-38 %**. Full-build 80/80 stays ≤ 95 (88.6-94.0).
+- **Why not B everywhere:** it softens the Wangan/Touge tops (C2). **Why Street:** its boss window is the only one too narrow in
+  V0. Street kappa × 0.5 is a per-race combat setting (no story or art); if Austin prefers one global rule, take B and accept a
+  boss ≈ oh2 in Wangan.
+- **Weak spot:** full 60/60 ≈0 → 32-38 between 65 % and 100 % build means a weak reader must do most of the ~15 optionals.
+  That is the "difficult build-up", by design.
+
+## C4. Targets (proposed, replacing "boss only" pass/fail)
+- Keep: **full 80/80 ≤ 95, full 60/60 ≥ 30.**
+- Add: **under-built 80/80 (60-70 % of round XP) 40-60** (met: 41.7-61.9, the 70 % ends are 0.1-1.9 over); **full 60/60 30-50**
+  (met: 31.8-37.6); **climb**: expected-build 80/80 strictly falling kid1 → boss (met).
+- Reasoning: the boss is a skill check, not a stat check. The top two targets separate readers from builders, and the climb
+  target stops a boss from being easier than its lieutenants.
+
+## C5. Reward for fighting early: "underdog" bonus (draft)
+- **Underdog purse: +25 % of the rung purse** for beating a lieutenant (mat1, mat2, oh1, oh2) or the boss below the round cap.
+  Lieutenant purses 2,500 / 2,875 / 3,375 ×4 plus boss 8,000 / 9,200 / 10,800 give at most **+$4,500 / +$5,175 / +$6,075 per round** (R1 story
+  purses total $20,000, so ≤ +22.5 %). +50 % would be $9,000 / $10,350 / $12,150 (too rich, R1 +45 %).
+- **Underdog XP:** each such win also pays one wild encounter's XP (13 / 12 / 14), at most 5 per round (65 / 60 / 70 points),
+  saving ~5 of the ~15 optional wins. It never raises the boss, because the round ceiling binds.
+- **Free retries:** keep the retry fee at 0 (live), so failed early attempts cost only time.
+- **Not proposed by me:** a unique trophy mod, decal, or barks. That needs Desmond (story) and Arthur (art).
+
+## C6. For Austin / Desmond
+1. Austin: pick A + Street-boss K50 (recommended), A with Street relaxed to full 80/80 ≈ 96.5, or B everywhere.
+2. Austin: approve the XP retune (mandatory path → 65 %, pre-boss story XP ≈ 177 / 363 / 377, catch-up off) and the new targets.
+3. Austin: underdog bonus at +25 % purse and +1 wild encounter of XP per lieutenant/boss win below cap.
+4. **Desmond flags:** Option C's per-rung AI QTE is per-character driving skill; any underdog trophy mod, decal, or barks. The
+   Street-boss kappa change has no story hook, but Desmond may want one ("the Street boss's race is all lines").
+
+---
+
 # mod_skill: MANDATORY 20 RACES PER ROUND (Austin 2026-11-19), Barry DRAFT
+
+> **REJECTED by Austin (2026-11-19): "Hmm, that seems cheap … you've taken the easiest way to the top."** The "no retune"
+> finding below is kept for reference; the 20 mandatory races stay, and the climb draft above replaces the rest.
 
 > **Direction (Austin, direct, 2026-11-19):** "I want a mandatory 20 races per round." Mandatory = story races plus required
 > wild-encounter wins (story beats). This supersedes the N = 5 story-beat recommendation below (kept, marked superseded).

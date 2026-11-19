@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-11-19 — DRAFT: the climb for mod_skill (Barry, Systems; unapproved, Austin direction)
+- **Direction (Austin, direct, 2026-11-19):** "Hmm, that seems cheap. The boss needs to be a difficult build up … the lieutenants and bosses need to feel like a climb, and the player should be encouraged to fight them even without full stats." The mandatory-20 "no retune" finding (042a725) is marked REJECTED in GATE.md and the README, and kept. Kept: 20 mandatory races, 0.80 random AI QTE, AI heat, fixed mod layout.
+- **Model:** the mandatory path lands at 65 % of round mod XP at the boss (mandatory XP 346 / 519 / 559; pre-boss story XP ≈177 / 363 / 377 with wild-encounter XP 13 / 12 / 14; catch-up off). Full build needs ~15 optional wins per round. Rung budgets set for a falling 80/80 climb.
+- **Options (`unapproved/barry/mod-skill-v1/climb_*.py/json`):** A live combat; B kappa × 0.5 on story races; C rising AI QTE per rung (grid only; per-character skill, Desmond flag).
+- **Recommended: A + kappa × 0.5 on the Street boss race only.** Engine n 6,000: 80/80 kid1 → boss 97 → 52, 95 → 56, 92 → 54; boss full 31.8 / 93.35 (Street r 1.062, K50), 33.2 / 88.57 (Wangan r 1.036), 37.6 / 93.98 (Touge r 1.0589); 80/80 at 60-70 % build 43-61, 49-62, 42-60. B alone makes the Wangan boss (64.0) no harder than oh2 (63.9).
+- **Proposed targets:** keep full 80/80 ≤ 95 and full 60/60 ≥ 30; add under-built 80/80 40-60, full 60/60 30-50, and a strictly falling climb.
+- **Underdog bonus (proposed):** +25 % rung purse (max +$4,500 / +$5,175 / +$6,075 per round) and +1 wild encounter of XP for mat/oh/boss wins below cap; retries stay free. Trophy mods/decals need Desmond/Arthur.
+- Nothing live; sim/ untouched.
+
 ## 2026-11-19 — DRAFT: mandatory 20 races per round for mod_skill (Barry, Systems; unapproved, Austin direction)
 - **Direction (Austin, direct, 2026-11-19):** "I want a mandatory 20 races per round." This supersedes the N = 5 story-beat draft, which is kept and marked superseded in GATE.md and the README.
 - **Counts:** 7 story races per round (`E.LADDER_RUNGS`) + **13** required wild-encounter wins = 20 required wins. Losses are retries; the Prologue is not counted.
