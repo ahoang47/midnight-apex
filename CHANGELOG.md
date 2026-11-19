@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-19 — LIVE: off-tune delta table v2 for the 0.80 random AI QTE (Barry, Systems)
+- **What:** new `sim/config/winrate_offtune_v2.json`, built by `unapproved/barry/ai-heat-qte-v1/table_v2/offtune_v2.py` with the same method as v1: splits POW p / HAN 0.25 / EN 0.75-p, r 0.97-1.18, N=150/style, common random numbers. `progression.py` now reads it. v1 is kept but no longer read.
+- **Why:** this finishes the table regeneration Austin approved on 2026-11-19. v1's deltas were built with a perfect AI.
+- **Effect:** only the off-tune Wangan rows move. At-cap R2 boss check (POW 26.2 %) goes 40.6 / 93.3 → 41.5 / 93.6, still in band. Hard walk R2 goes 1 + 13 → 6 + 8 grind (total 14 either way). Story-only R2 boss goes 58.2 → 58.4. Tests are re-pinned; mixed grind stays 13 / 13 / 12.
+
 ## 2026-11-19 — LIVE: 0.80 random AI QTE, boss retune, EN-heavy Street boss, win-rate table v2 (Barry, Systems)
 - **Approval:** Austin, relayed verbatim by Gordon (2026-11-19): "Approve Barry's 0.80 random QTE cap and boss retune, including the brakes/tires-heavy Street boss". Draft: `unapproved/barry/ai-heat-qte-v1/` at 313a871. Desmond confirmed the 25/25/50 Street boss needs no story or character changes.
 - **AI QTE (`equations.py`, `match.py`, `models.py`, `simulation.py`; `opponent_qte.patch` applied):** `OPPONENT_QTE` is now the mean, 0.80 (was 1.0, a perfect hit every turn). Each turn the AI draws `round_qte_score(clamp(gauss(0.80, OPPONENT_QTE_SD 0.08), OPPONENT_QTE_MIN 0.60, OPPONENT_QTE_MAX 1.00))` from its own `Random(seed + OPPONENT_QTE_SEED_OFFSET)` (104,729). The race RNG is untouched. `MatchConfig.opponent_qte_ratio` is now actually read (mean = OPPONENT_QTE x ratio), plus `opponent_qte_sd/_min/_max` overrides (None = the live constants). The simulated player's read of the AI uses the mean. The AI heat rules are unchanged.

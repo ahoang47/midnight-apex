@@ -63,21 +63,21 @@ def test_walks_reproduce_eval_final_c():
     assert mixed[-1]["mods_spent"] == 66580.0
     hard = P.run("hard")
     assert [w["total_grind"] for w in hard] == [14, 14, 12] and [w["L"] for w in hard] == [12, 29, 46]   # was 13/15/18 (perfect AI)
-    assert [(w["wall_grind"], w["post_wall_to_cap"]) for w in hard] == [(1, 13), (1, 13), (2, 10)]
+    assert [(w["wall_grind"], w["post_wall_to_cap"]) for w in hard] == [(1, 13), (6, 8), (2, 10)]
     story = P.run("story")
     assert [w["L"] for w in story] == [7, 26, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
     # xp-carry-v1 fix C (Austin 2026-11-14): leftover XP carries over, so story-only enters R2 at L7 and R3 at L26
     assert [w["rows"][0]["arrive_L"] for w in story] == [0, 7, 26]
     worst = [min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story]
-    assert worst == [40.6, 58.2, 48.0]          # was 53.0 / 54.4 / 50.5; criterion 3 (>= 50) now fails R1/R3: test_story_criterion_3
+    assert worst == [40.6, 58.4, 48.0]          # was 53.0 / 54.4 / 50.5; criterion 3 (>= 50) now fails R1/R3: test_story_criterion_3
     # Austin 2026-11-14 campaign story-XP cut (STORY_XP_MULT): 80/80 story-only meets each boss one level lower
     boss = [(w["rows"][-1]["arrive_L"], P.hard_win(w["rows"][-1]["wr"]["c8080"])) for w in story]
-    assert boss == [(6, 40.6), (23, 58.2), (41, 48.0)]
+    assert boss == [(6, 40.6), (23, 58.4), (41, 48.0)]
     assert story[0]["rows"][0]["equipped"] == ["stock"] * 4 and story[0]["rows"][0]["cash_pre"] == 0.0   # kid1 runs stock
     assert story[0]["rows"][1]["wr"]["c8080"]["district"] == 98.6                       # kid2 at 88.9 % fill
     assert [round(w["money"], 2) for w in story] == [5900.0, 13940.0, 26700.0] and story[-1]["mods_spent"] == 27300.0
     # skill-points-v1 (Austin 2026-11-14): whole points, 25-50 % band, 20 % retune budget; R2 arrives off the Wangan tune
-    assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.2, 40.6, 31.2]
+    assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.2, 41.5, 31.2]
     assert [w["build"] for w in mixed] == [(1320, 660, 660), (792, 756, 1474), (1556, 865, 1037)]
     assert [w["rows"][0]["pow_share"] for w in mixed] == [50.0, 30.0, 45.0]           # entry POW share R1 / R2 / R3
 

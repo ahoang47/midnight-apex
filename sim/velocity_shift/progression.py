@@ -21,7 +21,7 @@ Rules (all constants in equations.py):
     points spent (E.check_build), spent points lock, new points free, and at each district change at most
     E.RETUNE_BUDGET_FRACTION (20 %) of the spent points move (E.check_retune). The walk's player places new points
     greedily toward E.DISTRICT_TUNE (add_points) and spends the full budget toward it (retune). Win rates at a split
-    off the district tune add the delta from config/winrate_offtune_v1.json (POW share p, HAN 25 %).
+    off the district tune add the delta from config/winrate_offtune_v2.json (POW share p, HAN 25 %; v2 = 0.80 random AI QTE, 2026-11-19).
   * Walk policies: "story" never grinds (80/80 criterion); "mixed" grinds once at the first rung where 60/80 or 80/60
     is < 50 % (hard cell for 20/30-turn races) until both clear, then grinds to the cap before the boss; "hard"
     (60/60) grinds at every rung where 60/60 is < 50 %, then to the cap before the boss.
@@ -46,7 +46,7 @@ from . import equations as E
 PROFILES = ("c6060", "c6080", "c8060", "c8080")
 _TABLE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_g2_live_tracks_v2.json")
 _TABLE = None
-_OFF_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_offtune_v1.json")
+_OFF_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_offtune_v2.json")
 _OFF = None
 
 
