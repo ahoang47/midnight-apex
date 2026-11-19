@@ -1,0 +1,782 @@
+[
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.58,
+  "se": 0.1
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 40.68,
+  "se": 0.63
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.0,
+  "se": 0.0
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 10.78,
+  "se": 0.4
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 6.65,
+  "se": 0.32
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 69.83,
+  "se": 0.59
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 1.02,
+  "se": 0.13
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 49.17,
+  "se": 0.65
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.03,
+  "se": 0.02
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 15.47,
+  "se": 0.47
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 9.35,
+  "se": 0.38
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 75.35,
+  "se": 0.56
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 1.42,
+  "se": 0.15
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 56.67,
+  "se": 0.64
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "F90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.08,
+  "se": 0.04
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "F90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 19.9,
+  "se": 0.52
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 11.05,
+  "se": 0.4
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 78.5,
+  "se": 0.53
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 2.13,
+  "se": 0.19
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 62.9,
+  "se": 0.62
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "F85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.15,
+  "se": 0.05
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "F85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 25.02,
+  "se": 0.56
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 13.9,
+  "se": 0.45
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 81.43,
+  "se": 0.5
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 2.87,
+  "se": 0.22
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 68.7,
+  "se": 0.6
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "F80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.2,
+  "se": 0.06
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "F80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 30.23,
+  "se": 0.59
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 17.88,
+  "se": 0.49
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 83.88,
+  "se": 0.47
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 1.43,
+  "se": 0.15
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 56.5,
+  "se": 0.64
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.12,
+  "se": 0.04
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 20.12,
+  "se": 0.52
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 11.1,
+  "se": 0.41
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 78.37,
+  "se": 0.53
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "D85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 2.1,
+  "se": 0.19
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "D85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 62.65,
+  "se": 0.62
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "D85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.15,
+  "se": 0.05
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "D85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 24.95,
+  "se": 0.56
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "D85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 14.05,
+  "se": 0.45
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "D85",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 81.42,
+  "se": 0.5
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "player_rules",
+  "n": 6000,
+  "win": 3.28,
+  "se": 0.23
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "player_rules",
+  "n": 6000,
+  "win": 47.92,
+  "se": 0.64
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "player_rules",
+  "n": 6000,
+  "win": 0.08,
+  "se": 0.04
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "player_rules",
+  "n": 6000,
+  "win": 11.48,
+  "se": 0.41
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "player_rules",
+  "n": 6000,
+  "win": 16.13,
+  "se": 0.47
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "player_rules",
+  "n": 6000,
+  "win": 73.72,
+  "se": 0.57
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "player_rules_r1",
+  "n": 6000,
+  "win": 3.28,
+  "se": 0.23
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "player_rules_r1",
+  "n": 6000,
+  "win": 47.92,
+  "se": 0.64
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "player_rules_r1",
+  "n": 6000,
+  "win": 0.08,
+  "se": 0.04
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "player_rules_r1",
+  "n": 6000,
+  "win": 11.48,
+  "se": 0.41
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "Q100",
+  "heat": "player_rules_r1",
+  "n": 6000,
+  "win": 16.13,
+  "se": 0.47
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "Q100",
+  "heat": "player_rules_r1",
+  "n": 6000,
+  "win": 73.72,
+  "se": 0.57
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F70",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 5.98,
+  "se": 0.31
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F70",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 79.05,
+  "se": 0.53
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "F70",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.68,
+  "se": 0.11
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "F70",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 43.6,
+  "se": 0.64
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F70",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 26.08,
+  "se": 0.57
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F70",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 87.95,
+  "se": 0.42
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F60",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 13.03,
+  "se": 0.43
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F60",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 88.92,
+  "se": 0.41
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "F60",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 2.23,
+  "se": 0.19
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "F60",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 61.17,
+  "se": 0.63
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "F60",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 38.43,
+  "se": 0.63
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "F60",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 92.18,
+  "se": 0.35
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "SK90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 2.4,
+  "se": 0.2
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "SK90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 65.97,
+  "se": 0.61
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "SK90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 0.18,
+  "se": 0.06
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "SK90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 27.35,
+  "se": 0.58
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "SK90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 16.45,
+  "se": 0.48
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "SK90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 82.8,
+  "se": 0.49
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "SK80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 8.8,
+  "se": 0.37
+ },
+ {
+  "player": "touge",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "SK80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 84.4,
+  "se": 0.47
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "60/60",
+  "opt": "SK80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 1.33,
+  "se": 0.15
+ },
+ {
+  "player": "touge",
+  "opponent": "wangan",
+  "prof": "80/80",
+  "opt": "SK80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 51.78,
+  "se": 0.65
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "60/60",
+  "opt": "SK80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 31.07,
+  "se": 0.6
+ },
+ {
+  "player": "wangan",
+  "opponent": "touge",
+  "prof": "80/80",
+  "opt": "SK80",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 90.15,
+  "se": 0.38
+ }
+]

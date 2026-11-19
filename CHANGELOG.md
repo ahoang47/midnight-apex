@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-19 — AI heat check and AI QTE cap options, draft (Barry, Systems)
+- **What:** new `unapproved/barry/ai-heat-qte-v1/` (README, runner, results). Nothing live changed.
+- **Why:** Austin asked through Gordon that the sims run heat for the opponents too, and that the opponents' QTE be capped because a perfect 1.0 every turn isn't fun.
+- **Heat finding:** the AI already runs POW/HAN/EN heat, overrun, lock and limp through the same gauges (match.py:83-84, 117-118, 139-140). It does so under the placeholder boss rules: release 0.8, no lock from passive load, r = 1, and no pacing. Switching it to the player rules makes the bosses far easier (60/60 Street 32.2 → 69.7, Wangan 38.7 → 90.4, Touge 30.9 → 91.2), so the draft keeps the boss rules.
+- **QTE:** win rates simmed for fixed caps from 0.95 to 0.60, seeded spreads (means 0.90 and 0.85), and a skill-model AI. Recommended: a seeded per-turn spread, N(0.90, 0.07) clamped to 0.70-1.00. Under it, 80/80 breaks 95 % on Street and Touge. Touge holds at r ≈ 1.066 and Wangan at its live r. Street can't hold 30/95 on r alone. In the parity test race a 60/60 player stays near 1-13 % for any cap, because the player's own timing at r = 1 is the bigger factor.
+- **Status:** draft for Austin. OPPONENT_QTE stays 1.0 and the r values are unchanged.
+
 ## 2026-11-19 — Pick timer settled at 12 s; random fill on timeout (Barry, Systems)
 - `design/02-equations-reference.md` §5 and the open-item list, plus `design/06-pattern-read.md`: the 8 s vs 12 s straight-window mismatch is resolved at 12 s (`STRAIGHT_DURATION 12.0`, Godot guide). When the timer runs out, empty picks fill at random from a seeded RNG separate from the race stream. Old text is struck through and marked stale, not deleted.
 - Why: Austin's answers on the Touge test race build (2026-11-19, given in Gordon's chat). The sim has no real-time timer, so no sim constant changes. Docs only.

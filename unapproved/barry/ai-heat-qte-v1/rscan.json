@@ -1,0 +1,242 @@
+[
+ {
+  "d": "street",
+  "r": 1.028,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 17.55,
+  "se": 0.49
+ },
+ {
+  "d": "street",
+  "r": 1.028,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 91.68,
+  "se": 0.36
+ },
+ {
+  "d": "street",
+  "r": 1.032,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 22.65,
+  "se": 0.54
+ },
+ {
+  "d": "street",
+  "r": 1.032,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 95.12,
+  "se": 0.28
+ },
+ {
+  "d": "street",
+  "r": 1.036,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 30.93,
+  "se": 0.6
+ },
+ {
+  "d": "street",
+  "r": 1.036,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 96.4,
+  "se": 0.24
+ },
+ {
+  "d": "wangan",
+  "r": 1.046,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 40.37,
+  "se": 0.63
+ },
+ {
+  "d": "wangan",
+  "r": 1.046,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 91.1,
+  "se": 0.37
+ },
+ {
+  "d": "wangan",
+  "r": 1.05,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 44.37,
+  "se": 0.64
+ },
+ {
+  "d": "wangan",
+  "r": 1.05,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 92.98,
+  "se": 0.33
+ },
+ {
+  "d": "touge",
+  "r": 1.052,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 22.6,
+  "se": 0.54
+ },
+ {
+  "d": "touge",
+  "r": 1.052,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 87.72,
+  "se": 0.42
+ },
+ {
+  "d": "touge",
+  "r": 1.058,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 25.35,
+  "se": 0.56
+ },
+ {
+  "d": "touge",
+  "r": 1.058,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 90.05,
+  "se": 0.39
+ },
+ {
+  "d": "touge",
+  "r": 1.064,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 29.43,
+  "se": 0.59
+ },
+ {
+  "d": "touge",
+  "r": 1.064,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 91.67,
+  "se": 0.36
+ },
+ {
+  "d": "touge",
+  "r": 1.066,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 31.3,
+  "se": 0.6
+ },
+ {
+  "d": "touge",
+  "r": 1.066,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 92.87,
+  "se": 0.33
+ },
+ {
+  "d": "touge",
+  "r": 1.068,
+  "prof": "60/60",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 44.25,
+  "se": 0.64
+ },
+ {
+  "d": "touge",
+  "r": 1.068,
+  "prof": "80/80",
+  "opt": "D90",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 96.23,
+  "se": 0.25
+ },
+ {
+  "d": "street",
+  "r": 1.036,
+  "prof": "60/60",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 25.2,
+  "se": 0.56
+ },
+ {
+  "d": "street",
+  "r": 1.036,
+  "prof": "80/80",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 93.72,
+  "se": 0.31
+ },
+ {
+  "d": "street",
+  "r": 1.04,
+  "prof": "60/60",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 31.75,
+  "se": 0.6
+ },
+ {
+  "d": "street",
+  "r": 1.04,
+  "prof": "80/80",
+  "opt": "F95",
+  "heat": "boss_rules",
+  "n": 6000,
+  "win": 96.2,
+  "se": 0.25
+ }
+]
