@@ -1,0 +1,41 @@
+At cap, bosses and finale (60/60 | 60/80 | 80/60 | 80/80; district mean (hardest track)):
+  R1 Street boss                       r=1.044 |  42.9 (hardest 31.6) |  80.3 (hardest 72.4) |  79.4 (hardest 71.0) |  96.3 (hardest 94.9)
+  R2 Wangan boss                       r=1.055 |  54.4 (hardest 39.7) |  78.1 (hardest 63.0) |  86.6 (hardest 80.7) |  95.5 (hardest 90.7)
+  R3 Touge  boss                       r=1.071 |  41.4 (hardest 31.9) |  74.8 (hardest 69.2) |  76.2 (hardest 70.2) |  94.6 (hardest 93.5)
+  RF Touge  Myth #1 vs Myth Driver #1  r=1.075 |  45.0 (hardest 34.7) |  77.8 (hardest 72.6) |  78.5 (hardest 74.1) |  95.4 (hardest 94.7)
+  RF Wangan Myth #2 vs Myth Driver #2  r=1.058 |  57.1 (hardest 41.7) |  80.2 (hardest 64.2) |  88.4 (hardest 84.2) |  96.2 (hardest 92.5)
+  RF Street Myth #3 vs Myth Driver #3  r=1.044 |  42.9 (hardest 31.6) |  80.3 (hardest 72.4) |  79.4 (hardest 71.0) |  96.3 (hardest 94.9)
+  RF Touge  Summit vs Sabine           r=1.075 |  45.0 (hardest 34.7) |  77.8 (hardest 72.6) |  78.5 (hardest 74.1) |  95.4 (hardest 94.7)
+
+walk: story
+  R1 Street cap L12 reached=False end L7 grind 0 (wall None 0 + to cap 0) cash $5,900 debt $3,000 | mods 5 owned, $1,100 spent
+  R2 Wangan cap L29 reached=False end L26 grind 0 (wall None 0 + to cap 0) cash $13,940 debt $0 | mods 14 owned, $13,060 spent
+  R3 Touge  cap L46 reached=False end L43 grind 0 (wall None 0 + to cap 0) cash $26,700 debt $0 | mods 21 owned, $27,300 spent
+
+walk: mixed
+  R1 Street cap L12 reached=True end L12 grind 13 (wall mat1 3 + to cap 10) cash $5,050 debt $0 | mods 11 owned, $6,100 spent
+  R2 Wangan cap L29 reached=True end L29 grind 13 (wall mat1 3 + to cap 10) cash $15,632 debt $0 | mods 21 owned, $26,740 spent
+  R3 Touge  cap L46 reached=True end L46 grind 12 (wall mat1 4 + to cap 8) cash $16,102 debt $0 | mods 32 owned, $62,180 spent
+
+walk: hard
+  R1 Street cap L12 reached=True end L12 grind 13 (wall kid1 1 + to cap 12) cash $4,550 debt $0 | mods 12 owned, $6,600 spent
+  R2 Wangan cap L29 reached=True end L29 grind 15 (wall kid1 3 + to cap 12) cash $13,998 debt $0 | mods 24 owned, $29,640 spent
+  R3 Touge  cap L46 reached=True end L46 grind 18 (wall kid1 6 + to cap 12) cash $16,922 debt $0 | mods 36 owned, $67,080 spent
+
+finale caps (C, L): [(531.9, 64), (599.1, 79), (676.7, 94), (797.5, 115)] | 4-slot Myth package $38,000 (MYTH4 $8,000 stand-in)
+
+pre-finale arc + finale:
+  P1   pre_F1 touge  10t r*=1.180 B=382.78 purse $2,500 xp 18,591.3 unlocks MYTH1
+  P2   pre_F1 touge  20t r*=1.149 B=412.29 purse $3,375 xp 24,788.4
+  P3   pre_F1 touge  20t r*=1.025 B=480.89 purse $3,375 xp 26,854.1
+  P4   pre_F1 touge  30t r*=1.086 B=464.83 purse $5,000 xp 33,051.2
+  F1   F1     touge  30t r*=1.075 B=494.80 purse $10,800 xp 0.0 unlocks MYTH2 Myth #1 vs Myth Driver #1 cap L64
+  M11  F1_F2  wangan 10t r*=1.180 B=441.61 purse $2,500 xp 119,694.4
+  M12  F1_F2  wangan 20t r*=1.000 B=555.28 purse $3,375 xp 179,541.7
+  F2   F2     wangan 30t r*=1.058 B=566.30 purse $10,800 xp 0.0 unlocks MYTH3 Myth #2 vs Myth Driver #2 cap L79
+  M21  F2_F3  street 10t r*=1.180 B=497.48 purse $2,500 xp 379,691.0
+  M22  F2_F3  street 20t r*=1.000 B=625.54 purse $3,375 xp 569,536.5
+  F3   F3     street 30t r*=1.044 B=648.20 purse $10,800 xp 0.0 unlocks MYTH4 Myth #3 vs Myth Driver #3 cap L94
+  M31  F3_F4  touge  10t r*=1.180 B=560.43 purse $2,500 xp 2,236,716.8
+  M32  F3_F4  touge  20t r*=1.020 B=713.17 purse $3,375 xp 3,355,075.2
+  F4   F4     touge  30t r*=1.075 B=741.90 purse $10,800 xp 0.0 Summit vs Sabine cap L115

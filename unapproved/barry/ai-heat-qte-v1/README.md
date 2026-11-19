@@ -1,4 +1,58 @@
-# ai-heat-qte-v1 (Barry DRAFT, 2026-11-19, unapproved)
+# ai-heat-qte-v1 — LIVE / APPROVED (Austin 2026-11-19, relayed verbatim by Gordon: "Approve Barry's 0.80 random QTE cap and boss retune, including the brakes/tires-heavy Street boss")
+
+> **Live on touge-race:** 67bbeb7 (AI QTE model, boss r, EN-heavy Street boss, win-rate table v2), 4a5a26f (off-tune table v2).
+> Desmond confirmed the 25/25/50 Street boss needs no story or character changes. Live constants: `OPPONENT_QTE` 0.80 (mean),
+> `OPPONENT_QTE_SD` 0.08, `OPPONENT_QTE_MIN` 0.60, `OPPONENT_QTE_MAX` 1.00, `OPPONENT_QTE_SEED_OFFSET` 104,729;
+> `BOSS_TARGET_R` 1.046 / 1.040 / 1.050; `BOSS_STAT_SHARES["street"]` (0.25, 0.25, 0.50). The v2 draft below is what went live;
+> the econ re-walk section is still a DRAFT (nothing in it is live).
+
+## Econ re-walk after go-live (DRAFT, 2026-11-19; nothing here is live)
+
+Files: `econ_rewalk/` (`rewalk.py` → `rewalk.json`, the mod_skill run_fixed comparison, live progression reports old vs new).
+Table regeneration: `table_v2/` (`sweep_v2.py`, `export_v2.py`, `offtune_v2.py`; outputs in `sim/config/*_v2.json`).
+
+**Live boss checks at cap (table v2, hardest track, 60/60 / 80/80):** Street 31.2 / 93.9 (r 1.046, EN-heavy boss), Wangan
+40.9 / 92.5 (r 1.040; with the real R2 cap build at 26.2 % POW 41.5 / 93.6), Touge 32.4 / 91.9 (r 1.050). All in band.
+Direct engine check with the draft seeds reproduces the draft exactly: 32.02 / 93.78, 40.85 / 92.23, 32.45 / 92.33.
+
+**mod_skill fixed-layout walk with the APPROVED calibration (story table, grind XP 13 / 12 / 14) on the new live tables:**
+
+| Item | Approved (perfect AI) | New live tables | Changed? |
+|---|---|---|---|
+| Ceilings per round | 133 / 261 / 407 | 133 / 261 / 407 | no |
+| Caps (points) | 3,532 / 4,044 / 4,628 | 3,532 / 4,044 / 4,628 | no |
+| Grind XP per win | 13 / 12 / 14 | 13 / 12 / 14 (kept) | no (recalibration would pick 14 / 8 / 7: draft only) |
+| Mixed grind wins | 13 / 13 / 12 | 13 / 13 / 12 | no |
+| Hard (60/60) grind wins | 13 / 14 / 18 | 13 / 13 / 14 | yes (fewer) |
+| Boss 60/60 / 80/80 (mixed, at cap) | 31.6 / 94.9, 39.5 / 90.6, 30.3 / 92.9 | 31.2 / 93.9, 40.5 / 92.4, 31.2 / 91.4 | in band |
+| Story-only 80/80 at the boss (no grind) | 52.9 / 57.7 / 55.9 | **40.6** / 58.4 / **48.1** | yes: R1 and R3 below 50 |
+
+**Live econ-v1 progression walk (`scripts/run_progression.py`, old 313a871 vs new):** mixed grind 13 / 13 / 12 both (R1 wall
+moves mat1 → mat2); hard 13 / 15 / 18 → 14 / 14 / 12; story-only 80/80 at the boss 53.0 / 57.7 / 55.8 → 40.6 / 58.4 / 48.0;
+mixed cash at round end $5,050 / $15,633 / $16,103 → $5,050 / $13,233 / $11,703 (the buyer spends $66,580 vs $62,180).
+
+**Needs Austin (not changed live):**
+1. **Story-only criterion (80/80 ≥ 50 % on every rung)** now fails at the R1 boss (40.6 %) and R3 boss (48.0 %). The EN-heavy Street
+   boss and the lower boss r hit the under-levelled story-only player harder. Fix options: story XP retune (the recalibration
+   above), or accept. Flagged as a strict xfail in `sim/tests/test_progression.py`.
+2. **Finale r** (`FINALE_TARGET_R` 1.075 / 1.058 / 1.044 / 1.075) is still tuned for a perfect AI: every billed finale is out of band
+   (60/60 58-61 %, 80/80 97.5-98.6 %). Needs a finale retune sim (strict xfail `test_finale_in_band`). The pre-finale arc
+   (`FINALE_ARC` r_design) was also tuned for the perfect AI.
+3. **Gauntlet targets** (perfect at r 0.80: 10-25 %; average at cap: 60-75 %) were set for a perfect AI. Under the live AI they read
+   46.7 and 84.4. CI now pins the gauntlet's opponent to the reference timing so it keeps checking the heat engine against G2.
+4. **Ladder rungs below the boss** keep their r (not part of the approval) and are all easier now (mixed lowest 80/80 rises
+   81.9 → 89.6 in R1). A rung retune would be a separate decision.
+
+**Godot mirror spec (for Gordon):** per turn, after the clashes and before the turn resolves, the AI's raw QTE =
+`floor(clamp(gauss(OPPONENT_QTE, OPPONENT_QTE_SD), OPPONENT_QTE_MIN, OPPONENT_QTE_MAX) * 1000.0 + 0.5) / 1000.0` (0.80, 0.08,
+0.60, 1.00), drawn from its OWN RNG seeded `race_seed + 104729` (never the race RNG that picks the AI's lines). One draw per turn,
+draws only happen when sd > 0. Python uses `random.Random(seed + 104729).gauss(mu, sd)`; bit-identical Godot parity needs the same
+generator (Godot's RandomNumberGenerator.randfn is a different stream), so parity tests should feed the Python draws or a shared
+pre-generated sequence. Crew-boss stats: budget × `BOSS_STAT_SHARES[district]` as POW / HAN / EN (Street 0.25 / 0.25 / 0.50; others even).
+The AI's heat rules are unchanged.
+
+---
+
 
 ## v2 (2026-11-19): AI QTE random per turn averaging 0.80; boss retune
 

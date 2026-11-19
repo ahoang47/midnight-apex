@@ -1,5 +1,7 @@
 # Midnight Apex — System Overview
 
+> **Decision 2026-11-19 (Austin approved via Gordon; live in commit 67bbeb7, draft `unapproved/barry/ai-heat-qte-v1/`):** the AI's QTE is no longer a perfect 1.0. Each turn the opponent's raw QTE is drawn from N(`OPPONENT_QTE` 0.80, `OPPONENT_QTE_SD` 0.08), clamped to [`OPPONENT_QTE_MIN` 0.60, `OPPONENT_QTE_MAX` 1.00] and rounded with `round_qte_score`, from its own RNG `Random(seed + OPPONENT_QTE_SEED_OFFSET)` (104,729), separate from the race RNG (`match.py` `opponent_qte_mean` / `opponent_qte_spread`; `MatchConfig.opponent_qte_ratio/_sd/_min/_max` override). Boss r retuned: Street 1.046, Wangan 1.040, Touge 1.050 (`BOSS_TARGET_R`), and the Street crew boss is EN-heavy (`BOSS_STAT_SHARES` POW/HAN/EN 25/25/50). Progression reads `sim/config/winrate_g2_live_tracks_v2.json` (with `q_boss` cells for the Street boss) and `winrate_offtune_v2.json`. The AI keeps its softer heat rules. Text below that says the opponent always times perfectly / `OPPONENT_QTE` = 1.0 / is fixed with no RNG, the old boss r (1.044 / 1.055 / 1.071), or the v1 tables is **stale**.
+
 > **Design canon: locked terms and decisions (2026-11-04; designated design canon by Austin 2026-11-12).** This block is the source of truth for Austin's mechanical and scope decisions; if any other design/ file disagrees, this block wins. Add a decision here only once Austin has approved it, with its date; unapproved proposals go in `unapproved/<owner>/`. Use these terms everywhere in design/. The game is **Midnight Apex**; the sim lives in `sim/` (Python package `sim/velocity_shift/`, named after the engine's old working title).
 > - **Race tiers:** **wild race** (open-world pushover for EXP farming; code `wild`), **betting race** (any wild race turned into a bet through a prompt, harder than wild and a bit easier than lieutenants; never awards shells), **lieutenant** (crew members; code `lieutenant`), **crew boss** (the crew's chief; code `boss`), **Myth Driver race** (Finale story races; like wild races, no loss persistence). "Lackey", "crew chief", "Lieutenant Challenge" and "encounter" are informal synonyms; prefer the terms above.
 > - **Crew ladder:** each district has one crew, raced once from start to finish: kids, then mature members, then old heads (all lieutenants), then the crew boss. There are no rematches (Finale training sessions with former crew members, 2026-11-13, aren't rematches), and the boss no longer levels up the crew between rounds.
@@ -65,7 +67,7 @@ sim/main.py
 | `sim/velocity_shift/ai.py` | Encounter laps/phases; legacy AI QTE (HP/DP only) |
 | `sim/velocity_shift/trace.py` | Structured execution logger |
 | `sim/velocity_shift/simulation.py` | Headless batch runner, simulated player (read model + reserve pacing), result export |
-| `sim/velocity_shift/progression.py` | Story ladder (budgets, level caps, story/grind XP, walls) over the heat-system win-rate table `sim/config/winrate_g2_live_tracks_v1.json` (econ-v1, recalibrated to the live stand-in tracks in `6d3641f`); report via `sim/scripts/run_progression.py` |
+| `sim/velocity_shift/progression.py` | Story ladder (budgets, level caps, story/grind XP, walls) over the heat-system win-rate table `sim/config/winrate_g2_live_tracks_v1.json` ~~(stale: v2 since 2026-11-19)~~ (econ-v1, recalibrated to the live stand-in tracks in `6d3641f`); report via `sim/scripts/run_progression.py` |
 | `sim/velocity_shift/cli.py` | Interactive frontend (setup, prompts, display, entry point) |
 | `sim/velocity_shift/config.py` | Factory function for archetype-based builds |
 
@@ -86,7 +88,7 @@ Player: per clash, any stance whose gauge is not locked; each adds CORNER_HEAT_C
         │      (OVERRUN_SLOPE, OVERRUN_FLOOR); a full gauge locks until load < HEAT_RELEASE × cap;
         │      all three locked = limp (LIMP_MULT). End of turn: CORNER_HEAT_PASSIVE, recovery, release.
 Player QTE: entry/apex/exit phases → mean_phase_qte (unplayed = PHASE_QTE_UNPLAYED)
-        │      zone width = qte_zone_width(r, qte_window_mod); opponent uses OPPONENT_QTE
+        │      zone width = qte_zone_width(r, qte_window_mod); opponent uses OPPONENT_QTE (since 2026-11-19: seeded per-turn draw, see top)
         ▼
 clash_progress x3: g = V × Φ(outcome, q) × stat_payoff_mult(share of the stance played) × heat mult
         │      V = r**kappa_for_length(max_turns)  (KAPPA_BY_LENGTH × KAPPA_HEAT_MULT); STAT_M_W

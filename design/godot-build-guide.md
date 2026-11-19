@@ -1,5 +1,7 @@
 # Midnight Apex — Godot Prototype
 
+> **Decision 2026-11-19 (Austin approved via Gordon; live in commit 67bbeb7, draft `unapproved/barry/ai-heat-qte-v1/`):** the AI's QTE is no longer a perfect 1.0. Each turn the opponent's raw QTE is drawn from N(`OPPONENT_QTE` 0.80, `OPPONENT_QTE_SD` 0.08), clamped to [`OPPONENT_QTE_MIN` 0.60, `OPPONENT_QTE_MAX` 1.00] and rounded with `round_qte_score`, from its own RNG `Random(seed + OPPONENT_QTE_SEED_OFFSET)` (104,729), separate from the race RNG (`match.py` `opponent_qte_mean` / `opponent_qte_spread`; `MatchConfig.opponent_qte_ratio/_sd/_min/_max` override). Boss r retuned: Street 1.046, Wangan 1.040, Touge 1.050 (`BOSS_TARGET_R`), and the Street crew boss is EN-heavy (`BOSS_STAT_SHARES` POW/HAN/EN 25/25/50). Progression reads `sim/config/winrate_g2_live_tracks_v2.json` (with `q_boss` cells for the Street boss) and `winrate_offtune_v2.json`. The AI keeps its softer heat rules. Text below that says the opponent always times perfectly / `OPPONENT_QTE` = 1.0 / is fixed with no RNG, the old boss r (1.044 / 1.055 / 1.071), or the v1 tables is **stale**.
+
 > Build a playable Godot prototype using only colored cubes. Tune gameplay constants,
 > then replace cubes with real art — gameplay comes first.
 >
@@ -63,6 +65,7 @@ enum QteType { MASH, TIMING }
 | `KAPPA_BY_LENGTH`, `KAPPA_HEAT_MULT` | Stat-gap leverage `V = r^kappa`, kappa = `kappa_for_length(T)` = `KAPPA_BY_LENGTH[T] × KAPPA_HEAT_MULT[T]` (heat system, 2026-11-13) |
 | `RACE_LENGTHS` | Race lengths that have a `KAPPA_BY_LENGTH` entry |
 | `OPPONENT_QTE` | Opponent raw timing; unchanged (HAN still applies; no visible-zone width) (`equations.py:129`, `combat.py:75`) |
+| `OPPONENT_QTE_SD`, `OPPONENT_QTE_MIN`, `OPPONENT_QTE_MAX`, `OPPONENT_QTE_SEED_OFFSET` | 2026-11-19: `OPPONENT_QTE` is now the MEAN (0.80) of a per-turn draw N(0.80, 0.08) clamped 0.60-1.00, rounded, own RNG seed + 104,729 (see the decision at the top). The row above is stale. |
 | `W0`, `T_MAX`, `L_MAX` | Phi payoff: win at q = 0, tie at q = 1, loss at q = 1 |
 | `TAU_BETA`, `TAU_P_TOP`, `TAU_GAMMA` | tau(q): top-bonus share, top-bonus sharpness, body shape |
 | ~~`MU`~~, ~~`ETA`~~ | **Removed 2026-11-13.** Replaced by `STAT_M_W` (payoff × (1 + `STAT_M_W` × (share of the stance played − 1/3)), all three stats); no HAN timing modifier |
@@ -401,7 +404,7 @@ static func resolve_turn(player_stances: Array, opponent_stances: Array,
 
 **Inputs, as `match.py` feeds them:**
 - `player_q_time` is the turn's single corner-long raw QTE score from `QTEController.stop()` divided by `QTE_NORMALIZER` (the same conversion as `cli.prompt_qte()` → `qte_factor()`), so it lies in [0, 1]. The same value is used for all 3 clashes. It is already the raw score at the visible zone for the race's fixed r (and any `qte_window_mod`); don't pre-apply HAN. `clash_progress` applies only the HAN term (`combat.py:71–75`, `equations.py:426–428`). A simulated player uses `raw_qte_score` at that same fixed r (`match.py:180–196`).
-- `opponent_q_time` is always `OPPONENT_QTE` (`AIQTE.opponent_q_time()`, §8.3). The opponent is unchanged: no visible-zone width, HAN still applies (`combat.py:75`, `equations.py:163–164`).
+- `opponent_q_time` is always `OPPONENT_QTE` (`AIQTE.opponent_q_time()`, §8.3). ~~[stale 2026-11-19: now a seeded per-turn draw, see the decision at the top]~~ The opponent is unchanged: no visible-zone width, HAN still applies (`combat.py:75`, `equations.py:163–164`).
 - Both sides use the same effective timing, `q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1)`, with no `knot_window` factor (`equations.py:160`, `:426–433`). For the player, `raw_qte` is `player_q_time`. For the opponent, `raw_qte` is `OPPONENT_QTE`. The opponent's HAN share still scales its timing.
 - The stat gap lives in the visible zone width `qte_zone_width(r, window_mod)` (`equations.py:338`), evaluated at the race's FIXED r (it does not change mid-race). `MatchConfig.qte_window_mod` (`models.py:152`) widens that zone. `KNOT_WINDOW_105` / `knot_window` are legacy for the oracle only (and as the generator of the zone table); they are not used in `clash_progress` or `resolve_turn` (`equations.py:115–116`, `:256–260`).
 - Every clash pays both cars: a win pays at least `W0`, while a tie and a loss pay `T_MAX` and `L_MAX` scaled by timing.
@@ -578,6 +581,8 @@ static func pick_card(hand: Array, opponent_hand: Array,
 ```gdscript
 static func opponent_q_time() -> float
     # Returns OPPONENT_QTE (match.py:200). Opponent unchanged: fixed, not
+    # STALE 2026-11-19: now draw once per turn: round_qte_score(clamp(gauss(OPPONENT_QTE, OPPONENT_QTE_SD),
+    # OPPONENT_QTE_MIN, OPPONENT_QTE_MAX)) from RandomNumberGenerator seeded seed + OPPONENT_QTE_SEED_OFFSET (top of file).
     # rolled; no level ratio, no noise, no visible-zone width, and no RNG
     # draw. HAN is applied later inside CombatResolver.clash_progress(),
     # the same as for the player (equations.py:163–164, combat.py:75).
@@ -1004,7 +1009,7 @@ Combat constants are tuned in Barry's sim, not in Godot. Austin and Barry sign o
 | `QTE_SKILL_SIGMA_OVER_A0` | PLACEHOLDER skill σ for `expected_hit_quality` / `raw_qte_score` until playtest |
 | `KNOT_WINDOW_105` | LEGACY only: winrate oracle and generator of the zone table; not used in `clash_progress` |
 | `KAPPA_BY_LENGTH` | How strongly the stat ratio scales progress, per race length |
-| `OPPONENT_QTE` | How well the opponent times (unchanged; HAN still applies) |
+| `OPPONENT_QTE` | How well the opponent times (unchanged; HAN still applies) (2026-11-19: mean of the per-turn draw, see top) |
 | `W0`, `T_MAX`, `L_MAX` | Progress for a win, tie and loss relative to a perfect win |
 | `TAU_BETA`, `TAU_P_TOP`, `TAU_GAMMA` | Shape of the timing curve tau(q) |
 | `MU` | How much POW share boosts wins and EN share boosts ties/losses |
@@ -1071,7 +1076,7 @@ scripts/
   TurnManager.gd           — state machine
   QTEController.gd         — mash + timing
   AIPicker.gd              — EV scoring
-  AIQTE.gd                 — opponent q_time (OPPONENT_QTE)
+  AIQTE.gd                 — opponent q_time (OPPONENT_QTE) (2026-11-19: seeded per-turn draw)
   TurnTypeData.gd          — stance sequences + QTE type
   ArchetypeData.gd         — comfort/weak zones
   PersonalityData.gd       — 5 personalities, 3 phases each
@@ -1144,7 +1149,7 @@ Total: **24 script files + 1 scene file**
 | Straight (12s) | No equivalent — pure Godot UX |
 | 3× CARD_PICK | `match.py` sequential pick loop (on straight) |
 | 3× CLASH resolve | `equations.resolve_stance()` (in corner, batched) |
-| 1× QTE (corner-long) | `cli.prompt_qte()` (score / `QTE_NORMALIZER` = player `q_time`); opponent uses `OPPONENT_QTE` |
+| 1× QTE (corner-long) | `cli.prompt_qte()` (score / `QTE_NORMALIZER` = player `q_time`); opponent uses `OPPONENT_QTE` (2026-11-19: seeded per-turn draw, see top) |
 | PROGRESS batch | `combat.resolve_turn()` (Phi/tau progress per clash, 3 summed) + `match.py` running totals |
 | Hand draw | `combat.draw_weighted_hand()` (`deck_weights()`, `HAND_SIZE`), after `combat.pick_line()` |
 
@@ -1227,7 +1232,7 @@ BEFORE TURN: TurnManager reads TrackData for current turn_type
      → CombatResolver.resolve_turn(...): clash_progress for each car on all 3 clashes, summed
        (q_eff = clip(raw_qte × (1 + ETA × (han_share − 1/3)), 0, 1) on both sides,
         no knot_window; player raw_qte is the entered QTE at the visible zone;
-        opponent raw_qte = OPPONENT_QTE; HAN still applies; kappa from max_turns)
+        opponent raw_qte = OPPONENT_QTE; [2026-11-19: per-turn seeded draw] HAN still applies; kappa from max_turns)
      → PositionTracker: accumulate progress
      → CarAnimator: tween Z offsets to the new lead
      → ProgressGapDisplay: animate gap meter

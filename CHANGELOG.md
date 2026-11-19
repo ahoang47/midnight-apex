@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-19 — Docs for the AI QTE go-live; econ re-walk draft (Barry, Systems)
+- **design/ (01, 02, 07, godot-build-guide):** each doc now opens with the go-live decision (commit 67bbeb7): the seeded per-turn AI QTE N(0.80, 0.08) clamped to 0.60-1.00 with its own RNG at seed + 104,729, boss r 1.046 / 1.040 / 1.050, the EN-heavy Street boss, and the v2 tables. Lines that said `OPPONENT_QTE` is a fixed 1.0 with no RNG, pointed at the v1 table, or cited the old boss r are marked stale, not deleted.
+- **unapproved/barry/ai-heat-qte-v1/README.md:** marked LIVE/APPROVED at the top. New econ re-walk section (DRAFT) and `econ_rewalk/`: `rewalk.py`/`rewalk.json`, the mod_skill comparison, live progression reports old vs new, and `walk_boss_flag.patch` (the boss-cell fix the re-walk copy applies to mod-skill-v1/walk.py; the draft file itself is untouched).
+- **Re-walk result:** the approved ceilings 133 / 261 / 407, caps 3,532 / 4,044 / 4,628, grind XP 13 / 12 / 14 and mixed grind wins 13 / 13 / 12 are all unchanged. Hard grind goes 13 / 14 / 18 → 13 / 13 / 14 (mod_skill) and 13 / 15 / 18 → 14 / 14 / 12 (econ-v1 live walk). A recalibration would pick grind XP 14 / 8 / 7; that is draft only.
+- **Needs Austin:** story-only 80/80 at the R1 and R3 bosses (40.6 / 48.0, criterion ≥ 50); every billed finale out of band (r still set for a perfect AI); the gauntlet's targets; and the ladder rungs below the boss, which are all easier now. Nothing in this list changed live.
+
 ## 2026-11-19 — LIVE: off-tune delta table v2 for the 0.80 random AI QTE (Barry, Systems)
 - **What:** new `sim/config/winrate_offtune_v2.json`, built by `unapproved/barry/ai-heat-qte-v1/table_v2/offtune_v2.py` with the same method as v1: splits POW p / HAN 0.25 / EN 0.75-p, r 0.97-1.18, N=150/style, common random numbers. `progression.py` now reads it. v1 is kept but no longer read.
 - **Why:** this finishes the table regeneration Austin approved on 2026-11-19. v1's deltas were built with a perfect AI.
