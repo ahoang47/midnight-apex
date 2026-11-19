@@ -1,8 +1,8 @@
-# Cel A on the two-corner test (experiment, unapproved)
+# Cel A on the two-corner test (approved reference build)
 
-Austin, 2026-11-14: "I like Cel A. Are you able to apply this to the two corner test and do a quick playtest?"
+Austin, 2026-11-14: "I like Cel A. Are you able to apply this to the two corner test and do a quick playtest?" Cel A soft was later locked as the in-game render style, and this folder is the reference build cited in `design/art/art_direction.md`. Austin promoted it on 2026-11-19.
 
-This is a test only, not a direction. It is Cel A from `../cel_shaded/` (commit f470dcc) ported onto Gordon's playable two-corner test. Gordon's folder (`unapproved/gordon/two-corner/`) is **not edited**: `stage.py` symlinks his Godot project in, and this folder owns only the files below. No models or textures are changed. It is all shaders, post and one script.
+It is Cel A from `../../../unapproved/arthur/experiments/cel_shaded/` (commit f470dcc) ported onto Gordon's playable two-corner test. Gordon's folder (`unapproved/gordon/two-corner/`) is **not edited**: `stage.py` symlinks his Godot project in, and this folder owns only the files below. No models or textures are changed. It is all shaders, post and one script.
 
 ## Cel A soft (new default, 2026-11-14)
 Austin's note on Cel A was that the lighting "makes it look very compressed". He approved this fix: keep the ink and the hard toon bands on cars and props, and soften the light on big surfaces before the dither runs.

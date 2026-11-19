@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Cel A port of Gordon's two-corner test (unapproved experiment). Stages the project, then:
+# Cel A port of Gordon's two-corner test (approved reference build). Stages the project, then:
 #   ./run.sh play       play it (F7 toggles cel on/off; ./run.sh play -- --cel 0 starts with it off)
 #   ./run.sh playtest   scripted full race (spec/shots9_pass.json, seed 3) at a fixed 30 fps: key shots cel on + off,
 #                       per-frame dumps (on / off / ink mask) for the video and the motion checks, under $OUT (default /tmp/ctc)

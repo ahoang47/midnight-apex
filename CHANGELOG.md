@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-19 — Arthur [art]: promote art_direction reference builds (cel_two_corner, tones.py)
+
+- **Why:** Austin, 2026-11-19: "Specifically for art_direction, promote anything that is referenced in approved docs."
+- **Promoted:**
+  - `unapproved/arthur/experiments/cel_two_corner/` → `art/mockups/cel_two_corner/` (Cel A soft reference build, commit 4ecffdf). `stage.py` now points at `unapproved/gordon/two-corner/godot`. Toggles unchanged: `cel/enabled` (F7), `cel/soft` (F8).
+  - `unapproved/arthur/mockups/tones/work/tones.py` → `art/mood/tones/tones.py` (B.2a `blend50` source). The rest of the tones study stays in `unapproved/arthur/mockups/tones/`; a shim at the old path keeps those scripts importing.
+- **Docs:** `design/art/art_direction.md` lines 35 and 201 updated to the new paths.
+
+---
+
 ## 2026-11-19 — Barry [docs]: references to deleted drafts now point at approved sources (Austin go-ahead 2026-11-19)
 - **Why:** Austin: "Anything that was pointing at a draft should be updated to point at an approved version." Commit 1fa6915 deleted 21 drafts from `unapproved/barry/`, but comments, docstrings, JSON comment/note strings and design docs still cited their paths. This changes text only: no numbers or code behaviour, and the JSON data is identical (checked with a parsed diff of every non-comment key). 82/82 sim tests pass.
 - **Rule used:** where a live file holds the thing, point at it (equations.py constants, heat.py, `config/*.json`). Otherwise cite the commit where Austin's approval went live:

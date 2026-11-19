@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Stage the Cel A two-corner experiment: symlink every file of Gordon's two-corner Godot project
-(../../../gordon/two-corner/godot) into ./godot, except the files this experiment owns (real files already in
+(../../../unapproved/gordon/two-corner/godot) into ./godot, except the files this experiment owns (real files already in
 ./godot: the cel shaders + cel.gdshaderinc, scripts/main.gd, project.godot). Never edits Gordon's folder."""
 import os
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.realpath(os.path.join(HERE, '..', '..', '..', 'gordon', 'two-corner', 'godot'))
+SRC = os.path.realpath(os.path.join(HERE, '..', '..', '..', 'unapproved', 'gordon', 'two-corner', 'godot'))
 DST = os.path.join(HERE, 'godot')
+if not os.path.isdir(SRC):
+    raise SystemExit('missing Gordon two-corner project at %s (expected unapproved/gordon/two-corner/godot)' % SRC)
 n = 0
 for root, dirs, files in os.walk(SRC):
     dirs[:] = [d for d in dirs if d != '.godot']

@@ -32,7 +32,7 @@ S2000 reference car (Appendix W).
 - 1 px ink outlines at 640×480, colour `#040810`, drawn by a screen-space depth/normal edge pass. Only the near side of an edge is inked, the lines fade into fog, and flat or grazing surfaces are ignored. Lane lines, chevrons, decals and car shadows get no ink.
 - Big surfaces (road, verge, terrain, forest cards, cut slopes, concrete, sky) get **no** toon bands and no brightness steps. They use smooth lighting with a wide blur, so the final dither spreads one gradient. Sodium pools fade off softly, never as rings.
 - RGB555 + Bayer dither stays as the last 3D pass. The HUD and menus are composited after it and are never shaded or inked.
-- It is shader and post only; no model or texture is changed for it. Reference build: `unapproved/arthur/experiments/cel_two_corner/` (commit 4ecffdf). Toggles there: `cel/enabled` (F7) and `cel/soft` (F8).
+- It is shader and post only; no model or texture is changed for it. Reference build: `art/mockups/cel_two_corner/` (commit 4ecffdf). Toggles there: `cel/enabled` (F7) and `cel/soft` (F8).
 
 Pitch alignment (`story/pitch.md`): cars and environments lean **Initial D** (grounded tuning
 culture, atmospheric roads); characters lean **JoJo** and are never rendered in-world (portraits/overlays only).
@@ -198,7 +198,7 @@ from the right place.
 ### B.2a Night palette: navy/teal + pale sodium [APPROVED 2026-11-11]
 Approved by the lead (2026-11-11). This is the world palette for night scenes and **supersedes the warm sodium,
 fog, sky and ambient values in B.2** (warm orange washes read as PS3/360). Source preset: `blend50` ("B HALF TEAL")
-in `unapproved/arthur/mockups/tones/work/tones.py` (the rest of that study is unapproved).
+in `art/mood/tones/tones.py` (the rest of that study is unapproved).
 | Group | Value |
 |---|---|
 | Sky/fog | fog `#0B172B`, zenith `#010408`, no city-glow band |
