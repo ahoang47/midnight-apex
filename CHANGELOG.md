@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-19 — DRAFT: story-beat wild-encounter gate for mod_skill (Barry, Systems; unapproved, Austin direction)
+- **Direction (Austin, direct, 2026-11-19):** "Make a few wild-encounter wins required story beats each round, no build check at the boss." Gate A stays reconsidered.
+- **Model (`unapproved/barry/mod-skill-v1/`):** N required wild-encounter wins per round, spread before kid2 … boss; extra wild encounters are optional; no boss build check. New `beats` mode in `walk.py`; `beats.py` → `beats.json`; `beats_engine_check.py` → `beats_engine_check.json`. Write-up is the new top section of GATE.md, with a README pointer.
+- **Sweep N = 2-8 at the live boss budgets:** no N passes the boss check. Best is N 8 at 60/60 7.5 / 13.8 / 15.9. The live boss r is tuned to the full build.
+- **Recommendation: N = 5** (one beat before each lieutenant race and the boss). Retune boss budgets to the min-path build: 328.07 / 380.04 / 432.33 (live 337.56 / 388.72 / 440.81), i.e. min-path r 1.046 / 1.034 / 1.049.
+- **Engine, min path:** 32.02 / 93.78, 31.98 / 89.30, 30.25 / 91.80. **Full build:** 65.80 / 98.98, 68.82 / 98.00, 58.30 / 97.97.
+- **Mitigation for the full-build overshoot:**
+  - Proposed: optional wild-encounter XP capped at K = 0 / 3 / 3 extra wins per round, cash always paid. Engine at K 3: Wangan 48.72 / 93.77, Touge 39.53 / 94.33.
+  - Rejected: lowering ceilings to 110 / 227 / 364. It cascades through catch-up and breaks the mid-ladder (min-path lowest 60/60 3.7 / 0.1 in R2 / R3) unless every rung is retuned.
+- Nothing live; sim/ untouched.
+
 ## 2026-11-19 — "Grind" prose reworded to mandatory / non-mandatory race terms; story-only criterion retired; Gate A reconsidered (Barry, Systems)
 - **Story-only retired (Austin, direct, 2026-11-19):** "Story only is updated via the mandatory races, those are part of the story."
   - There is no separate story-only player type. The story-only boss win criterion is retired, not replaced, which makes the "80/80 ≥ 50 on every non-boss race" proposal moot.

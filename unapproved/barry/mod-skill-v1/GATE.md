@@ -1,4 +1,103 @@
-# mod_skill boss gate ("gym gate"): mandatory wild encounters, Barry DRAFT, 2026-11-19
+# mod_skill boss gate: STORY-BEAT wild encounters (Austin 2026-11-19), Barry DRAFT
+
+> **Direction (Austin, direct, 2026-11-19):** "Make a few wild-encounter wins required story beats each round, no build check
+> at the boss." This section is the draft of that direction. **It is unapproved and nothing here is live.** Nothing in `sim/`
+> changed. ~~Gate A (boss locked until all four mods are full)~~ was reconsidered by Austin on 2026-11-19 (bosses behind a
+> maxed car feel bad); its study is kept further down for the record.
+
+## S1. Model
+- Each round has **N required wild-encounter wins**, placed as story beats between story races. Extra wild encounters stay
+  optional (non-mandatory races). There is **no build check at the boss**.
+- The beats are spread evenly over the six slots before kid2 … boss, with the remainder going to later slots
+  (`walk.py` mode `beats`). With **N = 5** there is **one beat before each lieutenant race (mat1, mat2, oh1, oh2) and one
+  before the boss**.
+- Setup:
+  - Live sim at 5cc6b97: 0.80 random AI QTE, boss r 1.046 / 1.040 / 1.050, Street boss 25/25/50, v2 tables.
+  - Fixed layout P/E/E flex. Ceilings 133 / 261 / 407 (caps 3,532 / 4,044 / 4,628). Wild-encounter XP 13 / 12 / 14 (code
+    `grind_xp`). Approved story table from `fixed_layout.json`, with the walk_boss_flag fix applied.
+- The "min-path player" wins exactly the N beats and no optional wild encounters.
+- Code: `beats.py` → `beats.json`, `beats_engine_check.py` → `beats_engine_check.json`.
+
+## S2. Sweep N = 2..8 at the LIVE boss budgets (min-path player; R1 / R2 / R3)
+| N | Car points at boss (cap 3,532 / 4,044 / 4,628) | Boss r at live budget | Boss win 60/60 / 80/80 | Lowest non-boss 60/60 | Exp. races 60/60 | Exp. races 80/80 | Cash after round (cumulative) |
+|---|---|---|---|---|---|---|---|
+| 0 (ref: no wild encounters) | 3,367 / 3,853 / 4,446 | 0.997 / 0.991 / 1.009 | 0.1/40.6; 0.8/58.4; 0.5/48.1 | 5.2 / 5.5 / 2.6 | 1058.5 / 203.1 / 314.8 | 9.1 / 9.6 / 10.4 | $6,400 / $24,160 / $47,320 |
+| 2 | 3,393 / 3,884 / 4,482 | 1.005 / 0.999 / 1.017 | 0.4/49.7; 2.0/65.8; 1.5/58.3 | 7.7 / 7.1 / 4.9 | 293.2 / 108.0 / 135.9 | 10.6 / 11.1 / 11.6 | $6,785 / $26,525 / $51,170 |
+| 3 | 3,406 / 3,899 / 4,499 | 1.009 / 1.003 / 1.021 | 0.7/53.7; 2.9/69.4; 2.4/63.3 | 7.7 / 10.1 / 5.6 | 180.2 / 80.9 / 98.1 | 11.4 / 11.8 / 12.3 | $6,978 / $27,708 / $53,095 |
+| 4 | 3,419 / 3,914 / 4,517 | 1.013 / 1.007 / 1.025 | 1.6/60.0; 3.8/72.9; 4.6/68.2 | 11.8 / 11.2 / 8.1 | 94.6 / 66.7 / 68.4 | 12.2 / 12.6 / 13.0 | $7,170 / $28,890 / $55,020 |
+| **5** | 3,432 / 3,930 / 4,535 | 1.017 / 1.011 / 1.029 | 2.9/67.2; 5.1/76.0; 6.8/73.1 | 11.8 / 14.6 / 9.4 | 64.7 / 55.5 / 55.4 | 12.9 / 13.4 / 13.7 | $7,362 / $30,072 / $56,945 |
+| 6 | 3,445 / 3,945 / 4,553 | 1.020 / 1.015 / 1.033 | 4.2/74.1; 7.3/77.9; 9.9/77.5 | 16.0 / 19.0 / 13.0 | 49.8 / 44.5 / 44.5 | 13.7 / 14.3 / 14.4 | $7,555 / $31,255 / $58,870 |
+| 7 | 3,458 / 3,960 / 4,570 | 1.024 / 1.019 / 1.037 | 5.8/77.7; 9.5/79.7; 13.2/81.5 | 16.0 / 20.1 / 13.6 | 44.3 / 40.7 / 41.8 | 14.7 / 15.2 / 15.3 | $7,748 / $32,438 / $60,795 |
+| 8 | 3,471 / 3,975 / 4,584 | 1.028 / 1.023 / 1.040 | 7.5/81.4; 13.8/82.5; 15.9/84.7 | 22.1 / 25.2 / 16.7 | 38.3 / 35.1 / 38.7 | 15.5 / 16.0 / 16.2 | $7,940 / $33,620 / $62,720 |
+| ref: full build (all mods maxed) | 3,532 / 4,044 / 4,628 | 1.046 / 1.040 / 1.049 | 31.2/93.9; 40.5/92.4; 31.2/91.4 | 16.0 / 16.6 / 22.4 | 41.7 / 39.6 / 38.5 | 20.5 / 21.0 / 20.0 | $10,550 / $39,532 / $71,602 |
+
+- **Expected races** = Σ 100 / win % over the 7 story races plus the N beats; a loss means retry.
+- **At the live boss budgets, no N from 2 to 8 passes the boss check**: the best is N = 8, at 60/60 7.5 / 13.8 / 15.9. The live
+  boss r is tuned to the full build. With N = 2-8, the min-path car sits 1-4 % below cap power, but the boss band (60/60 ≥ 30
+  to 80/80 ≤ 95) is only about 0.3-1.4 % wide in r. So bosses must be retuned to the min-path build (S3).
+- **Debt** after R1 for the min-path player: $2,285 (N 2) … $140 (N 8); $1,212 at N 5. It is paid off early in R2.
+- **The mid-ladder stays hard for 60/60 at any N ≤ 8**: lowest non-boss race 5-25 %. Rung budgets are unchanged in this draft.
+
+## S3. Recommendation: N = 5, boss retuned to the min-path build
+- **Why N = 5:** it's the top of Austin's "a few" (3-5), and it gives one beat before each lieutenant race and the boss.
+  It has the best 60/60 mid-ladder and the fewest expected races of N 3-5. Cost at 80/80 is about 12.9-13.7 races per round,
+  versus 11.4-12.3 at N 3.
+- **Retuned boss** (the smallest r where min-path 60/60 ≥ 30, rounded up to 0.001; boss table, hard track):
+
+| Round | Min-path boss r (new) | Boss budget new / live | Same boss vs a full build: r | Min-path 60/60 / 80/80 (table) | **Engine, min path (6,000 races)** | Full build (table) | **Engine, full build** |
+|---|---|---|---|---|---|---|---|
+| R1 Street | 1.046 | 328.07 / 337.56 | 1.0763 | 31.2 / 93.9 | **32.02 / 93.78** | 64.0 / 98.3 | **65.80 / 98.98** |
+| R2 Wangan | 1.034 | 380.04 / 388.72 | 1.0635 | 30.5 / 90.0 | **31.98 / 89.30** | 66.0 / 98.4 | **68.82 / 98.00** |
+| R3 Touge | 1.049 | 432.33 / 440.81 | 1.0698 | 30.8 / 91.2 | **30.25 / 91.80** | 55.3 / 97.8 | **58.30 / 97.97** |
+
+- **In live terms:** each boss budget drops 2.8 / 2.2 / 1.9 %. As `BOSS_TARGET_R` (cap power ÷ budget), that is 1.0763 / 1.0635 /
+  1.0698. N = 3 and N = 4 retune to the same min-path r, with budgets 325.58 / 377.09 / 428.93 and 326.83 / 378.56 / 430.63.
+  Their full build gets 99.0 / 99.2 / 99.0 and 98.6 / 98.9 / 98.4 at 80/80.
+- **Engine SE** is about 0.6 at 60/60 and 0.13-0.4 at 80/80. Touge min-path 60/60 at 30.25 is only about 0.4 SE above 30.
+- **Flag: a full build goes to 98-99 % at 80/80** (60/60 58-69 %) against the retuned boss. The boss band is very narrow:
+  - min-path 60/60 ≥ 30 needs r ≥ 1.0455 / 1.034 / 1.049;
+  - 80/80 ≤ 95 needs r ≤ 1.049 / 1.0485 / 1.0615.
+  - That leaves about 0.3 % / 1.4 % / 1.2 % of headroom. In Street, a single optional win (13 points) already gives 95.3.
+
+## S4. Mitigation options for the full-build overshoot (N = 5, numbers from `beats.json`)
+1. **Recommended: cap the XP from optional wild encounters at K extra wins per round (cash always pays).**
+   K is the largest number of extra wins that keeps 80/80 ≤ 95 against the retuned boss: **0 / 3 / 3**.
+   - Street: optional wins are cash-only.
+   - Wangan and Touge: the first 3 optional wins also pay XP.
+   - Engine at K = 3: Wangan 48.72 / 93.77, Touge 39.53 / 94.33. Street at K = 3 would be 45.43 / 96.72, which is why
+     Street gets K = 0.
+   - Table at K = 1 / 2 / 3, 80/80: Street 95.3 / 95.8 / 96.3, Wangan 91.7 / 93.1 / 94.2, Touge 92.7 / 93.7 / 94.6.
+   - If Austin accepts Street up to about 96-97 as the reward for optional play, Street can take K = 3 like the others.
+   - With this cap, ceilings and caps stay as they are (133 / 261 / 407), but a car only fills to the cap through story XP plus
+     beats plus K.
+2. **Not recommended: lower each round's ceiling.** Lowering so a full build sits at 80/80 = 95 against the retuned boss
+   (re-walked and iterated round by round) gives ceilings **110 / 227 / 364** (caps 3,440 / 3,908 / 4,456).
+   - A full build then needs 6 / 10 / 9 wild-encounter wins and meets the boss at 33.9 / 94.8, 51.2 / 94.7, 38.1 / 94.7.
+   - But a lower R1 and R2 cap means less catch-up XP and a weaker car going into the next round, while the story-race budgets
+     are unchanged. The min-path player's lowest non-boss 60/60 falls to 11.8 / 3.7 / 0.1, and expected 60/60 races to
+     64.7 / 215 / 3,185.
+   - That only works if every rung budget is rescaled too, which is a full ladder retune.
+3. **Diminishing XP** for optional wins only slows the climb. Every optional win still adds power, so on its own it doesn't
+   bound the full-build 80/80. It is option 1 with a soft edge instead of a hard K.
+4. **Accept the overshoot:** full build at 98.3 / 98.4 / 97.8 (engine 98.98 / 98.00 / 97.97) as the reward for optional play.
+   No rule needed.
+
+## S5. Effects and open items
+- **Story-only is retired** (Austin 2026-11-19): the N beats are part of the story, so the min-path player is the story path.
+- **Time and cash (N = 5, min path, cumulative):**
+  - Cash $7,362 / $30,072 / $56,945, versus $6,400 / $24,160 / $47,320 with no wild encounters and $10,550 / $39,532 /
+    $71,602 for a full build.
+  - Expected 80/80 races per round 12.9 / 13.4 / 13.7, versus about 20 for a full build.
+- **Mid-ladder:** for 60/60 at the min path, the lowest non-boss race is 11.8 / 14.6 / 9.4 % (55-65 expected races per round).
+  Weak readers will likely race optional wild encounters there too. That's fine under S4 option 1, because those wins still
+  pay cash and the first K pay XP. A separate rung retune is outside this draft.
+- **Finale:** not walked (mod_skill has no finale walk). The finale r retune is still open and is unaffected by this draft.
+- **For Austin:** N (recommended 5); the boss retune (the S3 budgets); the overshoot option (recommended: optional-win XP cap
+  K = 0 / 3 / 3, or accept up to about 96-97 in Street with K = 3); and the finale retune (still open).
+
+---
+
+# (Earlier) mod_skill boss gate ("gym gate"): Gate A study, Barry DRAFT, 2026-11-19
 
 > **2026-11-19 (later): Gate A RECONSIDERED by Austin, gate design reopened.** Locking a boss behind a maxed car feels
 > bad. Gate A ("boss locked until all four mods are full") is **not decided and not live**; it stays below as a studied

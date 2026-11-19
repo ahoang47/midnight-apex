@@ -1,5 +1,14 @@
 # mod-skill-v1: Austin's "mod_skill" progression, simulated (Barry DRAFT, 2026-11-18)
 
+> **2026-11-19 DRAFT (Austin direction, unapproved): story-beat gate, see [GATE.md](GATE.md) top.** "Make a few wild-encounter
+> wins required story beats each round, no build check at the boss."
+> - **Recommendation: N = 5** (one beat before each lieutenant race and the boss).
+> - Retune the bosses to the min-path build: budgets 328.07 / 380.04 / 432.33, which is r 1.046 / 1.034 / 1.049 for the min
+>   path. Engine: 32.0 / 93.8, 32.0 / 89.3, 30.3 / 91.8.
+> - A full build then gets 98-99 % at 80/80. Proposed fix: optional wild encounters pay XP for at most K = 0 / 3 / 3 extra
+>   wins per round (cash always pays).
+> - `walk.py` has a new `beats` mode.
+
 > **2026-11-19 (later): Gate A RECONSIDERED by Austin, gate design reopened; see [GATE.md](GATE.md).** Locking a boss behind
 > a maxed car feels bad, so Gate A is **not decided and not live**. Gate B (the mat2 lock) stays rejected. mod_skill itself
 > is still an unapproved draft; nothing in `sim/` changed.

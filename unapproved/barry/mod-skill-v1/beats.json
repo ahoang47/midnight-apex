@@ -1,0 +1,2060 @@
+{
+ "cap_points": [
+  3532,
+  4044,
+  4628
+ ],
+ "grind_xp": [
+  13.0,
+  12.0,
+  14.0
+ ],
+ "sweep": {
+  "2": [
+   {
+    "rnd": 1,
+    "wild_wins": 2,
+    "boss_points": 3393,
+    "boss_power": 339.26,
+    "boss_pow_share": 50.0,
+    "boss_r": 1.005,
+    "boss6060": 0.4,
+    "boss8080": 49.7,
+    "low6060_nonboss": 7.7,
+    "low8080_nonboss": 86.2,
+    "money": 6785,
+    "debt": 2285,
+    "spent": 600,
+    "end_points": 3419,
+    "exp_races_c6060": 293.2,
+    "exp_races_c8080": 10.6
+   },
+   {
+    "rnd": 2,
+    "wild_wins": 2,
+    "boss_points": 3884,
+    "boss_power": 388.38,
+    "boss_pow_share": 25.0,
+    "boss_r": 0.9991,
+    "boss6060": 2.0,
+    "boss8080": 65.8,
+    "low6060_nonboss": 7.1,
+    "low8080_nonboss": 74.7,
+    "money": 26525,
+    "debt": 0,
+    "spent": 2840,
+    "end_points": 3976,
+    "exp_races_c6060": 108.0,
+    "exp_races_c8080": 11.1
+   },
+   {
+    "rnd": 3,
+    "wild_wins": 2,
+    "boss_points": 4482,
+    "boss_power": 448.16,
+    "boss_pow_share": 45.0,
+    "boss_r": 1.0167,
+    "boss6060": 1.5,
+    "boss8080": 58.3,
+    "low6060_nonboss": 4.9,
+    "low8080_nonboss": 68.5,
+    "money": 51170,
+    "debt": 0,
+    "spent": 6680,
+    "end_points": 4552,
+    "exp_races_c6060": 135.9,
+    "exp_races_c8080": 11.6
+   }
+  ],
+  "3": [
+   {
+    "rnd": 1,
+    "wild_wins": 3,
+    "boss_points": 3406,
+    "boss_power": 340.56,
+    "boss_pow_share": 50.0,
+    "boss_r": 1.0089,
+    "boss6060": 0.7,
+    "boss8080": 53.7,
+    "low6060_nonboss": 7.7,
+    "low8080_nonboss": 86.2,
+    "money": 6978,
+    "debt": 1928,
+    "spent": 600,
+    "end_points": 3432,
+    "exp_races_c6060": 180.2,
+    "exp_races_c8080": 11.4
+   },
+   {
+    "rnd": 2,
+    "wild_wins": 3,
+    "boss_points": 3899,
+    "boss_power": 389.91,
+    "boss_pow_share": 25.0,
+    "boss_r": 1.0031,
+    "boss6060": 2.9,
+    "boss8080": 69.4,
+    "low6060_nonboss": 10.1,
+    "low8080_nonboss": 77.1,
+    "money": 27708,
+    "debt": 0,
+    "spent": 2840,
+    "end_points": 3991,
+    "exp_races_c6060": 80.9,
+    "exp_races_c8080": 11.8
+   },
+   {
+    "rnd": 3,
+    "wild_wins": 3,
+    "boss_points": 4499,
+    "boss_power": 449.95,
+    "boss_pow_share": 45.0,
+    "boss_r": 1.0207,
+    "boss6060": 2.4,
+    "boss8080": 63.3,
+    "low6060_nonboss": 5.6,
+    "low8080_nonboss": 69.6,
+    "money": 53095,
+    "debt": 0,
+    "spent": 6680,
+    "end_points": 4570,
+    "exp_races_c6060": 98.1,
+    "exp_races_c8080": 12.3
+   }
+  ],
+  "4": [
+   {
+    "rnd": 1,
+    "wild_wins": 4,
+    "boss_points": 3419,
+    "boss_power": 341.86,
+    "boss_pow_share": 50.0,
+    "boss_r": 1.0127,
+    "boss6060": 1.6,
+    "boss8080": 60.0,
+    "low6060_nonboss": 11.8,
+    "low8080_nonboss": 87.9,
+    "money": 7170,
+    "debt": 1570,
+    "spent": 600,
+    "end_points": 3445,
+    "exp_races_c6060": 94.6,
+    "exp_races_c8080": 12.2
+   },
+   {
+    "rnd": 2,
+    "wild_wins": 4,
+    "boss_points": 3914,
+    "boss_power": 391.43,
+    "boss_pow_share": 25.0,
+    "boss_r": 1.007,
+    "boss6060": 3.8,
+    "boss8080": 72.9,
+    "low6060_nonboss": 11.2,
+    "low8080_nonboss": 77.8,
+    "money": 28890,
+    "debt": 0,
+    "spent": 2840,
+    "end_points": 4007,
+    "exp_races_c6060": 66.7,
+    "exp_races_c8080": 12.6
+   },
+   {
+    "rnd": 3,
+    "wild_wins": 4,
+    "boss_points": 4517,
+    "boss_power": 451.73,
+    "boss_pow_share": 45.0,
+    "boss_r": 1.0248,
+    "boss6060": 4.6,
+    "boss8080": 68.2,
+    "low6060_nonboss": 8.1,
+    "low8080_nonboss": 72.5,
+    "money": 55020,
+    "debt": 0,
+    "spent": 6680,
+    "end_points": 4588,
+    "exp_races_c6060": 68.4,
+    "exp_races_c8080": 13.0
+   }
+  ],
+  "5": [
+   {
+    "rnd": 1,
+    "wild_wins": 5,
+    "boss_points": 3432,
+    "boss_power": 343.16,
+    "boss_pow_share": 50.0,
+    "boss_r": 1.0166,
+    "boss6060": 2.9,
+    "boss8080": 67.2,
+    "low6060_nonboss": 11.8,
+    "low8080_nonboss": 87.9,
+    "money": 7362,
+    "debt": 1212,
+    "spent": 600,
+    "end_points": 3458,
+    "exp_races_c6060": 64.7,
+    "exp_races_c8080": 12.9
+   },
+   {
+    "rnd": 2,
+    "wild_wins": 5,
+    "boss_points": 3930,
+    "boss_power": 392.96,
+    "boss_pow_share": 25.0,
+    "boss_r": 1.0109,
+    "boss6060": 5.1,
+    "boss8080": 76.0,
+    "low6060_nonboss": 14.6,
+    "low8080_nonboss": 80.2,
+    "money": 30072,
+    "debt": 0,
+    "spent": 2840,
+    "end_points": 4022,
+    "exp_races_c6060": 55.5,
+    "exp_races_c8080": 13.4
+   },
+   {
+    "rnd": 3,
+    "wild_wins": 5,
+    "boss_points": 4535,
+    "boss_power": 453.51,
+    "boss_pow_share": 45.0,
+    "boss_r": 1.0288,
+    "boss6060": 6.8,
+    "boss8080": 73.1,
+    "low6060_nonboss": 9.4,
+    "low8080_nonboss": 73.7,
+    "money": 56945,
+    "debt": 0,
+    "spent": 6680,
+    "end_points": 4606,
+    "exp_races_c6060": 55.4,
+    "exp_races_c8080": 13.7
+   }
+  ],
+  "6": [
+   {
+    "rnd": 1,
+    "wild_wins": 6,
+    "boss_points": 3445,
+    "boss_power": 344.46,
+    "boss_pow_share": 50.0,
+    "boss_r": 1.0204,
+    "boss6060": 4.2,
+    "boss8080": 74.1,
+    "low6060_nonboss": 16.0,
+    "low8080_nonboss": 89.6,
+    "money": 7555,
+    "debt": 855,
+    "spent": 600,
+    "end_points": 3471,
+    "exp_races_c6060": 49.8,
+    "exp_races_c8080": 13.7
+   },
+   {
+    "rnd": 2,
+    "wild_wins": 6,
+    "boss_points": 3945,
+    "boss_power": 394.48,
+    "boss_pow_share": 25.0,
+    "boss_r": 1.0148,
+    "boss6060": 7.3,
+    "boss8080": 77.9,
+    "low6060_nonboss": 19.0,
+    "low8080_nonboss": 82.6,
+    "money": 31255,
+    "debt": 0,
+    "spent": 2840,
+    "end_points": 4037,
+    "exp_races_c6060": 44.5,
+    "exp_races_c8080": 14.3
+   },
+   {
+    "rnd": 3,
+    "wild_wins": 6,
+    "boss_points": 4553,
+    "boss_power": 455.29,
+    "boss_pow_share": 45.0,
+    "boss_r": 1.0329,
+    "boss6060": 9.9,
+    "boss8080": 77.5,
+    "low6060_nonboss": 13.0,
+    "low8080_nonboss": 77.2,
+    "money": 58870,
+    "debt": 0,
+    "spent": 6680,
+    "end_points": 4623,
+    "exp_races_c6060": 44.5,
+    "exp_races_c8080": 14.4
+   }
+  ],
+  "7": [
+   {
+    "rnd": 1,
+    "wild_wins": 7,
+    "boss_points": 3458,
+    "boss_power": 345.76,
+    "boss_pow_share": 50.0,
+    "boss_r": 1.0243,
+    "boss6060": 5.8,
+    "boss8080": 77.7,
+    "low6060_nonboss": 16.0,
+    "low8080_nonboss": 89.6,
+    "money": 7748,
+    "debt": 498,
+    "spent": 600,
+    "end_points": 3484,
+    "exp_races_c6060": 44.3,
+    "exp_races_c8080": 14.7
+   },
+   {
+    "rnd": 2,
+    "wild_wins": 7,
+    "boss_points": 3960,
+    "boss_power": 396.01,
+    "boss_pow_share": 25.0,
+    "boss_r": 1.0188,
+    "boss6060": 9.5,
+    "boss8080": 79.7,
+    "low6060_nonboss": 20.1,
+    "low8080_nonboss": 83.0,
+    "money": 32438,
+    "debt": 0,
+    "spent": 2840,
+    "end_points": 4044,
+    "exp_races_c6060": 40.7,
+    "exp_races_c8080": 15.2
+   },
+   {
+    "rnd": 3,
+    "wild_wins": 7,
+    "boss_points": 4570,
+    "boss_power": 457.02,
+    "boss_pow_share": 45.0,
+    "boss_r": 1.0368,
+    "boss6060": 13.2,
+    "boss8080": 81.5,
+    "low6060_nonboss": 13.6,
+    "low8080_nonboss": 77.9,
+    "money": 60795,
+    "debt": 0,
+    "spent": 6680,
+    "end_points": 4628,
+    "exp_races_c6060": 41.8,
+    "exp_races_c8080": 15.3
+   }
+  ],
+  "8": [
+   {
+    "rnd": 1,
+    "wild_wins": 8,
+    "boss_points": 3471,
+    "boss_power": 347.06,
+    "boss_pow_share": 50.0,
+    "boss_r": 1.0281,
+    "boss6060": 7.5,
+    "boss8080": 81.4,
+    "low6060_nonboss": 22.1,
+    "low8080_nonboss": 91.3,
+    "money": 7940,
+    "debt": 140,
+    "spent": 600,
+    "end_points": 3497,
+    "exp_races_c6060": 38.3,
+    "exp_races_c8080": 15.5
+   },
+   {
+    "rnd": 2,
+    "wild_wins": 8,
+    "boss_points": 3975,
+    "boss_power": 397.53,
+    "boss_pow_share": 25.0,
+    "boss_r": 1.0227,
+    "boss6060": 13.8,
+    "boss8080": 82.5,
+    "low6060_nonboss": 25.2,
+    "low8080_nonboss": 85.2,
+    "money": 33620,
+    "debt": 0,
+    "spent": 2840,
+    "end_points": 4044,
+    "exp_races_c6060": 35.1,
+    "exp_races_c8080": 16.0
+   },
+   {
+    "rnd": 3,
+    "wild_wins": 8,
+    "boss_points": 4584,
+    "boss_power": 458.42,
+    "boss_pow_share": 45.0,
+    "boss_r": 1.04,
+    "boss6060": 15.9,
+    "boss8080": 84.7,
+    "low6060_nonboss": 16.7,
+    "low8080_nonboss": 80.7,
+    "money": 62720,
+    "debt": 0,
+    "spent": 6680,
+    "end_points": 4628,
+    "exp_races_c6060": 38.7,
+    "exp_races_c8080": 16.2
+   }
+  ]
+ },
+ "today_story": [
+  {
+   "rnd": 1,
+   "wild_wins": 0,
+   "boss_points": 3367,
+   "boss_power": 336.66,
+   "boss_pow_share": 50.0,
+   "boss_r": 0.9973,
+   "boss6060": 0.1,
+   "boss8080": 40.6,
+   "low6060_nonboss": 5.2,
+   "low8080_nonboss": 84.1,
+   "money": 6400,
+   "debt": 3000,
+   "spent": 600,
+   "end_points": 3393,
+   "exp_races_c6060": 1058.5,
+   "exp_races_c8080": 9.1
+  },
+  {
+   "rnd": 2,
+   "wild_wins": 0,
+   "boss_points": 3853,
+   "boss_power": 385.33,
+   "boss_pow_share": 25.0,
+   "boss_r": 0.9913,
+   "boss6060": 0.8,
+   "boss8080": 58.4,
+   "low6060_nonboss": 5.5,
+   "low8080_nonboss": 70.9,
+   "money": 24160,
+   "debt": 0,
+   "spent": 2840,
+   "end_points": 3946,
+   "exp_races_c6060": 203.1,
+   "exp_races_c8080": 9.6
+  },
+  {
+   "rnd": 3,
+   "wild_wins": 0,
+   "boss_points": 4446,
+   "boss_power": 444.6,
+   "boss_pow_share": 45.0,
+   "boss_r": 1.0086,
+   "boss6060": 0.5,
+   "boss8080": 48.1,
+   "low6060_nonboss": 2.6,
+   "low8080_nonboss": 64.8,
+   "money": 47320,
+   "debt": 0,
+   "spent": 6680,
+   "end_points": 4517,
+   "exp_races_c6060": 314.8,
+   "exp_races_c8080": 10.4
+  }
+ ],
+ "today_mixed": [
+  {
+   "rnd": 1,
+   "wild_wins": 13,
+   "boss_points": 3532,
+   "boss_power": 353.1,
+   "boss_pow_share": 50.0,
+   "boss_r": 1.046,
+   "boss6060": 31.2,
+   "boss8080": 93.9,
+   "low6060_nonboss": 16.0,
+   "low8080_nonboss": 89.6,
+   "money": 10550,
+   "debt": 0,
+   "spent": 600,
+   "end_points": 3532,
+   "exp_races_c6060": 41.7,
+   "exp_races_c8080": 20.5
+  },
+  {
+   "rnd": 2,
+   "wild_wins": 13,
+   "boss_points": 4044,
+   "boss_power": 404.19,
+   "boss_pow_share": 25.0,
+   "boss_r": 1.0398,
+   "boss6060": 40.5,
+   "boss8080": 92.4,
+   "low6060_nonboss": 16.6,
+   "low8080_nonboss": 81.5,
+   "money": 39532,
+   "debt": 0,
+   "spent": 2840,
+   "end_points": 4044,
+   "exp_races_c6060": 39.6,
+   "exp_races_c8080": 21.0
+  },
+  {
+   "rnd": 3,
+   "wild_wins": 12,
+   "boss_points": 4628,
+   "boss_power": 462.51,
+   "boss_pow_share": 45.0,
+   "boss_r": 1.0492,
+   "boss6060": 31.2,
+   "boss8080": 91.4,
+   "low6060_nonboss": 22.4,
+   "low8080_nonboss": 85.8,
+   "money": 71602,
+   "debt": 0,
+   "spent": 6680,
+   "end_points": 4628,
+   "exp_races_c6060": 38.5,
+   "exp_races_c8080": 20.0
+  }
+ ],
+ "retune": {
+  "3": [
+   {
+    "rnd": 1,
+    "min_points": 3406,
+    "min_power": 340.56,
+    "r_window_min_path": [
+     1.0455,
+     1.049
+    ],
+    "boss_r_new": 1.046,
+    "boss_budget_new": 325.58,
+    "boss_budget_live": 337.56,
+    "min_path": {
+     "c6060": 31.2,
+     "c8080": 93.9
+    },
+    "full_points": 3532,
+    "full_r": 1.0845,
+    "full_build": {
+     "c6060": 70.7,
+     "c8080": 99.0
+    }
+   },
+   {
+    "rnd": 2,
+    "min_points": 3899,
+    "min_power": 389.91,
+    "r_window_min_path": [
+     1.034,
+     1.0485
+    ],
+    "boss_r_new": 1.034,
+    "boss_budget_new": 377.09,
+    "boss_budget_live": 388.71,
+    "min_path": {
+     "c6060": 30.5,
+     "c8080": 90.0
+    },
+    "full_points": 4044,
+    "full_r": 1.0719,
+    "full_build": {
+     "c6060": 72.4,
+     "c8080": 99.2
+    }
+   },
+   {
+    "rnd": 3,
+    "min_points": 4499,
+    "min_power": 449.95,
+    "r_window_min_path": [
+     1.049,
+     1.0615
+    ],
+    "boss_r_new": 1.049,
+    "boss_budget_new": 428.93,
+    "boss_budget_live": 440.82,
+    "min_path": {
+     "c6060": 30.8,
+     "c8080": 91.2
+    },
+    "full_points": 4628,
+    "full_r": 1.0783,
+    "full_build": {
+     "c6060": 64.3,
+     "c8080": 99.0
+    }
+   }
+  ],
+  "4": [
+   {
+    "rnd": 1,
+    "min_points": 3419,
+    "min_power": 341.86,
+    "r_window_min_path": [
+     1.0455,
+     1.049
+    ],
+    "boss_r_new": 1.046,
+    "boss_budget_new": 326.83,
+    "boss_budget_live": 337.57,
+    "min_path": {
+     "c6060": 31.2,
+     "c8080": 93.9
+    },
+    "full_points": 3532,
+    "full_r": 1.0804,
+    "full_build": {
+     "c6060": 67.5,
+     "c8080": 98.6
+    }
+   },
+   {
+    "rnd": 2,
+    "min_points": 3914,
+    "min_power": 391.43,
+    "r_window_min_path": [
+     1.034,
+     1.0485
+    ],
+    "boss_r_new": 1.034,
+    "boss_budget_new": 378.56,
+    "boss_budget_live": 388.71,
+    "min_path": {
+     "c6060": 30.5,
+     "c8080": 90.0
+    },
+    "full_points": 4044,
+    "full_r": 1.0677,
+    "full_build": {
+     "c6060": 69.3,
+     "c8080": 98.9
+    }
+   },
+   {
+    "rnd": 3,
+    "min_points": 4517,
+    "min_power": 451.73,
+    "r_window_min_path": [
+     1.049,
+     1.0615
+    ],
+    "boss_r_new": 1.049,
+    "boss_budget_new": 430.63,
+    "boss_budget_live": 440.8,
+    "min_path": {
+     "c6060": 30.8,
+     "c8080": 91.2
+    },
+    "full_points": 4628,
+    "full_r": 1.074,
+    "full_build": {
+     "c6060": 59.9,
+     "c8080": 98.4
+    }
+   }
+  ],
+  "5": [
+   {
+    "rnd": 1,
+    "min_points": 3432,
+    "min_power": 343.16,
+    "r_window_min_path": [
+     1.0455,
+     1.049
+    ],
+    "boss_r_new": 1.046,
+    "boss_budget_new": 328.07,
+    "boss_budget_live": 337.56,
+    "min_path": {
+     "c6060": 31.2,
+     "c8080": 93.9
+    },
+    "full_points": 3532,
+    "full_r": 1.0763,
+    "full_build": {
+     "c6060": 64.0,
+     "c8080": 98.3
+    }
+   },
+   {
+    "rnd": 2,
+    "min_points": 3930,
+    "min_power": 392.96,
+    "r_window_min_path": [
+     1.034,
+     1.0485
+    ],
+    "boss_r_new": 1.034,
+    "boss_budget_new": 380.04,
+    "boss_budget_live": 388.72,
+    "min_path": {
+     "c6060": 30.5,
+     "c8080": 90.0
+    },
+    "full_points": 4044,
+    "full_r": 1.0635,
+    "full_build": {
+     "c6060": 66.0,
+     "c8080": 98.4
+    }
+   },
+   {
+    "rnd": 3,
+    "min_points": 4535,
+    "min_power": 453.51,
+    "r_window_min_path": [
+     1.049,
+     1.0615
+    ],
+    "boss_r_new": 1.049,
+    "boss_budget_new": 432.33,
+    "boss_budget_live": 440.81,
+    "min_path": {
+     "c6060": 30.8,
+     "c8080": 91.2
+    },
+    "full_points": 4628,
+    "full_r": 1.0698,
+    "full_build": {
+     "c6060": 55.3,
+     "c8080": 97.8
+    }
+   }
+  ]
+ },
+ "mitigation": {
+  "3": [
+   {
+    "rnd": 1,
+    "ceiling": 103,
+    "cap_points": 3412,
+    "boss_r_new": 1.046,
+    "boss_budget_new": 325.58,
+    "min_path_points": 3406,
+    "min_path": {
+     "c6060": 31.2,
+     "c8080": 93.9
+    },
+    "full_points": 3412,
+    "full_r": 1.048,
+    "full": {
+     "c6060": 33.3,
+     "c8080": 94.6
+    },
+    "headroom_points": 6,
+    "full_wild_wins": 4,
+    "min_path_cash": 6978,
+    "full_cash": 7170,
+    "min_low6060": 7.7,
+    "min_exp": [
+     180.2,
+     11.4
+    ]
+   },
+   {
+    "rnd": 2,
+    "ceiling": 214,
+    "cap_points": 3856,
+    "boss_r_new": 1.034,
+    "boss_budget_new": 367.97,
+    "min_path_points": 3805,
+    "min_path": {
+     "c6060": 30.5,
+     "c8080": 90.0
+    },
+    "full_points": 3856,
+    "full_r": 1.0479,
+    "full": {
+     "c6060": 51.4,
+     "c8080": 94.7
+    },
+    "headroom_points": 51,
+    "full_wild_wins": 8,
+    "min_path_cash": 27708,
+    "full_cash": 31420,
+    "min_low6060": 1.9,
+    "min_exp": [
+     2190.4,
+     14.7
+    ]
+   },
+   {
+    "rnd": 3,
+    "ceiling": 344,
+    "cap_points": 4376,
+    "boss_r_new": 1.049,
+    "boss_budget_new": 412.41,
+    "min_path_points": 4326,
+    "min_path": {
+     "c6060": 30.8,
+     "c8080": 91.2
+    },
+    "full_points": 4376,
+    "full_r": 1.0611,
+    "full": {
+     "c6060": 38.5,
+     "c8080": 94.8
+    },
+    "headroom_points": 50,
+    "full_wild_wins": 9,
+    "min_path_cash": 53095,
+    "full_cash": 61262,
+    "min_low6060": 0.0,
+    "min_exp": [
+     9166.6,
+     26.3
+    ]
+   }
+  ],
+  "4": [
+   {
+    "rnd": 1,
+    "ceiling": 107,
+    "cap_points": 3428,
+    "boss_r_new": 1.046,
+    "boss_budget_new": 326.83,
+    "min_path_points": 3419,
+    "min_path": {
+     "c6060": 31.2,
+     "c8080": 93.9
+    },
+    "full_points": 3428,
+    "full_r": 1.0489,
+    "full": {
+     "c6060": 34.2,
+     "c8080": 94.9
+    },
+    "headroom_points": 9,
+    "full_wild_wins": 5,
+    "min_path_cash": 7170,
+    "full_cash": 7362,
+    "min_low6060": 11.8,
+    "min_exp": [
+     94.6,
+     12.2
+    ]
+   },
+   {
+    "rnd": 2,
+    "ceiling": 221,
+    "cap_points": 3884,
+    "boss_r_new": 1.034,
+    "boss_budget_new": 370.68,
+    "min_path_points": 3833,
+    "min_path": {
+     "c6060": 30.5,
+     "c8080": 90.0
+    },
+    "full_points": 3884,
+    "full_r": 1.0478,
+    "full": {
+     "c6060": 51.3,
+     "c8080": 94.7
+    },
+    "headroom_points": 51,
+    "full_wild_wins": 9,
+    "min_path_cash": 28890,
+    "full_cash": 32602,
+    "min_low6060": 2.7,
+    "min_exp": [
+     467.9,
+     14.5
+    ]
+   },
+   {
+    "rnd": 3,
+    "ceiling": 355,
+    "cap_points": 4420,
+    "boss_r_new": 1.049,
+    "boss_budget_new": 416.42,
+    "min_path_points": 4368,
+    "min_path": {
+     "c6060": 30.8,
+     "c8080": 91.2
+    },
+    "full_points": 4420,
+    "full_r": 1.0614,
+    "full": {
+     "c6060": 39.2,
+     "c8080": 94.9
+    },
+    "headroom_points": 52,
+    "full_wild_wins": 8,
+    "min_path_cash": 55020,
+    "full_cash": 61702,
+    "min_low6060": 0.0,
+    "min_exp": [
+     6739.4,
+     20.6
+    ]
+   }
+  ],
+  "5": [
+   {
+    "rnd": 1,
+    "ceiling": 110,
+    "cap_points": 3440,
+    "boss_r_new": 1.046,
+    "boss_budget_new": 328.07,
+    "min_path_points": 3432,
+    "min_path": {
+     "c6060": 31.2,
+     "c8080": 93.9
+    },
+    "full_points": 3440,
+    "full_r": 1.0486,
+    "full": {
+     "c6060": 33.9,
+     "c8080": 94.8
+    },
+    "headroom_points": 8,
+    "full_wild_wins": 6,
+    "min_path_cash": 7362,
+    "full_cash": 7555,
+    "min_low6060": 11.8,
+    "min_exp": [
+     64.7,
+     12.9
+    ]
+   },
+   {
+    "rnd": 2,
+    "ceiling": 227,
+    "cap_points": 3908,
+    "boss_r_new": 1.034,
+    "boss_budget_new": 373.0,
+    "min_path_points": 3857,
+    "min_path": {
+     "c6060": 30.5,
+     "c8080": 90.0
+    },
+    "full_points": 3908,
+    "full_r": 1.0477,
+    "full": {
+     "c6060": 51.2,
+     "c8080": 94.7
+    },
+    "headroom_points": 51,
+    "full_wild_wins": 10,
+    "min_path_cash": 30072,
+    "full_cash": 33785,
+    "min_low6060": 3.7,
+    "min_exp": [
+     215.0,
+     14.9
+    ]
+   },
+   {
+    "rnd": 3,
+    "ceiling": 364,
+    "cap_points": 4456,
+    "boss_r_new": 1.049,
+    "boss_budget_new": 420.04,
+    "min_path_points": 4406,
+    "min_path": {
+     "c6060": 30.8,
+     "c8080": 91.2
+    },
+    "full_points": 4456,
+    "full_r": 1.0609,
+    "full": {
+     "c6060": 38.1,
+     "c8080": 94.7
+    },
+    "headroom_points": 50,
+    "full_wild_wins": 9,
+    "min_path_cash": 56945,
+    "full_cash": 63628,
+    "min_low6060": 0.1,
+    "min_exp": [
+     3185.4,
+     18.8
+    ]
+   }
+  ]
+ },
+ "optional_xp_cap": {
+  "3": {
+   "rows": [
+    {
+     "K": 0,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3406,
+       "r": 1.046,
+       "wr": {
+        "c6060": 31.2,
+        "c8080": 93.9
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3899,
+       "r": 1.034,
+       "wr": {
+        "c6060": 30.5,
+        "c8080": 90.0
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4499,
+       "r": 1.049,
+       "wr": {
+        "c6060": 30.8,
+        "c8080": 91.2
+       }
+      }
+     ]
+    },
+    {
+     "K": 1,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3419,
+       "r": 1.05,
+       "wr": {
+        "c6060": 35.4,
+        "c8080": 95.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3914,
+       "r": 1.038,
+       "wr": {
+        "c6060": 37.4,
+        "c8080": 91.7
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4517,
+       "r": 1.0532,
+       "wr": {
+        "c6060": 33.7,
+        "c8080": 92.7
+       }
+      }
+     ]
+    },
+    {
+     "K": 2,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3432,
+       "r": 1.054,
+       "wr": {
+        "c6060": 40.2,
+        "c8080": 95.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3930,
+       "r": 1.0421,
+       "wr": {
+        "c6060": 43.6,
+        "c8080": 93.1
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4535,
+       "r": 1.0573,
+       "wr": {
+        "c6060": 35.4,
+        "c8080": 93.8
+       }
+      }
+     ]
+    },
+    {
+     "K": 3,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3445,
+       "r": 1.058,
+       "wr": {
+        "c6060": 44.9,
+        "c8080": 96.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3945,
+       "r": 1.0461,
+       "wr": {
+        "c6060": 49.0,
+        "c8080": 94.2
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4553,
+       "r": 1.0615,
+       "wr": {
+        "c6060": 39.2,
+        "c8080": 94.9
+       }
+      }
+     ]
+    },
+    {
+     "K": 4,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3458,
+       "r": 1.062,
+       "wr": {
+        "c6060": 49.5,
+        "c8080": 96.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3960,
+       "r": 1.0502,
+       "wr": {
+        "c6060": 54.4,
+        "c8080": 95.4
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4570,
+       "r": 1.0655,
+       "wr": {
+        "c6060": 47.0,
+        "c8080": 96.3
+       }
+      }
+     ]
+    },
+    {
+     "K": 5,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3471,
+       "r": 1.066,
+       "wr": {
+        "c6060": 54.0,
+        "c8080": 97.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3975,
+       "r": 1.0542,
+       "wr": {
+        "c6060": 58.0,
+        "c8080": 96.5
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4584,
+       "r": 1.0688,
+       "wr": {
+        "c6060": 53.3,
+        "c8080": 97.5
+       }
+      }
+     ]
+    },
+    {
+     "K": 6,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3484,
+       "r": 1.07,
+       "wr": {
+        "c6060": 58.4,
+        "c8080": 97.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3991,
+       "r": 1.0583,
+       "wr": {
+        "c6060": 61.7,
+        "c8080": 97.5
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4598,
+       "r": 1.072,
+       "wr": {
+        "c6060": 57.8,
+        "c8080": 98.2
+       }
+      }
+     ]
+    },
+    {
+     "K": 7,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3497,
+       "r": 1.074,
+       "wr": {
+        "c6060": 61.9,
+        "c8080": 98.1
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4006,
+       "r": 1.0623,
+       "wr": {
+        "c6060": 65.0,
+        "c8080": 98.3
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4612,
+       "r": 1.0753,
+       "wr": {
+        "c6060": 61.2,
+        "c8080": 98.6
+       }
+      }
+     ]
+    },
+    {
+     "K": 8,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3510,
+       "r": 1.078,
+       "wr": {
+        "c6060": 65.4,
+        "c8080": 98.4
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4021,
+       "r": 1.0663,
+       "wr": {
+        "c6060": 68.2,
+        "c8080": 98.8
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4626,
+       "r": 1.0783,
+       "wr": {
+        "c6060": 64.3,
+        "c8080": 99.0
+       }
+      }
+     ]
+    },
+    {
+     "K": 9,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3523,
+       "r": 1.0819,
+       "wr": {
+        "c6060": 68.7,
+        "c8080": 98.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4033,
+       "r": 1.0695,
+       "wr": {
+        "c6060": 70.7,
+        "c8080": 99.2
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.0783,
+       "wr": {
+        "c6060": 64.3,
+        "c8080": 99.0
+       }
+      }
+     ]
+    },
+    {
+     "K": 10,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3532,
+       "r": 1.0845,
+       "wr": {
+        "c6060": 70.7,
+        "c8080": 99.0
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4044,
+       "r": 1.0719,
+       "wr": {
+        "c6060": 72.4,
+        "c8080": 99.2
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.0783,
+       "wr": {
+        "c6060": 64.3,
+        "c8080": 99.0
+       }
+      }
+     ]
+    }
+   ],
+   "K_max_8080_le_95": [
+    0,
+    3,
+    3
+   ]
+  },
+  "4": {
+   "rows": [
+    {
+     "K": 0,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3419,
+       "r": 1.046,
+       "wr": {
+        "c6060": 31.2,
+        "c8080": 93.9
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3914,
+       "r": 1.034,
+       "wr": {
+        "c6060": 30.5,
+        "c8080": 90.0
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4517,
+       "r": 1.049,
+       "wr": {
+        "c6060": 30.8,
+        "c8080": 91.2
+       }
+      }
+     ]
+    },
+    {
+     "K": 1,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3432,
+       "r": 1.05,
+       "wr": {
+        "c6060": 35.4,
+        "c8080": 95.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3930,
+       "r": 1.038,
+       "wr": {
+        "c6060": 37.5,
+        "c8080": 91.7
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4535,
+       "r": 1.0531,
+       "wr": {
+        "c6060": 33.7,
+        "c8080": 92.7
+       }
+      }
+     ]
+    },
+    {
+     "K": 2,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3445,
+       "r": 1.0539,
+       "wr": {
+        "c6060": 40.1,
+        "c8080": 95.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3945,
+       "r": 1.0421,
+       "wr": {
+        "c6060": 43.6,
+        "c8080": 93.1
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4553,
+       "r": 1.0573,
+       "wr": {
+        "c6060": 35.3,
+        "c8080": 93.8
+       }
+      }
+     ]
+    },
+    {
+     "K": 3,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3458,
+       "r": 1.0579,
+       "wr": {
+        "c6060": 44.9,
+        "c8080": 96.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3960,
+       "r": 1.0461,
+       "wr": {
+        "c6060": 49.0,
+        "c8080": 94.2
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4570,
+       "r": 1.0613,
+       "wr": {
+        "c6060": 38.9,
+        "c8080": 94.9
+       }
+      }
+     ]
+    },
+    {
+     "K": 4,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3471,
+       "r": 1.0619,
+       "wr": {
+        "c6060": 49.4,
+        "c8080": 96.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3975,
+       "r": 1.0501,
+       "wr": {
+        "c6060": 54.3,
+        "c8080": 95.4
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4584,
+       "r": 1.0645,
+       "wr": {
+        "c6060": 45.2,
+        "c8080": 96.0
+       }
+      }
+     ]
+    },
+    {
+     "K": 5,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3484,
+       "r": 1.0659,
+       "wr": {
+        "c6060": 53.9,
+        "c8080": 97.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3991,
+       "r": 1.0542,
+       "wr": {
+        "c6060": 58.0,
+        "c8080": 96.4
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4598,
+       "r": 1.0678,
+       "wr": {
+        "c6060": 51.4,
+        "c8080": 97.1
+       }
+      }
+     ]
+    },
+    {
+     "K": 6,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3497,
+       "r": 1.0699,
+       "wr": {
+        "c6060": 58.3,
+        "c8080": 97.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4006,
+       "r": 1.0582,
+       "wr": {
+        "c6060": 61.6,
+        "c8080": 97.5
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4612,
+       "r": 1.071,
+       "wr": {
+        "c6060": 56.7,
+        "c8080": 98.0
+       }
+      }
+     ]
+    },
+    {
+     "K": 7,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3510,
+       "r": 1.0738,
+       "wr": {
+        "c6060": 61.8,
+        "c8080": 98.1
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4021,
+       "r": 1.0621,
+       "wr": {
+        "c6060": 64.9,
+        "c8080": 98.3
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4626,
+       "r": 1.074,
+       "wr": {
+        "c6060": 59.9,
+        "c8080": 98.4
+       }
+      }
+     ]
+    },
+    {
+     "K": 8,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3523,
+       "r": 1.0778,
+       "wr": {
+        "c6060": 65.3,
+        "c8080": 98.4
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4033,
+       "r": 1.0653,
+       "wr": {
+        "c6060": 67.4,
+        "c8080": 98.6
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.074,
+       "wr": {
+        "c6060": 59.9,
+        "c8080": 98.4
+       }
+      }
+     ]
+    },
+    {
+     "K": 9,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3532,
+       "r": 1.0804,
+       "wr": {
+        "c6060": 67.5,
+        "c8080": 98.6
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4044,
+       "r": 1.0677,
+       "wr": {
+        "c6060": 69.3,
+        "c8080": 98.9
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.074,
+       "wr": {
+        "c6060": 59.9,
+        "c8080": 98.4
+       }
+      }
+     ]
+    },
+    {
+     "K": 10,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3532,
+       "r": 1.0804,
+       "wr": {
+        "c6060": 67.5,
+        "c8080": 98.6
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4044,
+       "r": 1.0677,
+       "wr": {
+        "c6060": 69.3,
+        "c8080": 98.9
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.074,
+       "wr": {
+        "c6060": 59.9,
+        "c8080": 98.4
+       }
+      }
+     ]
+    }
+   ],
+   "K_max_8080_le_95": [
+    0,
+    3,
+    3
+   ]
+  },
+  "5": {
+   "rows": [
+    {
+     "K": 0,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3432,
+       "r": 1.046,
+       "wr": {
+        "c6060": 31.2,
+        "c8080": 93.9
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3930,
+       "r": 1.034,
+       "wr": {
+        "c6060": 30.5,
+        "c8080": 90.0
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4535,
+       "r": 1.049,
+       "wr": {
+        "c6060": 30.7,
+        "c8080": 91.2
+       }
+      }
+     ]
+    },
+    {
+     "K": 1,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3445,
+       "r": 1.05,
+       "wr": {
+        "c6060": 35.4,
+        "c8080": 95.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3945,
+       "r": 1.038,
+       "wr": {
+        "c6060": 37.4,
+        "c8080": 91.7
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4553,
+       "r": 1.0531,
+       "wr": {
+        "c6060": 33.7,
+        "c8080": 92.7
+       }
+      }
+     ]
+    },
+    {
+     "K": 2,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3458,
+       "r": 1.0539,
+       "wr": {
+        "c6060": 40.1,
+        "c8080": 95.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3960,
+       "r": 1.042,
+       "wr": {
+        "c6060": 43.6,
+        "c8080": 93.1
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4570,
+       "r": 1.0571,
+       "wr": {
+        "c6060": 35.3,
+        "c8080": 93.7
+       }
+      }
+     ]
+    },
+    {
+     "K": 3,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3471,
+       "r": 1.0579,
+       "wr": {
+        "c6060": 44.8,
+        "c8080": 96.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3975,
+       "r": 1.046,
+       "wr": {
+        "c6060": 48.9,
+        "c8080": 94.2
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4584,
+       "r": 1.0603,
+       "wr": {
+        "c6060": 37.1,
+        "c8080": 94.6
+       }
+      }
+     ]
+    },
+    {
+     "K": 4,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3484,
+       "r": 1.0618,
+       "wr": {
+        "c6060": 49.4,
+        "c8080": 96.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 3991,
+       "r": 1.05,
+       "wr": {
+        "c6060": 54.3,
+        "c8080": 95.3
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4598,
+       "r": 1.0636,
+       "wr": {
+        "c6060": 43.3,
+        "c8080": 95.7
+       }
+      }
+     ]
+    },
+    {
+     "K": 5,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3497,
+       "r": 1.0658,
+       "wr": {
+        "c6060": 53.8,
+        "c8080": 97.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4006,
+       "r": 1.054,
+       "wr": {
+        "c6060": 57.9,
+        "c8080": 96.4
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4612,
+       "r": 1.0668,
+       "wr": {
+        "c6060": 49.6,
+        "c8080": 96.8
+       }
+      }
+     ]
+    },
+    {
+     "K": 6,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3510,
+       "r": 1.0698,
+       "wr": {
+        "c6060": 58.2,
+        "c8080": 97.8
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4021,
+       "r": 1.058,
+       "wr": {
+        "c6060": 61.4,
+        "c8080": 97.5
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4626,
+       "r": 1.0698,
+       "wr": {
+        "c6060": 55.3,
+        "c8080": 97.8
+       }
+      }
+     ]
+    },
+    {
+     "K": 7,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3523,
+       "r": 1.0737,
+       "wr": {
+        "c6060": 61.7,
+        "c8080": 98.1
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4033,
+       "r": 1.0612,
+       "wr": {
+        "c6060": 64.1,
+        "c8080": 98.1
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.0698,
+       "wr": {
+        "c6060": 55.3,
+        "c8080": 97.8
+       }
+      }
+     ]
+    },
+    {
+     "K": 8,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3532,
+       "r": 1.0763,
+       "wr": {
+        "c6060": 64.0,
+        "c8080": 98.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4044,
+       "r": 1.0635,
+       "wr": {
+        "c6060": 66.0,
+        "c8080": 98.4
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.0698,
+       "wr": {
+        "c6060": 55.3,
+        "c8080": 97.8
+       }
+      }
+     ]
+    },
+    {
+     "K": 9,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3532,
+       "r": 1.0763,
+       "wr": {
+        "c6060": 64.0,
+        "c8080": 98.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4044,
+       "r": 1.0635,
+       "wr": {
+        "c6060": 66.0,
+        "c8080": 98.4
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.0698,
+       "wr": {
+        "c6060": 55.3,
+        "c8080": 97.8
+       }
+      }
+     ]
+    },
+    {
+     "K": 10,
+     "rounds": [
+      {
+       "rnd": 1,
+       "points": 3532,
+       "r": 1.0763,
+       "wr": {
+        "c6060": 64.0,
+        "c8080": 98.3
+       }
+      },
+      {
+       "rnd": 2,
+       "points": 4044,
+       "r": 1.0635,
+       "wr": {
+        "c6060": 66.0,
+        "c8080": 98.4
+       }
+      },
+      {
+       "rnd": 3,
+       "points": 4628,
+       "r": 1.0698,
+       "wr": {
+        "c6060": 55.3,
+        "c8080": 97.8
+       }
+      }
+     ]
+    }
+   ],
+   "K_max_8080_le_95": [
+    0,
+    3,
+    3
+   ]
+  }
+ }
+}

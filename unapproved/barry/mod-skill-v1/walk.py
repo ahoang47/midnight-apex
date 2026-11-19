@@ -7,6 +7,7 @@ pays GRIND_PAYOUT_FRACTION x wild purse and a flat GRIND_XP[round] points.
 Policies as live progression._walk_round: story never grinds; mixed grinds at the first rung where 60/80 or 80/60 is
 < 50 % until both clear, then to "cap" (every kit mod at the round ceiling) before the boss; hard grinds wherever 60/60
 < 50 %, then to cap before the boss.
+beats (2026-11-19 draft): story path + `beats` required wild-encounter wins per round, no boss check.
 gate (2026-11-19 draft, GATE.md): story path, but the boss is locked until every kit mod is at the round ceiling.
 """
 from mod_skill import *
@@ -81,7 +82,7 @@ class Car:
         return self.assign(left, d) if (self.spill and left > 1e-9) else left
 
 
-def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk1_list", log=True, story_table=None, upto=None, spill=False, kits=None, gate_pts=None):
+def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk1_list", log=True, story_table=None, upto=None, spill=False, kits=None, gate_pts=None, beats=0):
     pr_t = PRICES[price] if isinstance(price, str) else price
     car = Car(X, spill, kits); money, debt = 0.0, E.DEBT_AMOUNT; out = []
     for rnd in range(3):
@@ -132,6 +133,12 @@ def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk
         for j, name in enumerate(E.LADDER_RUNGS):
             B = E.opponent_budget(rnd, j); T = E.LADDER_TURNS[j]; tag = f"R{rnd + 1} {name}"; here = 0
             shop(tag)
+            if mode == "beats" and j > 0:
+                # 2026-11-19 story-beat draft (GATE.md top): `beats` required wild-encounter wins per round, spread evenly over
+                # the 6 slots before kid2..boss (later slots first get the remainder); no build check at the boss.
+                k = j - 1; nb = (beats * (k + 1)) // 6 - (beats * k) // 6
+                for _ in range(nb):
+                    grind1(tag); here += 1
             if name == "boss" and mode in ("mixed", "hard"):
                 while not car.at_cap(d, rnd) and here < 400:
                     grind1(tag); here += 1
