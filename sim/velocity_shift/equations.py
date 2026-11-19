@@ -107,7 +107,7 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
 # Final settings from the final-v1 combat sweep (Austin's decisions of
 # 2026-11-09). Since 2026-11-13 the story ladder model in `progression.py`
 # runs on the econ-v1 block below and its G2 oracle
-# (`config/winrate_g2_live_tracks_v1.json`); `config/winrate_n4000.json` is the
+# (`config/winrate_g2_live_tracks_v2.json` since 2026-11-19; v1 stale); `config/winrate_n4000.json` is the
 # legacy card-draw oracle and is no longer read by it. The playable engine
 # in combat.py / match.py uses this same model: LINE_SET_C line picks,
 # KAPPA_BY_LENGTH, OPPONENT_QTE, the visible QTE zone (`QTE_ZONE_WIDTH_105`,
@@ -130,7 +130,16 @@ KAPPA_BY_LENGTH = {10: 1.55, 20: 1.35, 30: 1.20}   # final-v1 base stat-gap leve
 KAPPA_HEAT_MULT = {10: 1.75, 20: 2.25, 30: 2.25}
 RACE_LENGTHS = (10, 20, 30)
 SIM_SEEDS = (20261113, 20261114, 20261115)
-OPPONENT_QTE = 1.0             # story-rung opponents time perfectly (uniform across rungs)
+# AI timing (Austin approved 2026-11-19 via Gordon; draft unapproved/barry/ai-heat-qte-v1/ at 313a871, now live).
+# Each turn the AI's raw QTE = round_qte_score(clamp(N(OPPONENT_QTE, OPPONENT_QTE_SD), OPPONENT_QTE_MIN, OPPONENT_QTE_MAX)),
+# drawn from its own RNG Random(seed + OPPONENT_QTE_SEED_OFFSET), separate from the race RNG (line picks), same for
+# every opponent and rung. OPPONENT_QTE is the MEAN (MatchConfig.opponent_qte_ratio scales it). ~~Until 2026-11-19:
+# OPPONENT_QTE = 1.0, a perfect QTE every turn~~ (stale).
+OPPONENT_QTE = 0.80            # AI mean raw QTE per turn
+OPPONENT_QTE_SD = 0.08         # per-turn spread (sd); 0 = the fixed mean
+OPPONENT_QTE_MIN = 0.60        # clamp, symmetric about the mean so the mean stays 0.80
+OPPONENT_QTE_MAX = 1.00
+OPPONENT_QTE_SEED_OFFSET = 104_729   # AI-timing RNG = Random(seed + this)
 # Visible QTE zone (qte-v1, Austin approved 2026-11-11). Presentation unit
 # is QTE_ZONE_BASE_MS (Godot QTE_TIMING_WINDOW_BASE_MS). Widths below are
 # fractions of that default zone. Interpolation: see qte_zone_width().
@@ -333,7 +342,7 @@ GOOD_PLAY_Q = 0.8
 # ══════════════════════════════════════════════════════════════════════
 # econ-v1 approved and made live in commit 0af2715 (recalibrated to the live tracks in commit 6d3641f), on the
 # 7-rung ladder below (first drafted in the round-ladder-v1 study, approved as part of econ-v1, commit 0af2715; Austin confirmed 2026-11-19). Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
-# cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_live_tracks_v1.json since commit 6d3641f (the original
+# cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_live_tracks_v2.json since 2026-11-19 (0.80 random AI QTE; v1 from commit 6d3641f is stale; the original
 # draft-track table, built on the unapproved touge-lines-v1 laps, was deleted 2026-11-19). progression.py walks this ladder. Money is USD (x100 rescale).
 # Stand-ins pending playtest: all XP numbers, the MYTH4 price ($8,000, MOD_PRICE_STANDIN), every finale-arc opponent.
 
@@ -360,15 +369,23 @@ K_STEP = 1.07
 P_ROUND = tuple(ANCHOR_B * (K_STEP * MOD_CAP_FRACTION) ** n for n in range(3))   # 330.0, 377.817, 432.563
 C_ROUND = tuple(MOD_CAP_FRACTION * p for p in P_ROUND)                           # 353.1, 404.264, 462.842
 CAP_LEVEL = (12, 29, 46)       # level caps R1 / R2 / R3 (SP(L) = 0.8 x C / 1.07)
+# Boss r retuned for the 0.80 random AI QTE (Austin approved 2026-11-19 via Gordon; draft ai-heat-qte-v1 at 313a871):
+# Street 1.046 (with the EN-heavy boss shape below), Wangan 1.040, Touge 1.050. ~~Was Street 1.044, Wangan 1.055,
+# Touge 1.071 (2026-11-14, perfect AI)~~ (stale). kid1 .. oh2 are unchanged.
 LADDER_TARGET_R = {            # Variant C structure, kid1 .. boss; refit to the live stand-in tracks (Austin 2026-11-14)
-    "street": (1.20, 1.159, 1.095, 1.071, 1.065, 1.058, 1.044),
-    "wangan": (1.18, 1.16, 1.11, 1.08, 1.06, 1.055, 1.055),    # oh2 lifted to the boss r so the ladder never steps up
-    "touge":  (1.182, 1.163, 1.132, 1.097, 1.079, 1.071, 1.071),
+    "street": (1.20, 1.159, 1.095, 1.071, 1.065, 1.058, 1.046),
+    "wangan": (1.18, 1.16, 1.11, 1.08, 1.06, 1.055, 1.040),    # oh2 1.055 was lifted to the old boss r (stale reason)
+    "touge":  (1.182, 1.163, 1.132, 1.097, 1.079, 1.071, 1.050),
 }
-BOSS_TARGET_R = {"street": 1.044, "wangan": 1.055, "touge": 1.071}
+BOSS_TARGET_R = {"street": 1.046, "wangan": 1.040, "touge": 1.050}
+# Crew-boss stat shape, POW / HAN / EN shares of the boss budget (Austin approved 2026-11-19: the Street boss is a
+# brakes/tires-heavy car, 25/25/50, inside the 25-50 % band). Every other opponent (rungs, wilds, finale) stays even.
+BOSS_STAT_SHARES = {"street": (0.25, 0.25, 0.50), "wangan": (1 / 3, 1 / 3, 1 / 3), "touge": (1 / 3, 1 / 3, 1 / 3)}
 # Bosses are tuned on the HARDEST live track of their district (Austin 2026-11-14; 15 stand-in tracks kept):
-# Street S1 Shibuya, Wangan W3 C1 Outer, Touge T3 Usui. At cap (N=3000/style, 60/60 | 60/80 | 80/60 | 80/80):
-# Street 1.044 S1 31.6 | 72.4 | 71.0 | 94.9; Wangan 1.055 W3 39.7 | 63.0 | 80.7 | 90.7; Touge 1.071 T3 31.9 | 69.2 | 70.2 | 93.5.
+# Street S1 Shibuya, Wangan W3 C1 Outer, Touge T3 Usui. At cap, 0.80 random AI QTE (2026-11-19, n=6000, 60/60 | 80/80):
+# Street 1.046 (EN-heavy boss) 32.0 | 93.8; Wangan 1.040 40.9 | 92.2; Touge 1.050 32.5 | 92.3.
+# ~~Perfect AI (2026-11-14, N=3000/style, 60/60 | 60/80 | 80/60 | 80/80): Street 1.044 S1 31.6 | 72.4 | 71.0 | 94.9;
+# Wangan 1.055 W3 39.7 | 63.0 | 80.7 | 90.7; Touge 1.071 T3 31.9 | 69.2 | 70.2 | 93.5~~ (stale).
 BOSS_HARD_TRACK = {"street": "S1_Shibuya_Grid", "wangan": "W3_C1_Outer", "touge": "T3_Usui_Esses"}
 HARD_TRACK_TURNS = {"street": (30,), "wangan": (30,), "touge": (10, 20, 30)}   # where the hard cell is reported
 # Boss check band (econ-v1 criterion 9). The draft-track band was 80/80 88-92 % on the district/hard cell. Tuned on the

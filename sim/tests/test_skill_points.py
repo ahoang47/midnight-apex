@@ -53,7 +53,7 @@ def test_off_tune_delta():
 
 def test_at_cap_bosses_with_retune_limit():
     rows = P.boss_check_at_cap()
-    assert [(x["pow_share"], x["c6060"], x["c8080"]) for x in rows] == [(50.0, 31.6, 94.9), (26.2, 40.1, 91.6), (45.0, 30.2, 92.9)]
+    assert [(x["pow_share"], x["c6060"], x["c8080"]) for x in rows] == [(50.0, 31.2, 93.9), (26.2, 40.6, 93.3), (45.0, 31.1, 91.3)]   # 2026-11-19 retune
     assert all(x["ok"] for x in rows)
 
 

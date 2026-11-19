@@ -1,7 +1,9 @@
 """econ-v1 progression (3-round ladder, Variant C, USD) reproduction tests.
 
 Pinned numbers are the econ-v1 live-tracks recalibration, approved and made live in commit 6d3641f (live stand-in tracks, bosses on
-the hardest track per district, Austin 2026-11-14), money in USD."""
+the hardest track per district, Austin 2026-11-14), money in USD. Re-pinned 2026-11-19 for the 0.80 random AI QTE, the boss
+retune and the EN-heavy Street boss (Austin approved; win-rate table v2). Constants are unchanged; walk outputs moved."""
+import pytest
 import sys
 sys.path.insert(0, ".")
 from velocity_shift import equations as E, progression as P
@@ -24,54 +26,68 @@ def test_ladder_targets_at_cap():
     for x in P.ladder():
         rnd = x["rnd"] - 1
         assert abs(E.C_ROUND[rnd] / x["B"] - x["target_r"]) < 1e-12
-    assert {d: E.LADDER_TARGET_R[d][6] for d in E.LADDER_TARGET_R} == E.BOSS_TARGET_R == {"street": 1.044, "wangan": 1.055, "touge": 1.071}
+    assert {d: E.LADDER_TARGET_R[d][6] for d in E.LADDER_TARGET_R} == E.BOSS_TARGET_R == {"street": 1.046, "wangan": 1.040, "touge": 1.050}
     for d, lad in E.LADDER_TARGET_R.items():
         assert all(a >= b for a, b in zip(lad, lad[1:])), d                         # ladders never step up
 
 
 def test_hardest_track_boss_win_rates():
-    """At-cap bosses and finale on the hardest live track (RESULTS.md round 2; N=3000/style point checks, F2 N=1500)."""
+    """At-cap bosses on the hardest live track (table v2, N=2000/style point checks at the boss r; Austin 2026-11-19)."""
     got = {(x["rnd"], x["district"]): x for x in P.at_cap_table() if x["rung"] == "boss" or x["rnd"] == "F"}
     def row(key):
         return tuple(got[key]["wr"][pr]["hard"] for pr in P.PROFILES)
-    assert row((1, "Street")) == (31.6, 72.4, 71.0, 94.9)                             # S1 Shibuya, r 1.044
-    assert row((2, "Wangan")) == (39.7, 63.0, 80.7, 90.7)                             # W3 C1 Outer, r 1.055
-    assert row((3, "Touge")) == (31.9, 69.2, 70.2, 93.5)                              # T3 Usui, r 1.071
+    assert row((1, "Street")) == (31.2, 72.0, 62.3, 93.9)                             # S1 Shibuya, r 1.046, EN-heavy boss
+    assert row((2, "Wangan")) == (40.9, 64.8, 80.9, 92.5)                             # W3 C1 Outer, r 1.040
+    assert row((3, "Touge")) == (32.4, 70.0, 63.6, 91.9)                              # T3 Usui, r 1.050
     fin = [x for x in P.at_cap_table() if x["rnd"] == "F"]
-    assert [tuple(x["wr"][pr]["hard"] for pr in ("c6060", "c8080")) for x in fin] == [(34.7, 94.7), (41.7, 92.5), (31.6, 94.9), (34.7, 94.7)]
+    assert [tuple(x["wr"][pr]["hard"] for pr in ("c6060", "c8080")) for x in fin] == [(60.9, 98.6), (61.4, 97.5), (58.1, 98.3), (60.9, 98.6)]
     for d in E.BOSS_TARGET_R:
         assert P.boss_check(E.BOSS_TARGET_R[d], d)["ok"], d
-    for (_, d, _), r in zip(E.FINALE, E.FINALE_TARGET_R):
-        assert P.boss_check(r, d)["ok"], d
     assert E.BOSS_BAND_8080 == (90.0, 95.0) and E.BOSS_FLOOR_6060 == 30.0
+
+
+@pytest.mark.xfail(strict=True, reason="Finale r (FINALE_TARGET_R) is still tuned for the old perfect AI; with the 0.80 random "
+                   "AI QTE every billed finale is out of band (80/80 97.5-98.6). Retune not approved yet; draft in "
+                   "unapproved/barry/ai-heat-qte-v1/ (Austin 2026-11-19).")
+def test_finale_in_band():
+    for (_, d, _), r in zip(E.FINALE, E.FINALE_TARGET_R):
+        assert P.boss_check(r, d, boss=False)["ok"], d
 
 
 def test_walks_reproduce_eval_final_c():
     mixed = P.run("mixed")
-    assert [(w["wall"], w["wall_grind"], w["post_wall_to_cap"], w["total_grind"]) for w in mixed] == [("mat1", 3, 10, 13), ("mat1", 3, 10, 13), ("mat1", 4, 8, 12)]
+    assert [(w["wall"], w["wall_grind"], w["post_wall_to_cap"], w["total_grind"]) for w in mixed] == [("mat2", 3, 10, 13), ("mat1", 2, 11, 13), ("mat1", 3, 9, 12)]
     assert [w["L"] for w in mixed] == [12, 29, 46] and all(w["reached_cap"] for w in mixed)
     # mods-v1 (Austin 2026-11-14): the walk buys mods just in time, so it ends each round with the cash left after the shop
-    assert [round(w["money"], 2) for w in mixed] == [5050.0, 15632.5, 16102.5] and mixed[0]["debt"] == 0.0
-    assert mixed[-1]["mods_spent"] == 62180.0
+    assert [round(w["money"], 2) for w in mixed] == [5050.0, 13232.5, 11702.5] and mixed[0]["debt"] == 0.0
+    assert mixed[-1]["mods_spent"] == 66580.0
     hard = P.run("hard")
-    assert [w["total_grind"] for w in hard] == [13, 15, 18] and [w["L"] for w in hard] == [12, 29, 46]
-    assert [(w["wall_grind"], w["post_wall_to_cap"]) for w in hard] == [(1, 12), (3, 12), (6, 12)]   # R1 was 2 + 11 before mods-v1
+    assert [w["total_grind"] for w in hard] == [14, 14, 12] and [w["L"] for w in hard] == [12, 29, 46]   # was 13/15/18 (perfect AI)
+    assert [(w["wall_grind"], w["post_wall_to_cap"]) for w in hard] == [(1, 13), (1, 13), (2, 10)]
     story = P.run("story")
     assert [w["L"] for w in story] == [7, 26, 43] and story[0]["debt"] == 3000.0     # story-only R1 leaves $3,000 debt
     # xp-carry-v1 fix C (Austin 2026-11-14): leftover XP carries over, so story-only enters R2 at L7 and R3 at L26
     assert [w["rows"][0]["arrive_L"] for w in story] == [0, 7, 26]
     worst = [min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story]
-    assert worst == [53.0, 54.4, 50.5] and min(worst) >= 50.0                         # criterion 3 (thin on R3 T3)
+    assert worst == [40.6, 58.2, 48.0]          # was 53.0 / 54.4 / 50.5; criterion 3 (>= 50) now fails R1/R3: test_story_criterion_3
     # Austin 2026-11-14 campaign story-XP cut (STORY_XP_MULT): 80/80 story-only meets each boss one level lower
     boss = [(w["rows"][-1]["arrive_L"], P.hard_win(w["rows"][-1]["wr"]["c8080"])) for w in story]
-    assert boss == [(6, 53.0), (23, 57.7), (41, 55.8)]
+    assert boss == [(6, 40.6), (23, 58.2), (41, 48.0)]
     assert story[0]["rows"][0]["equipped"] == ["stock"] * 4 and story[0]["rows"][0]["cash_pre"] == 0.0   # kid1 runs stock
-    assert story[0]["rows"][1]["wr"]["c8080"]["district"] == 95.5                       # kid2 at 88.9 % fill (was 98.9 at full fill)
+    assert story[0]["rows"][1]["wr"]["c8080"]["district"] == 98.6                       # kid2 at 88.9 % fill
     assert [round(w["money"], 2) for w in story] == [5900.0, 13940.0, 26700.0] and story[-1]["mods_spent"] == 27300.0
     # skill-points-v1 (Austin 2026-11-14): whole points, 25-50 % band, 20 % retune budget; R2 arrives off the Wangan tune
-    assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.6, 40.1, 30.3]
+    assert [round(w["rows"][-1]["wr"]["c6060"]["hard"], 1) for w in hard] == [31.2, 40.6, 31.2]
     assert [w["build"] for w in mixed] == [(1320, 660, 660), (792, 756, 1474), (1556, 865, 1037)]
     assert [w["rows"][0]["pow_share"] for w in mixed] == [50.0, 30.0, 45.0]           # entry POW share R1 / R2 / R3
+
+
+@pytest.mark.xfail(strict=True, reason="Criterion 3 (80/80 story-only >= 50 % on every rung) breaks under the 0.80 random AI "
+                   "QTE + EN-heavy Street boss: the story-only player meets the R1 boss at 40.6 % and the R3 boss at 48.0 %. "
+                   "Story XP retune not approved; draft in unapproved/barry/ai-heat-qte-v1/ (Austin 2026-11-19).")
+def test_story_criterion_3():
+    story = P.run("story")
+    assert min(min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story) >= 50.0
 
 
 def test_story_xp_mult_campaign_only():

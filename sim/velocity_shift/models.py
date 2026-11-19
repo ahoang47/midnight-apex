@@ -163,9 +163,15 @@ class MatchConfig:
     # qte_zone_width(r)). Slot competition and the 105%-all-slots rule
     # belong to the upcoming slot sim and are not applied here.
     qte_window_mod: float = 0.0
-    # Opt-in (None = ENCOUNTER_RATIOS[encounter_type]): override the ratio
-    # that scales the AI's QTE, e.g. 1.0 for a pure stat-parity test.
+    # AI timing (Austin approved 2026-11-19; equations OPPONENT_QTE*). Mean raw QTE = OPPONENT_QTE x
+    # opponent_qte_ratio (None = OPPONENT_QTE). With sd > 0 the AI's raw QTE is drawn once per turn from
+    # N(mean, sd) clamped to [min, max] and rounded (round_qte_score), from its own RNG seeded
+    # seed + OPPONENT_QTE_SEED_OFFSET, so the race RNG (line picks) is untouched. sd 0 = the fixed mean.
+    # None for sd / min / max = the live constants OPPONENT_QTE_SD / _MIN / _MAX.
     opponent_qte_ratio: Optional[float] = None
+    opponent_qte_sd: Optional[float] = None
+    opponent_qte_min: Optional[float] = None
+    opponent_qte_max: Optional[float] = None
     # District line tables (LINE_SET_C) and the lap. Required by the playable
     # engine: match.py picks the opponent's whole line once per corner/turn
     # from the match RNG, and the corners set the heat costs. `corners` is a

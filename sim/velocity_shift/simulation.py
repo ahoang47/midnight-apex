@@ -26,7 +26,7 @@ from dataclasses import dataclass, asdict
 from typing import Callable
 
 from .models import Stance, MatchConfig, MatchResult, ClashContext, CombatantStats
-from .match import run_match, race_setup
+from .match import run_match, race_setup, opponent_qte_mean
 from .combat import official_tracks, line_triples, parse_line, line_probs
 from .equations import (
     OPPONENT_QTE, CORNER_HEAT_PASSIVE, STAT_M_W, PACE_RES_T, PACE_RES_K, PACE_RES_LOOK, PACE_LOOKAHEAD,
@@ -85,7 +85,7 @@ class SimulationRunner:
             self._q_read = q_read
             self._pace_q = c.player_pacing if c.player_pacing is not None else q_read
             V = r ** kappa_for_length(T)
-            php, pho = _phi(qt), _phi(OPPONENT_QTE)
+            php, pho = _phi(qt), _phi(opponent_qte_mean(c))
             self._V, self._php, self._pho = V, php, pho
             self._d_lock = V * (php[2] - php[1]) + (pho[1] - pho[0])
             sh = build_shares(p.pow, p.en, p.han)

@@ -35,4 +35,4 @@ def test_price_guards_and_aspire():
 def test_buyer_one_stat_mods_only():
     out, G, done = P.run_with_garage("mixed")
     assert all(not m.endswith("_AERO") for m in G.owned)                   # the sim buyer never buys aero (<= 1 allowed)
-    assert G.spent == 62180.0 and len(G.owned) == 32
+    assert G.spent == 66580.0 and len(G.owned) == 35                          # 2026-11-19 AI QTE retune (was 62180 / 32)

@@ -3,7 +3,7 @@
 Usage (from sim/):  python scripts/run_progression.py [--rows] [--arc]   (walks buy mods-v1 mods just in time)
 Prints the at-cap boss and finale win rates (Variant C), the story / mixed / hard walks (grind, levels, USD cash and
 debt per round), and with --arc the pre-finale arc table. --rows adds every rung of every walk.
-All constants: velocity_shift/equations.py. Win rates: config/winrate_g2_live_tracks_v1.json (live stand-in tracks; hard cell = hardest track).
+All constants: velocity_shift/equations.py. Win rates: config/winrate_g2_live_tracks_v2.json (live stand-in tracks; hard cell = hardest track; 0.80 random AI QTE, 2026-11-19).
 """
 import sys
 sys.path.insert(0, ".")

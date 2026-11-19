@@ -26,9 +26,12 @@ Rules (all constants in equations.py):
     is < 50 % (hard cell for 20/30-turn races) until both clear, then grinds to the cap before the boss; "hard"
     (60/60) grinds at every rung where 60/60 is < 50 %, then to the cap before the boss.
 
-Win rates come from config/winrate_g2_live_tracks_v1.json (Austin 2026-11-14: keep the 15 live stand-in tracks,
-config/tracks_v1.json): live engine, G2 heat, live QTE mapping, 3 boss styles, exported from
-the econ-v1 live-tracks recalibration, approved and made live in commit 6d3641f (N=300 grid + N=1500 30-turn confirm + N=1500-3000 exact-r point checks).
+Win rates come from config/winrate_g2_live_tracks_v2.json (2026-11-19: rebuilt for the 0.80 random AI QTE, the boss
+retune and the EN-heavy Street boss, Austin approved; built by unapproved/barry/ai-heat-qte-v1/table_v2/ with the same
+method as v1): live engine, G2 heat, live QTE mapping, 3 boss styles, 15 live stand-in tracks (config/tracks_v1.json),
+N=300 grid + N=2000/style exact-r point checks at each boss r. Crew-boss rows read the "q_boss" cells (the boss's own
+stat shape, E.BOSS_STAT_SHARES) where the table has them (Street 30-turn). ~~v1 (econ-v1 live-tracks recalibration,
+commit 6d3641f, perfect AI)~~ (stale).
 Linear interpolation in r, flat outside the grid. Hard cells are the hardest live track per district
 (E.BOSS_HARD_TRACK: Street S1 Shibuya and Wangan W3 C1 Outer on 30-turn races, Touge T3 Usui on every length).
 """
@@ -41,7 +44,7 @@ from bisect import bisect_left
 from . import equations as E
 
 PROFILES = ("c6060", "c6080", "c8060", "c8080")
-_TABLE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_g2_live_tracks_v1.json")
+_TABLE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_g2_live_tracks_v2.json")
 _TABLE = None
 _OFF_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "winrate_offtune_v1.json")
 _OFF = None
@@ -55,8 +58,11 @@ def _table():
     return _TABLE
 
 
-def _track_win(profile, r, turns, track):
-    pts = _table()["q"][profile][str(int(turns))][track]
+def _track_win(profile, r, turns, track, boss=False):
+    """boss=True reads the crew-boss cells ("q_boss": the boss's own stat shape, E.BOSS_STAT_SHARES) where the table has them."""
+    t = _table()
+    qb = t.get("q_boss", {}).get(profile, {}).get(str(int(turns)), {})
+    pts = qb[track] if boss and track in qb else t["q"][profile][str(int(turns))][track]
     rs = [x[0] for x in pts]
     if r <= rs[0]:
         return pts[0][1]
@@ -110,9 +116,10 @@ def _district_of(track):
     return _TRACK_DISTRICT[track]
 
 
-def track_win(profile, r, turns, track, pow_share=None):
-    """Win % on one track; at a POW share off the district tune, adds the off-tune delta (clamped to 0-100)."""
-    w = _track_win(profile, r, turns, track)
+def track_win(profile, r, turns, track, pow_share=None, boss=False):
+    """Win % on one track; at a POW share off the district tune, adds the off-tune delta (clamped to 0-100).
+    boss=True: the crew boss's own stat shape (q_boss cells, Street since 2026-11-19)."""
+    w = _track_win(profile, r, turns, track, boss)
     if pow_share is None:
         return w
     p0 = E.DISTRICT_TUNE[_district_of(track)][0]
@@ -127,21 +134,21 @@ def tracks(district: str):
 
 
 def win_rate(profile: str, r: float, turns: int, district: str | None = None, track: str | None = None,
-             pow_share: float | None = None) -> float:
+             pow_share: float | None = None, boss: bool = False) -> float:
     """Win rate (%) for a profile (c6060 / c6080 / c8060 / c8080) at stat ratio r, race length 10/20/30, averaged
     over a district's 5 live tracks (or one track). Linear in r between sweep points. pow_share = the build's POW
     share (HAN 25 %); None = the district tune."""
     names = [track] if track else tracks(district)
-    return sum(track_win(profile, r, turns, n, pow_share) for n in names) / len(names)
+    return sum(track_win(profile, r, turns, n, pow_share, boss) for n in names) / len(names)
 
 
-def win_pack(profile: str, r: float, turns: int, district: str, pow_share: float | None = None) -> dict:
+def win_pack(profile: str, r: float, turns: int, district: str, pow_share: float | None = None, boss: bool = False) -> dict:
     """{"district": %} plus {"hard": %} on the district's hardest track where it applies
     (E.HARD_TRACK_TURNS: Touge every length, Street / Wangan 30-turn), each rounded to 0.1."""
     d = district.lower()
-    out = {"district": round(win_rate(profile, r, turns, d, pow_share=pow_share), 1)}
+    out = {"district": round(win_rate(profile, r, turns, d, pow_share=pow_share, boss=boss), 1)}
     if int(turns) in E.HARD_TRACK_TURNS[d]:
-        out["hard"] = round(win_rate(profile, r, turns, track=E.BOSS_HARD_TRACK[d], pow_share=pow_share), 1)
+        out["hard"] = round(win_rate(profile, r, turns, track=E.BOSS_HARD_TRACK[d], pow_share=pow_share, boss=boss), 1)
     return out
 
 
@@ -150,12 +157,14 @@ def hard_win(pack: dict) -> float:
     return pack.get("hard", pack["district"])
 
 
-def boss_check(r: float, district: str, pow_share: float | None = None, pow_share_6060: float | None = None) -> dict:
+def boss_check(r: float, district: str, pow_share: float | None = None, pow_share_6060: float | None = None,
+               boss: bool = True) -> dict:
     """Criterion 9 on the hardest track at cap: 60/60 >= E.BOSS_FLOOR_6060 and 80/80 inside E.BOSS_BAND_8080.
-    pow_share (80/80) and pow_share_6060 (60/60, defaults to pow_share): the build's POW share; None = the tune."""
+    pow_share (80/80) and pow_share_6060 (60/60, defaults to pow_share): the build's POW share; None = the tune.
+    boss=True: the crew boss's stat shape (E.BOSS_STAT_SHARES); boss=False for the even-split finale opponents."""
     p60 = pow_share if pow_share_6060 is None else pow_share_6060
-    w60 = win_rate("c6060", r, 30, track=E.BOSS_HARD_TRACK[district.lower()], pow_share=p60)
-    w80 = win_rate("c8080", r, 30, track=E.BOSS_HARD_TRACK[district.lower()], pow_share=pow_share)
+    w60 = win_rate("c6060", r, 30, track=E.BOSS_HARD_TRACK[district.lower()], pow_share=p60, boss=boss)
+    w80 = win_rate("c8080", r, 30, track=E.BOSS_HARD_TRACK[district.lower()], pow_share=pow_share, boss=boss)
     lo, hi = E.BOSS_BAND_8080
     return dict(r=r, c6060=round(w60, 1), c8080=round(w80, 1), ok=w60 >= E.BOSS_FLOOR_6060 and lo <= w80 <= hi)
 
@@ -443,7 +452,7 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode, build: Build | N
                 else:
                     post += here
         arrive_L = L; pw = G.power(arrive_L, rnd, d); r = pw / B
-        packs = {pr: win_pack(pr, r, T, d, ps(arrive_L)) for pr in PROFILES}
+        packs = {pr: win_pack(pr, r, T, d, ps(arrive_L), boss=name == "boss") for pr in PROFILES}
         r_grind = pw / E.opponent_budget(rnd, 0)
         row = dict(rnd=rnd + 1, district=E.ROUND_DISTRICTS[rnd], rung=name, turns=T, B=round(B, 2),
                    target_r=E.LADDER_TARGET_R[d][j], arrive_L=arrive_L, arrive_r=round(r, 4), wr=packs,
@@ -517,7 +526,7 @@ def at_cap_table():
     rows = []
     for x in ladder():
         rows.append(dict(rnd=x["rnd"], district=x["district"], rung=x["rung"], turns=x["turns"], r=x["target_r"],
-                         wr={pr: win_pack(pr, x["target_r"], x["turns"], x["district"]) for pr in PROFILES}))
+                         wr={pr: win_pack(pr, x["target_r"], x["turns"], x["district"], boss=x["rung"] == "boss") for pr in PROFILES}))
     for (nm, d, B), r, opp in zip(E.FINALE, E.FINALE_TARGET_R, E.FINALE_OPPONENT):
         rows.append(dict(rnd="F", district=d, rung=f"{nm} vs {opp}", turns=E.FINALE_TURNS, r=r, B=B,
                          wr={pr: win_pack(pr, r, E.FINALE_TURNS, d) for pr in PROFILES}))

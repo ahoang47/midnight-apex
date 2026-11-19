@@ -13,6 +13,12 @@ split through match.py / SimulationRunner, then checks the targets:
 
 Constants come from velocity_shift/equations.py (MOD_CAP_FRACTION is the cap).
 
+AI timing (2026-11-19): the G2 reference runs and these targets were built with a perfect AI (QTE 1.0 every turn).
+The live AI now draws N(0.80, 0.08) per turn (Austin approved 2026-11-19), so this gauntlet pins the opponent to the
+reference timing (opponent_qte_ratio = 1 / OPPONENT_QTE, sd 0 -> exactly 1.0) to keep checking the heat engine against
+G2. Under the live AI the same cells read perf_0.8 46.7 / avg_cap 84.4 (targets 10-25 / 60-75): re-targeting is open for
+Austin (unapproved/barry/ai-heat-qte-v1/).
+
 Usage:
   python3 scripts/balance_gauntlet.py            # N races per cell (default 24)
   python3 scripts/balance_gauntlet.py --n 100
@@ -56,7 +62,8 @@ def race_cell(measure: str, district: str, lap: list[str], length: int, style: s
         cfg = MatchConfig(player_stats=player, opponent_stats=opp, max_turns=length, seed=seed + i,
                           district=district, corners=lap, player_read=q, player_timing=qt,
                           player_qte_profile=None if qt is not None else "average",
-                          player_pacing=pace, boss_style=style)
+                          player_pacing=pace, boss_style=style,
+                          opponent_qte_ratio=1.0 / E.OPPONENT_QTE, opponent_qte_sd=0.0)   # G2 reference AI timing (see top)
         m = SimulationRunner(cfg).run().match
         gp, go = m.player_total_progress, m.opponent_total_progress
         w += 1.0 if gp > go else 0.5 if gp == go else 0.0

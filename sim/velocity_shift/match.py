@@ -22,12 +22,25 @@ from typing import Callable, Optional
 
 from .models import Stance, StanceOutcome, MatchConfig, MatchResult, TurnResult, TurnState, ClashResult, ClashContext
 from .combat import resolve_turn, pick_line, corner_at_turn, official_tracks, normalize_district
-from .equations import resolve_stance, OPPONENT_QTE, raw_qte_score, mean_phase_qte, phase_raw_qte, DISTRICTS
+from .equations import (resolve_stance, OPPONENT_QTE, OPPONENT_QTE_SD, OPPONENT_QTE_MIN, OPPONENT_QTE_MAX,
+                        OPPONENT_QTE_SEED_OFFSET, raw_qte_score, mean_phase_qte, phase_raw_qte, DISTRICTS, round_qte_score)
 from .heat import HeatGauges, track_wear, boss_stance, boss_line_weights
 from .trace import TraceLogger
 from .ai import get_phase, get_total_phases
 
 DEFAULT_DISTRICT = DISTRICTS[0]
+
+def opponent_qte_mean(cfg: MatchConfig) -> float:
+    """The AI's mean raw QTE: OPPONENT_QTE, scaled by cfg.opponent_qte_ratio when set."""
+    return OPPONENT_QTE if cfg.opponent_qte_ratio is None else OPPONENT_QTE * cfg.opponent_qte_ratio
+
+
+def opponent_qte_spread(cfg: MatchConfig) -> tuple[float, float, float]:
+    """(sd, min, max) of the AI's per-turn QTE draw: cfg overrides, else the live constants (Austin 2026-11-19)."""
+    sd = OPPONENT_QTE_SD if cfg.opponent_qte_sd is None else cfg.opponent_qte_sd
+    lo = OPPONENT_QTE_MIN if cfg.opponent_qte_min is None else cfg.opponent_qte_min
+    hi = OPPONENT_QTE_MAX if cfg.opponent_qte_max is None else cfg.opponent_qte_max
+    return sd, lo, hi
 
 
 def race_setup(cfg: MatchConfig) -> tuple[str, list[str]]:
@@ -75,6 +88,11 @@ def run_match(
     )
     main_trace = trace or TraceLogger()
     rng = Random(cfg.seed) if cfg.seed is not None else Random()
+    o_qte_mean = opponent_qte_mean(cfg)
+    o_qte_sd, o_qte_lo, o_qte_hi = opponent_qte_spread(cfg)
+    o_qte_rng = None
+    if o_qte_sd > 0.0:
+        o_qte_rng = Random(cfg.seed + OPPONENT_QTE_SEED_OFFSET) if cfg.seed is not None else Random()
 
     p_tot = player.pow + player.en + player.han
     o_tot = opponent.pow + opponent.en + opponent.han
@@ -142,7 +160,7 @@ def run_match(
         # Raw q_time in [0, 1]. If a skill profile or player_timing is configured,
         # the score is E[s] at the race's fixed r (and qte_window_mod); otherwise the
         # callback value is already a raw score. A 3-tuple of Entry/Apex/Exit scores is
-        # averaged (unplayed / None = 0; Austin, 2026-11-11). Opponent timing is OPPONENT_QTE.
+        # averaged (unplayed / None = 0; Austin, 2026-11-11). Opponent timing: opponent_qte_mean(cfg) / spread.
         p_phases: list[float] = []
         if cfg.player_qte_profile or cfg.player_timing is not None or cfg.player_quality is not None:
             q_time = cfg.player_timing if cfg.player_timing is not None else cfg.player_quality
@@ -160,12 +178,17 @@ def run_match(
             else:
                 p_qte = cb
 
+        if o_qte_rng is None:
+            o_qte = o_qte_mean
+        else:
+            o_qte = round_qte_score(min(o_qte_hi, max(o_qte_lo, o_qte_rng.gauss(o_qte_mean, o_qte_sd))))
+
         turn_state = TurnState(
             turn_number=turn_num,
             player_stances=p_stances,
             opponent_stances=o_stances,
             player_qte=p_qte,
-            opponent_qte=OPPONENT_QTE,
+            opponent_qte=o_qte,
             player_heat_mults=p_mults,
             opponent_heat_mults=o_mults,
             player_qte_phases=p_phases,
