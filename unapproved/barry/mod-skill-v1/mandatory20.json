@@ -1,0 +1,258 @@
+{
+ "story_races_per_round": 7,
+ "rungs": [
+  "kid1",
+  "kid2",
+  "mat1",
+  "mat2",
+  "oh1",
+  "oh2",
+  "boss"
+ ],
+ "turns": [
+  10,
+  10,
+  20,
+  20,
+  20,
+  20,
+  30
+ ],
+ "N": 13,
+ "cap_points": [
+  3532,
+  4044,
+  4628
+ ],
+ "rounds": [
+  {
+   "rnd": 1,
+   "wild_wins": 13,
+   "boss_points": 3532,
+   "boss_power": 353.1,
+   "boss_pow_share": 50.0,
+   "boss_r": 1.046,
+   "boss6060": 31.2,
+   "boss8080": 93.9,
+   "low6060_nonboss": 35.8,
+   "low8080_nonboss": 94.4,
+   "money": 10550,
+   "debt": 0,
+   "spent": 600,
+   "end_points": 3532,
+   "exp_races_c6060": 28.2,
+   "exp_races_c8080": 20.3,
+   "at_cap_at_boss": true,
+   "xp_lost": 30.1,
+   "rungs": [
+    {
+     "rung": "kid1",
+     "beats_before": 0,
+     "points": 3000,
+     "wr6060": 45.6,
+     "wr8080": 97.5
+    },
+    {
+     "rung": "kid2",
+     "beats_before": 2,
+     "points": 3171,
+     "wr6060": 73.4,
+     "wr8080": 99.3
+    },
+    {
+     "rung": "mat1",
+     "beats_before": 2,
+     "points": 3313,
+     "wr6060": 48.8,
+     "wr8080": 96.0
+    },
+    {
+     "rung": "mat2",
+     "beats_before": 2,
+     "points": 3366,
+     "wr6060": 35.8,
+     "wr8080": 94.4
+    },
+    {
+     "rung": "oh1",
+     "beats_before": 2,
+     "points": 3417,
+     "wr6060": 55.1,
+     "wr8080": 96.7
+    },
+    {
+     "rung": "oh2",
+     "beats_before": 2,
+     "points": 3470,
+     "wr6060": 70.4,
+     "wr8080": 98.2
+    },
+    {
+     "rung": "boss",
+     "beats_before": 3,
+     "points": 3532,
+     "wr6060": 31.2,
+     "wr8080": 93.9
+    }
+   ]
+  },
+  {
+   "rnd": 2,
+   "wild_wins": 13,
+   "boss_points": 4044,
+   "boss_power": 404.19,
+   "boss_pow_share": 25.0,
+   "boss_r": 1.0398,
+   "boss6060": 40.5,
+   "boss8080": 92.4,
+   "low6060_nonboss": 38.3,
+   "low8080_nonboss": 89.9,
+   "money": 39532,
+   "debt": 0,
+   "spent": 2840,
+   "end_points": 4044,
+   "exp_races_c6060": 29.0,
+   "exp_races_c8080": 20.6,
+   "at_cap_at_boss": true,
+   "xp_lost": 93.0,
+   "rungs": [
+    {
+     "rung": "kid1",
+     "beats_before": 0,
+     "points": 3532,
+     "wr6060": 52.0,
+     "wr8080": 94.7
+    },
+    {
+     "rung": "kid2",
+     "beats_before": 2,
+     "points": 3653,
+     "wr6060": 70.2,
+     "wr8080": 97.0
+    },
+    {
+     "rung": "mat1",
+     "beats_before": 2,
+     "points": 3749,
+     "wr6060": 43.4,
+     "wr8080": 91.6
+    },
+    {
+     "rung": "mat2",
+     "beats_before": 2,
+     "points": 3841,
+     "wr6060": 38.3,
+     "wr8080": 89.9
+    },
+    {
+     "rung": "oh1",
+     "beats_before": 2,
+     "points": 3925,
+     "wr6060": 43.1,
+     "wr8080": 91.5
+    },
+    {
+     "rung": "oh2",
+     "beats_before": 2,
+     "points": 3978,
+     "wr6060": 57.7,
+     "wr8080": 94.5
+    },
+    {
+     "rung": "boss",
+     "beats_before": 3,
+     "points": 4044,
+     "wr6060": 40.5,
+     "wr8080": 92.4
+    }
+   ]
+  },
+  {
+   "rnd": 3,
+   "wild_wins": 13,
+   "boss_points": 4628,
+   "boss_power": 462.51,
+   "boss_pow_share": 45.0,
+   "boss_r": 1.0492,
+   "boss6060": 31.2,
+   "boss8080": 91.4,
+   "low6060_nonboss": 23.2,
+   "low8080_nonboss": 86.6,
+   "money": 72345,
+   "debt": 0,
+   "spent": 6680,
+   "end_points": 4628,
+   "exp_races_c6060": 35.8,
+   "exp_races_c8080": 20.8,
+   "at_cap_at_boss": true,
+   "xp_lost": 96.7,
+   "rungs": [
+    {
+     "rung": "kid1",
+     "beats_before": 0,
+     "points": 4044,
+     "wr6060": 29.1,
+     "wr8080": 87.0
+    },
+    {
+     "rung": "kid2",
+     "beats_before": 2,
+     "points": 4172,
+     "wr6060": 44.4,
+     "wr8080": 90.6
+    },
+    {
+     "rung": "mat1",
+     "beats_before": 2,
+     "points": 4302,
+     "wr6060": 40.4,
+     "wr8080": 93.5
+    },
+    {
+     "rung": "mat2",
+     "beats_before": 2,
+     "points": 4382,
+     "wr6060": 23.2,
+     "wr8080": 86.6
+    },
+    {
+     "rung": "oh1",
+     "beats_before": 2,
+     "points": 4480,
+     "wr6060": 30.4,
+     "wr8080": 90.0
+    },
+    {
+     "rung": "oh2",
+     "beats_before": 2,
+     "points": 4577,
+     "wr6060": 47.7,
+     "wr8080": 95.6
+    },
+    {
+     "rung": "boss",
+     "beats_before": 3,
+     "points": 4628,
+     "wr6060": 31.2,
+     "wr8080": 91.4
+    }
+   ]
+  }
+ ],
+ "min_N_to_cap": [
+  13,
+  13,
+  12
+ ],
+ "cash_only_wins": [
+  0,
+  0,
+  1
+ ],
+ "r3_xp_cap_on_13th": 12.0,
+ "alt_prologue_counted_R1_N10": {
+  "points": 3497,
+  "wr6060": 15.8,
+  "wr8080": 87.8
+ }
+}

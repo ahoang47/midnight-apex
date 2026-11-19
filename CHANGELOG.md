@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-19 — DRAFT: mandatory 20 races per round for mod_skill (Barry, Systems; unapproved, Austin direction)
+- **Direction (Austin, direct, 2026-11-19):** "I want a mandatory 20 races per round." This supersedes the N = 5 story-beat draft, which is kept and marked superseded in GATE.md and the README.
+- **Counts:** 7 story races per round (`E.LADDER_RUNGS`) + **13** required wild-encounter wins = 20 required wins. Losses are retries; the Prologue is not counted.
+- **Result** (`unapproved/barry/mod-skill-v1/mandatory20.py` → `mandatory20.json`; `walk.py` beats mode takes a per-round N):
+  - The mandatory path reaches the cap at every boss, so the bosses pass at the live r with no retune. Table 31.2 / 93.9, 40.5 / 92.4, 31.2 / 91.4; engine 32.02 / 93.78, 40.73 / 92.22, 30.75 / 91.77.
+  - Lowest non-boss 60/60 is 35.8 / 38.3 / 23.2. Expected races are 28.2 / 29.0 / 35.8 at 60/60 and 20.3 / 20.6 / 20.8 at 80/80.
+  - Ceilings bind, so optional wins add no boss headroom and the full-build overshoot is gone.
+  - Wins needed to cap: 13 / 13 / 12, so one R3 mandatory win is cash only. Option: R3 wild-encounter XP 14 → 12.
+- Nothing live; sim/ untouched.
+
 ## 2026-11-19 — DRAFT: story-beat wild-encounter gate for mod_skill (Barry, Systems; unapproved, Austin direction)
 - **Direction (Austin, direct, 2026-11-19):** "Make a few wild-encounter wins required story beats each round, no build check at the boss." Gate A stays reconsidered.
 - **Model (`unapproved/barry/mod-skill-v1/`):** N required wild-encounter wins per round, spread before kid2 … boss; extra wild encounters are optional; no boss build check. New `beats` mode in `walk.py`; `beats.py` → `beats.json`; `beats_engine_check.py` → `beats_engine_check.json`. Write-up is the new top section of GATE.md, with a README pointer.

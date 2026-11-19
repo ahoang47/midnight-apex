@@ -1,6 +1,13 @@
 # mod-skill-v1: Austin's "mod_skill" progression, simulated (Barry DRAFT, 2026-11-18)
 
-> **2026-11-19 DRAFT (Austin direction, unapproved): story-beat gate, see [GATE.md](GATE.md) top.** "Make a few wild-encounter
+> **2026-11-19 DRAFT (Austin direction, unapproved): mandatory 20 races per round, see [GATE.md](GATE.md) top.**
+> - 7 story races + 13 required wild-encounter wins per round.
+> - The mandatory path reaches the cap at every boss (3,532 / 4,044 / 4,628), so the bosses pass at the live r with no retune.
+>   Engine: 32.0 / 93.8, 40.7 / 92.2, 30.8 / 91.8.
+> - Optional wins add no XP headroom. In R3 one mandatory win is cash only (or lower R3 wild-encounter XP 14 → 12).
+> - This supersedes the N = 5 story-beat draft below.
+
+> ~~**2026-11-19 DRAFT (Austin direction, unapproved): story-beat gate**~~ (superseded by mandatory 20), see [GATE.md](GATE.md). "Make a few wild-encounter
 > wins required story beats each round, no build check at the boss."
 > - **Recommendation: N = 5** (one beat before each lieutenant race and the boss).
 > - Retune the bosses to the min-path build: budgets 328.07 / 380.04 / 432.33, which is r 1.046 / 1.034 / 1.049 for the min

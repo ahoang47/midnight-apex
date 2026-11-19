@@ -136,7 +136,8 @@ def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk
             if mode == "beats" and j > 0:
                 # 2026-11-19 story-beat draft (GATE.md top): `beats` required wild-encounter wins per round, spread evenly over
                 # the 6 slots before kid2..boss (later slots first get the remainder); no build check at the boss.
-                k = j - 1; nb = (beats * (k + 1)) // 6 - (beats * k) // 6
+                nbr = beats[rnd] if isinstance(beats, (tuple, list)) else beats   # per-round N allowed
+                k = j - 1; nb = (nbr * (k + 1)) // 6 - (nbr * k) // 6
                 for _ in range(nb):
                     grind1(tag); here += 1
             if name == "boss" and mode in ("mixed", "hard"):

@@ -1,5 +1,73 @@
-# mod_skill boss gate: STORY-BEAT wild encounters (Austin 2026-11-19), Barry DRAFT
+# mod_skill: MANDATORY 20 RACES PER ROUND (Austin 2026-11-19), Barry DRAFT
 
+> **Direction (Austin, direct, 2026-11-19):** "I want a mandatory 20 races per round." Mandatory = story races plus required
+> wild-encounter wins (story beats). This supersedes the N = 5 story-beat recommendation below (kept, marked superseded).
+> **Unapproved and nothing live. Nothing in `sim/` changed.** Code: `mandatory20.py` → `mandatory20.json`. `walk.py`
+> `beats` mode now also accepts a per-round N.
+
+## M1. Counts
+- **Story races per round (live ladder `E.LADDER_RUNGS`): 7** in every round. That's kid1 and kid2 (10 turns each),
+  mat1 and mat2 (20), oh1 and oh2 (20), and the boss (30).
+- **Required wild-encounter wins: N = 20 − 7 = 13 per round**, spread before kid2 … boss (2 before each rung, 3 before the boss).
+- **Interpretation:** "20 races" = **20 required wins (race slots)**. A loss is a retry and is not counted, so the
+  20 are fixed for every player.
+  - **Alternative ("20 attempts including losses"):** this can't be a fixed rule, because attempts depend on skill. For
+    reference, the mandatory path takes 20.3 / 20.6 / 20.8 expected attempts at 80/80 (so the two readings almost match for a
+    good player) and 28.2 / 29.0 / 35.8 at 60/60.
+  - **The Prologue's 3 scripted races come before Round 1 and are not counted.** If they counted toward R1, R1 would get
+    N = 10: the boss would be met at 3,497 points, 15.8 / 87.8, which fails 60/60 ≥ 30. Keep N = 13.
+
+## M2. Mandatory path (7 story + 13 wild encounters), live sim, live boss r (R1 / R2 / R3)
+| | R1 Street | R2 Wangan | R3 Touge |
+|---|---|---|---|
+| Car points at boss / cap | 3,532 / 3,532 (at cap) | 4,044 / 4,044 (at cap) | 4,628 / 4,628 (at cap) |
+| Boss r (live) | 1.046 | 1.0398 | 1.0492 |
+| Boss win 60/60 / 80/80, table | 31.2 / 93.9 | 40.5 / 92.4 | 31.2 / 91.4 |
+| **Boss win, engine (6,000 races)** | **32.02 / 93.78** | **40.73 / 92.22** | **30.75 / 91.77** |
+| Lowest non-boss race 60/60 | 35.8 (mat2) | 38.3 (mat2) | 23.2 (mat2) |
+| Expected races (retry on loss), 60/60 / 80/80 | 28.2 / 20.3 | 29.0 / 20.6 | 35.8 / 20.8 |
+| Cash after the round (cumulative) | $10,550 (debt paid) | $39,532 | $72,345 |
+
+- **Engine source:** `gate_engine_check.json`. The live SimulationRunner was run at exactly these boss r with on-tune builds
+  and is deterministic, so the inputs are identical.
+- **All three bosses pass** 60/60 ≥ 30 and 80/80 ≤ 95 at the **live** boss r, so **no boss retune is needed**. Touge 60/60
+  has only 0.75 points of headroom (about 1.25 SE).
+- **Comparison:**
+  - N = 5 path at the live boss budgets: 2.9 / 5.1 / 6.8 at 60/60, which is why that draft needed a retune.
+  - No wild encounters: 0.1 / 0.8 / 0.5.
+  - Lowest non-boss 60/60 rises from 11.8 / 14.6 / 9.4 (N = 5) to 35.8 / 38.3 / 23.2.
+
+## M3. Cap and overshoot finding
+- **The mandatory path reaches the cap at every boss**, so the ceilings bind. Extra optional wins add no XP headroom, and
+  **the full-build overshoot from the N = 5 draft disappears**.
+  - Checked: with 16 or 20 wild-encounter wins per round, the boss row is identical: 3,532 / 4,044 / 4,628 points, r 1.046 /
+    1.0398 / 1.0492, 31.2 / 93.9, 40.5 / 92.4, 31.2 / 91.4.
+  - Optional wins still pay cash, and they reach the cap earlier inside a round, which makes the lieutenant races easier.
+    They never change the boss.
+- **Wins needed to cap (prior rounds at N = 13): 13 / 13 / 12.**
+  - R1 and R2 cap on the 13th win (it is partly used: 9 of 13 points in R1, 11 of 12 in R2).
+  - In R3 **one mandatory win is cash only**: the 13th, whose 14 XP is lost.
+  - The current XP 13 / 12 / 14 therefore already lands the cap at the boss in R1 and R2.
+- **Optional XP tweak (draft): R3 wild-encounter XP 14 → 12** (the lowest value in 0.1 steps that still caps with 13 wins). The
+  cap then lands on the 13th win in every round, with no cash-only mandatory win. The boss is unchanged (31.2 / 91.4), and R3's
+  lowest non-boss 60/60 goes 23.2 → 20.4.
+  - Leaving 14 in place is also fine: it just makes the last R3 beat cash only.
+  - R1 and R2 can't go lower: 12.5 in R1 gives 3,529 at the boss, and 11.5 in R2 gives 4,038, both short of the cap.
+
+## M4. For Austin
+1. Confirm the reading: 7 story races + 13 required wild-encounter wins = 20 mandatory wins per round; losses are retries; the
+   Prologue is not counted.
+2. Boss r stays live (no retune), and the full-build overshoot is gone.
+3. R3 wild-encounter XP: keep 14 (one cash-only beat) or lower it to 12 (cap lands on the 13th beat).
+4. Still open: the finale r retune.
+
+---
+
+# ~~mod_skill boss gate: STORY-BEAT wild encounters (Austin 2026-11-19), Barry DRAFT~~ SUPERSEDED by the mandatory-20 section above (Austin 2026-11-19)
+
+> **SUPERSEDED (Austin 2026-11-19, "I want a mandatory 20 races per round"):** the N = 5 recommendation, its boss retune and
+> the optional-XP cap below no longer apply. Kept for the record.
+>
 > **Direction (Austin, direct, 2026-11-19):** "Make a few wild-encounter wins required story beats each round, no build check
 > at the boss." This section is the draft of that direction. **It is unapproved and nothing here is live.** Nothing in `sim/`
 > changed. ~~Gate A (boss locked until all four mods are full)~~ was reconsidered by Austin on 2026-11-19 (bosses behind a
