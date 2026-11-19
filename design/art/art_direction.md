@@ -32,7 +32,7 @@ S2000 reference car (Appendix W).
 - 1 px ink outlines at 640×480, colour `#040810`, drawn by a screen-space depth/normal edge pass. Only the near side of an edge is inked, the lines fade into fog, and flat or grazing surfaces are ignored. Lane lines, chevrons, decals and car shadows get no ink.
 - Big surfaces (road, verge, terrain, forest cards, cut slopes, concrete, sky) get **no** toon bands and no brightness steps. They use smooth lighting with a wide blur, so the final dither spreads one gradient. Sodium pools fade off softly, never as rings.
 - RGB555 + Bayer dither stays as the last 3D pass. The HUD and menus are composited after it and are never shaded or inked.
-- It is shader and post only; no model or texture is changed for it. Reference build: `unapproved/arthur/experiments/cel_two_corner/` (commit 4ecffdf). Toggles there: `cel/enabled` (F7) and `cel/soft` (F8).
+- It is shader and post only; no model or texture is changed for it. Reference build: `art/mockups/cel_shaded/` (`*_cel_soft.png`). `CEL_SOFT=0 ./run.sh` skips the soft frames.
 
 Pitch alignment (`story/pitch.md`): cars and environments lean **Initial D** (grounded tuning
 culture, atmospheric roads); characters lean **JoJo** and are never rendered in-world (portraits/overlays only).

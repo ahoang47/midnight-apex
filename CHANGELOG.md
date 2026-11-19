@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-19 — Arthur [art]: repoint art_direction Cel A reference from deleted cel_two_corner to `art/mockups/cel_shaded/`
+
+---
+
 ## 2026-11-19 — Arthur [art]: promote Cel A, 7.5 m v5, UI mockups and resource meters; delete two-corner tests
 
 - **Why:** Austin, 2026-11-19: "Let's promote the Cel A artwork and mockups. Approve any of the 7.5meter mockups. Approve the UI mockups. Approve the resource meters. Delete the two-corner test."
