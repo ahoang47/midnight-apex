@@ -8,6 +8,29 @@
 
 ---
 
+## 2026-11-19 — Barry [docs]: references to deleted drafts now point at approved sources (Austin go-ahead 2026-11-19)
+- **Why:** Austin: "Anything that was pointing at a draft should be updated to point at an approved version." Commit 1fa6915 deleted 21 drafts from `unapproved/barry/`, but comments, docstrings, JSON comment/note strings and design docs still cited their paths. This changes text only: no numbers or code behaviour, and the JSON data is identical (checked with a parsed diff of every non-comment key). 82/82 sim tests pass.
+- **Rule used:** where a live file holds the thing, point at it (equations.py constants, heat.py, `config/*.json`). Otherwise cite the commit where Austin's approval went live:
+  - resources-v4b G2: 6cebe47
+  - econ-v1: 0af2715
+  - econ-v1 live-tracks recalibration: 6d3641f
+  - skill-points-v1: c877a19
+  - story-XP cut: 65a070c
+  - mods-v1: e95dc6e
+  - slots-v2 aero caps: 5e5d902
+  - slots-v2 b3 floor: 29f8431
+- **Unapproved sources, stated plainly rather than presented as approved:**
+  - `config/winrate_g2_econ_v1.json` was built from the never-approved round-ladder-v1 study and the touge-lines-v1 draft laps (draft commit e82becc). It is no longer loaded since 6d3641f.
+  - The 7-rung ladder in equations.py was first drafted in round-ladder-v1 and went live only as part of econ-v1.
+  - Window mods and the rest of the slots-v2 study remain unapproved (draft commit 2f6c437).
+- **Files:**
+  - `sim/velocity_shift/progression.py`, `equations.py`
+  - `sim/tests/test_heat.py`, `test_progression.py`, `test_skill_points.py`
+  - `sim/config/heat_g2_tuned.json`, `winrate_g2_live_tracks_v1.json`, `winrate_offtune_v1.json`, `winrate_g2_econ_v1.json`
+  - `design/01`, `02`, `07`
+  - `design/notes/slots-v2/` (README, floor_cost.py, b3_check.py)
+- **Open:** `design/notes/slots-v2/floor_cost.py` and `b3_check.py` still add `unapproved/barry/slots-v2` to `sys.path` in code, so they cannot run until those study modules are restored from 2f6c437 or ported. The code was left unchanged; only the docstrings now say this.
+
 ## 2026-11-19 — Cleared 21 stale drafts from unapproved/barry (Barry, Systems)
 - Deleted (Austin 2026-11-19): econ-v1, econ-v1-live-tracks, mods-v1, skill-points-v1, story-xp-v1, xp-carry-v1 (already live); mods-v2-mk3-boss, skill-tree-v1, spirit-meter-v1, touge-lines-v1, corners-v1 (rejected, shelved, cut or paused); resources-v1..v4, slots-v1/v2, round-ladder-v1, round-order-v1, kid-length-v1, betting-v2-mods-v1 (superseded).
 - Kept, still open: mod-skill-v1, planner-v1, touge-race-parity.

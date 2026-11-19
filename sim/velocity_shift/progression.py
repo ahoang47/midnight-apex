@@ -1,7 +1,7 @@
 from __future__ import annotations
 """Story XP / level / money progression on the 3-round ladder (econ-v1, Barry; Austin go-ahead 2026-11-13).
 
-Port of unapproved/barry/econ-v1/model.py + evaluate.py (walk_round) onto the live constants in equations.py.
+Port of the econ-v1 study walk (model.py + evaluate.py walk_round; econ-v1 approved and made live in commit 0af2715) onto the live constants in equations.py.
 One district per round (R1 Street, R2 Wangan, R3 Touge), one crew each, 7 rungs (kid1 kid2 mat1 mat2 oh1 oh2 boss,
 10/10/20/20/20/20/30 turns), no rematches. Then the pre-finale arc (P1-P4, M11-M32) and the finale F1-F4.
 
@@ -16,7 +16,7 @@ Rules (all constants in equations.py):
   * Mods (mods-v1, Austin 2026-11-14): the walk carries a Garage (E.MOD_SLOTS = 4 slots, stock parts in empty slots)
     and a just-in-time buyer that shops before every race, after every grind and at each round end from the
     rung-unlocked E.MOD_CATALOG (mod_unlocked). Combat power = min(C_ROUND, 1.07 x P, (SP points + slot points) / 10).
-    Betting and the pre-finale arc walk stay in unapproved/barry/econ-v1 (run_betting_levers.py, run_finale_arc.py).
+    Betting rules are E.bet_allowed / E.bet_net_payout; the econ-v1 betting-lever and arc walk scripts (made live in commit 0af2715) are not ported here.
   * Skill points (skill-points-v1, Austin 2026-11-14): whole points at 10x (E.skill_points), each stat 25-50 % of the
     points spent (E.check_build), spent points lock, new points free, and at each district change at most
     E.RETUNE_BUDGET_FRACTION (20 %) of the spent points move (E.check_retune). The walk's player places new points
@@ -28,7 +28,7 @@ Rules (all constants in equations.py):
 
 Win rates come from config/winrate_g2_live_tracks_v1.json (Austin 2026-11-14: keep the 15 live stand-in tracks,
 config/tracks_v1.json): live engine, G2 heat, live QTE mapping, 3 boss styles, exported from
-unapproved/barry/econ-v1-live-tracks/ (N=300 grid + N=1500 30-turn confirm + N=1500-3000 exact-r point checks).
+the econ-v1 live-tracks recalibration, approved and made live in commit 6d3641f (N=300 grid + N=1500 30-turn confirm + N=1500-3000 exact-r point checks).
 Linear interpolation in r, flat outside the grid. Hard cells are the hardest live track per district
 (E.BOSS_HARD_TRACK: Street S1 Shibuya and Wangan W3 C1 Outer on 30-turn races, Touge T3 Usui on every length).
 """

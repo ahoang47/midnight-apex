@@ -214,7 +214,7 @@ LINE_SET_C = {
 # ══════════════════════════════════════════════════════════════════════
 # Heat / load resource system (resources-v4b candidate G2_slant_m10;
 # Austin approved 2026-11-13: "I'm happy with this new resource system").
-# Source study: unapproved/barry/resources-v4/retune/ (RESULTS.md, resources_v4b.py).
+# Approved and made live in commit 6cebe47; implementation heat.py, tuned splits config/heat_g2_tuned.json.
 # Replaces the card draw. Each turn the player picks any stance for each of
 # Entry / Apex / Exit, subject to three gauges that all recover during the race:
 #   POW = engine heat, HAN = suspension load, EN = brake/tire heat.
@@ -297,7 +297,7 @@ BUILD_STAT_MIN_SHARE = 0.25    # build bounds: each of POW/HAN/EN is 25–50 % o
 BUILD_STAT_MAX_SHARE = 0.50
 
 # ── Skill points (skill-points-v1, Austin 2026-11-14: "Great. Commit and push.") ──
-# Source study: unapproved/barry/skill-points-v1/ (RESULTS.md, RETUNE.md). Whole points at 10x resolution: the player
+# Approved and made live in commit c877a19; off-tune deltas config/winrate_offtune_v1.json. Whole points at 10x resolution: the player
 # holds skill_points(L) = round(SP_POINT_SCALE x SP(L)) points (2400 at L0; 19 per level at the start, 48 at L114).
 # Points are spent on POW / HAN / EN; each stat must stay inside the 25–50 % band of the points spent. Spent points
 # lock. Newly earned points are free to place (inside the band). At each district change (R1->R2, R2->R3, and before
@@ -331,10 +331,10 @@ GOOD_PLAY_Q = 0.8
 # ══════════════════════════════════════════════════════════════════════
 # econ-v1: XP / mods / economy on the 3-round ladder (Barry; Austin go-ahead 2026-11-13, "Yeah works for now")
 # ══════════════════════════════════════════════════════════════════════
-# Source study: unapproved/barry/econ-v1/ (RESULTS.md, proposed_constants.json, finale_arc_recommended.json), on the
-# round-ladder-v1 ladder. Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
-# cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_econ_v1.json (live G2 heat rules,
-# touge-lines-v1 DRAFT track set; see that file). progression.py walks this ladder. Money is USD (x100 rescale).
+# econ-v1 approved and made live in commit 0af2715 (recalibrated to the live tracks in commit 6d3641f), on the
+# 7-rung ladder below (first drafted in the round-ladder-v1 study, which Austin did not approve on its own). Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
+# cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_live_tracks_v1.json since commit 6d3641f (the original
+# config/winrate_g2_econ_v1.json was built on the unapproved touge-lines-v1 draft laps; see that file). progression.py walks this ladder. Money is USD (x100 rescale).
 # Stand-ins pending playtest: all XP numbers, the MYTH4 price ($8,000, MOD_PRICE_STANDIN), every finale-arc opponent.
 
 # ── Round structure (canon 2026-11-13: one district per round, one crew each, no rematches) ──
@@ -389,7 +389,7 @@ XP_GROWTH = 1.08               # xp_to_next(L) = XP_BASE x XP_GROWTH ** L
 STORY_FILL = (0.62, 0.75, 0.80)
 STORY_W = (0.12, 0.12, 0.14, 0.14, 0.14, 0.14, 0.20)
 # Story XP multiplier per round and rung (kid1 kid2 mat1 mat2 oh1 oh2 boss), applied on top of STORY_FILL x STORY_W.
-# Austin 2026-11-14 (campaign cut only; unapproved/barry/story-xp-v1): an 80/80 story-only player (no grind) meets each
+# Austin 2026-11-14 (campaign cut only; approved and made live in commit 65a070c): an 80/80 story-only player (no grind) meets each
 # boss about one level lower, ~55 % on the hardest track. R1 every race x0.90 (effective fill 0.558), R2 oh2 x0.60,
 # R3 oh2 x0.80. The pre-finale arc and finale (ARC_STORY_FILL, FINALE_ARC) are unchanged.
 STORY_XP_MULT = (
@@ -480,7 +480,7 @@ FINALE_TURNS = 30
 FINALE_PURSE = 10800.0         # billed finale race purse (= R3 boss purse)
 FINALE_GRIND_PURSE = 742.5     # finale-era 10-turn grind (= R3 wild x 0.55)
 
-# ── Pre-finale arc (econ-v1 finale_arc_recommended.json shape; budgets refit in unapproved/barry/econ-v1-live-tracks/hardest.json; cast in design/notes/finale-arc-cast-v1.md) ──
+# ── Pre-finale arc (econ-v1 finale_arc_recommended.json shape; budgets refit in the live-tracks recalibration, commit 6d3641f; cast in design/notes/finale-arc-cast-v1.md) ──
 # Four story races before F1 (P1-P4, Touge crew trainers; P1 grants T4) and two between each billed step (M11/M12
 # before F2, M21/M22 before F3, M31/M32 before F4). Arc story races pay ARC_STORY_FILL x xp_share of the XP between
 # the step's entry cap and its finale cap. Grind in the arc is 10-turn wilds at ARC_GRIND_R. B = budget, r = design r.

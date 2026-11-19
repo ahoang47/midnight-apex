@@ -2,7 +2,7 @@
 
 Rules: equations.py "Heat / load resource system"; implementation: heat.py.
 The win-rate check is a small smoke test of the G2 headline numbers; the full
-reproduction is unapproved/barry/resources-v4/retune/live_spotcheck.py.
+reproduction was the resources-v4b retune spot check (G2 approved and made live in commit 6cebe47).
 """
 from velocity_shift import equations as E
 from velocity_shift.heat import HeatGauges, avg_heat_demand, track_wear, raw_track_demand, boss_stance, corner_demand

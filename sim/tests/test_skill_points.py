@@ -1,5 +1,5 @@
 """skill-points-v1 (Austin 2026-11-14): whole skill points at 10x, 25-50 % stat band, spent points lock, 20 % retune
-budget at district changes. Pinned numbers: unapproved/barry/skill-points-v1/RETUNE.md (B = 20 %) and verify_live.txt."""
+budget at district changes. Pinned numbers: the skill-points-v1 retune (B = 20 %), approved and made live in commit c877a19."""
 import sys
 sys.path.insert(0, ".")
 import pytest

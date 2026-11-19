@@ -1,6 +1,6 @@
 """econ-v1 progression (3-round ladder, Variant C, USD) reproduction tests.
 
-Pinned numbers are unapproved/barry/econ-v1-live-tracks/hardest.json and RESULTS.md (live stand-in tracks, bosses on
+Pinned numbers are the econ-v1 live-tracks recalibration, approved and made live in commit 6d3641f (live stand-in tracks, bosses on
 the hardest track per district, Austin 2026-11-14), money in USD."""
 import sys
 sys.path.insert(0, ".")

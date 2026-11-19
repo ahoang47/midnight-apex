@@ -46,4 +46,4 @@ Every value is identical in all 216 orders, so the check depends on play positio
 - **Playable spot-check (`spotcheck_b3.json`):** identical to `spotcheck_after.json`. The engine cells are r-based, and the floor doesn't touch combat.
 - **Test:** `sim/tests/test_mod_floor.py`. Its oracle test needs numpy and the banks outside the repo, and it skips when they aren't present.
 
-Everything else in `unapproved/barry/slots-v2/RESULTS.md` is still **NOT approved**: window +75% / 1.15 cap, the P1/P2 prices, and the dead-win fill. In `unapproved/barry/slots-v2/RESULTS_v1v2.md`, fixes a, a0, b, b2 and c were **not chosen**.
+Everything else in the slots-v2 study's RESULTS.md (draft commit 2f6c437, removed in 1fa6915) is still **NOT approved**: window +75% / 1.15 cap, the P1/P2 prices, and the dead-win fill. In its RESULTS_v1v2.md, fixes a, a0, b, b2 and c were **not chosen**.

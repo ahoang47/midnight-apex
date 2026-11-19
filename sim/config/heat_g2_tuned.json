@@ -1,5 +1,5 @@
 {
-"source": "unapproved/barry/resources-v4/retune results_v4b_G2_slant_m10.npz (9 x 1000 races per cell)",
+"source": "resources-v4b retune results_v4b_G2_slant_m10.npz (9 x 1000 races per cell); G2 approved and made live in commit 6cebe47",
 "order": "POW, HAN, EN",
 "lengths": [
 10,

@@ -1,12 +1,12 @@
 """slots-v2 fix b3 (APPROVED, Austin 2026-11-12): check the LIVE crew-local mod tier floor against the share-aware oracle.
 
-Same progression loop and oracle as the study (unapproved/barry/slots-v2/fixes.py, fix "b3"), but the floor is read from the
+Same progression loop and oracle as the slots-v2 study (fixes.py, fix "b3"; b3 made live in commit 29f8431), but the floor is read from the
 live sim (velocity_shift.progression.mod_tier_floor -> equations.MOD_TIER_LEVEL_FLOOR, keyed by (round, play position)) instead
 of the study's own LOCAL_L table, and it can run every legal play order. Profiles weak/average/strong x policies
 balanced/window/aero10. 'decisive' = a mature #2 / boss rung cleared at the skip state only because of the newest fitted purchase
 (mid with the previous rung's lines < 50), as in the study.
 
-Needs numpy, the study modules in unapproved/barry/slots-v2 (+ slots-v1) and the share-grid banks (about 44 MB, not committed) in
+Needs numpy, the slots-v2 (+ slots-v1) study modules (removed from unapproved/ in commit 1fa6915; restore from commit 2f6c437) and the share-grid banks (about 44 MB, not committed) in
 /workspace/barry-drafts/slots-v2/counts (override with SLOTS_V2_COUNTS).
 Usage (from the repo root): python3 design/notes/slots-v2/b3_check.py [--all-orders] [--no-floor] [--policies balanced,window,aero10] [OUT.json]"""
 import itertools, json, os, sys
