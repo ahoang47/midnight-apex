@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-19 — Gordon [godot]: restore the two-corner playtest on touge-race (UNAPPROVED)
+
+- **Why:** Austin, 2026-11-19: "push the two-corner test to this branch so Arthur's notes have a place to go." `art/mockups/cel_two_corner/` (7257aad) and its `stage.py` point at `unapproved/gordon/two-corner/godot`, but that folder was kept off master in the proto-build merge (ba78d31), so touge-race didn't have it.
+- **What:** restored `unapproved/gordon/two-corner/` exactly as it was at its last commit, 2c29f24 (the proto-build tip: POW/EN/HAN naming, state token TC3, B.5d line preview, HUD plate pass). There are no code or number changes. It stays unapproved, and the 10-turn Touge race is being built separately in `unapproved/gordon/touge-race/`.
+
+---
+
 ## 2026-11-19 — Arthur [art]: promote art_direction reference builds (cel_two_corner, tones.py)
 
 - **Why:** Austin, 2026-11-19: "Specifically for art_direction, promote anything that is referenced in approved docs."
