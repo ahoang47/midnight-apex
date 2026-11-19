@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-19 — Gate A decided for the mod_skill draft; race terms in the glossary (Barry, Systems)
+- **Decision (Austin, direct, 2026-11-19): Gate A.** Each round's crew boss stays locked until all four mods are full (3,532 / 4,044 / 4,628 car points). For a story-only player that is 13 / 13 / 12 wild-encounter wins. Austin accepted about 20 races per round at 80/80. Gate B (mat2 lock) is rejected: marked, not deleted.
+- **Where it's recorded:** `unapproved/barry/mod-skill-v1/GATE.md` and the top of its README (decision prepended). mod_skill itself stays an unapproved draft, and `sim/` is untouched.
+- **Still OPEN:** replacing the story-only criterion with "80/80 ≥ 50 on every non-boss race", and the finale r retune.
+- **Terms (Austin approved 2026-11-19), design/01 canon, new "Race terms" bullet:**
+  - **Mandatory race** = a Pokemon-style wild encounter or a story race.
+  - **Non-mandatory race** = a substory or a race the player picks a fight in.
+  - "Grind race" is retired as a term. The old "grind races" definition in the XP bullet is marked stale.
+  - Code identifiers keep their names. No mass rename: other live design/ and sim/ uses of "grind" are left for a separate cleanup.
+- The mod-skill-v1 GATE.md and README now use the new terms. All numbers are unchanged.
+
 ## 2026-11-19 — DRAFT: mod_skill required grinding ("gym gate") (Barry, Systems; unapproved, Austin direct)
 - **What skill_tree had:** a win gate on mandatory races (gyms = crews; losing a mandatory race blocks progress; grinds stay optional; k2 m1 recommended), with no XP or grind-count threshold. Sources: `git show e5b8a14:unapproved/barry/skill-tree-v1/README.md` §8, `SIM_RESULTS.md` §3, `sim/run3_gyms.py`. Mandatory races with no grinds failed under today's budgets.
 - **mod_skill port (`unapproved/barry/mod-skill-v1/GATE.md`, README prepended):** Gate A locks the round boss until all four mods are full (car points 3,532 / 4,044 / 4,628), which is the build the boss targets assume. Optional Gate B adds a mat2 lock at 3,327 / 3,793 / 4,382.
