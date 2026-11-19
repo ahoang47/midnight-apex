@@ -1,9 +1,0 @@
-story grinds [0, 0, 0] [(0, 0), (0, 0), (0, 0)] min80 [53.0, 54.4, 50.5] boss80 [53.0, 57.7, 55.8] boss_check [(0.2, 53.1), (0.7, 57.8), (1.5, 55.9)] grind10 min 23.7 85.6 spent 23580.0 end 30420.0
-mixed grinds [13, 13, 12] [(3, 10), (3, 10), (4, 8)] min80 [84.3, 62.4, 68.0] boss80 [94.9, 91.6, 92.9] boss_check [(31.6, 94.9), (40.1, 91.6), (30.2, 92.9)] grind10 min 23.7 85.6 spent 62180.0 end 16102.5
-hard grinds [13, 15, 18] [(1, 12), (3, 12), (6, 12)] min80 [94.9, 91.6, 91.0] boss80 [94.9, 91.6, 92.9] boss_check [(31.6, 94.9), (40.1, 91.6), (30.2, 92.9)] grind10 min 50.3 93.7 spent 67080.0 end 16922.5
-at cap (boss_check_at_cap) [(31.6, 94.9), (40.1, 91.6), (30.2, 92.9)]
-arc c6060 {'grind': [11, 7, 7, 9], 'finale': [34.7, 41.7, 31.6, 34.7], 'min_story': 52.1, 'end_money': 35242.5}
-arc c6080 {'grind': [7, 6, 6, 7], 'finale': [72.6, 64.2, 72.4, 72.6], 'min_story': 53.1, 'end_money': 28482.5}
-arc c8060 {'grind': [6, 6, 6, 7], 'finale': [74.1, 84.2, 71.0, 74.1], 'min_story': 54.1, 'end_money': 27740.0}
-arc c8080 {'grind': [0, 0, 0, 0], 'finale': [81.7, 82.7, 79.3, 81.7], 'min_story': 55.9, 'end_money': 16995.0}
-matches draft {'grinds': {'story': True, 'mixed': True, 'hard': True}, 'min8080': {'story': True, 'mixed': True, 'hard': True}, 'spent': {'story': True, 'mixed': True, 'hard': True}, 'arc': {'c6060': True, 'c6080': True, 'c8060': True, 'c8080': True}}

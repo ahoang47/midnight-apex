@@ -1,5 +1,0 @@
-{"base": "6d3641f", "campaign_C_rec": {"R1": {"rungs": "all", "mult": 0.90}, "R2": {"rungs": ["oh2"], "mult": 0.60}, "R3": {"rungs": ["oh2"], "mult": 0.80}},
- "campaign_C_even_alt_R2": {"rungs": ["oh1", "oh2"], "mult": 0.70},
- "arc_t62": {"P4": 0.46, "M11": 1.18, "M12": 0.53, "M21": 1.26, "M22": 0.68, "M31": 1.08, "M32": 0.75},
- "arc_t55": {"P4": 0.18, "M11": 1.26, "M12": 0.37, "M21": 1.34, "M22": 0.52, "M31": 1.12, "M32": 0.62},
- "note": "arc multipliers apply on top of ARC_STORY_FILL 0.80; draft, not live"}

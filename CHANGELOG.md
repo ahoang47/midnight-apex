@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-19 — Cleared 21 stale drafts from unapproved/barry (Barry, Systems)
+- Deleted (Austin 2026-11-19): econ-v1, econ-v1-live-tracks, mods-v1, skill-points-v1, story-xp-v1, xp-carry-v1 (already live); mods-v2-mk3-boss, skill-tree-v1, spirit-meter-v1, touge-lines-v1, corners-v1 (rejected, shelved, cut or paused); resources-v1..v4, slots-v1/v2, round-ladder-v1, round-order-v1, kid-length-v1, betting-v2-mods-v1 (superseded).
+- Kept, still open: mod-skill-v1, planner-v1, touge-race-parity.
+- Why: the folder is for open work only. Git history keeps every file, and the provenance comments in sim/ and design/ that cite these paths still resolve through history. No code loads them; sim tests 82/82 pass.
+
 ## 2026-11-19 — Touge test race car stat blocks, draft (Barry, Systems) [unapproved]
 - New `unapproved/barry/touge-race-parity/` (blocks.json, README.md) for Gordon's car-select screen on the 10-turn Touge test race (no mods, no retune, AI QTE ratio 1.0).
 - All 5 repo cars, each 3,000 points with every stat 25-50 % (BUILD_STAT_MIN/MAX_SHARE). Shapes are the live DISTRICT_TUNE x 3,000 (Austin 2026-11-19): BRZ, MX-5, S2000 = Touge 1350/750/900 POW/HAN/EN; GR Corolla, WRX STI = Wangan 750/750/1500.
