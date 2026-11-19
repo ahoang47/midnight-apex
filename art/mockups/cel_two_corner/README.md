@@ -2,7 +2,7 @@
 
 Austin, 2026-11-14: "I like Cel A. Are you able to apply this to the two corner test and do a quick playtest?" Cel A soft was later locked as the in-game render style, and this folder is the reference build cited in `design/art/art_direction.md`. Austin promoted it on 2026-11-19.
 
-It is Cel A from `../../../unapproved/arthur/experiments/cel_shaded/` (commit f470dcc) ported onto Gordon's playable two-corner test. Gordon's project (the repo-root Godot project since 2026-11-19; it was `unapproved/gordon/two-corner/godot/`) is **not edited**: `stage.py` symlinks his Godot project in, and this folder owns only the files below. No models or textures are changed. It is all shaders, post and one script.
+It is Cel A from `../../../unapproved/arthur/experiments/cel_shaded/` (commit f470dcc) ported onto Gordon's playable two-corner test. Gordon's project is the repo-root Godot project (since 2026-11-19, 3748b4f; it was `unapproved/gordon/two-corner/godot/`) and is **not edited**: `stage.py` symlinks `assets/`, `scenes/`, `scripts/`, `shaders/`, `fonts/` and `spec/` from the repo root into `./godot`. Stand-in textures live at `res://assets/tex/kit/`; cars load `res://assets/cars/mx5` and `s2000` `.glb`. This folder owns only the files below. No models or textures are changed. It is all shaders, post and one script.
 
 ## Cel A soft (new default, 2026-11-14)
 Austin's note on Cel A was that the lighting "makes it look very compressed". He approved this fix: keep the ink and the hard toon bands on cars and props, and soften the light on big surfaces before the dither runs.

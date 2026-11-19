@@ -821,7 +821,7 @@ func _apply_frame(fr: Dictionary, cam_kind: String) -> void:
 	# Floating OUT / MID / IN labels (and their down-arrows) are off.
 	# The coloured road chevrons alone show the planned line. lanes.gd is
 	# Arthur's line-preview overlay (also copied in Gordon's two-corner HUD
-	# at unapproved/gordon/two-corner/godot/scripts/hud/lanes.gd); passing
+	# at scripts/hud/lanes.gd); passing
 	# null skips it. Chevron meshes are unchanged.
 	var lanes = null
 	_show_hud(fr, lanes, turn_m, left, mirror_on)

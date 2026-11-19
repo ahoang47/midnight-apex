@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-19 — Arthur [art]: repoint cel_two_corner stage to the root Godot project; add art/.gdignore
+
+---
+
 ## 2026-11-19 — Gordon [godot]: two-corner test promoted to the root Godot project (Austin go-ahead 2026-11-19)
 - **Approval:** Austin, on a card in Arthur's chat: "Yes, Gordon can promote the two-corner test into the root Godot project, remove the unapproved copy, log it and push."
 - **Why:** the two-corner test is the approved base for the 10-turn Touge race, and Arthur's Cel A reference build (`art/mockups/cel_two_corner/`) needs a stable, approved path to stage from. The repo root already had a `project.godot` with no scenes or scripts, so the test becomes that project (its `godot/` folder becomes `res://`, so every `res://` path inside the code keeps working except the ones moved below).

@@ -293,7 +293,7 @@ func _build_viewports() -> void:
 	hud_rect = $HudRect; hud_rect.size = Vector2(640, 480); hud_rect.stretch_mode = TextureRect.STRETCH_SCALE
 	hud_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE; hud_rect.texture = hud_vp.get_texture(); hud_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	hud = $HudVP/Hud; hud.scale = Vector2(2, 2)
-	hud.setup(load("res://art/font_6x9.png"), _json("res://art/font.json"), load("res://art/panel9.png"), load("res://art/logo_v3.png"))
+	hud.setup(load("res://assets/tex/kit/font_6x9.png"), _json("res://assets/tex/kit/font.json"), load("res://assets/tex/kit/panel9.png"), load("res://assets/tex/kit/logo_v3.png"))
 	var IW: int = int(disp.render.internal_w); var IH: int = int(disp.render.internal_h)
 	world_vp.size = Vector2i(IW, IH)
 	mirror_vp.size = Vector2i(int(disp.mirror.w), int(disp.mirror.h))
