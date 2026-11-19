@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-11-19 — "Grind" prose reworded to mandatory / non-mandatory race terms; story-only criterion retired; Gate A reconsidered (Barry, Systems)
+- **Story-only retired (Austin, direct, 2026-11-19):** "Story only is updated via the mandatory races, those are part of the story."
+  - There is no separate story-only player type. The story-only boss win criterion is retired, not replaced, which makes the "80/80 ≥ 50 on every non-boss race" proposal moot.
+  - Recorded at the top of design/07 and in the design/01 "Race terms" bullet. The 07 lines that cite story-only numbers are marked stale.
+  - `sim/tests/test_progression.py`: only the reason string of the strict xfail on `test_story_criterion_3` changed, now citing this decision. No logic change.
+- **Gate A reconsidered (Austin, 2026-11-19):** locking a boss behind a maxed car feels bad.
+  - Gate A is **not decided and not live**; the gate design is reopened. This supersedes the earlier "Gate A decided" entry.
+  - Gate B stays rejected.
+  - `unapproved/barry/mod-skill-v1/GATE.md` and its README are updated. The only open items are the gate design and the finale r retune.
+- **Prose reworded to the new terms:** design/01, 02, 07 and `design/notes/slots-v2/README.md`. "Grind race" is now "wild encounter" (a mandatory race).
+  - Code names (`GRIND_*`, `grind_*`, `ARC_GRIND_R`, the model name "grind v8c") are kept and marked as code names where helpful.
+  - Quotes in older decision text are kept or annotated.
+  - Generated JSON and sim code are untouched.
+
 ## 2026-11-19 — Gate A decided for the mod_skill draft; race terms in the glossary (Barry, Systems)
 - **Decision (Austin, direct, 2026-11-19): Gate A.** Each round's crew boss stays locked until all four mods are full (3,532 / 4,044 / 4,628 car points). For a story-only player that is 13 / 13 / 12 wild-encounter wins. Austin accepted about 20 races per round at 80/80. Gate B (mat2 lock) is rejected: marked, not deleted.
 - **Where it's recorded:** `unapproved/barry/mod-skill-v1/GATE.md` and the top of its README (decision prepended). mod_skill itself stays an unapproved draft, and `sim/` is untouched.

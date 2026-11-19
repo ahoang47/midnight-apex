@@ -82,9 +82,9 @@ def test_walks_reproduce_eval_final_c():
     assert [w["rows"][0]["pow_share"] for w in mixed] == [50.0, 30.0, 45.0]           # entry POW share R1 / R2 / R3
 
 
-@pytest.mark.xfail(strict=True, reason="Criterion 3 (80/80 story-only >= 50 % on every rung) breaks under the 0.80 random AI "
-                   "QTE + EN-heavy Street boss: the story-only player meets the R1 boss at 40.6 % and the R3 boss at 48.0 %. "
-                   "Story XP retune not approved; draft in unapproved/barry/ai-heat-qte-v1/ (Austin 2026-11-19).")
+@pytest.mark.xfail(strict=True, reason="Criterion 3 (80/80 story-only >= 50 % on every rung) is RETIRED, not replaced "
+                   "(Austin 2026-11-19): wild encounters are mandatory races and part of the story, so there is no "
+                   "story-only player type (design/07 top). Kept as a record; it reads 40.6 % (R1 boss) / 48.0 % (R3 boss).")
 def test_story_criterion_3():
     story = P.run("story")
     assert min(min(P.hard_win(r["wr"]["c8080"]) for r in w["rows"]) for w in story) >= 50.0

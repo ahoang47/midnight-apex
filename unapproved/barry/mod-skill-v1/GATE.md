@@ -1,9 +1,19 @@
 # mod_skill boss gate ("gym gate"): mandatory wild encounters, Barry DRAFT, 2026-11-19
 
-> **DECISION (Austin, direct, 2026-11-19): Gate A.** Each round's crew boss stays locked until all four mods are full
+> **2026-11-19 (later): Gate A RECONSIDERED by Austin, gate design reopened.** Locking a boss behind a maxed car feels
+> bad. Gate A ("boss locked until all four mods are full") is **not decided and not live**; it stays below as a studied
+> option with its numbers. Gate B was rejected earlier the same day and stays marked rejected. No gate is chosen.
+> mod_skill itself is still an unapproved draft. Nothing in `sim/` changed.
+>
+> ~~**DECISION (Austin, direct, 2026-11-19): Gate A.** Each round's crew boss stays locked until all four mods are full
 > (car points 3,532 / 4,044 / 4,628). For a story-only player that means 13 / 13 / 12 wild-encounter wins. Austin accepted
-> about 20 races per round for an 80/80 player. **Gate B is rejected** (kept below, marked, for the record).
-> **mod_skill itself is still an unapproved draft**, so this decision lives here only. Nothing in `sim/` changed.
+> about 20 races per round for an 80/80 player.~~ (Reconsidered, see above.) **Gate B is rejected** (kept below, marked, for the record).
+>
+> **DECIDED (Austin, direct, 2026-11-19): story-only retired.** "Story only is updated via the mandatory races, those are
+> part of the story." Wild encounters are mandatory races, so there is no separate story-only player type. **The story-only
+> boss win criterion is retired, not replaced.** The proposed replacement ("80/80 ≥ 50 on every non-boss race") is **moot**.
+> Recorded in design/07 (top) and the design/01 "Race terms" bullet. The "story-only" columns below are kept as the
+> pre-decision comparison only.
 >
 > **Terms (Austin approved, 2026-11-19; glossary in design/01 canon, "Race terms"):**
 > - **Mandatory race:** a Pokemon-style wild encounter or a story race.
@@ -12,8 +22,10 @@
 >   `grind1`, `total_grind`, the `"grind"` JSON keys) are unchanged. Quotes from older sources keep their original wording.
 >
 > **Still OPEN (not decided):**
-> 1. Whether to replace the story-only criterion with "80/80 ≥ 50 on every non-boss race" (§4).
+> 1. The boss-gate design (reopened 2026-11-19).
 > 2. The finale r retune (§4).
+>
+> ~~Whether to replace the story-only criterion with "80/80 ≥ 50 on every non-boss race"~~: moot, the criterion is retired.
 
 
 **Status: DRAFT, unapproved. Nothing here is live.** Austin, direct, 2026-11-19: port the Pokemon-style required grinding from
@@ -44,7 +56,7 @@ boss-shape cells, so the Street boss is 25/25/50.
   and its opponent budgets are already set to the cap build, so the gate goes on the car's mod points rather than on new races.
 
 ## 2. The gate
-- **Gate A (DECIDED, Austin 2026-11-19): the round boss is locked until all four mods are full for the round.** In car points that is
+- **Gate A (~~DECIDED~~ RECONSIDERED by Austin 2026-11-19, gate design reopened; not live): the round boss is locked until all four mods are full for the round.** In car points that is
   **3,532 / 4,044 / 4,628**: each mod at 133 / 261 / 407 earned points, with the tier bought.
   - This is the exact build the boss targets assume. Boss r and the 60/60 ≥ 30 / 80/80 ≤ 95 checks are tuned at the cap.
   - In the UI it reads as "max your mods to challenge <boss>". Wild encounters are the only XP source left once the story rungs
@@ -62,7 +74,7 @@ boss-shape cells, so the Street boss is 25/25/50.
 ## 3. Numbers (live sim, `gate.json`; boss checks at 60/60 ≥ 30, 80/80 ≤ 95)
 Columns are R1 / R2 / R3. "Today story" = the optional path with no wild encounters. "Today mixed" = the optional path most players take.
 
-| | Today story | Today mixed | **Gate A (decided)** | Gate B (rejected) |
+| | Today story | Today mixed | Gate A (reconsidered) | Gate B (rejected) |
 |---|---|---|---|---|
 | Required wild-encounter wins | 0 / 0 / 0 (optional) | 13 / 13 / 12 (optional) | **13 / 13 / 12** | 3+10 / 2+11 / 6+6 (rejected) |
 | Points at the boss | 3,367 / 3,853 / 4,446 | 3,532 / 4,044 / 4,628 | 3,532 / 4,044 / 4,628 | 3,532 / 4,044 / 4,628 |
@@ -92,16 +104,16 @@ Notes:
   by R3 is $24,282 ahead on the cumulative wallet: the wild-encounter purses pay the R1 debt off in R1.
 
 ## 4. Effects on open issues
-- **Story-only criterion (80/80 ≥ 50 at the boss on story XP only):** it **disappears**. Nobody can reach a boss on story XP
+- **Story-only criterion (80/80 ≥ 50 at the boss on story XP only):** **RETIRED (Austin 2026-11-19)**, independent of any gate: wild encounters are mandatory races and part of the story. Under Gate A it would also have disappeared. Nobody can reach a boss on story XP
   alone, so every boss is fought at the cap: 80/80 is 93.9 / 92.4 / 91.4 and 60/60 is 31.2 / 40.5 / 31.2. This settles today's
   R1 / R3 fails (40.6 / 48.1) by design. If a story-side check is still wanted, the natural replacement is "80/80 ≥ 50 on every
-  non-boss race". **OPEN, not decided (Austin 2026-11-19).**
+  non-boss race". ~~OPEN~~ **Moot: the story-only criterion is retired, not replaced (Austin 2026-11-19).**
   - Gate A passes it: lowest 84.1 / 77.6 / 69.3.
   - Gate B (rejected) would pass it: lowest 89.6 / 81.5 / 85.8.
 - **Finale out of band: still there, and the gate doesn't change it.** The gate only decides how the player arrives at each
   round boss, and gated players arrive at the same cap build the finale check already used. Live F1-F4 at 80/80 are
   97.5-98.6 and need their own r retune. **OPEN, not decided (Austin 2026-11-19).** mod_skill has no finale walk (README Limits), so I did not re-walk the finale.
-- **Gate A vs B tradeoff** (resolved: Austin chose A on 2026-11-19; kept for the record):
+- **Gate A vs B tradeoff** (B rejected 2026-11-19; A later reconsidered, gate design reopened; kept for the record):
   - A is one simple rule ("max your mods"). It keeps the mid-round lieutenant walls as they are for weak readers: 60/60 wins
     5-11% at mat2 to oh2 for story-only players, so they would likely race wild encounters there anyway.
   - B is closer to skill_tree's two gyms per round and removes that mid-round wall: lowest 60/60 is 16 / 17 / 22. It costs the
@@ -111,10 +123,11 @@ Notes:
 - **Catch-up XP stops firing** (no one enters a round below the previous cap). It can stay in code as a no-op or be cut.
 
 ## 5. Decisions for Austin
-1. ~~Gate A (boss locked until all four mods are full), Gate B (plus a mat2 lock at 3,327 / 3,793 / 4,382), or neither.~~
-   **DECIDED: Gate A (Austin 2026-11-19). Gate B rejected.**
-2. ~~Accept that wild encounters become required for the story-only path~~ **DECIDED: accepted (Austin 2026-11-19, about 20 races per round at 80/80)**: 13 / 13 / 12 wins, about 10-12 extra races per round.
-3. **OPEN:** retire the story-only criterion, or replace it with "80/80 ≥ 50 on every non-boss race".
+1. **OPEN (reopened 2026-11-19):** the boss-gate design. Gate B rejected; Gate A reconsidered by Austin (locking a boss
+   behind a maxed car feels bad). ~~DECIDED: Gate A.~~
+2. **DECIDED (Austin 2026-11-19):** wild encounters are mandatory races and part of the story (no story-only path). The
+   13 / 13 / 12 wins and about 20 races per round at 80/80 were Gate A numbers; with Gate A reconsidered they are not a decision.
+3. **DECIDED (Austin 2026-11-19):** the story-only criterion is retired, not replaced. The "80/80 ≥ 50 on every non-boss race" proposal is moot.
 4. **OPEN:** separately, and unchanged by this, the finale r retune.
 
 ## Reproduce

@@ -1,22 +1,27 @@
 # mod-skill-v1: Austin's "mod_skill" progression, simulated (Barry DRAFT, 2026-11-18)
 
-> **DECISION (Austin, direct, 2026-11-19): Gate A, see [GATE.md](GATE.md).** Each round's crew boss stays locked until all
-> four mods are full (car points 3,532 / 4,044 / 4,628). For a story-only player that is 13 / 13 / 12 wild-encounter wins.
-> Austin accepted about 20 races per round at 80/80. Gate B (the mat2 lock) is **rejected**. mod_skill itself is still an
-> unapproved draft; nothing in `sim/` changed.
-> - **Still open:** whether to replace the story-only criterion with "80/80 ≥ 50 on every non-boss race", and the finale r
->   retune.
+> **2026-11-19 (later): Gate A RECONSIDERED by Austin, gate design reopened; see [GATE.md](GATE.md).** Locking a boss behind
+> a maxed car feels bad, so Gate A is **not decided and not live**. Gate B (the mat2 lock) stays rejected. mod_skill itself
+> is still an unapproved draft; nothing in `sim/` changed.
+> - ~~**DECISION (Austin, direct, 2026-11-19): Gate A.** Each round's crew boss stays locked until all four mods are full
+>   (car points 3,532 / 4,044 / 4,628); 13 / 13 / 12 wild-encounter wins; about 20 races per round at 80/80 accepted.~~
+>   (Reconsidered, see above.)
+> - **DECIDED (Austin 2026-11-19): story-only retired.** "Story only is updated via the mandatory races, those are part of
+>   the story." There is no separate story-only player type; the story-only boss win criterion is retired, not replaced, and
+>   the "80/80 ≥ 50 on every non-boss race" proposal is moot. Older "story-only" numbers in this folder are pre-decision
+>   comparisons.
+> - **Still open:** the boss-gate design (reopened) and the finale r retune.
 > - **Terms (Austin approved 2026-11-19; design/01 canon, "Race terms"):** a **mandatory race** is a wild encounter or a story
 >   race; a **non-mandatory race** is a substory or a race the player picks a fight in. "Grind race" is retired: older lines in
 >   this README that say "grind" mean wild encounters. Code names (`grind_xp` etc.) are unchanged.
 
-> ~~**2026-11-19 DRAFT (Austin direct, unapproved): required grinding ("gym gate")**~~ (superseded by the decision above; numbers unchanged), see [GATE.md](GATE.md). The skill_tree
+> ~~**2026-11-19 DRAFT (Austin direct, unapproved): required grinding ("gym gate")**~~ (superseded; Gate A then reconsidered, see above; numbers unchanged), see [GATE.md](GATE.md). The skill_tree
 > "Pokemon-style" design (shelved in e5b8a14) was a win gate on mandatory races, with no XP threshold. For mod_skill I proposed:
 > the **round boss stays locked until all four mods are full** (car points 3,532 / 4,044 / 4,628), which is the build the
 > boss targets assume. Live sim results:
 > - A story-only player needs **13 / 13 / 12 wild-encounter wins**. Boss win at the gate is 31.2 / 93.9, 40.5 / 92.4 and 31.2 / 91.4
 >   (table); the engine gives 32.0 / 93.8, 40.7 / 92.2 and 30.8 / 91.8.
-> - Mixed and hard players are unaffected. The story-only boss criterion disappears. The finale out-of-band issue remains.
+> - Mixed and hard players are unaffected. The story-only boss criterion ~~disappears~~ is retired anyway (Austin 2026-11-19). The finale out-of-band issue remains.
 > - ~~Option B adds a mat2 lock at 3,327 / 3,793 / 4,382.~~ Rejected (Austin 2026-11-19).
 > - `walk.py` now has a `gate` mode and the boss-cell fix (`../ai-heat-qte-v1/econ_rewalk/walk_boss_flag.patch`).
 
