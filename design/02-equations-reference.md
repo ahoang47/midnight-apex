@@ -32,7 +32,7 @@ Source of truth: `sim/velocity_shift/equations.py` ("Heat / load resource system
 3. **Fix encounter scaling** (doc vs code mismatch; double-count today). Tiers should set **AI skill** (and maybe a small r), not double-scale level × QTE.
 4. **HP_PER_LEVEL**: code **180**, stale §1 says **120**. Recommend keep **180** and fix the doc.
 5. ~~Third-stance naming~~ **Resolved 2026-11-12: POW / EN / HAN everywhere** (Austin; canon block in 01, map in §6.0).
-6. **Straight window**: 8s (06) vs 12s (Godot guide). Pick one for Godot.
+6. ~~**Straight window**: 8s (06) vs 12s (Godot guide). Pick one for Godot.~~ **Decided (Austin 2026-11-19): 12 s** (see §5).
 7. **Economy numbers** (debt race, DEBT_SHARE, wholesale, respec, betting stakes/odds/shell rate): list only; **no season runs** until you give success criteria.
 8. Accept or mark up the **§0 target curves** (q_read / q_time form, equal weights, coefficients).
 9. **Wild ramp (proposed 2026-11-04, Integration room):** in each district, Wild races get harder and longer as the PC beats that district's lieutenants. Early Wild races stay short pushovers for EXP; later ones approach lieutenant AI skill and race length, so the climb to lieutenants isn't a cliff. Wild and lieutenant races differ by AI skill (read, QTE timing, tell lie rate, deck lean), not stats; both stay near stat parity. Story reason: reputation (each lieutenant beaten spreads the PC's name and draws better locals). Open: should lieutenants also read the PC's past stance habits against them (makes post-loss retries harder, which conflicts with the same-difficulty-retry rule), or only after wins? Lie rates go through Desmond and Nathaniel. Next step after sign-off: sim AI skill × race length along the ramp so each step is a small, real jump.
@@ -110,6 +110,8 @@ Validate re-run today (`decision-sheet/val_r40q10.txt`, seeds 40): AI read 0.40 
 | **Decision needed:** | Keep 192 / no player reshuffle? Y/N |
 
 #### 5. Straight window (pick timer)
+
+> **Decided (Austin 2026-11-19, via Gordon):** the pick timer is **12 s** (`STRAIGHT_DURATION 12.0` in `godot-build-guide.md`). When it runs out, any empty picks are filled **at random** from a seeded RNG kept separate from the race's RNG stream. The sim has no real-time timer, so there is no sim constant. The table below is stale.
 
 | | |
 |---|---|

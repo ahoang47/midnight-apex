@@ -238,7 +238,7 @@ The player locks all 3 cards, the line, up front, before corner playback. While 
 
 The corner then plays back as a cinematic. Authored per-corner camera motion does not replace the fixed rear third-person player camera as the view Entry is read from, and it does not change the spacing rule. Playback does not change cumulative DP.
 
-This decision does not set the selection timer. An older sentence in this section said 8 seconds of watching track position and suspension. `design/godot-build-guide.md` still builds a 12-second straight split into entry, apex, and exit picks, matching the prototype scripts. Those two durations are an open mismatch, not a number approved here.
+This decision does not set the selection timer. An older sentence in this section said 8 seconds of watching track position and suspension. `design/godot-build-guide.md` still builds a 12-second straight split into entry, apex, and exit picks, matching the prototype scripts. ~~Those two durations are an open mismatch, not a number approved here.~~ **Settled (Austin 2026-11-19): 12 seconds**; see `02-equations-reference.md` §5.
 
 ---
 

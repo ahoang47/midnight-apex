@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-19 — Pick timer settled at 12 s; random fill on timeout (Barry, Systems)
+- `design/02-equations-reference.md` §5 and the open-item list, plus `design/06-pattern-read.md`: the 8 s vs 12 s straight-window mismatch is resolved at 12 s (`STRAIGHT_DURATION 12.0`, Godot guide). When the timer runs out, empty picks fill at random from a seeded RNG separate from the race stream. Old text is struck through and marked stale, not deleted.
+- Why: Austin's answers on the Touge test race build (2026-11-19, given in Gordon's chat). The sim has no real-time timer, so no sim constant changes. Docs only.
+
 ## 2026-11-19 — Arthur [art]: repoint cel_two_corner stage to the root Godot project; add art/.gdignore
 
 ---
