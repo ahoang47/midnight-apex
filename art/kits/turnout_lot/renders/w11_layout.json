@@ -1,0 +1,87 @@
+{
+  "tag": "w11",
+  "frame": "LotArt: origin=road edge at entrance, +X into lot, +Y up, +Z along travel (Godot Y-up)",
+  "pocket_m": 62.0,
+  "taper_m": 14.0,
+  "pocket_w_m": 11.0,
+  "rows": 1,
+  "n_lamps": 2,
+  "n_stalls_per_row": 11,
+  "stall_w_m": 2.5,
+  "stall_d_m": 5.0,
+  "stall_angle_deg": 70.0,
+  "stall_spacing_m": 2.6604444311897804,
+  "curb_h_m": 0.15,
+  "island_d_m": [
+    0.1,
+    0.7
+  ],
+  "lamp_z_m": [
+    21.48,
+    40.519999999999996
+  ],
+  "pool_radius_m": 6.0,
+  "aisle_x_m": [
+    0.75,
+    6.301536896070459
+  ],
+  "piece_tris": [
+    {
+      "name": "lot_floor",
+      "tris": 86,
+      "path": "glb/w11/lot_floor.glb"
+    },
+    {
+      "name": "lot_curbs",
+      "tris": 44,
+      "path": "glb/w11/lot_curbs.glb"
+    },
+    {
+      "name": "lot_stall_lines",
+      "tris": 37,
+      "path": "glb/w11/lot_stall_lines.glb"
+    },
+    {
+      "name": "lot_wheel_stops",
+      "tris": 110,
+      "path": "glb/w11/lot_wheel_stops.glb"
+    },
+    {
+      "name": "lot_road_paint",
+      "tris": 27,
+      "path": "glb/w11/lot_road_paint.glb"
+    },
+    {
+      "name": "lot_props",
+      "tris": 54,
+      "path": "glb/w11/lot_props.glb"
+    },
+    {
+      "name": "lot_lamps",
+      "tris": 92,
+      "path": "glb/w11/lot_lamps.glb"
+    },
+    {
+      "name": "lot_back_wall",
+      "tris": 616,
+      "path": "glb/w11/lot_back_wall.glb"
+    },
+    {
+      "name": "lot_hill_top",
+      "tris": 218,
+      "path": "glb/w11/lot_hill_top.glb"
+    }
+  ],
+  "mapping": {
+    "lot_floor.glb": "Floor",
+    "lot_curbs.glb": "Curbs",
+    "lot_stall_lines.glb": "StallLines",
+    "lot_wheel_stops.glb": "WheelStops",
+    "lot_back_wall.glb": "BackWall",
+    "lot_hill_top.glb": "HillTop",
+    "lot_lamps.glb": "Lamps",
+    "lot_props.glb": "Props",
+    "lot_road_paint.glb": "LotArt"
+  },
+  "total_tris": 1284
+}

@@ -8,6 +8,8 @@
 
 ---
 
+## 2026-11-19 — Arthur [art]: approved 16 m two-row turnout lot kit, Godot LotArt frame, per-child glbs
+
 ## 2026-11-19 — Docs for the AI QTE go-live; econ re-walk draft (Barry, Systems)
 - **design/ (01, 02, 07, godot-build-guide):** each doc now opens with the go-live decision (commit 67bbeb7): the seeded per-turn AI QTE N(0.80, 0.08) clamped to 0.60-1.00 with its own RNG at seed + 104,729, boss r 1.046 / 1.040 / 1.050, the EN-heavy Street boss, and the v2 tables. Lines that said `OPPONENT_QTE` is a fixed 1.0 with no RNG, pointed at the v1 table, or cited the old boss r are marked stale, not deleted.
 - **unapproved/barry/ai-heat-qte-v1/README.md:** marked LIVE/APPROVED at the top. New econ re-walk section (DRAFT) and `econ_rewalk/`: `rewalk.py`/`rewalk.json`, the mod_skill comparison, live progression reports old vs new, and `walk_boss_flag.patch` (the boss-cell fix the re-walk copy applies to mod-skill-v1/walk.py; the draft file itself is untouched).
