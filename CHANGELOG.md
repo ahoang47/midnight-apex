@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-19 — Touge test race car stat blocks, draft (Barry, Systems) [unapproved]
+- New `unapproved/barry/touge-race-parity/` (blocks.json, README.md) for Gordon's car-select screen on the 10-turn Touge test race (no mods, no retune, AI QTE ratio 1.0).
+- All 5 repo cars, each 3,000 points with every stat 25-50 % (BUILD_STAT_MIN/MAX_SHARE). Shapes are the live DISTRICT_TUNE x 3,000 (Austin 2026-11-19): BRZ, MX-5, S2000 = Touge 1350/750/900 POW/HAN/EN; GR Corolla, WRX STI = Wangan 750/750/1500.
+- Why: Austin set the 3,000-point 25-50 % rule and the car-to-district mapping. A Touge car out-tuning a Wangan car on a Touge track is intended (Austin), so no matchup sim was run.
+- Earlier v1 (100/100/100) and v2 (placeholder shapes) are kept in the README, marked superseded.
+
 ## 2026-11-18 — Barry [sim]: skill_tree shelved, spirit meter cut, mod_skill fixed slot layout (UNAPPROVED)
 - **skill_tree SHELVED** (Austin, after the sims in `unapproved/barry/skill-tree-v1/SIM_RESULTS.md` + `sim/`). Reason: not suited to the intended gameplay. The sims found that the driver tree pushes 80/80 above 95 at the Street and Touge bosses, and that mandatory gyms only work if opponent budgets are rebuilt. Back to mod_skill.
 - **Spirit meter CUT** (Austin). Reason: it doesn't add anything. The ×1.25 and additive versions measured within noise of each other, and with spirit on, no Street boss ratio passes both checks. `spirit-meter-v1` is kept for reference only.

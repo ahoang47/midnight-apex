@@ -1,0 +1,44 @@
+{
+  "status": "UNAPPROVED DRAFT v3 (Barry 2026-11-19) - matchups NOT simmed, not live, not committed",
+  "rule": "3000 stat points per car; each stat 25-50% (BUILD_STAT_MIN/MAX_SHARE); shapes = live DISTRICT_TUNE (equations.py): touge 0.45/0.25/0.30, wangan 0.25/0.25/0.50 (Austin 2026-11-19)",
+  "race": {
+    "district": "touge",
+    "turns": 10,
+    "mods": false,
+    "retune": false,
+    "opponent_qte_ratio": 1.0
+  },
+  "parity_cap_r": 1.07,
+  "cars": {
+    "brz": {
+      "pow": 1350,
+      "han": 750,
+      "en": 900,
+      "tune": "touge"
+    },
+    "mx5": {
+      "pow": 1350,
+      "han": 750,
+      "en": 900,
+      "tune": "touge"
+    },
+    "s2000": {
+      "pow": 1350,
+      "han": 750,
+      "en": 900,
+      "tune": "touge"
+    },
+    "gr_corolla": {
+      "pow": 750,
+      "han": 750,
+      "en": 1500,
+      "tune": "wangan"
+    },
+    "wrx_sti": {
+      "pow": 750,
+      "han": 750,
+      "en": 1500,
+      "tune": "wangan"
+    }
+  }
+}
