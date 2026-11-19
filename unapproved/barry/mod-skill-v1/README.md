@@ -1,5 +1,15 @@
 # mod-skill-v1: Austin's "mod_skill" progression, simulated (Barry DRAFT, 2026-11-18)
 
+> **2026-11-19 DRAFT (Austin direct, unapproved): required grinding ("gym gate"), see [GATE.md](GATE.md).** The skill_tree
+> "Pokemon-style" design (shelved in e5b8a14) was a win gate on mandatory races, with no XP threshold. For mod_skill I propose:
+> the **round boss stays locked until all four mods are full** (car points 3,532 / 4,044 / 4,628), which is the build the
+> boss targets assume. Live sim results:
+> - A story-only player needs **13 / 13 / 12 grind wins**. Boss win at the gate is 31.2 / 93.9, 40.5 / 92.4 and 31.2 / 91.4
+>   (table); the engine gives 32.0 / 93.8, 40.7 / 92.2 and 30.8 / 91.8.
+> - Mixed and hard players are unaffected. The story-only boss criterion disappears. The finale out-of-band issue remains.
+> - Option B adds a mat2 lock at 3,327 / 3,793 / 4,382.
+> - `walk.py` now has a `gate` mode and the boss-cell fix (`../ai-heat-qte-v1/econ_rewalk/walk_boss_flag.patch`).
+
 Status: draft study. Nothing here is live and nothing is committed. sim/velocity_shift/ is imported read-only. The one
 in-memory patch, DEBT_AMOUNT in debt_check.py, is never written back.
 Branch: touge-race @ bbdda07.

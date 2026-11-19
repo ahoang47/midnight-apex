@@ -7,6 +7,7 @@ pays GRIND_PAYOUT_FRACTION x wild purse and a flat GRIND_XP[round] points.
 Policies as live progression._walk_round: story never grinds; mixed grinds at the first rung where 60/80 or 80/60 is
 < 50 % until both clear, then to "cap" (every kit mod at the round ceiling) before the boss; hard grinds wherever 60/60
 < 50 %, then to cap before the boss.
+gate (2026-11-19 draft, GATE.md): story path, but the boss is locked until every kit mod is at the round ceiling.
 """
 from mod_skill import *
 
@@ -80,7 +81,7 @@ class Car:
         return self.assign(left, d) if (self.spill and left > 1e-9) else left
 
 
-def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk1_list", log=True, story_table=None, upto=None, spill=False, kits=None):
+def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk1_list", log=True, story_table=None, upto=None, spill=False, kits=None, gate_pts=None):
     pr_t = PRICES[price] if isinstance(price, str) else price
     car = Car(X, spill, kits); money, debt = 0.0, E.DEBT_AMOUNT; out = []
     for rnd in range(3):
@@ -94,7 +95,7 @@ def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk
                    for j, w in enumerate(STORY_SHAPE[rnd])]
         else:
             sxp = [story_table[rnd][j] + E.CATCHUP_XP_FRAC * E.CATCHUP_XP_SHARE[j] * short for j in range(7)]
-        rows = []; total = 0; wall_done = False; lost = 0.0; maxdist = 0.0
+        rows = []; total = 0; wall_done = False; lost = 0.0; maxdist = 0.0; trace = None; gwr = []
 
         def credit(kind, grind):
             nonlocal money, debt
@@ -110,6 +111,8 @@ def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk
 
         def grind1(tag):
             nonlocal total, lost
+            gB = E.opponent_budget(rnd, 0); pw_, ps_ = car.power(d, rnd), car.pow_share(d)   # 2026-11-19: grind win % log
+            gwr.append({p: P.win_pack(p, pw_ / gB, 10, d, ps_)["district"] for p in ("c6060", "c8080")})
             credit("kid", True); shop(tag); lost += car.assign(grind_xp[rnd], d); total += 1; shop(tag)
 
         def ok(profiles, B, T):
@@ -132,13 +135,29 @@ def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk
             if name == "boss" and mode in ("mixed", "hard"):
                 while not car.at_cap(d, rnd) and here < 400:
                     grind1(tag); here += 1
+            elif mode == "gate" and gate_pts and (rnd, j) in gate_pts:
+                # optional mid-round gate (GATE.md option B): rung j locked until car points >= gate_pts[(rnd, j)]
+                while not car.at_cap(d, rnd) and car.points(d) < gate_pts[(rnd, j)] - 1e-9 and here < 400:
+                    grind1(tag); here += 1
+            if name == "boss" and mode == "gate":
+                # 2026-11-19 GATE draft (GATE.md): story path, but the round boss stays locked until every kit mod is at the
+                # round ceiling (car points = cap). Trace: boss win % (boss-shape cells) and grind win % after each grind.
+                gB = E.opponent_budget(rnd, 0)
+                def snap(n):
+                    pw_, ps_ = car.power(d, rnd), car.pow_share(d)
+                    bp = {p: P.hard_win(P.win_pack(p, pw_ / B, T, d, ps_, boss=True)) for p in ("c6060", "c8080")}
+                    gp = {p: P.win_pack(p, pw_ / gB, 10, d, ps_)["district"] for p in ("c6060", "c8080")}
+                    return dict(n=n, points=round(car.points(d), 1), cash=round(money), boss=bp, grind=gp)
+                trace = [snap(0)]
+                while not car.at_cap(d, rnd) and here < 400:
+                    grind1(tag); here += 1; trace.append(snap(here))
             elif name != "boss":
                 if mode == "mixed" and not wall_done and not ok(("c6080", "c8060"), B, T):
                     here = grind_until(("c6080", "c8060"), B, T, tag); wall_done = True
                 elif mode == "hard" and not ok(("c6060",), B, T):
                     here = grind_until(("c6060",), B, T, tag)
             pw = car.power(d, rnd); r = pw / B; ps = car.pow_share(d); maxdist = max(maxdist, car.build(d)[1])
-            packs = {p: P.win_pack(p, r, T, d, ps) for p in P.PROFILES}
+            packs = {p: P.win_pack(p, r, T, d, ps, boss=name == "boss") for p in P.PROFILES}   # 2026-11-19: boss shape cells
             rows.append(dict(rung=name, turns=T, grind=here, points=round(car.points(d)), power=round(pw, 2), B=round(B, 2),
                              r=round(r, 4), target_r=E.LADDER_TARGET_R[d][j], pow_share=round(100 * ps, 1),
                              wr={p: P.hard_win(v) for p, v in packs.items()}, wr_district={p: v["district"] for p, v in packs.items()},
@@ -151,5 +170,6 @@ def walk(mode, X=0.60, f=(0.5, 0.5, 0.5), grind_xp=(40.0, 60.0, 80.0), price="mk
         shop(f"R{rnd + 1} end")
         out.append(dict(rnd=rnd + 1, district=d, rows=rows, total_grind=total, end_points=round(car.points(d)),
                         money=round(money), debt=round(debt), spent=round(car.spent), xp_lost=round(lost, 1),
-                        max_tune_dist=round(maxdist, 2), story_xp=[round(x, 1) for x in sxp], at_cap_end=car.at_cap(d, rnd)))
+                        max_tune_dist=round(maxdist, 2), story_xp=[round(x, 1) for x in sxp], at_cap_end=car.at_cap(d, rnd),
+                        gate_trace=trace if mode == "gate" else None, grind_wr=gwr))
     return out

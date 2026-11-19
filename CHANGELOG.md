@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-19 — DRAFT: mod_skill required grinding ("gym gate") (Barry, Systems; unapproved, Austin direct)
+- **What skill_tree had:** a win gate on mandatory races (gyms = crews; losing a mandatory race blocks progress; grinds stay optional; k2 m1 recommended), with no XP or grind-count threshold. Sources: `git show e5b8a14:unapproved/barry/skill-tree-v1/README.md` §8, `SIM_RESULTS.md` §3, `sim/run3_gyms.py`. Mandatory races with no grinds failed under today's budgets.
+- **mod_skill port (`unapproved/barry/mod-skill-v1/GATE.md`, README prepended):** Gate A locks the round boss until all four mods are full (car points 3,532 / 4,044 / 4,628), which is the build the boss targets assume. Optional Gate B adds a mat2 lock at 3,327 / 3,793 / 4,382.
+- **Live-sim numbers (`gate.py` → `gate.json`, `gate_engine_check.py`):**
+  - A story-only player needs 13 / 13 / 12 grind wins.
+  - Boss win at the gate: 31.2 / 93.9, 40.5 / 92.4, 31.2 / 91.4 (table). The engine gives 32.0 / 93.8, 40.7 / 92.2, 30.8 / 91.8; Touge 60/60 has only 0.75 points of headroom.
+  - Mixed and hard players are unaffected.
+  - The story-only boss criterion disappears. The finale out-of-band issue remains.
+- **walk.py:** applied `walk_boss_flag.patch` (boss rows read the boss-shape cells), and added a `gate` mode, optional `gate_pts`, and a grind win-% log. The story / mixed / hard policies are unchanged.
+- Nothing live; sim/ untouched.
+
 ## 2026-11-19 — Arthur [art]: deepen turnout lot to 18.8735 m for a clear 6.0 m aisle; P sign on the island
 
 ## 2026-11-19 — Arthur [art]: approved 16 m two-row turnout lot kit, Godot LotArt frame, per-child glbs
