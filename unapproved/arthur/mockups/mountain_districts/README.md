@@ -1,3 +1,11 @@
+# Mountain districts: earlier passes (unapproved)
+
+**Pass 5 (every road 7.5 m) was approved on 2026-11-19** and lives in `art/mockups/mountain_districts/` (`*_v5.png`, `mountain_districts_sheet_v5.png`, and the build scripts). This folder keeps v1–v4 frames and sheets only.
+
+The build scripts here still default to v5; run them from `art/mockups/mountain_districts/` to rebuild the approved frames. `MTN_V=1-4 ./run.sh` still rebuilds the earlier passes in this folder. `blender/build_wangan.py` is vendored here because the `wangan_two_corner` experiment was deleted.
+
+---
+
 # Mountain districts: every district is a pass, all three entry lanes (unapproved mockup), pass 2: perspective + hillside city, pass 3: steeper + a Wangan cut of its own, pass 4: guardrails, sea bridge, canyon street
 
 Arthur (Art Director), 2026-11-15. Austin on `tight_districts`: *"Neither Wangan nor street give the sense of being on a

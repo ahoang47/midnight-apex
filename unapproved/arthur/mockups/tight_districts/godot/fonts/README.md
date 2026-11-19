@@ -4,7 +4,7 @@ Copied into this folder for the two-corner Godot HUD. Runtime load in `scripts/h
 
 ## Nimbus Sans Narrow Bold / Bold Oblique, Nimbus Sans Bold
 - Files: `NimbusSansNarrow-Bold.otf`, `NimbusSansNarrow-BoldOblique.otf`, `NimbusSans-Bold.otf`
-- Source: URW++ base35 (identical to `/usr/share/fonts/opentype/urw-base35/` on this box). Nimbus Sans Bold is the heavier title face from Arthur's line-preview mockup (`unapproved/arthur/mockups/line_preview/godot/fonts/`).
+- Source: URW++ base35 (identical to `/usr/share/fonts/opentype/urw-base35/` on this box). Nimbus Sans Bold is the heavier title face from Arthur's line-preview mockup (`art/ui/line_preview/godot/fonts/`).
 - License: AGPL-3 with Font exception (embedding in documents/programs allowed). Full text: `LICENSE-URW-base35.txt` (Debian `fonts-urw-base35` copyright file).
 
 ## Archivo Black Regular

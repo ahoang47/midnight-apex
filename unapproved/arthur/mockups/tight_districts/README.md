@@ -59,7 +59,7 @@ There is no pass or side-by-side. The look is Cel A soft, rendered in Godot 4.6.
   - Only the Cel A soft frame is written.
 
 ## Assets
-**New** (Blender script `blender/build_tight.py`, which reuses the Builder from `../../experiments/wangan_two_corner/blender/build_wangan.py`; textures from `tex_src/make_tex.py`):
+**New** (Blender script `blender/build_tight.py`, which reuses the Builder from the vendored `blender/build_wangan.py`; textures from `tex_src/make_tex.py`):
 
 | Asset | Tris |
 |---|---|
@@ -68,7 +68,7 @@ There is no pass or side-by-side. The look is Cel A soft, rendered in Godot 4.6.
 | textures: `art/wangan_tight_road.png` (7.5 m, 48 m tile, staggered pools), `art/street_tight_road.png` (5.8 m, 24 m tile, trench patch, utility cover, gutter grates), `art/env/street_curvemirror.png` | — |
 
 **Reused**
-- From `experiments/wangan_two_corner`:
+- Originally from `experiments/wangan_two_corner` (that test was deleted 2026-11-19; meshes/textures already live in this folder, and `blender/build_wangan.py` is vendored here):
 
   | Asset | Tris |
   |---|---|
