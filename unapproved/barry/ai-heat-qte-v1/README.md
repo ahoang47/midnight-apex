@@ -1,5 +1,112 @@
 # ai-heat-qte-v1 (Barry DRAFT, 2026-11-19, unapproved)
 
+## v2 (2026-11-19): AI QTE random per turn averaging 0.80; boss retune
+
+Austin's answers via Gordon: the AI's QTE is seeded random every turn, averaging 0.80, and the AI keeps its softer heat
+rules. Everything below is a draft for his review. Nothing live is changed, heat rules are untouched, and all v2 sims ran
+on a throwaway copy of `sim/` with `opponent_qte.patch` applied. All cells n = 6,000 (SE ≤ 0.65 pt), same seeds and
+setup as v1 (boss: hardest track per district, 30 turns, 3 boss styles, fixed layout at the round cap; test race:
+Touge-tune mirror, 10 turns, all 5 Touge tracks, parity v3 blocks, no mods). Every cell: `tables_v2.md` / `v2.json`.
+
+### 1. The spread (recommended: sd 0.08, clamp 0.60-1.00)
+Per turn the AI's raw QTE = N(0.80, sd) clamped to [0.60, 1.00], rounded with `round_qte_score`, drawn from its own RNG
+seeded `seed + 104_729`. The race RNG that picks the AI's lines is never touched (proved by the bit-identity test below).
+
+| Spread | What the player sees | Boss 60/60 (St / Wa / To), live r | Boss 80/80 | Mirror 60/60 / 80/80 |
+|---|---|---|---|---|
+| **S1: sd 0.08, clamp 0.60-1.00** | about 95 % of turns between 0.64 and 0.96; perfect (1.00) or floor (0.60) about 0.6 % of turns each | 60.0 / 58.6 / 59.1 | 98.9 / 96.1 / 98.1 | 3.0 / 68.9 |
+| S2: sd 0.10, clamp 0.60-1.00 | wider: 2.3 % of turns perfect, 2.3 % at the floor | 60.0 / 58.5 / 59.1 | 98.9 / 96.1 / 98.1 | 3.0 / 69.0 |
+
+Both clamps sit symmetric about 0.80 (±0.20), so the mean stays exactly 0.80. The two spreads give the same win rates
+within 0.1 pt, so the spread is a feel choice, not a balance one. I recommend S1: the AI reads as "good but human", and a
+perfect hit stays rare enough to feel like a moment. S2 is fine if Austin wants more visible swings.
+
+### 2. Win rates at the live boss r (S1): every boss gets far easier
+Street 32.2 → 60.0 and 94.7 → 98.9; Wangan 38.7 → 58.6 and 91.4 → 96.1; Touge 30.9 → 59.1 and 92.8 → 98.1
+(60/60 and 80/80, live perfect AI → 0.80 random). All three break the 95 % ceiling for 80/80. Test-race mirror:
+0.6 → 3.0 % (60/60) and 40.7 → 68.9 % (80/80).
+
+### 3. Boss retune (S1), heat rules unchanged
+
+r scan (60/60 / 80/80):
+
+| r | Street | Wangan | Touge |
+|---|---|---|---|
+| 1.016 | 10.1 / 87.8 | | |
+| 1.020 | 15.2 / 93.0 | | |
+| 1.024 | 20.1 / 95.1 | | |
+| 1.028 | 27.2 / 95.5 | | |
+| 1.032 | 33.7 / 97.4 | | |
+| 1.036 | | 34.4 / 89.5 | |
+| 1.040 | | **40.9 / 92.2** | |
+| 1.044 | | 47.0 / 93.9 | |
+| 1.048 | | 51.4 / 94.6 | |
+| 1.050 | | | **32.5 / 92.3** |
+| 1.054 | | | 36.2 / 93.0 |
+| 1.058 | | | 38.3 / 94.3 |
+| 1.062 | | | 41.5 / 94.9 |
+
+Wangan and Touge hold on r alone. Street doesn't: by the time 60/60 reaches 30, 80/80 is already over 95.
+
+Second Street levers tried (all Street, S1 unless noted):
+
+| Lever | Best cell | Holds 30 / 95? |
+|---|---|---|
+| Street boss AI QTE mean 0.90 (sd 0.08, clamp 0.70-1.00) | r 1.028: 17.7 / 91.6; r 1.032: 22.6 / 95.1 (v1: 0.90 at r 1.036 30.9 / 96.4, 0.95 at r 1.040 31.8 / 96.2) | no |
+| kappa × 0.75 / × 0.60 (30-turn) | r 1.036 ×0.6: 35.0 / 97.1; r 1.044 ×0.6: 49.3 / 98.0 | no (80/80 stays ≥ 97) |
+| Street boss tune POW-heavy 50/25/25 | r 1.036: 26.4 / 95.5 | no |
+| Street boss tune HAN-heavy 25/50/25 | r 1.032: 60.8 / 99.6 | no (much easier) |
+| **Street boss tune EN-heavy 25/25/50** (the Wangan tune shape, within the 25-50 % band) | **r 1.046: 32.0 / 93.8**; r 1.048: 35.7 / 94.4; r 1.050: 38.2 / 94.9; r 1.044: 28.1 / 92.6 | **yes** |
+
+**Recommended retune (draft):**
+
+| Boss | Live r | New r | Lever | 60/60 | 80/80 |
+|---|---|---|---|---|---|
+| Street | 1.044 | **1.046** | boss tune EN-heavy POW/HAN/EN 25/25/50 (was even 33/33/33) | 32.0 | 93.8 |
+| Wangan | 1.0548 | **1.040** | none | 40.9 | 92.2 |
+| Touge | 1.0702 | **1.050** | none | 32.5 | 92.3 |
+
+Why the boss tune: it is the only lever tried that narrows the gap between the 60/60 and 80/80 players on Street, and it
+uses an existing rule (the 25-50 % stat band) rather than a new mechanic. Raising the Street boss's own AI QTE back up
+doesn't work below a perfect 1.0, and kappa moves both profiles together. Story/art knock-on: the Street boss becomes an
+EN-heavy (brakes/tires) car. Flag to Desmond and Arthur before it goes anywhere. r values map to round ceilings through
+the fixed layout (`mod-skill-v1/fixed_layout.py`); recomputing the ceilings and caps for these r is a follow-up once
+Austin picks.
+
+**Progression win-rate table:** yes, `sim/config/winrate_g2_live_tracks_v1.json` must be regenerated if this goes live.
+It was built on the live engine at AI QTE 1.0 against even-split bosses (r 0.94-1.24, 10/20/30 turns), so every rung's
+win rate shifts (bosses at live r move +20 to +28 pt for 60/60). The Street boss tune would also need its own cells. The econ walk (grind wins
+13/13/12, ceilings, caps) then has to be re-run on the new table. Not regenerated here (live file).
+
+### 4. `opponent_qte.patch`: wires `MatchConfig.opponent_qte_ratio` (not applied to live)
+- `models.py`: `opponent_qte_ratio` (None = `OPPONENT_QTE` exactly) plus `opponent_qte_sd` (0.0), `opponent_qte_min` (0.0),
+  `opponent_qte_max` (1.0). The stale comment "None = ENCOUNTER_RATIOS[encounter_type]" is corrected: None keeps the live rule.
+- `match.py`: `opponent_qte_mean(cfg)` = `OPPONENT_QTE × ratio`; when sd > 0, a separate `Random(seed + OPPONENT_QTE_SEED_OFFSET)`
+  (104_729) draws each turn's AI QTE, clamped and rounded; `TurnState.opponent_qte` uses it (was the constant at `match.py:168`).
+- `simulation.py`: the simulated player's read of the AI's payoff uses `opponent_qte_mean(cfg)` (was `OPPONENT_QTE`).
+- To go live it needs Austin's go, then mirror in Godot (Gordon) with the same draw, seed offset and rounding. The 0.80 / 0.08 / 0.60-1.00
+  values would become the `MatchConfig` defaults or equations constants at that point.
+
+**Evidence of no change at defaults** (`patch_identity_test.py`, output in `patch_identity_test.txt`): 2,160 seeded races
+(3 districts × 3 boss styles × 60/60 and 80/80 × 60 seeds × a 30-turn boss race and a 10-turn off-shape race) through
+the live sim and the patched sim with default config. SHA-256 over every turn's stances, QTE scores, heat multipliers
+and fills, and progress: identical (`9501b213…4c03`). `sim/tests` passes on both (82 passed). `git apply --check` is clean on
+touge-race at 8e2c5f1.
+
+### Reproduce v2 (about 8 min of runs on 8 cores)
+```
+rm -rf /tmp/aiqte_b && cp -r ../../../sim /tmp/aiqte_b && (cd /tmp/aiqte_b && patch -p2 < "$PWD/opponent_qte.patch")
+AIQTE_SIM=/tmp/aiqte_b python3 ai_qte80.py JOBS.json v2.json   # JOBS.json = list of cells; v2.json lists every cell run (inputs are the row fields)
+python3 make_tables_v2.py
+# identity test: copy sim/ twice to /tmp/a and /tmp/b, apply the patch to /tmp/b only, then
+python3 patch_identity_test.py /tmp/a /tmp/b
+```
+
+---
+
+## v1 (2026-11-19, earlier the same day)
+
+
 Austin's two asks, relayed by Gordon on 2026-11-19: "making sure his sims run heat in the opponents as well" and
 "capping opponents QTE scores, as a 100% perfect QTE every time will not be fun". Nothing live is changed: no edit to
 `equations.py` or any file in `sim/`. The script swaps the AI's QTE and heat rules in-process only.
@@ -48,7 +155,11 @@ Readings:
 - **The parity test race barely moves at 60/60.** Even a 0.60 cap only lifts the mirror match to 13.0 %. The bigger driver is the player's own timing. At r = 1 the visible zone is 0.57 × default, so a 60/60 player's expected raw QTE is 0.402 and an 80/80 player's is 0.652 (`raw_qte_score(1.0, q_time)`). An AI cap alone won't make parity races winnable for an average player.
 - The parity blocks aren't balanced on Touge tracks. A Touge-tune car vs a Wangan-tune car wins 0.0 / 10.8 % (60/60 / 80/80); reversed, 6.7 / 69.8 %. That's relevant to the car-select screen in `touge-race-parity`.
 
-## 3. Recommendation (draft for Austin)
+## 3. Recommendation (draft for Austin) — **STALE 2026-11-19**: superseded by v2 at the top (Austin picked a random AI QTE averaging 0.80). Kept for the record.
+
+**Option B: ~~a seeded spread, mean 0.90~~** (stale)
+
+_Original text:_
 
 **Option B: a seeded spread, mean 0.90, sd 0.07, clamped to 0.70-1.00, drawn once per turn from its own seeded RNG.** It plays the same as a 0.90 cap, but the AI visibly misses sometimes, which answers "not perfect every time". Use one value for every rung for now. A per-rung ramp (for example a lower mean on early rungs, rising to 0.90 at the boss) is possible, but no rung below the boss was simmed. It would need the progression win-rate oracle (`sim/config/winrate_g2_live_tracks_v1.json`, built at AI QTE 1.0) regenerated first.
 

@@ -1,0 +1,104 @@
+diff -ru a/velocity_shift/match.py b/velocity_shift/match.py
+--- a/sim/velocity_shift/match.py	2026-11-19 09:14:36.950357325 -0800
++++ b/sim/velocity_shift/match.py	2026-11-19 09:14:37.098358391 -0800
+@@ -22,12 +22,18 @@
+ 
+ from .models import Stance, StanceOutcome, MatchConfig, MatchResult, TurnResult, TurnState, ClashResult, ClashContext
+ from .combat import resolve_turn, pick_line, corner_at_turn, official_tracks, normalize_district
+-from .equations import resolve_stance, OPPONENT_QTE, raw_qte_score, mean_phase_qte, phase_raw_qte, DISTRICTS
++from .equations import resolve_stance, OPPONENT_QTE, raw_qte_score, mean_phase_qte, phase_raw_qte, DISTRICTS, round_qte_score
+ from .heat import HeatGauges, track_wear, boss_stance, boss_line_weights
+ from .trace import TraceLogger
+ from .ai import get_phase, get_total_phases
+ 
+ DEFAULT_DISTRICT = DISTRICTS[0]
++OPPONENT_QTE_SEED_OFFSET = 104_729   # AI-timing RNG = Random(seed + this); separate from the race RNG
++
++
++def opponent_qte_mean(cfg: MatchConfig) -> float:
++    """The AI's mean raw QTE: OPPONENT_QTE, scaled by cfg.opponent_qte_ratio when set."""
++    return OPPONENT_QTE if cfg.opponent_qte_ratio is None else OPPONENT_QTE * cfg.opponent_qte_ratio
+ 
+ 
+ def race_setup(cfg: MatchConfig) -> tuple[str, list[str]]:
+@@ -75,6 +81,10 @@
+     )
+     main_trace = trace or TraceLogger()
+     rng = Random(cfg.seed) if cfg.seed is not None else Random()
++    o_qte_mean = opponent_qte_mean(cfg)
++    o_qte_rng = None
++    if cfg.opponent_qte_sd > 0.0:
++        o_qte_rng = Random(cfg.seed + OPPONENT_QTE_SEED_OFFSET) if cfg.seed is not None else Random()
+ 
+     p_tot = player.pow + player.en + player.han
+     o_tot = opponent.pow + opponent.en + opponent.han
+@@ -142,7 +152,7 @@
+         # Raw q_time in [0, 1]. If a skill profile or player_timing is configured,
+         # the score is E[s] at the race's fixed r (and qte_window_mod); otherwise the
+         # callback value is already a raw score. A 3-tuple of Entry/Apex/Exit scores is
+-        # averaged (unplayed / None = 0; Austin, 2026-11-11). Opponent timing is OPPONENT_QTE.
++        # averaged (unplayed / None = 0; Austin, 2026-11-11). Opponent timing: opponent_qte_mean(cfg) / spread.
+         p_phases: list[float] = []
+         if cfg.player_qte_profile or cfg.player_timing is not None or cfg.player_quality is not None:
+             q_time = cfg.player_timing if cfg.player_timing is not None else cfg.player_quality
+@@ -160,12 +170,17 @@
+             else:
+                 p_qte = cb
+ 
++        if o_qte_rng is None:
++            o_qte = o_qte_mean
++        else:
++            o_qte = round_qte_score(min(cfg.opponent_qte_max, max(cfg.opponent_qte_min, o_qte_rng.gauss(o_qte_mean, cfg.opponent_qte_sd))))
++
+         turn_state = TurnState(
+             turn_number=turn_num,
+             player_stances=p_stances,
+             opponent_stances=o_stances,
+             player_qte=p_qte,
+-            opponent_qte=OPPONENT_QTE,
++            opponent_qte=o_qte,
+             player_heat_mults=p_mults,
+             opponent_heat_mults=o_mults,
+             player_qte_phases=p_phases,
+diff -ru a/velocity_shift/models.py b/velocity_shift/models.py
+--- a/sim/velocity_shift/models.py	2026-11-19 09:14:36.950357325 -0800
++++ b/sim/velocity_shift/models.py	2026-11-19 09:14:37.098358391 -0800
+@@ -163,9 +163,15 @@
+     # qte_zone_width(r)). Slot competition and the 105%-all-slots rule
+     # belong to the upcoming slot sim and are not applied here.
+     qte_window_mod: float = 0.0
+-    # Opt-in (None = ENCOUNTER_RATIOS[encounter_type]): override the ratio
+-    # that scales the AI's QTE, e.g. 1.0 for a pure stat-parity test.
++    # AI timing (ai-heat-qte-v1 draft). Mean raw QTE = OPPONENT_QTE x opponent_qte_ratio
++    # (None = OPPONENT_QTE exactly, the live rule). opponent_qte_sd > 0 draws the AI's raw QTE
++    # once per turn from N(mean, sd) clamped to [opponent_qte_min, opponent_qte_max] and rounded
++    # (round_qte_score), from its own RNG seeded seed + OPPONENT_QTE_SEED_OFFSET, so the race RNG
++    # (line picks) is untouched. sd 0 (default) = the fixed mean every turn.
+     opponent_qte_ratio: Optional[float] = None
++    opponent_qte_sd: float = 0.0
++    opponent_qte_min: float = 0.0
++    opponent_qte_max: float = 1.0
+     # District line tables (LINE_SET_C) and the lap. Required by the playable
+     # engine: match.py picks the opponent's whole line once per corner/turn
+     # from the match RNG, and the corners set the heat costs. `corners` is a
+diff -ru a/velocity_shift/simulation.py b/velocity_shift/simulation.py
+--- a/sim/velocity_shift/simulation.py	2026-11-19 09:14:36.946357295 -0800
++++ b/sim/velocity_shift/simulation.py	2026-11-19 09:14:37.098358391 -0800
+@@ -26,7 +26,7 @@
+ from typing import Callable
+ 
+ from .models import Stance, MatchConfig, MatchResult, ClashContext, CombatantStats
+-from .match import run_match, race_setup
++from .match import run_match, race_setup, opponent_qte_mean
+ from .combat import official_tracks, line_triples, parse_line, line_probs
+ from .equations import (
+     OPPONENT_QTE, CORNER_HEAT_PASSIVE, STAT_M_W, PACE_RES_T, PACE_RES_K, PACE_RES_LOOK, PACE_LOOKAHEAD,
+@@ -85,7 +85,7 @@
+             self._q_read = q_read
+             self._pace_q = c.player_pacing if c.player_pacing is not None else q_read
+             V = r ** kappa_for_length(T)
+-            php, pho = _phi(qt), _phi(OPPONENT_QTE)
++            php, pho = _phi(qt), _phi(opponent_qte_mean(c))
+             self._V, self._php, self._pho = V, php, pho
+             self._d_lock = V * (php[2] - php[1]) + (pho[1] - pho[0])
+             sh = build_shares(p.pow, p.en, p.han)

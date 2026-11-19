@@ -1,0 +1,4 @@
+{"live": ["2160", "9501b2130859e3c2334d1deb1a45fcb14ae8a19c759e7e413395d7596fcd4c03"], "patched": ["2160", "9501b2130859e3c2334d1deb1a45fcb14ae8a19c759e7e413395d7596fcd4c03"]}
+BIT-IDENTICAL
+82 passed in 1.30s
+(last line: pytest sim/tests on the patched copy; live copy: 82 passed too)

@@ -8,6 +8,11 @@
 
 ---
 
+## 2026-11-19 — AI QTE random, averaging 0.80: spread, boss retune, and the opponent_qte patch, draft (Barry, Systems)
+- **What:** `unapproved/barry/ai-heat-qte-v1/` gets a v2 section at the top of the README, plus `ai_qte80.py`, `v2.json`, `tables_v2.md`, `opponent_qte.patch`, `patch_identity_test.py/.txt` and `make_tables_v2.py`. The v1 recommendation (mean 0.90) is marked stale, not deleted. Nothing live changed. The heat rules are untouched.
+- **Why:** Austin, via Gordon (2026-11-19), set the AI QTE to seeded random each turn, averaging 0.80, and kept the AI's softer heat rules. He asked for the spread, real win rates, a boss retune that holds 60/60 ≥ 30 and 80/80 ≤ 95, and a patch that makes `MatchConfig.opponent_qte_ratio` actually work.
+- **Findings:** recommended spread is sd 0.08, clamped to 0.60-1.00, from a separate seeded RNG (sd 0.10 plays the same within 0.1 pt). At the live r every boss gets much easier (60/60 about 59-60, 80/80 96-99). Draft retune: Wangan r 1.040 (40.9 / 92.2) and Touge r 1.050 (32.5 / 92.3). Street can't hold on r alone, and a per-boss AI QTE mean, kappa, and POW- or HAN-heavy boss tunes all fail. An EN-heavy Street boss tune (25/25/50) at r 1.046 holds (32.0 / 93.8); that is a story and art point for Desmond and Arthur. The patch is bit-identical to live at its defaults (SHA-256 over 2,160 races; 82 tests pass). `winrate_g2_live_tracks_v1.json` needs regenerating if this goes live (not done).
+
 ## 2026-11-19 — AI heat check and AI QTE cap options, draft (Barry, Systems)
 - **What:** new `unapproved/barry/ai-heat-qte-v1/` (README, runner, results). Nothing live changed.
 - **Why:** Austin asked through Gordon that the sims run heat for the opponents too, and that the opponents' QTE be capped because a perfect 1.0 every turn isn't fun.
