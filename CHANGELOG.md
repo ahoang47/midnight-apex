@@ -8,24 +8,6 @@
 
 ---
 
-## 2026-11-19 — Arthur [art]: repoint art_direction Cel A reference from deleted cel_two_corner to `art/mockups/cel_shaded/`
-
----
-
-## 2026-11-19 — Arthur [art]: promote Cel A, 7.5 m v5, UI mockups and resource meters; delete two-corner tests
-
-- **Why:** Austin, 2026-11-19: "Let's promote the Cel A artwork and mockups. Approve any of the 7.5meter mockups. Approve the UI mockups. Approve the resource meters. Delete the two-corner test."
-- **Promoted:**
-  - `unapproved/arthur/experiments/cel_shaded/` → `art/mockups/cel_shaded/` (Cel A / Cel A soft study, including the current/A/B/soft frames).
-  - Mountain districts pass 5 (every road 7.5 m): `*_v5.png`, `mountain_districts_sheet_v5.png`, and the build scripts needed to reproduce them → `art/mockups/mountain_districts/`. Earlier passes (v1–v4) stay in `unapproved/arthur/mockups/mountain_districts/`.
-  - `unapproved/arthur/mockups/line_preview/` → `art/ui/line_preview/` (B.5d UI mockup, next to the other approved UI studies).
-  - `unapproved/arthur/mockups/resource_meters/` → `art/ui/resource_meters/`.
-- **Deleted:** `unapproved/arthur/experiments/cel_two_corner/` and `unapproved/arthur/experiments/wangan_two_corner/`.
-- **Left in unapproved:** `mockups/districts/`, `mockups/tight_districts/` (only Wangan is 7.5 m; touge 6.0 m, street 5.8 m), `mockups/tones/` (palette study, not Cel A), `mockups/overworld/`, and mountain v1–v4.
-- **Also:** vendored `build_wangan.py` into the mountain and tight Blender folders so those builds still run after the two-corner deletion. Path references inside the moved folders were updated. `design/art/art_direction.md` still cites the deleted `cel_two_corner` reference build; that doc was left unchanged in this commit.
-
----
-
 ## 2026-11-19 — Cleared 21 stale drafts from unapproved/barry (Barry, Systems)
 - Deleted (Austin 2026-11-19): econ-v1, econ-v1-live-tracks, mods-v1, skill-points-v1, story-xp-v1, xp-carry-v1 (already live); mods-v2-mk3-boss, skill-tree-v1, spirit-meter-v1, touge-lines-v1, corners-v1 (rejected, shelved, cut or paused); resources-v1..v4, slots-v1/v2, round-ladder-v1, round-order-v1, kid-length-v1, betting-v2-mods-v1 (superseded).
 - Kept, still open: mod-skill-v1, planner-v1, touge-race-parity.

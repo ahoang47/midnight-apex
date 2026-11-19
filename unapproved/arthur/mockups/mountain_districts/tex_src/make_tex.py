@@ -4,7 +4,7 @@ its identity). Starts from the tight_districts recipe (the two road strips + the
 mountain kit: retaining walls, house walls / roofs / windows, stone steps, the toll-road sign, and the valley light field.
 Tight-district textures (Arthur, unapproved mockup, Austin 2026-11-15: cat-and-mouse only, roads "a little tight").
 Hand-painted night values (everything is unlit in Godot), quantised RGB555 + 4x4 Bayer and saved lossless, the same
-recipe as the deleted wangan_two_corner tex_src/make_tex.py (vendored history).
+recipe as ../../../experiments/wangan_two_corner/tex_src/make_tex.py.
   python3 tex_src/make_tex.py  ->  godot/art/wangan_tight_road.png, godot/art/street_tight_road.png, godot/art/env/street_curvemirror.png
 Road strips: x = across the asphalt (u 0..1 = -half .. +half), y = metres along (one lamp period per tile)."""
 import os, random

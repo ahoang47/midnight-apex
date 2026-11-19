@@ -1,13 +1,13 @@
 # Blender 4.2 headless: the two new props for the tight-district cat-and-mouse frames (Arthur, unapproved mockup).
 #   /workspace/tools/blender-4.2.3-linux-x64/blender -b -P blender/build_tight.py
-# Reuses the Builder / mat / export helpers of blender/build_wangan.py (vendored from the deleted wangan_two_corner test; read and
+# Reuses the Builder / mat / export helpers of ../../../experiments/wangan_two_corner/blender/build_wangan.py (read and
 # exec'd up to its asset functions, so the conventions are identical), with this folder's texture / output paths.
 #   wangan_gantry_2l  : the Wangan sign gantry re-proportioned for the 7.5 m two-lane deck (two signs, posts outside the walls)
 #   street_curvemirror: the orange back-street curve mirror on a pole (painted convex face, never reflective)
 # Axes (Blender): +X = away from the road edge (or across the road for centred pieces), Y = along, Z = up.
 import bpy, os, json, math
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, 'build_wangan.py')
+SRC = os.path.normpath(os.path.join(HERE, '..', '..', '..', 'experiments', 'wangan_two_corner', 'blender', 'build_wangan.py'))
 code = open(SRC).read().split('# --- copied from districts')[0]
 exec(code)   # defines reset / mat / Builder / export and the TEX / OUT / STATS globals ...
 TEX = os.path.normpath(os.path.join(HERE, '..', 'godot', 'art', 'env'))      # ... re-pointed at this folder
