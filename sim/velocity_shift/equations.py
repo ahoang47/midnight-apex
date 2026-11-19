@@ -107,7 +107,7 @@ def resolve_stance(a: Stance, b: Stance) -> StanceOutcome:
 # Final settings from the final-v1 combat sweep (Austin's decisions of
 # 2026-11-09). Since 2026-11-13 the story ladder model in `progression.py`
 # runs on the econ-v1 block below and its G2 oracle
-# (`config/winrate_g2_econ_v1.json`); `config/winrate_n4000.json` is the
+# (`config/winrate_g2_live_tracks_v1.json`); `config/winrate_n4000.json` is the
 # legacy card-draw oracle and is no longer read by it. The playable engine
 # in combat.py / match.py uses this same model: LINE_SET_C line picks,
 # KAPPA_BY_LENGTH, OPPONENT_QTE, the visible QTE zone (`QTE_ZONE_WIDTH_105`,
@@ -334,7 +334,7 @@ GOOD_PLAY_Q = 0.8
 # econ-v1 approved and made live in commit 0af2715 (recalibrated to the live tracks in commit 6d3641f), on the
 # 7-rung ladder below (first drafted in the round-ladder-v1 study, which Austin did not approve on its own). Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
 # cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_live_tracks_v1.json since commit 6d3641f (the original
-# config/winrate_g2_econ_v1.json was built on the unapproved touge-lines-v1 draft laps; see that file). progression.py walks this ladder. Money is USD (x100 rescale).
+# draft-track table, built on the unapproved touge-lines-v1 laps, was deleted 2026-11-19). progression.py walks this ladder. Money is USD (x100 rescale).
 # Stand-ins pending playtest: all XP numbers, the MYTH4 price ($8,000, MOD_PRICE_STANDIN), every finale-arc opponent.
 
 # ── Round structure (canon 2026-11-13: one district per round, one crew each, no rematches) ──

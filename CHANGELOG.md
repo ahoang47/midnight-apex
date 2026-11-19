@@ -8,6 +8,19 @@
 
 ---
 
+## 2026-11-19 — Barry [cleanup]: dropped winrate_g2_econ_v1.json, window mods and the broken slots-v2 helper scripts (Austin go-ahead 2026-11-19)
+- **Why:** Austin: "drop those 3. Drop the helper scripts."
+- **Deleted `sim/config/winrate_g2_econ_v1.json`.**
+  - No code has loaded it since 6d3641f (grep: no loader in sim/), and it was built on the unapproved touge-lines-v1 draft laps.
+  - References now name the live table, `sim/config/winrate_g2_live_tracks_v1.json`: design/01 (the progression module row and the Progression line, which wrongly called the old file the live oracle), design/02 §Cap, and two comments in equations.py.
+- **Window mods dropped as a mechanic (Austin 2026-11-19).**
+  - The design docs mark them stale rather than deleting them: design/01 canon mod-slot line, design/02 knot note, design/07 aero-evidence and unique-QTE example.
+  - Sim code is unchanged. `MatchConfig.qte_window_mod` (default 0.0; used in match.py, cli.py and simulation.py) stays, because removing it touches the engine and the Godot parity CI (Desmond's process).
+- **Deleted the broken helpers** in `design/notes/slots-v2/`:
+  - `floor_cost.py` and `b3_check.py` imported the deleted `unapproved/barry/slots-v2`.
+  - `rebuild_winrate_table.py` read `/workspace/barry-drafts/lines-v1`, which is outside the repo.
+  - Kept: `spotcheck.py` and all the result JSONs. The folder README and the `winrate_n4000.json` provenance string no longer name the scripts; this is a string change only, and the table data is identical.
+- Not touched: the 7-rung ladder (pending Austin) and design/notes/qte-v1. Sim tests 82/82 pass.
 ## 2026-11-19 — Gordon [godot]: restore the two-corner playtest on touge-race (UNAPPROVED)
 
 - **Why:** Austin, 2026-11-19: "push the two-corner test to this branch so Arthur's notes have a place to go." `art/mockups/cel_two_corner/` (7257aad) and its `stage.py` point at `unapproved/gordon/two-corner/godot`, but that folder was kept off master in the proto-build merge (ba78d31), so touge-race didn't have it.
