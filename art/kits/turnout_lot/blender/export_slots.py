@@ -22,7 +22,6 @@ def envi(n, d):
 ROAD_W = envf('ROAD_W', 7.5)
 POCKET_M = envf('POCKET_M', 62.0)
 TAPER_M = envf('TAPER_M', 14.0)
-POCKET_W = envf('POCKET_W', 16.0)
 ROWS = envi('ROWS', 2)
 N_LAMPS = max(2, min(4, envi('N_LAMPS', 2)))
 STALL_W = envf('STALL_W', 2.5)
@@ -31,10 +30,36 @@ STALL_ANGLE = envf('STALL_ANGLE', 70.0)
 CURB_H = envf('CURB_H', 0.15)
 ISLAND_0 = envf('ISLAND_0', 0.1)
 ISLAND_1 = envf('ISLAND_1', 0.7)
+AISLE_CLEAR_M = envf('AISLE_CLEAR_M', 6.0)
 OUT_TAG = os.environ.get('OUT_TAG', 'w16')
+
+def _stall_perp():
+    return STALL_D * math.sin(math.radians(STALL_ANGLE))
+
+def _ref16_aisle1():
+    """Aisle end (x) of the approved 16 m kit (f771ab9), which squeezed the
+    two rows and left only ~3.13 m of aisle (Gordon: x 0.75 to 3.88)."""
+    perp = _stall_perp()
+    aisle0 = ISLAND_1 + 0.05
+    # same squeeze as f771ab9: mid_x = (aisle0 + 0.4 + back_row_x - perp/2) / 2
+    mid_x = (aisle0 + 0.4 + 16.0 - perp) * 0.5
+    return mid_x - perp * 0.5
+
+def default_pocket_w():
+    # Widen only the through-aisle to AISLE_CLEAR_M; keep both stall rows and
+    # the gap between them exactly as in the 16 m kit.
+    # 0.75 + 6.0 + (16.0 - 3.876536896070459) = 18.87346310392954 m
+    return (ISLAND_1 + 0.05 + AISLE_CLEAR_M) + (16.0 - _ref16_aisle1())
+
+POCKET_W = envf('POCKET_W', default_pocket_w())
 RH = ROAD_W * 0.5
 MID_A, MID_B = TAPER_M, POCKET_M - TAPER_M
 MID_LEN = MID_B - MID_A
+# P sign: centred on the island (0.4 m), past the taper mouth, out of every drive path.
+# Was x=1.15, z=13 (in the entry aisle / taper mouth; near-lane cars grazed it).
+SIGN_X = 0.5 * (ISLAND_0 + ISLAND_1)
+SIGN_Z = MID_A + 1.0
+SIGN_PLATE_W = 0.52  # fits on the 0.6 m island (x 0.10–0.70)
 
 # Approved kit writes to glb/; a non-default tag (e.g. w11) goes to glb/<tag>/.
 if OUT_TAG in ('', 'w16'):
@@ -224,28 +249,25 @@ def stall_layout():
     ang = math.radians(STALL_ANGLE)
     spacing = STALL_W / max(0.35, math.sin(ang))
     perp = STALL_D * math.sin(ang)
-    # one row along the back; optional second row for 16 m
+    # Through-aisle is a hard clear width after the island. Two stall rows
+    # sit behind it; the back row is against the back curb. Default pocket
+    # depth keeps the 16 m kit's inter-row gap and only widens this aisle.
     back = POCKET_W
     aisle0 = ISLAND_1 + 0.05
-    # back row: stalls occupy [back-perp, back]
+    aisle1 = aisle0 + AISLE_CLEAR_M
     back_row_x = back - perp * 0.5
     rows = [('back', back_row_x)]
     if ROWS >= 2:
-        # second row closer to the aisle, leaving a small mid gap
-        mid_x = aisle0 + 5.5 + perp * 0.5
-        # keep a gap from the back row
-        if mid_x + perp * 0.5 < back_row_x - perp * 0.5 - 0.4:
-            rows.insert(0, ('centre', mid_x))
-        else:
-            mid_x = (aisle0 + 0.4 + back_row_x - perp * 0.5) * 0.5
-            rows.insert(0, ('centre', mid_x))
+        mid_x = aisle1 + perp * 0.5
+        rows.insert(0, ('centre', mid_x))
     row_a, row_b = MID_A + 1.2, MID_B - 1.2
     n_st = max(1, int(math.floor((row_b - row_a) / spacing)))
     st0 = 0.5 * (row_a + row_b) - n_st * spacing * 0.5
     return {
         'ang': ang, 'spacing': spacing, 'perp': perp, 'rows': rows,
         'row_a': row_a, 'row_b': row_b, 'n_st': n_st, 'st0': st0,
-        'aisle0': aisle0, 'aisle1': (rows[0][1] - perp * 0.5) if rows else back - perp,
+        'aisle0': aisle0, 'aisle1': aisle1,
+        'aisle_clear_m': AISLE_CLEAR_M,
     }
 
 def lamp_zs():
@@ -532,10 +554,10 @@ def build_props():
     blue = mat('lot_sign_blue', 'lot_paint_blue', 'prop', 'Closest')
     white = mat('lot_sign_p', 'lot_paint_white', 'prop', 'Closest')
     face = mat('lot_sign_face', 'lot_sign_face', 'prop', 'Closest')
-    sx, sz = ISLAND_1 + 0.45, MID_A - 1.0
+    sx, sz = SIGN_X, SIGN_Z
     # post sits BEHIND the plate (deeper in +Z) so it no longer splits the P
     bs.cyl((sx, 0, sz + 0.10), 0.045, 0.04, 2.70, metal, n=6, uvscale=1.0)
-    pw, ph, pt = 0.78, 0.98, 0.07
+    pw, ph, pt = SIGN_PLATE_W, 0.90, 0.07
     y0 = 1.62
     # solid blue plate fully in front of the post, facing incoming traffic (-Z)
     bs.box((sx, y0, sz - 0.06), (pw, ph, pt), blue, uvscale=1.0)
@@ -962,8 +984,8 @@ def render_views():
                         (-2.0, 2.3, MID_A - 4.0),
                         (3.0, 0.3, MID_A + 8.0), 40.0)
     close_sign = make_camera('close_sign',
-                             (ISLAND_1 + 0.45, 2.10, MID_A - 4.2),
-                             (ISLAND_1 + 0.45, 2.10, MID_A - 1.0), 32.0)
+                             (SIGN_X, 2.10, SIGN_Z - 3.2),
+                             (SIGN_X, 2.10, SIGN_Z), 32.0)
     mask_by_kind, dmat = make_override_mats()
     shots = (('race_cam', race), ('overhead', over), ('close_paint', close), ('close_sign', close_sign))
     render_all(scene, shots, mask_by_kind, dmat)
@@ -978,6 +1000,8 @@ def write_layout():
         'stall_w_m': STALL_W, 'stall_d_m': STALL_D, 'stall_angle_deg': STALL_ANGLE,
         'stall_spacing_m': lay['spacing'], 'curb_h_m': CURB_H,
         'island_d_m': [ISLAND_0, ISLAND_1],
+        'aisle_clear_m': AISLE_CLEAR_M,
+        'sign_m': {'x': SIGN_X, 'z': SIGN_Z, 'plate_w_m': SIGN_PLATE_W},
         'lamp_z_m': lamp_zs(), 'pool_radius_m': pool_radius(),
         'aisle_x_m': [lay['aisle0'], lay['aisle1']],
         'piece_tris': STATS,

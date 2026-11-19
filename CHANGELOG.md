@@ -8,6 +8,8 @@
 
 ---
 
+## 2026-11-19 — Arthur [art]: deepen turnout lot to 18.8735 m for a clear 6.0 m aisle; P sign on the island
+
 ## 2026-11-19 — Arthur [art]: approved 16 m two-row turnout lot kit, Godot LotArt frame, per-child glbs
 
 ## 2026-11-19 — Docs for the AI QTE go-live; econ re-walk draft (Barry, Systems)

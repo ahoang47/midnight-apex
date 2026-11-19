@@ -1,8 +1,9 @@
 {
+  "tag": "w16",
   "frame": "LotArt: origin=road edge at entrance, +X into lot, +Y up, +Z along travel (Godot Y-up)",
   "pocket_m": 62.0,
   "taper_m": 14.0,
-  "pocket_w_m": 16.0,
+  "pocket_w_m": 18.87346310392954,
   "rows": 2,
   "n_lamps": 2,
   "n_stalls_per_row": 11,
@@ -15,6 +16,12 @@
     0.1,
     0.7
   ],
+  "aisle_clear_m": 6.0,
+  "sign_m": {
+    "x": 0.39999999999999997,
+    "z": 15.0,
+    "plate_w_m": 0.52
+  },
   "lamp_z_m": [
     21.48,
     40.519999999999996
@@ -22,7 +29,7 @@
   "pool_radius_m": 6.0,
   "aisle_x_m": [
     0.75,
-    3.876536896070459
+    6.75
   ],
   "piece_tris": [
     {
@@ -78,8 +85,8 @@
     "lot_wheel_stops.glb": "WheelStops",
     "lot_back_wall.glb": "BackWall",
     "lot_hill_top.glb": "HillTop",
-    "lot_lamps.glb": "Lamps",
-    "lot_props.glb": "Props",
+    "lot_lamps.glb (Lamp children) / lot_lamp.glb": "Lamps",
+    "lot_props.glb (Sign, Vending)": "Props",
     "lot_road_paint.glb": "LotArt"
   },
   "total_tris": 1444

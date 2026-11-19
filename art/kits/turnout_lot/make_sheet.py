@@ -41,10 +41,10 @@ def main():
     race = load(race_name, 2)
     over = load(over_name, 2)
     closes = [
-        ('16 m  ·  two-row stalls', 'w16_close_paint_640.png'),
-        ('16 m  ·  P sign', 'w16_close_sign_640.png'),
-        ('16 m  ·  Blender race cam', 'w16_race_cam_640.png'),
-        ('16 m  ·  Blender overhead', 'w16_overhead_640.png'),
+        ('two-row stalls', 'w16_close_paint_640.png'),
+        ('P sign on the island', 'w16_close_sign_640.png'),
+        ('Blender race cam', 'w16_race_cam_640.png'),
+        ('Blender overhead', 'w16_overhead_640.png'),
     ]
     close_ims = [(lab, load(fn, 1)) for lab, fn in closes if os.path.exists(os.path.join(RND, fn))]
 
@@ -57,7 +57,7 @@ def main():
     d = ImageDraw.Draw(im)
 
     d.rectangle([0, 0, W, header - 8], fill=(8, 12, 22))
-    d.text((pad, 14), 'TOUGE TURNOUT  ·  approved 16 m two-row kit  ·  Cel A soft', font=F(28, True), fill=ACC)
+    d.text((pad, 14), 'TOUGE TURNOUT  ·  approved two-row kit, 6 m aisle  ·  Cel A soft', font=F(28, True), fill=ACC)
     d.text((pad, 52), 'art/kits/turnout_lot  ·  LotArt frame  ·  640×480, RGB555 + Bayer  ·  night navy/teal + #F0C894',
            font=F(16), fill=DIM)
 
