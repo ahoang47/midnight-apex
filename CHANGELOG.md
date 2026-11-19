@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-19 — 7-rung ladder confirmed approved via econ-v1 (Barry, Systems)
+- `sim/velocity_shift/equations.py` comment: the 7-rung opponent ladder (first drafted in round-ladder-v1) is now cited as approved as part of econ-v1 (0af2715). Comment only, no code or numbers changed.
+- Why: Austin chose to keep the ladder and treat it as approved via econ-v1 (2026-11-19), so the reference points at an approved version.
+
 ## 2026-11-19 — Barry [cleanup]: dropped winrate_g2_econ_v1.json, window mods and the broken slots-v2 helper scripts (Austin go-ahead 2026-11-19)
 - **Why:** Austin: "drop those 3. Drop the helper scripts."
 - **Deleted `sim/config/winrate_g2_econ_v1.json`.**

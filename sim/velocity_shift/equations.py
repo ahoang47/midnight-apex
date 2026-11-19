@@ -332,7 +332,7 @@ GOOD_PLAY_Q = 0.8
 # econ-v1: XP / mods / economy on the 3-round ladder (Barry; Austin go-ahead 2026-11-13, "Yeah works for now")
 # ══════════════════════════════════════════════════════════════════════
 # econ-v1 approved and made live in commit 0af2715 (recalibrated to the live tracks in commit 6d3641f), on the
-# 7-rung ladder below (first drafted in the round-ladder-v1 study, which Austin did not approve on its own). Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
+# 7-rung ladder below (first drafted in the round-ladder-v1 study, approved as part of econ-v1, commit 0af2715; Austin confirmed 2026-11-19). Variant C (Austin 2026-11-13 middle ground): 80/80 about 90 % against bosses at the level
 # cap, 60/60 at least 30 % on every boss variant. Win-rate oracle: config/winrate_g2_live_tracks_v1.json since commit 6d3641f (the original
 # draft-track table, built on the unapproved touge-lines-v1 laps, was deleted 2026-11-19). progression.py walks this ladder. Money is USD (x100 rescale).
 # Stand-ins pending playtest: all XP numbers, the MYTH4 price ($8,000, MOD_PRICE_STANDIN), every finale-arc opponent.
