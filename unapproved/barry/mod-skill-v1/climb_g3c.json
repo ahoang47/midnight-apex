@@ -1,0 +1,802 @@
+{
+ "floors": [
+  [
+   3000,
+   3055,
+   3110,
+   3165,
+   3220,
+   3275,
+   3392
+  ],
+  [
+   3392,
+   3474,
+   3556,
+   3638,
+   3720,
+   3802,
+   3904
+  ],
+  [
+   3904,
+   3992,
+   4080,
+   4168,
+   4256,
+   4344,
+   4467
+  ]
+ ],
+ "budgets": [
+  [
+   293.98,
+   306.16,
+   309.14,
+   317.38,
+   325.1,
+   331.98,
+   332.58
+  ],
+  [
+   318.65,
+   340.56,
+   348.93,
+   362.05,
+   372.82,
+   383.0,
+   390.35
+  ],
+  [
+   354.33,
+   383.85,
+   393.8,
+   404.82,
+   415.79,
+   426.72,
+   437.06
+  ]
+ ],
+ "max": [
+  [
+   3195,
+   3250,
+   3305,
+   3360,
+   3415,
+   3470,
+   3532
+  ],
+  [
+   3712,
+   3794,
+   3876,
+   3958,
+   4040,
+   4044,
+   4044
+  ],
+  [
+   4254,
+   4342,
+   4430,
+   4518,
+   4606,
+   4628,
+   4628
+  ]
+ ],
+ "rows": [
+  {
+   "d": "street",
+   "rung": "boss",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3392,
+   "r": 1.0199,
+   "win": 66.87
+  },
+  {
+   "d": "street",
+   "rung": "boss",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3392,
+   "r": 1.0199,
+   "win": 2.28
+  },
+  {
+   "d": "street",
+   "rung": "boss",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3532,
+   "r": 1.062,
+   "win": 32.63
+  },
+  {
+   "d": "street",
+   "rung": "boss",
+   "prof": "80/80",
+   "build": "max",
+   "pts": 3532,
+   "r": 1.062,
+   "win": 94.5
+  },
+  {
+   "d": "wangan",
+   "rung": "boss",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3904,
+   "r": 1.0001,
+   "win": 66.05
+  },
+  {
+   "d": "wangan",
+   "rung": "boss",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3904,
+   "r": 1.0001,
+   "win": 1.53
+  },
+  {
+   "d": "wangan",
+   "rung": "boss",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4044,
+   "r": 1.036,
+   "win": 35.9
+  },
+  {
+   "d": "wangan",
+   "rung": "boss",
+   "prof": "80/80",
+   "build": "max",
+   "pts": 4044,
+   "r": 1.036,
+   "win": 89.6
+  },
+  {
+   "d": "touge",
+   "rung": "boss",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 4467,
+   "r": 1.0221,
+   "win": 67.65
+  },
+  {
+   "d": "touge",
+   "rung": "boss",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 4467,
+   "r": 1.0221,
+   "win": 2.93
+  },
+  {
+   "d": "touge",
+   "rung": "boss",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4628,
+   "r": 1.0589,
+   "win": 38.6
+  },
+  {
+   "d": "touge",
+   "rung": "boss",
+   "prof": "80/80",
+   "build": "max",
+   "pts": 4628,
+   "r": 1.0589,
+   "win": 94.77
+  },
+  {
+   "d": "street",
+   "rung": "oh2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3275,
+   "r": 0.9865,
+   "win": 71.02
+  },
+  {
+   "d": "street",
+   "rung": "oh2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3275,
+   "r": 0.9865,
+   "win": 0.93
+  },
+  {
+   "d": "street",
+   "rung": "oh2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3470,
+   "r": 1.0452,
+   "win": 70.13
+  },
+  {
+   "d": "wangan",
+   "rung": "oh2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3802,
+   "r": 0.9927,
+   "win": 70.02
+  },
+  {
+   "d": "wangan",
+   "rung": "oh2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3802,
+   "r": 0.9927,
+   "win": 1.23
+  },
+  {
+   "d": "wangan",
+   "rung": "oh2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4044,
+   "r": 1.0559,
+   "win": 66.7
+  },
+  {
+   "d": "touge",
+   "rung": "oh2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 4344,
+   "r": 1.018,
+   "win": 70.85
+  },
+  {
+   "d": "touge",
+   "rung": "oh2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 4344,
+   "r": 1.018,
+   "win": 4.95
+  },
+  {
+   "d": "touge",
+   "rung": "oh2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4628,
+   "r": 1.0846,
+   "win": 77.22
+  },
+  {
+   "d": "street",
+   "rung": "oh1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3220,
+   "r": 0.9905,
+   "win": 76.7
+  },
+  {
+   "d": "street",
+   "rung": "oh1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3220,
+   "r": 0.9905,
+   "win": 2.1
+  },
+  {
+   "d": "street",
+   "rung": "oh1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3415,
+   "r": 1.0504,
+   "win": 76.87
+  },
+  {
+   "d": "wangan",
+   "rung": "oh1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3720,
+   "r": 0.9978,
+   "win": 74.17
+  },
+  {
+   "d": "wangan",
+   "rung": "oh1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3720,
+   "r": 0.9978,
+   "win": 2.38
+  },
+  {
+   "d": "wangan",
+   "rung": "oh1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4040,
+   "r": 1.0836,
+   "win": 83.05
+  },
+  {
+   "d": "touge",
+   "rung": "oh1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 4256,
+   "r": 1.0236,
+   "win": 75.35
+  },
+  {
+   "d": "touge",
+   "rung": "oh1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 4256,
+   "r": 1.0236,
+   "win": 8.1
+  },
+  {
+   "d": "touge",
+   "rung": "oh1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4606,
+   "r": 1.1078,
+   "win": 88.8
+  },
+  {
+   "d": "street",
+   "rung": "mat2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3165,
+   "r": 0.9972,
+   "win": 81.85
+  },
+  {
+   "d": "street",
+   "rung": "mat2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3165,
+   "r": 0.9972,
+   "win": 4.73
+  },
+  {
+   "d": "street",
+   "rung": "mat2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3360,
+   "r": 1.0587,
+   "win": 82.88
+  },
+  {
+   "d": "wangan",
+   "rung": "mat2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3638,
+   "r": 1.0048,
+   "win": 78.93
+  },
+  {
+   "d": "wangan",
+   "rung": "mat2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3638,
+   "r": 1.0048,
+   "win": 6.07
+  },
+  {
+   "d": "wangan",
+   "rung": "mat2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3958,
+   "r": 1.0932,
+   "win": 86.93
+  },
+  {
+   "d": "touge",
+   "rung": "mat2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 4168,
+   "r": 1.0296,
+   "win": 79.9
+  },
+  {
+   "d": "touge",
+   "rung": "mat2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 4168,
+   "r": 1.0296,
+   "win": 13.98
+  },
+  {
+   "d": "touge",
+   "rung": "mat2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4518,
+   "r": 1.1161,
+   "win": 91.67
+  },
+  {
+   "d": "street",
+   "rung": "mat1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3110,
+   "r": 1.006,
+   "win": 87.02
+  },
+  {
+   "d": "street",
+   "rung": "mat1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3110,
+   "r": 1.006,
+   "win": 10.35
+  },
+  {
+   "d": "street",
+   "rung": "mat1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3305,
+   "r": 1.0691,
+   "win": 87.3
+  },
+  {
+   "d": "wangan",
+   "rung": "mat1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3556,
+   "r": 1.0191,
+   "win": 86.12
+  },
+  {
+   "d": "wangan",
+   "rung": "mat1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3556,
+   "r": 1.0191,
+   "win": 20.2
+  },
+  {
+   "d": "wangan",
+   "rung": "mat1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3876,
+   "r": 1.1108,
+   "win": 90.6
+  },
+  {
+   "d": "touge",
+   "rung": "mat1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 4080,
+   "r": 1.0361,
+   "win": 84.58
+  },
+  {
+   "d": "touge",
+   "rung": "mat1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 4080,
+   "r": 1.0361,
+   "win": 21.22
+  },
+  {
+   "d": "touge",
+   "rung": "mat1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4430,
+   "r": 1.1249,
+   "win": 93.38
+  },
+  {
+   "d": "street",
+   "rung": "kid2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3055,
+   "r": 0.9978,
+   "win": 91.18
+  },
+  {
+   "d": "street",
+   "rung": "kid2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3055,
+   "r": 0.9978,
+   "win": 17.13
+  },
+  {
+   "d": "street",
+   "rung": "kid2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3250,
+   "r": 1.0615,
+   "win": 86.33
+  },
+  {
+   "d": "wangan",
+   "rung": "kid2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3474,
+   "r": 1.0201,
+   "win": 90.8
+  },
+  {
+   "d": "wangan",
+   "rung": "kid2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3474,
+   "r": 1.0201,
+   "win": 32.5
+  },
+  {
+   "d": "wangan",
+   "rung": "kid2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3794,
+   "r": 1.114,
+   "win": 82.45
+  },
+  {
+   "d": "touge",
+   "rung": "kid2",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3992,
+   "r": 1.04,
+   "win": 90.0
+  },
+  {
+   "d": "touge",
+   "rung": "kid2",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3992,
+   "r": 1.04,
+   "win": 38.03
+  },
+  {
+   "d": "touge",
+   "rung": "kid2",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4342,
+   "r": 1.1312,
+   "win": 90.75
+  },
+  {
+   "d": "street",
+   "rung": "kid1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3000,
+   "r": 1.0205,
+   "win": 97.85
+  },
+  {
+   "d": "street",
+   "rung": "kid1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3000,
+   "r": 1.0205,
+   "win": 48.18
+  },
+  {
+   "d": "street",
+   "rung": "kid1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3195,
+   "r": 1.0868,
+   "win": 92.92
+  },
+  {
+   "d": "wangan",
+   "rung": "kid1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3392,
+   "r": 1.0645,
+   "win": 97.4
+  },
+  {
+   "d": "wangan",
+   "rung": "kid1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3392,
+   "r": 1.0645,
+   "win": 73.32
+  },
+  {
+   "d": "wangan",
+   "rung": "kid1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 3712,
+   "r": 1.1649,
+   "win": 92.9
+  },
+  {
+   "d": "touge",
+   "rung": "kid1",
+   "prof": "80/80",
+   "build": "floor",
+   "pts": 3904,
+   "r": 1.1018,
+   "win": 98.35
+  },
+  {
+   "d": "touge",
+   "rung": "kid1",
+   "prof": "60/60",
+   "build": "floor",
+   "pts": 3904,
+   "r": 1.1018,
+   "win": 82.58
+  },
+  {
+   "d": "touge",
+   "rung": "kid1",
+   "prof": "60/60",
+   "build": "max",
+   "pts": 4254,
+   "r": 1.2006,
+   "win": 99.5
+  }
+ ],
+ "curves": {
+  "street": [
+   97.85,
+   91.18,
+   87.02,
+   81.85,
+   76.7,
+   71.02,
+   66.87
+  ],
+  "wangan": [
+   97.4,
+   90.8,
+   86.12,
+   78.93,
+   74.17,
+   70.02,
+   66.05
+  ],
+  "touge": [
+   98.35,
+   90.0,
+   84.58,
+   79.9,
+   75.35,
+   70.85,
+   67.65
+  ]
+ },
+ "score": {
+  "G1a": [
+   66.87,
+   66.05,
+   67.65
+  ],
+  "G1b": [
+   1.7,
+   1.85,
+   1.78
+  ],
+  "G2a": [
+   32.63,
+   "street boss"
+  ],
+  "G3a": [
+   [
+    true,
+    30.98
+   ],
+   [
+    true,
+    31.35
+   ],
+   [
+    true,
+    30.7
+   ]
+  ],
+  "G3b": [
+   34.24,
+   30.15,
+   29.05
+  ],
+  "G4a": 66.05,
+  "G4b": [
+   2.28,
+   1.53,
+   2.93
+  ],
+  "G5": [
+   94.5,
+   89.6,
+   94.77
+  ],
+  "G3c": [
+   [
+    6.67,
+    4.16,
+    5.17,
+    5.15,
+    5.68,
+    4.15
+   ],
+   [
+    6.6,
+    4.68,
+    7.19,
+    4.76,
+    4.15,
+    3.97
+   ],
+   [
+    8.35,
+    5.42,
+    4.68,
+    4.55,
+    4.5,
+    3.2
+   ]
+  ],
+  "boss_6060_max": [
+   32.63,
+   35.9,
+   38.6
+  ]
+ },
+ "P": {
+  "G1a": true,
+  "G1b": true,
+  "G2a": true,
+  "G3a": true,
+  "G3b": true,
+  "G4a": true,
+  "G4b": true,
+  "G5": true,
+  "G3c": true
+ }
+}

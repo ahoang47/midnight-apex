@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-19 — DRAFT: mod_skill strictly rising climb, criterion G3c (Barry, Systems; unapproved, Austin direction)
+- **Austin (direct, 6:31 PM PT):** "Do whatever it takes to make it such that it gets harder the higher up the ladder it goes." New G3c in SETUP-STUDY.md: strong 80/80 at the floor falls strictly kid1 → boss, every step ≥ 3.0, every cell n 6,000.
+- **Stats:** Wangan oh1 budget 373.74 → 372.82 (71.88 → 74.17), Touge oh1 416.82 → 415.79 (73.15 → 75.35). All other steps already ≥ 3.0 at n 6,000; boss and oh2 untouched.
+- **Climb (80/80 at floor):** Street 97.85 / 91.18 / 87.02 / 81.85 / 76.70 / 71.02 / 66.87; Wangan 97.40 / 90.80 / 86.12 / 78.93 / 74.17 / 70.02 / 66.05; Touge 98.35 / 90.00 / 84.58 / 79.90 / 75.35 / 70.85 / 67.65. Min step 3.20 (Touge oh2 → boss).
+- **Scorecard (`climb_g3c.py`, all cells n 6,000): 10/10.** G1b 1.70 / 1.85 / 1.78, G3a drop 30.98 / 31.35 / 30.70; others unchanged. R1 journey unchanged (Street stats unchanged): strong 15.1, weak 36.2, weak + NM 32.0 attempts.
+- Nothing live; sim/ untouched.
+
 ## 2026-11-19 — DRAFT: mod_skill old head (oh2) at ~70 %, boss 66-68 % (Barry, Systems; unapproved, Austin direction)
 - **Austin (direct, 6:26 PM PT card answer):** "Make the old head a bit easier, about 70%, and keep the boss at 66-68%". Fixes the flat climb top of 255db46. Stats only; boss and boss floor untouched.
 - **oh2 budget:** Street 332.93 → 331.98, Wangan 384.44 → 383.00, Touge 426.72 unchanged (`oh2_70.py`, n 6,000). Strong at floor oh2 / boss: 71.02 / 66.87, 70.02 / 66.05, 70.85 / 67.65.

@@ -12,7 +12,34 @@
 > `climb65.py` → `climb65.json` (scorecard), `journey_shop.py` → `journey_shop.json` (journeys with mod purchases).
 > Nothing live; `sim/` untouched.
 
-### 0.0 UPDATE 2026-11-19 6:26 PM PT: old head (oh2) at ~70 %, boss 66-68 % (Barry DRAFT, unapproved)
+### 0.00 UPDATE 2026-11-19 6:31 PM PT: strictly rising climb, new criterion G3c (Barry DRAFT, unapproved)
+> **Austin (direct):** "Do whatever it takes to make it such that it gets harder the higher up the ladder it goes."
+> **New criterion G3c (hard rule):** strong 80/80 at the floor falls strictly kid1 > kid2 > mat1 > mat2 > oh1 > oh2 > boss in
+> every district, **each step ≥ 3.0 points**, every rung measured at n = 6,000. G1-G5 thresholds otherwise unchanged (G1a 65-70
+> as revised). Code: `climb_strict.py` → `climb_strict.json` (all rungs re-measured at 6,000, top-down repair),
+> `climb_g3c.py` → `climb_g3c.json` (scorecard, every cell 6,000), `journey_g3c.py` → `journey_g3c.json`. Nothing live.
+
+- **Stats changed (rung budget, stats only):** Wangan oh1 373.74 → **372.82** (r 0.9953 → 0.9978; 80/80 71.88 → 74.17);
+  Touge oh1 416.82 → **415.79** (r 1.0211 → 1.0236; 73.15 → 75.35, its oh1 → oh2 step was 2.30). Nothing else needed: at
+  n = 6,000 every other step was already ≥ 3.0. Boss and oh2 untouched.
+- **Climb, strong 80/80 at the floor (n = 6,000 every cell), steps in brackets:**
+
+| District | kid1 | kid2 | mat1 | mat2 | oh1 | oh2 | boss |
+|---|---|---|---|---|---|---|---|
+| Street | 97.85 | 91.18 (6.67) | 87.02 (4.16) | 81.85 (5.17) | 76.70 (5.15) | 71.02 (5.68) | 66.87 (4.15) |
+| Wangan | 97.40 | 90.80 (6.60) | 86.12 (4.68) | 78.93 (7.19) | 74.17 (4.76) | 70.02 (4.15) | 66.05 (3.97) |
+| Touge | 98.35 | 90.00 (8.35) | 84.58 (5.42) | 79.90 (4.68) | 75.35 (4.55) | 70.85 (4.50) | 67.65 (3.20) |
+
+- **Scorecard: 10/10** (9 + G3c). Moved vs 0.0: G1b 1.70 / 1.93 / 1.79 → **1.70 / 1.85 / 1.78**; G3a drop 31.18 / 31.0 /
+  31.0 → **30.98 / 31.35 / 30.70** (kid1 now at n = 6,000); G3c min step **3.20** (Touge oh2 → boss, the tightest margin).
+  Unchanged: G1a 66.87 / 66.05 / 67.65, G2a 32.63 (Street boss), G3b +34.2 / +30.2 / +29.1, G4a 66.05, G4b 2.28 / 1.53 / 2.93,
+  G5 94.5 / 89.6 / 94.77.
+- **R1 journey with purchases:** Street stats are unchanged, so it reproduces 0.0 exactly: strong 15.1 attempts, weak
+  mandatory-only 36.2, weak + non-mandatory (cap 15) 32.0 with 6.0 NM wins; $6,600 on mods, 0 XP lost, 0 stuck.
+- **Stale in 0.0 below:** its climb table (2,000-race cells for kid1-oh1), the Wangan oh1 → oh2 question (answered: 74.17 →
+  70.02), G1b and G3a drop.
+
+### 0.0 UPDATE 2026-11-19 6:26 PM PT: old head (oh2) at ~70 %, boss 66-68 % (Barry DRAFT, unapproved) (climb table, Wangan oh1 note, G1b, G3a drop STALE, see 0.00)
 > **Austin (direct, card answer):** "Make the old head a bit easier, about 70%, and keep the boss at 66-68%". Fixes the flat
 > climb top in the 255db46 variant. Stats only; boss stats and boss floor untouched. Code: `oh2_70.py` → `oh2_70.json`
 > (bisection, n = 6,000), `climb70.py` → `climb70.json` (scorecard; oh2 and boss cells n = 6,000), `journey_oh2_70.py` →
@@ -126,6 +153,7 @@ q(a) = min(0.80, 0.50 + 0.30·a/40), a = race attempts made so far in the round 
 | G3b | Reading matters (learn the lines) | boss: 80/80 at mandatory build − 60/60 at max build | **≥ +10 pts** every round | A good reader without grinding must beat a poor reader who maxed the car |
 | G4a | Challenge before full stats | min over story rungs of 80/80 at the floor (no non-mandatory XP) | **≥ 40 %** every round | A strong reader at the floor should be able to take every rung with a realistic chance |
 | G4b | Brutal for weak readers | 60/60 boss win % at the floor | **≤ 10 %** every round | Weak readers must grind; at the floor the boss is near-closed to them |
+| G3c | Strictly rising climb (added 2026-11-19 6:31 PM PT, Austin: "Do whatever it takes to make it such that it gets harder the higher up the ladder it goes.") | 80/80 at the floor, every step kid1 → boss, n = 6,000 | **strictly falling, each step ≥ 3.0** every district | Austin's hard rule |
 | G5 | Non-mandatory cap | an explicit cap exists AND 80/80 boss win at the max build | **cap set, ≤ 95 %** every round | The cap must keep the boss a skill check (approved 80/80 ≤ 95) |
 
 ## 2. Setups simulated (live SimulationRunner, seeded; code `setup_study.py` → `setup_study.json`, `journey_setups.py` → `journey_setups.json`, scoring `setup_score.py` → `setup_score.json`)
