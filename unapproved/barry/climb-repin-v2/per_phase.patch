@@ -56,20 +56,59 @@ index 1902fe4..602e2ab 100644
 +        return 1.0
 +    return round_qte_score(max(0.0, 1.0 - abs(rng.gauss(0.0, sigma_over_a0)) / width_over_w0))
 diff --git a/sim/velocity_shift/heat.py b/sim/velocity_shift/heat.py
-index ebc7ac9..0d6cdbd 100644
+index ebc7ac9..0c73d8f 100644
 --- a/sim/velocity_shift/heat.py
 +++ b/sim/velocity_shift/heat.py
-@@ -151,6 +151,9 @@ class HeatGauges:
+@@ -151,6 +151,10 @@ class HeatGauges:
          self.load = [0.0, 0.0, 0.0]
          self.locked = [False, False, False]
          self.uses = [0, 0, 0]          # uses of each stance this turn (repeat surcharge)
 +        self.lock_cap = None             # PROTOTYPE (unapproved): max turn ends a gauge stays locked
 +        self.lock_age = [0, 0, 0]
 +        self.lock_cap_keep_load = False
++        self.falloff_t = None            # PROTOTYPE heat falloff: never lock; m(h) = 1 to t*cap, linear to LIMP_MULT at cap
  
      @classmethod
      def for_player(cls, pow_stat, en_stat, han_stat, r, wear) -> "HeatGauges":
-@@ -233,6 +236,14 @@ class HeatGauges:
+@@ -184,8 +188,15 @@ class HeatGauges:
+         i = _STANCE_INDEX[stance]
+         return max(0.0, self.load[i] + self.cost(stance, corner) - self.cap[i]) / self.cap[i]
+ 
++    def falloff_mult(self, i: int, load: float) -> float:
++        f = load / self.cap[i]; t = self.falloff_t
++        return 1.0 if f <= t else max(LIMP_MULT, 1.0 - (1.0 - LIMP_MULT) * (f - t) / (1.0 - t))
++
+     def mult_if(self, stance: Stance, corner: str) -> float:
+         """Payoff multiplier if `stance` were played now (LIMP_MULT when all three are locked)."""
++        if self.falloff_t is not None:
++            i = _STANCE_INDEX[stance]
++            return self.falloff_mult(i, self.load[i] + self.cost(stance, corner))
+         if self.all_locked():
+             return LIMP_MULT
+         return overrun_mult(self.overrun_if(stance, corner))
+@@ -206,14 +217,20 @@ class HeatGauges:
+ 
+     # ── updates
+     def _lock_new(self) -> None:
++        if self.falloff_t is not None:
++            return
+         for i in range(3):
+             if self.load[i] >= self.cap[i] - _EPS:
+                 self.locked[i] = True
+ 
+     def play(self, stance: Stance, corner: str) -> tuple[float, float, bool]:
+         """Play `stance` (caller checks it is selectable unless limping). Returns (payoff mult, overrun x, limp)."""
+-        limp = self.all_locked()
+         i = _STANCE_INDEX[stance]
++        if self.falloff_t is not None:
++            m = self.mult_if(stance, corner)
++            self.load[i] += self.cost(stance, corner); self.uses[i] += 1
++            return m, 0.0, False
++        limp = self.all_locked()
+         if not limp and self.locked[i]:
+             raise ValueError(f"{stance.value} is locked (gauge full); pick one of {[s.value for s in self.selectable_stances()]}")
+         x = self.overrun_if(stance, corner)
+@@ -233,6 +250,14 @@ class HeatGauges:
              self.load[i] = max(0.0, self.load[i] - self.rec[i])
              if self.locked[i] and self.load[i] < self.release * self.cap[i] - _EPS:
                  self.locked[i] = False
@@ -85,10 +124,10 @@ index ebc7ac9..0d6cdbd 100644
  
  def boss_stance(gauges: HeatGauges, wanted: Stance) -> Stance:
 diff --git a/sim/velocity_shift/match.py b/sim/velocity_shift/match.py
-index e96ea8d..9d48f4f 100644
+index e96ea8d..b90f0ed 100644
 --- a/sim/velocity_shift/match.py
 +++ b/sim/velocity_shift/match.py
-@@ -93,15 +93,23 @@ def run_match(
+@@ -93,15 +93,27 @@ def run_match(
      o_qte_rng = None
      if o_qte_sd > 0.0:
          o_qte_rng = Random(cfg.seed + OPPONENT_QTE_SEED_OFFSET) if cfg.seed is not None else Random()
@@ -105,6 +144,10 @@ index e96ea8d..9d48f4f 100644
 +    p_heat.lock_cap = cfg.lock_cap; p_heat.lock_cap_keep_load = cfg.lock_cap_keep_load
      o_heat = HeatGauges.for_boss(opponent.pow, opponent.en, opponent.han, wear)
 +    o_heat.lock_cap = cfg.opponent_lock_cap; o_heat.lock_cap_keep_load = True
++    if cfg.falloff_t is not None:
++        p_heat.falloff_t = cfg.falloff_t; o_heat.falloff_t = min(0.95, cfg.falloff_t + 0.2)   # AI softer: curve starts 0.2 later
++    from .equations import counter_stance as _counter
++    result.pref_degraded = []
  
      prev_phase: int = -1
 +    tonics_left = cfg.tonics
@@ -112,18 +155,25 @@ index e96ea8d..9d48f4f 100644
      for turn_num in range(1, cfg.max_turns + 1):
          phase_index = get_phase(turn_num, cfg.encounter_type)
          total_phases = get_total_phases(cfg.encounter_type)
-@@ -119,6 +127,10 @@ def run_match(
+@@ -119,7 +131,17 @@ def run_match(
              on_line_picked(turn_num, corner, planned_line)
  
          p_heat.begin_turn()
-+        if tonics_left > 0 and any(p_heat.locked):
++        if tonics_left > 0 and p_heat.falloff_t is not None:
++            ti = max(range(3), key=lambda i: p_heat.load[i] / p_heat.cap[i])
++            if p_heat.load[ti] > 0:
++                p_heat.load[ti] = 0.0; tonics_left -= 1; result.tonics_used += 1
++        elif tonics_left > 0 and any(p_heat.locked):
 +            ti = max((i for i in range(3) if p_heat.locked[i]), key=lambda i: p_heat.load[i] / p_heat.cap[i])
 +            p_heat.load[ti] = 0.0; p_heat.locked[ti] = False; p_heat.lock_age[ti] = 0
 +            tonics_left -= 1; result.tonics_used += 1
          o_heat.begin_turn()
++        _pref = _counter(planned_line[0]); _pi = {Stance.POW: 0, Stance.HAN: 1, Stance.EN: 2}[_pref]
++        result.pref_degraded.append(bool(p_heat.locked[_pi]) or p_heat.mult_if(_pref, corner) < 0.7)
          if on_turn_start:
              on_turn_start(turn_num, corner, p_heat, o_heat)
-@@ -193,8 +205,33 @@ def run_match(
+ 
+@@ -193,8 +215,33 @@ def run_match(
              opponent_heat_mults=o_mults,
              player_qte_phases=p_phases,
          )
@@ -160,10 +210,10 @@ index e96ea8d..9d48f4f 100644
          turn_result.opponent_line = list(planned_line)
          turn_result.player_heat_fill = p_heat.fill()
 diff --git a/sim/velocity_shift/models.py b/sim/velocity_shift/models.py
-index dd5430e..e070c17 100644
+index dd5430e..5c9cbdf 100644
 --- a/sim/velocity_shift/models.py
 +++ b/sim/velocity_shift/models.py
-@@ -175,6 +175,17 @@ class MatchConfig:
+@@ -175,6 +175,18 @@ class MatchConfig:
      # Per-race stat weight (mod_skill go-live, Austin approved 2026-11-19): kappa = kappa_for_length(max_turns) x
      # kappa_mult. 1.0 = live default; the Street crew boss races at E.MS_BOSS_KAPPA_MULT["street"] = 0.5.
      kappa_mult: float = 1.0
@@ -175,6 +225,7 @@ index dd5430e..e070c17 100644
 +    phase_avg_control: bool = False   # control: draw per-phase presses but use the turn average (isolates the noise)
 +    phase_smooth_w: float | None = None   # option 2: phase score = w*press + (1-w)*mean(earlier presses this turn); Entry = press
 +    lock_cap_keep_load: bool = False   # True: the capped lock ends but the load stays (next play overruns, relocks)
++    falloff_t: float | None = None   # PROTOTYPE heat falloff (player t; AI t + FALLOFF_AI_SHIFT)
 +    tonics: int = 0   # PROTOTYPE tonics-v1: per race; at turn start, if a gauge is locked, cool the hottest locked one to 0 (1 per turn)
 +    opponent_lock_cap: int | None = None   # same cap for the AI's gauges (load kept)
 +    lock_cap: int | None = None           # player gauge lock cap: a lock ends after this many turn ends (load set to release x cap)

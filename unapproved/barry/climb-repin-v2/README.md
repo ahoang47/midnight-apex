@@ -1,5 +1,96 @@
 # climb-repin-v2: crew stats re-pinned for per-phase smoothed QTE + 2-turn lock cap (Barry PROPOSAL, 2026-11-20, UNAPPROVED)
 
+> **2026-11-20 HEAT FALLOFF variant (Austin direct, 7:04-7:08 AM: "instead of locking out a stance, could we just make
+> damage hit less?" / "on paper math the lock makes sense but playing it is really frustrating to get a lock out and it
+> doesn't cool off... even more frustrating as we go up.").** Proposal only; sim/ untouched (`per_phase.patch`, `falloff_t`).
+>
+> **Definition (1 param):** gauges never lock, for the player or the AI. Output multiplier m = 1.0 while load after the push
+> ≤ t·capacity, then falls linearly to 0.4 (the old limp value) at capacity, and stays at 0.4 above it. This replaces the
+> overrun multiplier. Cooling is unchanged. **AI mapping:** its softer rules (release at 80 %, no passive locks) become a
+> curve that starts 0.2 later (t_AI = t + 0.2: 0.7 / 0.9). Tried t = 0.5 and t = 0.7. Same model as the lock-cap re-pin
+> (Street/Wangan per-phase smoothed w 0.35, Touge per-turn, Touge per-phase what-if). Rungs n = 2,000, bosses n = 6,000.
+>
+> **Re-pinned crew stats (live → falloff t 0.5 / t 0.7; lock cap for comparison):**
+>
+> | Rung | Street | Wangan | Touge |
+> |---|---|---|---|
+> | kid1 | 293.98 → 296.39 / 297.08 (cap 297.77) | 318.65 → 349.89 / 351.14 (cap 327.74) | 354.33 → 395.99 / 398.76 (cap 377.17) |
+> | kid2 | 306.16 → 307.00 / 307.71 (cap 307.95) | 340.56 → 364.64 / 364.90 (cap 342.82) | 383.85 → 412.19 / 414.59 (cap 391.80) |
+> | mat1 | 309.14 → 317.71 / 318.20 (cap 315.54) | 348.93 → 377.14 / 379.33 (cap 354.79) | 393.80 → 424.72 / 427.18 (cap 406.26) |
+> | mat2 | 317.38 → 324.69 / 325.44 (cap 322.22) | 362.05 → 389.91 / 391.89 (cap 364.45) | 404.82 → 435.34 / 437.87 (cap 417.00) |
+> | oh1 | 325.10 → 331.32 / 332.34 (cap 329.04) | 372.82 → 402.09 / 404.71 (cap 373.84) | 415.79 → 445.84 / 448.76 (cap 427.00) |
+> | oh2 | 331.98 → 338.33 / 339.11 (cap 335.74) | 383.00 → 414.57 / 417.26 (cap 383.45) | 426.72 → 456.22 / 460.22 (cap 436.89) |
+> | boss | 332.58 → 355.06 / 356.35 (cap 337.96) | 390.35 → 424.96 / 428.32 (cap 395.68) | 437.06 → 470.01 / 475.13 (cap 450.07) |
+>
+> **Climb (strong 80/80 at floor kid1 → boss; weak 60/60 at max kid1 → boss; boss weak at floor / strong at max):**
+>
+> | Model | District | Strong at floor | Weak at max | Boss wf / sm |
+> |---|---|---|---|---|
+> | falloff t 0.5 | street | 96.2 / 90.79 / 85.99 / 81.28 / 77.88 / 72.87 / 66.35 | 81.98 / 71.77 / 67.67 / 59.66 / 52.45 / 43.79 / 7.43 | 0.17 / 96.72 |
+> | falloff t 0.5 | wangan | 95.95 / 90.09 / 85.54 / 80.78 / 76.43 / 71.42 / 67.3 | 93.69 / 87.64 / 87.19 / 72.57 / 56.26 / 18.32 / 1.55 | 0.23 / 87.88 |
+> | falloff t 0.5 | touge | 96.85 / 91.54 / 85.54 / 81.53 / 77.83 / 73.27 / 67.6 | 94.04 / 90.54 / 92.59 / 90.24 / 85.09 / 62.21 / 9.18 | 0.07 / 97.53 |
+> | falloff t 0.5 | touge_pp | 94.19 / 83.18 / 73.92 / 69.57 / 63.91 / 58.66 / 51.12 | 90.19 / 85.59 / 86.54 / 80.83 / 75.23 / 46.35 / 4.05 | 0.03 / 96.18 |
+> | falloff t 0.7 | street | 96.4 / 90.74 / 86.49 / 81.98 / 77.73 / 72.92 / 67.13 | 81.18 / 70.47 / 66.37 / 57.21 / 47.75 / 40.29 / 6.95 | 0.15 / 97.3 |
+> | falloff t 0.7 | wangan | 95.8 / 90.14 / 85.39 / 80.33 / 76.63 / 71.87 / 66.98 | 93.39 / 87.29 / 82.73 / 67.77 / 48.9 / 14.11 / 1.08 | 0.23 / 86.63 |
+> | falloff t 0.7 | touge | 96.55 / 91.29 / 84.98 / 81.78 / 77.93 / 73.42 / 67.22 | 93.89 / 90.34 / 91.54 / 88.54 / 82.98 / 54.1 / 5.0 | 0.08 / 96.27 |
+> | falloff t 0.7 | touge_pp | 93.74 / 82.43 / 72.42 / 67.97 / 62.16 / 57.31 / 51.07 | 89.79 / 85.69 / 84.03 / 78.43 / 72.32 / 37.84 / 2.32 | 0.02 / 93.43 |
+> | lock cap | street | 95.95 / 90.44 / 84.68 / 81.43 / 76.68 / 72.07 / 66.22 | 86.09 / 81.28 / 87.34 / 81.03 / 72.02 / 64.21 / 25.87 | 0.35 / 98.08 |
+> | lock cap | wangan | 96.1 / 90.64 / 85.34 / 81.03 / 77.23 / 72.17 / 66.57 | 92.44 / 86.94 / 92.94 / 90.84 / 89.54 / 75.98 / 19.45 | 0.18 / 95.03 |
+> | lock cap | touge | 96.15 / 90.54 / 85.44 / 80.18 / 76.98 / 73.12 / 66.8 | 92.39 / 88.24 / 94.64 / 92.79 / 90.89 / 79.08 / 21.0 | 0.02 / 96.27 |
+> | lock cap | touge_pp | 95.55 / 87.79 / 79.68 / 71.22 / 66.92 / 63.21 / 55.62 | 85.44 / 79.48 / 87.49 / 84.48 / 82.18 / 66.22 / 10.63 | 0.03 / 95.85 |
+>
+> **Criteria (falloff t 0.5 | t 0.7):**
+> - **Boss 66-68:** pass in all three (66.35 / 67.3 / 67.6 | 67.13 / 66.98 / 67.22).
+> - **Ladder ≥ 3.0:** pass in all three (smallest step 3.40 / 4.12 / 3.70 | 4.25 / 3.70 / 3.20).
+> - **G3a, G3b, G4a, G4b:** pass.
+> - **G2a: FAILS badly.** Weak at max at the boss is 7.43 / 1.55 / 9.18 | 6.95 / 1.08 / 5.0, and Wangan oh2 also fails (18.32 | 14.11).
+> - **G5: fails in Street and Touge** (96.72 / 97.53 | 97.3 / 96.27). Wangan passes (87.88 | 86.63).
+> - **Touge per-phase what-if:** boss 51.1 (fails the band).
+>
+> So falloff widens the reading gap far more than the lock cap: boss strong at floor − weak at max is 59-66 pp, against
+> 40-47 for the cap. The stats needed jump a lot (boss +6.8 / +8.9 / +7.5 % at t 0.5), because the AI keeps pushing hot
+> stances at reduced output while the pacing player doesn't. **Closest fit: t 0.5** (better G2a, similar G5). Same conflict
+> as the cap: crew stats can't fix G2a/G5. That needs levers outside stats, plus an AI pacing rule.
+>
+> **Feel (n = 999 per cell; `feel.py` → `feel.json`; degraded = the counter stance is locked, or pays m < 0.7, at turn start):**
+>
+> | Cell | Lock cap: degraded % / avg mult / longest (mean, max) | Falloff 0.5 | Falloff 0.7 |
+> |---|---|---|---|
+> | street oh1 strong | 12.3 / 0.947 / 1.2, 9 | 24.7 / 0.814 / 2.0, 11 | 22.5 / 0.865 / 1.73, 9 |
+> | street oh1 weak | 15.9 / 0.934 / 1.26, 6 | 31.5 / 0.758 / 1.93, 9 | 28.4 / 0.788 / 1.77, 7 |
+> | street oh2 strong | 12.6 / 0.945 / 1.24, 9 | 25.2 / 0.811 / 2.06, 13 | 22.6 / 0.863 / 1.76, 9 |
+> | street oh2 weak | 16.4 / 0.932 / 1.3, 6 | 32.3 / 0.755 / 2.02, 9 | 29.5 / 0.787 / 1.79, 7 |
+> | street boss strong | 12.7 / 0.944 / 1.46, 9 | 33.6 / 0.756 / 3.93, 23 | 29.4 / 0.807 / 3.12, 19 |
+> | street boss weak | 17.3 / 0.928 / 1.54, 6 | 40.0 / 0.706 / 3.32, 14 | 36.9 / 0.739 / 2.75, 13 |
+> | wangan oh1 strong | 9.5 / 0.955 / 1.2, 6 | 20.0 / 0.826 / 2.36, 15 | 17.9 / 0.86 / 2.06, 15 |
+> | wangan oh1 weak | 13.1 / 0.937 / 1.59, 5 | 22.0 / 0.773 / 1.92, 15 | 20.5 / 0.796 / 1.78, 15 |
+> | wangan oh2 strong | 9.6 / 0.954 / 1.22, 6 | 21.3 / 0.818 / 2.54, 15 | 18.7 / 0.853 / 2.2, 15 |
+> | wangan oh2 weak | 14.7 / 0.929 / 1.67, 6 | 23.7 / 0.759 / 2.1, 15 | 21.7 / 0.784 / 1.92, 15 |
+> | wangan boss strong | 13.9 / 0.935 / 1.89, 16 | 30.2 / 0.766 / 5.15, 25 | 27.1 / 0.8 / 4.57, 25 |
+> | wangan boss weak | 21.4 / 0.897 / 2.53, 7 | 32.0 / 0.708 / 4.05, 25 | 29.9 / 0.733 / 3.69, 25 |
+> | touge oh1 strong | 13.3 / 0.963 / 1.19, 3 | 25.0 / 0.793 / 1.92, 15 | 22.7 / 0.848 / 1.57, 14 |
+> | touge oh1 weak | 14.0 / 0.957 / 1.09, 3 | 27.9 / 0.783 / 1.49, 11 | 25.1 / 0.824 / 1.3, 11 |
+> | touge oh2 strong | 13.7 / 0.962 / 1.21, 3 | 25.3 / 0.79 / 1.99, 15 | 23.3 / 0.843 / 1.63, 14 |
+> | touge oh2 weak | 16.3 / 0.951 / 1.26, 3 | 28.9 / 0.77 / 1.63, 11 | 27.3 / 0.81 / 1.48, 11 |
+> | touge boss strong | 18.5 / 0.94 / 1.64, 5 | 32.1 / 0.754 / 3.88, 25 | 30.0 / 0.8 / 3.3, 24 |
+> | touge boss weak | 22.1 / 0.925 / 1.71, 3 | 36.5 / 0.716 / 3.54, 21 | 33.8 / 0.751 / 3.09, 21 |
+>
+> **On these metrics, falloff feels worse than the lock cap.** The counter stance is degraded on 18-40 % of turns (cap
+> 9.5-22 %), average output is 0.71-0.87 (cap 0.90-0.96), and boss stretches run 3-5 turns on average, up to 25 (cap
+> 1.5-2.5, max 16). With falloff the stance is never closed, so the player keeps paying the penalty instead of switching.
+> t 0.7 is milder than 0.5 on every feel metric.
+>
+> **Playtest cars under falloff** (r = 1, 2,000 races; `car_matchup.json`):
+>
+> | | Win % | Degraded % | Avg mult | Longest degraded (mean, max) |
+> |---|---|---|---|---|
+> | MX-5 vs S2000: live / cap / falloff 0.5 / 0.7 | 72.15 / 78.45 / 99.9 / 99.9 | 16.5 / 11.0 / 17.9 / 15.8 | 0.961 / 0.974 / 0.895 / 0.934 | 1.46, 5 / 0.91, 4 / 1.57, 5 / 1.38, 5 |
+> | WRX vs MX-5: live / cap / falloff 0.5 / 0.7 | 81.25 / 93.25 / 98.75 / 98.9 | 34.1 / 19.9 / 27.8 / 25.1 | 0.886 / 0.949 / 0.845 / 0.88 | 2.99, 8 / 1.46, 6 / 2.35, 8 / 1.98, 8 |
+>
+> At parity the AI collapses under falloff (player wins 99 %), because it has no pacing rule and keeps playing its line
+> into hot gauges. **Falloff needs an AI pacing rule** before it can be judged fairly. Re-pinned crew stats cover the
+> climb, but not the 10-turn car playtest.
+
 > **Austin, direct:** "Maximum turns a state is locked should be 2." / (7:01 AM) "Lock cap: gauge stays hot after unlocking,
 > so the next hard push relocks it. Re-pin the climb around that." / per-phase option 2 direction approved, w = 0.35.
 > sim/ is untouched. Engine = live sim + `per_phase.patch` (branch copy). Floors, XP and the cap are unchanged; only crew

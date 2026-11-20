@@ -13,6 +13,8 @@ from mod_skill_climb import max_build
 
 SEED = 96_000_000
 CAP = dict(lock_cap=2, lock_cap_keep_load=True)
+if os.environ.get("FALLOFF_T"):   # heat falloff variant: no locks; player curve from t, AI from t + 0.2
+    CAP = dict(falloff_t=float(os.environ["FALLOFF_T"]))
 MODEL = {"street": dict(per_phase=True, phase_smooth_w=0.35, **CAP), "wangan": dict(per_phase=True, phase_smooth_w=0.35, **CAP),
          "touge": dict(per_phase=False, **CAP), "touge_pp": dict(per_phase=True, phase_smooth_w=0.35, **CAP)}
 TARGET = tuple(float(x) for x in os.environ.get("TARGET", "95,89,84,79,75,71,67").split(","))

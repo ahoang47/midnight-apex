@@ -11,12 +11,13 @@ from velocity_shift.simulation import SimulationRunner
 CORNERS = [c["corner"] for c in json.load(open("../../../spec/race_config.json"))["corners"]]
 CARS = {"mx5": (1350, 750, 900), "s2000": (1350, 750, 900), "wrx_sti": (750, 750, 1500)}   # globals.gd:143 POW/HAN/EN
 MATCH = {"MX-5 vs S2000": ("mx5", "s2000"), "WRX vs MX-5": ("wrx_sti", "mx5")}
-VAR = {"live": {}, "lockcap2": dict(lock_cap=2, lock_cap_keep_load=True), "lockcap2_both": dict(lock_cap=2, lock_cap_keep_load=True, opponent_lock_cap=2)}
+VAR = {"live": {}, "lockcap2": dict(lock_cap=2, lock_cap_keep_load=True), "lockcap2_both": dict(lock_cap=2, lock_cap_keep_load=True, opponent_lock_cap=2),
+       "falloff0.5": dict(falloff_t=0.5), "falloff0.7": dict(falloff_t=0.7)}
 
 
 def job(a):
     mname, v, k0, n = a; p, o = (CARS[c] for c in MATCH[mname])
-    g = dict(win=0.0, races=0, turns=0, clashes=0, limp=0, overrun=0, start_locked=0, runs=[], gauge_locked_turns=[0, 0, 0], ai_runs=[], ai_start_locked=0)
+    g = dict(deg=0, mult=0.0, longest=[], win=0.0, races=0, turns=0, clashes=0, limp=0, overrun=0, start_locked=0, runs=[], gauge_locked_turns=[0, 0, 0], ai_runs=[], ai_start_locked=0)
     for k in range(k0, k0 + n):
         cfg = MatchConfig(player_stats=CombatantStats(name="P", pow=p[0] / 10, han=p[1] / 10, en=p[2] / 10, level=50),
                           opponent_stats=CombatantStats(name="O", pow=o[0] / 10, han=o[1] / 10, en=o[2] / 10, level=50),
@@ -24,6 +25,10 @@ def job(a):
                           player_read=0.8, player_timing=0.8, player_pacing=0.8, **VAR[v])
         m = SimulationRunner(cfg).run().match; g["races"] += 1
         g["win"] += 1.0 if m.player_total_progress > m.opponent_total_progress else 0.5 if m.player_total_progress == m.opponent_total_progress else 0.0
+        pd = m.pref_degraded; g["deg"] += sum(pd); rr = bb = 0
+        for x in pd:
+            rr = rr + 1 if x else 0; bb = max(bb, rr)
+        g["longest"].append(bb); g["mult"] += sum(sum(tr.player_heat_mults) for tr in m.turn_results)
         run = [0] * 3; arun = [0] * 3; prev = [False] * 3; aprev = [False] * 3
         for tr in m.turn_results:
             g["turns"] += 1; g["start_locked"] += any(prev); g["ai_start_locked"] += any(aprev)
@@ -58,6 +63,7 @@ if __name__ == "__main__":
             locks_per_race=round(len(r) / g["races"], 2), mean_lock_turns=round(sum(r) / max(1, len(r)), 2), max_lock_turns=max(r or [0]),
             locked_turn_share_POW_HAN_EN=[round(100 * x / g["turns"], 1) for x in g["gauge_locked_turns"]],
             ai_turns_starting_locked_pct=round(100 * g["ai_start_locked"] / g["turns"], 1), ai_mean_lock_turns=round(sum(ar) / max(1, len(ar)), 2),
-            ai_max_lock_turns=max(ar or [0]), ai_lock_runs_over_2=sum(1 for x in ar if x > 2))
+            ai_max_lock_turns=max(ar or [0]), ai_lock_runs_over_2=sum(1 for x in ar if x > 2), pref_degraded_pct=round(100 * g['deg'] / g['turns'], 1),
+            avg_mult=round(g['mult'] / g['clashes'], 3), longest_degraded_mean=round(sum(g['longest']) / g['races'], 2), longest_degraded_max=max(g['longest']))
         print(m, v, out[m][v])
     json.dump(dict(n=2000, seeds="98,000,000 + k", out=out), open("car_matchup.json", "w"), indent=1)

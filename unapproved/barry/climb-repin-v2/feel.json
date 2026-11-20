@@ -1,0 +1,404 @@
+{
+ "lockcap": {
+  "street": {
+   "boss strong": {
+    "win": 68.6,
+    "degraded_pct": 12.7,
+    "avg_mult": 0.944,
+    "longest_mean": 1.46,
+    "longest_max": 9
+   },
+   "boss weak": {
+    "win": 26.2,
+    "degraded_pct": 17.3,
+    "avg_mult": 0.928,
+    "longest_mean": 1.54,
+    "longest_max": 6
+   },
+   "oh2 strong": {
+    "win": 72.7,
+    "degraded_pct": 12.6,
+    "avg_mult": 0.945,
+    "longest_mean": 1.24,
+    "longest_max": 9
+   },
+   "oh2 weak": {
+    "win": 62.8,
+    "degraded_pct": 16.4,
+    "avg_mult": 0.932,
+    "longest_mean": 1.3,
+    "longest_max": 6
+   },
+   "oh1 strong": {
+    "win": 77.5,
+    "degraded_pct": 12.3,
+    "avg_mult": 0.947,
+    "longest_mean": 1.2,
+    "longest_max": 9
+   },
+   "oh1 weak": {
+    "win": 73.7,
+    "degraded_pct": 15.9,
+    "avg_mult": 0.934,
+    "longest_mean": 1.26,
+    "longest_max": 6
+   }
+  },
+  "wangan": {
+   "boss strong": {
+    "win": 68.8,
+    "degraded_pct": 13.9,
+    "avg_mult": 0.935,
+    "longest_mean": 1.89,
+    "longest_max": 16
+   },
+   "boss weak": {
+    "win": 19.6,
+    "degraded_pct": 21.4,
+    "avg_mult": 0.897,
+    "longest_mean": 2.53,
+    "longest_max": 7
+   },
+   "oh2 strong": {
+    "win": 74.8,
+    "degraded_pct": 9.6,
+    "avg_mult": 0.954,
+    "longest_mean": 1.22,
+    "longest_max": 6
+   },
+   "oh2 weak": {
+    "win": 76.5,
+    "degraded_pct": 14.7,
+    "avg_mult": 0.929,
+    "longest_mean": 1.67,
+    "longest_max": 6
+   },
+   "oh1 strong": {
+    "win": 78.6,
+    "degraded_pct": 9.5,
+    "avg_mult": 0.955,
+    "longest_mean": 1.2,
+    "longest_max": 6
+   },
+   "oh1 weak": {
+    "win": 89.0,
+    "degraded_pct": 13.1,
+    "avg_mult": 0.937,
+    "longest_mean": 1.59,
+    "longest_max": 5
+   }
+  },
+  "touge": {
+   "boss strong": {
+    "win": 65.3,
+    "degraded_pct": 18.5,
+    "avg_mult": 0.94,
+    "longest_mean": 1.64,
+    "longest_max": 5
+   },
+   "boss weak": {
+    "win": 21.5,
+    "degraded_pct": 22.1,
+    "avg_mult": 0.925,
+    "longest_mean": 1.71,
+    "longest_max": 3
+   },
+   "oh2 strong": {
+    "win": 72.8,
+    "degraded_pct": 13.7,
+    "avg_mult": 0.962,
+    "longest_mean": 1.21,
+    "longest_max": 3
+   },
+   "oh2 weak": {
+    "win": 80.0,
+    "degraded_pct": 16.3,
+    "avg_mult": 0.951,
+    "longest_mean": 1.26,
+    "longest_max": 3
+   },
+   "oh1 strong": {
+    "win": 76.3,
+    "degraded_pct": 13.3,
+    "avg_mult": 0.963,
+    "longest_mean": 1.19,
+    "longest_max": 3
+   },
+   "oh1 weak": {
+    "win": 90.8,
+    "degraded_pct": 14.0,
+    "avg_mult": 0.957,
+    "longest_mean": 1.09,
+    "longest_max": 3
+   }
+  }
+ },
+ "fo0.5": {
+  "street": {
+   "boss strong": {
+    "win": 66.9,
+    "degraded_pct": 33.6,
+    "avg_mult": 0.756,
+    "longest_mean": 3.93,
+    "longest_max": 23
+   },
+   "boss weak": {
+    "win": 6.9,
+    "degraded_pct": 40.0,
+    "avg_mult": 0.706,
+    "longest_mean": 3.32,
+    "longest_max": 14
+   },
+   "oh2 strong": {
+    "win": 71.8,
+    "degraded_pct": 25.2,
+    "avg_mult": 0.811,
+    "longest_mean": 2.06,
+    "longest_max": 13
+   },
+   "oh2 weak": {
+    "win": 40.6,
+    "degraded_pct": 32.3,
+    "avg_mult": 0.755,
+    "longest_mean": 2.02,
+    "longest_max": 9
+   },
+   "oh1 strong": {
+    "win": 77.1,
+    "degraded_pct": 24.7,
+    "avg_mult": 0.814,
+    "longest_mean": 2.0,
+    "longest_max": 11
+   },
+   "oh1 weak": {
+    "win": 49.8,
+    "degraded_pct": 31.5,
+    "avg_mult": 0.758,
+    "longest_mean": 1.93,
+    "longest_max": 9
+   }
+  },
+  "wangan": {
+   "boss strong": {
+    "win": 64.4,
+    "degraded_pct": 30.2,
+    "avg_mult": 0.766,
+    "longest_mean": 5.15,
+    "longest_max": 25
+   },
+   "boss weak": {
+    "win": 0.6,
+    "degraded_pct": 32.0,
+    "avg_mult": 0.708,
+    "longest_mean": 4.05,
+    "longest_max": 25
+   },
+   "oh2 strong": {
+    "win": 72.1,
+    "degraded_pct": 21.3,
+    "avg_mult": 0.818,
+    "longest_mean": 2.54,
+    "longest_max": 15
+   },
+   "oh2 weak": {
+    "win": 17.3,
+    "degraded_pct": 23.7,
+    "avg_mult": 0.759,
+    "longest_mean": 2.1,
+    "longest_max": 15
+   },
+   "oh1 strong": {
+    "win": 76.4,
+    "degraded_pct": 20.0,
+    "avg_mult": 0.826,
+    "longest_mean": 2.36,
+    "longest_max": 15
+   },
+   "oh1 weak": {
+    "win": 59.3,
+    "degraded_pct": 22.0,
+    "avg_mult": 0.773,
+    "longest_mean": 1.92,
+    "longest_max": 15
+   }
+  },
+  "touge": {
+   "boss strong": {
+    "win": 66.2,
+    "degraded_pct": 32.1,
+    "avg_mult": 0.754,
+    "longest_mean": 3.88,
+    "longest_max": 25
+   },
+   "boss weak": {
+    "win": 9.1,
+    "degraded_pct": 36.5,
+    "avg_mult": 0.716,
+    "longest_mean": 3.54,
+    "longest_max": 21
+   },
+   "oh2 strong": {
+    "win": 73.7,
+    "degraded_pct": 25.3,
+    "avg_mult": 0.79,
+    "longest_mean": 1.99,
+    "longest_max": 15
+   },
+   "oh2 weak": {
+    "win": 62.3,
+    "degraded_pct": 28.9,
+    "avg_mult": 0.77,
+    "longest_mean": 1.63,
+    "longest_max": 11
+   },
+   "oh1 strong": {
+    "win": 78.0,
+    "degraded_pct": 25.0,
+    "avg_mult": 0.793,
+    "longest_mean": 1.92,
+    "longest_max": 15
+   },
+   "oh1 weak": {
+    "win": 84.9,
+    "degraded_pct": 27.9,
+    "avg_mult": 0.783,
+    "longest_mean": 1.49,
+    "longest_max": 11
+   }
+  }
+ },
+ "fo0.7": {
+  "street": {
+   "boss strong": {
+    "win": 67.5,
+    "degraded_pct": 29.4,
+    "avg_mult": 0.807,
+    "longest_mean": 3.12,
+    "longest_max": 19
+   },
+   "boss weak": {
+    "win": 6.4,
+    "degraded_pct": 36.9,
+    "avg_mult": 0.739,
+    "longest_mean": 2.75,
+    "longest_max": 13
+   },
+   "oh2 strong": {
+    "win": 72.7,
+    "degraded_pct": 22.6,
+    "avg_mult": 0.863,
+    "longest_mean": 1.76,
+    "longest_max": 9
+   },
+   "oh2 weak": {
+    "win": 37.8,
+    "degraded_pct": 29.5,
+    "avg_mult": 0.787,
+    "longest_mean": 1.79,
+    "longest_max": 7
+   },
+   "oh1 strong": {
+    "win": 76.9,
+    "degraded_pct": 22.5,
+    "avg_mult": 0.865,
+    "longest_mean": 1.73,
+    "longest_max": 9
+   },
+   "oh1 weak": {
+    "win": 45.1,
+    "degraded_pct": 28.4,
+    "avg_mult": 0.788,
+    "longest_mean": 1.77,
+    "longest_max": 7
+   }
+  },
+  "wangan": {
+   "boss strong": {
+    "win": 64.1,
+    "degraded_pct": 27.1,
+    "avg_mult": 0.8,
+    "longest_mean": 4.57,
+    "longest_max": 25
+   },
+   "boss weak": {
+    "win": 0.4,
+    "degraded_pct": 29.9,
+    "avg_mult": 0.733,
+    "longest_mean": 3.69,
+    "longest_max": 25
+   },
+   "oh2 strong": {
+    "win": 72.0,
+    "degraded_pct": 18.7,
+    "avg_mult": 0.853,
+    "longest_mean": 2.2,
+    "longest_max": 15
+   },
+   "oh2 weak": {
+    "win": 13.0,
+    "degraded_pct": 21.7,
+    "avg_mult": 0.784,
+    "longest_mean": 1.92,
+    "longest_max": 15
+   },
+   "oh1 strong": {
+    "win": 75.9,
+    "degraded_pct": 17.9,
+    "avg_mult": 0.86,
+    "longest_mean": 2.06,
+    "longest_max": 15
+   },
+   "oh1 weak": {
+    "win": 49.5,
+    "degraded_pct": 20.5,
+    "avg_mult": 0.796,
+    "longest_mean": 1.78,
+    "longest_max": 15
+   }
+  },
+  "touge": {
+   "boss strong": {
+    "win": 67.4,
+    "degraded_pct": 30.0,
+    "avg_mult": 0.8,
+    "longest_mean": 3.3,
+    "longest_max": 24
+   },
+   "boss weak": {
+    "win": 4.9,
+    "degraded_pct": 33.8,
+    "avg_mult": 0.751,
+    "longest_mean": 3.09,
+    "longest_max": 21
+   },
+   "oh2 strong": {
+    "win": 74.6,
+    "degraded_pct": 23.3,
+    "avg_mult": 0.843,
+    "longest_mean": 1.63,
+    "longest_max": 14
+   },
+   "oh2 weak": {
+    "win": 52.3,
+    "degraded_pct": 27.3,
+    "avg_mult": 0.81,
+    "longest_mean": 1.48,
+    "longest_max": 11
+   },
+   "oh1 strong": {
+    "win": 78.7,
+    "degraded_pct": 22.7,
+    "avg_mult": 0.848,
+    "longest_mean": 1.57,
+    "longest_max": 14
+   },
+   "oh1 weak": {
+    "win": 82.3,
+    "degraded_pct": 25.1,
+    "avg_mult": 0.824,
+    "longest_mean": 1.3,
+    "longest_max": 11
+   }
+  }
+ }
+}

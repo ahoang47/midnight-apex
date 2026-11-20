@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: heat falloff variant (no locks) re-pinned beside the lock cap; feel metrics; tonics on falloff (UNAPPROVED)
+
+- **What:** Austin (7:04-7:08 AM): "instead of locking out a stance, could we just make damage hit less?" Falloff: no locks for the player or the AI; output m = 1 up to t·capacity, then linear to 0.4 at capacity, and 0.4 above it. The AI curve starts 0.2 later (its softer rules). t = 0.5 and t = 0.7. Re-pinned the same way as 4d51973. Files: `unapproved/barry/climb-repin-v2/` (README top, `fo*_search/verify/final.json`, `feel.py/.json`, `car_matchup.json`) and `unapproved/barry/tonics-v1/` (README appended, `tonics_falloff.json`). sim/ untouched.
+- **Result:**
+  - Boss band and ladder pass for both t (boss 66.35/67.3/67.6 at t 0.5).
+  - G2a fails badly (boss weak at max 7.43/1.55/9.18; Wangan oh2 18.32). G5 fails in Street and Touge (96.72/97.53).
+  - Stats rise a lot (boss +6.8/+8.9/+7.5 %), because the AI has no pacing rule and keeps pushing hot stances; at parity the playtest cars go 99 % to the player.
+  - Feel is worse than the cap: counter stance degraded on 18-40 % of turns (cap 9.5-22), avg output 0.71-0.87 (cap 0.90-0.96), boss stretches up to 25 turns (cap 16).
+  - Tonics under falloff are worth less (1st tonic at the boss: strong +3.5 to +8.5, weak ≤ +1.7) and widen the reading gap. Suggested cap: 1 per race.
+- **Takeaway:** as modelled, the lock cap beats falloff on feel and fit. Falloff needs an AI pacing rule (and still the levers outside stats for G2a/G5) before it's a fair comparison.
+
 ## 2026-11-20 — Barry [sim]: climb-repin-v2 (per-phase w 0.35 + 2-turn lock cap) and tonics-v1 (UNAPPROVED)
 
 - **Lock cap** (Austin: "Maximum turns a state is locked should be 2." / 7:01 AM "Lock cap: gauge stays hot after unlocking, so the next hard push relocks it. Re-pin the climb around that."): a player lock ends at the 2nd turn end and the load stays. **AI: no cap.** Its locks do run up to 5 turns, but with no pacing logic a capped AI re-enters hot gauges and overruns, which made it weaker (MX-5 vs S2000 player win 78.45 → 87.4 %).
