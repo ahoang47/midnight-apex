@@ -1,0 +1,23 @@
+{
+ "wangan": {
+  "boss_budget": 395.8,
+  "strong_floor": 65.97,
+  "weak_max": 18.97,
+  "strong_max": 95.02,
+  "weak_floor": 0.18
+ },
+ "touge": {
+  "boss_budget": 450.07,
+  "strong_floor": 66.8,
+  "weak_max": 21.0,
+  "strong_max": 96.27,
+  "weak_floor": 0.02
+ },
+ "touge_pp": {
+  "boss_budget": 450.07,
+  "strong_floor": 55.62,
+  "weak_max": 10.63,
+  "strong_max": 95.85,
+  "weak_floor": 0.03
+ }
+}

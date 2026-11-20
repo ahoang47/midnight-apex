@@ -1,0 +1,118 @@
+{
+ "n": 2000,
+ "seeds": "98,000,000 + k",
+ "out": {
+  "MX-5 vs S2000": {
+   "live": {
+    "win": 72.15,
+    "turns_starting_locked_pct": 34.6,
+    "limp_pct": 2.7,
+    "overrun_pct": 5.3,
+    "locks_per_race": 1.68,
+    "mean_lock_turns": 3.31,
+    "max_lock_turns": 10,
+    "locked_turn_share_POW_HAN_EN": [
+     4.9,
+     29.8,
+     20.9
+    ],
+    "ai_turns_starting_locked_pct": 66.8,
+    "ai_mean_lock_turns": 1.85,
+    "ai_max_lock_turns": 5,
+    "ai_lock_runs_over_2": 1979
+   },
+   "lockcap2": {
+    "win": 78.45,
+    "turns_starting_locked_pct": 20.4,
+    "limp_pct": 0.1,
+    "overrun_pct": 6.0,
+    "locks_per_race": 2.6,
+    "mean_lock_turns": 1.0,
+    "max_lock_turns": 1,
+    "locked_turn_share_POW_HAN_EN": [
+     0.8,
+     15.9,
+     9.3
+    ],
+    "ai_turns_starting_locked_pct": 66.8,
+    "ai_mean_lock_turns": 1.85,
+    "ai_max_lock_turns": 5,
+    "ai_lock_runs_over_2": 1979
+   },
+   "lockcap2_both": {
+    "win": 87.4,
+    "turns_starting_locked_pct": 20.4,
+    "limp_pct": 0.1,
+    "overrun_pct": 6.0,
+    "locks_per_race": 2.6,
+    "mean_lock_turns": 1.0,
+    "max_lock_turns": 1,
+    "locked_turn_share_POW_HAN_EN": [
+     0.8,
+     15.9,
+     9.3
+    ],
+    "ai_turns_starting_locked_pct": 49.7,
+    "ai_mean_lock_turns": 1.0,
+    "ai_max_lock_turns": 1,
+    "ai_lock_runs_over_2": 0
+   }
+  },
+  "WRX vs MX-5": {
+   "live": {
+    "win": 81.25,
+    "turns_starting_locked_pct": 47.6,
+    "limp_pct": 13.1,
+    "overrun_pct": 8.3,
+    "locks_per_race": 2.65,
+    "mean_lock_turns": 3.8,
+    "max_lock_turns": 10,
+    "locked_turn_share_POW_HAN_EN": [
+     30.5,
+     44.8,
+     25.6
+    ],
+    "ai_turns_starting_locked_pct": 66.8,
+    "ai_mean_lock_turns": 1.85,
+    "ai_max_lock_turns": 5,
+    "ai_lock_runs_over_2": 1979
+   },
+   "lockcap2": {
+    "win": 93.25,
+    "turns_starting_locked_pct": 31.1,
+    "limp_pct": 1.4,
+    "overrun_pct": 11.0,
+    "locks_per_race": 4.2,
+    "mean_lock_turns": 1.0,
+    "max_lock_turns": 1,
+    "locked_turn_share_POW_HAN_EN": [
+     11.7,
+     20.7,
+     9.6
+    ],
+    "ai_turns_starting_locked_pct": 66.8,
+    "ai_mean_lock_turns": 1.85,
+    "ai_max_lock_turns": 5,
+    "ai_lock_runs_over_2": 1979
+   },
+   "lockcap2_both": {
+    "win": 94.8,
+    "turns_starting_locked_pct": 31.1,
+    "limp_pct": 1.4,
+    "overrun_pct": 11.0,
+    "locks_per_race": 4.2,
+    "mean_lock_turns": 1.0,
+    "max_lock_turns": 1,
+    "locked_turn_share_POW_HAN_EN": [
+     11.7,
+     20.7,
+     9.6
+    ],
+    "ai_turns_starting_locked_pct": 49.7,
+    "ai_mean_lock_turns": 1.0,
+    "ai_max_lock_turns": 1,
+    "ai_lock_runs_over_2": 0
+   }
+  }
+ }
+}

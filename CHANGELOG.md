@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: climb-repin-v2 (per-phase w 0.35 + 2-turn lock cap) and tonics-v1 (UNAPPROVED)
+
+- **Lock cap** (Austin: "Maximum turns a state is locked should be 2." / 7:01 AM "Lock cap: gauge stays hot after unlocking, so the next hard push relocks it. Re-pin the climb around that."): a player lock ends at the 2nd turn end and the load stays. **AI: no cap.** Its locks do run up to 5 turns, but with no pacing logic a capped AI re-enters hot gauges and overruns, which made it weaker (MX-5 vs S2000 player win 78.45 → 87.4 %).
+- **Climb re-pin** (`unapproved/barry/climb-repin-v2/`; Street/Wangan per-phase smoothed w 0.35, Touge per-turn, all with the cap; stats only).
+  - New boss stats: 337.96 / 395.68 / 450.07 (live 332.58 / 390.35 / 437.06). Kid1 +1.3 / +2.9 / +6.4 %, every rung re-pinned.
+  - Strong boss 66.22 / 66.57 / 66.8. The ladder falls ≥ 3.0 at every step (smallest 3.25 / 3.80 / 3.20). G3a, G3b, G4a and G4b pass.
+  - **Conflict (nothing relaxed):** G5 fails (strong at max 98.08 / 95.03 / 96.27) and G2a fails at the boss (weak at max 25.87 / 19.45 / 21.0). The boss scan shows crew stats can't hold the band, G5 and G2a together, because the cap and per-phase QTE widen the reading gap to 40-47 pp. Fixing it needs levers outside crew stats (the non-mandatory XP cap or mod ceilings for G5; a timing help or softer boss heat for G2a).
+  - Touge per-phase what-if with the same stats: boss 55.62.
+- **MX-5 vs S2000** (mirror blocks): live win 72.15 %, HAN/EN locked 29.8/20.9 % of turns, locks 3.31 turns. It felt worse than WRX vs MX-5 (81.25 %) because the MX-5's big gauge is POW, which Touge corners use least. The lock cap: win 78.45 %, limp 2.7 → 0.1 %.
+- **Tonics** (`unapproved/barry/tonics-v1/`; my placeholder definition: cool the hottest locked gauge to 0, max 1 per turn).
+  - Strong boss with 0-3 tonics: 67 → 92-96 live, 67 → 84-88 lock cap. The 1st tonic is worth +11 to +15 pp live and +8 to +10 lock cap.
+  - Under live locks, a weak max-build player with 3 tonics beats a strong one with none in Touge (68.77 vs 66.33).
+  - Suggested: cap 1 per race, only with the lock cap; price about one mod step ($500-$1,000 in R1). The falloff model was not run (no spec).
+
 ## 2026-11-20 — Barry [sim]: per-phase option 2 (smoothed live phase QTE) w sweep x 2-turn lock cap (UNAPPROVED)
 
 - **What:** Austin approved the direction at 6:44 AM: each phase resolves live with a smoothed QTE, w·press + (1 − w)·mean of the earlier presses (Entry = its own press). The AI uses the same smoothing, there is no re-resolve, and order is final. I swept w 0.35/0.5/0.65 on Street, Wangan and Touge (Touge as a what-if), with and without a 2-turn player lock cap. No lock-cap spec reached me, so I defined two versions: R resets the load to release × cap, K keeps the load. Files: `unapproved/barry/per-phase-combat-v1/` (README top, `per_phase.patch`, `option2_climb*.py/json`). sim/ untouched.

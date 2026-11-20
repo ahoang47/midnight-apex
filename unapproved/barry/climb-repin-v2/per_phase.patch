@@ -1,0 +1,183 @@
+diff --git a/sim/velocity_shift/combat.py b/sim/velocity_shift/combat.py
+index 0d047dc..a1161e9 100644
+--- a/sim/velocity_shift/combat.py
++++ b/sim/velocity_shift/combat.py
+@@ -68,6 +68,10 @@ def resolve_turn(
+     race_length: int = 10,
+     boss_total: float | None = None,
+     kappa_mult: float = 1.0,
++    p_qte_by_clash: list | None = None,
++    o_qte_by_clash: list | None = None,
++    p_bonus: float = 1.0,
++    o_bonus: float = 1.0,
+ ) -> TurnResult:
+     """Resolve one turn with the Phi/tau progress model and heat multipliers.
+ 
+@@ -139,15 +143,15 @@ def resolve_turn(
+     for i, p_outcome in enumerate(p_outcomes):
+         o_outcome = StanceOutcome(-p_outcome.value)
+         pg = clash_progress(
+-            p_outcome, p_stances[i], player_qte,
++            p_outcome, p_stances[i], player_qte if p_qte_by_clash is None else p_qte_by_clash[i],
+             player.pow, player.en, player.han,
+             boss_total, kappa, p_mults[i],
+-        )
++        ) * p_bonus
+         og = clash_progress(
+-            o_outcome, o_stances[i], turn_state.opponent_qte,
++            o_outcome, o_stances[i], turn_state.opponent_qte if o_qte_by_clash is None else o_qte_by_clash[i],
+             opponent.pow, opponent.en, opponent.han,
+             boss_total, kappa, o_mults[i],
+-        )
++        ) * o_bonus
+         p_prog += pg
+         o_prog += og
+         p_parts.append(pg)
+diff --git a/sim/velocity_shift/equations.py b/sim/velocity_shift/equations.py
+index 1902fe4..602e2ab 100644
+--- a/sim/velocity_shift/equations.py
++++ b/sim/velocity_shift/equations.py
+@@ -1011,3 +1011,17 @@ MS_TARGETS = {
+     "G2b_weak_improving_attempts": 60.0, "G3a_drop_kid1_boss": 30.0, "G3b_boss_read_gap": 10.0, "G3c_min_step": 3.0,
+     "G4a_min_strong_floor": 40.0, "G4b_boss_weak_floor_max": 10.0, "G5_boss_strong_max_build": 95.0,
+ }
++
++
++# PROTOTYPE (unapproved/barry/per-phase-combat-v1): districts that resolve combat per phase (Austin 2026-11-20 canon).
++PER_PHASE_DISTRICTS = ("street", "wangan")
++PLAYER_PRESS_SEED_OFFSET = 15_485_863
++
++
++def sample_press_score(rng, sigma_over_a0: float, width_over_w0: float) -> float:
++    """One timing press: s = max(0, 1 - |e| / a), e ~ N(0, sigma) (a0 units); E[s] = expected_hit_quality."""
++    if width_over_w0 <= 0.0:
++        return 0.0
++    if sigma_over_a0 <= 0.0:
++        return 1.0
++    return round_qte_score(max(0.0, 1.0 - abs(rng.gauss(0.0, sigma_over_a0)) / width_over_w0))
+diff --git a/sim/velocity_shift/heat.py b/sim/velocity_shift/heat.py
+index ebc7ac9..0d6cdbd 100644
+--- a/sim/velocity_shift/heat.py
++++ b/sim/velocity_shift/heat.py
+@@ -151,6 +151,9 @@ class HeatGauges:
+         self.load = [0.0, 0.0, 0.0]
+         self.locked = [False, False, False]
+         self.uses = [0, 0, 0]          # uses of each stance this turn (repeat surcharge)
++        self.lock_cap = None             # PROTOTYPE (unapproved): max turn ends a gauge stays locked
++        self.lock_age = [0, 0, 0]
++        self.lock_cap_keep_load = False
+ 
+     @classmethod
+     def for_player(cls, pow_stat, en_stat, han_stat, r, wear) -> "HeatGauges":
+@@ -233,6 +236,14 @@ class HeatGauges:
+             self.load[i] = max(0.0, self.load[i] - self.rec[i])
+             if self.locked[i] and self.load[i] < self.release * self.cap[i] - _EPS:
+                 self.locked[i] = False
++            if self.lock_cap is not None:
++                if self.locked[i]:
++                    self.lock_age[i] += 1
++                    if self.lock_age[i] >= self.lock_cap:
++                        self.locked[i] = False
++                        if not self.lock_cap_keep_load: self.load[i] = min(self.load[i], self.release * self.cap[i])
++                if not self.locked[i]:
++                    self.lock_age[i] = 0
+ 
+ 
+ def boss_stance(gauges: HeatGauges, wanted: Stance) -> Stance:
+diff --git a/sim/velocity_shift/match.py b/sim/velocity_shift/match.py
+index e96ea8d..9d48f4f 100644
+--- a/sim/velocity_shift/match.py
++++ b/sim/velocity_shift/match.py
+@@ -93,15 +93,23 @@ def run_match(
+     o_qte_rng = None
+     if o_qte_sd > 0.0:
+         o_qte_rng = Random(cfg.seed + OPPONENT_QTE_SEED_OFFSET) if cfg.seed is not None else Random()
++    from . import equations as _E
++    per_phase = (cfg.district in _E.PER_PHASE_DISTRICTS) if cfg.per_phase is None else cfg.per_phase
++    press_rng = Random((cfg.seed or 0) + _E.PLAYER_PRESS_SEED_OFFSET) if per_phase else None
++    p_spirit = o_spirit = False
+ 
+     p_tot = player.pow + player.en + player.han
+     o_tot = opponent.pow + opponent.en + opponent.han
+     r = p_tot / o_tot if o_tot else 1.0
+     wear = track_wear(district, lap)
+     p_heat = HeatGauges.for_player(player.pow, player.en, player.han, r, wear)
++    p_heat.lock_cap = cfg.lock_cap; p_heat.lock_cap_keep_load = cfg.lock_cap_keep_load
+     o_heat = HeatGauges.for_boss(opponent.pow, opponent.en, opponent.han, wear)
++    o_heat.lock_cap = cfg.opponent_lock_cap; o_heat.lock_cap_keep_load = True
+ 
+     prev_phase: int = -1
++    tonics_left = cfg.tonics
++    result.tonics_used = 0
+     for turn_num in range(1, cfg.max_turns + 1):
+         phase_index = get_phase(turn_num, cfg.encounter_type)
+         total_phases = get_total_phases(cfg.encounter_type)
+@@ -119,6 +127,10 @@ def run_match(
+             on_line_picked(turn_num, corner, planned_line)
+ 
+         p_heat.begin_turn()
++        if tonics_left > 0 and any(p_heat.locked):
++            ti = max((i for i in range(3) if p_heat.locked[i]), key=lambda i: p_heat.load[i] / p_heat.cap[i])
++            p_heat.load[ti] = 0.0; p_heat.locked[ti] = False; p_heat.lock_age[ti] = 0
++            tonics_left -= 1; result.tonics_used += 1
+         o_heat.begin_turn()
+         if on_turn_start:
+             on_turn_start(turn_num, corner, p_heat, o_heat)
+@@ -193,8 +205,33 @@ def run_match(
+             opponent_heat_mults=o_mults,
+             player_qte_phases=p_phases,
+         )
+-        turn_result = resolve_turn(turn_state, player, opponent, main_trace, race_length=cfg.max_turns,
+-                                   kappa_mult=cfg.kappa_mult)
++        if not per_phase:
++            turn_result = resolve_turn(turn_state, player, opponent, main_trace, race_length=cfg.max_turns,
++                                       kappa_mult=cfg.kappa_mult)
++        else:
++            pq = oq = None
++            if not p_phases and (cfg.player_timing is not None or cfg.player_quality is not None) and not cfg.player_qte_profile:
++                sig = _E.qte_sigma_over_a0(None, q_time); w = _E.qte_zone_width(r, cfg.qte_window_mod)
++                pq = [_E.sample_press_score(press_rng, sig, w) for _ in range(3)]
++            elif p_phases:
++                pq = list(p_phases)
++            if o_qte_rng is not None:
++                oq = [o_qte] + [round_qte_score(min(o_qte_hi, max(o_qte_lo, o_qte_rng.gauss(o_qte_mean, o_qte_sd)))) for _ in range(2)]
++            if cfg.phase_smooth_w is not None:
++                w_ = cfg.phase_smooth_w
++                sm = lambda v: None if v is None else [v[0]] + [round_qte_score(w_ * v[i] + (1 - w_) * sum(v[:i]) / i) for i in (1, 2)]
++                pq = sm(pq); oq = sm(oq)
++            if cfg.phase_avg_control:
++                if pq: turn_state.player_qte = sum(pq) / 3; turn_state.player_qte_phases = []
++                if oq: turn_state.opponent_qte = sum(oq) / 3
++                pq = oq = None
++            b = 1.0 + cfg.sweep_bonus
++            turn_result = resolve_turn(turn_state, player, opponent, main_trace, race_length=cfg.max_turns,
++                                       kappa_mult=cfg.kappa_mult, p_qte_by_clash=pq, o_qte_by_clash=oq,
++                                       p_bonus=b if p_spirit else 1.0, o_bonus=b if o_spirit else 1.0)
++            if cfg.sweep_bonus > 0:
++                oc = [o.value for o in turn_result.battle_outcomes]
++                p_spirit = all(v > 0 for v in oc); o_spirit = all(v < 0 for v in oc)
+         turn_result.corner_type = corner
+         turn_result.opponent_line = list(planned_line)
+         turn_result.player_heat_fill = p_heat.fill()
+diff --git a/sim/velocity_shift/models.py b/sim/velocity_shift/models.py
+index dd5430e..e070c17 100644
+--- a/sim/velocity_shift/models.py
++++ b/sim/velocity_shift/models.py
+@@ -175,6 +175,17 @@ class MatchConfig:
+     # Per-race stat weight (mod_skill go-live, Austin approved 2026-11-19): kappa = kappa_for_length(max_turns) x
+     # kappa_mult. 1.0 = live default; the Street crew boss races at E.MS_BOSS_KAPPA_MULT["street"] = 0.5.
+     kappa_mult: float = 1.0
++    # PROTOTYPE per-phase combat (unapproved/barry/per-phase-combat-v1). per_phase None = district in E.PER_PHASE_DISTRICTS.
++    # Per-phase: each clash uses its own phase QTE (player: one press per phase drawn from the press model; AI: one draw
++    # per phase); sweep_bonus > 0 = spirit: a side that wins all 3 clashes of a turn gets x(1 + sweep_bonus) next turn.
++    per_phase: bool | None = None
++    sweep_bonus: float = 0.0
++    phase_avg_control: bool = False   # control: draw per-phase presses but use the turn average (isolates the noise)
++    phase_smooth_w: float | None = None   # option 2: phase score = w*press + (1-w)*mean(earlier presses this turn); Entry = press
++    lock_cap_keep_load: bool = False   # True: the capped lock ends but the load stays (next play overruns, relocks)
++    tonics: int = 0   # PROTOTYPE tonics-v1: per race; at turn start, if a gauge is locked, cool the hottest locked one to 0 (1 per turn)
++    opponent_lock_cap: int | None = None   # same cap for the AI's gauges (load kept)
++    lock_cap: int | None = None           # player gauge lock cap: a lock ends after this many turn ends (load set to release x cap)
+     # District line tables (LINE_SET_C) and the lap. Required by the playable
+     # engine: match.py picks the opponent's whole line once per corner/turn
+     # from the match RNG, and the corners set the heat costs. `corners` is a
