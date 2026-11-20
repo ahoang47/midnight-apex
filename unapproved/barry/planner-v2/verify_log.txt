@@ -1,0 +1,2 @@
+checked constants.ts + engine.ts: 844 numbers over 42 rows (scripted playthrough + error plan), 844 exact, worst win diff 0.000 pp, worst other diff 4.83e-7, 0 mismatches
+

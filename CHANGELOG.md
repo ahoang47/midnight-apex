@@ -8,6 +8,24 @@
 
 ---
 
+## 2026-11-20 — Barry [sim/tool]: campaign planner rebuilt on the live mod_skill rules and regenerated on release 0.5
+- **Approval:** Austin, direct: "Yes." to regenerating the planner from the live sim, then approved the real rebuild (keep the
+  reading slider / standard reading curve, not strong/weak players).
+- **Why:** the Page (13f6917) predated the mod_skill go-live (83b98d8): it used the draft study's story XP, no floors, no
+  required wilds, level-ladder opponent targets, a slot-order spill rule, the old R2 ceiling 261 and win tables from the 0.3
+  unlock. A data swap could not fix that, so the engine was rebuilt.
+- **New:** `unapproved/barry/planner-v2/` (old `mod-skill-v1/planner/` kept, marked STALE). Rules read from
+  sim/velocity_shift at c8d1200: Garage slots and assign, Mk unlocks, tiers 115-407 (R2 232/250/265), floors, 6 required wilds
+  per round, NM XP cap 15, fixed crew stats, purses and debt. Win tables: new Monte Carlo through `mod_skill.crew_config` at
+  HEAT_RELEASE 0.5 (reading 0.60-0.80 in 5 levels x car points at every floor + midpoint + cap, n 2,400 per cell, gauntlet seeds).
+- **Page:** same title and manual design; base setup, mod splits and XP picks removed (live rules: district tune, auto XP
+  placement); required wilds and non-mandatory wins added as per-race inputs, floors shown and enforced.
+- **Verified:** TS engine vs Python model 844 / 844 exact, 0 mismatches; published Page carries constants and engine verbatim.
+  Strong at the boss floor 65.8 / 66.8 / 66.9 (Street / Wangan / Touge), consistent with the gauntlet's 66-68 band.
+- **Example shift (same car points, reading 0.8):** Street boss at 3,392 points 61.3 % -> 65.8 %; Wangan boss at 3,904
+  71.2 % -> 66.8 %; Touge Kid 1 at 3,904 40.6 % -> 97.0 % (planner-v2/before_after.txt).
+- Sim and live game unchanged; no Godot impact. No story or art impact.
+
 ## 2026-11-20 — Barry [sim]: old balance gauntlet retired; new experience gauntlet (G1-G5, live sim, no pins) in CI — LIVE
 - **Approval:** Austin, direct, 11:41 AM: "Yeah let's retire it and come up with a new gauntlet based on the experience goals."
 - **Retired:**

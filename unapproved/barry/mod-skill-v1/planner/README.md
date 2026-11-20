@@ -1,3 +1,6 @@
+> **STALE (2026-11-20):** superseded by `../../planner-v2/` (live mod_skill rules at c8d1200, release 0.5). This version
+> models the pre-go-live draft rules (13f6917) and win tables at the old 0.3 unlock. Kept for history only.
+
 # mod_skill campaign planner (draft, unapproved)
 
 Live Page, rewritten in place: https://cursor.com/canvas/store-4599c40d-e855-4fb8-bc90-b1743052ccec/786f1da3-54a2-42a2-b4c6-331eb5da9579

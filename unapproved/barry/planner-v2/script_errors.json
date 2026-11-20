@@ -1,0 +1,158 @@
+{
+ "wilds": {
+  "R1 kid1": 0,
+  "R1 kid2": 1,
+  "R1 mat1": 0,
+  "R1 mat2": 1,
+  "R1 oh1": 1,
+  "R1 oh2": 1,
+  "R1 boss": 1,
+  "R2 kid1": 0,
+  "R2 kid2": 1,
+  "R2 mat1": 1,
+  "R2 mat2": 3,
+  "R2 oh1": 1,
+  "R2 oh2": 1,
+  "R2 boss": 1,
+  "R3 kid1": 0,
+  "R3 kid2": 1,
+  "R3 mat1": 1,
+  "R3 mat2": 1,
+  "R3 oh1": 0,
+  "R3 oh2": 1,
+  "R3 boss": 1
+ },
+ "nm": {
+  "R1 kid2": 0,
+  "R1 mat2": 3,
+  "R1 boss": 6,
+  "R2 kid1": 4,
+  "R2 oh1": 5,
+  "R2 boss": 6,
+  "R3 kid2": 6,
+  "R3 oh2": 6,
+  "R3 boss": 3
+ },
+ "buys": [
+  {
+   "at": "R1 kid1",
+   "phase": "pre",
+   "slot": 0
+  },
+  {
+   "at": "R1 kid1",
+   "phase": "post",
+   "slot": 0
+  },
+  {
+   "at": "R1 kid1",
+   "phase": "post",
+   "slot": 1
+  },
+  {
+   "at": "R1 kid1",
+   "phase": "post",
+   "slot": 2
+  },
+  {
+   "at": "R1 kid1",
+   "phase": "post",
+   "slot": 3
+  },
+  {
+   "at": "R1 kid2",
+   "phase": "post",
+   "slot": 0
+  },
+  {
+   "at": "R1 mat1",
+   "phase": "post",
+   "slot": 0
+  },
+  {
+   "at": "R1 mat1",
+   "phase": "post",
+   "slot": 1
+  },
+  {
+   "at": "R1 mat2",
+   "phase": "post",
+   "slot": 0
+  },
+  {
+   "at": "R1 mat2",
+   "phase": "post",
+   "slot": 2
+  },
+  {
+   "at": "R1 mat2",
+   "phase": "post",
+   "slot": 3
+  },
+  {
+   "at": "R1 oh1",
+   "phase": "post",
+   "slot": 0
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "slot": 0
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "slot": 1
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "slot": 2
+  },
+  {
+   "at": "R3 kid1",
+   "phase": "pre",
+   "slot": 3
+  },
+  {
+   "at": "R3 mat1",
+   "phase": "post",
+   "slot": 0
+  },
+  {
+   "at": "R3 mat1",
+   "phase": "post",
+   "slot": 1
+  },
+  {
+   "at": "R3 mat1",
+   "phase": "post",
+   "slot": 2
+  },
+  {
+   "at": "R3 mat1",
+   "phase": "post",
+   "slot": 3
+  },
+  {
+   "at": "R3 mat2",
+   "phase": "post",
+   "slot": 0
+  },
+  {
+   "at": "R3 mat2",
+   "phase": "post",
+   "slot": 1
+  },
+  {
+   "at": "R3 mat2",
+   "phase": "post",
+   "slot": 2
+  },
+  {
+   "at": "R3 mat2",
+   "phase": "post",
+   "slot": 3
+  }
+ ]
+}

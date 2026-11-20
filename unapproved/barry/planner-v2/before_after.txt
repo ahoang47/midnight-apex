@@ -1,0 +1,25 @@
+Same build, old page (mod-skill-v1 engine, 13f6917) vs new page (planner-v2, c8d1200): car at the rung floor points, district tune, hardest track.
+old street kid1 3000 s 0.6 old win 24.3
+old street kid1 3000 s 0.8 old win 92
+old street boss 3392 s 0.6 old win 0.5
+old street boss 3392 s 0.8 old win 61.3
+old wangan kid1 3392 s 0.6 old win 2.4
+old wangan kid1 3392 s 0.8 old win 58.8
+old wangan boss 3904 s 0.6 old win 2.5
+old wangan boss 3904 s 0.8 old win 71.2
+old touge kid1 3904 s 0.6 old win 0.5
+old touge kid1 3904 s 0.8 old win 40.6
+old touge boss 4467 s 0.6 old win 2.2
+old touge boss 4467 s 0.8 old win 60.8
+new street kid1 3000 s 0.6 new win 45.1
+new street kid1 3000 s 0.8 new win 97.5
+new street boss 3392 s 0.6 new win 0.8
+new street boss 3392 s 0.8 new win 65.8
+new wangan kid1 3392 s 0.6 new win 77.5
+new wangan kid1 3392 s 0.8 new win 97.7
+new wangan boss 3904 s 0.6 new win 0.5
+new wangan boss 3904 s 0.8 new win 66.8
+new touge kid1 3904 s 0.6 new win 63.1
+new touge kid1 3904 s 0.8 new win 97.0
+new touge boss 4467 s 0.6 new win 0.5
+new touge boss 4467 s 0.8 new win 66.9
