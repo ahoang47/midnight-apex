@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-20 — Barry: AI pacing on falloff and lock cap, re-pinned (PROPOSAL, unapproved)
+- Austin 8:11 AM: "Let's ignore tonics right now. Test falloff with AI pacing." `unapproved/barry/climb-repin-v2/` (README top section). sim/ untouched.
+- Pacing rule (1 param): the AI leaves its line's stance when the push would end above x·cap (falloff, x = t+0.2) or would lock (lock cap). It then plays the best-output stance that doesn't trigger. Deterministic.
+- Boss stats (no pace → pace): lock cap 337.96/395.68/450.07 → 337.13/396.30/450.21; falloff 0.5 355.06/424.96/470.01 → 326.80/391.42/441.70; falloff 0.7 356.35/428.32/475.13 → 330.60/392.64/446.45.
+- Falloff 0.5 + pace passes the band, ladder, G3b, G4 and G5 (Street/Wangan). All models still fail G2a (boss weak at max 0.6-16) and G3a (correction: it was misreported as pass before).
+- Cars at equal stats, falloff 0.5 / 0.7 + pace: MX-5 vs S2000 52.85 / 68.4 % (was 99.9), WRX vs MX-5 67.1 / 76.75 % (was 98.75 / 98.9).
+
 ## 2026-11-20 — Barry [sim]: heat falloff variant (no locks) re-pinned beside the lock cap; feel metrics; tonics on falloff (UNAPPROVED)
 
 - **What:** Austin (7:04-7:08 AM): "instead of locking out a stance, could we just make damage hit less?" Falloff: no locks for the player or the AI; output m = 1 up to t·capacity, then linear to 0.4 at capacity, and 0.4 above it. The AI curve starts 0.2 later (its softer rules). t = 0.5 and t = 0.7. Re-pinned the same way as 4d51973. Files: `unapproved/barry/climb-repin-v2/` (README top, `fo*_search/verify/final.json`, `feel.py/.json`, `car_matchup.json`) and `unapproved/barry/tonics-v1/` (README appended, `tonics_falloff.json`). sim/ untouched.

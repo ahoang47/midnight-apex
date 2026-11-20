@@ -15,6 +15,8 @@ SEED = 96_000_000
 CAP = dict(lock_cap=2, lock_cap_keep_load=True)
 if os.environ.get("FALLOFF_T"):   # heat falloff variant: no locks; player curve from t, AI from t + 0.2
     CAP = dict(falloff_t=float(os.environ["FALLOFF_T"]))
+if os.environ.get("AI_PACE"):   # AI pacing rule (heat.ai_paced_stance), Austin 8:11 AM "Test falloff with AI pacing."
+    CAP = dict(CAP, ai_pace=True)
 MODEL = {"street": dict(per_phase=True, phase_smooth_w=0.35, **CAP), "wangan": dict(per_phase=True, phase_smooth_w=0.35, **CAP),
          "touge": dict(per_phase=False, **CAP), "touge_pp": dict(per_phase=True, phase_smooth_w=0.35, **CAP)}
 TARGET = tuple(float(x) for x in os.environ.get("TARGET", "95,89,84,79,75,71,67").split(","))

@@ -1,0 +1,428 @@
+{
+ "lockcap": {
+  "street": {
+   "boss_budget": 337.96,
+   "boss_strong_floor": 66.22,
+   "min_step": 3.25,
+   "boss_weak_max": 25.87,
+   "oh2_weak_max": 64.21,
+   "min_weak_max": 25.87,
+   "G5": 98.08,
+   "gap": 40.35,
+   "drop": 29.73,
+   "lowest": 66.22,
+   "boss_weak_floor": 0.35,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  },
+  "wangan": {
+   "boss_budget": 395.68,
+   "boss_strong_floor": 66.57,
+   "min_step": 3.8,
+   "boss_weak_max": 19.45,
+   "oh2_weak_max": 75.98,
+   "min_weak_max": 19.45,
+   "G5": 95.03,
+   "gap": 47.12,
+   "drop": 29.53,
+   "lowest": 66.57,
+   "boss_weak_floor": 0.18,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  },
+  "touge": {
+   "boss_budget": 450.07,
+   "boss_strong_floor": 66.8,
+   "min_step": 3.2,
+   "boss_weak_max": 21.0,
+   "oh2_weak_max": 79.08,
+   "min_weak_max": 21.0,
+   "G5": 96.27,
+   "gap": 45.8,
+   "drop": 29.35,
+   "lowest": 66.8,
+   "boss_weak_floor": 0.02,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  }
+ },
+ "lockcap+pace": {
+  "street": {
+   "boss_budget": 337.13,
+   "boss_strong_floor": 68.0,
+   "min_step": 3.25,
+   "boss_weak_max": 10.77,
+   "oh2_weak_max": 63.36,
+   "min_weak_max": 10.77,
+   "G5": 98.7,
+   "gap": 57.23,
+   "drop": 27.8,
+   "lowest": 68.0,
+   "boss_weak_floor": 0.03,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  },
+  "wangan": {
+   "boss_budget": 396.3,
+   "boss_strong_floor": 67.75,
+   "min_step": 4.0,
+   "boss_weak_max": 7.02,
+   "oh2_weak_max": 64.91,
+   "min_weak_max": 7.02,
+   "G5": 92.87,
+   "gap": 60.73,
+   "drop": 27.8,
+   "lowest": 67.75,
+   "boss_weak_floor": 0.02,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "touge": {
+   "boss_budget": 450.21,
+   "boss_strong_floor": 67.35,
+   "min_step": 3.9,
+   "boss_weak_max": 15.87,
+   "oh2_weak_max": 73.97,
+   "min_weak_max": 15.87,
+   "G5": 95.18,
+   "gap": 51.48,
+   "drop": 28.9,
+   "lowest": 67.35,
+   "boss_weak_floor": 0.02,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  }
+ },
+ "fo0.5": {
+  "street": {
+   "boss_budget": 355.06,
+   "boss_strong_floor": 66.35,
+   "min_step": 3.4,
+   "boss_weak_max": 7.43,
+   "oh2_weak_max": 43.79,
+   "min_weak_max": 7.43,
+   "G5": 96.72,
+   "gap": 58.92,
+   "drop": 29.85,
+   "lowest": 66.35,
+   "boss_weak_floor": 0.17,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  },
+  "wangan": {
+   "boss_budget": 424.96,
+   "boss_strong_floor": 67.3,
+   "min_step": 4.12,
+   "boss_weak_max": 1.55,
+   "oh2_weak_max": 18.32,
+   "min_weak_max": 1.55,
+   "G5": 87.88,
+   "gap": 65.75,
+   "drop": 28.65,
+   "lowest": 67.3,
+   "boss_weak_floor": 0.23,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "touge": {
+   "boss_budget": 470.01,
+   "boss_strong_floor": 67.6,
+   "min_step": 3.7,
+   "boss_weak_max": 9.18,
+   "oh2_weak_max": 62.21,
+   "min_weak_max": 9.18,
+   "G5": 97.53,
+   "gap": 58.42,
+   "drop": 29.25,
+   "lowest": 67.6,
+   "boss_weak_floor": 0.07,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  }
+ },
+ "fo0.5+pace": {
+  "street": {
+   "boss_budget": 326.8,
+   "boss_strong_floor": 67.12,
+   "min_step": 3.4,
+   "boss_weak_max": 0.55,
+   "oh2_weak_max": 51.0,
+   "min_weak_max": 0.55,
+   "G5": 90.28,
+   "gap": 66.57,
+   "drop": 28.98,
+   "lowest": 67.12,
+   "boss_weak_floor": 0.0,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "wangan": {
+   "boss_budget": 391.42,
+   "boss_strong_floor": 66.37,
+   "min_step": 3.71,
+   "boss_weak_max": 6.37,
+   "oh2_weak_max": 45.4,
+   "min_weak_max": 6.37,
+   "G5": 94.15,
+   "gap": 60.0,
+   "drop": 29.53,
+   "lowest": 66.37,
+   "boss_weak_floor": 0.0,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "touge": {
+   "boss_budget": 441.7,
+   "boss_strong_floor": 67.22,
+   "min_step": 3.9,
+   "boss_weak_max": 12.97,
+   "oh2_weak_max": 49.45,
+   "min_weak_max": 12.97,
+   "G5": 96.83,
+   "gap": 54.25,
+   "drop": 28.78,
+   "lowest": 67.22,
+   "boss_weak_floor": 0.07,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  }
+ },
+ "fo0.7": {
+  "street": {
+   "boss_budget": 356.35,
+   "boss_strong_floor": 67.13,
+   "min_step": 4.25,
+   "boss_weak_max": 6.95,
+   "oh2_weak_max": 40.29,
+   "min_weak_max": 6.95,
+   "G5": 97.3,
+   "gap": 60.18,
+   "drop": 29.27,
+   "lowest": 67.13,
+   "boss_weak_floor": 0.15,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  },
+  "wangan": {
+   "boss_budget": 428.32,
+   "boss_strong_floor": 66.98,
+   "min_step": 3.7,
+   "boss_weak_max": 1.08,
+   "oh2_weak_max": 14.11,
+   "min_weak_max": 1.08,
+   "G5": 86.63,
+   "gap": 65.9,
+   "drop": 28.82,
+   "lowest": 66.98,
+   "boss_weak_floor": 0.23,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "touge": {
+   "boss_budget": 475.13,
+   "boss_strong_floor": 67.22,
+   "min_step": 3.2,
+   "boss_weak_max": 5.0,
+   "oh2_weak_max": 54.1,
+   "min_weak_max": 5.0,
+   "G5": 96.27,
+   "gap": 62.22,
+   "drop": 29.33,
+   "lowest": 67.22,
+   "boss_weak_floor": 0.08,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  }
+ },
+ "fo0.7+pace": {
+  "street": {
+   "boss_budget": 330.6,
+   "boss_strong_floor": 65.83,
+   "min_step": 3.65,
+   "boss_weak_max": 1.77,
+   "oh2_weak_max": 39.74,
+   "min_weak_max": 1.77,
+   "G5": 95.68,
+   "gap": 64.06,
+   "drop": 29.72,
+   "lowest": 65.83,
+   "boss_weak_floor": 0.0,
+   "pass": {
+    "G1a": false,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  },
+  "wangan": {
+   "boss_budget": 392.64,
+   "boss_strong_floor": 66.93,
+   "min_step": 4.0,
+   "boss_weak_max": 4.87,
+   "oh2_weak_max": 43.84,
+   "min_weak_max": 4.87,
+   "G5": 95.05,
+   "gap": 62.06,
+   "drop": 29.02,
+   "lowest": 66.93,
+   "boss_weak_floor": 0.0,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  },
+  "touge": {
+   "boss_budget": 446.45,
+   "boss_strong_floor": 67.12,
+   "min_step": 4.05,
+   "boss_weak_max": 8.02,
+   "oh2_weak_max": 50.0,
+   "min_weak_max": 8.02,
+   "G5": 96.55,
+   "gap": 59.1,
+   "drop": 28.93,
+   "lowest": 67.12,
+   "boss_weak_floor": 0.03,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": false,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  }
+ }
+}

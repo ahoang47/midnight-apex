@@ -23,7 +23,9 @@
     "pref_degraded_pct": 16.5,
     "avg_mult": 0.961,
     "longest_degraded_mean": 1.46,
-    "longest_degraded_max": 5
+    "longest_degraded_max": 5,
+    "ai_switch_pct": 40.4,
+    "ai_degraded_pct": 50.6
    },
    "lockcap2": {
     "win": 78.45,
@@ -45,7 +47,9 @@
     "pref_degraded_pct": 11.0,
     "avg_mult": 0.974,
     "longest_degraded_mean": 0.91,
-    "longest_degraded_max": 4
+    "longest_degraded_max": 4,
+    "ai_switch_pct": 40.4,
+    "ai_degraded_pct": 50.6
    },
    "lockcap2_both": {
     "win": 87.4,
@@ -67,7 +71,9 @@
     "pref_degraded_pct": 11.0,
     "avg_mult": 0.974,
     "longest_degraded_mean": 0.91,
-    "longest_degraded_max": 4
+    "longest_degraded_max": 4,
+    "ai_switch_pct": 37.2,
+    "ai_degraded_pct": 51.4
    },
    "falloff0.5": {
     "win": 99.9,
@@ -89,7 +95,9 @@
     "pref_degraded_pct": 17.9,
     "avg_mult": 0.895,
     "longest_degraded_mean": 1.57,
-    "longest_degraded_max": 5
+    "longest_degraded_max": 5,
+    "ai_switch_pct": 0.0,
+    "ai_degraded_pct": 65.5
    },
    "falloff0.7": {
     "win": 99.9,
@@ -111,7 +119,105 @@
     "pref_degraded_pct": 15.8,
     "avg_mult": 0.934,
     "longest_degraded_mean": 1.38,
-    "longest_degraded_max": 5
+    "longest_degraded_max": 5,
+    "ai_switch_pct": 0.0,
+    "ai_degraded_pct": 60.5
+   },
+   "live+pace": {
+    "win": 71.7,
+    "turns_starting_locked_pct": 34.6,
+    "limp_pct": 2.7,
+    "overrun_pct": 5.3,
+    "locks_per_race": 1.68,
+    "mean_lock_turns": 3.31,
+    "max_lock_turns": 10,
+    "locked_turn_share_POW_HAN_EN": [
+     4.9,
+     29.8,
+     20.9
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 16.5,
+    "avg_mult": 0.961,
+    "longest_degraded_mean": 1.46,
+    "longest_degraded_max": 5,
+    "ai_switch_pct": 36.4,
+    "ai_degraded_pct": 0.0
+   },
+   "lockcap2+pace": {
+    "win": 78.0,
+    "turns_starting_locked_pct": 20.4,
+    "limp_pct": 0.1,
+    "overrun_pct": 6.0,
+    "locks_per_race": 2.6,
+    "mean_lock_turns": 1.0,
+    "max_lock_turns": 1,
+    "locked_turn_share_POW_HAN_EN": [
+     0.8,
+     15.9,
+     9.3
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 11.0,
+    "avg_mult": 0.974,
+    "longest_degraded_mean": 0.91,
+    "longest_degraded_max": 4,
+    "ai_switch_pct": 36.4,
+    "ai_degraded_pct": 0.0
+   },
+   "falloff0.5+pace": {
+    "win": 52.85,
+    "turns_starting_locked_pct": 0.0,
+    "limp_pct": 0.0,
+    "overrun_pct": 36.1,
+    "locks_per_race": 0.0,
+    "mean_lock_turns": 0.0,
+    "max_lock_turns": 0,
+    "locked_turn_share_POW_HAN_EN": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 17.9,
+    "avg_mult": 0.895,
+    "longest_degraded_mean": 1.57,
+    "longest_degraded_max": 5,
+    "ai_switch_pct": 42.6,
+    "ai_degraded_pct": 10.0
+   },
+   "falloff0.7+pace": {
+    "win": 68.4,
+    "turns_starting_locked_pct": 0.0,
+    "limp_pct": 0.0,
+    "overrun_pct": 16.1,
+    "locks_per_race": 0.0,
+    "mean_lock_turns": 0.0,
+    "max_lock_turns": 0,
+    "locked_turn_share_POW_HAN_EN": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 15.8,
+    "avg_mult": 0.934,
+    "longest_degraded_mean": 1.38,
+    "longest_degraded_max": 5,
+    "ai_switch_pct": 37.5,
+    "ai_degraded_pct": 20.0
    }
   },
   "WRX vs MX-5": {
@@ -135,7 +241,9 @@
     "pref_degraded_pct": 34.1,
     "avg_mult": 0.886,
     "longest_degraded_mean": 2.99,
-    "longest_degraded_max": 8
+    "longest_degraded_max": 8,
+    "ai_switch_pct": 40.4,
+    "ai_degraded_pct": 50.6
    },
    "lockcap2": {
     "win": 93.25,
@@ -157,7 +265,9 @@
     "pref_degraded_pct": 19.9,
     "avg_mult": 0.949,
     "longest_degraded_mean": 1.46,
-    "longest_degraded_max": 6
+    "longest_degraded_max": 6,
+    "ai_switch_pct": 40.4,
+    "ai_degraded_pct": 50.6
    },
    "lockcap2_both": {
     "win": 94.8,
@@ -179,7 +289,9 @@
     "pref_degraded_pct": 19.9,
     "avg_mult": 0.949,
     "longest_degraded_mean": 1.46,
-    "longest_degraded_max": 6
+    "longest_degraded_max": 6,
+    "ai_switch_pct": 37.2,
+    "ai_degraded_pct": 51.4
    },
    "falloff0.5": {
     "win": 98.75,
@@ -201,7 +313,9 @@
     "pref_degraded_pct": 27.8,
     "avg_mult": 0.845,
     "longest_degraded_mean": 2.35,
-    "longest_degraded_max": 8
+    "longest_degraded_max": 8,
+    "ai_switch_pct": 0.0,
+    "ai_degraded_pct": 65.5
    },
    "falloff0.7": {
     "win": 98.9,
@@ -223,7 +337,105 @@
     "pref_degraded_pct": 25.1,
     "avg_mult": 0.88,
     "longest_degraded_mean": 1.98,
-    "longest_degraded_max": 8
+    "longest_degraded_max": 8,
+    "ai_switch_pct": 0.0,
+    "ai_degraded_pct": 60.5
+   },
+   "live+pace": {
+    "win": 73.8,
+    "turns_starting_locked_pct": 47.6,
+    "limp_pct": 13.1,
+    "overrun_pct": 8.3,
+    "locks_per_race": 2.65,
+    "mean_lock_turns": 3.8,
+    "max_lock_turns": 10,
+    "locked_turn_share_POW_HAN_EN": [
+     30.5,
+     44.8,
+     25.6
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 34.1,
+    "avg_mult": 0.886,
+    "longest_degraded_mean": 2.99,
+    "longest_degraded_max": 8,
+    "ai_switch_pct": 36.4,
+    "ai_degraded_pct": 0.0
+   },
+   "lockcap2+pace": {
+    "win": 90.3,
+    "turns_starting_locked_pct": 31.1,
+    "limp_pct": 1.4,
+    "overrun_pct": 11.0,
+    "locks_per_race": 4.2,
+    "mean_lock_turns": 1.0,
+    "max_lock_turns": 1,
+    "locked_turn_share_POW_HAN_EN": [
+     11.7,
+     20.7,
+     9.6
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 19.9,
+    "avg_mult": 0.949,
+    "longest_degraded_mean": 1.46,
+    "longest_degraded_max": 6,
+    "ai_switch_pct": 36.4,
+    "ai_degraded_pct": 0.0
+   },
+   "falloff0.5+pace": {
+    "win": 67.1,
+    "turns_starting_locked_pct": 0.0,
+    "limp_pct": 0.0,
+    "overrun_pct": 48.9,
+    "locks_per_race": 0.0,
+    "mean_lock_turns": 0.0,
+    "max_lock_turns": 0,
+    "locked_turn_share_POW_HAN_EN": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 27.8,
+    "avg_mult": 0.845,
+    "longest_degraded_mean": 2.35,
+    "longest_degraded_max": 8,
+    "ai_switch_pct": 42.6,
+    "ai_degraded_pct": 10.0
+   },
+   "falloff0.7+pace": {
+    "win": 76.75,
+    "turns_starting_locked_pct": 0.0,
+    "limp_pct": 0.0,
+    "overrun_pct": 31.9,
+    "locks_per_race": 0.0,
+    "mean_lock_turns": 0.0,
+    "max_lock_turns": 0,
+    "locked_turn_share_POW_HAN_EN": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ai_turns_starting_locked_pct": 0.0,
+    "ai_mean_lock_turns": 0.0,
+    "ai_max_lock_turns": 0,
+    "ai_lock_runs_over_2": 0,
+    "pref_degraded_pct": 25.1,
+    "avg_mult": 0.88,
+    "longest_degraded_mean": 1.98,
+    "longest_degraded_max": 8,
+    "ai_switch_pct": 37.5,
+    "ai_degraded_pct": 20.0
    }
   }
  }

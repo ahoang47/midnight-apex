@@ -1,0 +1,674 @@
+{
+ "p_lockcap": {
+  "street": {
+   "boss strong": {
+    "win": 69.3,
+    "degraded_pct": 12.1,
+    "avg_mult": 0.948,
+    "longest_mean": 1.42,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.7
+   },
+   "boss weak": {
+    "win": 11.7,
+    "degraded_pct": 17.0,
+    "avg_mult": 0.93,
+    "longest_mean": 1.51,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.7
+   },
+   "oh2 strong": {
+    "win": 74.9,
+    "degraded_pct": 12.5,
+    "avg_mult": 0.946,
+    "longest_mean": 1.23,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 7.9
+   },
+   "oh2 weak": {
+    "win": 62.6,
+    "degraded_pct": 16.4,
+    "avg_mult": 0.932,
+    "longest_mean": 1.31,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 7.9
+   },
+   "oh1 strong": {
+    "win": 79.7,
+    "degraded_pct": 12.3,
+    "avg_mult": 0.947,
+    "longest_mean": 1.2,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 7.9
+   },
+   "oh1 weak": {
+    "win": 73.1,
+    "degraded_pct": 15.9,
+    "avg_mult": 0.935,
+    "longest_mean": 1.26,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 7.9
+   }
+  },
+  "wangan": {
+   "boss strong": {
+    "win": 67.3,
+    "degraded_pct": 13.8,
+    "avg_mult": 0.934,
+    "longest_mean": 1.89,
+    "longest_max": 16,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 36.5
+   },
+   "boss weak": {
+    "win": 6.8,
+    "degraded_pct": 22.2,
+    "avg_mult": 0.894,
+    "longest_mean": 2.66,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 36.5
+   },
+   "oh2 strong": {
+    "win": 72.5,
+    "degraded_pct": 9.9,
+    "avg_mult": 0.952,
+    "longest_mean": 1.24,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 35.8
+   },
+   "oh2 weak": {
+    "win": 63.7,
+    "degraded_pct": 15.6,
+    "avg_mult": 0.923,
+    "longest_mean": 1.75,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 35.8
+   },
+   "oh1 strong": {
+    "win": 78.5,
+    "degraded_pct": 9.9,
+    "avg_mult": 0.953,
+    "longest_mean": 1.24,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 35.8
+   },
+   "oh1 weak": {
+    "win": 85.0,
+    "degraded_pct": 13.5,
+    "avg_mult": 0.936,
+    "longest_mean": 1.6,
+    "longest_max": 5,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 35.8
+   }
+  },
+  "touge": {
+   "boss strong": {
+    "win": 65.1,
+    "degraded_pct": 18.7,
+    "avg_mult": 0.939,
+    "longest_mean": 1.64,
+    "longest_max": 5,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 24.5
+   },
+   "boss weak": {
+    "win": 15.8,
+    "degraded_pct": 22.1,
+    "avg_mult": 0.925,
+    "longest_mean": 1.71,
+    "longest_max": 3,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 24.5
+   },
+   "oh2 strong": {
+    "win": 72.5,
+    "degraded_pct": 14.7,
+    "avg_mult": 0.959,
+    "longest_mean": 1.24,
+    "longest_max": 3,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 24.7
+   },
+   "oh2 weak": {
+    "win": 75.3,
+    "degraded_pct": 16.4,
+    "avg_mult": 0.951,
+    "longest_mean": 1.26,
+    "longest_max": 3,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 24.7
+   },
+   "oh1 strong": {
+    "win": 76.4,
+    "degraded_pct": 13.7,
+    "avg_mult": 0.962,
+    "longest_mean": 1.21,
+    "longest_max": 3,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 24.7
+   },
+   "oh1 weak": {
+    "win": 88.8,
+    "degraded_pct": 13.9,
+    "avg_mult": 0.957,
+    "longest_mean": 1.09,
+    "longest_max": 3,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 24.7
+   }
+  }
+ },
+ "p_fo0.5": {
+  "street": {
+   "boss strong": {
+    "win": 65.8,
+    "degraded_pct": 19.6,
+    "avg_mult": 0.87,
+    "longest_mean": 1.81,
+    "longest_max": 14,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 31.0
+   },
+   "boss weak": {
+    "win": 0.2,
+    "degraded_pct": 32.9,
+    "avg_mult": 0.755,
+    "longest_mean": 2.24,
+    "longest_max": 13,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 31.0
+   },
+   "oh2 strong": {
+    "win": 72.6,
+    "degraded_pct": 22.7,
+    "avg_mult": 0.832,
+    "longest_mean": 1.81,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 13.9
+   },
+   "oh2 weak": {
+    "win": 49.5,
+    "degraded_pct": 28.5,
+    "avg_mult": 0.799,
+    "longest_mean": 1.76,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 13.9
+   },
+   "oh1 strong": {
+    "win": 77.5,
+    "degraded_pct": 22.3,
+    "avg_mult": 0.836,
+    "longest_mean": 1.77,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 13.9
+   },
+   "oh1 weak": {
+    "win": 54.2,
+    "degraded_pct": 28.4,
+    "avg_mult": 0.801,
+    "longest_mean": 1.76,
+    "longest_max": 6,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 13.9
+   }
+  },
+  "wangan": {
+   "boss strong": {
+    "win": 63.8,
+    "degraded_pct": 19.5,
+    "avg_mult": 0.848,
+    "longest_mean": 2.59,
+    "longest_max": 20,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 40.7
+   },
+   "boss weak": {
+    "win": 5.7,
+    "degraded_pct": 25.4,
+    "avg_mult": 0.759,
+    "longest_mean": 2.71,
+    "longest_max": 25,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 40.7
+   },
+   "oh2 strong": {
+    "win": 72.1,
+    "degraded_pct": 14.9,
+    "avg_mult": 0.876,
+    "longest_mean": 1.57,
+    "longest_max": 15,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 40.4
+   },
+   "oh2 weak": {
+    "win": 46.9,
+    "degraded_pct": 19.2,
+    "avg_mult": 0.803,
+    "longest_mean": 1.59,
+    "longest_max": 15,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 40.4
+   },
+   "oh1 strong": {
+    "win": 75.8,
+    "degraded_pct": 14.8,
+    "avg_mult": 0.878,
+    "longest_mean": 1.55,
+    "longest_max": 15,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 40.4
+   },
+   "oh1 weak": {
+    "win": 64.3,
+    "degraded_pct": 18.4,
+    "avg_mult": 0.813,
+    "longest_mean": 1.48,
+    "longest_max": 15,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 40.4
+   }
+  },
+  "touge": {
+   "boss strong": {
+    "win": 67.1,
+    "degraded_pct": 25.8,
+    "avg_mult": 0.818,
+    "longest_mean": 2.08,
+    "longest_max": 19,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 26.8
+   },
+   "boss weak": {
+    "win": 12.1,
+    "degraded_pct": 30.2,
+    "avg_mult": 0.768,
+    "longest_mean": 2.14,
+    "longest_max": 18,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 26.8
+   },
+   "oh2 strong": {
+    "win": 71.7,
+    "degraded_pct": 23.0,
+    "avg_mult": 0.84,
+    "longest_mean": 1.42,
+    "longest_max": 14,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 27.2
+   },
+   "oh2 weak": {
+    "win": 49.2,
+    "degraded_pct": 25.8,
+    "avg_mult": 0.808,
+    "longest_mean": 1.34,
+    "longest_max": 11,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 27.2
+   },
+   "oh1 strong": {
+    "win": 77.6,
+    "degraded_pct": 22.6,
+    "avg_mult": 0.843,
+    "longest_mean": 1.35,
+    "longest_max": 14,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 27.2
+   },
+   "oh1 weak": {
+    "win": 68.7,
+    "degraded_pct": 24.0,
+    "avg_mult": 0.822,
+    "longest_mean": 1.17,
+    "longest_max": 11,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 27.2
+   }
+  }
+ },
+ "p_fo0.7": {
+  "street": {
+   "boss strong": {
+    "win": 65.2,
+    "degraded_pct": 18.6,
+    "avg_mult": 0.881,
+    "longest_mean": 1.86,
+    "longest_max": 15,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 26.0
+   },
+   "boss weak": {
+    "win": 1.0,
+    "degraded_pct": 30.9,
+    "avg_mult": 0.778,
+    "longest_mean": 2.04,
+    "longest_max": 13,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 26.0
+   },
+   "oh2 strong": {
+    "win": 70.8,
+    "degraded_pct": 19.9,
+    "avg_mult": 0.878,
+    "longest_mean": 1.55,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 9.1
+   },
+   "oh2 weak": {
+    "win": 37.5,
+    "degraded_pct": 27.7,
+    "avg_mult": 0.795,
+    "longest_mean": 1.7,
+    "longest_max": 5,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 9.1
+   },
+   "oh1 strong": {
+    "win": 76.7,
+    "degraded_pct": 19.6,
+    "avg_mult": 0.881,
+    "longest_mean": 1.51,
+    "longest_max": 9,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 9.1
+   },
+   "oh1 weak": {
+    "win": 48.2,
+    "degraded_pct": 27.6,
+    "avg_mult": 0.796,
+    "longest_mean": 1.69,
+    "longest_max": 5,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 9.1
+   }
+  },
+  "wangan": {
+   "boss strong": {
+    "win": 64.7,
+    "degraded_pct": 17.8,
+    "avg_mult": 0.877,
+    "longest_mean": 2.3,
+    "longest_max": 25,
+    "ai_degraded_pct": 3.9,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.69,
+    "ai_longest_max": 1,
+    "ai_switch_pct": 36.9
+   },
+   "boss weak": {
+    "win": 3.9,
+    "degraded_pct": 23.9,
+    "avg_mult": 0.782,
+    "longest_mean": 2.39,
+    "longest_max": 18,
+    "ai_degraded_pct": 3.9,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.69,
+    "ai_longest_max": 1,
+    "ai_switch_pct": 36.9
+   },
+   "oh2 strong": {
+    "win": 70.9,
+    "degraded_pct": 13.6,
+    "avg_mult": 0.9,
+    "longest_mean": 1.43,
+    "longest_max": 15,
+    "ai_degraded_pct": 4.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.54,
+    "ai_longest_max": 1,
+    "ai_switch_pct": 36.3
+   },
+   "oh2 weak": {
+    "win": 44.7,
+    "degraded_pct": 18.0,
+    "avg_mult": 0.826,
+    "longest_mean": 1.46,
+    "longest_max": 15,
+    "ai_degraded_pct": 4.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.54,
+    "ai_longest_max": 1,
+    "ai_switch_pct": 36.3
+   },
+   "oh1 strong": {
+    "win": 76.1,
+    "degraded_pct": 13.3,
+    "avg_mult": 0.902,
+    "longest_mean": 1.4,
+    "longest_max": 15,
+    "ai_degraded_pct": 4.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.54,
+    "ai_longest_max": 1,
+    "ai_switch_pct": 36.3
+   },
+   "oh1 weak": {
+    "win": 63.9,
+    "degraded_pct": 17.0,
+    "avg_mult": 0.836,
+    "longest_mean": 1.35,
+    "longest_max": 15,
+    "ai_degraded_pct": 4.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.54,
+    "ai_longest_max": 1,
+    "ai_switch_pct": 36.3
+   }
+  },
+  "touge": {
+   "boss strong": {
+    "win": 67.4,
+    "degraded_pct": 23.0,
+    "avg_mult": 0.869,
+    "longest_mean": 1.77,
+    "longest_max": 19,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.8
+   },
+   "boss weak": {
+    "win": 7.5,
+    "degraded_pct": 27.9,
+    "avg_mult": 0.804,
+    "longest_mean": 1.76,
+    "longest_max": 16,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.8
+   },
+   "oh2 strong": {
+    "win": 72.2,
+    "degraded_pct": 19.8,
+    "avg_mult": 0.891,
+    "longest_mean": 1.21,
+    "longest_max": 14,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.5
+   },
+   "oh2 weak": {
+    "win": 49.5,
+    "degraded_pct": 23.2,
+    "avg_mult": 0.844,
+    "longest_mean": 1.16,
+    "longest_max": 11,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.5
+   },
+   "oh1 strong": {
+    "win": 78.5,
+    "degraded_pct": 19.8,
+    "avg_mult": 0.892,
+    "longest_mean": 1.2,
+    "longest_max": 14,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.5
+   },
+   "oh1 weak": {
+    "win": 66.9,
+    "degraded_pct": 22.4,
+    "avg_mult": 0.852,
+    "longest_mean": 1.09,
+    "longest_max": 11,
+    "ai_degraded_pct": 0.0,
+    "ai_avg_mult": 1.0,
+    "ai_longest_mean": 0.0,
+    "ai_longest_max": 0,
+    "ai_switch_pct": 23.5
+   }
+  }
+ }
+}

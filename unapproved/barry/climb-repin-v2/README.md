@@ -1,5 +1,89 @@
 # climb-repin-v2: crew stats re-pinned for per-phase smoothed QTE + 2-turn lock cap (Barry PROPOSAL, 2026-11-20, UNAPPROVED)
 
+> **2026-11-20 AI PACING variant (Austin direct, 8:11 AM: "Let's ignore tonics right now. Test falloff with AI pacing.").**
+> Proposal only; sim/ untouched (`per_phase.patch`: `MatchConfig.ai_pace`, `heat.ai_paced_stance`). No tonics anywhere.
+>
+> **Rule (1 param, x):** before each clash the AI checks its line's stance. It keeps it unless the push would leave that gauge
+> above x·capacity (falloff) or would lock it (lock cap: x = 1.0). Then it plays the selectable stance that doesn't trigger, with
+> the best output multiplier; ties go to the lowest fill after the push. x = the AI curve start (t + 0.2: 0.7 / 0.9), so falloff
+> adds no new number. Deterministic (no RNG), about 6 lines for Godot to mirror (`boss_stance` + `ai_paced_stance`).
+> **Interaction with the AI's softer rules:** it sits on top of release 80 % and no passive lock. Those still decide how fast its
+> gauges cool. Pacing only changes which stance it plays when hot, so it now leaves its planned line in 24-41 % of clashes at the
+> boss (8-40 % at oh1/oh2). Without pacing it was 35-51 % under the lock cap (forced by locks) and 0 % under falloff. **That makes
+> the line harder to read.** Same model and cells as before: Street/Wangan per-phase w 0.35, Touge per-turn; rungs n = 2,000,
+> bosses n = 6,000, seeded. Files: `pace_*_search/verify/final.json`, `pace_boss_fix.py/.json`, `pace_final.py`, `pace_criteria.py/.json`,
+> `pace_feel.json` (paced), `pace_feel_nopace.json` (same metrics, no pacing), `car_matchup.json` (+pace variants), `run_pace.sh`.
+>
+> **Boss crew stats (live → no pacing → with pacing):**
+>
+> | Model | Street | Wangan | Touge |
+> |---|---|---|---|
+> | lock cap | 332.58 → 337.96 → 337.13 | 390.35 → 395.68 → 396.30 | 437.06 → 450.07 → 450.21 |
+> | falloff t 0.5 | 332.58 → 355.06 → 326.80 | 390.35 → 424.96 → 391.42 | 437.06 → 470.01 → 441.70 |
+> | falloff t 0.7 | 332.58 → 356.35 → 330.60 | 390.35 → 428.32 → 392.64 | 437.06 → 475.13 → 446.45 |
+>
+> With pacing, falloff stats fall back to about live (−8 to −9 % from the no-pacing falloff re-pin). Lock-cap stats barely move.
+> Full ladders are in `pace_*_final.json`.
+>
+> **Criteria with pacing (Street / Wangan / Touge):**
+>
+> | | lock cap + pace | falloff 0.5 + pace | falloff 0.7 + pace |
+> |---|---|---|---|
+> | Strong boss at floor (66-68) | 68.0 / 67.75 / 67.35 pass | 67.12 / 66.37 / 67.22 pass | **65.83** / 66.93 / 67.12 (Street fails) |
+> | Smallest step (≥ 3.0) | 3.25 / 4.0 / 3.9 pass | 3.4 / 3.71 / 3.9 pass | 3.65 / 4.0 / 4.05 pass |
+> | G2a weak at max, boss (≥ 30) | 10.77 / 7.02 / 15.87 fail | 0.55 / 6.37 / 12.97 fail | 1.77 / 4.87 / 8.02 fail |
+> | G2a weak at max, oh2 | 63.36 / 64.91 / 73.97 | 51.0 / 45.4 / 49.45 | 39.74 / 43.84 / 50.0 |
+> | G5 strong at max (≤ 95) | **98.7** / 92.87 / **95.18** | 90.28 / 94.15 / **96.83** | **95.68** / **95.05** / **96.55** |
+> | Reading gap (G3b ≥ 10) | 57.2 / 60.7 / 51.5 | 66.6 / 60.0 / 54.3 | 64.1 / 62.1 / 59.1 |
+> | G3a drop kid1 → boss (≥ 30) | 27.8 / 27.8 / 28.9 fail | 28.98 / 29.53 / 28.78 fail | 29.72 / 29.02 / 28.93 fail |
+> | G4a / G4b | pass | pass | pass |
+>
+> Without pacing, for comparison: lock cap G2a boss 25.87 / 19.45 / 21.0, G5 98.08 / 95.03 / 96.27, gap 40-47. Falloff 0.5: G2a
+> 7.43 / 1.55 / 9.18, Wangan oh2 18.32, G5 96.72 / 87.88 / 97.53. Falloff 0.7: G2a 6.95 / 1.08 / 5.0, G5 97.3 / 86.63 / 96.27.
+> **Correction:** G3a was marked "pass" in the lock-cap and falloff sections below. Against the live target (MS_TARGETS
+> G3a_drop_kid1_boss 30, test_mod_skill) it fails in every model by 0.1-2.2 pp, because kid1 ≈ 96 and the boss band is 66-68.
+> So it can only pass with the boss at about 66 or kid1 above 96. **Street falloff 0.7 + pace:** there is a stat cliff at boss
+> 330.55 → 330.6 (strong at floor 76.3 → 65.8, n = 6,000), so 66-68 can't be reached. The closest is 65.83.
+>
+> **Feel with pacing (strong 80/80 at floor; player turns degraded % / average output / mean longest degraded stretch; AI planned stance
+> degraded % / AI average output / AI off-line %). No pacing in brackets:**
+>
+> | Model | District | oh1 | oh2 | boss |
+> |---|---|---|---|---|
+> | lock cap | street | 12.3/0.947/1.2; AI 0/1.0/7.9 (AI 6.8/0.958) | 12.5/0.946/1.23 | 12.1/0.948/1.42; AI 0/1.0/23.7 (12.7/0.944/1.46; AI 34.5/0.85) |
+> | lock cap | wangan | 9.9/0.953/1.24; AI 0/1.0/35.8 (AI 45.7/0.855) | 9.9/0.952/1.24 | 13.8/0.934/1.89; AI 0/1.0/36.5 (13.9/0.935/1.89; AI 48.2/0.831) |
+> | lock cap | touge | 13.7/0.962/1.21; AI 0/1.0/24.7 (AI 34.3/0.942) | 14.7/0.959/1.24 | 18.7/0.939/1.64; AI 0/1.0/24.5 (18.5/0.94/1.64; AI 35.5/0.931) |
+> | falloff 0.5 | street | 22.3/0.836/1.77 (24.7/0.814/2.0) | 22.7/0.832/1.81 | **19.6/0.87/1.81** (33.6/0.756/3.93; AI 46.7/0.65) |
+> | falloff 0.5 | wangan | 14.8/0.878/1.55 (20.0/0.826/2.36) | 14.9/0.876/1.57 | **19.5/0.848/2.59** (30.2/0.766/5.15; AI 68.4/0.607) |
+> | falloff 0.5 | touge | 22.6/0.843/1.35 (25.0/0.793/1.92) | 23.0/0.84/1.42 | **25.8/0.818/2.08** (32.1/0.754/3.88; AI 70.6/0.632) |
+> | falloff 0.7 | street | 19.6/0.881/1.51 (22.5/0.865/1.73) | 19.9/0.878/1.55 | **18.6/0.881/1.86** (29.4/0.807/3.12; AI 45.4/0.674) |
+> | falloff 0.7 | wangan | 13.3/0.902/1.4 (17.9/0.86/2.06) | 13.6/0.9/1.43 | **17.8/0.877/2.3** (27.1/0.8/4.57; AI 68.4/0.616) |
+> | falloff 0.7 | touge | 19.8/0.892/1.2 (22.7/0.848/1.57) | 19.8/0.891/1.21 | **23.0/0.869/1.77** (30.0/0.8/3.3; AI 69.7/0.642) |
+>
+> The paced AI never plays a degraded stance (AI output 1.0 in every falloff cell; 3.9-4 % planned-degraded only in Wangan
+> t 0.7, and it switches away from those). Without pacing the falloff AI played degraded stances 28-71 % of turns, at output
+> 0.61-0.79. The player's degraded share at the boss under falloff drops from 27-34 % to 18-26 %, and the longest stretch
+> halves (3.1-5.2 → 1.8-2.6 turns), because crew stats drop back to about live. The weak 60/60 player is worse off at the
+> boss in every paced model (see G2a).
+>
+> **Cars at equal stats (2,000 races; player win % / player turns degraded % / player average output; AI off-line %):**
+>
+> | Matchup | live | live + pace | lock cap + pace | falloff 0.5 + pace | falloff 0.7 + pace |
+> |---|---|---|---|---|---|
+> | MX-5 vs S2000 | 72.15 / 16.5 / 0.961 | 71.7; AI 36.4 | 78.0 / 11.0 / 0.974; AI 36.4 | **52.85** / 17.9 / 0.895; AI 42.6 | 68.4 / 15.8 / 0.934; AI 37.5 |
+> | WRX vs MX-5 | 81.25 / 34.1 / 0.886 | 73.8; AI 36.4 | 90.3 / 19.9 / 0.949; AI 36.4 | **67.1** / 27.8 / 0.845; AI 42.6 | 76.75 / 25.1 / 0.88; AI 37.5 |
+>
+> Without pacing, falloff was 99.9 / 98.75-98.9 % player win, so pacing removes the AI collapse. Lock cap without pacing was
+> 78.45 / 93.25. Live + pace gives the same player numbers as live (pacing only changes the AI). WRX vs MX-5 under falloff 0.7 +
+> pace (76.75) is closest to live (81.25).
+>
+> **Reading:** pacing fixes falloff's AI collapse and brings stats back to about live. Falloff 0.5 + pace passes the band,
+> the ladder, G3b and G4 in all three districts, and G5 in Street and Wangan. It still fails G2a (weak at max at the boss is 0.6-13)
+> and G3a by about 1. Pacing also widens the reading gap under the lock cap (40-47 → 51-61), because a paced AI punishes the
+> weak build harder. **Closest fit: falloff 0.5 + pace** (best G5, smallest player degraded share). G2a still needs a lever
+> outside crew stats.
+
+
 > **2026-11-20 HEAT FALLOFF variant (Austin direct, 7:04-7:08 AM: "instead of locking out a stance, could we just make
 > damage hit less?" / "on paper math the lock makes sense but playing it is really frustrating to get a lock out and it
 > doesn't cool off... even more frustrating as we go up.").** Proposal only; sim/ untouched (`per_phase.patch`, `falloff_t`).
@@ -42,7 +126,7 @@
 > **Criteria (falloff t 0.5 | t 0.7):**
 > - **Boss 66-68:** pass in all three (66.35 / 67.3 / 67.6 | 67.13 / 66.98 / 67.22).
 > - **Ladder ≥ 3.0:** pass in all three (smallest step 3.40 / 4.12 / 3.70 | 4.25 / 3.70 / 3.20).
-> - **G3a, G3b, G4a, G4b:** pass.
+> - **G3a, G3b, G4a, G4b:** pass. *(STALE 2026-11-20: G3a actually fails, drop 28.65-29.85 < 30; see AI pacing correction above.)*
 > - **G2a: FAILS badly.** Weak at max at the boss is 7.43 / 1.55 / 9.18 | 6.95 / 1.08 / 5.0, and Wangan oh2 also fails (18.32 | 14.11).
 > - **G5: fails in Street and Touge** (96.72 / 97.53 | 97.3 / 96.27). Wangan passes (87.88 | 86.63).
 > - **Touge per-phase what-if:** boss 51.1 (fails the band).
@@ -132,7 +216,7 @@
 | Boss 66-68 | pass | pass | pass | fail (55.6) |
 | Ladder strictly falling ≥ 3.0 | pass | pass | pass | pass |
 | G2a weak at max ≥ 30 (every rung) | **fail at boss (25.87)** | **fail at boss (19.45)** | **fail at boss (21.0)** | fail |
-| G3a (drop ≥ 30) | pass | pass | pass | pass |
+| G3a (drop ≥ 30) | pass *(STALE: fails, 29.73; see correction above)* | pass *(STALE: 29.53)* | pass *(STALE: 29.35)* | pass |
 | G3b (gap ≥ +10) | pass (40.4) | pass (47.1) | pass (45.8) | pass |
 | G4a (lowest ≥ 40) | pass | pass | pass | pass |
 | G4b (≤ 10) | pass | pass | pass | pass |
