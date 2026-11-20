@@ -33,9 +33,9 @@ q(a) = min(0.80, 0.50 + 0.30·a/40), a = race attempts made so far in the round 
 - **Mandatory count M per round:** 7 (story only), 10, 13, 20 = 7 story + 0 / 3 / 6 / 13 required wild encounters in the gaps
   before kid2, mat1, mat2, oh1, oh2, boss (0 | 0,1,0,1,0,1 | 1 each | 2,2,2,2,2,3).
   - **Fixed race XP (M7, M10, M13, M20):** fewer mandatory races means a lower floor build.
-  - **Retuned (M7r, M13r):** story XP absorbs the dropped wild encounters' XP so the floors equal M20's (R1 story 55×5 + 71
-    for M7r, 42×5 + 58 for M13r; R2/R3 scaled the same way: +(13 − M + 7)/… i.e. each story win also pays the XP of the
-    wild encounters removed from the gap after it). Same stats as M20, fewer races.
+  - **Retuned (M7r, M13r):** each story win also pays the XP of the wild encounters removed from the gap after it, so the
+    floors equal M20's. Story XP kid1 … oh2: M7r 55×5 + 71 / 82×5 + 109 / 88×5 + 119; M13r 42×5 + 58 / 70×5 + 85 / 74×5 + 91
+    (R1 / R2 / R3). Same stats as M20, fewer races.
 - **Non-mandatory cap c:** none (round ceiling only), 8, 12, 15 XP-paying non-mandatory wins per round.
 - **Structure S2 (every crew each round), pruned on one engine pass.** Mapping by tier (7 story races per round):
   R1 = kid1 + kid2 of Street, Wangan, Touge + Street mat1; R2 = Wangan mat1, Touge mat1, mat2 ×3, Street oh1, Wangan oh1;
