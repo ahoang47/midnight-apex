@@ -29,8 +29,8 @@ jobs:
         run: python -m pytest tests/ -q --tb=short
       - name: Progression report (default order)
         run: python scripts/run_progression.py
-      - name: Balance gauntlet
-        run: python scripts/balance_gauntlet.py
+      - name: Experience gauntlet (G1-G5 on the live sim, n = 6000 per cell)
+        run: python scripts/experience_gauntlet.py
 
   # The Godot job ran the two-corner prototype under unapproved/gordon/two-corner/, which is not on master.
   # Gordon re-adds Godot steps for the main project when the build starts (2026-11-14).

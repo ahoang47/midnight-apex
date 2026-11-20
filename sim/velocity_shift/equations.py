@@ -287,11 +287,6 @@ BOSS_HEAT_CAP_TURNS = 3.0
 BOSS_HEAT_RECOVERY = 1.0
 BOSS_HEAT_RELEASE = 0.8
 BOSS_HEAT_LOCK_ON_PASSIVE = False   # v3/G2 boss: a gauge locks only when the boss plays into it, not from passive load
-# balance_gauntlet.py checks the heat engine against the G2 reference runs, which were built at the old player release 0.3.
-# It pins the player release to this value (like it pins the AI timing) so it keeps testing the engine, not the release-0.5
-# go-live. Under live HEAT_RELEASE 0.5 the same cells read avg_cap 76.4 (all) / 78.1 (20) / 75.6 (30), perf_0.8 31.9:
-# re-targeting the gauntlet is open for Austin.
-GAUNTLET_REF_HEAT_RELEASE = 0.3
 # Boss line styles (sim only, PLACEHOLDER; story question for Desmond / Nathaniel). "balanced" is the live
 # 65/21/14 split. "hot_early" / "conserver" blend BOSS_STYLE_BLEND of a cost ranking into it: hot_early runs
 # the dearest line first until BOSS_HOT_SWITCH of the race, then the cheapest; conserver the reverse at BOSS_CONS_SWITCH.
@@ -1021,3 +1016,4 @@ MS_TARGETS = {
 # Accepted misses (Austin, direct, 2026-11-20 10:41 "Yes."): Street G5 reads 95.67 after the release-0.5 re-pin; accepted as noise
 # (n = 6000; no Street boss total keeps 66-68 with G5 <= 95). Tests allow G5 up to target + this, per district.
 MS_G5_ACCEPTED_MISS = {"street": 1.0}
+MS_BOSS_BAND = (66.0, 68.0)   # Austin 2026-11-19 6:26 PM "keep the boss at 66-68%" (inside G1a 65-70); checked by experience_gauntlet.py

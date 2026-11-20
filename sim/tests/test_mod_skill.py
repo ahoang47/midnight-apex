@@ -80,7 +80,7 @@ def test_boss_band_and_targets():
     for d in M.DISTRICTS:
         boss = CLIMB["table"][d]["boss"]
         assert T["G1a_boss_strong_floor"][0] <= boss["strong_floor"] <= T["G1a_boss_strong_floor"][1], d          # G1a strong boss at floor 65-70
-        assert 66.0 <= boss["strong_floor"] <= 68.0, d                          # Austin: keep the boss at 66-68
+        assert E.MS_BOSS_BAND[0] <= boss["strong_floor"] <= E.MS_BOSS_BAND[1], d                          # Austin: keep the boss at 66-68
         assert min(_col(d, "weak_max")) >= T["G2a_min_weak_max_build"], d                         # G2a 60/60 at max >= 30 everywhere
         assert boss["strong_floor"] - boss["weak_max"] >= T["G3b_boss_read_gap"], d           # G3b
         assert min(_col(d, "strong_floor")) >= T["G4a_min_strong_floor"], d                     # G4a

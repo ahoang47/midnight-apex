@@ -8,6 +8,25 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: old balance gauntlet retired; new experience gauntlet (G1-G5, live sim, no pins) in CI — LIVE
+- **Approval:** Austin, direct, 11:41 AM: "Yeah let's retire it and come up with a new gauntlet based on the experience goals."
+- **Retired:**
+  - `sim/scripts/balance_gauntlet.py` is deleted (it stays in git history before this commit). Its perf_0.8 / perf_1.0 / avg_cap targets came from the Nov 13 G2 reference runs.
+  - Its pins are gone: `E.GAUNTLET_REF_HEAT_RELEASE` (0.3) is removed, and so is its perfect-AI timing pin (opponent_qte_ratio 1/OPPONENT_QTE, sd 0). The engine's `MatchConfig.opponent_qte_ratio` option stays, because the parity tools use it.
+  - No engine drift check kept: comparing against the G2 reference needed those pins. `config/heat_g2_tuned.json` stays as the G2 record.
+- **New `sim/scripts/experience_gauntlet.py`:** each goal per district (Street / Wangan / Touge) on the live sim. Thresholds come from `MS_TARGETS`, the new `MS_BOSS_BAND` (66-68) and `MS_G5_ACCEPTED_MISS`:
+  - G1a: boss band.
+  - G1b (proxy): Σ(1−p)/p story losses for the strong player at the floor.
+  - G2a, plus G2b (proxy): Σ1/p attempts at max build + required wilds.
+  - G3a, G3b, G3c.
+  - G4a, G4b.
+  - G5 with Street's accepted miss.
+  - Feel section, report only.
+  - Exit 1 on failure.
+- **Run:** n = 6000 per cell (SE 0.61 pp at the boss band), the same seeds as the climb pin. 1 m 36 s on 8 cores. All pass, and it reproduces the 68b3fc9 numbers exactly (boss 66.25 / 67.07 / 66.35).
+- **CI:** the sim job runs it in place of the old gauntlet. New `tests/test_experience_gauntlet.py` smoke test (pytest 95 passed / 2 xfailed). `test_mod_skill` reads the boss band from `MS_BOSS_BAND`.
+- **Docs:** retirement notes prepended to design/01, 02 and 08; design/07 top block points at the new check.
+
 ## 2026-11-20 — Barry [sim]: release-0.5 go-live (player lock release 0.3 → 0.5, crew re-pin, Wangan cap 4060) — LIVE
 - **Approval:** Austin, direct, 9:40 AM: "No, I think an earlier unlock is what preserves gameplay mechanics." 10:41 AM: "Yes." to the Wangan cap 4044 → 4060, accepting the Street G5 miss as noise, and promoting to the live sim.
 - **Why** (root cause, `unapproved/barry/experience-rootcause-v1/`): lock-outs were carrying the climb's difficulty. A player lock lasted 3-5 turns (release 30 %) while the AI's lasted 1 (release 80 %), and it got worse going up (Touge strong at floor: limp 1 → 18 %, kid1 → boss). The earlier unlock keeps the lock mechanic but shortens it, and the crew re-pin keeps the win-rate goals.

@@ -1,5 +1,7 @@
 # Skill Parity: play quality, stat gap and win rate
 
+> **RETIRED 2026-11-20: `sim/scripts/balance_gauntlet.py`** (Austin, direct, 11:41 AM: "Yeah let's retire it and come up with a new gauntlet based on the experience goals."). Its win-rate targets (perf_0.8, perf_1.0, avg_cap: the Nov 13 G2 reference runs, a perfect AI and player release 0.3) are gone. The live check is **`sim/scripts/experience_gauntlet.py`**: Austin's G1-G5 experience goals (`design/07-economy-and-mods.md` top, `E.MS_TARGETS`) on the live sim with no pins, run in CI. Mentions of `balance_gauntlet.py` and its targets below are stale.
+
 > **HISTORY (2026-11-13):** `sim/scripts/parity_sweep.py` was removed with the card draw and the legacy HP/DP match path. Numbers below are from that old engine. Current targets and checks: `design/02-equations-reference.md` (heat/load section) and `sim/scripts/balance_gauntlet.py`.
 
 > Author: Barry (Chief of Systems), 2026-11-02. **Source of truth: `sim/scripts/parity_sweep.py`.** Every figure below is from a run of that script on 2026-11-02 (commands in §7). If the engine changes, re-run it; don't edit numbers here by hand.
