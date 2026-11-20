@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-20 — Arthur [art]: RX-7 (FD3S) game model, paint15 (Austin go-ahead 2026-11-20)
+
+- **What:** `assets/cars/rx7/car_rx7.glb` + README (rig and hubs, same layout as the MX-5). `art/vehicles/rx7/` holds the paint15 textures, review renders, the in-game RX-7 vs MX-5 sheet, the 3-view and Austin's window and panel-line drawings.
+- **How:** carved visual hull (carve_v20, 4,618 tris, IoU side .971 / top .976 / front .942 / rear .956). Windows and door, hood and hatch lines traced from Austin's drawings and mirrored. Soft painted value gradient in the albedo; Austin preferred this (paint15) over the stepped-band paint23 ("lines are too clean and look unnatural").
+- **Not changed:** `spec/display.json` (Gordon's) has no rx7 entry yet; the test scene used a copy of the MX-5 entry with tint 1. No `.tscn` or vehicle tuning. The unclamped light add in `shaders/car_vertex_lit.gdshader` still makes every car clip under lamps.
+
+---
+
 ## 2026-11-20 — Barry [sim]: cooldown analysis of Austin's Touge playtest (WRX vs MX-5), proposal only (UNAPPROVED)
 
 - **What:** `unapproved/barry/cooldown-v1/` holds `replay_tc4.py` (an exact replay of Austin's TC4 race, cumulative totals bit-identical, 18.019 vs 12.978), `matchup_mc.py` (2,000 seeded races per split), JSON outputs and a README. Nothing in sim/ or Godot changed.
