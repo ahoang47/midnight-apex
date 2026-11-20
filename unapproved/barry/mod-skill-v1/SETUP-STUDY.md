@@ -5,6 +5,81 @@
 > 2 mature, 2 old head, 1 boss), crews stat-locked with FLOORS (earned points count, assigned or not), no underdog bonus,
 > 0.80 random AI QTE, AI heat rules, fixed mod layout.
 
+## 0. REVISION 2026-11-19 (later): strong story player at 65-70 % on the boss (Barry DRAFT, unapproved)
+> **Austin (direct, 2026-11-19, after reading this study):** "Think we can get a strong story player to 65-70%?"
+> **G1a revised: 80/80 boss win at the floor (mandatory build) 65-70 % every round** (was 40-65). Every other threshold in
+> section 1 is unchanged. Code: `boss_lever.py` → `boss_lever.json` (levers), `boss65_probe.py` → `boss65_probe.json`,
+> `climb65.py` → `climb65.json` (scorecard), `journey_shop.py` → `journey_shop.json` (journeys with mod purchases).
+> Nothing live; `sim/` untouched.
+
+### 0.1 Levers tried (engine n = 6,000, target 66 % so the boss stays ≤ oh2 + 1 for G3a)
+| Lever | Values (Street / Wangan / Touge) | 80/80 at floor | 80/80 at max (G5 ≤ 95) | 60/60 at max | Verdict |
+|---|---|---|---|---|---|
+| **(b) raise the boss floor** (story XP in the oh2 → boss gap) | floor 3,346 → **3,392 (+46)**, 3,865 → **3,904 (+39)**, 4,424 → **4,467 (+43)**; boss budgets unchanged | 66.9 / 66.1 / 67.7 | **94.5 / 89.6 / 94.8** (unchanged) | 32.6 / 35.9 / 38.6 (unchanged) | **chosen: cheapest, breaks nothing** |
+| (a) lower the boss budget at the old floor | 332.58 → 328.07, 390.35 → 386.46, 437.06 → 432.96 | ≈ 66 (same floor r) | **95.98** / 93.85 / **98.08** | 40.2 / 50.2 / 56.4 | fails G5; 60/60 too easy |
+| (c) soften the boss AI QTE | mean 0.80 → 0.685 / 0.65 / 0.68 | 69.7 / 66.4 / 66.7 | **96.7** / 92.3 / **96.9** | 49.0 / 48.1 / 53.7 | fails G5; 60/60 too easy; per-character AI skill (Desmond) |
+
+- (a) and (c) lift the full build as much as the floor; (b) only closes the floor-to-max gap, so G5 and G2a don't move.
+- **(b) in numbers (M13r, one wild encounter per gap):** pre-boss story XP R1 42×5 + **104** (oh2 was 58), R2 70×5 + **90**
+  (was 85), R3 74×5 + **109** (was 91); the boss sits at 73.7 % / 72.7 % / 72.4 % of the round's mod XP (was 65 %).
+  Full build from the boss floor needs 11 / 12 / 12 non-mandatory wins (was 15 / 15 / 15); cap 15 unchanged.
+- **Knock-on:** the higher R1/R2 boss floor raises the next round's entry (+46 into R2, +39 into R3). To hold kid1-oh2, the
+  R2/R3 rung budgets are rescaled to keep each rung's r: R2 318.65 / 340.56 / 348.93 / 362.05 / 373.74 / 384.44, R3 354.33 /
+  383.85 / 393.80 / 404.82 / 416.82 / 426.72 (kid1 … oh2; the R2 kid1 and R3 kid1/oh2 values include the G3a repair below).
+- **G3a repair (the boss drop broke it):** at boss ≈ 66-68 the kid1 → boss drop was 29.1 (Wangan) and 25.3 (Touge), and the
+  Touge boss (67.9; the engine curve steps from 64.9 to 67.8 between r 1.0219 and 1.0220) sat above oh2 + 1 (66.8 + 1).
+  Fixes: Wangan kid1 r 1.046 → 1.0645 (80/80 95.0 → 97.1), Touge kid1 r 1.0636 → 1.1018 (93.3 → 98.7), Touge oh2 r 1.0125 →
+  1.018 (66.8 → 70.7). Story/art impact: none (stats only).
+
+### 0.2 Scorecard, S1 M13r cap 15 + lever (b) (engine: n = 2,000 non-boss, 6,000 boss; `climb65.json`)
+| Criterion | Threshold | Street / Wangan / Touge | Pass |
+|---|---|---|---|
+| G1a (revised) strong boss at floor | 65-70 | **66.87 / 66.05 / 67.65** | + |
+| G1b strong story losses per round | 1.5-4.0 | 1.80 / 2.02 / 1.79 | + |
+| G2a min 60/60 at max build | ≥ 30 | 32.63 (Street boss) | + |
+| G2b weak improving, R1 | ≤ 60 att, 0 stuck | 32.3 attempts, 6.1 NM wins, 0 stuck | + |
+| G3a climb monotone, drop | drop ≥ 30 | yes; 31.18 / 31.0 / 31.0 | + |
+| G3b boss read gap (80/80 floor − 60/60 max) | ≥ +10 | +34.2 / +30.2 / +29.1 | + |
+| G4a min 80/80 at floor | ≥ 40 | 65.9 (Wangan oh2) | + |
+| G4b 60/60 boss at floor | ≤ 10 | 2.28 / 1.53 / 2.93 | + |
+| G5 cap set, 80/80 boss at max | ≤ 95 | 94.5 / 89.6 / 94.77 | + |
+
+**9/9.** Boss per round: strong at floor 66.9 / 66.1 / 67.7, strong at max 94.5 / 89.6 / 94.8, 60/60 at floor 2.3 / 1.5 / 2.9,
+60/60 at max 32.6 / 35.9 / 38.6. Climb (80/80 at floor, kid1 … boss): Street 98.1 / 91.8 / 87.2 / 81.7 / 75.9 / 66.2 / 66.9;
+Wangan 97.1 / 89.9 / 85.6 / 78.9 / 70.8 / 65.9 / 66.1; Touge 98.7 / 90.7 / 85.6 / 80.0 / 73.2 / 70.7 / 67.7.
+- **Nothing broke** against the thresholds. 60/60 doesn't get easier (floor ≤ 2.9, max unchanged at 32.6-38.6).
+- **Watch:** in Street and Wangan the boss (66.9 / 66.1) now equals oh2 (66.2 / 65.9) for a strong player at the floor: G3a passes
+  on its +1 tolerance, but the top of the climb is flat. If Austin wants the boss to feel harder than oh2, lower oh2 to ~70-72
+  (budget only); not run.
+- G5 and the cap need no change: the max build is untouched by (b).
+
+### 0.3 Mod tiers in the journeys (answer)
+- **The earlier journeys (`journey.py`, `journey_setups.py`) assumed the needed tier was owned:** no purchase, no cash deducted,
+  no debt. (The engine scorecards are stat-only and don't need it; the campaign walk `walk.py` does buy, but one tier per round
+  at round open at Mk1 list $150 / $700 / $1,200, not the mods-v1 Mk2/Mk3 unlocks.)
+- **Fixed in `journey_shop.py`:** R1 starts at $0 with the $16,000 debt, 65 % of each purse to the debt; mods-v1 R1 prices and
+  unlocks: Mk1 $150 at round open, Mk2 $500 after the mat1 win, Mk3 $1,000 after the mat2 win, 4 slots; earned-point ceiling
+  per slot Mk1 115 / Mk2 124 / Mk3 133 (scaled from mods-v1 points above stock 63 / 68 / 73 to mod_skill's 133; Barry
+  mapping, draft). XP with no room is lost from the car but counts toward the floor ledger. Myth tiers are arc-only (not R1).
+- **Result:** every player owns 4 × Mk3 by the boss (100 % of runs), spends $6,600, and loses 0 XP; the ceilings never bind
+  before the boss, so the R1 journeys are unchanged within noise (old M13r: strong 15.6 attempts, weak 37.2, weak + NM 33.0).
+
+### 0.4 Round 1 journey, M13r + lever (b), with purchases (10,000 players; journey grid = engine, reads ~1.5 pts low at the boss)
+| Race | Strong (80/80), mandatory only | Weak (50 → 80), mandatory only | Weak + non-mandatory (cap 15) |
+|---|---|---|---|
+| kid1 | 97.4 %, 1.0 att | skill 0.50, 12.1 %, 5.0 att | 0.58, 3,040 pts, 57.6 %, 1.7 att (3.1 NM wins) |
+| kid2 | 90.5 %, 1.1 | 0.56, 9.2 %, 6.6 | 0.62, 3,121, 55.1 %, 1.8 (2.0) |
+| mat1 | 84.7 %, 1.2 | 0.61, 17.8 %, 4.6 | 0.64, 3,177, 56.8 %, 1.7 |
+| mat2 | 78.0 %, 1.3 | 0.66, 21.1 %, 4.1 | 0.67, 3,238, 54.6 %, 1.8 |
+| oh1 | 70.6 %, 1.4 | 0.69, 26.8 %, 3.4 | 0.69, 3,298, 55.5 %, 1.8 |
+| oh2 | 63.2 %, 1.6 | 0.73, 30.4 %, 3.0 | 0.71, 3,355, 55.6 %, 1.7 |
+| boss | 3,392 pts, **65.3 %**, 1.5 | 0.76, 3,392, 47.3 %, 2.1 | 0.73, 3,472, **67.3 %**, 1.5 |
+| Round | 15.2 attempts; cash $1,555, debt $855 left | 36.4 attempts; same cash/debt | 32.3 attempts, 6.1 NM wins; $4,079, debt cleared |
+
+All runs: $6,600 on mods (4 × Mk1-Mk3), 0 XP lost, 0 stuck. Floors never wall a player in story order.
+
+---
+
 ## 1. Criteria (written and fixed at 16:23 PT, BEFORE any setup run; not tuned afterwards)
 Players: **strong** = 80/80 (read = timing = pacing 0.80) throughout. **Weak (fixed)** = 60/60. **Weak improving** = skill
 q(a) = min(0.80, 0.50 + 0.30·a/40), a = race attempts made so far in the round (wins and losses), i.e. linear from 50/50 to
@@ -13,7 +88,7 @@ q(a) = min(0.80, 0.50 + 0.30·a/40), a = race attempts made so far in the round 
 
 | ID | Goal | Measure | Pass threshold | Why this number |
 |---|---|---|---|---|
-| G1a | Strong player challenged, mandatory only | 80/80 boss win % at the mandatory build, worst and best round | **40-65 %** every round | A coin-flip-ish boss (~1-2.5 attempts) is a challenge; > 65 is routine, < 40 is a wall for the target player |
+| G1a | Strong player challenged, mandatory only | 80/80 boss win % at the mandatory build, worst and best round | **40-65 %** every round (REVISED 2026-11-19 by Austin to **65-70 %**, see section 0) | A coin-flip-ish boss (~1-2.5 attempts) is a challenge; > 65 is routine, < 40 is a wall for the target player |
 | G1b | … | 80/80 expected losses over the 7 story races, per round (Σ 1/p − 1) | **1.5-4.0** every round | At least one or two lost story races per round; more than 4 starts to feel like a grind for a strong player |
 | G2a | Weak can grind to win | 60/60 win % at the MAX (capped) build, worst story rung over 3 rounds | **≥ 30 %** | Same floor as the approved boss rule (60/60 ≥ 30) applied to every story rung |
 | G2b | … | Weak improving, R1 Street, mandatory + capped non-mandatory (grind until the next story race is ≥ 50 % or the cap is hit): mean attempts in the round; players stuck (≥ 400 attempts on a race) | **≤ 60 attempts, 0 stuck** | 60 ≈ 3× the current 20 mandatory; beyond that the round is a slog |
@@ -96,7 +171,7 @@ $27,150; weak run 2 38.0 attempts, 4.8 NM wins, boss 60.5 %, $29,808.
 - Floors never wall a player who plays in story order; they only block skipping ahead (or skipping required wild encounters).
 - Free retries are themselves practice: the improving weak player clears even mandatory-only, at the cost of skill walls early.
 
-## 5. Recommendation and the main tradeoff
+## 5. ~~Recommendation and the main tradeoff~~ (STALE 2026-11-19: G1a revised to 65-70 % by Austin; superseded by section 0, which keeps S1 M13r cap 15 and adds lever (b))
 - **Recommended: S1, M13r, non-mandatory cap 15 XP-paying wins per round** (7 story + 6 required wild encounters, one before
   each rung after kid1; story XP raised so the floors match the climb). Passes 9/9: strong mandatory-only boss 53.6 / 56.8 /
   54.1 %, 2.2-2.3 story losses per round, climb 97 → 54, read gap +15.5 to +21.0, 60/60 boss 32.6 at the cap and ≤ 0.8 at

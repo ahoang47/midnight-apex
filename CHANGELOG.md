@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-19 — DRAFT: mod_skill boss at 65-70 % for a strong story player (Barry, Systems; unapproved, Austin direction)
+- **Austin (direct, 2026-11-19):** "Think we can get a strong story player to 65-70%?" G1a revised to 65-70 % (80/80 boss at the floor) in SETUP-STUDY.md; every other threshold unchanged. Old section 5 recommendation marked stale; new section 0 prepended.
+- **Levers (engine n 6,000; `boss_lever.py`):** (b) raise the boss floor 3,346 / 3,865 / 4,424 → 3,392 / 3,904 / 4,467 (story XP in the oh2 → boss gap): chosen, max build untouched. (a) lower boss budget: full-build 80/80 95.98 / 93.85 / 98.08 (fails G5). (c) boss AI QTE 0.685 / 0.65 / 0.68: 96.7 / 92.3 / 96.9 (fails G5), 60/60 at max 48-54.
+- **Scorecard S1 M13r cap 15 + (b) (`climb65.py`): 9/9.** Strong boss at floor 66.87 / 66.05 / 67.65; at max 94.5 / 89.6 / 94.77; 60/60 at floor 2.28 / 1.53 / 2.93, at max 32.63 / 35.9 / 38.6; read gap +29.1 to +34.2. G3a repair: Wangan kid1 r 1.0645, Touge kid1 r 1.1018, Touge oh2 r 1.018; R2/R3 rung budgets rescaled for the higher entry. Watch: Street/Wangan boss ≈ oh2 (flat top).
+- **Mod tiers:** earlier journeys assumed tiers owned. `journey_shop.py` buys mods-v1 R1 Mk1 $150 (open) / Mk2 $500 (after mat1) / Mk3 $1,000 (after mat2) with the $16,000 debt at 65 %: 4 × Mk3 by the boss in every run, $6,600 spent, 0 XP lost; R1 journeys unchanged within noise. New R1: strong 15.2 attempts (boss 65.3 % grid), weak 36.4, weak + NM 32.3 (6.1 NM wins), 0 stuck.
+- Nothing live; sim/ untouched.
+
 ## 2026-11-19 — Arthur [art]: Live per-vertex night lighting approved: sodium point lamps, moon fill, flares, short taillight trails; baked pools retired
 
 ## 2026-11-19 — DRAFT: mod_skill setup study vs Austin's goals G1-G5 (Barry, Systems; unapproved, Austin direction)
