@@ -1,6 +1,6 @@
 # mod_skill: story and UI framing
 
-**Status (Austin 2026-11-19, 7:26 PM PT):** 1 and 3 approved. 2 replaced: a required wild is someone who runs up on the player at random at a key map point once conditions are met. 4: no framing chosen. The canon block in design/01 is authoritative.
+**Status (Austin 2026-11-19, 7:26 PM PT):** 1 and 3 approved. 2 replaced: a required wild is someone who runs up on the player at random at a key map point once conditions are met. 4: dropped. The Street boss half weight stays a pure systems rule with no story framing (Austin, 10:20 PM PT). The canon block in design/01 is authoritative.
 
 Owner: Desmond. Based on touge-race 83b98d8 (design/07 goals block). Answers Barry's four asks from 2026-11-19. Nothing here is canon until Austin approves it; dialogue is placeholder for Nathaniel.
 
@@ -21,13 +21,11 @@ Owner: Desmond. Based on touge-race 83b98d8 (design/07 goals block). Answers Bar
 - **In-world reason:** after 15 side wins in a district, nobody there cares about you beating randoms anymore. Wins still pay cash, but there's no new Rep. A new district means a new audience, so the cap resets.
 - **Signal:** a side-race counter in the HUD or map, `Side-race Rep 12 / 15`. On the 15th win a one-time toast: "The scene's seen enough. Side races pay cash only this round." (placeholder). After the cap, the post-race screen shows `+0 Rep (capped)` next to the cash.
 
-## 4. Street boss at half stat weight: his course, his rules
-- **Recommended framing (course):** the influencer picks a tight downtown course built for footage: short straights, blind corners, nowhere for horsepower to show. "Anyone can win with money. Win on my street." It fits canon 22 (builds made for the camera, "My street, my camera") and needs no extra rule on screen.
-- **Alternative (rules):** he insists on "content rules" for the stream (limits on how much the build can do) so the win is clean on camera. This is more explicit, but it reads as a rules exception.
-- **UI:** the pre-race card for this race says something like "Driver's race: your build matters less here." so the player isn't surprised.
+## 4. Street boss at half stat weight
+- **Dropped (Austin 2026-11-19, 10:20 PM PT):** no story reason. It stays a pure systems rule.
 
 ## Open for Austin
 1. Is it OK to make Rep visible as a number (it was lore only)?
 2. Gatekeeper framing for the required wilds?
 3. The scene-stops-watching reason and the counter for the cap?
-4. Course framing or rules framing for the Street boss?
+4. ~~Course framing or rules framing for the Street boss?~~ Dropped: no story framing.
