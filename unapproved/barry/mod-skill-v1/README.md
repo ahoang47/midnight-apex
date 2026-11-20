@@ -1,5 +1,9 @@
 # mod-skill-v1: Austin's "mod_skill" progression, simulated (Barry DRAFT, 2026-11-18)
 
+> **2026-11-19 DRAFT (Austin direction, unapproved): SETUP STUDY, see [SETUP-STUDY.md](SETUP-STUDY.md).** G1-G5 as pass/fail
+> criteria; S1 one crew per round × mandatory 7/10/13/20 × cap none/8/12/15; S2 pruned. Recommended: S1, 13 mandatory (story XP
+> retuned so floors match), cap 15 (9/9). No underdog bonus (rejected). The climb draft below is superseded in part.
+
 > **2026-11-19 DRAFT (Austin direction, unapproved): THE CLIMB, see [GATE.md](GATE.md) top.** Austin rejected the mandatory-20
 > "no retune" result as "cheap". Draft: keep 20 mandatory races, but the mandatory path lands at 65 % of round mod XP at the boss
 > (full build needs ~15 optional wins); rung budgets make a climb (80/80 kid1 ~95 → boss ~52-56); live combat, plus kappa × 0.5

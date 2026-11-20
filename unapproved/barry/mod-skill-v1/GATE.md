@@ -1,3 +1,12 @@
+# mod_skill: SETUP STUDY replaces the climb recommendation (Austin 2026-11-19 4:21 PM PT), Barry DRAFT
+
+> **See [SETUP-STUDY.md](SETUP-STUDY.md)** (criteria G1-G5 fixed before runs, scorecard, journeys, floors, live-sim lock check).
+> Austin's decisions on the climb draft (2026-11-19): **no underdog bonus** (C5 below REJECTED); keep it brutal for 60/60; crews
+> stat-locked with floors on earned points. The single recommendation in C3 below is **superseded** by the setup study
+> (recommended there: S1, 13 mandatory with story XP retuned, non-mandatory cap 15). Unapproved; nothing live.
+
+---
+
 # mod_skill: THE CLIMB (Austin 2026-11-19), Barry DRAFT
 
 > **Direction (Austin, direct, 2026-11-19):** "Hmm, that seems cheap. The boss needs to be a difficult build up, and you've taken
@@ -70,7 +79,7 @@ easier r (Q kid1 1.006 / 1.036 / 1.053 vs V0 1.021 / 1.046 / 1.064). Boss 80/80 
 41.4 / 58.6; K70Q 41.3 / 58.8, 51.4 / 64.3, 42.0 / 58.1. It reads as "the bosses drive better", which is **per-character AI skill:
 story/character territory, flag for Desmond.** Plain K70 (grid) behaves like a milder B.
 
-## C3. Recommendation: Option A, plus kappa × 0.5 on the Street boss race only
+## C3. Recommendation: Option A, plus kappa × 0.5 on the Street boss race only (SUPERSEDED by SETUP-STUDY.md)
 - **Everything is engine-verified at n = 6,000.** Live combat for every rung and for the Wangan and Touge bosses (Option A
   table), and **K50 only for the Street boss** at full r **1.062** (`climb_street_check.json`):
 
@@ -97,7 +106,7 @@ story/character territory, flag for Desmond.** Plain K70 (grid) behaves like a m
 - Reasoning: the boss is a skill check, not a stat check. The top two targets separate readers from builders, and the climb
   target stops a boss from being easier than its lieutenants.
 
-## C5. Reward for fighting early: "underdog" bonus (draft)
+## C5. ~~Reward for fighting early: "underdog" bonus (draft)~~ REJECTED by Austin 2026-11-19 (no underdog bonus)
 - **Underdog purse: +25 % of the rung purse** for beating a lieutenant (mat1, mat2, oh1, oh2) or the boss below the round cap.
   Lieutenant purses 2,500 / 2,875 / 3,375 ×4 plus boss 8,000 / 9,200 / 10,800 give at most **+$4,500 / +$5,175 / +$6,075 per round** (R1 story
   purses total $20,000, so ≤ +22.5 %). +50 % would be $9,000 / $10,350 / $12,150 (too rich, R1 +45 %).

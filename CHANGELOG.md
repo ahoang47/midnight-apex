@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-19 — DRAFT: mod_skill setup study vs Austin's goals G1-G5 (Barry, Systems; unapproved, Austin direction)
+- **Austin (direct, 2026-11-19):** no underdog bonus (marked REJECTED in GATE.md); keep it brutal for 60/60; crews stat-locked with floors on earned points; then (4:21 PM PT) compare setups against written goals instead of one climb recommendation (GATE.md C3 marked superseded).
+- **New `unapproved/barry/mod-skill-v1/SETUP-STUDY.md`:** G1-G5 as 9 pass/fail criteria fixed before any run. Grid: S1 one crew per round × mandatory 7 / 10 / 13 / 20 (fixed race XP) plus M7r / M13r (story XP retuned so floors match M20) × non-mandatory cap none / 8 / 12 / 15. S2 (every crew every round, stat-locked) pruned on one engine pass: Touge kids 0.0 % for 80/80 in R1, Street boss 100 % in R3.
+- **Scorecard:** M20 / M13r / M7r with cap 15 pass 9/9 (strong boss 53.6 / 56.8 / 54.1 %, climb drop 38, read gap +15.5 to +21.0, 60/60 boss at cap 32.6, 80/80 at cap ≤ 94.8). Fixed-XP M7 / M10 / M13 pass 4/9 (strong boss 0-18 %). Cap 12 fails G2a (26.4), 8 fails (11.2). Weak-improving R1 journey: M20 38.0 attempts, M13r 33.0, M7r 29.4; 0 stuck.
+- **Recommended: S1, M13r, cap 15.** Tradeoff is race count vs practice: same stats, the weak player reaches the boss at skill 0.71 (M7r) / 0.74 (M13r) / 0.77 (M20).
+- **Floors, grind cost, live-sim check** (`climb_floor.py`): floors = mandatory build per rung; 60/60 needs 4-14 non-mandatory wins to reach 30 % at mat1 … boss. Live sim crews are already stat-locked (`equations.py:923`), with no floor gate; Godot derives the player from the opponent (`race_core.gd:34-38`), so Gordon needs progression, per-character stats, a floor check, per-race kappa and a cap counter.
+- Code: `climb_floor.py`, `journey_grid.py`, `journey.py`, `setup_study.py`, `journey_setups.py`, `setup_score.py` (+ .json). Nothing live; sim/ untouched.
+
 ## 2026-11-19 — DRAFT: the climb for mod_skill (Barry, Systems; unapproved, Austin direction)
 - **Direction (Austin, direct, 2026-11-19):** "Hmm, that seems cheap. The boss needs to be a difficult build up … the lieutenants and bosses need to feel like a climb, and the player should be encouraged to fight them even without full stats." The mandatory-20 "no retune" finding (042a725) is marked REJECTED in GATE.md and the README, and kept. Kept: 20 mandatory races, 0.80 random AI QTE, AI heat, fixed mod layout.
 - **Model:** the mandatory path lands at 65 % of round mod XP at the boss (mandatory XP 346 / 519 / 559; pre-boss story XP ≈177 / 363 / 377 with wild-encounter XP 13 / 12 / 14; catch-up off). Full build needs ~15 optional wins per round. Rung budgets set for a falling 80/80 climb.
