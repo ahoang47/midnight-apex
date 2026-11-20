@@ -1,4 +1,4 @@
-# release-0.5-v1: player lock release 30 % → 50 %, crew stats re-pinned (LIVE 2026-11-20: promoted to sim/ in the CHANGELOG entry "release-0.5 go-live"; Austin 10:41 AM "Yes.")
+# release-0.5-v1: player lock release 30 % → 50 %, crew stats re-pinned (LIVE 2026-11-20: promoted to sim/ in go-live commit 68b3fc9; Austin 10:41 AM "Yes.")
 
 > **LIVE.** Promoted with the Wangan cap fix 4044 → 4060 (Mk3 R2 261 → 265, tiers 232 / 250 / 265); Street G5 95.67 accepted as noise.
 > The live numbers are in `design/07-economy-and-mods.md` (top) and `sim/config/mod_skill_climb_v1.json`; the tables below are the proposal record.
