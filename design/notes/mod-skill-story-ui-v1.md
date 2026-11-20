@@ -1,4 +1,6 @@
-# mod_skill: story and UI framing (proposal, unapproved)
+# mod_skill: story and UI framing
+
+**Status (Austin 2026-11-19, 7:26 PM PT):** 1 and 3 approved. 2 replaced: a required wild is someone who runs up on the player at random at a key map point once conditions are met. 4: no framing chosen. The canon block in design/01 is authoritative.
 
 Owner: Desmond. Based on touge-race 83b98d8 (design/07 goals block). Answers Barry's four asks from 2026-11-19. Nothing here is canon until Austin approves it; dialogue is placeholder for Nathaniel.
 

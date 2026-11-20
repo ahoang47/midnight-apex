@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-19 — mod_skill story/UI framing: Rep and side-race cap approved (Desmond; Austin direct)
+- Canon block (design/01): added Austin's 7:26 PM decision. Rep is the visible name for the earned-XP floor ledger (`Rep X / Y` on locked rungs). The non-mandatory cap is framed as the scene no longer watching, with a counter and a capped message. Required wilds are random run-ups at key map points once conditions are met. The Street boss at half weight has no framing yet.
+- Moved the proposal from unapproved/desmond/ to design/notes/mod-skill-story-ui-v1.md with a status note.
+
 ## 2026-11-19 — mod_skill go-live: stat-locked crews, earned-XP floors, 13 mandatory races, cap 15 (Barry; Austin "Approved for all")
 
 - **What:** Austin approved the mod_skill setup study in full (direct, 6:39 PM PT: "Approved for all"; values from commit 203e3b6). Ported to the live sim:
