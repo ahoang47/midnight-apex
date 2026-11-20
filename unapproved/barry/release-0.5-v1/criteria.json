@@ -1,0 +1,134 @@
+{
+ "street": {
+  "live": {
+   "boss": 66.87,
+   "min_step": 4.15,
+   "G2a_boss": 32.63,
+   "G2a_min": 32.63,
+   "G3a": 30.96,
+   "G3b": 34.24,
+   "G4a": 66.87,
+   "G4b": 2.28,
+   "G5": 94.5,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": true,
+    "G3a": true,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "release05": {
+   "boss": 66.25,
+   "min_step": 3.81,
+   "G2a_boss": 32.72,
+   "G2a_min": 32.72,
+   "G3a": 31.25,
+   "G3b": 33.53,
+   "G4a": 66.25,
+   "G4b": 0.73,
+   "G5": 95.67,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": true,
+    "G3a": true,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": false
+   }
+  }
+ },
+ "wangan": {
+  "live": {
+   "boss": 66.07,
+   "min_step": 3.96,
+   "G2a_boss": 35.9,
+   "G2a_min": 35.9,
+   "G3a": 31.33,
+   "G3b": 30.17,
+   "G4a": 66.07,
+   "G4b": 1.55,
+   "G5": 89.6,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": true,
+    "G3a": true,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "release05": {
+   "boss": 67.07,
+   "min_step": 3.95,
+   "G2a_boss": 26.83,
+   "G2a_min": 26.83,
+   "G3a": 30.53,
+   "G3b": 40.24,
+   "G4a": 67.07,
+   "G4b": 0.47,
+   "G5": 90.03,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": false,
+    "G3a": true,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  }
+ },
+ "touge": {
+  "live": {
+   "boss": 67.65,
+   "min_step": 3.2,
+   "G2a_boss": 38.57,
+   "G2a_min": 38.57,
+   "G3a": 30.7,
+   "G3b": 29.08,
+   "G4a": 67.65,
+   "G4b": 2.88,
+   "G5": 94.77,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": true,
+    "G3a": true,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  },
+  "release05": {
+   "boss": 66.35,
+   "min_step": 3.67,
+   "G2a_boss": 33.98,
+   "G2a_min": 33.98,
+   "G3a": 30.75,
+   "G3b": 32.37,
+   "G4a": 66.35,
+   "G4b": 0.52,
+   "G5": 92.15,
+   "pass": {
+    "G1a": true,
+    "G3c": true,
+    "G2a": true,
+    "G3a": true,
+    "G3b": true,
+    "G4a": true,
+    "G4b": true,
+    "G5": true
+   }
+  }
+ }
+}

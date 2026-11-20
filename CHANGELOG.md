@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-20 — Barry: player lock release 0.5, crew stats re-pinned (PROPOSAL, unapproved)
+- Austin 9:40 AM: "No, I think an earlier unlock is what preserves gameplay mechanics." `unapproved/barry/release-0.5-v1/`. Only the player release changes, 0.3 → 0.5; everything else live. sim/ untouched.
+- Bosses 332.58/390.35/437.06 → 336.50/395.20/444.00. Everything passes except Wangan G2a 26.83 and Street G5 95.67.
+- Fix tested, not applied: Wangan round cap 4044 → 4060 (G2a 33.77, G5 91.8). Street cap 3522-3525 misses by ≤ 0.7 either way.
+- Feel: boss locks 1.5-2.2 turns shorter, limp down by about a third; MX-5 vs S2000 72.15 → 76.5 %, limp 2.7 → 1.0 %.
+
 ## 2026-11-20 — Barry: experience root cause, Austin's playtests vs the goals (ANALYSIS, unapproved)
 - Austin 8:48 AM: goals → his playtest experience → root cause → levers. `unapproved/barry/experience-rootcause-v1/`. sim/ untouched.
 - Causes: player release 30 % vs AI 80 % (player locks 3-4 turns, AI 1); Touge HAN undersized for HAN-heavy corners; gauges carry over 10 → 20 → 30-turn races (Touge strong at floor: limp 1.0 → 18.2 %, all-locked races 3.8 → 67 %, kid1 → boss); boss difficulty is partly delivered by lock-outs (live stats, fewer locks → boss 81-100 %).

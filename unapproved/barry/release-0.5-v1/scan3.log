@@ -1,0 +1,10 @@
+0.5 street 336.5 {'strong_floor': 66.25, 'weak_max': 32.72, 'strong_max': 95.67, 'weak_floor': 0.73}
+0.5 street 337.0 {'strong_floor': 64.78, 'weak_max': 30.83, 'strong_max': 95.33}
+0.5 street 338.5 {'strong_floor': 59.08, 'weak_max': 24.37, 'strong_max': 93.85}
+0.5 touge 442.5 {'strong_floor': 68.47, 'weak_max': 39.88, 'strong_max': 93.85}
+0.5 touge 443.5 {'strong_floor': 67.82, 'weak_max': 35.53, 'strong_max': 92.78, 'weak_floor': 0.72}
+0.5 touge 444.0 {'strong_floor': 66.35, 'weak_max': 33.98, 'strong_max': 92.15, 'weak_floor': 0.52}
+0.5 wangan 395.2 {'strong_floor': 67.07, 'weak_max': 26.83, 'strong_max': 90.03, 'weak_floor': 0.47}
+0.5 wangan 395.5 {'strong_floor': 66.1, 'weak_max': 26.08, 'strong_max': 90.05, 'weak_floor': 0.35}
+0.5 wangan 396.0 {'strong_floor': 64.48, 'weak_max': 24.18, 'strong_max': 89.48}
+0.5 wangan 397.5 {'strong_floor': 60.1, 'weak_max': 18.03, 'strong_max': 86.82}
