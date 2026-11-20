@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: per-phase combat prototype for Street/Wangan, spirit sweep option, Touge what-if (UNAPPROVED)
+
+- **What:** a prototype for the canon in acf9b25 (Austin 2026-11-20: passing in Wangan and Street; each phase resolves its own clash). It lives in `unapproved/barry/per-phase-combat-v1/` (README, `per_phase.patch`, `per_phase_climb.py`/`.json`) and was run on a branch copy; sim/ is untouched. Open point (1) was decided by Austin at 6:14 AM: "Each phase uses its own QTE score. Perhaps this is where the spirit meter can come in, because there's no incentive to winning all three phases currently." Per his "Try simming it with touge, as well.", Touge was run as a what-if.
+- **Finding:** the engine already resolves 3 clashes per turn and wins on total progress, so per-phase resolution alone changes nothing. Scoring each clash on its own press (player: one press per phase; AI: one draw per phase) is what moves the numbers.
+  - Strong boss at floor: 66.87/66.07/67.65 → 62.15/60.0/63.7 (Street/Wangan/Touge).
+  - Weak at max: 32.63/35.9/38.57 → 19.3/21.65/23.87.
+  - The boss band and G2a fail everywhere. G3c fails in Street and Wangan (oh2 ends up above the boss) but holds in Touge. G3b, G4a, G4b and G5 hold.
+  - The reading gap widens by 9-11 pp.
+  - Spirit sweep (×1.20 next turn after winning all 3 clashes): strong +1.5 to +1.9, weak +1.3 to +1.4. Small, matching the cut spirit-meter-v1. No existing spirit meter in design/ or sim/; v1 was cut 2026-11-18.
+- **Recommendation:** (2) a mid-turn order change has no mechanical effect in v1 (order is just the running progress shown). Retune estimate (not run): boss budgets about -0.7 to -1 % for the band, but G2a needs about -1.1 to -1.5 %, which overshoots the strong band. So per-phase districts also need a timing lever (a wider zone or lower press sigma). Press sigma is a placeholder.
+
 ## 2026-11-19 — Gordon [godot]: 10-turn Touge race v2 (lot, night lighting, random QTE cams, 0.80 AI QTE)
 
 - **Approvals (Austin, 2026-11-19):** the 10-turn Touge race go-ahead (car select for all five repo cars, parked start, "Lead or chase first?", real roadside turnout, no mods / no stat retune, mobile touch, gap-only passing, swap after turn 5, chase cam + look-back). 0.80 random AI QTE cap and boss retune, including the brakes/tires-heavy Street boss (card t125s450). 16 m two-row turnout, then the deeper 18.873 m lot with a 6 m aisle (via Arthur). Live per-vertex night lighting (art_direction.md B.2b, Arthur 1282dbd). QTE camera options randomized per section (t131u); inside camera removed (t132u: "Inside cam sucks. Delete it."). Commit and push (t134u).
