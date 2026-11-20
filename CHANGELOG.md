@@ -8,6 +8,14 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: cooldown analysis of Austin's Touge playtest (WRX vs MX-5), proposal only (UNAPPROVED)
+
+- **What:** `unapproved/barry/cooldown-v1/` holds `replay_tc4.py` (an exact replay of Austin's TC4 race, cumulative totals bit-identical, 18.019 vs 12.978), `matchup_mc.py` (2,000 seeded races per split), JSON outputs and a README. Nothing in sim/ or Godot changed.
+- **Finding:** cooldown works as coded (Godot = sim). Neither Godot nor the sim has per-car cooldown values; capacity comes from build shares. The draft WRX block (`globals.gd:143`, 750/750/1500) is Wangan-shaped, so on HAN-hungry Touge corners its POW/HAN gauges are small (caps 2.94/2.48 vs EN 8.38).
+  - In Austin's race HAN stayed locked turns 1-5, 9 of 10 turns started locked, 5 clashes overran and 6 of 30 were limp. He still won.
+  - Over 2,000 races, the WRX starts 47.6 % of turns locked (even build 26.1 %) and limps 13.1 % of clashes (even 2.1 %), with locks lasting 3.80 turns (even 2.49). Yet it wins 81.25 % (even 74.5).
+- **Proposal (not live):** A, player `HEAT_RELEASE` 0.3 → 0.5. Locks get about 1 turn shorter (WRX 3.80 → 2.62 turns, limp 13.1 → 6.3 %), but player win rates rise 4-6 pp, so the climb and gauntlet would need a re-pin. B, `HEAT_SHARE_EXP` 1.5 → 1.0, helps only specialized builds and cuts the WRX's win rate 81.25 → 71.0. No passive locks barely helps. Plus a UI warning for overrun/lock picks and turns until unlock.
+
 ## 2026-11-20 — Barry [sim]: per-phase combat prototype for Street/Wangan, spirit sweep option, Touge what-if (UNAPPROVED)
 
 - **What:** a prototype for the canon in acf9b25 (Austin 2026-11-20: passing in Wangan and Street; each phase resolves its own clash). It lives in `unapproved/barry/per-phase-combat-v1/` (README, `per_phase.patch`, `per_phase_climb.py`/`.json`) and was run on a branch copy; sim/ is untouched. Open point (1) was decided by Austin at 6:14 AM: "Each phase uses its own QTE score. Perhaps this is where the spirit meter can come in, because there's no incentive to winning all three phases currently." Per his "Try simming it with touge, as well.", Touge was run as a what-if.

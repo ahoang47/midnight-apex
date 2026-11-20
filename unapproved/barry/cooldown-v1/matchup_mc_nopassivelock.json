@@ -1,0 +1,44 @@
+{
+ "n": 2000,
+ "seeds": "98,000,000 + k",
+ "out": {
+  "nopassivelock": {
+   "WRX (25/25/50)": {
+    "win": 82.15,
+    "overrun_pct": 8.1,
+    "limp_pct": 12.2,
+    "turns_starting_locked_pct": 46.9,
+    "locked_gauges_per_turn": 0.78,
+    "locks_per_race": 2.43,
+    "mean_lock_turns": 3.92
+   },
+   "MX-5 / Touge tune (45/25/30)": {
+    "win": 72.05,
+    "overrun_pct": 5.3,
+    "limp_pct": 2.6,
+    "turns_starting_locked_pct": 34.0,
+    "locked_gauges_per_turn": 0.46,
+    "locks_per_race": 1.59,
+    "mean_lock_turns": 3.4
+   },
+   "even (33/33/33)": {
+    "win": 76.5,
+    "overrun_pct": 4.1,
+    "limp_pct": 1.6,
+    "turns_starting_locked_pct": 20.9,
+    "locked_gauges_per_turn": 0.26,
+    "locks_per_race": 1.22,
+    "mean_lock_turns": 2.6
+   },
+   "HAN-heavy (30/45/25)": {
+    "win": 58.55,
+    "overrun_pct": 5.7,
+    "limp_pct": 7.1,
+    "turns_starting_locked_pct": 34.3,
+    "locked_gauges_per_turn": 0.52,
+    "locks_per_race": 1.7,
+    "mean_lock_turns": 3.65
+   }
+  }
+ }
+}
