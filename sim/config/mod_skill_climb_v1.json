@@ -47,15 +47,15 @@
    3876,
    3958,
    4040,
-   4044,
-   4044
+   4060,
+   4060
   ],
   "touge": [
-   4254,
-   4342,
-   4430,
-   4518,
-   4606,
+   4270,
+   4358,
+   4446,
+   4534,
+   4622,
    4628,
    4628
   ]
@@ -63,116 +63,116 @@
  "table": {
   "street": {
    "kid1": {
-    "strong_floor": 97.83,
-    "weak_floor": 48.15,
-    "weak_max": 92.92
+    "strong_floor": 97.72,
+    "weak_floor": 43.77,
+    "weak_max": 93.97
    },
    "kid2": {
-    "strong_floor": 91.45,
-    "weak_floor": 17.18,
-    "weak_max": 86.35
+    "strong_floor": 91.47,
+    "weak_floor": 12.05,
+    "weak_max": 86.18
    },
    "mat1": {
-    "strong_floor": 87.03,
-    "weak_floor": 10.35,
-    "weak_max": 87.3
+    "strong_floor": 86.68,
+    "weak_floor": 5.52,
+    "weak_max": 93.42
    },
    "mat2": {
-    "strong_floor": 81.9,
-    "weak_floor": 4.73,
-    "weak_max": 82.85
+    "strong_floor": 81.58,
+    "weak_floor": 1.73,
+    "weak_max": 86.1
    },
    "oh1": {
-    "strong_floor": 76.68,
-    "weak_floor": 2.12,
-    "weak_max": 76.88
+    "strong_floor": 77.47,
+    "weak_floor": 0.63,
+    "weak_max": 76.58
    },
    "oh2": {
-    "strong_floor": 71.02,
-    "weak_floor": 0.93,
-    "weak_max": 70.2
+    "strong_floor": 72.15,
+    "weak_floor": 0.28,
+    "weak_max": 64.53
    },
    "boss": {
-    "strong_floor": 66.87,
-    "weak_floor": 2.28,
-    "weak_max": 32.63,
-    "strong_max": 94.5
+    "strong_floor": 66.25,
+    "weak_floor": 0.73,
+    "weak_max": 32.72,
+    "strong_max": 95.67
    }
   },
   "wangan": {
    "kid1": {
-    "strong_floor": 97.4,
-    "weak_floor": 73.32,
-    "weak_max": 92.9
+    "strong_floor": 98.05,
+    "weak_floor": 76.8,
+    "weak_max": 98.02
    },
    "kid2": {
-    "strong_floor": 90.8,
-    "weak_floor": 32.5,
-    "weak_max": 82.45
+    "strong_floor": 92.73,
+    "weak_floor": 36.15,
+    "weak_max": 85.82
    },
    "mat1": {
-    "strong_floor": 86.12,
-    "weak_floor": 20.2,
-    "weak_max": 90.6
+    "strong_floor": 87.88,
+    "weak_floor": 12.03,
+    "weak_max": 91.07
    },
    "mat2": {
-    "strong_floor": 78.98,
-    "weak_floor": 6.07,
-    "weak_max": 86.93
+    "strong_floor": 81.92,
+    "weak_floor": 3.63,
+    "weak_max": 87.12
    },
    "oh1": {
-    "strong_floor": 74.17,
-    "weak_floor": 2.38,
-    "weak_max": 83.05
+    "strong_floor": 77.33,
+    "weak_floor": 1.42,
+    "weak_max": 82.1
    },
    "oh2": {
-    "strong_floor": 70.03,
-    "weak_floor": 1.23,
-    "weak_max": 66.68
+    "strong_floor": 72.05,
+    "weak_floor": 0.67,
+    "weak_max": 71.52
    },
    "boss": {
-    "strong_floor": 66.07,
-    "weak_floor": 1.55,
-    "weak_max": 35.9,
-    "strong_max": 89.6
+    "strong_floor": 67.07,
+    "weak_floor": 0.47,
+    "weak_max": 33.77,
+    "strong_max": 91.8
    }
   },
   "touge": {
    "kid1": {
-    "strong_floor": 98.35,
-    "weak_floor": 82.58,
-    "weak_max": 99.5
+    "strong_floor": 96.67,
+    "weak_floor": 62.1,
+    "weak_max": 96.5
    },
    "kid2": {
-    "strong_floor": 90.0,
-    "weak_floor": 38.03,
-    "weak_max": 90.75
-   },
-   "mat1": {
-    "strong_floor": 84.58,
-    "weak_floor": 21.2,
-    "weak_max": 93.83
-   },
-   "mat2": {
-    "strong_floor": 79.88,
-    "weak_floor": 13.98,
+    "strong_floor": 91.85,
+    "weak_floor": 27.5,
     "weak_max": 91.67
    },
+   "mat1": {
+    "strong_floor": 85.83,
+    "weak_floor": 9.18,
+    "weak_max": 94.98
+   },
+   "mat2": {
+    "strong_floor": 81.07,
+    "weak_floor": 3.88,
+    "weak_max": 93.33
+   },
    "oh1": {
-    "strong_floor": 75.35,
-    "weak_floor": 8.1,
-    "weak_max": 88.8
+    "strong_floor": 75.82,
+    "weak_floor": 1.2,
+    "weak_max": 89.65
    },
    "oh2": {
-    "strong_floor": 70.85,
-    "weak_floor": 4.95,
-    "weak_max": 77.2
+    "strong_floor": 70.78,
+    "weak_floor": 0.63,
+    "weak_max": 70.88
    },
    "boss": {
-    "strong_floor": 67.65,
-    "weak_floor": 2.88,
-    "weak_max": 38.57,
-    "strong_max": 94.77
+    "strong_floor": 66.35,
+    "weak_floor": 0.52,
+    "weak_max": 33.98,
+    "strong_max": 92.15
    }
   }
  }

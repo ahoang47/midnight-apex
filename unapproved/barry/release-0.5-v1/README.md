@@ -1,5 +1,8 @@
-# release-0.5-v1: player lock release 30 % → 50 %, crew stats re-pinned (Barry PROPOSAL, 2026-11-20, UNAPPROVED)
+# release-0.5-v1: player lock release 30 % → 50 %, crew stats re-pinned (LIVE 2026-11-20: promoted to sim/ in the CHANGELOG entry "release-0.5 go-live"; Austin 10:41 AM "Yes.")
 
+> **LIVE.** Promoted with the Wangan cap fix 4044 → 4060 (Mk3 R2 261 → 265, tiers 232 / 250 / 265); Street G5 95.67 accepted as noise.
+> The live numbers are in `design/07-economy-and-mods.md` (top) and `sim/config/mod_skill_climb_v1.json`; the tables below are the proposal record.
+>
 > Austin (direct, 9:40 AM): "No, I think an earlier unlock is what preserves gameplay mechanics." One change only: the player's
 > gauge unlocks below **50 %** of capacity (was 30 %, `HEAT_RELEASE`). Everything else is live: per-turn QTE, no lock cap, no falloff,
 > no AI pacing, no lap reset, no tonics; AI rules unchanged (release 80 %, corner load never locks). sim/ untouched (patched in memory

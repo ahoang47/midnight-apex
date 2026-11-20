@@ -19,6 +19,8 @@ reference timing (opponent_qte_ratio = 1 / OPPONENT_QTE, sd 0 -> exactly 1.0) to
 G2. Under the live AI the same cells read perf_0.8 46.7 / avg_cap 84.4 (targets 10-25 / 60-75): re-targeting is open for
 Austin (unapproved/barry/ai-heat-qte-v1/).
 
+Heat release (2026-11-20): the player release is pinned to the G2 reference 0.3 (E.GAUNTLET_REF_HEAT_RELEASE); live is 0.5.
+
 Usage:
   python3 scripts/balance_gauntlet.py            # N races per cell (default 24)
   python3 scripts/balance_gauntlet.py --n 100
@@ -37,6 +39,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 from velocity_shift import equations as E                        # noqa: E402
 from velocity_shift.combat import official_tracks                 # noqa: E402
 from velocity_shift.models import CombatantStats, MatchConfig     # noqa: E402
+from velocity_shift import heat as _H                             # noqa: E402
+
+# Player heat release pinned to the G2 reference (E.GAUNTLET_REF_HEAT_RELEASE; the release-0.5 go-live moved live to 0.5,
+# 2026-11-20). Only the player's default changes; the boss passes its own BOSS_HEAT_RELEASE.
+_d = list(_H.HeatGauges.__init__.__defaults__); _d[2] = E.GAUNTLET_REF_HEAT_RELEASE; _H.HeatGauges.__init__.__defaults__ = tuple(_d)
 from velocity_shift.simulation import SimulationRunner            # noqa: E402
 
 TABLE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config", "heat_g2_tuned.json")

@@ -274,7 +274,8 @@ HEAT_CAP_TURNS = 3.0           # even build's capacity = this x average per-turn
 HEAT_RECOVERY = 1.0            # even build's recovery per turn = this x average per-turn load
 HEAT_SHARE_EXP = 1.5           # capacity and recovery x 3 s**e / sum(s**e) (sums to 3: specialising adds no total)
 HEAT_R_EXP = 1.0               # capacity and recovery x r**HEAT_R_EXP (stat total vs the boss)
-HEAT_RELEASE = 0.3             # a locked gauge unlocks once load < HEAT_RELEASE x capacity
+HEAT_RELEASE = 0.5             # a locked gauge unlocks once load < HEAT_RELEASE x capacity (player; was 0.3, release-0.5 go-live
+                               # 2026-11-20, Austin: lock-outs were carrying difficulty, an earlier unlock keeps the mechanic)
 OVERRUN_SLOPE = 2.0            # overrun payoff = max(OVERRUN_FLOOR, 1 - OVERRUN_SLOPE x x)
 OVERRUN_FLOOR = 0.4
 LIMP_MULT = 0.4                # payoff of a clash played with all three gauges locked
@@ -286,6 +287,11 @@ BOSS_HEAT_CAP_TURNS = 3.0
 BOSS_HEAT_RECOVERY = 1.0
 BOSS_HEAT_RELEASE = 0.8
 BOSS_HEAT_LOCK_ON_PASSIVE = False   # v3/G2 boss: a gauge locks only when the boss plays into it, not from passive load
+# balance_gauntlet.py checks the heat engine against the G2 reference runs, which were built at the old player release 0.3.
+# It pins the player release to this value (like it pins the AI timing) so it keeps testing the engine, not the release-0.5
+# go-live. Under live HEAT_RELEASE 0.5 the same cells read avg_cap 76.4 (all) / 78.1 (20) / 75.6 (30), perf_0.8 31.9:
+# re-targeting the gauntlet is open for Austin.
+GAUNTLET_REF_HEAT_RELEASE = 0.3
 # Boss line styles (sim only, PLACEHOLDER; story question for Desmond / Nathaniel). "balanced" is the live
 # 65/21/14 split. "hot_early" / "conserver" blend BOSS_STYLE_BLEND of a cost ranking into it: hot_early runs
 # the dearest line first until BOSS_HOT_SWITCH of the race, then the cheapest; conserver the reverse at BOSS_CONS_SWITCH.
@@ -980,11 +986,12 @@ def bet_allowed(rounds_done: int, stake: float) -> bool:
 # before each rung after kid1 = 13 mandatory races per round. Non-mandatory races (substories, picked fights) pay a wild
 # encounter's XP for the first MS_NM_XP_CAP wins per round, cash only after that.
 MS_STOCK_POINTS = 3000                       # stock car: 2400 SP + 4 stock parts x 150 (car points, 10 x stat units)
-MS_MOD_CEILING = (133, 261, 407)             # earned points per mod slot at the round's Mk3 (round caps 3532 / 4044 / 4628)
+MS_MOD_CEILING = (133, 265, 407)             # earned points per mod slot at the round's Mk3 (round caps 3532 / 4060 / 4628;
+                                             # R2 261 -> 265 = Wangan cap 4044 -> 4060, release-0.5 go-live, Austin 2026-11-20)
 MS_ROUND_CAP_POINTS = tuple(MS_STOCK_POINTS + MOD_SLOTS * c for c in MS_MOD_CEILING)
 # Mk1 / Mk2 / Mk3 earned-point ceiling per slot (mods-v1 points above the stock part, 63 / 68 / 73 in R1, scaled to the round
 # ceiling). R1 = 115 / 124 / 133 (approved); R2 / R3 derived by the same rule (round(ceiling x (pts - 150) / (Mk3 pts - 150))).
-MS_TIER_POINTS = ((115, 124, 133), (229, 246, 261), (370, 396, 407))
+MS_TIER_POINTS = ((115, 124, 133), (232, 250, 265), (370, 396, 407))   # R2 re-derived for ceiling 265 (was 229 / 246 / 261)
 MS_WILD_XP = (13, 12, 14)                    # wild encounter / non-mandatory win XP per round
 MS_REQUIRED_WILDS = (0, 1, 1, 1, 1, 1, 1)    # required wild-encounter wins before each rung (kid1 .. boss) = 6 per round
 MS_MANDATORY_PER_ROUND = 7 + sum(MS_REQUIRED_WILDS)   # 13
@@ -1000,9 +1007,9 @@ MS_FLOOR_POINTS = {
 }
 # Crew stats: fixed stat total (stat units) per character, kid1 .. boss (shape: even, bosses BOSS_STAT_SHARES).
 MS_CREW_BUDGET = {
-    "street": (293.98, 306.16, 309.14, 317.38, 325.10, 331.98, 332.58),
-    "wangan": (318.65, 340.56, 348.93, 362.05, 372.82, 383.00, 390.35),
-    "touge": (354.33, 383.85, 393.80, 404.82, 415.79, 426.72, 437.06),
+    "street": (295.24, 308.67, 311.92, 320.73, 328.02, 335.48, 336.50),   # re-pinned for HEAT_RELEASE 0.5 (release-0.5 go-live);
+    "wangan": (314.54, 340.16, 352.61, 364.74, 375.30, 385.24, 395.20),   # was 293.98 .. 332.58 / 318.65 .. 390.35 / 354.33 .. 437.06
+    "touge": (370.52, 389.10, 400.41, 411.94, 423.42, 434.22, 444.00),
 }
 MS_BOSS_KAPPA_MULT = {"street": 0.5, "wangan": 1.0, "touge": 1.0}   # per-race stat weight on the crew boss race only
 # Austin's experience goals as measured targets (strong = 80/80, weak = 60/60, at the floor unless stated).
@@ -1011,3 +1018,6 @@ MS_TARGETS = {
     "G2b_weak_improving_attempts": 60.0, "G3a_drop_kid1_boss": 30.0, "G3b_boss_read_gap": 10.0, "G3c_min_step": 3.0,
     "G4a_min_strong_floor": 40.0, "G4b_boss_weak_floor_max": 10.0, "G5_boss_strong_max_build": 95.0,
 }
+# Accepted misses (Austin, direct, 2026-11-20 10:41 "Yes."): Street G5 reads 95.67 after the release-0.5 re-pin; accepted as noise
+# (n = 6000; no Street boss total keeps 66-68 with G5 <= 95). Tests allow G5 up to target + this, per district.
+MS_G5_ACCEPTED_MISS = {"street": 1.0}

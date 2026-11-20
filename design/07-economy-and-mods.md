@@ -1,5 +1,13 @@
 # Economy and Mod Parts: Headless Sim Specification
 
+> **LIVE 2026-11-20: release-0.5 go-live (Austin, direct, 9:40 AM "No, I think an earlier unlock is what preserves gameplay mechanics."; 10:41 AM "Yes." to the cap change, the accepted Street G5 miss and the promotion; go-live commit: the CHANGELOG entry "release-0.5 go-live").** Root cause (Austin's playtests, `unapproved/barry/experience-rootcause-v1/`): lock-outs were carrying the climb's difficulty, and a player lock lasted 3-5 turns (release at 30 %) while the AI's lasted 1 (release at 80 %). The earlier unlock keeps the lock mechanic but shortens it.
+> - **Player lock release `HEAT_RELEASE` 0.3 → 0.5** (`sim/velocity_shift/equations.py`). AI unchanged (`BOSS_HEAT_RELEASE` 0.8, no passive lock).
+> - **Crew stats re-pinned** (`MS_CREW_BUDGET`): Street 295.24 / 308.67 / 311.92 / 320.73 / 328.02 / 335.48 / 336.50; Wangan 314.54 / 340.16 / 352.61 / 364.74 / 375.30 / 385.24 / 395.20; Touge 370.52 / 389.10 / 400.41 / 411.94 / 423.42 / 434.22 / 444.00.
+> - **Wangan round cap 4044 → 4060** (`MS_MOD_CEILING` R2 261 → 265, so `MS_TIER_POINTS` R2 is re-derived by the same rule: 229 / 246 / 261 → **232 / 250 / 265**). Round caps 3532 / 4060 / 4628. Max builds: Wangan oh2/boss 4060, Touge kid1-oh1 +16 (4270 / 4358 / 4446 / 4534 / 4622; oh2/boss stay capped at 4628).
+> - **Live numbers** (`sim/config/mod_skill_climb_v1.json`, n = 6000): strong at floor kid1 → boss Street 97.72 / 91.47 / 86.68 / 81.58 / 77.47 / 72.15 / **66.25**; Wangan 98.05 / 92.73 / 87.88 / 81.92 / 77.33 / 72.05 / **67.07**; Touge 96.67 / 91.85 / 85.83 / 81.07 / 75.82 / 70.78 / **66.35**. Boss weak at max 32.72 / 33.77 / 33.98; weak at floor 0.73 / 0.47 / 0.52; strong at max **95.67** / 91.8 / 92.15.
+> - All targets pass except **Street G5 95.67, accepted as noise by Austin** (`MS_G5_ACCEPTED_MISS`). The smallest steps are 4.11 / 4.59 / 4.43, G3a 31.47 / 30.98 / 30.32, and G3b 33.53 / 33.3 / 32.37.
+> - Superseded below: the values HEAT_RELEASE 0.3, the old crew totals, the round cap 4044, R2 229 / 246 / 261, and the 2026-11-19 "Live numbers" table (all stale).
+
 > **LIVE 2026-11-19: mod_skill progression (Austin, direct, 6:39 PM PT: "Approved for all"; go-live commit: the CHANGELOG entry "mod_skill go-live").** Sections below that describe the level-based walk (levels, `CAP_LEVEL`, `C_ROUND` / `LADDER_TARGET_R` crew budgets, story XP as a share of the round's level XP, the mod fill rule) are **stale for the game**; that walk is kept only as the legacy record (`progression.py`, `E.legacy_opponent_budget` `equations.py:929`, `tests/test_progression.py`).
 >
 > **Experience targets (Austin's goals; the stated targets for progression, `E.MS_TARGETS` `equations.py:1009`):**
@@ -16,7 +24,7 @@
 > - **Crews are stat-locked** (fixed stat totals, `MS_CREW_BUDGET` `:1002`, read by `E.opponent_budget` `:923`). **Floors** (`MS_FLOOR_POINTS` `:996`) = the earned points on arrival at each rung with mandatory wins only. The check reads the **earned-XP ledger** (stock + all race XP earned, assigned or lost), not the car (`mod_skill.can_challenge` `mod_skill.py:37`). No underdog bonus (rejected).
 > - **Street boss stat weight:** the Street crew boss race runs at kappa × 0.5 (`MS_BOSS_KAPPA_MULT` `:1007`, `MatchConfig.kappa_mult` `models.py:177`, applied in `combat.py:126` and `simulation.py:87`). Default 1.0 everywhere else, so every other race is unchanged.
 >
-> **Live numbers** (`sim/scripts/mod_skill_climb.py` → `sim/config/mod_skill_climb_v1.json`, live engine, n = 6000 per cell, hardest live track per district, 3 boss styles, ties half; checked by `sim/tests/test_mod_skill.py`):
+> **Live numbers (STALE 2026-11-20: superseded by the release-0.5 go-live block above)** (`sim/scripts/mod_skill_climb.py` → `sim/config/mod_skill_climb_v1.json`, live engine, n = 6000 per cell, hardest live track per district, 3 boss styles, ties half; checked by `sim/tests/test_mod_skill.py`):
 >
 > | | Street | Wangan | Touge |
 > |---|---|---|---|
