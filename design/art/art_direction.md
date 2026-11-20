@@ -183,12 +183,16 @@ from the right place.
 ### B.1 What made Tokyo v2 read as PSX/PS2 [VIBE]
 - **Everything unlit:** `texture × vertex colour → linear fog → emission`. Lighting is painted into textures and vertex
   colours, including **stepped sodium-light pools** painted onto the road texture (banded, not smooth gradients).
+  *Tokyo v2 vibe-check record only. The approved night look is live per-vertex lighting (B.2b), not painted or
+  stepped pools.*
 - **Dry, matte road.** No wet roads, puddles, mirror floors or screen-space reflections (lead: "I think it's dumb").
 - **Linear fog** colour-matched to the painted sky (v2 used ~14–105 m), skyline as painted cards.
 - **Signs:** unlit, full-bright neon textures plus additive glow billboards; made-up shop names only; flat ribbon wires.
 - **Props:** dense, cheap alpha-cutout cards (bikes, bins, menu boards, cones, roadworks barrier), vending machines
   pre-lit, sidewalks lit by vertex colour.
 - **Facades:** pre-lit night textures × vertex light; lit and dark windows, window lettering, AC units.
+  *Vibe-check record only. Night lighting is B.2b (live per-vertex in the unshaded Cel A shaders), not
+  pre-lit textures multiplied by a vertex light.*
 - **Car in scene:** fake env-map shine + Blinn spec, emissive lamps + glow sprites, blob shadow, headlight-throw decal.
 - **Frame:** native 640×448 *(vibe check; the game standard is now 640×480, Q3 resolved)*, 1 sample, no AA (filter size 0), Standard view transform (no filmic), **bloom on neon
   only**, then RGB555 + 4×4 Bayer, then 2× nearest upscale (1280×896).
@@ -202,15 +206,36 @@ in `art/mood/tones/tones.py` (the rest of that study is unapproved).
 | Group | Value |
 |---|---|
 | Sky/fog | fog `#0B172B`, zenith `#010408`, no city-glow band |
-| Ambient | ambient `#5575A0` at 0.8 strength |
-| Lamps | **every** street lamp is one pale cream sodium `#F0C894` (no alternating lamp colours); lamp strength 0.85 |
-| Pools | hard painted pools, **3 steps**, pool strength 0.09 |
+| Ambient | ambient `#5575A0` *(strength now 0.56, see B.2b; was 0.8)* |
+| Lamps | **every** street lamp is pale cream sodium `#F0C894` (no alternating lamp colours). Method, count and strength: B.2b. *(The earlier "lamp strength 0.85 / single painted pool" setup is retired.)* |
+| Pools | **retired.** Baked / hard-painted 3-step pool decals are no longer used; sodium falloff is live and smooth (B.2b). |
 | Post | bloom 0.22 strength, 0 threshold; saturation 1.05 |
 Orange stays on lamps and highlights only, over the cool navy/teal base with dark blue-black shadows.
 B.2's car, window, wall, neon and signage colours still apply until re-checked against this base.
 
+### B.2b Live night lighting [APPROVED 2026-11-19]
+Approved by the lead (2026-11-19) on the turnout playtest (`playtest_trails_v2`). This is the night lighting
+for Touge (and the keeper look wherever the Cel A world is shown at night). It **supersedes** Tokyo v2's
+texture × vertex-colour path (B.1), B.2a's ambient strength / lamp strength / painted pools, and B.6's
+"unlit + baked pools" engine note. Colours from B.2a still apply (fog `#0B172B`, sodium `#F0C894`, ambient
+`#5575A0`, etc.).
+
+Shaders stay `render_mode unshaded` (Cel A: snap, fog, toon, RGB555 + 4×4 Bayer last). There are **no Godot
+scene lights**. Lighting is evaluated in `vertex()` and interpolated (classic PS1 Gouraud).
+
+| Piece | Spec |
+|---|---|
+| Sodium lamps | Point lights, colour `#F0C894`, smooth falloff (no stepped rings). Intensity 1.05, range 16 m. Packed as four `mat4` uniforms, **16-light cap**. Every street lamp and lot lamp is this sodium (no mixed mercury in the keeper look). |
+| Night ambient | `#5575A0` at **0.56** strength. |
+| Moon fill | Directional, cool blue-white `#8FA8D8`, **k = 1.30**, direction `(0.383, 0.643, −0.663)` (about 40° elevation, off to one side). Mild wrap (`0.20 + 0.80 × N·L`) so ground and walls lift between lamp pools without flattening the sodium. Fill only — **no moon sprite**. |
+| Billboard flares | Additive, depth-tested (`depth_draw_never` but depth test on), fog-faded to 0, 64 px texture. Lamp heads are omni (camera-facing). Car headlights (warm white) and taillights (red) are angle-faded. Keep head/tail flares on when trails are drawn. |
+| Taillight trails | One short ribbon per taillight (player and rival). History **0.12 s** (about a car-length or less at speed). Width **0.12 m** at the lamp tapering to **0.01 m**. Peak vertex alpha **0.45**, falloff `pow(t, 2.6)`, dim red, additive unshaded, fog-aware, through RGB555+Bayer. Length scales with physical speed on a **6–20 m/s** ramp. The tail **flare is the bright point** (ribbon stops a little short of the lamp). During a QTE, Plan-the-Line / camera-stop, or LINE LOCKED pause the ribbon is **frozen** (clock keeps running; do not age it out or stack points at the parked lamp) and **stays attached to the lamp** if the car is snapped or parked. |
+| Retired | Baked sodium pool decals (the 3-step painted pools in B.2a / B.6). Hide or drop them once live lamps are on. |
+
+HUD is a separate 1280×960 overlay and is not Bayer-quantised. The world stays 640×480 internal, 2× nearest to 1280×960.
+
 ### B.2 Tokyo v2 palette [VIBE] (from the style-reference sheet)
-*Sodium, sky/fog and ambient rows superseded by B.2a.*
+*Sodium, sky/fog and ambient colours superseded by B.2a; night lighting method and strengths superseded by B.2b.*
 | Group | Hex |
 |---|---|
 | Car | body paint `#C70D0F`, panel line `#2C0406`, soft top `#1E1E20`, head glow `#FFF2CC`, tail glow `#FF1F14` |
@@ -298,10 +323,11 @@ phase plays. The corner plate (top right) shows the current phase. No pause or c
 `art/ui/line_vs_line/`. (Selection flow: B.5b.)
 
 ### B.6 Engine-side environment notes [PROPOSAL]
-- Unlit + vertex-colour environment shader with linear fog uniform; no dynamic lights or shadows on art.
-- Glow sprites as additive billboards; blob shadows as decals/quads.
-- Road kit per Appendix E (`road_straight` ~30 units, `road_corner_left/right`, `barrier_*`), one tiling track texture
-  with painted light pools baked per segment.
+- **Night lighting (approved, B.2b):** unshaded Cel A shaders with live per-vertex lighting in `vertex()`; no Godot scene lights and no shadow maps on art. Linear fog remains a shader uniform (Touge: `#0B172B`, 9–78 m).
+- *Tokyo v2 record (superseded at night):* unlit + vertex-colour environment shader. Do not go back to "pre-lit night textures × vertex light" or a single sodium lamp / baked pool as the night method.
+- Glow sprites as additive billboards (lamp and car flares: B.2b); blob shadows as decals/quads.
+- Road kit per Appendix E (`road_straight` ~30 units, `road_corner_left/right`, `barrier_*`), one tiling track texture.
+  **Painted light pools baked per segment are retired**; sodium is live point lamps with smooth falloff (B.2b).
 
 ### B.7 Scene mockup checklist [advisory]
 - Fog meets the sky; storefronts not brighter than the car; no mirrored text or visible cut-out backs; no ground
@@ -346,6 +372,7 @@ Also pending: confirm the IoU bar (A.1.2), reserving POW / EN / HAN colours for 
 - **K6** Appendix E lists one car body shared by both cars; the art pipeline now has multiple models (S2000, BRZ) —
   shared-body-plus-livery still holds per model.
 - **K7** *(resolved by Q1: Japanese streets)* Urban Street is "an Americanized scene" while inspirations and the vibe check are Japanese (Q1).
+- **K8** *(resolved 2026-11-19 by B.2b)* Earlier notes said unlit / "pre-lit night textures × vertex light", a single sodium lamp strength, and baked 3-step pool decals. The approved night look is live per-vertex lighting, a 16-lamp sodium cap, moon fill, flares, and short taillight trails; baked pool decals are retired.
 
 ---
 

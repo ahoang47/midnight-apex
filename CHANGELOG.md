@@ -8,6 +8,8 @@
 
 ---
 
+## 2026-11-19 — Arthur [art]: Live per-vertex night lighting approved: sodium point lamps, moon fill, flares, short taillight trails; baked pools retired
+
 ## 2026-11-19 — DRAFT: mod_skill setup study vs Austin's goals G1-G5 (Barry, Systems; unapproved, Austin direction)
 - **Austin (direct, 2026-11-19):** no underdog bonus (marked REJECTED in GATE.md); keep it brutal for 60/60; crews stat-locked with floors on earned points; then (4:21 PM PT) compare setups against written goals instead of one climb recommendation (GATE.md C3 marked superseded).
 - **New `unapproved/barry/mod-skill-v1/SETUP-STUDY.md`:** G1-G5 as 9 pass/fail criteria fixed before any run. Grid: S1 one crew per round × mandatory 7 / 10 / 13 / 20 (fixed race XP) plus M7r / M13r (story XP retuned so floors match M20) × non-mandatory cap none / 8 / 12 / 15. S2 (every crew every round, stat-locked) pruned on one engine pass: Touge kids 0.0 % for 80/80 in R1, Street boss 100 % in R3.
