@@ -12,6 +12,36 @@
 > `climb65.py` → `climb65.json` (scorecard), `journey_shop.py` → `journey_shop.json` (journeys with mod purchases).
 > Nothing live; `sim/` untouched.
 
+### 0.0 UPDATE 2026-11-19 6:26 PM PT: old head (oh2) at ~70 %, boss 66-68 % (Barry DRAFT, unapproved)
+> **Austin (direct, card answer):** "Make the old head a bit easier, about 70%, and keep the boss at 66-68%". Fixes the flat
+> climb top in the 255db46 variant. Stats only; boss stats and boss floor untouched. Code: `oh2_70.py` → `oh2_70.json`
+> (bisection, n = 6,000), `climb70.py` → `climb70.json` (scorecard; oh2 and boss cells n = 6,000), `journey_oh2_70.py` →
+> `journey_oh2_70.json` (R1 journey with purchases). Nothing live; `sim/` untouched.
+
+- **oh2 stats (budget, stat units) old → new:** Street 332.93 → **331.98** (r at floor 0.9837 → 0.9865); Wangan 384.44 →
+  **383.00** (r 0.989 → 0.9927); Touge 426.72 unchanged (already 70.85 at n = 6,000).
+- **Strong (80/80) at the floor, oh2 / boss:** Street **71.02 / 66.87**, Wangan **70.02 / 66.05**, Touge **70.85 / 67.65**.
+- **Climb kid1 … boss (80/80 at floor):** Street 98.05 / 91.84 / 87.24 / 81.68 / 75.88 / 71.02 / 66.87; Wangan 97.05 / 89.94 /
+  85.64 / 78.88 / 70.77 / 70.02 / 66.05; Touge 98.65 / 90.69 / 85.59 / 79.98 / 73.22 / 70.85 / 67.65.
+- **oh1 → oh2 step:** no inversion (oh2 never wins more than oh1). Street 75.88 → 71.02, Touge 73.22 → 70.85; **Wangan 70.77 →
+  70.02 is nearly flat (−0.75; oh1 cell n = 2,000)**. Not changed; ask Austin whether Wangan oh1 should be harder (~74-75).
+- **Scorecard: still 9/9.** Changed vs 0.2: G1b 1.80 / 2.02 / 1.79 → **1.70 / 1.93 / 1.79**; G4a 65.9 (Wangan oh2) → **66.05
+  (Wangan boss)**. Unchanged: G1a 66.87 / 66.05 / 67.65, G2a 32.63, G3a monotone with drop 31.18 / 31.0 / 31.0, G3b +34.2 /
+  +30.2 / +29.1, G4b 2.28 / 1.53 / 2.93, G5 94.5 / 89.6 / 94.77.
+- **R1 journey with purchases (10,000 players; journey grid = engine but coarse: it reads Street oh1/oh2 ~5 pts low, 70.6 /
+  66.3 vs 75.88 / 71.02, and the boss ~1.5 low):**
+
+| Race | Strong, mandatory only | Weak (50 → 80), mandatory only | Weak + non-mandatory (cap 15) |
+|---|---|---|---|
+| oh1 | 70.6 %, 1.4 att | skill 0.69, 26.8 %, 3.4 att | 0.69, 3,298 pts, 55.4 %, 1.8 att |
+| oh2 | 66.3 %, 1.5 | 0.73, 34.4 %, 2.8 | 0.71, 3,353, 57.7 %, 1.7 |
+| boss | 65.3 %, 1.5 | 0.76, 46.5 %, 2.1 | 0.73, 3,470, 65.8 %, 1.5 |
+| Round | 15.1 attempts; $1,555 cash, $855 debt left | 36.2 attempts | 32.0 attempts, 6.0 NM wins; $3,984, debt cleared |
+
+  kid1-mat2 rows are unchanged from 0.4. All runs: $6,600 on mods (4 × Mk3 by the boss), 0 XP lost, 0 stuck.
+- **Stale in 0.2 / 0.4 below:** the oh2 values (Street 66.2, Wangan 65.9), G1b, G4a, the "Watch: flat top" note, and the 0.4
+  journey's oh2/boss/round rows.
+
 ### 0.1 Levers tried (engine n = 6,000, target 66 % so the boss stays ≤ oh2 + 1 for G3a)
 | Lever | Values (Street / Wangan / Touge) | 80/80 at floor | 80/80 at max (G5 ≤ 95) | 60/60 at max | Verdict |
 |---|---|---|---|---|---|
@@ -31,7 +61,7 @@
   Fixes: Wangan kid1 r 1.046 → 1.0645 (80/80 95.0 → 97.1), Touge kid1 r 1.0636 → 1.1018 (93.3 → 98.7), Touge oh2 r 1.0125 →
   1.018 (66.8 → 70.7). Story/art impact: none (stats only).
 
-### 0.2 Scorecard, S1 M13r cap 15 + lever (b) (engine: n = 2,000 non-boss, 6,000 boss; `climb65.json`)
+### 0.2 Scorecard, S1 M13r cap 15 + lever (b) (oh2 values, G1b, G4a and the flat-top note STALE, see 0.0) (engine: n = 2,000 non-boss, 6,000 boss; `climb65.json`)
 | Criterion | Threshold | Street / Wangan / Touge | Pass |
 |---|---|---|---|
 | G1a (revised) strong boss at floor | 65-70 | **66.87 / 66.05 / 67.65** | + |
@@ -64,7 +94,7 @@ Wangan 97.1 / 89.9 / 85.6 / 78.9 / 70.8 / 65.9 / 66.1; Touge 98.7 / 90.7 / 85.6 
 - **Result:** every player owns 4 × Mk3 by the boss (100 % of runs), spends $6,600, and loses 0 XP; the ceilings never bind
   before the boss, so the R1 journeys are unchanged within noise (old M13r: strong 15.6 attempts, weak 37.2, weak + NM 33.0).
 
-### 0.4 Round 1 journey, M13r + lever (b), with purchases (10,000 players; journey grid = engine, reads ~1.5 pts low at the boss)
+### 0.4 Round 1 journey, M13r + lever (b), with purchases (oh2/boss/round rows STALE, see 0.0) (10,000 players; journey grid = engine, reads ~1.5 pts low at the boss)
 | Race | Strong (80/80), mandatory only | Weak (50 → 80), mandatory only | Weak + non-mandatory (cap 15) |
 |---|---|---|---|
 | kid1 | 97.4 %, 1.0 att | skill 0.50, 12.1 %, 5.0 att | 0.58, 3,040 pts, 57.6 %, 1.7 att (3.1 NM wins) |

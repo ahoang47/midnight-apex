@@ -8,6 +8,13 @@
 
 ---
 
+## 2026-11-19 — DRAFT: mod_skill old head (oh2) at ~70 %, boss 66-68 % (Barry, Systems; unapproved, Austin direction)
+- **Austin (direct, 6:26 PM PT card answer):** "Make the old head a bit easier, about 70%, and keep the boss at 66-68%". Fixes the flat climb top of 255db46. Stats only; boss and boss floor untouched.
+- **oh2 budget:** Street 332.93 → 331.98, Wangan 384.44 → 383.00, Touge 426.72 unchanged (`oh2_70.py`, n 6,000). Strong at floor oh2 / boss: 71.02 / 66.87, 70.02 / 66.05, 70.85 / 67.65.
+- **oh1 → oh2:** no inversion; Wangan nearly flat (70.77 → 70.02), not changed, question for Austin.
+- **Scorecard (`climb70.py`): 9/9.** G1b 1.70 / 1.93 / 1.79, G4a 66.05; others unchanged. R1 journey with purchases (`journey_oh2_70.py`): strong 15.1 attempts, weak 36.2, weak + NM 32.0 (6.0 NM wins), 0 stuck. SETUP-STUDY.md section 0.0 prepended; replaced numbers marked stale.
+- Nothing live; sim/ untouched.
+
 ## 2026-11-19 — DRAFT: mod_skill boss at 65-70 % for a strong story player (Barry, Systems; unapproved, Austin direction)
 - **Austin (direct, 2026-11-19):** "Think we can get a strong story player to 65-70%?" G1a revised to 65-70 % (80/80 boss at the floor) in SETUP-STUDY.md; every other threshold unchanged. Old section 5 recommendation marked stale; new section 0 prepended.
 - **Levers (engine n 6,000; `boss_lever.py`):** (b) raise the boss floor 3,346 / 3,865 / 4,424 → 3,392 / 3,904 / 4,467 (story XP in the oh2 → boss gap): chosen, max build untouched. (a) lower boss budget: full-build 80/80 95.98 / 93.85 / 98.08 (fails G5). (c) boss AI QTE 0.685 / 0.65 / 0.68: 96.7 / 92.3 / 96.9 (fails G5), 60/60 at max 48-54.
