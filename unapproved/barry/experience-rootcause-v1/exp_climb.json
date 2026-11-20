@@ -1,0 +1,74 @@
+{
+ "touge kid1 strong floor": {
+  "turns_starting_locked_pct": 29.1,
+  "limp_pct": 1.0,
+  "overrun_pct": 3.5,
+  "avg_mult": 0.977,
+  "locks_per_race": 1.21,
+  "mean_lock_turns": 3.23,
+  "max_lock_turns": 8,
+  "races_with_all_locked_pct": 3.8,
+  "win": 99.0,
+  "r": 1.102
+ },
+ "touge kid1 weak floor": {
+  "turns_starting_locked_pct": 43.7,
+  "limp_pct": 2.4,
+  "overrun_pct": 6.5,
+  "avg_mult": 0.957,
+  "locks_per_race": 2.16,
+  "mean_lock_turns": 3.12,
+  "max_lock_turns": 9,
+  "races_with_all_locked_pct": 11.4,
+  "win": 86.6,
+  "r": 1.102
+ },
+ "touge oh1 strong floor": {
+  "turns_starting_locked_pct": 51.8,
+  "limp_pct": 12.4,
+  "overrun_pct": 6.0,
+  "avg_mult": 0.901,
+  "locks_per_race": 3.96,
+  "mean_lock_turns": 4.65,
+  "max_lock_turns": 18,
+  "races_with_all_locked_pct": 49.4,
+  "win": 75.8,
+  "r": 1.024
+ },
+ "touge oh1 weak floor": {
+  "turns_starting_locked_pct": 70.9,
+  "limp_pct": 23.7,
+  "overrun_pct": 8.8,
+  "avg_mult": 0.823,
+  "locks_per_race": 5.77,
+  "mean_lock_turns": 4.99,
+  "max_lock_turns": 18,
+  "races_with_all_locked_pct": 80.8,
+  "win": 12.0,
+  "r": 1.024
+ },
+ "touge boss strong floor": {
+  "turns_starting_locked_pct": 57.5,
+  "limp_pct": 18.2,
+  "overrun_pct": 6.0,
+  "avg_mult": 0.866,
+  "locks_per_race": 5.98,
+  "mean_lock_turns": 5.44,
+  "max_lock_turns": 19,
+  "races_with_all_locked_pct": 67.0,
+  "win": 65.0,
+  "r": 1.022
+ },
+ "touge boss weak floor": {
+  "turns_starting_locked_pct": 76.8,
+  "limp_pct": 31.0,
+  "overrun_pct": 8.6,
+  "avg_mult": 0.779,
+  "locks_per_race": 8.39,
+  "mean_lock_turns": 5.8,
+  "max_lock_turns": 21,
+  "races_with_all_locked_pct": 94.0,
+  "win": 3.2,
+  "r": 1.022
+ }
+}

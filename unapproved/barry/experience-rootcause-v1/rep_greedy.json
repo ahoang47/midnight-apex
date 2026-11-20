@@ -1,0 +1,302 @@
+{
+ "median_start_locked": 4.0,
+ "median_limp": 0.0,
+ "win_pct": 65.8,
+ "seed": 98000004,
+ "final": [
+  17.54,
+  15.631
+ ],
+ "turns": [
+  {
+   "turn": 1,
+   "corner": "HP",
+   "ai_line": "EHP",
+   "played": "HPE",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.0,
+    0.25,
+    0.11
+   ],
+   "p_locked_end": "---",
+   "ai_played": "EHP",
+   "ai_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "ai_locked_end": "---"
+  },
+  {
+   "turn": 2,
+   "corner": "ES",
+   "ai_line": "HEE",
+   "played": "PPP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.29,
+    0.07,
+    0.0
+   ],
+   "p_locked_end": "---",
+   "ai_played": "HEE",
+   "ai_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "ai_locked_end": "---"
+  },
+  {
+   "turn": 3,
+   "corner": "HP",
+   "ai_line": "EHP",
+   "played": "HPE",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.06,
+    0.33,
+    0.11
+   ],
+   "p_locked_end": "---",
+   "ai_played": "EHP",
+   "ai_mults": [
+    1.0,
+    0.82,
+    1.0
+   ],
+   "ai_locked_end": "-H-"
+  },
+  {
+   "turn": 4,
+   "corner": "DR",
+   "ai_line": "HEE",
+   "played": "HEE",
+   "p_mults": [
+    1.0,
+    1.0,
+    0.77
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.0,
+    0.5,
+    0.86
+   ],
+   "p_locked_end": "--E",
+   "ai_played": "PEE",
+   "ai_mults": [
+    1.0,
+    1.0,
+    0.4
+   ],
+   "ai_locked_end": "--E"
+  },
+  {
+   "turn": 5,
+   "corner": "ES",
+   "ai_line": "HHH",
+   "played": "PPP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.29,
+    0.32,
+    0.55
+   ],
+   "p_locked_end": "--E",
+   "ai_played": "HPP",
+   "ai_mults": [
+    0.67,
+    1.0,
+    1.0
+   ],
+   "ai_locked_end": "-HE"
+  },
+  {
+   "turn": 6,
+   "corner": "HP",
+   "ai_line": "EEH",
+   "played": "HPP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.27,
+    0.57,
+    0.3
+   ],
+   "p_locked_end": "---",
+   "ai_played": "PPP",
+   "ai_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "ai_locked_end": "---"
+  },
+  {
+   "turn": 7,
+   "corner": "N90",
+   "ai_line": "EEH",
+   "played": "HPE",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.07,
+    0.55,
+    0.43
+   ],
+   "p_locked_end": "---",
+   "ai_played": "EPH",
+   "ai_mults": [
+    0.69,
+    1.0,
+    0.84
+   ],
+   "ai_locked_end": "--E"
+  },
+  {
+   "turn": 8,
+   "corner": "HP",
+   "ai_line": "EEH",
+   "played": "HPE",
+   "p_mults": [
+    0.96,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.0,
+    0.8,
+    0.53
+   ],
+   "p_locked_end": "-H-",
+   "ai_played": "PPH",
+   "ai_mults": [
+    1.0,
+    1.0,
+    0.57
+   ],
+   "ai_locked_end": "-H-"
+  },
+  {
+   "turn": 9,
+   "corner": "DR",
+   "ai_line": "HEH",
+   "played": "PEP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.0,
+    0.55,
+    0.61
+   ],
+   "p_locked_end": "-H-",
+   "ai_played": "PEP",
+   "ai_mults": [
+    1.0,
+    0.99,
+    1.0
+   ],
+   "ai_locked_end": "---"
+  },
+  {
+   "turn": 10,
+   "corner": "CH",
+   "ai_line": "HEP",
+   "played": "PEE",
+   "p_mults": [
+    1.0,
+    1.0,
+    0.4
+   ],
+   "p_limp": [
+    false,
+    false,
+    false
+   ],
+   "p_fill_end": [
+    0.0,
+    0.33,
+    1.19
+   ],
+   "p_locked_end": "-HE",
+   "ai_played": "HEP",
+   "ai_mults": [
+    0.5,
+    0.93,
+    1.0
+   ],
+   "ai_locked_end": "-H-"
+  }
+ ]
+}

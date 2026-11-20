@@ -1,0 +1,152 @@
+{
+ "MX-5 vs S2000": {
+  "release0.6": {
+   "turns_starting_locked_pct": 29.5,
+   "limp_pct": 0.5,
+   "overrun_pct": 5.8,
+   "avg_mult": 0.973,
+   "locks_per_race": 1.93,
+   "mean_lock_turns": 2.16,
+   "max_lock_turns": 9,
+   "races_with_all_locked_pct": 3.1,
+   "win": 77.35,
+   "ai": {
+    "turns_starting_locked_pct": 66.8,
+    "limp_pct": 0.2,
+    "overrun_pct": 17.0,
+    "avg_mult": 0.935,
+    "locks_per_race": 4.51,
+    "mean_lock_turns": 1.85,
+    "max_lock_turns": 5,
+    "races_with_all_locked_pct": 0.0
+   },
+   "locked_at_turn_start_by_turn_PHE_pct": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     0.0,
+     4.2,
+     6.2
+    ],
+    [
+     0.0,
+     17.4,
+     0.8
+    ],
+    [
+     0.0,
+     22.8,
+     9.9
+    ],
+    [
+     0.0,
+     27.2,
+     12.4
+    ],
+    [
+     0.0,
+     37.1,
+     4.4
+    ],
+    [
+     0.2,
+     41.0,
+     17.7
+    ],
+    [
+     4.0,
+     19.1,
+     28.5
+    ],
+    [
+     5.0,
+     24.7,
+     25.2
+    ],
+    [
+     5.1,
+     20.1,
+     21.6
+    ]
+   ]
+  }
+ },
+ "WRX vs MX-5": {
+  "release0.6": {
+   "turns_starting_locked_pct": 39.4,
+   "limp_pct": 5.2,
+   "overrun_pct": 8.7,
+   "avg_mult": 0.935,
+   "locks_per_race": 2.93,
+   "mean_lock_turns": 2.23,
+   "max_lock_turns": 10,
+   "races_with_all_locked_pct": 20.8,
+   "win": 88.0,
+   "ai": {
+    "turns_starting_locked_pct": 66.8,
+    "limp_pct": 0.2,
+    "overrun_pct": 17.0,
+    "avg_mult": 0.935,
+    "locks_per_race": 4.51,
+    "mean_lock_turns": 1.85,
+    "max_lock_turns": 5,
+    "races_with_all_locked_pct": 0.0
+   },
+   "locked_at_turn_start_by_turn_PHE_pct": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     0.0,
+     4.2,
+     0.7
+    ],
+    [
+     15.6,
+     17.2,
+     0.0
+    ],
+    [
+     17.8,
+     26.0,
+     1.9
+    ],
+    [
+     11.1,
+     32.9,
+     1.1
+    ],
+    [
+     17.2,
+     46.4,
+     4.5
+    ],
+    [
+     14.1,
+     51.5,
+     16.9
+    ],
+    [
+     16.4,
+     34.3,
+     20.2
+    ],
+    [
+     20.5,
+     36.6,
+     39.4
+    ],
+    [
+     40.8,
+     35.8,
+     22.2
+    ]
+   ]
+  }
+ }
+}

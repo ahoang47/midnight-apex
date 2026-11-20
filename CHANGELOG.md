@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-20 — Barry: experience root cause, Austin's playtests vs the goals (ANALYSIS, unapproved)
+- Austin 8:48 AM: goals → his playtest experience → root cause → levers. `unapproved/barry/experience-rootcause-v1/`. sim/ untouched.
+- Causes: player release 30 % vs AI 80 % (player locks 3-4 turns, AI 1); Touge HAN undersized for HAN-heavy corners; gauges carry over 10 → 20 → 30-turn races (Touge strong at floor: limp 1.0 → 18.2 %, all-locked races 3.8 → 67 %, kid1 → boss); boss difficulty is partly delivered by lock-outs (live stats, fewer locks → boss 81-100 %).
+- MX-5 vs S2000: representative sims only (no state string). Counter-picking player: 45 % of turns start locked, 32 % of races all-locked.
+- Ranked levers: UI telegraph; lap reset between laps + re-pin; player release 0.5 + re-pin. Lock cap and falloff + pacing fail G2a after their re-pins.
+
 ## 2026-11-20 — Barry: AI pacing on falloff and lock cap, re-pinned (PROPOSAL, unapproved)
 - Austin 8:11 AM: "Let's ignore tonics right now. Test falloff with AI pacing." `unapproved/barry/climb-repin-v2/` (README top section). sim/ untouched.
 - Pacing rule (1 param): the AI leaves its line's stance when the push would end above x·cap (falloff, x = t+0.2) or would lock (lock cap). It then plays the best-output stance that doesn't trigger. Deterministic.

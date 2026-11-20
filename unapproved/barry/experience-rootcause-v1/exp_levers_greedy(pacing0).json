@@ -1,0 +1,152 @@
+{
+ "MX-5 vs S2000": {
+  "greedy(pacing0)": {
+   "turns_starting_locked_pct": 45.2,
+   "limp_pct": 6.9,
+   "overrun_pct": 9.2,
+   "avg_mult": 0.927,
+   "locks_per_race": 2.86,
+   "mean_lock_turns": 3.24,
+   "max_lock_turns": 10,
+   "races_with_all_locked_pct": 32.2,
+   "win": 65.8,
+   "ai": {
+    "turns_starting_locked_pct": 66.8,
+    "limp_pct": 0.2,
+    "overrun_pct": 17.0,
+    "avg_mult": 0.935,
+    "locks_per_race": 4.51,
+    "mean_lock_turns": 1.85,
+    "max_lock_turns": 5,
+    "races_with_all_locked_pct": 0.0
+   },
+   "locked_at_turn_start_by_turn_PHE_pct": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     0.0,
+     4.2,
+     6.2
+    ],
+    [
+     0.0,
+     17.4,
+     7.0
+    ],
+    [
+     0.0,
+     26.3,
+     20.4
+    ],
+    [
+     0.0,
+     34.4,
+     29.3
+    ],
+    [
+     0.2,
+     46.5,
+     11.9
+    ],
+    [
+     0.8,
+     39.5,
+     43.2
+    ],
+    [
+     13.5,
+     38.5,
+     51.3
+    ],
+    [
+     31.3,
+     70.0,
+     56.7
+    ],
+    [
+     31.8,
+     85.6,
+     55.1
+    ]
+   ]
+  }
+ },
+ "WRX vs MX-5": {
+  "greedy(pacing0)": {
+   "turns_starting_locked_pct": 79.3,
+   "limp_pct": 39.4,
+   "overrun_pct": 12.7,
+   "avg_mult": 0.695,
+   "locks_per_race": 3.82,
+   "mean_lock_turns": 5.55,
+   "max_lock_turns": 10,
+   "races_with_all_locked_pct": 98.6,
+   "win": 48.45,
+   "ai": {
+    "turns_starting_locked_pct": 66.8,
+    "limp_pct": 0.2,
+    "overrun_pct": 17.0,
+    "avg_mult": 0.935,
+    "locks_per_race": 4.51,
+    "mean_lock_turns": 1.85,
+    "max_lock_turns": 5,
+    "races_with_all_locked_pct": 0.0
+   },
+   "locked_at_turn_start_by_turn_PHE_pct": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     0.0,
+     4.2,
+     0.7
+    ],
+    [
+     79.5,
+     17.2,
+     0.7
+    ],
+    [
+     79.8,
+     90.8,
+     5.0
+    ],
+    [
+     79.8,
+     97.8,
+     8.0
+    ],
+    [
+     25.4,
+     99.7,
+     74.5
+    ],
+    [
+     90.6,
+     94.4,
+     91.9
+    ],
+    [
+     92.8,
+     98.9,
+     97.8
+    ],
+    [
+     98.4,
+     98.7,
+     99.3
+    ],
+    [
+     99.2,
+     99.2,
+     99.4
+    ]
+   ]
+  }
+ }
+}

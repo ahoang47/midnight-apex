@@ -1,0 +1,138 @@
+{
+ "mx5 player": {
+  "cap": [
+   7.26,
+   2.53,
+   3.98
+  ],
+  "rec": [
+   2.42,
+   0.84,
+   1.33
+  ],
+  "release": 0.3,
+  "avg_first_pick_cost": [
+   0.78,
+   1.173,
+   1.285
+  ],
+  "avg_passive": [
+   0.009,
+   0.266,
+   0.267
+  ],
+  "picks_to_fill_from_empty": [
+   9.31,
+   2.16,
+   3.09
+  ],
+  "turns_locked_from_full": [
+   3,
+   4,
+   3
+  ],
+  "lock_on_passive": true
+ },
+ "mx5 ai": {
+  "cap": [
+   7.26,
+   2.53,
+   3.98
+  ],
+  "rec": [
+   2.42,
+   0.84,
+   1.33
+  ],
+  "release": 0.8,
+  "avg_first_pick_cost": [
+   0.78,
+   1.173,
+   1.285
+  ],
+  "avg_passive": [
+   0.009,
+   0.266,
+   0.267
+  ],
+  "picks_to_fill_from_empty": [
+   9.31,
+   2.16,
+   3.09
+  ],
+  "turns_locked_from_full": [
+   1,
+   1,
+   1
+  ],
+  "lock_on_passive": false
+ },
+ "wrx player": {
+  "cap": [
+   2.94,
+   2.48,
+   8.38
+  ],
+  "rec": [
+   0.98,
+   0.83,
+   2.79
+  ],
+  "release": 0.3,
+  "avg_first_pick_cost": [
+   0.78,
+   1.173,
+   1.285
+  ],
+  "avg_passive": [
+   0.009,
+   0.266,
+   0.267
+  ],
+  "picks_to_fill_from_empty": [
+   3.77,
+   2.11,
+   6.52
+  ],
+  "turns_locked_from_full": [
+   3,
+   4,
+   3
+  ],
+  "lock_on_passive": true
+ },
+ "wrx ai": {
+  "cap": [
+   2.94,
+   2.48,
+   8.38
+  ],
+  "rec": [
+   0.98,
+   0.83,
+   2.79
+  ],
+  "release": 0.8,
+  "avg_first_pick_cost": [
+   0.78,
+   1.173,
+   1.285
+  ],
+  "avg_passive": [
+   0.009,
+   0.266,
+   0.267
+  ],
+  "picks_to_fill_from_empty": [
+   3.77,
+   2.11,
+   6.52
+  ],
+  "turns_locked_from_full": [
+   1,
+   1,
+   1
+  ],
+  "lock_on_passive": false
+ }
+}

@@ -1,0 +1,356 @@
+{
+ "MX-5 vs S2000": {
+  "live": {
+   "turns_starting_locked_pct": 34.6,
+   "limp_pct": 2.7,
+   "overrun_pct": 5.3,
+   "avg_mult": 0.961,
+   "locks_per_race": 1.68,
+   "mean_lock_turns": 3.31,
+   "max_lock_turns": 10,
+   "races_with_all_locked_pct": 12.9,
+   "win": 72.15,
+   "ai": {
+    "turns_starting_locked_pct": 66.8,
+    "limp_pct": 0.2,
+    "overrun_pct": 17.0,
+    "avg_mult": 0.935,
+    "locks_per_race": 4.51,
+    "mean_lock_turns": 1.85,
+    "max_lock_turns": 5,
+    "races_with_all_locked_pct": 0.0
+   },
+   "locked_at_turn_start_by_turn_PHE_pct": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     0.0,
+     4.2,
+     6.2
+    ],
+    [
+     0.0,
+     17.4,
+     7.0
+    ],
+    [
+     0.0,
+     22.9,
+     9.5
+    ],
+    [
+     0.0,
+     31.4,
+     17.2
+    ],
+    [
+     0.2,
+     42.1,
+     11.1
+    ],
+    [
+     0.7,
+     40.3,
+     18.8
+    ],
+    [
+     4.8,
+     38.9,
+     29.4
+    ],
+    [
+     13.3,
+     26.6,
+     38.3
+    ],
+    [
+     13.3,
+     34.0,
+     38.6
+    ]
+   ]
+  }
+ },
+ "median_start_locked": 3.0,
+ "median_limp": 0.0,
+ "rep_seed": 98001143,
+ "rep_race": [
+  {
+   "turn": 1,
+   "corner": "HP",
+   "ai_line": "EHP",
+   "played": "HPE",
+   "ai_played": "EHP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.0,
+    0.25,
+    0.11
+   ],
+   "p_locked_end": "---",
+   "ai_locked_end": "---",
+   "ai_fill": [
+    0.0,
+    0.25,
+    0.11
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 2,
+   "corner": "ES",
+   "ai_line": "HEE",
+   "played": "PPP",
+   "ai_played": "HEE",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.29,
+    0.07,
+    0.0
+   ],
+   "p_locked_end": "---",
+   "ai_locked_end": "---",
+   "ai_fill": [
+    0.0,
+    0.62,
+    0.5
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 3,
+   "corner": "HP",
+   "ai_line": "EHP",
+   "played": "HPE",
+   "ai_played": "EHP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.06,
+    0.33,
+    0.11
+   ],
+   "p_locked_end": "---",
+   "ai_locked_end": "-H-",
+   "ai_fill": [
+    0.0,
+    0.87,
+    0.6
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 4,
+   "corner": "DR",
+   "ai_line": "HEH",
+   "played": "HEE",
+   "ai_played": "PEP",
+   "p_mults": [
+    1.0,
+    1.0,
+    0.77
+   ],
+   "p_fill": [
+    0.0,
+    0.5,
+    0.86
+   ],
+   "p_locked_end": "--E",
+   "ai_locked_end": "---",
+   "ai_fill": [
+    0.0,
+    0.62,
+    0.68
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 5,
+   "corner": "ES",
+   "ai_line": "HHH",
+   "played": "PPP",
+   "ai_played": "HPP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.29,
+    0.32,
+    0.55
+   ],
+   "p_locked_end": "--E",
+   "ai_locked_end": "-H-",
+   "ai_fill": [
+    0.0,
+    0.99,
+    0.38
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 6,
+   "corner": "HP",
+   "ai_line": "EHP",
+   "played": "PHP",
+   "ai_played": "EPP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.27,
+    0.57,
+    0.3
+   ],
+   "p_locked_end": "---",
+   "ai_locked_end": "---",
+   "ai_fill": [
+    0.0,
+    0.77,
+    0.48
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 7,
+   "corner": "N90",
+   "ai_line": "EHH",
+   "played": "EPP",
+   "ai_played": "EHP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.33,
+    0.24,
+    0.43
+   ],
+   "p_locked_end": "---",
+   "ai_locked_end": "---",
+   "ai_fill": [
+    0.0,
+    0.75,
+    0.61
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 8,
+   "corner": "HP",
+   "ai_line": "EHP",
+   "played": "HPE",
+   "ai_played": "EHP",
+   "p_mults": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.1,
+    0.49,
+    0.53
+   ],
+   "p_locked_end": "---",
+   "ai_locked_end": "-H-",
+   "ai_fill": [
+    0.0,
+    1.0,
+    0.72
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 9,
+   "corner": "DR",
+   "ai_line": "HEH",
+   "played": "HEE",
+   "ai_played": "PEP",
+   "p_mults": [
+    1.0,
+    1.0,
+    0.4
+   ],
+   "p_fill": [
+    0.0,
+    0.67,
+    1.29
+   ],
+   "p_locked_end": "--E",
+   "ai_locked_end": "--E",
+   "ai_fill": [
+    0.0,
+    0.74,
+    0.8
+   ],
+   "cum": [
+    0
+   ]
+  },
+  {
+   "turn": 10,
+   "corner": "CH",
+   "ai_line": "HEP",
+   "played": "HPP",
+   "ai_played": "HPP",
+   "p_mults": [
+    0.65,
+    1.0,
+    1.0
+   ],
+   "p_fill": [
+    0.02,
+    0.96,
+    1.0
+   ],
+   "p_locked_end": "-HE",
+   "ai_locked_end": "-H-",
+   "ai_fill": [
+    0.02,
+    1.03,
+    0.52
+   ],
+   "cum": [
+    18.27
+   ]
+  }
+ ],
+ "rep_final": [
+  18.273,
+  14.935
+ ]
+}

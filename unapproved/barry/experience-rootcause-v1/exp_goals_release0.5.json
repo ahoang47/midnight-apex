@@ -1,0 +1,61 @@
+{
+ "variant": "release0.5",
+ "n_per_cell": 900,
+ "out": {
+  "kid1 strong floor": {
+   "turns_starting_locked_pct": 26.4,
+   "limp_pct": 0.1,
+   "overrun_pct": 3.8,
+   "avg_mult": 0.981,
+   "locks_per_race": 1.26,
+   "mean_lock_turns": 2.58,
+   "max_lock_turns": 6,
+   "races_with_all_locked_pct": 0.8,
+   "win": 99.67
+  },
+  "oh2 weak max": {
+   "turns_starting_locked_pct": 51.1,
+   "limp_pct": 3.8,
+   "overrun_pct": 8.4,
+   "avg_mult": 0.942,
+   "locks_per_race": 5.53,
+   "mean_lock_turns": 2.66,
+   "max_lock_turns": 12,
+   "races_with_all_locked_pct": 21.1,
+   "win": 85.11
+  },
+  "boss strong floor": {
+   "turns_starting_locked_pct": 46.5,
+   "limp_pct": 8.2,
+   "overrun_pct": 6.9,
+   "avg_mult": 0.923,
+   "locks_per_race": 6.93,
+   "mean_lock_turns": 3.23,
+   "max_lock_turns": 20,
+   "races_with_all_locked_pct": 38.7,
+   "win": 81.11
+  },
+  "boss weak max": {
+   "turns_starting_locked_pct": 65.2,
+   "limp_pct": 11.7,
+   "overrun_pct": 11.1,
+   "avg_mult": 0.886,
+   "locks_per_race": 10.82,
+   "mean_lock_turns": 3.05,
+   "max_lock_turns": 20,
+   "races_with_all_locked_pct": 60.0,
+   "win": 55.67
+  },
+  "boss strong max": {
+   "turns_starting_locked_pct": 40.4,
+   "limp_pct": 4.2,
+   "overrun_pct": 6.1,
+   "avg_mult": 0.951,
+   "locks_per_race": 5.97,
+   "mean_lock_turns": 2.89,
+   "max_lock_turns": 15,
+   "races_with_all_locked_pct": 24.6,
+   "win": 97.0
+  }
+ }
+}
