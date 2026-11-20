@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: per-phase option 2 (smoothed live phase QTE) w sweep x 2-turn lock cap (UNAPPROVED)
+
+- **What:** Austin approved the direction at 6:44 AM: each phase resolves live with a smoothed QTE, w·press + (1 − w)·mean of the earlier presses (Entry = its own press). The AI uses the same smoothing, there is no re-resolve, and order is final. I swept w 0.35/0.5/0.65 on Street, Wangan and Touge (Touge as a what-if), with and without a 2-turn player lock cap. No lock-cap spec reached me, so I defined two versions: R resets the load to release × cap, K keeps the load. Files: `unapproved/barry/per-phase-combat-v1/` (README top, `per_phase.patch`, `option2_climb*.py/json`). sim/ untouched.
+- **Result:** w barely matters (≤ 0.2 pp strong boss, ≤ 0.7 pp weak). Best is w 0.35: boss 63.82/62.25/64.93, weak at max 23.62/26.67/28.53, so the 66-68 band and G2a fail. The ladder fails in Street (2.70 and 0.64 steps) and Wangan (oh2 → boss −0.09) but holds in Touge (3.39). G3b/G4b/G5 hold, and the reading gap is 40.2/35.6/36.4 (live 34.2/30.2/29.1). The lock cap breaks the climb: version R puts the strong boss at 95-99.8 and fails G5; version K lifts the boss 15-26 pp.
+- **Retune estimate (not applied):** with w 0.35 and no lock cap, boss stats about −0.85 % Street, −0.6 % Wangan, −0.3 % Touge, plus oh2 about −1.1 % and oh1 about −0.8 % in Street/Wangan, then a climb re-pin. The lock cap needs its own re-pin.
+
 ## 2026-11-20 — Arthur [art]: RX-7 (FD3S) game model, paint15 (Austin go-ahead 2026-11-20)
 
 - **What:** `assets/cars/rx7/car_rx7.glb` + README (rig and hubs, same layout as the MX-5). `art/vehicles/rx7/` holds the paint15 textures, review renders, the in-game RX-7 vs MX-5 sheet, the 3-view and Austin's window and panel-line drawings.

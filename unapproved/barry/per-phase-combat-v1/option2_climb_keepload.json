@@ -1,0 +1,177 @@
+{
+ "seed": 96000000,
+ "variants": {
+  "LC2k": {
+   "lock_cap": 2,
+   "lock_cap_keep_load": true
+  },
+  "w0.50+LC2k": {
+   "per_phase": true,
+   "phase_smooth_w": 0.5,
+   "lock_cap": 2,
+   "lock_cap_keep_load": true
+  }
+ },
+ "out": {
+  "LC2k": {
+   "street": {
+    "strong_floor": [
+     98.85,
+     92.34,
+     97.55,
+     93.49,
+     87.94,
+     83.68,
+     85.68
+    ],
+    "sweep_pct_turns": [
+     24.6,
+     23.2,
+     19.7,
+     19.4,
+     19.3,
+     19.2,
+     9.0
+    ],
+    "weak_floor": 1.55,
+    "sweep_weak_floor": 6.9,
+    "weak_max": 31.47,
+    "sweep_weak_max": 7.1,
+    "strong_max": 99.22,
+    "sweep_strong_max": 8.6
+   },
+   "wangan": {
+    "strong_floor": [
+     98.75,
+     92.94,
+     93.54,
+     85.59,
+     77.23,
+     70.07,
+     82.4
+    ],
+    "sweep_pct_turns": [
+     15.2,
+     14.9,
+     10.8,
+     10.7,
+     10.7,
+     10.6,
+     9.2
+    ],
+    "weak_floor": 0.42,
+    "sweep_weak_floor": 5.9,
+    "weak_max": 36.7,
+    "sweep_weak_max": 6.1,
+    "strong_max": 97.35,
+    "sweep_strong_max": 9.4
+   },
+   "touge": {
+    "strong_floor": [
+     99.95,
+     97.05,
+     98.45,
+     97.35,
+     96.15,
+     94.99,
+     94.57
+    ],
+    "sweep_pct_turns": [
+     13.5,
+     12.9,
+     9.6,
+     9.4,
+     9.4,
+     9.3,
+     8.4
+    ],
+    "weak_floor": 10.78,
+    "sweep_weak_floor": 5.5,
+    "weak_max": 77.57,
+    "sweep_weak_max": 5.9,
+    "strong_max": 99.52,
+    "sweep_strong_max": 9.0
+   }
+  },
+  "w0.50+LC2k": {
+   "street": {
+    "strong_floor": [
+     99.1,
+     93.09,
+     97.9,
+     94.64,
+     89.74,
+     86.59,
+     86.88
+    ],
+    "sweep_pct_turns": [
+     24.6,
+     23.2,
+     19.7,
+     19.4,
+     19.3,
+     19.2,
+     9.0
+    ],
+    "weak_floor": 2.82,
+    "sweep_weak_floor": 6.9,
+    "weak_max": 38.55,
+    "sweep_weak_max": 7.1,
+    "strong_max": 99.23,
+    "sweep_strong_max": 8.6
+   },
+   "wangan": {
+    "strong_floor": [
+     98.75,
+     93.29,
+     94.04,
+     87.44,
+     80.53,
+     74.47,
+     84.77
+    ],
+    "sweep_pct_turns": [
+     15.2,
+     14.9,
+     10.8,
+     10.7,
+     10.7,
+     10.6,
+     9.2
+    ],
+    "weak_floor": 1.22,
+    "sweep_weak_floor": 5.9,
+    "weak_max": 45.53,
+    "sweep_weak_max": 6.1,
+    "strong_max": 97.43,
+    "sweep_strong_max": 9.4
+   },
+   "touge": {
+    "strong_floor": [
+     99.95,
+     96.6,
+     98.25,
+     97.25,
+     95.15,
+     93.04,
+     93.68
+    ],
+    "sweep_pct_turns": [
+     13.5,
+     12.9,
+     9.6,
+     9.4,
+     9.4,
+     9.3,
+     8.4
+    ],
+    "weak_floor": 4.53,
+    "sweep_weak_floor": 5.5,
+    "weak_max": 63.97,
+    "sweep_weak_max": 5.9,
+    "strong_max": 99.5,
+    "sweep_strong_max": 9.0
+   }
+  }
+ }
+}

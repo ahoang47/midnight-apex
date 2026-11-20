@@ -1,0 +1,597 @@
+{
+ "seed": 96000000,
+ "variants": {
+  "LC2": {
+   "lock_cap": 2
+  },
+  "w0.35": {
+   "per_phase": true,
+   "phase_smooth_w": 0.35
+  },
+  "w0.35+LC2": {
+   "per_phase": true,
+   "phase_smooth_w": 0.35,
+   "lock_cap": 2
+  },
+  "w0.50": {
+   "per_phase": true,
+   "phase_smooth_w": 0.5
+  },
+  "w0.50+LC2": {
+   "per_phase": true,
+   "phase_smooth_w": 0.5,
+   "lock_cap": 2
+  },
+  "w0.65": {
+   "per_phase": true,
+   "phase_smooth_w": 0.65
+  },
+  "w0.65+LC2": {
+   "per_phase": true,
+   "phase_smooth_w": 0.65,
+   "lock_cap": 2
+  }
+ },
+ "out": {
+  "LC2": {
+   "street": {
+    "strong_floor": [
+     99.5,
+     94.29,
+     99.4,
+     98.45,
+     96.05,
+     93.44,
+     95.43
+    ],
+    "sweep_pct_turns": [
+     25.2,
+     25.0,
+     22.3,
+     22.4,
+     22.4,
+     22.4,
+     9.6
+    ],
+    "weak_floor": 3.2,
+    "sweep_weak_floor": 8.1,
+    "weak_max": 45.22,
+    "sweep_weak_max": 8.2,
+    "strong_max": 99.93,
+    "sweep_strong_max": 8.9
+   },
+   "wangan": {
+    "strong_floor": [
+     99.85,
+     97.45,
+     99.2,
+     95.75,
+     90.89,
+     84.93,
+     97.3
+    ],
+    "sweep_pct_turns": [
+     15.5,
+     15.4,
+     11.8,
+     11.8,
+     11.8,
+     11.8,
+     10.6
+    ],
+    "weak_floor": 0.9,
+    "sweep_weak_floor": 7.6,
+    "weak_max": 59.48,
+    "sweep_weak_max": 7.7,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   },
+   "touge": {
+    "strong_floor": [
+     99.8,
+     97.9,
+     99.85,
+     99.65,
+     99.15,
+     98.85,
+     99.8
+    ],
+    "sweep_pct_turns": [
+     15.6,
+     14.8,
+     11.0,
+     10.9,
+     10.8,
+     10.7,
+     9.8
+    ],
+    "weak_floor": 20.73,
+    "sweep_weak_floor": 7.2,
+    "weak_max": 88.32,
+    "sweep_weak_max": 7.6,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   }
+  },
+  "w0.35": {
+   "street": {
+    "strong_floor": [
+     97.55,
+     88.04,
+     85.34,
+     77.63,
+     70.22,
+     64.46,
+     63.82
+    ],
+    "sweep_pct_turns": [
+     23.5,
+     22.1,
+     18.1,
+     17.8,
+     17.6,
+     17.2,
+     8.5
+    ],
+    "weak_floor": 1.08,
+    "sweep_weak_floor": 6.3,
+    "weak_max": 23.62,
+    "sweep_weak_max": 6.5,
+    "strong_max": 94.3,
+    "sweep_strong_max": 8.5
+   },
+   "wangan": {
+    "strong_floor": [
+     96.9,
+     88.69,
+     83.98,
+     75.68,
+     68.37,
+     62.16,
+     62.25
+    ],
+    "sweep_pct_turns": [
+     14.8,
+     14.6,
+     10.4,
+     10.4,
+     10.3,
+     10.2,
+     8.6
+    ],
+    "weak_floor": 0.45,
+    "sweep_weak_floor": 5.5,
+    "weak_max": 26.67,
+    "sweep_weak_max": 5.6,
+    "strong_max": 89.17,
+    "sweep_strong_max": 8.9
+   },
+   "touge": {
+    "strong_floor": [
+     98.75,
+     90.24,
+     84.18,
+     78.93,
+     74.17,
+     68.32,
+     64.93
+    ],
+    "sweep_pct_turns": [
+     13.3,
+     12.4,
+     8.6,
+     8.4,
+     8.3,
+     8.2,
+     7.3
+    ],
+    "weak_floor": 1.18,
+    "sweep_weak_floor": 4.6,
+    "weak_max": 28.53,
+    "sweep_weak_max": 5.0,
+    "strong_max": 94.57,
+    "sweep_strong_max": 7.9
+   }
+  },
+  "w0.35+LC2": {
+   "street": {
+    "strong_floor": [
+     99.4,
+     94.94,
+     99.65,
+     98.9,
+     97.2,
+     94.99,
+     96.1
+    ],
+    "sweep_pct_turns": [
+     25.2,
+     25.0,
+     22.3,
+     22.4,
+     22.4,
+     22.4,
+     9.6
+    ],
+    "weak_floor": 6.28,
+    "sweep_weak_floor": 8.1,
+    "weak_max": 53.03,
+    "sweep_weak_max": 8.2,
+    "strong_max": 99.93,
+    "sweep_strong_max": 8.9
+   },
+   "wangan": {
+    "strong_floor": [
+     99.85,
+     97.55,
+     99.2,
+     96.5,
+     92.89,
+     88.69,
+     98.03
+    ],
+    "sweep_pct_turns": [
+     15.5,
+     15.4,
+     11.8,
+     11.8,
+     11.8,
+     11.8,
+     10.6
+    ],
+    "weak_floor": 3.12,
+    "sweep_weak_floor": 7.6,
+    "weak_max": 69.78,
+    "sweep_weak_max": 7.7,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   },
+   "touge": {
+    "strong_floor": [
+     99.75,
+     97.55,
+     99.8,
+     99.55,
+     98.8,
+     97.35,
+     99.63
+    ],
+    "sweep_pct_turns": [
+     15.6,
+     14.8,
+     11.0,
+     10.9,
+     10.8,
+     10.7,
+     9.8
+    ],
+    "weak_floor": 8.88,
+    "sweep_weak_floor": 7.2,
+    "weak_max": 74.8,
+    "sweep_weak_max": 7.6,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   }
+  },
+  "w0.50": {
+   "street": {
+    "strong_floor": [
+     97.65,
+     88.29,
+     85.49,
+     77.73,
+     70.07,
+     64.06,
+     63.83
+    ],
+    "sweep_pct_turns": [
+     23.5,
+     22.1,
+     18.1,
+     17.8,
+     17.6,
+     17.2,
+     8.5
+    ],
+    "weak_floor": 0.98,
+    "sweep_weak_floor": 6.3,
+    "weak_max": 23.45,
+    "sweep_weak_max": 6.5,
+    "strong_max": 94.3,
+    "sweep_strong_max": 8.5
+   },
+   "wangan": {
+    "strong_floor": [
+     96.9,
+     88.79,
+     84.08,
+     75.93,
+     68.37,
+     62.61,
+     62.18
+    ],
+    "sweep_pct_turns": [
+     14.8,
+     14.6,
+     10.4,
+     10.4,
+     10.3,
+     10.2,
+     8.6
+    ],
+    "weak_floor": 0.43,
+    "sweep_weak_floor": 5.5,
+    "weak_max": 26.53,
+    "sweep_weak_max": 5.6,
+    "strong_max": 89.15,
+    "sweep_strong_max": 8.9
+   },
+   "touge": {
+    "strong_floor": [
+     98.8,
+     90.34,
+     84.03,
+     78.93,
+     74.17,
+     68.47,
+     65.12
+    ],
+    "sweep_pct_turns": [
+     13.3,
+     12.4,
+     8.6,
+     8.4,
+     8.3,
+     8.2,
+     7.3
+    ],
+    "weak_floor": 1.15,
+    "sweep_weak_floor": 4.6,
+    "weak_max": 28.58,
+    "sweep_weak_max": 5.0,
+    "strong_max": 94.52,
+    "sweep_strong_max": 7.9
+   }
+  },
+  "w0.50+LC2": {
+   "street": {
+    "strong_floor": [
+     99.45,
+     95.3,
+     99.65,
+     99.0,
+     97.35,
+     95.2,
+     96.15
+    ],
+    "sweep_pct_turns": [
+     25.2,
+     25.0,
+     22.3,
+     22.4,
+     22.4,
+     22.4,
+     9.6
+    ],
+    "weak_floor": 6.07,
+    "sweep_weak_floor": 8.1,
+    "weak_max": 53.02,
+    "sweep_weak_max": 8.2,
+    "strong_max": 99.93,
+    "sweep_strong_max": 8.9
+   },
+   "wangan": {
+    "strong_floor": [
+     99.85,
+     97.6,
+     99.3,
+     96.5,
+     93.14,
+     88.89,
+     98.15
+    ],
+    "sweep_pct_turns": [
+     15.5,
+     15.4,
+     11.8,
+     11.8,
+     11.8,
+     11.8,
+     10.6
+    ],
+    "weak_floor": 2.9,
+    "sweep_weak_floor": 7.6,
+    "weak_max": 69.72,
+    "sweep_weak_max": 7.7,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   },
+   "touge": {
+    "strong_floor": [
+     99.75,
+     97.65,
+     99.8,
+     99.55,
+     98.85,
+     97.4,
+     99.72
+    ],
+    "sweep_pct_turns": [
+     15.6,
+     14.8,
+     11.0,
+     10.9,
+     10.8,
+     10.7,
+     9.8
+    ],
+    "weak_floor": 8.68,
+    "sweep_weak_floor": 7.2,
+    "weak_max": 75.2,
+    "sweep_weak_max": 7.6,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   }
+  },
+  "w0.65": {
+   "street": {
+    "strong_floor": [
+     97.7,
+     88.29,
+     85.34,
+     77.33,
+     69.67,
+     63.96,
+     63.67
+    ],
+    "sweep_pct_turns": [
+     23.5,
+     22.1,
+     18.1,
+     17.8,
+     17.6,
+     17.2,
+     8.5
+    ],
+    "weak_floor": 0.87,
+    "sweep_weak_floor": 6.3,
+    "weak_max": 22.92,
+    "sweep_weak_max": 6.5,
+    "strong_max": 94.28,
+    "sweep_strong_max": 8.5
+   },
+   "wangan": {
+    "strong_floor": [
+     96.9,
+     88.74,
+     84.08,
+     75.68,
+     67.87,
+     61.91,
+     62.0
+    ],
+    "sweep_pct_turns": [
+     14.8,
+     14.6,
+     10.4,
+     10.4,
+     10.3,
+     10.2,
+     8.6
+    ],
+    "weak_floor": 0.32,
+    "sweep_weak_floor": 5.5,
+    "weak_max": 25.9,
+    "sweep_weak_max": 5.6,
+    "strong_max": 89.12,
+    "sweep_strong_max": 8.9
+   },
+   "touge": {
+    "strong_floor": [
+     98.75,
+     90.39,
+     84.03,
+     79.03,
+     74.12,
+     68.37,
+     64.93
+    ],
+    "sweep_pct_turns": [
+     13.3,
+     12.4,
+     8.6,
+     8.4,
+     8.3,
+     8.2,
+     7.3
+    ],
+    "weak_floor": 0.98,
+    "sweep_weak_floor": 4.6,
+    "weak_max": 28.12,
+    "sweep_weak_max": 5.0,
+    "strong_max": 94.45,
+    "sweep_strong_max": 7.9
+   }
+  },
+  "w0.65+LC2": {
+   "street": {
+    "strong_floor": [
+     99.5,
+     95.25,
+     99.65,
+     99.0,
+     97.25,
+     94.99,
+     96.05
+    ],
+    "sweep_pct_turns": [
+     25.2,
+     25.0,
+     22.3,
+     22.4,
+     22.4,
+     22.4,
+     9.6
+    ],
+    "weak_floor": 5.52,
+    "sweep_weak_floor": 8.1,
+    "weak_max": 51.62,
+    "sweep_weak_max": 8.2,
+    "strong_max": 99.93,
+    "sweep_strong_max": 8.9
+   },
+   "wangan": {
+    "strong_floor": [
+     99.85,
+     97.6,
+     99.4,
+     96.4,
+     92.74,
+     88.59,
+     98.17
+    ],
+    "sweep_pct_turns": [
+     15.5,
+     15.4,
+     11.8,
+     11.8,
+     11.8,
+     11.8,
+     10.6
+    ],
+    "weak_floor": 2.38,
+    "sweep_weak_floor": 7.6,
+    "weak_max": 68.5,
+    "sweep_weak_max": 7.7,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   },
+   "touge": {
+    "strong_floor": [
+     99.75,
+     97.7,
+     99.8,
+     99.55,
+     98.8,
+     97.6,
+     99.72
+    ],
+    "sweep_pct_turns": [
+     15.6,
+     14.8,
+     11.0,
+     10.9,
+     10.8,
+     10.7,
+     9.8
+    ],
+    "weak_floor": 7.72,
+    "sweep_weak_floor": 7.2,
+    "weak_max": 74.4,
+    "sweep_weak_max": 7.6,
+    "strong_max": 100.0,
+    "sweep_strong_max": 10.6
+   }
+  }
+ }
+}
