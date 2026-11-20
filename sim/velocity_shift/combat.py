@@ -67,6 +67,7 @@ def resolve_turn(
     trace: TraceLogger | None = None,
     race_length: int = 10,
     boss_total: float | None = None,
+    kappa_mult: float = 1.0,
 ) -> TurnResult:
     """Resolve one turn with the Phi/tau progress model and heat multipliers.
 
@@ -79,7 +80,8 @@ def resolve_turn(
     opponent uses OPPONENT_QTE. Each clash pays
     clash_progress(outcome, stance played, ...) x that side's heat
     multiplier (`player_heat_mults` / `opponent_heat_mults`, default 1.0).
-    `race_length` selects kappa. `boss_total` defaults to the opponent's
+    `race_length` selects kappa, times `kappa_mult` (per-race stat weight, MatchConfig.kappa_mult; mod_skill
+    go-live 2026-11-19). `boss_total` defaults to the opponent's
     stat sum, so the opponent's V is 1 and the player's V is r**kappa.
     """
     t = TurnResult(turn_number=turn_state.turn_number)
@@ -121,7 +123,7 @@ def resolve_turn(
 
     if boss_total is None:
         boss_total = opponent.pow + opponent.en + opponent.han
-    kappa = kappa_for_length(race_length)
+    kappa = kappa_for_length(race_length) * kappa_mult
     p_tot = player.pow + player.en + player.han
     r = p_tot / boss_total if boss_total else 1.0
 

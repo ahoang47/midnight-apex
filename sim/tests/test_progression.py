@@ -1,4 +1,8 @@
-"""econ-v1 progression (3-round ladder, Variant C, USD) reproduction tests.
+"""LEGACY RECORD (2026-11-19): the level-based walk these tests pin is superseded by the mod_skill go-live (Austin "Approved
+for all"; live logic velocity_shift/mod_skill.py, tests/test_mod_skill.py). Kept green as a regression of the legacy walk
+(E.legacy_opponent_budget), not as the game's progression targets.
+
+econ-v1 progression (3-round ladder, Variant C, USD) reproduction tests.
 
 Pinned numbers are the econ-v1 live-tracks recalibration, approved and made live in commit 6d3641f (live stand-in tracks, bosses on
 the hardest track per district, Austin 2026-11-14), money in USD. Re-pinned 2026-11-19 for the 0.80 random AI QTE, the boss

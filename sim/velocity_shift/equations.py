@@ -921,7 +921,13 @@ def purse(rnd: int, kind: str, grind: bool = False) -> float:
 
 
 def opponent_budget(rnd: int, rung: int) -> float:
-    """Ladder opponent budget B = C_ROUND / target r (round index `rnd`, rung index `rung`)."""
+    """LIVE crew stats (mod_skill go-live 2026-11-19): the stat-locked budget of round index `rnd`'s crew member at rung
+    index `rung` (MS_CREW_BUDGET). Fixed per character; never scales with the player."""
+    return MS_CREW_BUDGET[ROUND_DISTRICTS[rnd].lower()][rung]
+
+
+def legacy_opponent_budget(rnd: int, rung: int) -> float:
+    """SUPERSEDED (pre-mod_skill level ladder, kept for the legacy walk in progression.py): B = C_ROUND / target r."""
     return C_ROUND[rnd] / LADDER_TARGET_R[ROUND_DISTRICTS[rnd].lower()][rung]
 
 
@@ -963,3 +969,45 @@ def bet_net_payout(stake: float, p_win: float) -> float:
 def bet_allowed(rounds_done: int, stake: float) -> bool:
     """Betting is open once round BETTING_UNLOCK_AFTER is done, on any race, BET_MIN <= stake <= BET_MAX, no count cap."""
     return rounds_done >= BETTING_UNLOCK_AFTER and BET_MIN <= stake <= BET_MAX
+
+
+# ── mod_skill progression (LIVE: Austin approved 2026-11-19, "Approved for all"; go-live of the setup study) ──
+# Replaces the level-based ladder for crew stats, floors, story XP, the mandatory structure and the non-mandatory cap.
+# The level-based constants above (CAP_LEVEL, story_xp, LADDER_TARGET_R, C_ROUND, ...) are SUPERSEDED and kept only for the
+# legacy walk in progression.py (legacy_opponent_budget). Live logic: mod_skill.py. Experience targets (Austin's goals,
+# measured as MS_TARGETS): design/07-economy-and-mods.md top.
+# Structure S1: one crew per round, 7 story races (kid1, kid2, mat1, mat2, oh1, oh2, boss) + one REQUIRED wild encounter
+# before each rung after kid1 = 13 mandatory races per round. Non-mandatory races (substories, picked fights) pay a wild
+# encounter's XP for the first MS_NM_XP_CAP wins per round, cash only after that.
+MS_STOCK_POINTS = 3000                       # stock car: 2400 SP + 4 stock parts x 150 (car points, 10 x stat units)
+MS_MOD_CEILING = (133, 261, 407)             # earned points per mod slot at the round's Mk3 (round caps 3532 / 4044 / 4628)
+MS_ROUND_CAP_POINTS = tuple(MS_STOCK_POINTS + MOD_SLOTS * c for c in MS_MOD_CEILING)
+# Mk1 / Mk2 / Mk3 earned-point ceiling per slot (mods-v1 points above the stock part, 63 / 68 / 73 in R1, scaled to the round
+# ceiling). R1 = 115 / 124 / 133 (approved); R2 / R3 derived by the same rule (round(ceiling x (pts - 150) / (Mk3 pts - 150))).
+MS_TIER_POINTS = ((115, 124, 133), (229, 246, 261), (370, 396, 407))
+MS_WILD_XP = (13, 12, 14)                    # wild encounter / non-mandatory win XP per round
+MS_REQUIRED_WILDS = (0, 1, 1, 1, 1, 1, 1)    # required wild-encounter wins before each rung (kid1 .. boss) = 6 per round
+MS_MANDATORY_PER_ROUND = 7 + sum(MS_REQUIRED_WILDS)   # 13
+MS_NM_XP_CAP = 15                            # XP-paying non-mandatory wins per round (resets each round)
+# Story XP per win, kid1 .. boss (the boss win pays cash only; the next round starts at the boss floor).
+MS_STORY_XP = ((42, 42, 42, 42, 42, 104, 0), (70, 70, 70, 70, 70, 90, 0), (74, 74, 74, 74, 74, 109, 0))
+# Stat-lock floors: earned car points (MS_STOCK_POINTS + ALL race XP earned, in a mod or not) needed to challenge each rung.
+# = the mandatory-path total on arrival, so the floor never blocks the mandatory path in story order.
+MS_FLOOR_POINTS = {
+    "street": (3000, 3055, 3110, 3165, 3220, 3275, 3392),
+    "wangan": (3392, 3474, 3556, 3638, 3720, 3802, 3904),
+    "touge": (3904, 3992, 4080, 4168, 4256, 4344, 4467),
+}
+# Crew stats: fixed stat total (stat units) per character, kid1 .. boss (shape: even, bosses BOSS_STAT_SHARES).
+MS_CREW_BUDGET = {
+    "street": (293.98, 306.16, 309.14, 317.38, 325.10, 331.98, 332.58),
+    "wangan": (318.65, 340.56, 348.93, 362.05, 372.82, 383.00, 390.35),
+    "touge": (354.33, 383.85, 393.80, 404.82, 415.79, 426.72, 437.06),
+}
+MS_BOSS_KAPPA_MULT = {"street": 0.5, "wangan": 1.0, "touge": 1.0}   # per-race stat weight on the crew boss race only
+# Austin's experience goals as measured targets (strong = 80/80, weak = 60/60, at the floor unless stated).
+MS_TARGETS = {
+    "G1a_boss_strong_floor": (65.0, 70.0), "G1b_story_losses_strong": (1.5, 4.0), "G2a_min_weak_max_build": 30.0,
+    "G2b_weak_improving_attempts": 60.0, "G3a_drop_kid1_boss": 30.0, "G3b_boss_read_gap": 10.0, "G3c_min_step": 3.0,
+    "G4a_min_strong_floor": 40.0, "G4b_boss_weak_floor_max": 10.0, "G5_boss_strong_max_build": 95.0,
+}

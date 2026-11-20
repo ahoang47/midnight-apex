@@ -1,5 +1,34 @@
 # Economy and Mod Parts: Headless Sim Specification
 
+> **LIVE 2026-11-19: mod_skill progression (Austin, direct, 6:39 PM PT: "Approved for all"; go-live commit: the CHANGELOG entry "mod_skill go-live").** Sections below that describe the level-based walk (levels, `CAP_LEVEL`, `C_ROUND` / `LADDER_TARGET_R` crew budgets, story XP as a share of the round's level XP, the mod fill rule) are **stale for the game**; that walk is kept only as the legacy record (`progression.py`, `E.legacy_opponent_budget` `equations.py:929`, `tests/test_progression.py`).
+>
+> **Experience targets (Austin's goals; the stated targets for progression, `E.MS_TARGETS` `equations.py:1009`):**
+> - **G1 (strong player is challenged on mandatory races only):** G1a strong (80/80) at the boss floor wins **65-70 %** (Austin 4:48 PM "get a strong story player to 65-70%", 6:26 PM "keep the boss at 66-68%"); G1b strong player loses **1.5-4** story races per round.
+> - **G2 (weak player can grind to win):** G2a weak (60/60) at the max build wins **≥ 30 %** at every rung; G2b a weak improving player clears each round in **≤ 60** attempts, nobody stuck.
+> - **G3 (a rising climb; learn the lines):** G3a monotone, kid1 → boss drop **≥ 30 pp**; G3b boss: strong at floor − weak at max **≥ +10 pp**; **G3c strictly harder every rung, each step ≥ 3.0 pp at n = 6000** (Austin 6:31 PM: "Do whatever it takes to make it such that it gets harder the higher up the ladder it goes."). Austin 6:26 PM: old heads "a bit easier, about 70%".
+> - **G4 (challenge from the start; brutal; no underdog bonus):** G4a lowest strong-at-floor cell **≥ 40 %**; G4b weak at the boss floor **≤ 10 %**. Crews are stat-locked; floors check earned points; no underdog bonus.
+> - **G5 (a non-mandatory cap):** cap set, strong at the boss with the max build **≤ 95 %**.
+>
+> **Rules (live: `sim/velocity_shift/mod_skill.py`, constants `equations.py:982-1013`):**
+> - **Structure S1:** one crew per round (Street, Wangan, Touge), 7 story races (kid1, kid2, mat1, mat2, oh1, oh2, boss; 10/10/20/20/20/20/30 turns) plus **one required wild encounter before each rung after kid1** = **13 mandatory races per round** (`MS_REQUIRED_WILDS` `:989`, `mod_skill.mandatory_sequence` `mod_skill.py:51`).
+> - **Car:** stock car 3000 car points (`MS_STOCK_POINTS`) + the earned points in 4 mod slots. Race XP fills owned slots up to the slot's Mk ceiling: **Mk1 / Mk2 / Mk3 = 115 / 124 / 133 points per slot in R1** (approved), R2 229 / 246 / 261 and R3 370 / 396 / 407 derived by the same rule (`MS_TIER_POINTS` `:987`). Round caps 3532 / 4044 / 4628. Mods are bought at the mods-v1 prices and unlocks (`MOD_SETS`; Mk1 at round open, Mk2 after mat1, Mk3 after mat2; `mod_skill.Garage` `mod_skill.py:88`). XP with no room is lost from the car.
+> - **XP:** story wins pay `MS_STORY_XP` (`:993`; R1 42 per rung, oh2 104; R2 70 / oh2 90; R3 74 / oh2 109; the boss win pays none). Wild encounters and non-mandatory wins pay 13 / 12 / 14 (`MS_WILD_XP`). **Non-mandatory cap:** only the first **15** non-mandatory wins per round pay XP (`MS_NM_XP_CAP` `:991`, `mod_skill.nm_xp` `mod_skill.py:46`); after that, cash only.
+> - **Crews are stat-locked** (fixed stat totals, `MS_CREW_BUDGET` `:1002`, read by `E.opponent_budget` `:923`). **Floors** (`MS_FLOOR_POINTS` `:996`) = the earned points on arrival at each rung with mandatory wins only. The check reads the **earned-XP ledger** (stock + all race XP earned, assigned or lost), not the car (`mod_skill.can_challenge` `mod_skill.py:37`). No underdog bonus (rejected).
+> - **Street boss stat weight:** the Street crew boss race runs at kappa × 0.5 (`MS_BOSS_KAPPA_MULT` `:1007`, `MatchConfig.kappa_mult` `models.py:177`, applied in `combat.py:126` and `simulation.py:87`). Default 1.0 everywhere else, so every other race is unchanged.
+>
+> **Live numbers** (`sim/scripts/mod_skill_climb.py` → `sim/config/mod_skill_climb_v1.json`, live engine, n = 6000 per cell, hardest live track per district, 3 boss styles, ties half; checked by `sim/tests/test_mod_skill.py`):
+>
+> | | Street | Wangan | Touge |
+> |---|---|---|---|
+> | Floors, earned points (kid1 → boss) | 3000 / 3055 / 3110 / 3165 / 3220 / 3275 / 3392 | 3392 / 3474 / 3556 / 3638 / 3720 / 3802 / 3904 | 3904 / 3992 / 4080 / 4168 / 4256 / 4344 / 4467 |
+> | Crew stat totals (units) | 293.98 → 332.58 | 318.65 → 390.35 | 354.33 → 437.06 |
+> | Strong 80/80 at floor, % (kid1 → boss) | 97.83 / 91.45 / 87.03 / 81.9 / 76.68 / 71.02 / 66.87 | 97.4 / 90.8 / 86.12 / 78.98 / 74.17 / 70.03 / 66.07 | 98.35 / 90 / 84.58 / 79.88 / 75.35 / 70.85 / 67.65 |
+> | Weak 60/60 at floor, boss | 2.28 | 1.55 | 2.88 |
+> | Weak 60/60 at max build, boss | 32.63 | 35.9 | 38.57 |
+> | Strong 80/80 at max build, boss | 94.5 | 89.6 | 94.77 |
+>
+> All table targets pass (G1a, G2a, G3a, G3b, G3c (smallest step 3.20, Touge oh2 → boss), G4a, G4b, G5). G1b and G2b are journey measures; the approved study's journeys (in the go-live commit's history) passed them; the live `Garage` holds the rules for a live journey runner, which is not yet written (open).
+
 > **Decision 2026-11-19 (Austin, direct): story-only retired; race terms.** "Story only is updated via the mandatory races, those are part of the story." Wild encounters are **mandatory races** (with story races); substories and picked fights are **non-mandatory races** (01 canon, "Race terms"). So there is no separate "story-only" player type, and the **story-only boss win criterion (80/80 story-only ≥ 50 % on every rung) is retired, not replaced**. Lines below that cite story-only numbers or that criterion are marked stale. "Grind race" is retired as a term; `GRIND_*` / `grind_*` stay as code names. The live sim is unchanged; `test_story_criterion_3` stays as a strict xfail citing this decision.
 
 > **Decision 2026-11-19 (Austin approved via Gordon; live in commit 67bbeb7, draft `unapproved/barry/ai-heat-qte-v1/`):** the AI's QTE is no longer a perfect 1.0. Each turn the opponent's raw QTE is drawn from N(`OPPONENT_QTE` 0.80, `OPPONENT_QTE_SD` 0.08), clamped to [`OPPONENT_QTE_MIN` 0.60, `OPPONENT_QTE_MAX` 1.00] and rounded with `round_qte_score`, from its own RNG `Random(seed + OPPONENT_QTE_SEED_OFFSET)` (104,729), separate from the race RNG (`match.py` `opponent_qte_mean` / `opponent_qte_spread`; `MatchConfig.opponent_qte_ratio/_sd/_min/_max` override). Boss r retuned: Street 1.046, Wangan 1.040, Touge 1.050 (`BOSS_TARGET_R`), and the Street crew boss is EN-heavy (`BOSS_STAT_SHARES` POW/HAN/EN 25/25/50). Progression reads `sim/config/winrate_g2_live_tracks_v2.json` (with `q_boss` cells for the Street boss) and `winrate_offtune_v2.json`. The AI keeps its softer heat rules. Text below that says the opponent always times perfectly / `OPPONENT_QTE` = 1.0 / is fixed with no RNG, the old boss r (1.044 / 1.055 / 1.071), or the v1 tables is **stale**.

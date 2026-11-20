@@ -1,5 +1,10 @@
 # mod_skill: SETUP STUDY replaces the climb recommendation (Austin 2026-11-19 4:21 PM PT), Barry DRAFT
 
+> **LIVE 2026-11-19 (Austin, direct, 6:39 PM PT: "Approved for all").** The setup study (commit 203e3b6 values: S1, M13r, raised
+> boss floor / story XP for a 66-68 % boss, the oh1/oh2 changes for G3c, cap 15, ledger floors, no underdog, Mk 115/124/133) is
+> ported into the live sim: `sim/velocity_shift/mod_skill.py`, `equations.py` "mod_skill progression", `MatchConfig.kappa_mult`,
+> `sim/config/mod_skill_climb_v1.json`, `sim/tests/test_mod_skill.py`; design/07 top. This folder is now the study record.
+
 > **See [SETUP-STUDY.md](SETUP-STUDY.md)** (criteria G1-G5 fixed before runs, scorecard, journeys, floors, live-sim lock check).
 > Austin's decisions on the climb draft (2026-11-19): **no underdog bonus** (C5 below REJECTED); keep it brutal for 60/60; crews
 > stat-locked with floors on earned points. The single recommendation in C3 below is **superseded** by the setup study

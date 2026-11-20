@@ -193,7 +193,8 @@ def run_match(
             opponent_heat_mults=o_mults,
             player_qte_phases=p_phases,
         )
-        turn_result = resolve_turn(turn_state, player, opponent, main_trace, race_length=cfg.max_turns)
+        turn_result = resolve_turn(turn_state, player, opponent, main_trace, race_length=cfg.max_turns,
+                                   kappa_mult=cfg.kappa_mult)
         turn_result.corner_type = corner
         turn_result.opponent_line = list(planned_line)
         turn_result.player_heat_fill = p_heat.fill()

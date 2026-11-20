@@ -1,6 +1,11 @@
 from __future__ import annotations
 """Story XP / level / money progression on the 3-round ladder (econ-v1, Barry; Austin go-ahead 2026-11-13).
 
+SUPERSEDED 2026-11-19 (mod_skill go-live, Austin "Approved for all"): the live progression is velocity_shift/mod_skill.py
+(stat-locked crews, earned-XP floors, 13 mandatory races, non-mandatory XP cap; constants equations.py "mod_skill progression").
+This level-based walk is kept as the legacy record (crew budgets via E.legacy_opponent_budget) for run_progression.py and
+tests/test_progression.py; its figures no longer describe the game.
+
 Port of the econ-v1 study walk (model.py + evaluate.py walk_round; econ-v1 approved and made live in commit 0af2715) onto the live constants in equations.py.
 One district per round (R1 Street, R2 Wangan, R3 Touge), one crew each, 7 rungs (kid1 kid2 mat1 mat2 oh1 oh2 boss,
 10/10/20/20/20/20/30 turns), no rematches. Then the pre-finale arc (P1-P4, M11-M32) and the finale F1-F4.
@@ -310,7 +315,7 @@ def ladder():
     for rnd, d in enumerate(E.ROUND_DISTRICTS):
         for j, name in enumerate(E.LADDER_RUNGS):
             rows.append(dict(rnd=rnd + 1, district=d, rung=name, j=j, kind=E.LADDER_RUNG_KIND[j], turns=E.LADDER_TURNS[j],
-                             B=E.opponent_budget(rnd, j), target_r=E.LADDER_TARGET_R[d.lower()][j], cap=E.CAP_LEVEL[rnd],
+                             B=E.legacy_opponent_budget(rnd, j), target_r=E.LADDER_TARGET_R[d.lower()][j], cap=E.CAP_LEVEL[rnd],
                              unlocks=unlocks_after(rnd + 1) if j == 6 else []))
     return rows
 
@@ -432,7 +437,7 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode, build: Build | N
         return n
 
     for j, name in enumerate(E.LADDER_RUNGS):
-        B = E.opponent_budget(rnd, j); T = E.LADDER_TURNS[j]; pre_boss = 0; here = 0; tag = f"R{rnd + 1} {name}"
+        B = E.legacy_opponent_budget(rnd, j); T = E.LADDER_TURNS[j]; pre_boss = 0; here = 0; tag = f"R{rnd + 1} {name}"
         cash_pre = money; shop(tag)
         if name == "boss" and mode in ("mixed", "hard") and L < cap:
             before = total
@@ -453,7 +458,7 @@ def _walk_round(rnd, enter_level, enter_bag, money, debt, mode, build: Build | N
                     post += here
         arrive_L = L; pw = G.power(arrive_L, rnd, d); r = pw / B
         packs = {pr: win_pack(pr, r, T, d, ps(arrive_L), boss=name == "boss") for pr in PROFILES}
-        r_grind = pw / E.opponent_budget(rnd, 0)
+        r_grind = pw / E.legacy_opponent_budget(rnd, 0)
         row = dict(rnd=rnd + 1, district=E.ROUND_DISTRICTS[rnd], rung=name, turns=T, B=round(B, 2),
                    target_r=E.LADDER_TARGET_R[d][j], arrive_L=arrive_L, arrive_r=round(r, 4), wr=packs,
                    build=build.at(arrive_L), pow_share=round(100 * ps(arrive_L), 1),
@@ -516,7 +521,7 @@ def boss_check_at_cap():
     cap before the boss, so 60/60 and 80/80 share the cap build)."""
     rows = []
     for rnd, (d, b) in enumerate(zip(E.ROUND_DISTRICTS, cap_builds())):
-        cap = E.CAP_LEVEL[rnd]; r = round(combat_power(cap, rnd) / E.opponent_budget(rnd, 6), 4); p = b.pow_share(cap)
+        cap = E.CAP_LEVEL[rnd]; r = round(combat_power(cap, rnd) / E.legacy_opponent_budget(rnd, 6), 4); p = b.pow_share(cap)
         rows.append(dict(rnd=rnd + 1, district=d, pow_share=round(100 * p, 1), build=b.at(cap), **boss_check(r, d, p)))
     return rows
 

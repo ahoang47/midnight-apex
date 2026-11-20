@@ -1,5 +1,10 @@
 # mod-skill-v1: Austin's "mod_skill" progression, simulated (Barry DRAFT, 2026-11-18)
 
+> **LIVE 2026-11-19 (Austin, direct, 6:39 PM PT: "Approved for all").** The setup study (commit 203e3b6 values: S1, M13r, raised
+> boss floor / story XP for a 66-68 % boss, the oh1/oh2 changes for G3c, cap 15, ledger floors, no underdog, Mk 115/124/133) is
+> ported into the live sim: `sim/velocity_shift/mod_skill.py`, `equations.py` "mod_skill progression", `MatchConfig.kappa_mult`,
+> `sim/config/mod_skill_climb_v1.json`, `sim/tests/test_mod_skill.py`; design/07 top. This folder is now the study record.
+
 > **2026-11-19 DRAFT (Austin direction, unapproved): SETUP STUDY, see [SETUP-STUDY.md](SETUP-STUDY.md).** G1-G5 as pass/fail
 > criteria; S1 one crew per round × mandatory 7/10/13/20 × cap none/8/12/15; S2 pruned. Recommended: S1, 13 mandatory (story XP
 > retuned so floors match), cap 15 (9/9). No underdog bonus (rejected). The climb draft below is superseded in part.

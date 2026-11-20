@@ -84,7 +84,7 @@ class SimulationRunner:
                                q_time=None if c.player_qte_profile else q_time, window_mod=c.qte_window_mod)
             self._q_read = q_read
             self._pace_q = c.player_pacing if c.player_pacing is not None else q_read
-            V = r ** kappa_for_length(T)
+            V = r ** (kappa_for_length(T) * c.kappa_mult)
             php, pho = _phi(qt), _phi(opponent_qte_mean(c))
             self._V, self._php, self._pho = V, php, pho
             self._d_lock = V * (php[2] - php[1]) + (pho[1] - pho[0])

@@ -1,0 +1,179 @@
+{
+ "n": 6000,
+ "seed": 96000000,
+ "note": "live engine via mod_skill.crew_config; strong = 80/80, weak = 60/60; % wins, ties half",
+ "floor": {
+  "street": [
+   3000,
+   3055,
+   3110,
+   3165,
+   3220,
+   3275,
+   3392
+  ],
+  "wangan": [
+   3392,
+   3474,
+   3556,
+   3638,
+   3720,
+   3802,
+   3904
+  ],
+  "touge": [
+   3904,
+   3992,
+   4080,
+   4168,
+   4256,
+   4344,
+   4467
+  ]
+ },
+ "max_build": {
+  "street": [
+   3195,
+   3250,
+   3305,
+   3360,
+   3415,
+   3470,
+   3532
+  ],
+  "wangan": [
+   3712,
+   3794,
+   3876,
+   3958,
+   4040,
+   4044,
+   4044
+  ],
+  "touge": [
+   4254,
+   4342,
+   4430,
+   4518,
+   4606,
+   4628,
+   4628
+  ]
+ },
+ "table": {
+  "street": {
+   "kid1": {
+    "strong_floor": 97.83,
+    "weak_floor": 48.15,
+    "weak_max": 92.92
+   },
+   "kid2": {
+    "strong_floor": 91.45,
+    "weak_floor": 17.18,
+    "weak_max": 86.35
+   },
+   "mat1": {
+    "strong_floor": 87.03,
+    "weak_floor": 10.35,
+    "weak_max": 87.3
+   },
+   "mat2": {
+    "strong_floor": 81.9,
+    "weak_floor": 4.73,
+    "weak_max": 82.85
+   },
+   "oh1": {
+    "strong_floor": 76.68,
+    "weak_floor": 2.12,
+    "weak_max": 76.88
+   },
+   "oh2": {
+    "strong_floor": 71.02,
+    "weak_floor": 0.93,
+    "weak_max": 70.2
+   },
+   "boss": {
+    "strong_floor": 66.87,
+    "weak_floor": 2.28,
+    "weak_max": 32.63,
+    "strong_max": 94.5
+   }
+  },
+  "wangan": {
+   "kid1": {
+    "strong_floor": 97.4,
+    "weak_floor": 73.32,
+    "weak_max": 92.9
+   },
+   "kid2": {
+    "strong_floor": 90.8,
+    "weak_floor": 32.5,
+    "weak_max": 82.45
+   },
+   "mat1": {
+    "strong_floor": 86.12,
+    "weak_floor": 20.2,
+    "weak_max": 90.6
+   },
+   "mat2": {
+    "strong_floor": 78.98,
+    "weak_floor": 6.07,
+    "weak_max": 86.93
+   },
+   "oh1": {
+    "strong_floor": 74.17,
+    "weak_floor": 2.38,
+    "weak_max": 83.05
+   },
+   "oh2": {
+    "strong_floor": 70.03,
+    "weak_floor": 1.23,
+    "weak_max": 66.68
+   },
+   "boss": {
+    "strong_floor": 66.07,
+    "weak_floor": 1.55,
+    "weak_max": 35.9,
+    "strong_max": 89.6
+   }
+  },
+  "touge": {
+   "kid1": {
+    "strong_floor": 98.35,
+    "weak_floor": 82.58,
+    "weak_max": 99.5
+   },
+   "kid2": {
+    "strong_floor": 90.0,
+    "weak_floor": 38.03,
+    "weak_max": 90.75
+   },
+   "mat1": {
+    "strong_floor": 84.58,
+    "weak_floor": 21.2,
+    "weak_max": 93.83
+   },
+   "mat2": {
+    "strong_floor": 79.88,
+    "weak_floor": 13.98,
+    "weak_max": 91.67
+   },
+   "oh1": {
+    "strong_floor": 75.35,
+    "weak_floor": 8.1,
+    "weak_max": 88.8
+   },
+   "oh2": {
+    "strong_floor": 70.85,
+    "weak_floor": 4.95,
+    "weak_max": 77.2
+   },
+   "boss": {
+    "strong_floor": 67.65,
+    "weak_floor": 2.88,
+    "weak_max": 38.57,
+    "strong_max": 94.77
+   }
+  }
+ }
+}

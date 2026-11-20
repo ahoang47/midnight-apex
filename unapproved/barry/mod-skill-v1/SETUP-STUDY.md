@@ -1,5 +1,10 @@
 # mod_skill SETUP STUDY: structures × mandatory count × non-mandatory cap, judged against Austin's goals (Barry DRAFT, 2026-11-19)
 
+> **LIVE 2026-11-19 (Austin, direct, 6:39 PM PT: "Approved for all").** The setup study (commit 203e3b6 values: S1, M13r, raised
+> boss floor / story XP for a 66-68 % boss, the oh1/oh2 changes for G3c, cap 15, ledger floors, no underdog, Mk 115/124/133) is
+> ported into the live sim: `sim/velocity_shift/mod_skill.py`, `equations.py` "mod_skill progression", `MatchConfig.kappa_mult`,
+> `sim/config/mod_skill_climb_v1.json`, `sim/tests/test_mod_skill.py`; design/07 top. This folder is now the study record.
+
 > **Scope (Austin, direct, 2026-11-19 4:21 PM PT):** compare setups against his written goals G1-G5 instead of a single
 > climb recommendation. **Unapproved and nothing live. Nothing in `sim/` changed.** Fixed: 7 story races per crew (2 kid,
 > 2 mature, 2 old head, 1 boss), crews stat-locked with FLOORS (earned points count, assigned or not), no underdog bonus,

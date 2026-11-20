@@ -172,6 +172,9 @@ class MatchConfig:
     opponent_qte_sd: Optional[float] = None
     opponent_qte_min: Optional[float] = None
     opponent_qte_max: Optional[float] = None
+    # Per-race stat weight (mod_skill go-live, Austin approved 2026-11-19): kappa = kappa_for_length(max_turns) x
+    # kappa_mult. 1.0 = live default; the Street crew boss races at E.MS_BOSS_KAPPA_MULT["street"] = 0.5.
+    kappa_mult: float = 1.0
     # District line tables (LINE_SET_C) and the lap. Required by the playable
     # engine: match.py picks the opponent's whole line once per corner/turn
     # from the match RNG, and the corners set the heat costs. `corners` is a
