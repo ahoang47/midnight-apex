@@ -1,6 +1,8 @@
+// CEL EXPERIMENT copy: unchanged look (flat gameplay paint, not inked); absent from the G-buffer passes.
 // Flat road chevrons (B.5d): unlit, hard alpha, linear fog, no glow, no soft edges.
 shader_type spatial;
 render_mode unshaded, cull_disabled, fog_disabled, depth_draw_always;
+#include "res://shaders/cel.gdshaderinc"
 uniform sampler2D tex : filter_nearest, repeat_disable;
 uniform vec3 tint : source_color = vec3(1.0);
 uniform float gain = 1.0;
@@ -20,4 +22,5 @@ void fragment() {
 	vec3 c = t.rgb * tint * gain;
 	float f = fog_amount * clamp((fog_depth - fog_near) / (fog_far - fog_near), 0.0, 1.0);
 	ALBEDO = mix(c, fog_color, f);
+	if (CEL_GB > 0.5) discard;   // the road under it stands in, so the chevrons never get inked
 }

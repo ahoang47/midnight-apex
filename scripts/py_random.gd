@@ -8,6 +8,9 @@ var mt := PackedInt64Array()
 var mti := N + 1
 var draws := 0
 var seed_value := 0
+# CPython random.Random.gauss (Box-Muller with cached second value)
+var has_gauss_next := false
+var gauss_next := 0.0
 
 func _init(s: int = 0) -> void:
 	seed_py(s)
@@ -18,6 +21,8 @@ static func _mul32(a: int, b: int) -> int:
 func seed_py(s: int) -> void:
 	seed_value = s
 	draws = 0
+	has_gauss_next = false
+	gauss_next = 0.0
 	var n: int = absi(s)
 	var key: Array[int] = []
 	while n > 0:
@@ -113,6 +118,31 @@ func choices(pop: Array, weights: Array, k: int = 1) -> Array:
 				lo = mid + 1
 		out.append(pop[lo])
 	return out
+
+## CPython 3.13 random.Random.gauss: Box-Muller, caches the second normal.
+## First call draws two random() values; the next call returns the cached value (no draw).
+func gauss(mu: float = 0.0, sigma: float = 1.0) -> float:
+	var z: float
+	if has_gauss_next:
+		z = gauss_next
+		has_gauss_next = false
+	else:
+		var x2pi: float = random() * TAU
+		var g2rad: float = sqrt(-2.0 * log(1.0 - random()))
+		z = cos(x2pi) * g2rad
+		gauss_next = sin(x2pi) * g2rad
+		has_gauss_next = true
+	return mu + z * sigma
+
+func clone():
+	var r = load("res://scripts/py_random.gd").new(0)
+	r.mt = mt.duplicate()
+	r.mti = mti
+	r.draws = draws
+	r.seed_value = seed_value
+	r.has_gauss_next = has_gauss_next
+	r.gauss_next = gauss_next
+	return r
 
 static func restore(s: int, n_draws: int):
 	var r = load("res://scripts/py_random.gd").new(s)

@@ -1,37 +1,79 @@
 {
-  "_doc": "Two-corner engine test. Shared by Godot, Three.js and tools/sim_parity.py. No balance numbers here: stats come from sim constants by name.",
-  "pin_commit": "50928ed0e268277e50f97a68c7d71151078e976e",
-  "_pin_doc": "Re-pinned from c3ffc41 to 50928ed (newest proto-build containing Barry's 53267c5 stat-name rename: Stance.POW/EN/HAN, DRAW, P/E/H line letters; numbers identical). QTE rounding from c3ffc41 is in this pin. Austin's naming rule, 2026-11-12: backend is POW/EN/HAN only; IN/MID/OUT is visual. sim/ is unchanged after 53267c5 (later commits are design/story/ci/godot).",
-  "max_turns": 2,
-  "_max_turns_doc": "race length in turns = corners; kappa = kappa_for_length(2) -> nearest key 10 (sim rule, no interpolation)",
-  "stats": {
-    "_doc": "simulation.simulate_win_rate convention: Balanced builds, opp_total = SABINE_BUDGET (300.0, same value as simulate_win_rate's default), player total = r * opp_total, r = LADDER_R[rung]. Each stat = total / 3.0.",
-    "opp_total_const": "SABINE_BUDGET",
-    "ladder_rung": 6
-  },
+  "_doc": "Touge race (Gordon [godot], touge-race, Austin go-ahead 2026-11-19). Shared by Godot and tools/parity_touge.py. No balance numbers here: stats come from scripts/globals.gd (TODO(barry) parity blocks), rules from sim/ by name.",
+  "district": "touge",
+  "track_index": 0,
+  "_track_doc": "corners = sim/config/tracks_v1.json tracks.touge.T1_Akina_Switchbacks, the lap match.race_setup uses by default for Touge (first official track). tools/gen_globals.py asserts they match.",
+  "max_turns": 10,
+  "_max_turns_doc": "race length in turns = corners = 10; kappa = kappa_for_length(10) (KAPPA_BY_LENGTH x KAPPA_HEAT_MULT)",
+  "swap_after_turn": 5,
+  "_swap_doc": "Austin: cat or mouse is picked first; turnout swap after turn 5. Display only: progress keeps summing in the sim order; turns 1-5 are banked and the on-screen gap resets.",
   "corners": [
     {
       "district": "touge",
       "corner": "HP",
-      "dir": "L",
-      "_doc": "first corner of tracks_v1 T1_Akina_Switchbacks"
+      "dir": "L"
+    },
+    {
+      "district": "touge",
+      "corner": "ES",
+      "dir": "R"
+    },
+    {
+      "district": "touge",
+      "corner": "HP",
+      "dir": "R"
+    },
+    {
+      "district": "touge",
+      "corner": "DR",
+      "dir": "L"
+    },
+    {
+      "district": "touge",
+      "corner": "ES",
+      "dir": "L"
+    },
+    {
+      "district": "touge",
+      "corner": "HP",
+      "dir": "R"
     },
     {
       "district": "touge",
       "corner": "N90",
-      "dir": "R",
-      "_doc": "Austin 2026-11-11 ~10 PM PT: both corners in one district on a continuous 2-turn track (he picked Touge). N90 is corner 7 of tracks_v1 T1_Akina_Switchbacks; its Touge line set (LINE_SET_C touge N90) replaces Street N90's for the rival. Was street N90 R."
+      "dir": "L"
+    },
+    {
+      "district": "touge",
+      "corner": "HP",
+      "dir": "R"
+    },
+    {
+      "district": "touge",
+      "corner": "DR",
+      "dir": "L"
+    },
+    {
+      "district": "touge",
+      "corner": "CH",
+      "dir": "R"
     }
   ],
-  "_dir_doc": "corner direction is display-only (lane tell side). LINE_SET_C / tracks_v1 carry no L/R; PLACEHOLDER.",
+  "_dir_doc": "corner direction is display-only (lane tell side). tracks_v1 carries no L/R; PLACEHOLDER alternation.",
   "player": {
     "name": "Player",
     "car": "mx5"
   },
   "opponent": {
-    "name": "Crew Boss",
-    "car": "s2000"
+    "name": "Touge Kid",
+    "car": "s2000",
+    "rung": "kid1"
   },
+  "_opponent_doc": "Austin: test rival is the Touge kid (P1's rung). Rung name from LADDER_RUNGS; the stat block is the same TODO(barry) parity placeholder as every car (Austin 2026-11-19: car choice is visual only).",
   "qte_window_mod": 0.0,
-  "_qte_window_mod_doc": "MatchConfig.qte_window_mod (sim/velocity_shift/models.py:157, default 0.0). No mods in this test. Zone = qte_zone_width(r, qte_window_mod) at the race's fixed r = player stat total / opponent stat total (match.py:190-192)."
+  "_qte_window_mod_doc": "MatchConfig.qte_window_mod default 0.0. No mods in this test.",
+  "opponent_qte_ratio": 1.0,
+  "_opponent_qte_ratio_doc": "MatchConfig.opponent_qte_ratio (Austin approved 2026-11-19). Mean raw AI QTE = OPPONENT_QTE (0.80) \u00d7 this. 1.0 is the live default (same as omitting it). Per-turn draw uses OPPONENT_QTE_SD/MIN/MAX from its own RNG seeded race_seed + OPPONENT_QTE_SEED_OFFSET (104729). Optional overrides: opponent_qte_sd / _min / _max.",
+  "use_draft_blocks": true,
+  "_use_draft_blocks_doc": "true = Barry's car blocks, unapproved/barry/touge-race-parity/blocks.json @ fd59332 (still UNAPPROVED; globals.gd CAR_DRAFT_BLOCKS). false = the TODO(barry) even/equal placeholder for every car. Settings per that file: 10 turns, touge, no mods, no retune, opponent QTE ratio 1.0 (= OPPONENT_QTE)."
 }

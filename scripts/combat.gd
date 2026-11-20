@@ -1,8 +1,9 @@
-## 1:1 port of sim/velocity_shift/equations.py + combat.py playable engine (pinned commit, see sim_constants.gd PIN_COMMIT).
-## Stances are letters P/E/H (Stance.POW/EN/HAN). Pin 50928ed (includes 53267c5 rename + c3ffc41 QTE rounding).
-## qte-v1 visible zone, no knot_window factor in clash_progress, Entry / Apex / Exit phase scores averaged into the turn's raw_qte.
+## 1:1 port of sim/velocity_shift/equations.py + combat.py playable engine at globals.gd PIN_COMMIT (G2 heat system,
+## card draw removed 2026-11-13). Gordon [godot] touge-race re-port: kappa x KAPPA_HEAT_MULT, stat weight on the stance played
+## (STAT_M_W), per-clash heat multipliers. QTE functions unchanged from the two-corner port (qte-v1, c3ffc41 rounding).
+## Stances are letters P/E/H (Stance.POW/EN/HAN).
 extends RefCounted
-const C = preload("res://scripts/sim_constants.gd")
+const C = preload("res://scripts/globals.gd")
 const LETTERS := ["P", "H", "E"]  # _INDEX_STANCE order: POW, HAN, EN (models.py Stance member order is POW, EN, HAN)
 const WIN := 1
 const DRAW := 0  # StanceOutcome.DRAW
@@ -27,14 +28,15 @@ static func knot_window(r: float) -> float:
 			return minf(1.0, y0 + (y1 - y0) * (r - x0) / (x1 - x0))
 	return minf(1.0, K[K.size() - 1][1])
 
+## equations.py kappa_for_length: KAPPA_BY_LENGTH x KAPPA_HEAT_MULT, nearest official key (no interpolation)
 static func kappa_for_length(L: int) -> float:
-	if C.KAPPA_BY_LENGTH.has(L):
-		return C.KAPPA_BY_LENGTH[L]
-	var best: int = C.KAPPA_BY_LENGTH.keys()[0]
-	for k in C.KAPPA_BY_LENGTH.keys():
-		if absi(k - L) < absi(best - L):
-			best = k
-	return C.KAPPA_BY_LENGTH[best]
+	if not C.KAPPA_BY_LENGTH.has(L):
+		var best: int = C.KAPPA_BY_LENGTH.keys()[0]
+		for k in C.KAPPA_BY_LENGTH.keys():
+			if absi(k - L) < absi(best - L):
+				best = k
+		L = best
+	return C.KAPPA_BY_LENGTH[L] * C.KAPPA_HEAT_MULT[L]
 
 static func timing_value(q: float) -> float:
 	q = 0.0 if q < 0.0 else (1.0 if q > 1.0 else q)
@@ -55,20 +57,20 @@ static func stat_shares(p: float, e: float, h: float) -> Array:
 		return [0.0, 1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0]
 	return [tot, p / tot, e / tot, h / tot]
 
-## equations.py:447-475 clash_progress: g = V * Phi(o, q_eff) * M,
-## q_eff = clip(q_time * (1 + ETA * (han_share - 1/3)), 0, 1) (equations.py:465-466). No knot_window factor.
-static func clash_progress(outcome: int, q_time: float, p: float, e: float, h: float, boss_total: float, kappa: float) -> float:
+## equations.py stat_payoff_mult / stance_share / clash_progress:
+## g = V * Phi(o, q) * (1 + STAT_M_W * (share of the stance played - 1/3)) * heat_mult, V = (tot / boss_total)**kappa
+static func stat_payoff_mult(share_played: float) -> float:
+	return 1.0 + C.STAT_M_W * (share_played - 1.0 / 3.0)
+static func stance_share(stance: String, p: float, e: float, h: float) -> float:
 	var sh := stat_shares(p, e, h)
-	var r: float = sh[0] / boss_total if boss_total != 0.0 else 1.0
+	return sh[1] if stance == "P" else (sh[2] if stance == "E" else sh[3])
+static func clash_progress(outcome: int, stance: String, q_time: float, p: float, e: float, h: float, boss_total: float, kappa: float, heat_mult: float = 1.0) -> float:
+	var tot := p + e + h
+	var r: float = tot / boss_total if boss_total != 0.0 else 1.0
 	var V := pow(r, kappa)
-	var qe: float = q_time * (1.0 + C.ETA * (sh[3] - 1.0 / 3.0))
-	qe = 0.0 if qe < 0.0 else (1.0 if qe > 1.0 else qe)
-	var M: float
-	if outcome == WIN:
-		M = 1.0 + C.MU * (sh[1] - 1.0 / 3.0)
-	else:
-		M = 1.0 + C.MU * (sh[2] - 1.0 / 3.0)
-	return V * clash_payoff(outcome, qe) * M
+	var q: float = 0.0 if q_time < 0.0 else (1.0 if q_time > 1.0 else q_time)
+	var m := stat_payoff_mult(stance_share(stance, p, e, h))
+	return V * clash_payoff(outcome, q) * m * heat_mult
 
 # ── qte-v1 visible zone (equations.py:279-387) and per-phase QTE (equations.py:390-408) ──
 ## erf: line-for-line port of glibc 2.41 sysdeps/ieee754/dbl-64/s_erf.c __erf, which CPython's math.erf calls on this box
@@ -274,12 +276,6 @@ static func hit_quality(err_ms: float, zone_ms: float) -> float:
 	if zone_ms <= 0.0: return 0.0
 	return maxf(0.0, 1.0 - absf(err_ms) / (zone_ms / 2.0))
 
-static func deck_weights(p: float, e: float, h: float) -> Array:
-	var sh := stat_shares(p, e, h)
-	var raw := [sh[1] * C.DECK_ALPHA + (1.0 - C.DECK_ALPHA) / 3.0, sh[3] * C.DECK_ALPHA + (1.0 - C.DECK_ALPHA) / 3.0, sh[2] * C.DECK_ALPHA + (1.0 - C.DECK_ALPHA) / 3.0]
-	var s: float = 0.0 + raw[0] + raw[1] + raw[2]
-	return [raw[0] / s, raw[1] / s, raw[2] / s]
-
 static func line_probs() -> Array:
 	var a: float = C.LINE_ADHERENCE
 	return [a, (1.0 - a) * C.LINE_ALT_WEIGHTS["alt1"], (1.0 - a) * C.LINE_ALT_WEIGHTS["alt2"]]
@@ -287,29 +283,33 @@ static func line_probs() -> Array:
 static func line_triples(district: String, corner: String) -> Array:
 	return C.LINE_SET_C[district.strip_edges().to_lower()][corner].duplicate()
 
+## combat.py pick_line: one categorical draw rng.choices(triples, weights=line_probs()) from the match RNG
 static func pick_line(district: String, corner: String, rng) -> String:
 	return rng.choices(line_triples(district, corner), line_probs(), 1)[0]
 
-static func draw_weighted_hand(p: float, e: float, h: float, rng) -> Array:
-	return rng.choices(LETTERS, deck_weights(p, e, h), C.HAND_SIZE)
+## equations.py counter_stance / loser_to_stance
+static func counter_stance(s: String) -> String: return "E" if s == "P" else ("P" if s == "H" else "H")
+static func loser_to_stance(s: String) -> String: return "H" if s == "P" else ("E" if s == "H" else "P")
 
-## combat.py:62 resolve_turn. phases: TurnState.player_qte_phases (models.py:68). When it has 3 entries the turn's player_qte
-## is mean_phase_qte(phases) and TurnResult.player_qte_phases = [phase_raw_qte(v)...] (combat.py:86-88); else p_q is used.
-static func resolve_turn(p_cards: Array, o_cards: Array, player: Dictionary, opponent: Dictionary, p_q: float, o_q: float, race_length: int, phases: Array = []) -> Dictionary:
+## combat.py resolve_turn (Phi/tau + heat). p_line / o_line: 3 stance letters each; p_mults / o_mults: per-clash heat
+## multipliers from heat.gd play() (TurnState.player_heat_mults / opponent_heat_mults). phases: Entry / Apex / Exit raw scores
+## (null = unplayed = 0); when 3 are given the turn's player_qte = mean_phase_qte(phases) (combat.py resolve_turn).
+static func resolve_turn(p_line: Array, o_line: Array, player: Dictionary, opponent: Dictionary, p_q: float, o_q: float, race_length: int, phases: Array = [], p_mults: Array = [1.0, 1.0, 1.0], o_mults: Array = [1.0, 1.0, 1.0]) -> Dictionary:
 	var ph_out := []
 	if not phases.is_empty():
 		for v in phases: ph_out.append(phase_raw_qte(v))
 		p_q = mean_phase_qte(phases)
 	var outcomes := []
-	for i in p_cards.size():
-		outcomes.append(resolve_stance(p_cards[i], o_cards[i]))
+	for i in p_line.size():
+		outcomes.append(resolve_stance(p_line[i], o_line[i]))
 	var boss_total: float = opponent.pow + opponent.en + opponent.han
 	var kappa := kappa_for_length(race_length)
 	var pc := []; var oc := []
 	var pp := 0.0; var op := 0.0
-	for o in outcomes:
-		var pg := clash_progress(o, p_q, player.pow, player.en, player.han, boss_total, kappa)
-		var og := clash_progress(-o, o_q, opponent.pow, opponent.en, opponent.han, boss_total, kappa)
+	for i in outcomes.size():
+		var o: int = outcomes[i]
+		var pg := clash_progress(o, p_line[i], p_q, player.pow, player.en, player.han, boss_total, kappa, float(p_mults[i]))
+		var og := clash_progress(-o, o_line[i], o_q, opponent.pow, opponent.en, opponent.han, boss_total, kappa, float(o_mults[i]))
 		pp += pg; op += og; pc.append(pg); oc.append(og)
 	var sum := 0
 	for o in outcomes: sum += o

@@ -1,11 +1,12 @@
+## WANGAN COPY (Arthur, unapproved): Gordon's art_kit.gd plus grid_strip() and band() for the Wangan deck.
 ## Shared stand-in art builders (art_direction Part B recipes; textures from spec/gen_art.py). Moved verbatim out of main.gd
 ## (scene refactor, 2026-11-12) so the @tool scenes (track.tscn, touge_dressing.tscn, sky.tscn, car.tscn) build the same meshes
 ## and materials in the editor that the game builds at runtime. One instance per running game (main.gd owns it); each @tool
 ## scene makes its own in the editor. Every number comes from spec/display.json or was already in main.gd before the move.
 @tool
 extends RefCounted
-const ENV_SH = preload("res://shaders/env.gdshader")
-const SCROLL_SH = preload("res://shaders/scroll.gdshader")
+const ENV_SH = preload("res://shaders/env_vertex_lit.gdshader")
+const SCROLL_SH = preload("res://shaders/scroll_vertex_lit.gdshader")
 const GLOW_SH = preload("res://shaders/glow.gdshader")
 
 var disp: Dictionary
@@ -22,7 +23,7 @@ var GLOW_QUAD: QuadMesh
 
 func _init(d: Dictionary) -> void:
 	disp = d; DIST = d.districts; PAL = d.palette
-	road_W = float(d.lane_width_m) * 1.5 + 1.0
+	road_W = float(d.road_half_m) if d.has("road_half_m") else float(d.lane_width_m) * 1.5 + 1.0   # TOUGE: 3.0 (6.0 m road)
 	env_mat = ShaderMaterial.new(); env_mat.shader = ENV_SH
 	env_mat.set_shader_parameter("snap_res", Vector2(int(d.render.internal_w), int(d.render.internal_h)))
 
@@ -54,7 +55,7 @@ func card_mat(n: String) -> ShaderMaterial:
 
 ## before a rebuild: keep only the cached card materials, forget the glow materials (main.gd _build_road)
 func reset_for_rebuild() -> void:
-	scroll_mats = scroll_mats.filter(func(m): return card_mats.values().has(m))
+	scroll_mats = scroll_mats.filter(func(m): return card_mats.values().has(m) or m.has_meta("persist"))   # WANGAN: cached prop + far-set materials survive
 	glow_mats.clear()
 
 func glow_sprite(n: String, col: Color, size: float, strength: float) -> MeshInstance3D:
@@ -70,7 +71,7 @@ func glow_sprite(n: String, col: Color, size: float, strength: float) -> MeshIns
 
 static func pp(pth, s: float, d: float, y: float = 0.0) -> Vector3:
 	var q: Dictionary = pth.point(s, d)
-	return Vector3(q.x, y, q.z)
+	return Vector3(q.x, y + float(q.get("y", 0.0)), q.z)   # TOUGE: road height from course.gd elev(s, d)
 
 ## one strip along pth, tessellated across/up (keeps affine warping readable); UV.x 0..1 across/up, UV.y = metres along
 func strip(pth, s0: float, s1: float, d0: float, d1: float, mat: ShaderMaterial, wall := 0.0, y := 0.0) -> MeshInstance3D:
@@ -89,6 +90,43 @@ func strip(pth, s0: float, s1: float, d0: float, d1: float, mat: ShaderMaterial,
 		for j in nc:
 			var q := [rows[i - 1][j], rows[i][j], rows[i - 1][j + 1], rows[i - 1][j + 1], rows[i][j], rows[i][j + 1]]
 			for v in q:
+				st.set_uv(v[1]); st.add_vertex(v[0])
+	var mi := MeshInstance3D.new(); mi.mesh = st.commit(); mi.material_override = mat; mi.extra_cull_margin = 16384.0
+	return mi
+
+## WANGAN: one road strip on an even col_m x row_m grid (districts mockup grid_strip), UV.x 0..1 across, UV.y = metres along
+func grid_strip(pth, s0: float, s1: float, d0: float, d1: float, mat: ShaderMaterial, col_m: float, row_m: float, y := 0.0) -> MeshInstance3D:
+	var st := SurfaceTool.new(); st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var nc: int = maxi(1, ceili(absf(d1 - d0) / col_m))
+	var rows: Array = []
+	var s := s0
+	while s <= s1 + 1e-6:
+		var row: Array = []
+		for j in nc + 1:
+			var u := float(j) / nc
+			row.append([pp(pth, s, d0 + (d1 - d0) * u, y), Vector2(u, s)])
+		rows.append(row); s += row_m
+	for i in range(1, rows.size()):
+		for j in nc:
+			for v in [rows[i - 1][j], rows[i][j], rows[i - 1][j + 1], rows[i - 1][j + 1], rows[i][j], rows[i][j + 1]]:
+				st.set_uv(v[1]); st.add_vertex(v[0])
+	var mi := MeshInstance3D.new(); mi.mesh = st.commit(); mi.material_override = mat; mi.extra_cull_margin = 16384.0
+	return mi
+
+## WANGAN: band along pth from (d0, y0) to (d1, y1) across (UV.x 0..1 across, UV.y = metres along); fascia, soffit, shoulders
+func band(pth, s0: float, s1: float, d0: float, y0: float, d1: float, y1: float, mat: ShaderMaterial, step := 2.0, ncross := 1) -> MeshInstance3D:
+	var st := SurfaceTool.new(); st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rows: Array = []
+	var s := s0
+	while s <= s1 + 1e-6:
+		var row: Array = []
+		for j in ncross + 1:
+			var u := float(j) / ncross
+			row.append([pp(pth, s, lerpf(d0, d1, u), lerpf(y0, y1, u)), Vector2(u, s)])
+		rows.append(row); s += step
+	for i in range(1, rows.size()):
+		for j in ncross:
+			for v in [rows[i - 1][j], rows[i][j], rows[i - 1][j + 1], rows[i - 1][j + 1], rows[i][j], rows[i][j + 1]]:
 				st.set_uv(v[1]); st.add_vertex(v[0])
 	var mi := MeshInstance3D.new(); mi.mesh = st.commit(); mi.material_override = mat; mi.extra_cull_margin = 16384.0
 	return mi

@@ -14,4 +14,5 @@ func paint() -> void:
 	t2(220, 144, s, 10, SUB, true)
 	if int(st.reveal) >= 3:
 		var n := int(ceilf(float(st.get("cont_left", 0.0))))
-		t2(220, 157, "Press Enter to %s  %d" % ["finish" if st.last_corner else "continue", n], 11, EDGE, true)
+		if bool(st.get("no_timer", false)): t2(220, 157, "Press Enter to %s  (timer off)" % ["finish" if st.last_corner else "continue"], 11, EDGE, true)   # TOUGE debug: no countdown
+		else: t2(220, 157, "Press Enter to %s  %d" % ["finish" if st.last_corner else "continue", n], 11, EDGE, true)

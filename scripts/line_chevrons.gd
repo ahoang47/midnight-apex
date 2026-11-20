@@ -71,7 +71,7 @@ func build(pth, segs: Array, fog: Color, fog_near: float, fog_far: float) -> voi
 			# Fade less than the scenery so the follow-on still reads around the hook, without looking like a glow.
 			var fog_amt := pending_fog if pending else 1.0
 			var hw := width * (pending_w if pending else (hovered_w if hovered else solid_w))
-			add_child(_chevron(tex, Vector3(q.x, y, q.z), Vector3(q.tx, 0, q.tz), tint, fog, fog_near, fog_far, length, hw, fog_amt))
+			add_child(_chevron(tex, Vector3(q.x, y + float(q.get("y", 0.0)), q.z), Vector3(q.tx, 0, q.tz), tint, fog, fog_near, fog_far, length, hw, fog_amt))
 			s += spacing
 			i += 1
 

@@ -1,0 +1,100 @@
+{
+ "_doc": "TOUGE scripted playtest (Gordon). main.gd _run_touge_script: menu -> car select (player BRZ, rival S2000) -> parked start + 'Lead or chase first?' -> CHASE -> 10 turns -> turnout swap after turn 5 -> finish. Picks are wanted stances (a locked gauge falls back to the first allowed); QTE = raw phase scores.",
+ "touge_flow": true,
+ "seed": 20261119,
+ "role": "chase",
+ "player_car": "brz",
+ "opp_car": "s2000",
+ "lookback_turn": 6,
+ "shot_turn": 2,
+ "corners": [
+  {
+   "pick": "PHE",
+   "qte": [
+    0.82,
+    0.64,
+    0.91
+   ]
+  },
+  {
+   "pick": "EHP",
+   "qte": [
+    0.55,
+    0.9,
+    0.7
+   ]
+  },
+  {
+   "pick": "HEP",
+   "qte": [
+    0.95,
+    0.75,
+    0.6
+   ]
+  },
+  {
+   "pick": "PPE",
+   "qte": [
+    0.7,
+    null,
+    0.85
+   ]
+  },
+  {
+   "pick": "HHE",
+   "qte": [
+    0.88,
+    0.8,
+    0.5
+   ]
+  },
+  {
+   "pick": "EPH",
+   "qte": [
+    0.6,
+    0.72,
+    0.93
+   ]
+  },
+  {
+   "pick": "PEH",
+   "qte": [
+    0.9,
+    0.66,
+    0.78
+   ]
+  },
+  {
+   "pick": "HPE",
+   "qte": [
+    0.4,
+    0.85,
+    0.8
+   ]
+  },
+  {
+   "pick": "EEH",
+   "qte": [
+    0.77,
+    0.9,
+    null
+   ]
+  },
+  {
+   "pick": "PHH",
+   "qte": [
+    0.85,
+    0.7,
+    0.95
+   ]
+  }
+ ],
+ "cam_turns": [
+  1,
+  2,
+  4,
+  5,
+  7,
+  10
+ ]
+}

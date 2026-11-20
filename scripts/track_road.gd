@@ -1,3 +1,4 @@
+## WANGAN COPY (Arthur, unapproved): Gordon's track_road.gd plus compound arcs and the 1 m road grid, marked `# WANGAN:`.
 ## track.tscn: the Touge road surface (StraightRoad + the continuous course road, guide §13.1), built from code so the editor
 ## viewport shows exactly what the game draws. @tool: in the editor the road rebuilds from spec/display.json +
 ## spec/race_config.json whenever the scene opens or "Rebuild road" is pressed. At runtime main.gd calls build_course() and
@@ -28,7 +29,10 @@ var _spec := {}
 static func build_course(disp: Dictionary, cfg: Dictionary) -> Dictionary:
 	var S: float = disp.road.straight_m
 	var course = Course.new(); course.add_straight(S)
-	var views := []; var straights := []
+	var D0: Dictionary = disp.districts.get(String(cfg.corners[0].district), {})   # TOUGE: downhill grade + bank (display.json)
+	course.grade = float(D0.get("grade", 0.0)); course.bank = float(D0.get("bank", 0.0)); course.bank_ramp_m = float(D0.get("bank_ramp_m", 8.0))
+	var TO: Dictionary = disp.get("turnout", {})
+	var views := []; var straights := []; var turnout := {}
 	var n: int = cfg.corners.size()
 	for i in n:
 		var c: Dictionary = cfg.corners[i]
@@ -36,12 +40,36 @@ static func build_course(disp: Dictionary, cfg: Dictionary) -> Dictionary:
 		var R: float = g.corner_radius_m; var A: float = deg_to_rad(float(g.corner_angle_deg)); var sg := 1.0 if String(c.dir) == "L" else -1.0
 		var anchor: float = course.length - S
 		var E: float = float(disp.road.exit_m) if i == n - 1 else 10.0 + S - 8.0
-		course.add_arc(R, A, sg).add_straight(E)
+		if not TO.is_empty() and i + 1 == int(cfg.get("swap_after_turn", -1)): E += float(TO.total_m)   # TOUGE: turnout straight after the swap turn
+		if g.has("arcs"):   # WANGAN: compound corner (increasing radius); the View keeps R = arc length / A, so R*A is the true arc
+			var tot := 0.0; var ang := 0.0
+			for ar in g.arcs:   # TOUGE: optional 3rd entry = direction multiplier (-1 = the opposite way: esses, chicane)
+				var ra: float = deg_to_rad(float(ar[1])); course.add_arc(float(ar[0]), ra, sg * (float(ar[2]) if ar.size() > 2 else 1.0)); tot += float(ar[0]) * ra; ang += ra
+			A = ang; R = tot / ang
+			course.add_straight(E)
+		else:
+			course.add_arc(R, A, sg).add_straight(E)
 		views.append(Course.View.new(course, anchor, S, R, A, E, sg))
+		if not TO.is_empty() and i + 1 == int(cfg.get("swap_after_turn", -1)):   # TOUGE: turnout pocket on turn 5's exit straight
+			var t0: float = anchor + S + R * A + float(TO.approach_m)
+			turnout = {"s0": t0, "s1": t0 + float(TO.pocket_m), "taper": float(TO.taper_m), "w": float(TO.pocket_w_m), "turn": i, "local_s0": S + R * A + float(TO.approach_m), "cfg": TO}
+	# TOUGE (Austin t121 item 11): outside of corner i = its turn direction (L -> right / +1, R -> left / -1). Each run starts
+	# halfway along the straight before the corner; the swap turn's run holds until the turnout lot has ended.
+	var sides := []
+	for i in n: sides.append(1.0 if String(cfg.corners[i].dir) == "L" else -1.0)
+	course.drop_runs = [[-1e9, sides[0]]]
+	for i in range(1, n):
+		var prev_end: float = views[i - 1].off + views[i - 1].S + views[i - 1].R * views[i - 1].A
+		var turn_in: float = views[i].off + views[i].S
+		var sw := (prev_end + turn_in) * 0.5
+		if not turnout.is_empty() and int(turnout.turn) == i - 1: sw = maxf(sw, float(turnout.s1) + 6.0)
+		course.drop_runs.append([sw, sides[i]])
+	course.build_caps(course.length + 140.0)
 	for i in n:
 		var a: Dictionary = course.at(views[i].off)
-		straights.append(Course.new(a.x, a.z, a.tx, a.tz).add_straight(100000.0))
-	return {"course": course, "views": views, "straights": straights}
+		var st = Course.new(a.x, a.z, a.tx, a.tz); st.grade = course.grade; st.y0 = course.elev(views[i].off, 0.0); st.drop_const = sides[i]
+		straights.append(st.add_straight(100000.0))
+	return {"course": course, "views": views, "straights": straights, "turnout": turnout}
 
 ## the period-aligned range a district covers along pth (shared with touge_dressing.gd so props sit on the painted pools)
 static func span(D: Dictionary, s0: float, s1: float) -> Array:   # [a0, range] as 64-bit floats (not Vector2: float32)
@@ -57,7 +85,11 @@ func clear() -> void:
 func build_strip(art, pth, s0: float, s1: float, dk: String, nm: String) -> MeshInstance3D:
 	var D: Dictionary = art.DIST[dk]; var per: float = D.lamp_period_m; var W: float = art.road_W
 	var sp := span(D, s0, s1); var a0: float = sp[0]; var rng: float = sp[1]
-	var mi: MeshInstance3D = art.strip(pth, a0, a0 + rng, -W, W, art.strip_mat(dk + "_road", per))
+	var mi: MeshInstance3D
+	if D.has("grid_m"):   # WANGAN: 1 m x 1 m road grid + its own road texture (districts mockup: lane lines stay straight under affine UVs)
+		mi = art.grid_strip(pth, a0, a0 + rng, -W, W, art.strip_mat(String(D.road_tex), per), float(D.grid_m), float(D.grid_m))
+	else:
+		mi = art.strip(pth, a0, a0 + rng, -W, W, art.strip_mat(dk + "_road", per))
 	mi.name = nm; add_child(mi)
 	return mi
 

@@ -1,6 +1,8 @@
+// CEL EXPERIMENT copy: adds nothing in the G-buffer passes.
 // Additive glow billboard (A.4.3 / B.1): camera-facing quad of size `size`, texture alpha drives the additive amount.
 shader_type spatial;
 render_mode unshaded, blend_add, depth_draw_never, cull_disabled, fog_disabled, shadows_disabled;
+#include "res://shaders/cel.gdshaderinc"
 uniform vec2 snap_res = vec2(640.0, 480.0);
 uniform sampler2D tex : filter_linear;
 uniform vec3 color = vec3(1.0);
@@ -23,4 +25,5 @@ void fragment() {
 	vec4 t = texture(tex, UV);
 	float f = clamp((fog_depth - fog_near) / (fog_far - fog_near), 0.0, 1.0);
 	ALBEDO = t.rgb * color * t.a * strength * (1.0 - f);
+	if (CEL_GB > 0.5) ALBEDO = vec3(0.0);
 }

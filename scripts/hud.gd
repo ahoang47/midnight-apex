@@ -38,6 +38,13 @@ func setup(font_png: Texture2D, meta: Dictionary, panel_png: Texture2D, logo_png
 	fb = _font("res://fonts/NimbusSans-Bold.otf") if ResourceLoader.exists("res://fonts/NimbusSans-Bold.otf") else fn
 	fa = _font("res://fonts/ArchivoBlack-Regular.ttf") if ResourceLoader.exists("res://fonts/ArchivoBlack-Regular.ttf") else fb
 	grain = load("res://assets/tex/kit/plate_grain.png") as Texture2D   # sampled nearest via this HUD CanvasItem
+	# TOUGE (Gordon, touge-race): new panels created in code (no editor nodes yet): heat gauges, car select, start prompt,
+	# turnout banner and the touch buttons (drawn last, on top)
+	for pair in [["heat", "HeatGauges", "heat_gauges"], ["carsel", "CarSelect", "car_select"], ["role", "RolePrompt", "role_prompt"],
+			["turnout", "TurnoutBanner", "turnout_banner"], ["touch", "TouchButtons", "touch_buttons"]]:
+		if not P.has(pair[0]):
+			var c := Control.new(); c.name = pair[1]; c.set_script(load("res://scripts/hud/%s.gd" % pair[2]))
+			c.size = Vector2(640, 480); c.mouse_filter = Control.MOUSE_FILTER_IGNORE; add_child(c); P[pair[0]] = c
 	for n in P.values():
 		if "hud" in n: n.hud = self   # LineSelect is a plain container
 
@@ -55,6 +62,8 @@ func show_state(s: Dictionary) -> void:
 	var on := {}
 	if st.is_empty(): pass
 	elif st.has("menu"): on.menu = true
+	elif st.has("carsel"): on.carsel = true
+	elif st.has("role_prompt"): on.role = true
 	else:
 		if st.mirror: on.mirror = true
 		on.plate = true; on.gap = true
@@ -72,6 +81,12 @@ func show_state(s: Dictionary) -> void:
 			on.lvl = true; on.debug = 106.0
 			if st.phase == "FINISHED": on.finish = true
 			else: on.cont = true
+	if st.get("heat") != null and not st.has("menu"): on.heat = true
+	if st.get("turnout") != null:
+		on.turnout = true; on.erase("cont"); on.erase("lvl")
+	if not st.get("buttons", []).is_empty(): on.touch = true
+	if on.has("heat"):
+		var hp = st.get("heat_pos", [4, 410]); P.heat.position = Vector2(float(hp[0]), float(hp[1]))
 	if on.has("debug"): P.debug.position.y = on.debug
 	# Race split / tie-gap bar: top centre, directly under the REAR VIEW label (mirror at y=13-82, label at y=84).
 	# Coords from Arthur pass 4; overridable via st.gap_pos (display.json line_preview.gap_pos).

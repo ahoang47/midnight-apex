@@ -4,7 +4,7 @@
 ## @tool: the model shows in the editor (unshaded preview of the .glb); the shading is applied at runtime by setup().
 @tool
 extends Node3D
-const CAR_SH = preload("res://shaders/car.gdshader")
+const CAR_SH = preload("res://shaders/car_vertex_lit.gdshader")
 const FX_SH = preload("res://shaders/fx.gdshader")
 @export var model: PackedScene:
 	set(v): model = v; if is_inside_tree(): _spawn_model()
@@ -62,7 +62,7 @@ func _freeze_and_shade(n: Node, env_tex: Texture2D, cs: Dictionary, disp: Dictio
 		(n as RigidBody3D).freeze = true
 	if n is MeshInstance3D:
 		var mi := n as MeshInstance3D
-		if mi.name.contains("FX_LampGlow"):  # MX5_FX_LampGlow: the car's own glow quads (hidden by default in the .glb), additive unshaded
+		if mi.name.contains("FX_LampGlow") or mi.name.contains("FX_HeadGlow"):   # TOUGE: WRX_FX_HeadGlow  # MX5_FX_LampGlow: the car's own glow quads (hidden by default in the .glb), additive unshaded
 			var src0 := mi.get_active_material(0)
 			var fx := ShaderMaterial.new(); fx.shader = FX_SH
 			fx.set_shader_parameter("tex", (src0 as BaseMaterial3D).albedo_texture if src0 is BaseMaterial3D else null)
