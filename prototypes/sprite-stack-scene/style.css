@@ -1,0 +1,22 @@
+html, body {
+  margin: 0;
+  background: #000;
+  height: 100%;
+  overflow: hidden;
+}
+canvas {
+  display: block;
+  width: 1280px;
+  height: 960px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+#status {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  color: transparent;
+}
