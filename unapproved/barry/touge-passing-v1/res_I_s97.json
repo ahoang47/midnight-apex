@@ -1,0 +1,142 @@
+{
+ "seed": 97000000,
+ "touge_budget": "364.96,389.10,400.41,411.94,421.80,432.32,442.14",
+ "variant": "w035",
+ "w": 0.35,
+ "scale": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "n": 6000,
+ "results": {
+  "touge": {
+   "strong_floor": [
+    98.53,
+    90.7,
+    84.58,
+    78.92,
+    75.2,
+    71.48,
+    67.35
+   ],
+   "weak_max": [
+    94.92,
+    84.78,
+    90.55,
+    87.48,
+    84.68,
+    67.7,
+    31.83
+   ],
+   "boss_weak_floor": 0.53,
+   "boss_strong_max": 94.13,
+   "checks": [
+    [
+     "G1a boss strong at floor",
+     67.35,
+     "66.0-68.0",
+     true
+    ],
+    [
+     "G1b story losses/round (proxy)",
+     1.78,
+     "1.5-4.0",
+     true
+    ],
+    [
+     "G2a min weak at max",
+     31.83,
+     ">= 30.0",
+     true
+    ],
+    [
+     "G2b attempts/round (proxy)",
+     16.28,
+     "<= 60.0",
+     true
+    ],
+    [
+     "G3a drop kid1 -> boss",
+     31.18,
+     ">= 30.0",
+     true
+    ],
+    [
+     "G3b boss read gap",
+     35.52,
+     ">= 10.0",
+     true
+    ],
+    [
+     "G3c smallest step",
+     3.72,
+     ">= 3.0",
+     true
+    ],
+    [
+     "G4a lowest strong at floor",
+     67.35,
+     ">= 40.0",
+     true
+    ],
+    [
+     "G4b boss weak at floor",
+     0.53,
+     "<= 10.0",
+     true
+    ],
+    [
+     "G5 boss strong at max",
+     94.13,
+     "<= 95",
+     true
+    ]
+   ],
+   "feel": {
+    "kid1 strong": {
+     "turns_starting_locked_pct": 28.0,
+     "limp_pct": 0.6,
+     "mean_lock_turns": 2.9,
+     "races_all_locked_pct": 2.6
+    },
+    "kid1 weak": {
+     "turns_starting_locked_pct": 39.3,
+     "limp_pct": 0.0,
+     "mean_lock_turns": 2.32,
+     "races_all_locked_pct": 0.0
+    },
+    "oh1 strong": {
+     "turns_starting_locked_pct": 43.7,
+     "limp_pct": 6.2,
+     "mean_lock_turns": 3.08,
+     "races_all_locked_pct": 26.6
+    },
+    "oh1 weak": {
+     "turns_starting_locked_pct": 53.9,
+     "limp_pct": 2.8,
+     "mean_lock_turns": 2.56,
+     "races_all_locked_pct": 18.2
+    },
+    "boss strong": {
+     "turns_starting_locked_pct": 50.3,
+     "limp_pct": 11.1,
+     "mean_lock_turns": 3.47,
+     "races_all_locked_pct": 45.3
+    },
+    "boss weak": {
+     "turns_starting_locked_pct": 69.6,
+     "limp_pct": 14.1,
+     "mean_lock_turns": 3.16,
+     "races_all_locked_pct": 65.5
+    }
+   },
+   "n": 6000
+  }
+ },
+ "fails": []
+}

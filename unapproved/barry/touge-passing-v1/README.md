@@ -1,4 +1,54 @@
-# touge-passing-v1: Touge passing, start from the PA (Barry DRAFT, 2026-11-20, UNAPPROVED)
+# touge-passing-v1: Touge passing, start from the PA (Barry DRAFT, UNAPPROVED)
+
+## 2026-11-20 UPDATE (Austin, 5:54 PM PT session: "Let's try it"): w 0.35 + re-pin, rounded and confirmed on 2 seed sets
+
+Austin said "Let's try it" to option 2 smoothing (w 0.35) plus re-pin G, rounded and rerun before calling it final. Still a
+draft: sim/ untouched. Runner gained `--touge-budget` (exact Touge crew stats) and `--seed` (base seed; default 96,000,000 as
+experience_gauntlet.py; the second set is 97,000,000, disjoint). n = 6,000 per cell on each set.
+
+**Best: variant I** (2 decimals, like live `MS_CREW_BUDGET`). Touge crew stats kid1 .. boss:
+
+| | kid1 | kid2 | mat1 | mat2 | oh1 | oh2 | boss |
+|---|---|---|---|---|---|---|---|
+| Live | 370.52 | 389.10 | 400.41 | 411.94 | 423.42 | 434.22 | 444.00 |
+| G rounded | 364.96 | 389.10 | 400.41 | 411.94 | 421.94 | 432.20 | 442.14 |
+| H | 364.96 | 389.10 | 400.41 | 411.94 | 421.80 | 432.45 | 442.14 |
+| **I (best)** | **364.96** | 389.10 | 400.41 | 411.94 | **421.80** | **432.32** | **442.14** |
+
+| Goal (target) | G rnd s96 | G rnd s97 | H s96 | H s97 | **I s96** | **I s97** | I margin (worst) |
+|---|---|---|---|---|---|---|---|
+| G1a boss strong at floor (66-68) | 66.63 | 67.35 | 66.63 | 67.35 | **66.63** | **67.35** | 0.63 (mean 66.99, centred) |
+| G1b losses/round, proxy (1.5-4) | 1.85 | 1.78 | 1.86 | 1.78 | **1.86** | **1.78** | 0.28 (live 1.76) |
+| G2a min weak at max (>= 30) | 31.35 | 31.83 | 31.35 | 31.83 | **31.35** | **31.83** | 1.35 |
+| G2b attempts/round, proxy (<= 60) | 16.36 | 16.28 | 16.36 | 16.29 | **16.36** | **16.28** | 43.6 |
+| G3a drop kid1 -> boss (>= 30) | 31.92 | 31.18 | 31.92 | 31.18 | **31.92** | **31.18** | 1.18 |
+| G3b boss read gap (>= 10) | 35.28 | 35.52 | 35.28 | 35.52 | **35.28** | **35.52** | 25.3 |
+| G3c smallest step (>= 3.0) | 3.43 | **3.00** | **2.95 FAIL** | 3.72 | **3.40** | **3.72** | 0.40 |
+| G4a lowest strong at floor (>= 40) | 66.63 | 67.35 | 66.63 | 67.35 | **66.63** | **67.35** | 26.6 |
+| G4b boss weak at floor (<= 10) | 0.40 | 0.53 | 0.40 | 0.53 | **0.40** | **0.53** | 9.47 |
+| G5 boss strong at max (<= 95) | 94.00 | 94.13 | 94.00 | 94.13 | **94.00** | **94.13** | 0.87 |
+
+Ladders, strong at floor kid1 -> boss | weak at max:
+- G rnd s96: 98.55 90.38 84.52 78.2 74.15 70.72 66.63 | 94.43 83.45 89.68 87.08 84.52 68.37 31.35
+- G rnd s97: 98.53 90.7 84.58 78.92 74.9 71.9 67.35 | 94.92 84.78 90.55 87.48 84.48 67.9 31.83
+- I s96: 98.55 90.38 84.52 78.2 74.43 70.03 66.63 | 94.43 83.45 89.68 87.08 84.65 68.27 31.35
+- I s97: 98.53 90.7 84.58 78.92 75.2 71.48 67.35 | 94.92 84.78 90.55 87.48 84.68 67.7 31.83
+
+- **G rounded** passed both sets, but on seed 97 the oh1 -> oh2 step was exactly 3.00. **H** (oh1 easier, oh2 harder) overshot:
+  seed 96 oh2 -> boss 2.95 FAIL. **I** splits the difference: steps (mat2 -> oh1, oh1 -> oh2, oh2 -> boss) 3.77 / 4.40 / 3.40
+  (s96) and 3.72 / 3.72 / 4.13 (s97).
+- **Within ~0.6 of a bound:** G1a sits 0.63 above 66 on s96 and 0.65 below 68 on s97; the band is 2 wide, so the 2-set mean
+  66.99 is as centred as it gets. G1b (proxy) is 0.28-0.36 above its 1.5 floor; live Touge is 1.76, so this is not new, and
+  raising it means a harder ladder (costs G2a). G5 has 0.87-1.00 of room; lowering it means a stronger boss, which costs G1a
+  and G2a. I left both.
+- Files: `log_final_s96/97.txt` (G rounded), `log_H_s96/97.txt`, `log_I_s96/97.txt` (+ `res_*.json`). Rerun:
+  `python3 run_touge_passing.py --variant w035 --touge-budget 364.96,389.10,400.41,411.94,421.80,432.32,442.14 [--seed 97000000]`
+
+---
+
+> **STALE below (superseded 2026-11-20 by the update above for the re-pin values; the rules spec, port list and flags still
+> stand).**
+
 
 **Ask:** Austin, relayed by Gordon (2026-11-20 5:01 PM PT, his words): "Yes, have Barry spec Touge passing now on that plan."
 The plan: the Touge race starts from the PA, there are no cat-and-mouse roles and no turn-5 swap, and passing resolves per

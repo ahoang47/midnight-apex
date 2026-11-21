@@ -1,0 +1,18 @@
+Experience gauntlet (live sim, no pins), n = 6000 per cell, SE at the boss band 0.61 pp
+check                                              touge
+G1a boss strong at floor                      66.63 pass   target 66.0-68.0
+G1b story losses/round (proxy)                 1.85 pass   target 1.5-4.0
+G2a min weak at max                           31.35 pass   target >= 30.0
+G2b attempts/round (proxy)                    16.36 pass   target <= 60.0
+G3a drop kid1 -> boss                         31.92 pass   target >= 30.0
+G3b boss read gap                             35.28 pass   target >= 10.0
+G3c smallest step                              3.43 pass   target >= 3.0
+G4a lowest strong at floor                    66.63 pass   target >= 40.0
+G4b boss weak at floor                         0.40 pass   target <= 10.0
+G5 boss strong at max                         94.00 pass   target <= 95
+touge: strong at floor [98.55, 90.38, 84.52, 78.2, 74.15, 70.72, 66.63] | weak at max [94.43, 83.45, 89.68, 87.08, 84.52, 68.37, 31.35]
+
+Feel (report only; no targets set): turns starting locked % / limp % / mean lock turns / races all-locked %
+  touge: kid1 strong 28.6/0.5/2.92/2.7 | kid1 weak 39.7/0.0/2.32/0.1 | oh1 strong 44.6/6.5/3.14/27.6 | oh1 weak 54.2/2.9/2.58/19.3 | boss strong 51.4/11.5/3.52/46.7 | boss weak 70.0/14.4/3.19/66.7
+
+ALL EXPERIENCE CHECKS PASS

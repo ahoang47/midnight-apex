@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-20 — Barry [sim draft]: Touge passing v1 re-pin rounded and confirmed on 2 seed sets (UNAPPROVED)
+- **Ask:** Austin, "Let's try it" (option 2 smoothing w 0.35 + re-pin G, rounded and rerun before calling it final). Draft
+  only, `unapproved/barry/touge-passing-v1/`; sim/ untouched. Runner gained `--touge-budget` and `--seed`.
+- **Best: variant I**, Touge crew kid1..boss 364.96 / 389.10 / 400.41 / 411.94 / 421.80 / 432.32 / 442.14 (live 370.52 /
+  389.10 / 400.41 / 411.94 / 423.42 / 434.22 / 444.00). All 10 goals pass on seeds 96,000,000 and 97,000,000 (n 6,000 each):
+  G1a 66.63 / 67.35, G2a 31.35 / 31.83, G3c 3.40 / 3.72, G5 94.00 / 94.13, G1b 1.86 / 1.78.
+- Why I over G: G rounded left the oh1 -> oh2 step at exactly 3.00 on seed 97; H (oh2 432.45) failed G3c 2.95 on seed 96.
+- Thin by nature: G1a 0.63 from a bound (2-pt band, 2-set mean 66.99); G1b proxy 0.28 over 1.5 (live 1.76). Not live: needs
+  Austin's approval, then promotion into sim/ and Gordon's port.
+
 ## 2026-11-20 — Barry [sim draft]: Touge passing v1, start from the PA, per-phase passing, no roles (UNAPPROVED)
 - **Ask:** Austin, relayed by Gordon (5:01 PM PT): "Yes, have Barry spec Touge passing now on that plan." Draft only:
   `unapproved/barry/touge-passing-v1/` (README spec, opt-in module `touge_passing.py`, runner, logs). **sim/ untouched**; live
