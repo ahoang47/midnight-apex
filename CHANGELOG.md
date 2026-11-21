@@ -8,6 +8,21 @@
 
 ---
 
+## 2026-11-20 — Barry [sim draft]: Touge passing v1, start from the PA, per-phase passing, no roles (UNAPPROVED)
+- **Ask:** Austin, relayed by Gordon (5:01 PM PT): "Yes, have Barry spec Touge passing now on that plan." Draft only:
+  `unapproved/barry/touge-passing-v1/` (README spec, opt-in module `touge_passing.py`, runner, logs). **sim/ untouched**; live
+  defaults unchanged (identity check bit for bit with per-phase off).
+- **Rules (proposal):** the race starts from the PA (turnout lot) at 0-0; no lead/chase roles, no turn-5 swap or banking; each
+  of Entry/Apex/Exit resolves its own clash and order can change after each phase; order has no mechanical effect in v1.
+  Roles and the swap were presentation only in Godot (race_core.gd), so only the per-phase QTE scoring moves numbers.
+- **Experience gauntlet (Touge, n 6,000):** live passes all. Per-phase fails G1a / G2a / G3c: w 0.35 boss 61.95, weak at max
+  23.33, smallest step 1.95; PP (w 1.0) 60.07 / 18.18 / -0.03. Touge crew re-pin lever (budget x 0.985 kid1, 0.9965 oh1,
+  0.99535 oh2, 0.9958 boss; run G) passes all at w 0.35 (66.65 / 31.37 / 3.43, G5 94.00), margins about 1 SE, unrounded:
+  a candidate, not a final.
+- **Open for Austin:** w (own press vs 0.35), the re-pin, PA start presentation, order effect, promote with Wangan/Street.
+  Godot port list (10 steps) in the README; nothing for Gordon to build until Austin approves. Story/art flags for Desmond in
+  README section 6 (turnout kit moves to the start; swap banner, role prompt, gap meter labels; visible passing).
+
 ## 2026-11-20 — Barry [sim/tool]: campaign planner rebuilt on the live mod_skill rules and regenerated on release 0.5
 - **Approval:** Austin, direct: "Yes." to regenerating the planner from the live sim, then approved the real rebuild (keep the
   reading slider / standard reading curve, not strong/weak players).
