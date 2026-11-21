@@ -8,6 +8,9 @@
 
 ---
 
+## 2026-11-20 — Barry: point Touge passing docs at go-live commit 5c79dea
+- design/01, design/07 LIVE block and `unapproved/barry/touge-passing-v1/README.md` (port list) now name `5c79dea`.
+
 ## 2026-11-20 — Barry [sim]: Touge passing go-live (per-phase Touge, w 0.35, crew variant I) (Austin approved 6:00 PM PT)
 - **Approval:** Austin, 6:00 PM PT: "Yes, make Touge passing live with these stats." (spec approved 5:01 PM PT; "Let's try it"
   5:54 PM PT to w 0.35 + the re-pin).

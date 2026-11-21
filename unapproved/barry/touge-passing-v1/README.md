@@ -1,6 +1,6 @@
 # touge-passing-v1: Touge passing, start from the PA (Barry, LIVE for Touge)
 
-> **LIVE 2026-11-20 (Austin, 6:00 PM PT: "Yes, make Touge passing live with these stats."): go-live commit GOLIVE.** Promoted into
+> **LIVE 2026-11-20 (Austin, 6:00 PM PT: "Yes, make Touge passing live with these stats."): go-live commit `5c79dea`.** Promoted into
 > `sim/velocity_shift/` for **Touge only**: `E.PER_PHASE_DISTRICTS = ("touge",)`, `E.PHASE_SMOOTH_W = 0.35`,
 > `E.PLAYER_PRESS_SEED_OFFSET`, `E.sample_press_score`, `E.smooth_phase_qte`, the per-phase path in `match.run_match`, per-clash
 > QTE in `combat.resolve_turn` (`p_qte_by_clash` / `o_qte_by_clash`), `TurnResult.player_clash_qte` / `opponent_clash_qte` /
@@ -12,7 +12,7 @@
 
 ## Godot port (go-live, for Gordon after Austin tells him)
 
-1. Regenerate `scripts/globals.gd`: `python3 tools/touge_race/gen_globals.py` (sets `PIN_COMMIT` to GOLIVE). New constants to
+1. Regenerate `scripts/globals.gd`: `python3 tools/touge_race/gen_globals.py` (sets `PIN_COMMIT` to `5c79dea`). New constants to
    mirror: `PER_PHASE_DISTRICTS` ("touge"), `PHASE_SMOOTH_W` 0.35, and the Touge `MS_CREW_BUDGET` row if Godot reads crew stats.
    The release-0.5 change (`HEAT_RELEASE` 0.3 → 0.5, 68b3fc9) is still unported and lands with the same regeneration.
 2. `scripts/race_core.gd` `submit_qte()`: in Touge, score clash i with the smoothed phase QTE
@@ -28,10 +28,10 @@
 6. PA start: the turnout lot moves to before turn 1 (`track_road.gd`, `touge_dressing.gd`, `turnout_lot.tscn`); visible passing
    replaces `display.json` `visual_gap.touge` (rival keeps its role's side). Presentation details are still open with Austin
    (side by side vs one behind at the roll-out).
-7. Rerun parity: `python3 tools/touge_race/parity_touge.py` against GOLIVE (drop `role_first` from its print/args). Until the
+7. Rerun parity: `python3 tools/touge_race/parity_touge.py` against `5c79dea` (drop `role_first` from its print/args). Until the
    port lands, Touge parity against the live sim will legitimately FAIL (per-phase vs per-turn); run it against the Godot pin
    instead (`SIM_PATH` = a checkout of globals.gd's `PIN_COMMIT`), the same way the unported release-0.5 change is handled.
-   Do not mark parity green against GOLIVE before the port.
+   Do not mark parity green against `5c79dea` before the port.
 
 ---
 
