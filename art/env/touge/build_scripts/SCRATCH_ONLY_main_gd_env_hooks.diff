@@ -1,0 +1,143 @@
+# SCRATCH ONLY - NOT FOR COMMIT INTO scripts/. Reference for Gordon: the verification hooks Arthur added to a scratch copy
+# of scripts/main.gd (diff against /workspace/gordon-touge/scripts/main.gd, worktree HEAD 060d9f3 + uncommitted).
+# --authored-env <dir> hides the procedural Terr*/FloorBase/bands, frees streamed guardrails, hides lamp-post meshes and
+# loads every non-_col glb in <dir> at identity, mapping materials by name. --env-shots <json> renders review stills.
+
+229a230
+> 	if _arg("--env-shots") != null: await _env_shots(String(_arg("--env-shots")))   # ARTHUR SCRATCH
+456a458
+> 	if dk == "touge" and _arg("--authored-env") != null: _env_swap(String(_arg("--authored-env")))   # ARTHUR SCRATCH (not for commit)
+1710a1713
+> 	if env_pose != null: _env_apply_pose()
+3267a3271,3401
+> 
+> 
+> # ── ARTHUR SCRATCH (verification only, never commit): authored terrain swap + free-camera review stills ──────────────
+> var env_pose = null
+> const ENV_SOFT := {"touge_hill": [8.0, 0.0], "touge_cutface": [8.0, 0.0], "touge_cutrock": [6.0, 0.0], "touge_gravel": [4.0, 0.0], "touge_concrete": [5.0, 0.0], "asphalt": [10.0, 0.0]}
+> const ENV_TILE := {"touge_hill": 8.0, "touge_cutface": 8.0, "touge_cutrock": 8.0, "touge_gravel": 4.0, "touge_concrete": 4.0, "asphalt": 8.0}
+> func _env_swap(dir: String) -> void:
+> 	var n_hid := 0
+> 	var stack: Array = [corner_d.group]
+> 	while not stack.is_empty():
+> 		var nd: Node = stack.pop_back()
+> 		var nm := String(nd.name)
+> 		if nd is MeshInstance3D and nm.begins_with("Terr"): (nd as MeshInstance3D).visible = false; nd.name = "Hidden_" + nm; n_hid += 1
+> 		if nm == "FloorBase": (nd as Node3D).visible = false; n_hid += 1
+> 		for ch in nd.get_children(): stack.append(ch)
+> 	# procedural verge / gravel / underlay bands are direct MeshInstance3D children of the group (ArtKit strips), not Terr*: hide them too
+> 	for ch in corner_d.group.get_children():
+> 		if ch is MeshInstance3D and String(ch.scene_file_path) == "" and not String(ch.name).begins_with("Hidden_"): (ch as MeshInstance3D).visible = false; n_hid += 1
+> 	# baked: rails (removed from the stream) and lamp posts (glow sprites stay: they are the live-light records)
+> 	var keep: Array = []
+> 	for it in corner_d.items:
+> 		var o: Node3D = it.obj
+> 		if String(o.name).to_lower().contains("guardrail") or String(o.scene_file_path).contains("guardrail"):
+> 			o.queue_free(); continue
+> 		if bool(it.get("lamp", false)):
+> 			for c in o.get_children():
+> 				if c is MeshInstance3D and (c as MeshInstance3D).mesh == art.lamp_mesh(): (c as MeshInstance3D).visible = false
+> 		keep.append(it)
+> 	print("ENV_SWAP hidden=%d rails_removed=%d" % [n_hid, corner_d.items.size() - keep.size()])
+> 	corner_d.items = keep
+> 	var root := Node3D.new(); root.name = "AuthoredEnv"; corner_d.group.add_child(root)
+> 	var da := DirAccess.open(dir)
+> 	var files: Array = []
+> 	for f in da.get_files():
+> 		if f.ends_with(".glb") and not f.ends_with("_col.glb"): files.append(f)
+> 	files.sort()
+> 	var mats := {}
+> 	var tris := 0
+> 	for f in files:
+> 		var ps: PackedScene = load(dir.path_join(f))
+> 		var inst: Node3D = ps.instantiate(); inst.name = f.get_basename(); root.add_child(inst)
+> 		var st2: Array = [inst]
+> 		while not st2.is_empty():
+> 			var nd: Node = st2.pop_back()
+> 			for ch in nd.get_children(): st2.append(ch)
+> 			if not (nd is MeshInstance3D): continue
+> 			var mi := nd as MeshInstance3D
+> 			mi.extra_cull_margin = 16384.0
+> 			for si in mi.mesh.get_surface_count():
+> 				tris += mi.mesh.surface_get_array_len(si) / 3 if mi.mesh.surface_get_array_index_len(si) <= 0 else mi.mesh.surface_get_array_index_len(si) / 3
+> 				var src = mi.mesh.surface_get_material(si)
+> 				var mn: String = src.resource_name if src != null else ""
+> 				if not mats.has(mn):
+> 					var m: Material
+> 					if mn == "lamp_post":
+> 						m = art.env_mat
+> 					else:
+> 						var sm := ShaderMaterial.new(); sm.shader = ArtKit.SCROLL_SH
+> 						var tp := "res://assets/tex/kit/env/%s.png" % mn.to_lower()
+> 						sm.set_shader_parameter("tex", load(tp) if ResourceLoader.exists(tp) else ((src as BaseMaterial3D).albedo_texture if src is BaseMaterial3D else null))
+> 						sm.set_shader_parameter("tile", float(ENV_TILE.get(mn, 1.0))); sm.set_shader_parameter("scroll_m", 0.0)
+> 						if mn.begins_with("Emit_"): sm.set_shader_parameter("cel_k", 0.0); sm.set_shader_parameter("flatten", 0.0)
+> 						if ENV_SOFT.has(mn):
+> 							sm.set_shader_parameter("soft_surface", 1.0); sm.set_shader_parameter("soft_radius", ENV_SOFT[mn][0]); sm.set_shader_parameter("soft_clamp_u", ENV_SOFT[mn][1])
+> 						sm.set_meta("persist", true); art.fogify(sm)
+> 						m = sm
+> 					mats[mn] = m
+> 				mi.set_surface_override_material(si, mats[mn])
+> 	print("ENV_SWAP loaded files=%d mats=%s tris=%d" % [files.size(), str(mats.keys()), tris])
+> 
+> func _env_apply_pose() -> void:
+> 	straight_d.group.visible = false; straight_d.road.visible = false; corner_d.group.visible = true; corner_d.road.visible = true
+> 	if env_pose.has("car_s"):
+> 		player_car.visible = true; rival_car.visible = true
+> 		_place(player_car, course, float(env_pose.car_s), float(env_pose.get("car_d", -1.6)))
+> 		_place(rival_car, course, float(env_pose.car_s) + 9.0, float(env_pose.get("rival_d", 1.6)))
+> 	else:
+> 		player_car.visible = false; rival_car.visible = false
+> 
+> func _env_shots(path: String) -> void:
+> 	var J: Dictionary = _json(path)
+> 	var out: String = J.out; DirAccess.make_dir_recursive_absolute(out)
+> 	busy = true
+> 	for k in 6: await RenderingServer.frame_post_draw
+> 	_stream_district(corner_d, 0.0)
+> 	for p in J.poses:
+> 		env_pose = p
+> 		var pos := Vector3(p.pos[0], p.pos[1], p.pos[2]); var look := Vector3(p.look[0], p.look[1], p.look[2])
+> 		if p.has("chase_s"):
+> 			var q: Dictionary = course.point(float(p.chase_s), 0.0)
+> 			var ch: Array = _chase_pose(q); pos = ch[0]; look = ch[1]
+> 		if p.has("chev_s"): _env_chevrons(p)
+> 		cam_override = [pos, look, float(p.get("fov", 60.0))]
+> 		cam.far = float(p.get("far", 400.0))
+> 		var fo := bool(p.get("fog_off", false))
+> 		for m in _arthur_lit_mats: (m as ShaderMaterial).set_shader_parameter("fog_amount", 0.0 if fo else 1.0)
+> 		for m in art.scroll_mats: (m as ShaderMaterial).set_shader_parameter("fog_amount", 0.0 if fo else 1.0)
+> 		post_mat.set_shader_parameter("fog_far", 4000.0 if fo else float(DIST["touge"].get("fog_far", 78.0)))
+> 		_update_scene()
+> 		await RenderingServer.frame_post_draw
+> 		await RenderingServer.frame_post_draw
+> 		var img := await _bake_post_640()
+> 		img.save_png(out.path_join(String(p.name) + ".png"))
+> 		print("ENV_SHOT ", p.name)
+> 	print("DROP_RUNS ", course.drop_runs, " const ", course.drop_const)
+> 	print("ENV_SHOTS_DONE")
+> 	get_tree().quit()
+> 
+> 
+> ## scratch only: a few tinted copies of the authored kit/line_chevron.glb on the road (OUT green, MID yellow, IN red)
+> func _env_chevrons(p: Dictionary) -> void:
+> 	var sc: PackedScene = load("res://assets/env/touge/kit/line_chevron.glb")
+> 	var tex: Texture2D = load("res://assets/tex/kit/env/line_chevron.png")
+> 	var cols := [Color8(44, 184, 74), Color8(240, 200, 40), Color8(232, 40, 44)]
+> 	var k := 0
+> 	for s0 in p.chev_s:
+> 		var q: Dictionary = course.point(float(s0), float(p.get("chev_d", 0.0)) + 1.6 * sin(float(k) * 0.5))
+> 		var n: Node3D = sc.instantiate()
+> 		var m := StandardMaterial3D.new()
+> 		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+> 		m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+> 		m.albedo_texture = tex; m.albedo_color = cols[int(k / 3) % 3]
+> 		m.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+> 		m.cull_mode = BaseMaterial3D.CULL_DISABLED
+> 		for mi in n.find_children("*", "MeshInstance3D", true, false): (mi as MeshInstance3D).material_override = m
+> 		rival_car.get_parent().add_child(n)
+> 		n.position = Vector3(q.x, float(q.y) + 0.05, q.z)
+> 		n.rotation = Vector3(0, atan2(float(q.tx), float(q.tz)), 0)
+> 		n.scale = Vector3(2.1, 1.0, 2.3)
+> 		if k == 0: print("CHEV ", n.position, " meshes=", n.find_children("*", "MeshInstance3D", true, false).size(), " aabb=", (n.find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D).get_aabb())
+> 		k += 1

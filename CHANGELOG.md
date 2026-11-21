@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-20 — Arthur [art]: authored Touge terrain assets (Austin go-ahead 2026-11-20: "Resolve some of that clipping then pass off.")
+
+- **What:** `assets/env/touge/` holds 10 turn sections (`touge_t01`–`t10`), the turnout lot, galleries a/b/c, a backdrop ridge, 14 `*_col.glb` collision proxies and a README. `assets/env/touge/kit/` holds lamp_post, rail_seg, gallery_bay and line_chevron (replaces the code-built chevrons; white, tinted in code). New textures are in `assets/tex/kit/env/`. Blender source and build scripts are in `art/env/touge/`.
+- **Why:** Austin's rule (2026-11-20) is that everything in the game world is an authored asset; the road surface stays in code as the one exception. The procedural terrain in `scripts/course.gd` kept making overlaps and gaps where the road crosses over itself.
+- **How:** modelled against Gordon's road export (uncommitted, 10-turn course). Every file sits at the world origin. Materials map by name to `res://assets/tex/kit/env/<name>.png`, with no embedded images. Each section is 1.5k–6.2k tris and 7–8 draw calls (first-pass budget: 5–10k tris and under 50 draw calls per section); 37.3k tris in total. Lamps and rails are baked in, evenly repeated (Austin: the repetition is fine for now).
+- **Clipping pass:** the lattice now stands on its own cut at the side switches and gallery walls; the turn-4 underpass is a stepped cut instead of a sheer face; a backdrop hides the 100 m terrain edge; lamp posts, rails and delineators reach the ground or deck.
+- **Not changed (Gordon's code):** the inside cedars float at a fixed height over hairpin low ground; overhead cedars hang into the galleries; the scrolling lattice can slip off the wing walls near the switches. The swap-in steps are in the README.
+
+---
+
 ## 2026-11-20 — Barry: point Touge passing docs at go-live commit 5c79dea
 - design/01, design/07 LIVE block and `unapproved/barry/touge-passing-v1/README.md` (port list) now name `5c79dea`.
 
