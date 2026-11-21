@@ -8,6 +8,10 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: archived unapproved resources-v1..v4 drafts (Austin's call via Desmond: commit box-only work, storage isn't durable)
+- Added `unapproved/barry/resources-v1` through `resources-v4` (scripts, JSON results, logs, notes). Unapproved drafts only; nothing in sim/ or design/ changed.
+- Left out 8 `.npz` result arrays (~86 MB). Why: they regenerate from `run_v2.py`, `run_v3.py`, `run_v4.py` and `retune/run_v4b.py` in the same folders.
+
 ## 2026-11-20 — Gordon [godot]: authored Touge terrain swap-in, asset rule, road export, lot/camera/HUD fixes (Austin go-ahead 2026-11-20 8:18 PM PT: "Commit and push")
 - **Asset rule (AGENTS.md):** everything in the game world is an authored asset, not generated in code. The road surface is the one exception and stays code. Keep generated geometry to the bare minimum. Why: brute-forced procedural terrain caused the slabs, wedges and cracks in playtests, and it costs frame time (Austin, 2026-11-20).
 - **Road export:** `tools/touge_race/road_export.gd` writes `unapproved/gordon/road_export/`: road_surface.glb split into Turn01–10 + LotFloor, plus road_centreline.json at 1 m samples. Arthur models against the exact in-game road. Regenerate with `godot --headless --path . --script tools/touge_race/road_export.gd`.

@@ -1,0 +1,98 @@
+[
+ {
+  "KAPPA_SCALE": 1.0,
+  "TANK_FACTOR": 0.5,
+  "perf0.8": 51.4,
+  "perf1.0": 99.6,
+  "avg1.05": 68.8,
+  "avg1.1": 84.0
+ },
+ {
+  "KAPPA_SCALE": 1.0,
+  "TANK_FACTOR": 0.4,
+  "perf0.8": 33.3,
+  "perf1.0": 99.5,
+  "avg1.05": 60.2,
+  "avg1.1": 79.0
+ },
+ {
+  "KAPPA_SCALE": 1.0,
+  "TANK_FACTOR": 0.3,
+  "perf0.8": 18.7,
+  "perf1.0": 98.6,
+  "avg1.05": 52.6,
+  "avg1.1": 73.6
+ },
+ {
+  "KAPPA_SCALE": 1.25,
+  "TANK_FACTOR": 0.5,
+  "perf0.8": 34.1,
+  "perf1.0": 99.6,
+  "avg1.05": 72.1,
+  "avg1.1": 88.0
+ },
+ {
+  "KAPPA_SCALE": 1.25,
+  "TANK_FACTOR": 0.4,
+  "perf0.8": 15.4,
+  "perf1.0": 99.5,
+  "avg1.05": 64.2,
+  "avg1.1": 84.4
+ },
+ {
+  "KAPPA_SCALE": 1.25,
+  "TANK_FACTOR": 0.3,
+  "perf0.8": 6.7,
+  "perf1.0": 98.6,
+  "avg1.05": 57.0,
+  "avg1.1": 80.2
+ },
+ {
+  "KAPPA_SCALE": 1.5,
+  "TANK_FACTOR": 0.5,
+  "perf0.8": 17.2,
+  "perf1.0": 99.6,
+  "avg1.05": 75.2,
+  "avg1.1": 91.2
+ },
+ {
+  "KAPPA_SCALE": 1.5,
+  "TANK_FACTOR": 0.4,
+  "perf0.8": 4.8,
+  "perf1.0": 99.5,
+  "avg1.05": 68.2,
+  "avg1.1": 88.7
+ },
+ {
+  "KAPPA_SCALE": 1.5,
+  "TANK_FACTOR": 0.3,
+  "perf0.8": 1.4,
+  "perf1.0": 98.6,
+  "avg1.05": 61.0,
+  "avg1.1": 85.7
+ },
+ {
+  "KAPPA_SCALE": 2.0,
+  "TANK_FACTOR": 0.5,
+  "perf0.8": 1.2,
+  "perf1.0": 99.6,
+  "avg1.05": 80.8,
+  "avg1.1": 95.8
+ },
+ {
+  "KAPPA_SCALE": 2.0,
+  "TANK_FACTOR": 0.4,
+  "perf0.8": 0.1,
+  "perf1.0": 99.5,
+  "avg1.05": 75.3,
+  "avg1.1": 94.6
+ },
+ {
+  "KAPPA_SCALE": 2.0,
+  "TANK_FACTOR": 0.3,
+  "perf0.8": 0.0,
+  "perf1.0": 98.6,
+  "avg1.05": 69.1,
+  "avg1.1": 93.4
+ }
+]

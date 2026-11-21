@@ -1,0 +1,21 @@
+     70s G1_slant_m05 avg_cap mean over tunes 57.8
+    126s G1_slant_m05 perf_0.8 mean over tunes 8.7
+    181s G1_slant_m05 perf_1.0 mean over tunes 99.8
+    246s G1_slant_m05 c8080 mean over tunes 93.8
+    312s G1_slant_m05 best_cap mean over tunes 69.4
+    378s G1_slant_m05 greedy_cap mean over tunes 41.9
+    435s G1_slant_m05 read1_best mean over tunes 99.9
+    489s G1_slant_m05 read1_greedy mean over tunes 66.3
+    546s G1_slant_m05 rand_best mean over tunes 66.3
+    603s G1_slant_m05 rand_greedy mean over tunes 20.1
+    673s G2_slant_m10 avg_cap mean over tunes 52.9
+    728s G2_slant_m10 perf_0.8 mean over tunes 9.3
+    785s G2_slant_m10 perf_1.0 mean over tunes 99.7
+    852s G2_slant_m10 c8080 mean over tunes 92.5
+    919s G2_slant_m10 best_cap mean over tunes 65.1
+    980s G2_slant_m10 greedy_cap mean over tunes 37.1
+   1037s G2_slant_m10 read1_best mean over tunes 99.9
+   1188s G2_slant_m10 read1_greedy mean over tunes 61.3
+   1429s G2_slant_m10 rand_best mean over tunes 61.3
+   1484s G2_slant_m10 rand_greedy mean over tunes 17.0
+done 1483.6358618736267

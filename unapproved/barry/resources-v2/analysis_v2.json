@@ -1,0 +1,591 @@
+{
+ "A_scarce": {
+  "perf08_tuned": 14.3,
+  "perf08_lowdry": 1.3,
+  "perf08_even": 5.0,
+  "perf10_tuned": 100.0,
+  "perf10_even": 99.9,
+  "avg_tuned": 61.2,
+  "avg_lowdry": 42.2,
+  "avg_even": 42.0,
+  "blk_tuned": 96.0,
+  "blkr_tuned": 88.5,
+  "rb_tuned": 27.7,
+  "limp_tuned": 0.0,
+  "blk_even": 18.1,
+  "rb_even": 0.7,
+  "blk_wrong": 95.2,
+  "rb_wrong": 24.6,
+  "blk_lowdry": 19.3,
+  "rb_lowdry": 0.9,
+  "perf10_blk_tuned": 90.4,
+  "perf10_rb_tuned": 33.1,
+  "blk_tuned_by_len": {
+   "10": 88.6,
+   "20": 99.6,
+   "30": 99.8
+  },
+  "rb_tuned_by_len": {
+   "10": 20.4,
+   "20": 30.0,
+   "30": 32.7
+  },
+  "blk_even_by_len": {
+   "10": 6.9,
+   "20": 18.2,
+   "30": 29.2
+  },
+  "blk_wrong_by_len": {
+   "10": 86.8,
+   "20": 99.3,
+   "30": 99.6
+  },
+  "cells_tuned_blk_le15": 0.0,
+  "cells_tuned_rb_le5": 0.7,
+  "cells_with_lowdry_tune": 45.9,
+  "gap_even": 19.2,
+  "gap_wrong": 25.7,
+  "clear_even": 90.4,
+  "clear_wrong": 88.9,
+  "gap_wrong_max_cell": 63.9,
+  "lowdry_gap_even": 0.1,
+  "lowdry_clear_even": 0.0,
+  "gap_even_by_len": {
+   "10": 9.7,
+   "20": 20.7,
+   "30": 27.3
+  },
+  "gap_wrong_by_len": {
+   "10": 11.6,
+   "20": 27.7,
+   "30": 37.7
+  },
+  "tuned_touge": 56.3,
+  "even_touge": 41.9,
+  "gap_even_touge": 14.4,
+  "gap_wrong_touge": 26.9,
+  "gap_wrong_max_touge": 54.6,
+  "clear_wrong_touge": 97.8,
+  "clear_even_touge": 88.9,
+  "blk_tuned_touge": 93.9,
+  "tuned_split_touge": [
+   0.262,
+   0.25,
+   0.488
+  ],
+  "tuned_wangan": 62.9,
+  "even_wangan": 28.8,
+  "gap_even_wangan": 34.1,
+  "gap_wrong_wangan": 37.1,
+  "gap_wrong_max_wangan": 63.9,
+  "clear_wrong_wangan": 100.0,
+  "clear_even_wangan": 100.0,
+  "blk_tuned_wangan": 96.9,
+  "tuned_split_wangan": [
+   0.25,
+   0.5,
+   0.25
+  ],
+  "tuned_street": 64.5,
+  "even_street": 55.3,
+  "gap_even_street": 9.2,
+  "gap_wrong_street": 12.9,
+  "gap_wrong_max_street": 34.7,
+  "clear_wrong_street": 68.9,
+  "clear_even_street": 82.2,
+  "blk_tuned_street": 97.2,
+  "tuned_split_street": [
+   0.444,
+   0.29,
+   0.266
+  ],
+  "read1_tuned": 99.5,
+  "random_same_tune": 15.0,
+  "random_best_tune": 16.8,
+  "read_gap": 84.5,
+  "read_gap_clear": 100.0,
+  "avg_vs_random_gap": 44.6,
+  "random_blk": 0.0,
+  "read1_blk": 97.0,
+  "read1_rb": 32.0,
+  "pacing_gap": 0.0,
+  "pacing_gap_maxabs_cell": 0.2,
+  "scout_b03": 0.0,
+  "scout_b03_clear": 0.0,
+  "scout_b1": 25.6,
+  "scout_b1_clear": 60.0,
+  "scout_b1_by_style": {
+   "balanced": 0.0,
+   "hot_early": 47.4,
+   "conserver": 29.4
+  },
+  "scout_b03_by_style": {
+   "balanced": 0.0,
+   "hot_early": 0.0,
+   "conserver": 0.0
+  }
+ },
+ "A_mid": {
+  "perf08_tuned": 25.4,
+  "perf08_lowdry": 4.1,
+  "perf08_even": 8.0,
+  "perf10_tuned": 100.0,
+  "perf10_even": 100.0,
+  "avg_tuned": 58.4,
+  "avg_lowdry": 48.3,
+  "avg_even": 48.1,
+  "blk_tuned": 83.3,
+  "blkr_tuned": 67.9,
+  "rb_tuned": 14.0,
+  "limp_tuned": 0.0,
+  "blk_even": 5.6,
+  "rb_even": 0.1,
+  "blk_wrong": 79.7,
+  "rb_wrong": 11.7,
+  "blk_lowdry": 7.0,
+  "rb_lowdry": 0.3,
+  "perf10_blk_tuned": 78.5,
+  "perf10_rb_tuned": 22.3,
+  "blk_tuned_by_len": {
+   "10": 59.4,
+   "20": 92.1,
+   "30": 98.3
+  },
+  "rb_tuned_by_len": {
+   "10": 8.3,
+   "20": 15.3,
+   "30": 18.3
+  },
+  "blk_even_by_len": {
+   "10": 2.1,
+   "20": 5.6,
+   "30": 9.1
+  },
+  "blk_wrong_by_len": {
+   "10": 53.4,
+   "20": 88.7,
+   "30": 97.1
+  },
+  "cells_tuned_blk_le15": 0.0,
+  "cells_tuned_rb_le5": 14.8,
+  "cells_with_lowdry_tune": 100.0,
+  "gap_even": 10.3,
+  "gap_wrong": 11.2,
+  "clear_even": 77.8,
+  "clear_wrong": 72.6,
+  "gap_wrong_max_cell": 33.6,
+  "lowdry_gap_even": 0.2,
+  "lowdry_clear_even": 0.0,
+  "gap_even_by_len": {
+   "10": 5.2,
+   "20": 10.5,
+   "30": 15.1
+  },
+  "gap_wrong_by_len": {
+   "10": 5.4,
+   "20": 10.9,
+   "30": 17.4
+  },
+  "tuned_touge": 55.8,
+  "even_touge": 45.4,
+  "gap_even_touge": 10.4,
+  "gap_wrong_touge": 12.8,
+  "gap_wrong_max_touge": 30.3,
+  "clear_wrong_touge": 88.9,
+  "clear_even_touge": 82.2,
+  "blk_tuned_touge": 84.8,
+  "tuned_split_touge": [
+   0.274,
+   0.25,
+   0.476
+  ],
+  "tuned_wangan": 55.3,
+  "even_wangan": 41.4,
+  "gap_even_wangan": 13.9,
+  "gap_wrong_wangan": 15.3,
+  "gap_wrong_max_wangan": 33.6,
+  "clear_wrong_wangan": 93.3,
+  "clear_even_wangan": 93.3,
+  "blk_tuned_wangan": 76.9,
+  "tuned_split_wangan": [
+   0.25,
+   0.5,
+   0.25
+  ],
+  "tuned_street": 63.9,
+  "even_street": 57.5,
+  "gap_even_street": 6.5,
+  "gap_wrong_street": 5.6,
+  "gap_wrong_max_street": 18.2,
+  "clear_wrong_street": 35.6,
+  "clear_even_street": 57.8,
+  "blk_tuned_street": 88.1,
+  "tuned_split_street": [
+   0.422,
+   0.3,
+   0.278
+  ],
+  "read1_tuned": 99.6,
+  "random_same_tune": 10.7,
+  "random_best_tune": 15.9,
+  "read_gap": 88.9,
+  "read_gap_clear": 100.0,
+  "avg_vs_random_gap": 42.6,
+  "random_blk": 0.0,
+  "read1_blk": 54.1,
+  "read1_rb": 12.1,
+  "pacing_gap": -0.0,
+  "pacing_gap_maxabs_cell": 0.1,
+  "scout_b03": 0.0,
+  "scout_b03_clear": 0.0,
+  "scout_b1": 29.7,
+  "scout_b1_clear": 60.7,
+  "scout_b1_by_style": {
+   "balanced": 0.0,
+   "hot_early": 53.8,
+   "conserver": 35.3
+  },
+  "scout_b03_by_style": {
+   "balanced": 0.0,
+   "hot_early": 0.0,
+   "conserver": 0.0
+  }
+ },
+ "A_mid_norefill": {
+  "perf08_tuned": 43.3,
+  "perf08_lowdry": 14.0,
+  "perf08_even": 19.0,
+  "perf10_tuned": 100.0,
+  "perf10_even": 100.0,
+  "avg_tuned": 55.7,
+  "avg_lowdry": 49.5,
+  "avg_even": 49.2,
+  "blk_tuned": 69.4,
+  "blkr_tuned": 51.1,
+  "rb_tuned": 8.6,
+  "limp_tuned": 0.0,
+  "blk_even": 4.1,
+  "rb_even": 0.0,
+  "blk_wrong": 62.9,
+  "rb_wrong": 7.3,
+  "blk_lowdry": 5.9,
+  "rb_lowdry": 0.2,
+  "perf10_blk_tuned": 78.5,
+  "perf10_rb_tuned": 17.6,
+  "blk_tuned_by_len": {
+   "10": 59.4,
+   "20": 72.4,
+   "30": 76.5
+  },
+  "rb_tuned_by_len": {
+   "10": 8.3,
+   "20": 8.4,
+   "30": 9.0
+  },
+  "blk_even_by_len": {
+   "10": 2.1,
+   "20": 3.9,
+   "30": 6.4
+  },
+  "blk_wrong_by_len": {
+   "10": 53.4,
+   "20": 65.6,
+   "30": 69.6
+  },
+  "cells_tuned_blk_le15": 0.0,
+  "cells_tuned_rb_le5": 40.0,
+  "cells_with_lowdry_tune": 100.0,
+  "gap_even": 6.5,
+  "gap_wrong": 6.7,
+  "clear_even": 54.1,
+  "clear_wrong": 56.3,
+  "gap_wrong_max_cell": 20.7,
+  "lowdry_gap_even": 0.2,
+  "lowdry_clear_even": 0.0,
+  "gap_even_by_len": {
+   "10": 5.2,
+   "20": 6.6,
+   "30": 7.7
+  },
+  "gap_wrong_by_len": {
+   "10": 5.4,
+   "20": 6.9,
+   "30": 7.7
+  },
+  "tuned_touge": 56.1,
+  "even_touge": 45.9,
+  "gap_even_touge": 10.2,
+  "gap_wrong_touge": 11.0,
+  "gap_wrong_max_touge": 20.7,
+  "clear_wrong_touge": 88.9,
+  "clear_even_touge": 82.2,
+  "blk_tuned_touge": 82.9,
+  "tuned_split_touge": [
+   0.294,
+   0.25,
+   0.456
+  ],
+  "tuned_wangan": 49.2,
+  "even_wangan": 44.1,
+  "gap_even_wangan": 5.0,
+  "gap_wrong_wangan": 7.3,
+  "gap_wrong_max_wangan": 12.3,
+  "clear_wrong_wangan": 77.8,
+  "clear_even_wangan": 48.9,
+  "blk_tuned_wangan": 41.7,
+  "tuned_split_wangan": [
+   0.25,
+   0.5,
+   0.25
+  ],
+  "tuned_street": 61.8,
+  "even_street": 57.6,
+  "gap_even_street": 4.2,
+  "gap_wrong_street": 1.7,
+  "gap_wrong_max_street": 5.3,
+  "clear_wrong_street": 2.2,
+  "clear_even_street": 31.1,
+  "blk_tuned_street": 83.7,
+  "tuned_split_street": [
+   0.442,
+   0.27,
+   0.288
+  ]
+ },
+ "A_mid_refill50": {
+  "perf08_tuned": 16.9,
+  "perf08_lowdry": 3.6,
+  "perf08_even": 6.9,
+  "perf10_tuned": 100.0,
+  "perf10_even": 99.9,
+  "avg_tuned": 63.1,
+  "avg_lowdry": 46.4,
+  "avg_even": 46.2,
+  "blk_tuned": 86.1,
+  "blkr_tuned": 76.2,
+  "rb_tuned": 22.1,
+  "limp_tuned": 0.0,
+  "blk_even": 11.5,
+  "rb_even": 0.4,
+  "blk_wrong": 82.8,
+  "rb_wrong": 18.9,
+  "blk_lowdry": 13.1,
+  "rb_lowdry": 0.6,
+  "perf10_blk_tuned": 79.3,
+  "perf10_rb_tuned": 26.3,
+  "blk_tuned_by_len": {
+   "10": 59.4,
+   "20": 99.0,
+   "30": 100.0
+  },
+  "rb_tuned_by_len": {
+   "10": 8.3,
+   "20": 24.8,
+   "30": 33.1
+  },
+  "blk_even_by_len": {
+   "10": 2.1,
+   "20": 9.5,
+   "30": 23.1
+  },
+  "blk_wrong_by_len": {
+   "10": 53.4,
+   "20": 95.7,
+   "30": 99.5
+  },
+  "cells_tuned_blk_le15": 0.0,
+  "cells_tuned_rb_le5": 14.8,
+  "cells_with_lowdry_tune": 71.1,
+  "gap_even": 16.9,
+  "gap_wrong": 22.2,
+  "clear_even": 80.7,
+  "clear_wrong": 75.6,
+  "gap_wrong_max_cell": 66.0,
+  "lowdry_gap_even": 0.3,
+  "lowdry_clear_even": 0.0,
+  "gap_even_by_len": {
+   "10": 5.2,
+   "20": 18.0,
+   "30": 27.6
+  },
+  "gap_wrong_by_len": {
+   "10": 5.4,
+   "20": 23.5,
+   "30": 37.8
+  },
+  "tuned_touge": 59.1,
+  "even_touge": 45.1,
+  "gap_even_touge": 14.0,
+  "gap_wrong_touge": 24.9,
+  "gap_wrong_max_touge": 57.8,
+  "clear_wrong_touge": 88.9,
+  "clear_even_touge": 82.2,
+  "blk_tuned_touge": 86.5,
+  "tuned_split_touge": [
+   0.267,
+   0.25,
+   0.483
+  ],
+  "tuned_wangan": 64.8,
+  "even_wangan": 35.8,
+  "gap_even_wangan": 29.0,
+  "gap_wrong_wangan": 33.8,
+  "gap_wrong_max_wangan": 66.0,
+  "clear_wrong_wangan": 93.3,
+  "clear_even_wangan": 93.3,
+  "blk_tuned_wangan": 82.3,
+  "tuned_split_wangan": [
+   0.25,
+   0.5,
+   0.25
+  ],
+  "tuned_street": 65.4,
+  "even_street": 57.7,
+  "gap_even_street": 7.7,
+  "gap_wrong_street": 8.0,
+  "gap_wrong_max_street": 36.1,
+  "clear_wrong_street": 44.4,
+  "clear_even_street": 66.7,
+  "blk_tuned_street": 89.5,
+  "tuned_split_street": [
+   0.458,
+   0.281,
+   0.261
+  ]
+ },
+ "B_generous": {
+  "perf08_tuned": 22.6,
+  "perf08_lowdry": 6.5,
+  "perf08_even": 8.8,
+  "perf10_tuned": 100.0,
+  "perf10_even": 100.0,
+  "avg_tuned": 57.7,
+  "avg_lowdry": 55.6,
+  "avg_even": 55.1,
+  "blk_tuned": 35.3,
+  "blkr_tuned": 15.6,
+  "rb_tuned": 1.9,
+  "limp_tuned": 0.0,
+  "blk_even": 4.4,
+  "rb_even": 0.1,
+  "blk_wrong": 44.6,
+  "rb_wrong": 2.1,
+  "blk_lowdry": 7.8,
+  "rb_lowdry": 0.3,
+  "perf10_blk_tuned": 55.6,
+  "perf10_rb_tuned": 6.9,
+  "blk_tuned_by_len": {
+   "10": 20.4,
+   "20": 38.2,
+   "30": 47.2
+  },
+  "rb_tuned_by_len": {
+   "10": 1.5,
+   "20": 1.9,
+   "30": 2.1
+  },
+  "blk_even_by_len": {
+   "10": 1.9,
+   "20": 4.3,
+   "30": 7.0
+  },
+  "blk_wrong_by_len": {
+   "10": 20.2,
+   "20": 48.2,
+   "30": 65.5
+  },
+  "cells_tuned_blk_le15": 34.1,
+  "cells_tuned_rb_le5": 84.4,
+  "cells_with_lowdry_tune": 100.0,
+  "gap_even": 2.6,
+  "gap_wrong": 0.9,
+  "clear_even": 16.3,
+  "clear_wrong": 0.0,
+  "gap_wrong_max_cell": 3.9,
+  "lowdry_gap_even": 0.5,
+  "lowdry_clear_even": 0.0,
+  "gap_even_by_len": {
+   "10": 1.8,
+   "20": 2.6,
+   "30": 3.5
+  },
+  "gap_wrong_by_len": {
+   "10": 1.7,
+   "20": 0.6,
+   "30": 0.4
+  },
+  "tuned_touge": 57.7,
+  "even_touge": 52.6,
+  "gap_even_touge": 5.1,
+  "gap_wrong_touge": 0.8,
+  "gap_wrong_max_touge": 3.9,
+  "clear_wrong_touge": 0.0,
+  "clear_even_touge": 48.9,
+  "blk_tuned_touge": 42.2,
+  "tuned_split_touge": [
+   0.321,
+   0.25,
+   0.429
+  ],
+  "tuned_wangan": 51.4,
+  "even_wangan": 50.3,
+  "gap_even_wangan": 1.1,
+  "gap_wrong_wangan": 1.7,
+  "gap_wrong_max_wangan": 3.7,
+  "clear_wrong_wangan": 0.0,
+  "clear_even_wangan": 0.0,
+  "blk_tuned_wangan": 11.6,
+  "tuned_split_wangan": [
+   0.25,
+   0.408,
+   0.342
+  ],
+  "tuned_street": 64.1,
+  "even_street": 62.4,
+  "gap_even_street": 1.7,
+  "gap_wrong_street": 0.1,
+  "gap_wrong_max_street": 0.4,
+  "clear_wrong_street": 0.0,
+  "clear_even_street": 0.0,
+  "blk_tuned_street": 52.1,
+  "tuned_split_street": [
+   0.382,
+   0.261,
+   0.357
+  ],
+  "read1_tuned": 99.7,
+  "random_same_tune": 12.3,
+  "random_best_tune": 13.9,
+  "read_gap": 87.4,
+  "read_gap_clear": 100.0,
+  "avg_vs_random_gap": 44.1,
+  "random_blk": 0.0,
+  "read1_blk": 27.4,
+  "read1_rb": 1.4,
+  "pacing_gap": 0.0,
+  "pacing_gap_maxabs_cell": 0.0,
+  "scout_b03": 0.0,
+  "scout_b03_clear": 0.0,
+  "scout_b1": 30.7,
+  "scout_b1_clear": 57.8,
+  "scout_b1_by_style": {
+   "balanced": 0.0,
+   "hot_early": 57.1,
+   "conserver": 34.9
+  },
+  "scout_b03_by_style": {
+   "balanced": 0.0,
+   "hot_early": 0.0,
+   "conserver": 0.0
+  }
+ },
+ "live": {
+  "read1_tuned": 99.9,
+  "random_same_tune": 10.0,
+  "read_gap": 89.9,
+  "avg_tuned": 72.4,
+  "avg_vs_random_gap": 57.2,
+  "read1_even": 99.8,
+  "random_even": 7.3
+ }
+}

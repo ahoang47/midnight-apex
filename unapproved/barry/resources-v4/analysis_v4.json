@@ -1,0 +1,1486 @@
+{
+ "F1_steep": {
+  "cfg": {
+   "REC_FACTOR": 1.0,
+   "RELEASE": 0.3,
+   "AGG_STEP": 1.0,
+   "PEN_SHAPE": "linear",
+   "PEN_SLOPE": 4.0,
+   "PEN_FLOOR": 0.4,
+   "CAP_TURNS": 3.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "KAPPA_10": 1.5,
+   "KAPPA_20": 2.2,
+   "KAPPA_30": 1.9,
+   "BOSS_REC_FACTOR": 1.0,
+   "BOSS_RELEASE": 0.8,
+   "BOSS_CAP_TURNS": 3.0,
+   "RES_T": 0.7,
+   "RES_K": 2.0,
+   "RES_LOOK": 0.5,
+   "PLAN_H": 3,
+   "_cap": 1.1
+  },
+  "combat": {
+   "perf_0.8": {
+    "tuned": 38.6,
+    "even": 23.9,
+    "tuned_by_len": {
+     "10": 78.1,
+     "20": 19.0,
+     "30": 18.6
+    },
+    "even_by_len": {
+     "10": 48.8,
+     "20": 10.3,
+     "30": 12.5
+    },
+    "tuned_by_dist": {
+     "touge": 32.3,
+     "wangan": 30.4,
+     "street": 53.0
+    },
+    "even_by_dist": {
+     "touge": 11.3,
+     "wangan": 20.4,
+     "street": 40.1
+    },
+    "tuned_2030": 18.8,
+    "even_2030": 11.4
+   },
+   "perf_1.0": {
+    "tuned": 100.0,
+    "even": 100.0,
+    "tuned_by_len": {
+     "10": 100.0,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "even_by_len": {
+     "10": 100.0,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "tuned_by_dist": {
+     "touge": 100.0,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "even_by_dist": {
+     "touge": 100.0,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "tuned_2030": 100.0,
+    "even_2030": 100.0
+   },
+   "avg_cap": {
+    "tuned": 77.3,
+    "even": 70.3,
+    "tuned_by_len": {
+     "10": 75.7,
+     "20": 82.2,
+     "30": 74.0
+    },
+    "even_by_len": {
+     "10": 72.5,
+     "20": 75.0,
+     "30": 63.6
+    },
+    "tuned_by_dist": {
+     "touge": 72.7,
+     "wangan": 83.3,
+     "street": 75.7
+    },
+    "even_by_dist": {
+     "touge": 65.5,
+     "wangan": 70.8,
+     "street": 74.7
+    },
+    "tuned_2030": 78.1,
+    "even_2030": 69.3,
+    "wrong": 67.8,
+    "wrong_by_len": {
+     "10": 71.8,
+     "20": 73.6,
+     "30": 58.0
+    }
+   },
+   "c8080": {
+    "tuned": 99.2,
+    "even": 97.4,
+    "tuned_by_len": {
+     "10": 98.9,
+     "20": 99.4,
+     "30": 99.3
+    },
+    "even_by_len": {
+     "10": 97.5,
+     "20": 97.8,
+     "30": 97.1
+    },
+    "tuned_by_dist": {
+     "touge": 98.9,
+     "wangan": 99.4,
+     "street": 99.3
+    },
+    "even_by_dist": {
+     "touge": 96.4,
+     "wangan": 96.8,
+     "street": 99.1
+    },
+    "tuned_2030": 99.4,
+    "even_2030": 97.4
+   },
+   "best_cap": {
+    "tuned": 83.8,
+    "even": 78.6,
+    "tuned_by_len": {
+     "10": 80.9,
+     "20": 87.6,
+     "30": 82.8
+    },
+    "even_by_len": {
+     "10": 75.4,
+     "20": 83.2,
+     "30": 77.1
+    },
+    "tuned_by_dist": {
+     "touge": 80.8,
+     "wangan": 85.6,
+     "street": 84.9
+    },
+    "even_by_dist": {
+     "touge": 76.7,
+     "wangan": 74.9,
+     "street": 84.0
+    },
+    "tuned_2030": 85.2,
+    "even_2030": 80.1
+   },
+   "greedy_cap": {
+    "tuned": 68.7,
+    "even": 55.3,
+    "tuned_by_len": {
+     "10": 71.7,
+     "20": 73.7,
+     "30": 60.8
+    },
+    "even_by_len": {
+     "10": 66.4,
+     "20": 59.1,
+     "30": 40.3
+    },
+    "tuned_by_dist": {
+     "touge": 63.8,
+     "wangan": 81.5,
+     "street": 61.0
+    },
+    "even_by_dist": {
+     "touge": 46.0,
+     "wangan": 63.9,
+     "street": 55.9
+    },
+    "tuned_2030": 67.3,
+    "even_2030": 49.7
+   },
+   "read1_best": {
+    "tuned": 100.0,
+    "even": 99.9,
+    "tuned_by_len": {
+     "10": 100.0,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "even_by_len": {
+     "10": 99.8,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "tuned_by_dist": {
+     "touge": 100.0,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "even_by_dist": {
+     "touge": 99.9,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "tuned_2030": 100.0,
+    "even_2030": 100.0
+   },
+   "read1_greedy": {
+    "tuned": 100.0,
+    "even": 85.7,
+    "tuned_by_len": {
+     "10": 99.9,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "even_by_len": {
+     "10": 93.6,
+     "20": 89.3,
+     "30": 74.3
+    },
+    "tuned_by_dist": {
+     "touge": 99.9,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "even_by_dist": {
+     "touge": 73.0,
+     "wangan": 96.2,
+     "street": 87.9
+    },
+    "tuned_2030": 100.0,
+    "even_2030": 81.8
+   }
+  },
+  "retune_even": {
+   "gap": 6.9,
+   "clear": 53.3,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 3.2,
+    "20": 7.2,
+    "30": 10.4
+   },
+   "by_len_clear": {
+    "10": 26.7,
+    "20": 64.4,
+    "30": 68.9
+   },
+   "max_cell": 25.7
+  },
+  "retune_wrong": {
+   "gap": 9.5,
+   "clear": 57.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 3.9,
+    "20": 8.6,
+    "30": 16.0
+   },
+   "by_len_clear": {
+    "10": 37.8,
+    "20": 66.7,
+    "30": 66.7
+   },
+   "max_cell": 35.4
+  },
+  "retune_by_dist": {
+   "touge": {
+    "even": 7.2,
+    "even_clear": 64.4,
+    "wrong": 14.1,
+    "wrong_clear": 86.7,
+    "tuned_split": [
+     0.39,
+     0.288,
+     0.322
+    ]
+   },
+   "wangan": {
+    "even": 12.5,
+    "even_clear": 93.3,
+    "wrong": 13.3,
+    "wrong_clear": 84.4,
+    "tuned_split": [
+     0.264,
+     0.331,
+     0.404
+    ]
+   },
+   "street": {
+    "even": 1.0,
+    "even_clear": 2.2,
+    "wrong": 1.0,
+    "wrong_clear": 0.0,
+    "tuned_split": [
+     0.331,
+     0.323,
+     0.346
+    ]
+   }
+  },
+  "worst_wrong_cell": {
+   "track": "W4_Tatsumi_Sprint",
+   "length": 30,
+   "style": "hot_early",
+   "gap": 35.4,
+   "tuned_split": [
+    0.25,
+    0.3,
+    0.45
+   ],
+   "tuned_win": 86.9,
+   "wrong_split": [
+    0.4,
+    0.3,
+    0.3
+   ],
+   "wrong_win": 51.5
+  },
+  "reads_best_pacing": {
+   "gap": 19.0,
+   "clear": 86.7,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 35.5,
+    "20": 9.5,
+    "30": 12.0
+   },
+   "by_len_clear": {
+    "10": 100.0,
+    "20": 80.0,
+    "30": 80.0
+   },
+   "max_cell": 53.1
+  },
+  "reads_greedy": {
+   "gap": 69.7,
+   "clear": 100.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 66.1,
+    "20": 65.6,
+    "30": 77.5
+   },
+   "by_len_clear": {
+    "10": 100.0,
+    "20": 100.0,
+    "30": 100.0
+   },
+   "max_cell": 97.9
+  },
+  "reads_avg_vs_perfect": {
+   "gap": 16.2,
+   "clear": 100.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 19.1,
+    "20": 12.4,
+    "30": 17.2
+   },
+   "by_len_clear": {
+    "10": 100.0,
+    "20": 100.0,
+    "30": 100.0
+   },
+   "max_cell": 29.2
+  },
+  "pacing_q06": {
+   "gap": 15.0,
+   "clear": 80.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 9.2,
+    "20": 13.8,
+    "30": 22.1
+   },
+   "by_len_clear": {
+    "10": 95.6,
+    "20": 71.1,
+    "30": 73.3
+   },
+   "max_cell": 46.5
+  },
+  "pacing_q1": {
+   "gap": 0.0,
+   "clear": 0.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 0.1,
+    "20": 0.0,
+    "30": 0.0
+   },
+   "by_len_clear": {
+    "10": 0.0,
+    "20": 0.0,
+    "30": 0.0
+   },
+   "max_cell": 0.9
+  },
+  "pacing_avg_vs_greedy": {
+   "gap": 8.5,
+   "clear": 54.8,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 3.9,
+    "20": 8.4,
+    "30": 13.2
+   },
+   "by_len_clear": {
+    "10": 35.6,
+    "20": 62.2,
+    "30": 66.7
+   },
+   "max_cell": 29.1
+  },
+  "random_best_win": 81.0,
+  "random_greedy_win": 30.2,
+  "ratio_pacing_q06_over_reads": 0.789,
+  "ratio_pacing_q1_over_reads": 0.0,
+  "feel_avg_tuned": {
+   "ov": 21.4,
+   "ovc": 7.1,
+   "lock": 51.5,
+   "pen": 7.7,
+   "rlock": 19.4,
+   "rov": 3.9,
+   "rovplay": 2.0,
+   "rswitch": 21.4,
+   "limp": 7.1,
+   "streak_mean": 8.02,
+   "pen_per_overrun_clash": 107.6,
+   "lock_dur_mean": 3.29,
+   "lock_dur_share": {
+    "0": 5.4,
+    "1": 5.5,
+    "2": 34.8,
+    "3": 20.8,
+    "4+": 33.4
+   },
+   "locks_per_race": 4.7,
+   "locks_by_res_pow_han_en": [
+    31.6,
+    40.3,
+    28.1
+   ],
+   "lock_by_lap_30turn": [
+    43.7,
+    65.4,
+    69.1
+   ],
+   "lock_by_len": {
+    "10": 41.2,
+    "20": 54.0,
+    "30": 59.4
+   },
+   "lock_by_dist": {
+    "touge": 50.6,
+    "wangan": 61.6,
+    "street": 42.3
+   },
+   "rlock_by_len": {
+    "10": 14.3,
+    "20": 19.9,
+    "30": 23.9
+   },
+   "rlock_by_dist": {
+    "touge": 18.8,
+    "wangan": 20.4,
+    "street": 19.0
+   },
+   "ovc_by_len": {
+    "10": 6.6,
+    "20": 7.3,
+    "30": 7.5
+   },
+   "ovc_by_dist": {
+    "touge": 6.9,
+    "wangan": 8.3,
+    "street": 6.2
+   },
+   "lockdur_by_len": {
+    "10": 2.3,
+    "20": 3.19,
+    "30": 3.63
+   }
+  },
+  "feel_avg_even": {
+   "ov": 19.6,
+   "ovc": 6.5,
+   "lock": 45.1,
+   "pen": 10.0,
+   "rlock": 22.9,
+   "rov": 4.4,
+   "rovplay": 2.3,
+   "rswitch": 23.2,
+   "limp": 11.6,
+   "streak_mean": 8.14,
+   "pen_per_overrun_clash": 153.5,
+   "lock_dur_mean": 3.7,
+   "lock_dur_share": {
+    "0": 5.6,
+    "1": 5.8,
+    "2": 38.5,
+    "3": 15.5,
+    "4+": 34.6
+   },
+   "locks_per_race": 4.48,
+   "locks_by_res_pow_han_en": [
+    34.9,
+    33.4,
+    31.7
+   ],
+   "lock_by_lap_30turn": [
+    32.7,
+    62.8,
+    69.5
+   ],
+   "lock_by_len": {
+    "10": 32.5,
+    "20": 47.7,
+    "30": 55.0
+   },
+   "lock_by_dist": {
+    "touge": 45.6,
+    "wangan": 51.5,
+    "street": 38.1
+   },
+   "rlock_by_len": {
+    "10": 12.9,
+    "20": 24.8,
+    "30": 31.1
+   },
+   "rlock_by_dist": {
+    "touge": 23.4,
+    "wangan": 26.8,
+    "street": 18.5
+   },
+   "ovc_by_len": {
+    "10": 5.5,
+    "20": 6.8,
+    "30": 7.3
+   },
+   "ovc_by_dist": {
+    "touge": 6.9,
+    "wangan": 6.8,
+    "street": 5.9
+   },
+   "lockdur_by_len": {
+    "10": 2.3,
+    "20": 3.54,
+    "30": 4.11
+   }
+  },
+  "feel_best_tuned": {
+   "ov": 16.2,
+   "ovc": 5.4,
+   "lock": 40.3,
+   "pen": 5.6,
+   "rlock": 14.7,
+   "rov": 6.3,
+   "rovplay": 0.5,
+   "rswitch": 23.7,
+   "limp": 5.1,
+   "streak_mean": 6.13,
+   "pen_per_overrun_clash": 103.4,
+   "lock_dur_mean": 3.19,
+   "lock_dur_share": {
+    "0": 5.4,
+    "1": 5.5,
+    "2": 36.7,
+    "3": 22.8,
+    "4+": 29.6
+   },
+   "locks_per_race": 3.55,
+   "locks_by_res_pow_han_en": [
+    34.4,
+    42.0,
+    23.7
+   ],
+   "lock_by_lap_30turn": [
+    34.1,
+    50.6,
+    53.5
+   ],
+   "lock_by_len": {
+    "10": 34.5,
+    "20": 40.2,
+    "30": 46.1
+   },
+   "lock_by_dist": {
+    "touge": 40.8,
+    "wangan": 57.2,
+    "street": 22.8
+   },
+   "rlock_by_len": {
+    "10": 11.7,
+    "20": 14.6,
+    "30": 17.7
+   },
+   "rlock_by_dist": {
+    "touge": 15.8,
+    "wangan": 18.3,
+    "street": 9.9
+   },
+   "ovc_by_len": {
+    "10": 5.0,
+    "20": 5.4,
+    "30": 5.8
+   },
+   "ovc_by_dist": {
+    "touge": 5.5,
+    "wangan": 7.6,
+    "street": 3.1
+   },
+   "lockdur_by_len": {
+    "10": 2.43,
+    "20": 3.02,
+    "30": 3.45
+   }
+  },
+  "feel_greedy_tuned": {
+   "ov": 27.4,
+   "ovc": 9.2,
+   "lock": 63.9,
+   "pen": 10.9,
+   "rlock": 26.7,
+   "rov": 3.6,
+   "rovplay": 3.6,
+   "rswitch": 22.8,
+   "limp": 10.7,
+   "streak_mean": 10.59,
+   "pen_per_overrun_clash": 118.7,
+   "lock_dur_mean": 3.5,
+   "lock_dur_share": {
+    "0": 5.4,
+    "1": 5.2,
+    "2": 32.2,
+    "3": 19.2,
+    "4+": 38.1
+   },
+   "locks_per_race": 6.06,
+   "locks_by_res_pow_han_en": [
+    30.5,
+    39.3,
+    30.1
+   ],
+   "lock_by_lap_30turn": [
+    56.7,
+    82.1,
+    84.1
+   ],
+   "lock_by_len": {
+    "10": 49.2,
+    "20": 68.3,
+    "30": 74.3
+   },
+   "lock_by_dist": {
+    "touge": 59.7,
+    "wangan": 64.9,
+    "street": 67.1
+   },
+   "rlock_by_len": {
+    "10": 17.3,
+    "20": 28.8,
+    "30": 34.0
+   },
+   "rlock_by_dist": {
+    "touge": 24.4,
+    "wangan": 21.3,
+    "street": 34.5
+   },
+   "ovc_by_len": {
+    "10": 8.5,
+    "20": 9.4,
+    "30": 9.6
+   },
+   "ovc_by_dist": {
+    "touge": 8.4,
+    "wangan": 8.7,
+    "street": 10.4
+   },
+   "lockdur_by_len": {
+    "10": 2.23,
+    "20": 3.43,
+    "30": 3.95
+   }
+  },
+  "feel_perf10_tuned": {
+   "ov": 0.6,
+   "ovc": 0.2,
+   "lock": 6.2,
+   "pen": 0.4,
+   "rlock": 2.3,
+   "rov": 10.4,
+   "rovplay": 0.1,
+   "rswitch": 21.1,
+   "limp": 0.6,
+   "streak_mean": 0.84,
+   "pen_per_overrun_clash": 212.8,
+   "lock_by_len": {
+    "10": 4.7,
+    "20": 5.3,
+    "30": 8.7
+   },
+   "lock_by_dist": {
+    "touge": 3.0,
+    "wangan": 0.0,
+    "street": 15.7
+   },
+   "rlock_by_len": {
+    "10": 1.3,
+    "20": 1.7,
+    "30": 3.9
+   },
+   "rlock_by_dist": {
+    "touge": 2.1,
+    "wangan": 0.0,
+    "street": 4.8
+   },
+   "ovc_by_len": {
+    "10": 0.0,
+    "20": 0.0,
+    "30": 0.6
+   },
+   "ovc_by_dist": {
+    "touge": 0.2,
+    "wangan": 0.0,
+    "street": 0.4
+   },
+   "lockdur_by_len": {
+    "10": 0.47,
+    "20": 0.53,
+    "30": 0.9
+   }
+  }
+ },
+ "F2_gentle": {
+  "cfg": {
+   "REC_FACTOR": 1.0,
+   "RELEASE": 0.3,
+   "AGG_STEP": 1.0,
+   "PEN_SHAPE": "linear",
+   "PEN_SLOPE": 2.0,
+   "PEN_FLOOR": 0.4,
+   "CAP_TURNS": 3.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "KAPPA_10": 1.5,
+   "KAPPA_20": 2.1,
+   "KAPPA_30": 1.85,
+   "BOSS_REC_FACTOR": 1.0,
+   "BOSS_RELEASE": 0.8,
+   "BOSS_CAP_TURNS": 3.0,
+   "RES_T": 0.7,
+   "RES_K": 2.0,
+   "RES_LOOK": 0.5,
+   "PLAN_H": 3,
+   "_cap": 1.1
+  },
+  "combat": {
+   "perf_0.8": {
+    "tuned": 38.0,
+    "even": 23.5,
+    "tuned_by_len": {
+     "10": 74.5,
+     "20": 22.1,
+     "30": 17.4
+    },
+    "even_by_len": {
+     "10": 47.1,
+     "20": 11.1,
+     "30": 12.3
+    },
+    "tuned_by_dist": {
+     "touge": 30.8,
+     "wangan": 28.0,
+     "street": 55.2
+    },
+    "even_by_dist": {
+     "touge": 11.0,
+     "wangan": 19.7,
+     "street": 39.7
+    },
+    "tuned_2030": 19.7,
+    "even_2030": 11.7
+   },
+   "perf_1.0": {
+    "tuned": 100.0,
+    "even": 100.0,
+    "tuned_by_len": {
+     "10": 100.0,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "even_by_len": {
+     "10": 99.9,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "tuned_by_dist": {
+     "touge": 100.0,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "even_by_dist": {
+     "touge": 99.9,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "tuned_2030": 100.0,
+    "even_2030": 100.0
+   },
+   "avg_cap": {
+    "tuned": 75.0,
+    "even": 68.0,
+    "tuned_by_len": {
+     "10": 74.9,
+     "20": 79.5,
+     "30": 70.7
+    },
+    "even_by_len": {
+     "10": 71.6,
+     "20": 72.3,
+     "30": 60.3
+    },
+    "tuned_by_dist": {
+     "touge": 69.9,
+     "wangan": 81.2,
+     "street": 73.9
+    },
+    "even_by_dist": {
+     "touge": 62.9,
+     "wangan": 68.3,
+     "street": 73.0
+    },
+    "tuned_2030": 75.1,
+    "even_2030": 66.3,
+    "wrong": 66.8,
+    "wrong_by_len": {
+     "10": 70.9,
+     "20": 71.0,
+     "30": 58.6
+    }
+   },
+   "c8080": {
+    "tuned": 99.1,
+    "even": 97.1,
+    "tuned_by_len": {
+     "10": 98.8,
+     "20": 99.2,
+     "30": 99.2
+    },
+    "even_by_len": {
+     "10": 97.4,
+     "20": 97.4,
+     "30": 96.6
+    },
+    "tuned_by_dist": {
+     "touge": 98.7,
+     "wangan": 99.3,
+     "street": 99.2
+    },
+    "even_by_dist": {
+     "touge": 96.0,
+     "wangan": 96.4,
+     "street": 99.0
+    },
+    "tuned_2030": 99.2,
+    "even_2030": 97.0
+   },
+   "best_cap": {
+    "tuned": 81.8,
+    "even": 76.4,
+    "tuned_by_len": {
+     "10": 80.0,
+     "20": 85.4,
+     "30": 80.1
+    },
+    "even_by_len": {
+     "10": 74.3,
+     "20": 80.8,
+     "30": 74.1
+    },
+    "tuned_by_dist": {
+     "touge": 78.7,
+     "wangan": 83.7,
+     "street": 83.2
+    },
+    "even_by_dist": {
+     "touge": 74.4,
+     "wangan": 72.5,
+     "street": 82.3
+    },
+    "tuned_2030": 82.8,
+    "even_2030": 77.4
+   },
+   "greedy_cap": {
+    "tuned": 66.4,
+    "even": 52.9,
+    "tuned_by_len": {
+     "10": 71.2,
+     "20": 70.7,
+     "30": 57.3
+    },
+    "even_by_len": {
+     "10": 65.8,
+     "20": 55.7,
+     "30": 37.1
+    },
+    "tuned_by_dist": {
+     "touge": 60.8,
+     "wangan": 79.1,
+     "street": 59.2
+    },
+    "even_by_dist": {
+     "touge": 43.5,
+     "wangan": 61.0,
+     "street": 54.1
+    },
+    "tuned_2030": 64.0,
+    "even_2030": 46.4
+   },
+   "read1_best": {
+    "tuned": 100.0,
+    "even": 99.9,
+    "tuned_by_len": {
+     "10": 100.0,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "even_by_len": {
+     "10": 99.8,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "tuned_by_dist": {
+     "touge": 100.0,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "even_by_dist": {
+     "touge": 99.9,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "tuned_2030": 100.0,
+    "even_2030": 100.0
+   },
+   "read1_greedy": {
+    "tuned": 99.9,
+    "even": 84.1,
+    "tuned_by_len": {
+     "10": 99.8,
+     "20": 100.0,
+     "30": 100.0
+    },
+    "even_by_len": {
+     "10": 93.5,
+     "20": 87.6,
+     "30": 71.1
+    },
+    "tuned_by_dist": {
+     "touge": 99.9,
+     "wangan": 100.0,
+     "street": 100.0
+    },
+    "even_by_dist": {
+     "touge": 71.3,
+     "wangan": 94.9,
+     "street": 86.1
+    },
+    "tuned_2030": 100.0,
+    "even_2030": 79.4
+   }
+  },
+  "retune_even": {
+   "gap": 7.0,
+   "clear": 52.6,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 3.3,
+    "20": 7.2,
+    "30": 10.4
+   },
+   "by_len_clear": {
+    "10": 26.7,
+    "20": 62.2,
+    "30": 68.9
+   },
+   "max_cell": 25.7
+  },
+  "retune_wrong": {
+   "gap": 8.2,
+   "clear": 59.3,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 4.0,
+    "20": 8.5,
+    "30": 12.1
+   },
+   "by_len_clear": {
+    "10": 44.4,
+    "20": 66.7,
+    "30": 66.7
+   },
+   "max_cell": 29.1
+  },
+  "retune_by_dist": {
+   "touge": {
+    "even": 7.0,
+    "even_clear": 62.2,
+    "wrong": 13.5,
+    "wrong_clear": 86.7,
+    "tuned_split": [
+     0.386,
+     0.286,
+     0.329
+    ]
+   },
+   "wangan": {
+    "even": 13.0,
+    "even_clear": 93.3,
+    "wrong": 10.0,
+    "wrong_clear": 91.1,
+    "tuned_split": [
+     0.27,
+     0.336,
+     0.394
+    ]
+   },
+   "street": {
+    "even": 0.9,
+    "even_clear": 2.2,
+    "wrong": 1.0,
+    "wrong_clear": 0.0,
+    "tuned_split": [
+     0.339,
+     0.32,
+     0.341
+    ]
+   }
+  },
+  "worst_wrong_cell": {
+   "track": "T1_Akina_Switchbacks",
+   "length": 30,
+   "style": "hot_early",
+   "gap": 29.1,
+   "tuned_split": [
+    0.45,
+    0.3,
+    0.25
+   ],
+   "tuned_win": 70.2,
+   "wrong_split": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "wrong_win": 41.1
+  },
+  "reads_best_pacing": {
+   "gap": 22.6,
+   "clear": 100.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 37.1,
+    "20": 13.8,
+    "30": 16.9
+   },
+   "by_len_clear": {
+    "10": 100.0,
+    "20": 100.0,
+    "30": 100.0
+   },
+   "max_cell": 59.7
+  },
+  "reads_greedy": {
+   "gap": 71.5,
+   "clear": 100.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 66.5,
+    "20": 68.4,
+    "30": 79.6
+   },
+   "by_len_clear": {
+    "10": 100.0,
+    "20": 100.0,
+    "30": 100.0
+   },
+   "max_cell": 98.3
+  },
+  "reads_avg_vs_perfect": {
+   "gap": 18.2,
+   "clear": 100.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 20.0,
+    "20": 14.6,
+    "30": 19.9
+   },
+   "by_len_clear": {
+    "10": 100.0,
+    "20": 100.0,
+    "30": 100.0
+   },
+   "max_cell": 32.6
+  },
+  "pacing_q06": {
+   "gap": 15.5,
+   "clear": 80.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 8.8,
+    "20": 14.7,
+    "30": 22.9
+   },
+   "by_len_clear": {
+    "10": 93.3,
+    "20": 73.3,
+    "30": 73.3
+   },
+   "max_cell": 46.4
+  },
+  "pacing_q1": {
+   "gap": 0.1,
+   "clear": 0.0,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 0.2,
+    "20": 0.0,
+    "30": 0.0
+   },
+   "by_len_clear": {
+    "10": 0.0,
+    "20": 0.0,
+    "30": 0.0
+   },
+   "max_cell": 1.3
+  },
+  "pacing_avg_vs_greedy": {
+   "gap": 8.6,
+   "clear": 53.3,
+   "neg_clear": 0.0,
+   "by_len": {
+    "10": 3.7,
+    "20": 8.8,
+    "30": 13.4
+   },
+   "by_len_clear": {
+    "10": 31.1,
+    "20": 62.2,
+    "30": 66.7
+   },
+   "max_cell": 28.8
+  },
+  "random_best_win": 77.4,
+  "random_greedy_win": 28.4,
+  "ratio_pacing_q06_over_reads": 0.686,
+  "ratio_pacing_q1_over_reads": 0.004,
+  "feel_avg_tuned": {
+   "ov": 21.8,
+   "ovc": 7.3,
+   "lock": 51.9,
+   "pen": 7.2,
+   "rlock": 19.8,
+   "rov": 4.2,
+   "rovplay": 2.1,
+   "rswitch": 21.8,
+   "limp": 7.3,
+   "streak_mean": 8.03,
+   "pen_per_overrun_clash": 98.4,
+   "lock_dur_mean": 3.26,
+   "lock_dur_share": {
+    "0": 5.4,
+    "1": 5.6,
+    "2": 35.6,
+    "3": 21.2,
+    "4+": 32.2
+   },
+   "locks_per_race": 4.74,
+   "locks_by_res_pow_han_en": [
+    31.7,
+    39.9,
+    28.5
+   ],
+   "lock_by_lap_30turn": [
+    43.2,
+    64.9,
+    68.8
+   ],
+   "lock_by_len": {
+    "10": 43.1,
+    "20": 53.6,
+    "30": 59.0
+   },
+   "lock_by_dist": {
+    "touge": 51.7,
+    "wangan": 61.0,
+    "street": 43.0
+   },
+   "rlock_by_len": {
+    "10": 15.6,
+    "20": 19.9,
+    "30": 24.0
+   },
+   "rlock_by_dist": {
+    "touge": 19.4,
+    "wangan": 20.7,
+    "street": 19.3
+   },
+   "ovc_by_len": {
+    "10": 7.0,
+    "20": 7.3,
+    "30": 7.5
+   },
+   "ovc_by_dist": {
+    "touge": 7.1,
+    "wangan": 8.4,
+    "street": 6.3
+   },
+   "lockdur_by_len": {
+    "10": 2.32,
+    "20": 3.17,
+    "30": 3.6
+   }
+  },
+  "feel_avg_even": {
+   "ov": 19.6,
+   "ovc": 6.5,
+   "lock": 45.1,
+   "pen": 9.5,
+   "rlock": 22.9,
+   "rov": 4.4,
+   "rovplay": 2.3,
+   "rswitch": 23.2,
+   "limp": 11.6,
+   "streak_mean": 8.15,
+   "pen_per_overrun_clash": 144.5,
+   "lock_dur_mean": 3.7,
+   "lock_dur_share": {
+    "0": 5.6,
+    "1": 5.8,
+    "2": 38.5,
+    "3": 15.5,
+    "4+": 34.6
+   },
+   "locks_per_race": 4.49,
+   "locks_by_res_pow_han_en": [
+    34.9,
+    33.4,
+    31.7
+   ],
+   "lock_by_lap_30turn": [
+    32.7,
+    62.9,
+    69.5
+   ],
+   "lock_by_len": {
+    "10": 32.5,
+    "20": 47.7,
+    "30": 55.0
+   },
+   "lock_by_dist": {
+    "touge": 45.7,
+    "wangan": 51.5,
+    "street": 38.1
+   },
+   "rlock_by_len": {
+    "10": 12.9,
+    "20": 24.8,
+    "30": 31.1
+   },
+   "rlock_by_dist": {
+    "touge": 23.4,
+    "wangan": 26.9,
+    "street": 18.5
+   },
+   "ovc_by_len": {
+    "10": 5.6,
+    "20": 6.8,
+    "30": 7.3
+   },
+   "ovc_by_dist": {
+    "touge": 6.9,
+    "wangan": 6.8,
+    "street": 5.9
+   },
+   "lockdur_by_len": {
+    "10": 2.3,
+    "20": 3.54,
+    "30": 4.1
+   }
+  },
+  "feel_best_tuned": {
+   "ov": 16.2,
+   "ovc": 5.4,
+   "lock": 40.1,
+   "pen": 5.2,
+   "rlock": 14.8,
+   "rov": 6.4,
+   "rovplay": 0.6,
+   "rswitch": 23.8,
+   "limp": 5.2,
+   "streak_mean": 6.12,
+   "pen_per_overrun_clash": 95.6,
+   "lock_dur_mean": 3.18,
+   "lock_dur_share": {
+    "0": 5.5,
+    "1": 5.5,
+    "2": 37.1,
+    "3": 23.0,
+    "4+": 28.9
+   },
+   "locks_per_race": 3.55,
+   "locks_by_res_pow_han_en": [
+    34.6,
+    41.7,
+    23.6
+   ],
+   "lock_by_lap_30turn": [
+    33.6,
+    50.3,
+    53.3
+   ],
+   "lock_by_len": {
+    "10": 34.9,
+    "20": 39.8,
+    "30": 45.7
+   },
+   "lock_by_dist": {
+    "touge": 41.1,
+    "wangan": 56.5,
+    "street": 22.9
+   },
+   "rlock_by_len": {
+    "10": 11.9,
+    "20": 14.7,
+    "30": 17.8
+   },
+   "rlock_by_dist": {
+    "touge": 16.1,
+    "wangan": 18.3,
+    "street": 9.9
+   },
+   "ovc_by_len": {
+    "10": 5.0,
+    "20": 5.4,
+    "30": 5.8
+   },
+   "ovc_by_dist": {
+    "touge": 5.5,
+    "wangan": 7.6,
+    "street": 3.2
+   },
+   "lockdur_by_len": {
+    "10": 2.44,
+    "20": 3.04,
+    "30": 3.43
+   }
+  },
+  "feel_greedy_tuned": {
+   "ov": 27.7,
+   "ovc": 9.2,
+   "lock": 64.0,
+   "pen": 10.2,
+   "rlock": 26.9,
+   "rov": 3.6,
+   "rovplay": 3.6,
+   "rswitch": 22.9,
+   "limp": 10.9,
+   "streak_mean": 10.55,
+   "pen_per_overrun_clash": 110.8,
+   "lock_dur_mean": 3.49,
+   "lock_dur_share": {
+    "0": 5.4,
+    "1": 5.3,
+    "2": 32.5,
+    "3": 19.2,
+    "4+": 37.6
+   },
+   "locks_per_race": 6.06,
+   "locks_by_res_pow_han_en": [
+    30.5,
+    39.2,
+    30.3
+   ],
+   "lock_by_lap_30turn": [
+    55.3,
+    81.3,
+    83.5
+   ],
+   "lock_by_len": {
+    "10": 50.5,
+    "20": 68.1,
+    "30": 73.4
+   },
+   "lock_by_dist": {
+    "touge": 59.4,
+    "wangan": 64.9,
+    "street": 67.6
+   },
+   "rlock_by_len": {
+    "10": 18.1,
+    "20": 28.7,
+    "30": 33.9
+   },
+   "rlock_by_dist": {
+    "touge": 24.3,
+    "wangan": 21.6,
+    "street": 34.8
+   },
+   "ovc_by_len": {
+    "10": 8.7,
+    "20": 9.4,
+    "30": 9.5
+   },
+   "ovc_by_dist": {
+    "touge": 8.4,
+    "wangan": 8.7,
+    "street": 10.6
+   },
+   "lockdur_by_len": {
+    "10": 2.22,
+    "20": 3.44,
+    "30": 3.94
+   }
+  },
+  "feel_perf10_tuned": {
+   "ov": 0.5,
+   "ovc": 0.2,
+   "lock": 6.0,
+   "pen": 0.3,
+   "rlock": 2.1,
+   "rov": 10.4,
+   "rovplay": 0.1,
+   "rswitch": 21.0,
+   "limp": 0.4,
+   "streak_mean": 0.79,
+   "pen_per_overrun_clash": 183.5,
+   "lock_by_len": {
+    "10": 4.7,
+    "20": 5.3,
+    "30": 7.9
+   },
+   "lock_by_dist": {
+    "touge": 2.3,
+    "wangan": 0.0,
+    "street": 15.7
+   },
+   "rlock_by_len": {
+    "10": 1.3,
+    "20": 1.7,
+    "30": 3.4
+   },
+   "rlock_by_dist": {
+    "touge": 1.6,
+    "wangan": 0.0,
+    "street": 4.8
+   },
+   "ovc_by_len": {
+    "10": 0.0,
+    "20": 0.0,
+    "30": 0.5
+   },
+   "ovc_by_dist": {
+    "touge": 0.1,
+    "wangan": 0.0,
+    "street": 0.4
+   },
+   "lockdur_by_len": {
+    "10": 0.47,
+    "20": 0.53,
+    "30": 0.81
+   }
+  }
+ }
+}

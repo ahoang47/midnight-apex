@@ -1,0 +1,1367 @@
+{
+ "A_mid": {
+  "cfg": {
+   "CAP_TURNS": 3.0,
+   "REC_FACTOR": 1.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "RELEASE": 0.8,
+   "PEN_SHAPE": "linear",
+   "PEN_SLOPE": 2.0,
+   "PEN_FLOOR": 0.4,
+   "_cap": 1.05
+  },
+  "perf08_tuned": 17.2,
+  "perf08_even": 4.7,
+  "perf10_tuned": 100.0,
+  "perf10_even": 99.9,
+  "avg_tuned": 67.2,
+  "avg_even": 57.7,
+  "avg_wrong": 47.1,
+  "len10_combat": {
+   "perf08": 46.3,
+   "perf10": 100.0,
+   "avg": 62.4
+  },
+  "len20_combat": {
+   "perf08": 5.0,
+   "perf10": 100.0,
+   "avg": 68.3
+  },
+  "len30_combat": {
+   "perf08": 0.3,
+   "perf10": 100.0,
+   "avg": 71.0
+  },
+  "perf08_by_district": {
+   "touge": 15.2,
+   "wangan": 19.0,
+   "street": 17.4
+  },
+  "perf10_by_district": {
+   "touge": 100.0,
+   "wangan": 100.0,
+   "street": 100.0
+  },
+  "tuned": {
+   "ov": 50.0,
+   "ovc": 18.7,
+   "lock": 63.1,
+   "pen": 5.6,
+   "rlock": 18.0,
+   "rov": 17.4,
+   "rovplay": 15.7,
+   "rswitch": 19.8,
+   "limp": 0.0,
+   "streak_mean": 8.9,
+   "pen_per_overrun_clash": 29.9,
+   "lock_dur_mean": 0.69,
+   "lock_dur_share": {
+    "0": 41.8,
+    "1": 48.8,
+    "2": 7.7,
+    "3+": 1.7
+   },
+   "streak_p90": 13.69,
+   "streak_max": 30,
+   "locks_by_res_fuel_susp_brake": [
+    39.6,
+    31.2,
+    29.2
+   ],
+   "locks_per_race": 13.01,
+   "len10": {
+    "ov": 41.8,
+    "lock": 53.4,
+    "rlock": 13.7,
+    "streak": 4.46,
+    "pen": 4.6
+   },
+   "len20": {
+    "ov": 52.1,
+    "lock": 65.5,
+    "rlock": 19.1,
+    "streak": 9.21,
+    "pen": 5.8
+   },
+   "len30": {
+    "ov": 56.0,
+    "lock": 70.5,
+    "rlock": 21.3,
+    "streak": 13.03,
+    "pen": 6.3
+   },
+   "lock_touge": 75.3,
+   "ov_touge": 59.5,
+   "rlock_touge": 27.3,
+   "lock_wangan": 69.6,
+   "ov_wangan": 53.1,
+   "rlock_wangan": 17.1,
+   "lock_street": 44.6,
+   "ov_street": 37.3,
+   "rlock_street": 9.7
+  },
+  "even": {
+   "ov": 28.3,
+   "ovc": 9.7,
+   "lock": 29.3,
+   "pen": 2.6,
+   "rlock": 5.5,
+   "rov": 7.2,
+   "rovplay": 6.8,
+   "rswitch": 5.9,
+   "limp": 0.0,
+   "streak_mean": 3.23,
+   "pen_per_overrun_clash": 26.4,
+   "lock_dur_mean": 0.51,
+   "lock_dur_share": {
+    "0": 55.1,
+    "1": 39.3,
+    "2": 5.5,
+    "3+": 0.1
+   },
+   "streak_p90": 5.86,
+   "streak_max": 29,
+   "locks_by_res_fuel_susp_brake": [
+    33.7,
+    34.7,
+    31.6
+   ],
+   "locks_per_race": 7.83,
+   "len10": {
+    "ov": 21.0,
+    "lock": 20.9,
+    "rlock": 3.7,
+    "streak": 1.65,
+    "pen": 1.9
+   },
+   "len20": {
+    "ov": 29.9,
+    "lock": 31.1,
+    "rlock": 5.8,
+    "streak": 3.42,
+    "pen": 2.7
+   },
+   "len30": {
+    "ov": 34.1,
+    "lock": 35.9,
+    "rlock": 6.9,
+    "streak": 4.61,
+    "pen": 3.1
+   },
+   "lock_touge": 27.2,
+   "ov_touge": 28.1,
+   "rlock_touge": 5.9,
+   "lock_wangan": 30.7,
+   "ov_wangan": 26.0,
+   "rlock_wangan": 4.7,
+   "lock_street": 29.9,
+   "ov_street": 30.9,
+   "rlock_street": 5.9
+  },
+  "wrong": {
+   "ov": 40.2,
+   "ovc": 14.3,
+   "lock": 43.4,
+   "pen": 3.9,
+   "rlock": 10.7,
+   "rov": 13.0,
+   "rovplay": 10.4,
+   "rswitch": 13.2,
+   "limp": 0.0,
+   "streak_mean": 4.59,
+   "pen_per_overrun_clash": 27.1,
+   "lock_dur_mean": 0.58,
+   "lock_dur_share": {
+    "0": 48.8,
+    "1": 45.5,
+    "2": 4.9,
+    "3+": 0.8
+   },
+   "streak_p90": 7.77,
+   "streak_max": 30,
+   "locks_by_res_fuel_susp_brake": [
+    45.9,
+    38.8,
+    15.3
+   ],
+   "locks_per_race": 10.55,
+   "len10": {
+    "ov": 31.5,
+    "lock": 34.0,
+    "rlock": 7.5,
+    "streak": 2.53,
+    "pen": 3.0
+   },
+   "len20": {
+    "ov": 42.1,
+    "lock": 45.3,
+    "rlock": 11.6,
+    "streak": 4.75,
+    "pen": 4.0
+   },
+   "len30": {
+    "ov": 46.9,
+    "lock": 50.9,
+    "rlock": 12.9,
+    "streak": 6.48,
+    "pen": 4.5
+   },
+   "lock_touge": 42.0,
+   "ov_touge": 44.6,
+   "rlock_touge": 15.3,
+   "lock_wangan": 52.6,
+   "ov_wangan": 44.4,
+   "rlock_wangan": 8.5,
+   "lock_street": 35.7,
+   "ov_street": 31.6,
+   "rlock_street": 8.2
+  },
+  "perf10_tuned_lock": 55.9,
+  "perf10_tuned_rlock": 16.5,
+  "clustering_tuned": {
+   "overall": 66.0,
+   "by_corner": {
+    "DR": [
+     77.1,
+     306
+    ],
+    "SW": [
+     71.7,
+     414
+    ],
+    "HP": [
+     71.2,
+     342
+    ],
+    "ES": [
+     70.5,
+     270
+    ],
+    "IR": [
+     69.5,
+     342
+    ],
+    "CR": [
+     64.5,
+     324
+    ],
+    "CH": [
+     57.1,
+     324
+    ],
+    "N90": [
+     48.5,
+     378
+    ]
+   },
+   "by_lap_30turn": {
+    "1": 56.7,
+    "2": 76.7,
+    "3": 78.0
+   },
+   "by_turn_in_lap": {
+    "0": 40.0,
+    "1": 48.8,
+    "2": 63.7,
+    "3": 64.6,
+    "4": 69.4,
+    "5": 74.6,
+    "6": 74.4,
+    "7": 73.1,
+    "8": 78.0,
+    "9": 73.4
+   },
+   "top_pairs": [
+    [
+     "ES->DR",
+     92.1,
+     72
+    ],
+    [
+     "ES->HP",
+     86.8,
+     99
+    ],
+    [
+     "DR->ES",
+     84.5,
+     54
+    ],
+    [
+     "HP->DR",
+     84.4,
+     90
+    ],
+    [
+     "DR->SW",
+     81.2,
+     36
+    ],
+    [
+     "HP->CH",
+     80.9,
+     54
+    ]
+   ],
+   "bottom_pairs": [
+    [
+     "N90->ES",
+     47.8,
+     45
+    ],
+    [
+     "N90->DR",
+     44.7,
+     36
+    ],
+    [
+     "ES->N90",
+     43.8,
+     36
+    ],
+    [
+     "CH->N90",
+     43.1,
+     144
+    ]
+   ]
+  },
+  "gap_even": 9.6,
+  "clear_even": 58.5,
+  "gap_wrong": 20.1,
+  "clear_wrong": 80.7,
+  "gap_wrong_max_cell": 59.5,
+  "worst_cell": {
+   "track": "W3_C1_Outer",
+   "length": 30,
+   "style": "conserver",
+   "tuned_split": [
+    0.3,
+    0.45,
+    0.25
+   ],
+   "wrong_split": [
+    0.3,
+    0.25,
+    0.45
+   ],
+   "tuned_win": 79.0,
+   "wrong_win": 19.5
+  },
+  "gap_by_len": {
+   "10": [
+    4.6,
+    11.1
+   ],
+   "20": [
+    10.5,
+    21.6
+   ],
+   "30": [
+    13.6,
+    27.6
+   ]
+  },
+  "one_tune": {
+   "split": [
+    0.3,
+    0.35,
+    0.35
+   ],
+   "mean_loss_vs_cell_best": 8.5,
+   "max_loss": 32.5,
+   "cells_within_2pp": 13.3
+  },
+  "touge": {
+   "tuned": 65.4,
+   "even": 50.8,
+   "gap_even": 14.6,
+   "clear_even": 84.4,
+   "gap_wrong": 18.1,
+   "clear_wrong": 91.1,
+   "worst_wrong": 35.4,
+   "tuned_split": [
+    0.262,
+    0.253,
+    0.484
+   ]
+  },
+  "wangan": {
+   "tuned": 71.5,
+   "even": 59.6,
+   "gap_even": 11.9,
+   "clear_even": 86.7,
+   "gap_wrong": 37.4,
+   "clear_wrong": 100.0,
+   "worst_wrong": 59.5,
+   "tuned_split": [
+    0.27,
+    0.454,
+    0.276
+   ]
+  },
+  "street": {
+   "tuned": 64.7,
+   "even": 62.5,
+   "gap_even": 2.2,
+   "clear_even": 4.4,
+   "gap_wrong": 4.8,
+   "clear_wrong": 51.1,
+   "worst_wrong": 8.5,
+   "tuned_split": [
+    0.37,
+    0.316,
+    0.314
+   ]
+  },
+  "greedy_tuned": 66.0,
+  "ration2_tuned": 68.5,
+  "pacing_gap": 1.2,
+  "pacing_clear": 1.5,
+  "pacing_neg_clear": 0.0,
+  "pacing_max_cell": 5.7,
+  "pacing2_gap": 2.5,
+  "pacing2_clear": 23.7,
+  "pacing2_neg_clear": 0.7,
+  "pacing2_max_cell": 11.4,
+  "greedy_lock": 64.9,
+  "ration2_lock": 50.0,
+  "greedy_ov": 50.5,
+  "ration2_ov": 41.4,
+  "pacing_by_len": {
+   "10": [
+    0.7,
+    2.0
+   ],
+   "20": [
+    1.3,
+    2.4
+   ],
+   "30": [
+    1.6,
+    3.1
+   ]
+  },
+  "read1_tuned": 99.7,
+  "random_same_tune": 11.6,
+  "read_gap": 88.2,
+  "read_gap_clear": 100.0,
+  "avg_vs_random": 44.5,
+  "random_best_tune": 24.6,
+  "read1_lock": 36.4,
+  "read1_rlock": 8.5,
+  "random_lock": 65.0
+ },
+ "B_retune": {
+  "cfg": {
+   "CAP_TURNS": 3.0,
+   "REC_FACTOR": 1.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "RELEASE": 0.8,
+   "PEN_SHAPE": "quadratic",
+   "PEN_SLOPE": 4.0,
+   "PEN_FLOOR": 0.4,
+   "_cap": 1.05
+  },
+  "perf08_tuned": 17.0,
+  "perf08_even": 5.0,
+  "perf10_tuned": 100.0,
+  "perf10_even": 99.9,
+  "avg_tuned": 68.0,
+  "avg_even": 54.5,
+  "avg_wrong": 41.7,
+  "len10_combat": {
+   "perf08": 46.4,
+   "perf10": 100.0,
+   "avg": 63.2
+  },
+  "len20_combat": {
+   "perf08": 4.6,
+   "perf10": 100.0,
+   "avg": 69.2
+  },
+  "len30_combat": {
+   "perf08": 0.2,
+   "perf10": 100.0,
+   "avg": 71.6
+  },
+  "perf08_by_district": {
+   "touge": 14.3,
+   "wangan": 18.7,
+   "street": 18.2
+  },
+  "perf10_by_district": {
+   "touge": 100.0,
+   "wangan": 100.0,
+   "street": 100.0
+  },
+  "tuned": {
+   "ov": 57.3,
+   "ovc": 21.6,
+   "lock": 71.9,
+   "pen": 3.6,
+   "rlock": 22.6,
+   "rov": 19.7,
+   "rovplay": 18.8,
+   "rswitch": 23.4,
+   "limp": 0.0,
+   "streak_mean": 10.63,
+   "pen_per_overrun_clash": 16.5,
+   "lock_dur_mean": 0.76,
+   "lock_dur_share": {
+    "0": 38.3,
+    "1": 49.1,
+    "2": 10.8,
+    "3+": 1.7
+   },
+   "streak_p90": 15.15,
+   "streak_max": 30,
+   "locks_by_res_fuel_susp_brake": [
+    37.4,
+    29.3,
+    33.2
+   ],
+   "locks_per_race": 14.3,
+   "len10": {
+    "ov": 53.8,
+    "lock": 66.8,
+    "rlock": 20.4,
+    "streak": 5.78,
+    "pen": 3.4
+   },
+   "len20": {
+    "ov": 57.7,
+    "lock": 73.0,
+    "rlock": 23.0,
+    "streak": 10.94,
+    "pen": 3.6
+   },
+   "len30": {
+    "ov": 60.3,
+    "lock": 76.0,
+    "rlock": 24.2,
+    "streak": 15.16,
+    "pen": 3.7
+   },
+   "lock_touge": 80.9,
+   "ov_touge": 64.2,
+   "rlock_touge": 31.5,
+   "lock_wangan": 80.8,
+   "ov_wangan": 63.9,
+   "rlock_wangan": 23.1,
+   "lock_street": 54.1,
+   "ov_street": 43.8,
+   "rlock_street": 13.1
+  },
+  "even": {
+   "ov": 29.4,
+   "ovc": 10.1,
+   "lock": 30.6,
+   "pen": 1.3,
+   "rlock": 5.8,
+   "rov": 7.3,
+   "rovplay": 7.2,
+   "rswitch": 5.9,
+   "limp": 0.0,
+   "streak_mean": 3.39,
+   "pen_per_overrun_clash": 13.0,
+   "lock_dur_mean": 0.52,
+   "lock_dur_share": {
+    "0": 53.4,
+    "1": 41.0,
+    "2": 5.5,
+    "3+": 0.1
+   },
+   "streak_p90": 6.15,
+   "streak_max": 29,
+   "locks_by_res_fuel_susp_brake": [
+    34.0,
+    34.7,
+    31.2
+   ],
+   "locks_per_race": 8.01,
+   "len10": {
+    "ov": 21.7,
+    "lock": 21.9,
+    "rlock": 3.9,
+    "streak": 1.72,
+    "pen": 1.0
+   },
+   "len20": {
+    "ov": 31.0,
+    "lock": 32.5,
+    "rlock": 6.2,
+    "streak": 3.58,
+    "pen": 1.4
+   },
+   "len30": {
+    "ov": 35.5,
+    "lock": 37.5,
+    "rlock": 7.4,
+    "streak": 4.86,
+    "pen": 1.5
+   },
+   "lock_touge": 28.9,
+   "ov_touge": 29.5,
+   "rlock_touge": 6.4,
+   "lock_wangan": 30.8,
+   "ov_wangan": 26.0,
+   "rlock_wangan": 4.7,
+   "lock_street": 32.1,
+   "ov_street": 32.7,
+   "rlock_street": 6.4
+  },
+  "wrong": {
+   "ov": 45.8,
+   "ovc": 16.4,
+   "lock": 53.4,
+   "pen": 2.5,
+   "rlock": 12.5,
+   "rov": 13.7,
+   "rovplay": 12.6,
+   "rswitch": 13.6,
+   "limp": 0.0,
+   "streak_mean": 5.96,
+   "pen_per_overrun_clash": 15.4,
+   "lock_dur_mean": 0.7,
+   "lock_dur_share": {
+    "0": 44.7,
+    "1": 44.5,
+    "2": 7.9,
+    "3+": 2.9
+   },
+   "streak_p90": 9.82,
+   "streak_max": 30,
+   "locks_by_res_fuel_susp_brake": [
+    47.3,
+    35.4,
+    17.3
+   ],
+   "locks_per_race": 11.65,
+   "len10": {
+    "ov": 38.7,
+    "lock": 44.4,
+    "rlock": 9.5,
+    "streak": 3.38,
+    "pen": 2.1
+   },
+   "len20": {
+    "ov": 47.2,
+    "lock": 56.2,
+    "rlock": 13.0,
+    "streak": 6.26,
+    "pen": 2.7
+   },
+   "len30": {
+    "ov": 51.6,
+    "lock": 59.8,
+    "rlock": 14.9,
+    "streak": 8.24,
+    "pen": 2.8
+   },
+   "lock_touge": 52.7,
+   "ov_touge": 51.1,
+   "rlock_touge": 16.1,
+   "lock_wangan": 65.6,
+   "ov_wangan": 50.7,
+   "rlock_wangan": 11.5,
+   "lock_street": 42.1,
+   "ov_street": 35.7,
+   "rlock_street": 9.8
+  },
+  "perf10_tuned_lock": 62.2,
+  "perf10_tuned_rlock": 18.7,
+  "clustering_tuned": {
+   "overall": 73.5,
+   "by_corner": {
+    "DR": [
+     81.7,
+     306
+    ],
+    "SW": [
+     81.6,
+     414
+    ],
+    "IR": [
+     78.2,
+     342
+    ],
+    "HP": [
+     77.6,
+     342
+    ],
+    "ES": [
+     76.4,
+     270
+    ],
+    "CR": [
+     73.7,
+     324
+    ],
+    "CH": [
+     65.2,
+     324
+    ],
+    "N90": [
+     54.5,
+     378
+    ]
+   },
+   "by_lap_30turn": {
+    "1": 62.1,
+    "2": 82.5,
+    "3": 83.4
+   },
+   "by_turn_in_lap": {
+    "0": 43.5,
+    "1": 54.6,
+    "2": 71.7,
+    "3": 74.7,
+    "4": 78.6,
+    "5": 83.4,
+    "6": 81.7,
+    "7": 80.1,
+    "8": 85.2,
+    "9": 80.9
+   },
+   "top_pairs": [
+    [
+     "ES->HP",
+     94.1,
+     99
+    ],
+    [
+     "ES->DR",
+     93.6,
+     72
+    ],
+    [
+     "IR->IR",
+     90.2,
+     45
+    ],
+    [
+     "HP->DR",
+     90.1,
+     90
+    ],
+    [
+     "HP->CH",
+     89.8,
+     54
+    ],
+    [
+     "DR->ES",
+     89.6,
+     54
+    ]
+   ],
+   "bottom_pairs": [
+    [
+     "N90->CR",
+     55.6,
+     72
+    ],
+    [
+     "N90->DR",
+     54.5,
+     36
+    ],
+    [
+     "CH->N90",
+     51.3,
+     144
+    ],
+    [
+     "ES->N90",
+     49.4,
+     36
+    ]
+   ]
+  },
+  "gap_even": 13.5,
+  "clear_even": 73.3,
+  "gap_wrong": 26.3,
+  "clear_wrong": 87.4,
+  "gap_wrong_max_cell": 66.8,
+  "worst_cell": {
+   "track": "W3_C1_Outer",
+   "length": 30,
+   "style": "conserver",
+   "tuned_split": [
+    0.25,
+    0.5,
+    0.25
+   ],
+   "wrong_split": [
+    0.25,
+    0.25,
+    0.5
+   ],
+   "tuned_win": 79.7,
+   "wrong_win": 12.8
+  },
+  "gap_by_len": {
+   "10": [
+    7.1,
+    14.6
+   ],
+   "20": [
+    14.7,
+    30.3
+   ],
+   "30": [
+    18.8,
+    34.0
+   ]
+  },
+  "one_tune": {
+   "split": [
+    0.25,
+    0.35,
+    0.4
+   ],
+   "mean_loss_vs_cell_best": 11.6,
+   "max_loss": 29.6,
+   "cells_within_2pp": 0.7
+  },
+  "touge": {
+   "tuned": 66.9,
+   "even": 46.6,
+   "gap_even": 20.3,
+   "clear_even": 100.0,
+   "gap_wrong": 28.1,
+   "clear_wrong": 100.0,
+   "worst_wrong": 51.4,
+   "tuned_split": [
+    0.251,
+    0.25,
+    0.499
+   ]
+  },
+  "wangan": {
+   "tuned": 71.3,
+   "even": 54.2,
+   "gap_even": 17.1,
+   "clear_even": 100.0,
+   "gap_wrong": 44.9,
+   "clear_wrong": 100.0,
+   "worst_wrong": 66.8,
+   "tuned_split": [
+    0.26,
+    0.49,
+    0.25
+   ]
+  },
+  "street": {
+   "tuned": 65.8,
+   "even": 62.6,
+   "gap_even": 3.2,
+   "clear_even": 20.0,
+   "gap_wrong": 5.9,
+   "clear_wrong": 62.2,
+   "worst_wrong": 10.9,
+   "tuned_split": [
+    0.394,
+    0.308,
+    0.298
+   ]
+  },
+  "greedy_tuned": 67.2,
+  "ration2_tuned": 66.5,
+  "pacing_gap": 0.8,
+  "pacing_clear": 0.0,
+  "pacing_neg_clear": 0.0,
+  "pacing_max_cell": 2.6,
+  "pacing2_gap": -0.7,
+  "pacing2_clear": 0.7,
+  "pacing2_neg_clear": 6.7,
+  "pacing2_max_cell": 11.9,
+  "greedy_lock": 72.6,
+  "ration2_lock": 54.2,
+  "greedy_ov": 58.3,
+  "ration2_ov": 46.1,
+  "pacing_by_len": {
+   "10": [
+    0.6,
+    0.0
+   ],
+   "20": [
+    0.8,
+    -0.9
+   ],
+   "30": [
+    1.0,
+    -1.2
+   ]
+  },
+  "read1_tuned": 99.7,
+  "random_same_tune": 16.3,
+  "read_gap": 83.3,
+  "read_gap_clear": 100.0,
+  "avg_vs_random": 43.7,
+  "random_best_tune": 24.9,
+  "read1_lock": 53.5,
+  "read1_rlock": 14.6,
+  "random_lock": 65.0
+ },
+ "C_light": {
+  "cfg": {
+   "CAP_TURNS": 4.5,
+   "REC_FACTOR": 1.15,
+   "CAP_R_EXP": 2.0,
+   "REC_R_EXP": 2.0,
+   "KAPPA_SCALE": 1.5,
+   "RELEASE": 0.8,
+   "PEN_SHAPE": "quadratic",
+   "PEN_SLOPE": 4.0,
+   "PEN_FLOOR": 0.4,
+   "_cap": 1.05
+  },
+  "perf08_tuned": 15.4,
+  "perf08_even": 5.8,
+  "perf10_tuned": 100.0,
+  "perf10_even": 99.9,
+  "avg_tuned": 56.7,
+  "avg_even": 50.5,
+  "avg_wrong": 49.6,
+  "len10_combat": {
+   "perf08": 46.0,
+   "perf10": 99.9,
+   "avg": 57.6
+  },
+  "len20_combat": {
+   "perf08": 0.1,
+   "perf10": 100.0,
+   "avg": 57.2
+  },
+  "len30_combat": {
+   "perf08": 0.0,
+   "perf10": 100.0,
+   "avg": 55.2
+  },
+  "perf08_by_district": {
+   "touge": 15.9,
+   "wangan": 15.2,
+   "street": 15.0
+  },
+  "perf10_by_district": {
+   "touge": 100.0,
+   "wangan": 100.0,
+   "street": 100.0
+  },
+  "tuned": {
+   "ov": 31.8,
+   "ovc": 11.1,
+   "lock": 45.9,
+   "pen": 1.2,
+   "rlock": 12.5,
+   "rov": 9.6,
+   "rovplay": 9.5,
+   "rswitch": 12.6,
+   "limp": 0.0,
+   "streak_mean": 5.51,
+   "pen_per_overrun_clash": 10.7,
+   "lock_dur_mean": 0.94,
+   "lock_dur_share": {
+    "0": 24.3,
+    "1": 60.6,
+    "2": 12.3,
+    "3+": 2.7
+   },
+   "streak_p90": 9.05,
+   "streak_max": 29,
+   "locks_by_res_fuel_susp_brake": [
+    34.5,
+    29.0,
+    36.4
+   ],
+   "locks_per_race": 8.55,
+   "len10": {
+    "ov": 21.7,
+    "lock": 30.6,
+    "rlock": 7.1,
+    "streak": 2.43,
+    "pen": 0.9
+   },
+   "len20": {
+    "ov": 34.8,
+    "lock": 50.7,
+    "rlock": 14.1,
+    "streak": 6.02,
+    "pen": 1.3
+   },
+   "len30": {
+    "ov": 38.9,
+    "lock": 56.6,
+    "rlock": 16.3,
+    "streak": 8.07,
+    "pen": 1.4
+   },
+   "lock_touge": 47.9,
+   "ov_touge": 34.3,
+   "rlock_touge": 16.2,
+   "lock_wangan": 51.8,
+   "ov_wangan": 33.8,
+   "rlock_wangan": 11.2,
+   "lock_street": 38.2,
+   "ov_street": 27.2,
+   "rlock_street": 10.1
+  },
+  "even": {
+   "ov": 2.2,
+   "ovc": 0.7,
+   "lock": 3.0,
+   "pen": 0.1,
+   "rlock": 0.5,
+   "rov": 0.1,
+   "rovplay": 0.1,
+   "rswitch": 0.5,
+   "limp": 0.0,
+   "streak_mean": 0.48,
+   "pen_per_overrun_clash": 8.7,
+   "lock_dur_mean": 0.71,
+   "lock_dur_share": {
+    "0": 40.1,
+    "1": 48.9,
+    "2": 11.0,
+    "3+": 0.0
+   },
+   "streak_p90": 1.47,
+   "streak_max": 14,
+   "locks_by_res_fuel_susp_brake": [
+    55.7,
+    24.1,
+    20.2
+   ],
+   "locks_per_race": 0.69,
+   "len10": {
+    "ov": 1.7,
+    "lock": 2.1,
+    "rlock": 0.3,
+    "streak": 0.19,
+    "pen": 0.1
+   },
+   "len20": {
+    "ov": 2.4,
+    "lock": 3.2,
+    "rlock": 0.5,
+    "streak": 0.49,
+    "pen": 0.1
+   },
+   "len30": {
+    "ov": 2.7,
+    "lock": 3.7,
+    "rlock": 0.6,
+    "streak": 0.75,
+    "pen": 0.1
+   },
+   "lock_touge": 1.7,
+   "ov_touge": 1.5,
+   "rlock_touge": 0.3,
+   "lock_wangan": 6.0,
+   "ov_wangan": 4.0,
+   "rlock_wangan": 0.7,
+   "lock_street": 1.3,
+   "ov_street": 1.2,
+   "rlock_street": 0.3
+  },
+  "wrong": {
+   "ov": 21.2,
+   "ovc": 7.3,
+   "lock": 29.3,
+   "pen": 0.7,
+   "rlock": 7.9,
+   "rov": 7.1,
+   "rovplay": 7.0,
+   "rswitch": 8.1,
+   "limp": 0.0,
+   "streak_mean": 3.34,
+   "pen_per_overrun_clash": 9.9,
+   "lock_dur_mean": 0.87,
+   "lock_dur_share": {
+    "0": 26.6,
+    "1": 60.8,
+    "2": 12.0,
+    "3+": 0.7
+   },
+   "streak_p90": 5.85,
+   "streak_max": 29,
+   "locks_by_res_fuel_susp_brake": [
+    36.2,
+    1.2,
+    62.6
+   ],
+   "locks_per_race": 5.65,
+   "len10": {
+    "ov": 12.4,
+    "lock": 17.0,
+    "rlock": 3.7,
+    "streak": 1.39,
+    "pen": 0.4
+   },
+   "len20": {
+    "ov": 24.6,
+    "lock": 33.7,
+    "rlock": 9.3,
+    "streak": 3.79,
+    "pen": 0.8
+   },
+   "len30": {
+    "ov": 26.6,
+    "lock": 37.1,
+    "rlock": 10.8,
+    "streak": 4.84,
+    "pen": 0.9
+   },
+   "lock_touge": 20.4,
+   "ov_touge": 14.6,
+   "rlock_touge": 3.8,
+   "lock_wangan": 22.3,
+   "ov_wangan": 16.7,
+   "rlock_wangan": 6.7,
+   "lock_street": 45.1,
+   "ov_street": 32.3,
+   "rlock_street": 13.4
+  },
+  "perf10_tuned_lock": 44.5,
+  "perf10_tuned_rlock": 13.6,
+  "clustering_tuned": {
+   "overall": 50.3,
+   "by_corner": {
+    "SW": [
+     57.6,
+     414
+    ],
+    "IR": [
+     55.8,
+     342
+    ],
+    "CR": [
+     54.2,
+     324
+    ],
+    "ES": [
+     53.5,
+     270
+    ],
+    "DR": [
+     51.6,
+     306
+    ],
+    "HP": [
+     46.9,
+     342
+    ],
+    "N90": [
+     41.5,
+     378
+    ],
+    "CH": [
+     41.0,
+     324
+    ]
+   },
+   "by_lap_30turn": {
+    "1": 34.7,
+    "2": 66.5,
+    "3": 68.6
+   },
+   "by_turn_in_lap": {
+    "0": 31.6,
+    "1": 36.2,
+    "2": 40.4,
+    "3": 43.6,
+    "4": 52.6,
+    "5": 56.9,
+    "6": 57.3,
+    "7": 59.1,
+    "8": 61.6,
+    "9": 63.5
+   },
+   "top_pairs": [
+    [
+     "N90->SW",
+     72.5,
+     36
+    ],
+    [
+     "SW->IR",
+     63.9,
+     117
+    ],
+    [
+     "IR->SW",
+     62.5,
+     117
+    ],
+    [
+     "ES->HP",
+     60.7,
+     99
+    ],
+    [
+     "SW->SW",
+     60.4,
+     54
+    ],
+    [
+     "DR->ES",
+     57.9,
+     54
+    ]
+   ],
+   "bottom_pairs": [
+    [
+     "HP->HP",
+     42.2,
+     36
+    ],
+    [
+     "HP->N90",
+     38.5,
+     36
+    ],
+    [
+     "N90->HP",
+     35.6,
+     36
+    ],
+    [
+     "IR->CH",
+     28.0,
+     45
+    ]
+   ]
+  },
+  "gap_even": 6.2,
+  "clear_even": 56.3,
+  "gap_wrong": 7.1,
+  "clear_wrong": 60.0,
+  "gap_wrong_max_cell": 21.0,
+  "worst_cell": {
+   "track": "S1_Shibuya_Grid",
+   "length": 30,
+   "style": "conserver",
+   "tuned_split": [
+    0.5,
+    0.25,
+    0.25
+   ],
+   "wrong_split": [
+    0.25,
+    0.5,
+    0.25
+   ],
+   "tuned_win": 68.1,
+   "wrong_win": 47.0
+  },
+  "gap_by_len": {
+   "10": [
+    2.8,
+    2.8
+   ],
+   "20": [
+    6.7,
+    7.2
+   ],
+   "30": [
+    9.1,
+    11.3
+   ]
+  },
+  "one_tune": {
+   "split": [
+    0.3,
+    0.45,
+    0.25
+   ],
+   "mean_loss_vs_cell_best": 4.0,
+   "max_loss": 12.2,
+   "cells_within_2pp": 35.6
+  },
+  "touge": {
+   "tuned": 49.0,
+   "even": 44.7,
+   "gap_even": 4.4,
+   "clear_even": 40.0,
+   "gap_wrong": 4.7,
+   "clear_wrong": 46.7,
+   "worst_wrong": 12.2,
+   "tuned_split": [
+    0.257,
+    0.28,
+    0.463
+   ]
+  },
+  "wangan": {
+   "tuned": 54.9,
+   "even": 46.9,
+   "gap_even": 8.0,
+   "clear_even": 64.4,
+   "gap_wrong": 8.8,
+   "clear_wrong": 68.9,
+   "worst_wrong": 19.6,
+   "tuned_split": [
+    0.25,
+    0.484,
+    0.266
+   ]
+  },
+  "street": {
+   "tuned": 66.1,
+   "even": 59.8,
+   "gap_even": 6.3,
+   "clear_even": 64.4,
+   "gap_wrong": 7.9,
+   "clear_wrong": 64.4,
+   "worst_wrong": 21.0,
+   "tuned_split": [
+    0.446,
+    0.304,
+    0.25
+   ]
+  },
+  "greedy_tuned": 56.4,
+  "ration2_tuned": 56.4,
+  "pacing_gap": 0.3,
+  "pacing_clear": 0.0,
+  "pacing_neg_clear": 0.0,
+  "pacing_max_cell": 2.0,
+  "pacing2_gap": 0.0,
+  "pacing2_clear": 0.0,
+  "pacing2_neg_clear": 0.0,
+  "pacing2_max_cell": 4.3,
+  "greedy_lock": 45.0,
+  "ration2_lock": 35.7,
+  "greedy_ov": 31.1,
+  "ration2_ov": 23.5,
+  "pacing_by_len": {
+   "10": [
+    0.0,
+    0.3
+   ],
+   "20": [
+    0.3,
+    -0.0
+   ],
+   "30": [
+    0.6,
+    -0.2
+   ]
+  },
+  "read1_tuned": 99.5,
+  "random_same_tune": 10.5,
+  "read_gap": 89.1,
+  "read_gap_clear": 100.0,
+  "avg_vs_random": 42.1,
+  "random_best_tune": 15.1,
+  "read1_lock": 26.4,
+  "read1_rlock": 6.6,
+  "random_lock": 34.4
+ }
+}

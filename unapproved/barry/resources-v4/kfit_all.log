@@ -1,0 +1,126 @@
+{"T": 10, "kappa": 0.75, "cap": 1.05, "perf08": 98.1, "perf08_even": 65.3, "perf10": 100.0, "perf10_even": 99.9, "avg": 42.9, "avg_even": 38.7, "c8080": 90.6, "c8080_even": 86.9}
+{"T": 10, "kappa": 0.75, "cap": 1.1, "avg": 55.6, "avg_even": 52.3, "c8080": 95.2, "c8080_even": 92.6}
+{"T": 10, "kappa": 1.0, "cap": 1.05, "perf08": 94.8, "perf08_even": 55.4, "perf10": 100.0, "perf10_even": 99.9, "avg": 45.7, "avg_even": 41.8, "c8080": 91.5, "c8080_even": 88.2}
+{"T": 10, "kappa": 1.0, "cap": 1.1, "avg": 61.0, "avg_even": 57.9, "c8080": 96.5, "c8080_even": 93.9}
+{"T": 10, "kappa": 1.25, "cap": 1.05, "perf08": 84.6, "perf08_even": 47.7, "perf10": 100.0, "perf10_even": 99.9, "avg": 48.7, "avg_even": 44.1, "c8080": 92.4, "c8080_even": 89.0}
+{"T": 10, "kappa": 1.25, "cap": 1.1, "avg": 66.6, "avg_even": 63.3, "c8080": 97.3, "c8080_even": 95.0}
+{"T": 10, "kappa": 1.5, "cap": 1.05, "perf08": 68.8, "perf08_even": 34.7, "perf10": 100.0, "perf10_even": 99.9, "avg": 51.5, "avg_even": 47.0, "c8080": 93.2, "c8080_even": 90.0}
+{"T": 10, "kappa": 1.5, "cap": 1.1, "avg": 71.7, "avg_even": 68.2, "c8080": 98.0, "c8080_even": 96.0}
+{"T": 10, "kappa": 1.75, "cap": 1.05, "perf08": 46.9, "perf08_even": 24.7, "perf10": 100.0, "perf10_even": 99.9, "avg": 54.2, "avg_even": 49.9, "c8080": 93.9, "c8080_even": 91.1}
+{"T": 10, "kappa": 1.75, "cap": 1.1, "avg": 76.2, "avg_even": 73.1, "c8080": 98.6, "c8080_even": 96.7}
+{"T": 10, "kappa": 2.0, "cap": 1.05, "perf08": 24.7, "perf08_even": 15.0, "perf10": 100.0, "perf10_even": 99.9, "avg": 56.9, "avg_even": 52.9, "c8080": 94.5, "c8080_even": 92.0}
+{"T": 10, "kappa": 2.0, "cap": 1.1, "avg": 80.4, "avg_even": 77.2, "c8080": 99.0, "c8080_even": 97.2}
+{"T": 10, "kappa": 2.5, "cap": 1.05, "perf08": 3.1, "perf08_even": 2.1, "perf10": 100.0, "perf10_even": 99.9, "avg": 62.5, "avg_even": 58.2, "c8080": 95.6, "c8080_even": 93.2}
+{"T": 10, "kappa": 2.5, "cap": 1.1, "avg": 87.2, "avg_even": 83.8, "c8080": 99.6, "c8080_even": 98.0}
+{"T": 20, "kappa": 0.75, "cap": 1.05, "perf08": 41.3, "perf08_even": 21.0, "perf10": 100.0, "perf10_even": 97.5, "avg": 20.6, "avg_even": 15.8, "c8080": 75.6, "c8080_even": 66.8}
+{"T": 20, "kappa": 0.75, "cap": 1.1, "avg": 36.9, "avg_even": 31.1, "c8080": 87.9, "c8080_even": 81.8}
+{"T": 20, "kappa": 1.0, "cap": 1.05, "perf08": 20.9, "perf08_even": 14.5, "perf10": 100.0, "perf10_even": 97.5, "avg": 22.4, "avg_even": 17.3, "c8080": 76.8, "c8080_even": 68.3}
+{"T": 20, "kappa": 1.0, "cap": 1.1, "avg": 41.2, "avg_even": 34.7, "c8080": 89.4, "c8080_even": 83.6}
+{"T": 20, "kappa": 1.25, "cap": 1.05, "perf08": 9.5, "perf08_even": 8.3, "perf10": 100.0, "perf10_even": 97.5, "avg": 24.2, "avg_even": 18.7, "c8080": 78.0, "c8080_even": 69.6}
+{"T": 20, "kappa": 1.25, "cap": 1.1, "avg": 45.1, "avg_even": 38.4, "c8080": 90.7, "c8080_even": 85.4}
+{"T": 20, "kappa": 1.5, "cap": 1.05, "perf08": 3.2, "perf08_even": 3.9, "perf10": 100.0, "perf10_even": 97.5, "avg": 25.9, "avg_even": 20.1, "c8080": 79.0, "c8080_even": 71.0}
+{"T": 20, "kappa": 1.5, "cap": 1.1, "avg": 49.5, "avg_even": 42.2, "c8080": 91.8, "c8080_even": 86.9}
+{"T": 20, "kappa": 1.75, "cap": 1.05, "perf08": 1.0, "perf08_even": 1.3, "perf10": 100.0, "perf10_even": 97.5, "avg": 27.6, "avg_even": 21.5, "c8080": 80.0, "c8080_even": 72.2}
+{"T": 20, "kappa": 1.75, "cap": 1.1, "avg": 53.6, "avg_even": 46.4, "c8080": 92.9, "c8080_even": 88.7}
+{"T": 20, "kappa": 2.0, "cap": 1.05, "perf08": 0.3, "perf08_even": 0.2, "perf10": 100.0, "perf10_even": 97.5, "avg": 29.2, "avg_even": 23.1, "c8080": 81.1, "c8080_even": 73.6}
+{"T": 20, "kappa": 2.0, "cap": 1.1, "avg": 57.4, "avg_even": 50.5, "c8080": 94.2, "c8080_even": 90.3}
+{"T": 20, "kappa": 2.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 97.5, "avg": 32.6, "avg_even": 26.1, "c8080": 83.0, "c8080_even": 76.1}
+{"T": 20, "kappa": 2.5, "cap": 1.1, "avg": 64.7, "avg_even": 58.5, "c8080": 96.1, "c8080_even": 93.0}
+{"T": 30, "kappa": 0.75, "cap": 1.05, "perf08": 3.4, "perf08_even": 2.5, "perf10": 100.0, "perf10_even": 93.5, "avg": 8.5, "avg_even": 4.6, "c8080": 60.5, "c8080_even": 48.7}
+{"T": 30, "kappa": 0.75, "cap": 1.1, "avg": 22.7, "avg_even": 17.2, "c8080": 81.6, "c8080_even": 72.2}
+{"T": 30, "kappa": 1.0, "cap": 1.05, "perf08": 0.6, "perf08_even": 0.6, "perf10": 100.0, "perf10_even": 93.5, "avg": 9.3, "avg_even": 5.2, "c8080": 62.0, "c8080_even": 50.2}
+{"T": 30, "kappa": 1.0, "cap": 1.1, "avg": 26.0, "avg_even": 19.8, "c8080": 83.5, "c8080_even": 74.9}
+{"T": 30, "kappa": 1.25, "cap": 1.05, "perf08": 0.1, "perf08_even": 0.1, "perf10": 100.0, "perf10_even": 93.5, "avg": 10.0, "avg_even": 5.8, "c8080": 63.4, "c8080_even": 51.9}
+{"T": 30, "kappa": 1.25, "cap": 1.1, "avg": 29.2, "avg_even": 22.7, "c8080": 85.5, "c8080_even": 77.5}
+{"T": 30, "kappa": 1.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 10.9, "avg_even": 6.6, "c8080": 64.9, "c8080_even": 53.5}
+{"T": 30, "kappa": 1.5, "cap": 1.1, "avg": 32.7, "avg_even": 26.0, "c8080": 87.5, "c8080_even": 79.9}
+{"T": 30, "kappa": 1.75, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 11.8, "avg_even": 7.3, "c8080": 66.2, "c8080_even": 55.3}
+{"T": 30, "kappa": 1.75, "cap": 1.1, "avg": 36.8, "avg_even": 29.2, "c8080": 89.6, "c8080_even": 82.2}
+{"T": 30, "kappa": 2.0, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 12.9, "avg_even": 8.1, "c8080": 67.9, "c8080_even": 57.2}
+{"T": 30, "kappa": 2.0, "cap": 1.1, "avg": 40.7, "avg_even": 32.6, "c8080": 91.4, "c8080_even": 84.6}
+{"T": 30, "kappa": 2.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 15.3, "avg_even": 9.7, "c8080": 70.9, "c8080_even": 60.7}
+{"T": 30, "kappa": 2.5, "cap": 1.1, "avg": 48.9, "avg_even": 40.4, "c8080": 94.2, "c8080_even": 88.5}
+{"T": 10, "kappa": 0.75, "cap": 1.05, "perf08": 91.0, "perf08_even": 71.4, "perf10": 100.0, "perf10_even": 99.9, "avg": 44.9, "avg_even": 40.7, "c8080": 92.2, "c8080_even": 89.0}
+{"T": 10, "kappa": 0.75, "cap": 1.1, "avg": 57.7, "avg_even": 54.6, "c8080": 96.1, "c8080_even": 93.8}
+{"T": 10, "kappa": 1.0, "cap": 1.05, "perf08": 82.0, "perf08_even": 58.6, "perf10": 100.0, "perf10_even": 99.9, "avg": 47.9, "avg_even": 43.3, "c8080": 93.0, "c8080_even": 89.9}
+{"T": 10, "kappa": 1.0, "cap": 1.1, "avg": 63.6, "avg_even": 60.1, "c8080": 97.1, "c8080_even": 95.0}
+{"T": 10, "kappa": 1.25, "cap": 1.05, "perf08": 67.9, "perf08_even": 44.8, "perf10": 100.0, "perf10_even": 99.9, "avg": 50.7, "avg_even": 46.2, "c8080": 94.0, "c8080_even": 90.7}
+{"T": 10, "kappa": 1.25, "cap": 1.1, "avg": 69.1, "avg_even": 65.6, "c8080": 97.9, "c8080_even": 96.0}
+{"T": 10, "kappa": 1.5, "cap": 1.05, "perf08": 53.3, "perf08_even": 33.3, "perf10": 100.0, "perf10_even": 99.9, "avg": 53.7, "avg_even": 49.3, "c8080": 94.7, "c8080_even": 91.7}
+{"T": 10, "kappa": 1.5, "cap": 1.1, "avg": 74.6, "avg_even": 70.7, "c8080": 98.6, "c8080_even": 96.8}
+{"T": 10, "kappa": 1.75, "cap": 1.05, "perf08": 36.1, "perf08_even": 20.5, "perf10": 100.0, "perf10_even": 99.9, "avg": 56.9, "avg_even": 52.1, "c8080": 95.4, "c8080_even": 92.4}
+{"T": 10, "kappa": 1.75, "cap": 1.1, "avg": 79.0, "avg_even": 75.4, "c8080": 99.0, "c8080_even": 97.4}
+{"T": 10, "kappa": 2.0, "cap": 1.05, "perf08": 21.3, "perf08_even": 10.8, "perf10": 100.0, "perf10_even": 99.9, "avg": 59.6, "avg_even": 55.1, "c8080": 95.9, "c8080_even": 93.0}
+{"T": 10, "kappa": 2.0, "cap": 1.1, "avg": 83.1, "avg_even": 79.5, "c8080": 99.3, "c8080_even": 97.7}
+{"T": 10, "kappa": 2.5, "cap": 1.05, "perf08": 3.4, "perf08_even": 0.4, "perf10": 100.0, "perf10_even": 99.9, "avg": 65.1, "avg_even": 60.3, "c8080": 96.8, "c8080_even": 94.2}
+{"T": 10, "kappa": 2.5, "cap": 1.1, "avg": 89.6, "avg_even": 86.6, "c8080": 99.8, "c8080_even": 98.5}
+{"T": 20, "kappa": 0.75, "cap": 1.05, "perf08": 19.9, "perf08_even": 6.2, "perf10": 100.0, "perf10_even": 96.7, "avg": 21.1, "avg_even": 15.9, "c8080": 78.1, "c8080_even": 67.8}
+{"T": 20, "kappa": 0.75, "cap": 1.1, "avg": 39.3, "avg_even": 32.8, "c8080": 89.5, "c8080_even": 83.6}
+{"T": 20, "kappa": 1.0, "cap": 1.05, "perf08": 12.1, "perf08_even": 2.7, "perf10": 100.0, "perf10_even": 96.7, "avg": 23.0, "avg_even": 17.4, "c8080": 79.1, "c8080_even": 69.2}
+{"T": 20, "kappa": 1.0, "cap": 1.1, "avg": 44.3, "avg_even": 36.8, "c8080": 90.8, "c8080_even": 85.2}
+{"T": 20, "kappa": 1.25, "cap": 1.05, "perf08": 5.3, "perf08_even": 1.1, "perf10": 100.0, "perf10_even": 96.7, "avg": 25.0, "avg_even": 19.1, "c8080": 80.2, "c8080_even": 70.6}
+{"T": 20, "kappa": 1.25, "cap": 1.1, "avg": 48.9, "avg_even": 41.3, "c8080": 91.9, "c8080_even": 86.9}
+{"T": 20, "kappa": 1.5, "cap": 1.05, "perf08": 1.5, "perf08_even": 0.4, "perf10": 100.0, "perf10_even": 96.7, "avg": 26.9, "avg_even": 20.8, "c8080": 81.1, "c8080_even": 72.0}
+{"T": 20, "kappa": 1.5, "cap": 1.1, "avg": 53.3, "avg_even": 45.6, "c8080": 93.1, "c8080_even": 88.5}
+{"T": 20, "kappa": 1.75, "cap": 1.05, "perf08": 0.3, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 96.7, "avg": 29.0, "avg_even": 22.4, "c8080": 82.2, "c8080_even": 73.4}
+{"T": 20, "kappa": 1.75, "cap": 1.1, "avg": 57.8, "avg_even": 49.5, "c8080": 94.3, "c8080_even": 90.0}
+{"T": 20, "kappa": 2.0, "cap": 1.05, "perf08": 0.1, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 96.7, "avg": 30.7, "avg_even": 24.3, "c8080": 83.1, "c8080_even": 74.8}
+{"T": 20, "kappa": 2.0, "cap": 1.1, "avg": 61.9, "avg_even": 53.6, "c8080": 95.2, "c8080_even": 91.4}
+{"T": 20, "kappa": 2.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 96.7, "avg": 34.6, "avg_even": 27.8, "c8080": 85.1, "c8080_even": 77.4}
+{"T": 20, "kappa": 2.5, "cap": 1.1, "avg": 69.1, "avg_even": 61.3, "c8080": 96.9, "c8080_even": 93.8}
+{"T": 30, "kappa": 0.75, "cap": 1.05, "perf08": 0.9, "perf08_even": 0.4, "perf10": 100.0, "perf10_even": 87.3, "avg": 8.7, "avg_even": 4.6, "c8080": 61.4, "c8080_even": 47.1}
+{"T": 30, "kappa": 0.75, "cap": 1.1, "avg": 24.4, "avg_even": 17.5, "c8080": 82.8, "c8080_even": 73.3}
+{"T": 30, "kappa": 1.0, "cap": 1.05, "perf08": 0.2, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 87.3, "avg": 9.6, "avg_even": 5.1, "c8080": 62.7, "c8080_even": 48.7}
+{"T": 30, "kappa": 1.0, "cap": 1.1, "avg": 27.9, "avg_even": 20.2, "c8080": 84.5, "c8080_even": 75.7}
+{"T": 30, "kappa": 1.25, "cap": 1.05, "perf08": 0.1, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 87.3, "avg": 10.4, "avg_even": 5.7, "c8080": 64.0, "c8080_even": 50.2}
+{"T": 30, "kappa": 1.25, "cap": 1.1, "avg": 31.6, "avg_even": 23.4, "c8080": 86.6, "c8080_even": 78.3}
+{"T": 30, "kappa": 1.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 87.3, "avg": 11.2, "avg_even": 6.3, "c8080": 65.3, "c8080_even": 51.7}
+{"T": 30, "kappa": 1.5, "cap": 1.1, "avg": 35.4, "avg_even": 26.8, "c8080": 88.4, "c8080_even": 80.9}
+{"T": 30, "kappa": 1.75, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 87.3, "avg": 12.2, "avg_even": 7.2, "c8080": 66.6, "c8080_even": 53.5}
+{"T": 30, "kappa": 1.75, "cap": 1.1, "avg": 39.3, "avg_even": 30.5, "c8080": 90.1, "c8080_even": 83.1}
+{"T": 30, "kappa": 2.0, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 87.3, "avg": 13.3, "avg_even": 7.9, "c8080": 67.9, "c8080_even": 55.2}
+{"T": 30, "kappa": 2.0, "cap": 1.1, "avg": 43.3, "avg_even": 34.4, "c8080": 91.6, "c8080_even": 85.4}
+{"T": 30, "kappa": 2.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 87.3, "avg": 15.3, "avg_even": 9.3, "c8080": 70.6, "c8080_even": 58.4}
+{"T": 30, "kappa": 2.5, "cap": 1.1, "avg": 51.1, "avg_even": 42.4, "c8080": 94.3, "c8080_even": 89.3}
+{"T": 10, "kappa": 0.75, "cap": 1.05, "perf08": 97.5, "perf08_even": 63.9, "perf10": 100.0, "perf10_even": 99.9, "avg": 41.0, "avg_even": 37.3, "c8080": 90.1, "c8080_even": 86.6}
+{"T": 10, "kappa": 0.75, "cap": 1.1, "avg": 54.0, "avg_even": 50.5, "c8080": 95.0, "c8080_even": 92.2}
+{"T": 10, "kappa": 1.0, "cap": 1.05, "perf08": 92.8, "perf08_even": 53.9, "perf10": 100.0, "perf10_even": 99.9, "avg": 44.3, "avg_even": 40.4, "c8080": 91.2, "c8080_even": 87.6}
+{"T": 10, "kappa": 1.0, "cap": 1.1, "avg": 59.7, "avg_even": 56.4, "c8080": 96.3, "c8080_even": 93.5}
+{"T": 10, "kappa": 1.25, "cap": 1.05, "perf08": 81.9, "perf08_even": 45.2, "perf10": 100.0, "perf10_even": 99.9, "avg": 47.1, "avg_even": 43.2, "c8080": 92.1, "c8080_even": 88.7}
+{"T": 10, "kappa": 1.25, "cap": 1.1, "avg": 65.3, "avg_even": 62.0, "c8080": 97.3, "c8080_even": 94.7}
+{"T": 10, "kappa": 1.5, "cap": 1.05, "perf08": 64.4, "perf08_even": 32.7, "perf10": 100.0, "perf10_even": 99.9, "avg": 50.2, "avg_even": 45.8, "c8080": 92.9, "c8080_even": 89.9}
+{"T": 10, "kappa": 1.5, "cap": 1.1, "avg": 70.6, "avg_even": 67.1, "c8080": 97.9, "c8080_even": 95.7}
+{"T": 10, "kappa": 1.75, "cap": 1.05, "perf08": 42.6, "perf08_even": 22.1, "perf10": 100.0, "perf10_even": 99.9, "avg": 52.9, "avg_even": 48.7, "c8080": 93.7, "c8080_even": 90.8}
+{"T": 10, "kappa": 1.75, "cap": 1.1, "avg": 75.5, "avg_even": 72.1, "c8080": 98.5, "c8080_even": 96.5}
+{"T": 10, "kappa": 2.0, "cap": 1.05, "perf08": 21.0, "perf08_even": 13.3, "perf10": 100.0, "perf10_even": 99.9, "avg": 55.6, "avg_even": 51.4, "c8080": 94.4, "c8080_even": 91.6}
+{"T": 10, "kappa": 2.0, "cap": 1.1, "avg": 79.8, "avg_even": 76.5, "c8080": 98.9, "c8080_even": 97.0}
+{"T": 10, "kappa": 2.5, "cap": 1.05, "perf08": 2.8, "perf08_even": 1.3, "perf10": 100.0, "perf10_even": 99.9, "avg": 61.4, "avg_even": 57.2, "c8080": 95.4, "c8080_even": 92.9}
+{"T": 10, "kappa": 2.5, "cap": 1.1, "avg": 86.9, "avg_even": 83.2, "c8080": 99.6, "c8080_even": 97.9}
+{"T": 20, "kappa": 0.75, "cap": 1.05, "perf08": 32.5, "perf08_even": 19.0, "perf10": 100.0, "perf10_even": 97.2, "avg": 18.7, "avg_even": 14.3, "c8080": 74.2, "c8080_even": 65.1}
+{"T": 20, "kappa": 0.75, "cap": 1.1, "avg": 34.3, "avg_even": 28.7, "c8080": 87.1, "c8080_even": 80.4}
+{"T": 20, "kappa": 1.0, "cap": 1.05, "perf08": 15.3, "perf08_even": 12.6, "perf10": 100.0, "perf10_even": 97.2, "avg": 20.2, "avg_even": 15.8, "c8080": 75.5, "c8080_even": 66.6}
+{"T": 20, "kappa": 1.0, "cap": 1.1, "avg": 38.8, "avg_even": 32.7, "c8080": 88.6, "c8080_even": 82.4}
+{"T": 20, "kappa": 1.25, "cap": 1.05, "perf08": 5.9, "perf08_even": 7.0, "perf10": 100.0, "perf10_even": 97.2, "avg": 22.1, "avg_even": 17.0, "c8080": 76.8, "c8080_even": 68.0}
+{"T": 20, "kappa": 1.25, "cap": 1.1, "avg": 43.1, "avg_even": 36.5, "c8080": 89.9, "c8080_even": 84.3}
+{"T": 20, "kappa": 1.5, "cap": 1.05, "perf08": 2.0, "perf08_even": 3.1, "perf10": 100.0, "perf10_even": 97.2, "avg": 23.8, "avg_even": 18.4, "c8080": 77.9, "c8080_even": 69.3}
+{"T": 20, "kappa": 1.5, "cap": 1.1, "avg": 47.3, "avg_even": 40.2, "c8080": 91.2, "c8080_even": 86.0}
+{"T": 20, "kappa": 1.75, "cap": 1.05, "perf08": 0.9, "perf08_even": 0.9, "perf10": 100.0, "perf10_even": 97.2, "avg": 25.6, "avg_even": 19.8, "c8080": 78.9, "c8080_even": 70.7}
+{"T": 20, "kappa": 1.75, "cap": 1.1, "avg": 51.5, "avg_even": 44.3, "c8080": 92.3, "c8080_even": 87.7}
+{"T": 20, "kappa": 2.0, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.1, "perf10": 100.0, "perf10_even": 97.2, "avg": 27.2, "avg_even": 21.6, "c8080": 79.7, "c8080_even": 72.0}
+{"T": 20, "kappa": 2.0, "cap": 1.1, "avg": 55.3, "avg_even": 48.1, "c8080": 93.5, "c8080_even": 89.3}
+{"T": 20, "kappa": 2.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 97.2, "avg": 30.7, "avg_even": 24.7, "c8080": 82.0, "c8080_even": 74.7}
+{"T": 20, "kappa": 2.5, "cap": 1.1, "avg": 62.8, "avg_even": 56.4, "c8080": 95.5, "c8080_even": 92.3}
+{"T": 30, "kappa": 0.75, "cap": 1.05, "perf08": 1.0, "perf08_even": 1.8, "perf10": 100.0, "perf10_even": 93.5, "avg": 7.2, "avg_even": 3.7, "c8080": 57.5, "c8080_even": 45.5}
+{"T": 30, "kappa": 0.75, "cap": 1.1, "avg": 19.9, "avg_even": 14.9, "c8080": 79.3, "c8080_even": 69.7}
+{"T": 30, "kappa": 1.0, "cap": 1.05, "perf08": 0.1, "perf08_even": 0.3, "perf10": 100.0, "perf10_even": 93.5, "avg": 8.0, "avg_even": 4.2, "c8080": 59.0, "c8080_even": 46.9}
+{"T": 30, "kappa": 1.0, "cap": 1.1, "avg": 23.0, "avg_even": 17.5, "c8080": 81.5, "c8080_even": 72.5}
+{"T": 30, "kappa": 1.25, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 8.6, "avg_even": 4.8, "c8080": 60.6, "c8080_even": 48.7}
+{"T": 30, "kappa": 1.25, "cap": 1.1, "avg": 26.4, "avg_even": 20.1, "c8080": 83.7, "c8080_even": 75.0}
+{"T": 30, "kappa": 1.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 9.3, "avg_even": 5.4, "c8080": 62.1, "c8080_even": 50.4}
+{"T": 30, "kappa": 1.5, "cap": 1.1, "avg": 29.7, "avg_even": 23.2, "c8080": 86.0, "c8080_even": 77.7}
+{"T": 30, "kappa": 1.75, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 10.3, "avg_even": 6.1, "c8080": 63.7, "c8080_even": 52.1}
+{"T": 30, "kappa": 1.75, "cap": 1.1, "avg": 33.3, "avg_even": 26.4, "c8080": 88.0, "c8080_even": 80.0}
+{"T": 30, "kappa": 2.0, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 11.2, "avg_even": 6.7, "c8080": 65.0, "c8080_even": 53.8}
+{"T": 30, "kappa": 2.0, "cap": 1.1, "avg": 37.3, "avg_even": 30.0, "c8080": 90.0, "c8080_even": 82.6}
+{"T": 30, "kappa": 2.5, "cap": 1.05, "perf08": 0.0, "perf08_even": 0.0, "perf10": 100.0, "perf10_even": 93.5, "avg": 13.2, "avg_even": 8.4, "c8080": 68.1, "c8080_even": 57.3}
+{"T": 30, "kappa": 2.5, "cap": 1.1, "avg": 45.5, "avg_even": 37.4, "c8080": 93.1, "c8080_even": 86.9}

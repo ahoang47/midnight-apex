@@ -1,0 +1,644 @@
+{
+ "seeds": [
+  20261112,
+  20261113,
+  20261114,
+  20261115,
+  20261116,
+  20261117,
+  20261118,
+  20261119,
+  20261120
+ ],
+ "n": 1000,
+ "tracks": [
+  [
+   "street",
+   "S1_Shibuya_Grid"
+  ],
+  [
+   "street",
+   "S2_Ginza_Blocks"
+  ],
+  [
+   "street",
+   "S3_Shinjuku_Underpass"
+  ],
+  [
+   "street",
+   "S4_Roppongi_Hill"
+  ],
+  [
+   "street",
+   "S5_Harbor_Warehouses"
+  ],
+  [
+   "touge",
+   "T1_Akina_Switchbacks"
+  ],
+  [
+   "touge",
+   "T2_Irohazaka_Ladder"
+  ],
+  [
+   "touge",
+   "T3_Usui_Esses"
+  ],
+  [
+   "touge",
+   "T4_Myogi_Descent"
+  ],
+  [
+   "touge",
+   "T5_Hakone_Ridge"
+  ],
+  [
+   "wangan",
+   "W1_Bayshore_Run"
+  ],
+  [
+   "wangan",
+   "W2_Daikoku_Loop"
+  ],
+  [
+   "wangan",
+   "W3_C1_Outer"
+  ],
+  [
+   "wangan",
+   "W4_Tatsumi_Sprint"
+  ],
+  [
+   "wangan",
+   "W5_Aqualine_Flyer"
+  ]
+ ],
+ "laps": [
+  [
+   "N90",
+   "CH",
+   "N90",
+   "CR",
+   "CH",
+   "N90",
+   "IR",
+   "DR",
+   "N90",
+   "ES"
+  ],
+  [
+   "N90",
+   "N90",
+   "CH",
+   "SW",
+   "N90",
+   "HP",
+   "CH",
+   "N90",
+   "CR",
+   "IR"
+  ],
+  [
+   "CH",
+   "N90",
+   "DR",
+   "N90",
+   "CH",
+   "ES",
+   "N90",
+   "IR",
+   "CH",
+   "CR"
+  ],
+  [
+   "N90",
+   "CR",
+   "CH",
+   "N90",
+   "DR",
+   "CH",
+   "N90",
+   "SW",
+   "N90",
+   "ES"
+  ],
+  [
+   "CH",
+   "N90",
+   "IR",
+   "CH",
+   "N90",
+   "CR",
+   "HP",
+   "N90",
+   "CH",
+   "DR"
+  ],
+  [
+   "HP",
+   "ES",
+   "HP",
+   "DR",
+   "ES",
+   "HP",
+   "N90",
+   "HP",
+   "DR",
+   "CH"
+  ],
+  [
+   "HP",
+   "HP",
+   "ES",
+   "DR",
+   "HP",
+   "HP",
+   "ES",
+   "DR",
+   "CR",
+   "ES"
+  ],
+  [
+   "ES",
+   "ES",
+   "DR",
+   "HP",
+   "CH",
+   "ES",
+   "HP",
+   "DR",
+   "DR",
+   "N90"
+  ],
+  [
+   "DR",
+   "HP",
+   "ES",
+   "DR",
+   "SW",
+   "HP",
+   "DR",
+   "ES",
+   "HP",
+   "CH"
+  ],
+  [
+   "CH",
+   "HP",
+   "DR",
+   "ES",
+   "HP",
+   "CR",
+   "DR",
+   "HP",
+   "ES",
+   "IR"
+  ],
+  [
+   "SW",
+   "IR",
+   "CR",
+   "SW",
+   "SW",
+   "IR",
+   "CR",
+   "CH",
+   "SW",
+   "IR"
+  ],
+  [
+   "IR",
+   "SW",
+   "SW",
+   "CR",
+   "IR",
+   "DR",
+   "SW",
+   "CR",
+   "SW",
+   "IR"
+  ],
+  [
+   "CR",
+   "SW",
+   "IR",
+   "IR",
+   "SW",
+   "N90",
+   "SW",
+   "CR",
+   "IR",
+   "SW"
+  ],
+  [
+   "SW",
+   "CR",
+   "CR",
+   "IR",
+   "SW",
+   "IR",
+   "HP",
+   "SW",
+   "SW",
+   "CR"
+  ],
+  [
+   "IR",
+   "IR",
+   "SW",
+   "CR",
+   "SW",
+   "CH",
+   "IR",
+   "SW",
+   "CR",
+   "SW"
+  ]
+ ],
+ "lengths": [
+  10,
+  20,
+  30
+ ],
+ "styles": [
+  "balanced",
+  "hot_early",
+  "conserver"
+ ],
+ "keys": [
+  "win",
+  "ov",
+  "ovc",
+  "lock",
+  "pen",
+  "rlock",
+  "rov",
+  "rovplay",
+  "rswitch",
+  "streak",
+  "limp",
+  "lockdur"
+ ],
+ "tunes": [
+  [
+   0.25,
+   0.25,
+   0.5
+  ],
+  [
+   0.25,
+   0.3,
+   0.45
+  ],
+  [
+   0.25,
+   0.35,
+   0.4
+  ],
+  [
+   0.25,
+   0.4,
+   0.35
+  ],
+  [
+   0.25,
+   0.45,
+   0.3
+  ],
+  [
+   0.25,
+   0.5,
+   0.25
+  ],
+  [
+   0.3,
+   0.25,
+   0.45
+  ],
+  [
+   0.3,
+   0.3,
+   0.4
+  ],
+  [
+   0.3,
+   0.35,
+   0.35
+  ],
+  [
+   0.3,
+   0.4,
+   0.3
+  ],
+  [
+   0.3,
+   0.45,
+   0.25
+  ],
+  [
+   0.35,
+   0.25,
+   0.4
+  ],
+  [
+   0.35,
+   0.3,
+   0.35
+  ],
+  [
+   0.35,
+   0.35,
+   0.3
+  ],
+  [
+   0.35,
+   0.4,
+   0.25
+  ],
+  [
+   0.4,
+   0.25,
+   0.35
+  ],
+  [
+   0.4,
+   0.3,
+   0.3
+  ],
+  [
+   0.4,
+   0.35,
+   0.25
+  ],
+  [
+   0.45,
+   0.25,
+   0.3
+  ],
+  [
+   0.45,
+   0.3,
+   0.25
+  ],
+  [
+   0.5,
+   0.25,
+   0.25
+  ],
+  [
+   0.3333333333333333,
+   0.3333333333333333,
+   0.3333333333333333
+  ]
+ ],
+ "candidates": {
+  "G1_slant_m05": {
+   "REC_FACTOR": 1.0,
+   "RELEASE": 0.3,
+   "AGG_STEP": 1.0,
+   "PEN_SHAPE": "linear",
+   "PEN_SLOPE": 2.0,
+   "PEN_FLOOR": 0.4,
+   "CAP_TURNS": 3.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "KAPPA_10": 1.75,
+   "KAPPA_20": 2.25,
+   "KAPPA_30": 2.25,
+   "BOSS_REC_FACTOR": 1.0,
+   "BOSS_RELEASE": 0.8,
+   "BOSS_CAP_TURNS": 3.0,
+   "RES_T": 0.7,
+   "RES_K": 2.0,
+   "RES_LOOK": 0.5,
+   "PLAN_H": 3,
+   "_cap": 1.08,
+   "DEMAND_SLANT": 2.0,
+   "STAT_M_W": 0.5
+  },
+  "G2_slant_m10": {
+   "REC_FACTOR": 1.0,
+   "RELEASE": 0.3,
+   "AGG_STEP": 1.0,
+   "PEN_SHAPE": "linear",
+   "PEN_SLOPE": 2.0,
+   "PEN_FLOOR": 0.4,
+   "CAP_TURNS": 3.0,
+   "CAP_R_EXP": 1.0,
+   "REC_R_EXP": 1.0,
+   "KAPPA_SCALE": 1.5,
+   "KAPPA_10": 1.75,
+   "KAPPA_20": 2.25,
+   "KAPPA_30": 2.25,
+   "BOSS_REC_FACTOR": 1.0,
+   "BOSS_RELEASE": 0.8,
+   "BOSS_CAP_TURNS": 3.0,
+   "RES_T": 0.7,
+   "RES_K": 2.0,
+   "RES_LOOK": 0.5,
+   "PLAN_H": 3,
+   "_cap": 1.07,
+   "DEMAND_SLANT": 2.0,
+   "STAT_M_W": 1.0
+  }
+ },
+ "measures": {
+  "G1_slant_m05": {
+   "avg_cap": [
+    1.08,
+    0.6,
+    0.6,
+    {
+     "pacing": "mix"
+    },
+    {
+     "PACE_Q": 0.6
+    }
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "c8080": [
+    1.08,
+    0.8,
+    0.8,
+    {
+     "pacing": "mix"
+    },
+    {
+     "PACE_Q": 0.8
+    }
+   ],
+   "best_cap": [
+    1.08,
+    0.6,
+    0.6,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "greedy_cap": [
+    1.08,
+    0.6,
+    0.6,
+    {
+     "pacing": "greedy"
+    },
+    {}
+   ],
+   "read1_best": [
+    1.08,
+    1.0,
+    0.6,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "read1_greedy": [
+    1.08,
+    1.0,
+    0.6,
+    {
+     "pacing": "greedy"
+    },
+    {}
+   ],
+   "rand_best": [
+    1.08,
+    1.0,
+    0.6,
+    {
+     "pacing": "reserve",
+     "mode": "randguess"
+    },
+    {}
+   ],
+   "rand_greedy": [
+    1.08,
+    1.0,
+    0.6,
+    {
+     "pacing": "greedy",
+     "mode": "randguess"
+    },
+    {}
+   ]
+  },
+  "G2_slant_m10": {
+   "avg_cap": [
+    1.07,
+    0.6,
+    0.6,
+    {
+     "pacing": "mix"
+    },
+    {
+     "PACE_Q": 0.6
+    }
+   ],
+   "perf_0.8": [
+    0.8,
+    1.0,
+    1.0,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "perf_1.0": [
+    1.0,
+    1.0,
+    1.0,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "c8080": [
+    1.07,
+    0.8,
+    0.8,
+    {
+     "pacing": "mix"
+    },
+    {
+     "PACE_Q": 0.8
+    }
+   ],
+   "best_cap": [
+    1.07,
+    0.6,
+    0.6,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "greedy_cap": [
+    1.07,
+    0.6,
+    0.6,
+    {
+     "pacing": "greedy"
+    },
+    {}
+   ],
+   "read1_best": [
+    1.07,
+    1.0,
+    0.6,
+    {
+     "pacing": "reserve"
+    },
+    {}
+   ],
+   "read1_greedy": [
+    1.07,
+    1.0,
+    0.6,
+    {
+     "pacing": "greedy"
+    },
+    {}
+   ],
+   "rand_best": [
+    1.07,
+    1.0,
+    0.6,
+    {
+     "pacing": "reserve",
+     "mode": "randguess"
+    },
+    {}
+   ],
+   "rand_greedy": [
+    1.07,
+    1.0,
+    0.6,
+    {
+     "pacing": "greedy",
+     "mode": "randguess"
+    },
+    {}
+   ]
+  }
+ }
+}
