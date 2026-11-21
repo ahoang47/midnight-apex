@@ -1,0 +1,38 @@
+{
+  "pocket_m": 62.0,
+  "taper_m": 14.0,
+  "pocket_w_m": 16.0,
+  "road_w_m": 7.5,
+  "curve_r_m": 100.0,
+  "n_lamps": 3,
+  "stall_w_m": 2.6,
+  "stall_d_m": 5.0,
+  "stall_angle_deg": 70.0,
+  "s0": 24.0,
+  "s1": 86.0,
+  "aisle_w_m": 5.5,
+  "island_d_m": [
+    0.15,
+    0.75
+  ],
+  "curb_h_m": 0.15,
+  "how_to_set_length": "POCKET_M TAPER_M POCKET_W N_LAMPS CURVE_R ./run.sh",
+  "pieces": [],
+  "mid_a": 38.0,
+  "mid_b": 72.0,
+  "n_stalls_per_row": 11,
+  "stall_spacing_m": 2.766862208437372,
+  "stall_perp_m": 4.698463103929542,
+  "aisle_d_m": [
+    0.7999999999999998,
+    6.300000000000001
+  ],
+  "centre_row_d_m": 8.649231551964771,
+  "outer_row_d_m": 13.65076844803523,
+  "lamp_s": [
+    45.480000000000004,
+    55.0,
+    64.52
+  ],
+  "arrow_count": 3
+}

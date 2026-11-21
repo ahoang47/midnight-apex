@@ -1,0 +1,50 @@
+[gd_scene load_steps=11 format=3]
+[ext_resource type="Script" path="res://scripts/turnout_lot.gd" id="1"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_floor.glb" id="2"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_curbs.glb" id="3"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_stall_lines.glb" id="4"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_wheel_stops.glb" id="5"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_back_wall.glb" id="6"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_hill_top.glb" id="7"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_lamps.glb" id="8"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_props.glb" id="9"]
+[ext_resource type="PackedScene" path="res://unapproved/arthur/turnout_lot/glb/w16/lot_road_paint.glb" id="10"]
+
+[node name="TurnoutLot" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Floor" type="Node3D" parent="."]
+
+[node name="lot_floor" parent="Floor" instance=ExtResource("2")]
+
+[node name="Curbs" type="Node3D" parent="."]
+
+[node name="lot_curbs" parent="Curbs" instance=ExtResource("3")]
+
+[node name="StallLines" type="Node3D" parent="."]
+
+[node name="lot_stall_lines" parent="StallLines" instance=ExtResource("4")]
+
+[node name="WheelStops" type="Node3D" parent="."]
+
+[node name="lot_wheel_stops" parent="WheelStops" instance=ExtResource("5")]
+
+[node name="BackWall" type="Node3D" parent="."]
+
+[node name="lot_back_wall" parent="BackWall" instance=ExtResource("6")]
+
+[node name="HillTop" type="Node3D" parent="."]
+
+[node name="lot_hill_top" parent="HillTop" instance=ExtResource("7")]
+
+[node name="Lamps" type="Node3D" parent="."]
+
+[node name="lot_lamps" parent="Lamps" instance=ExtResource("8")]
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="lot_props" parent="Props" instance=ExtResource("9")]
+
+[node name="LotArt" type="Node3D" parent="."]
+
+[node name="lot_road_paint" parent="LotArt" instance=ExtResource("10")]

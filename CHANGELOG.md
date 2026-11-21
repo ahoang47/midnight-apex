@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-11-20 [art] Arthur: box backup of turnout lot work (branch only)
+
+- Austin asked (2026-11-20) for a backup push of the turnout lot work, because box storage isn't permanent. This goes on branch `arthur/box-backup` only. It isn't merged into touge-race.
+- `art/kits/turnout_lot/`: the untracked Godot cel renders (`renders/godot_cel/`), raw renders (`renders/raw/`) and `glb/layout.json` from the 6 m aisle pass. The approved kit itself already landed in ccd1126.
+- `unapproved/arthur/turnout_lot/`: unapproved turnout lot exploration files, kept for reference.
+- `design/art/art_direction.md`: no change needed, because the night-lighting edit is already on touge-race (1282dbd).
+- The experiments and mockups are intentionally left out, at Austin's request.
+
+---
+
 ## 2026-11-20 — Barry [sim]: archived unapproved resources-v1..v4 drafts (Austin's call via Desmond: commit box-only work, storage isn't durable)
 - Added `unapproved/barry/resources-v1` through `resources-v4` (scripts, JSON results, logs, notes). Unapproved drafts only; nothing in sim/ or design/ changed.
 - Left out 8 `.npz` result arrays (~86 MB). Why: they regenerate from `run_v2.py`, `run_v3.py`, `run_v4.py` and `retune/run_v4b.py` in the same folders.
