@@ -68,8 +68,13 @@ def resolve_turn(
     race_length: int = 10,
     boss_total: float | None = None,
     kappa_mult: float = 1.0,
+    p_qte_by_clash: list | None = None,
+    o_qte_by_clash: list | None = None,
 ) -> TurnResult:
     """Resolve one turn with the Phi/tau progress model and heat multipliers.
+
+    Per-phase districts (Touge passing go-live 2026-11-20): `p_qte_by_clash` / `o_qte_by_clash` (length 3) score clash i with
+    that side's phase-i QTE instead of the turn score; None = the turn score (every per-turn race, unchanged).
 
     `turn_state.player_qte` / `opponent_qte` are raw timing scores in
     [0, 1], not 1–10 scores. If `player_qte_phases` is a length-3 list
@@ -139,12 +144,12 @@ def resolve_turn(
     for i, p_outcome in enumerate(p_outcomes):
         o_outcome = StanceOutcome(-p_outcome.value)
         pg = clash_progress(
-            p_outcome, p_stances[i], player_qte,
+            p_outcome, p_stances[i], player_qte if p_qte_by_clash is None else p_qte_by_clash[i],
             player.pow, player.en, player.han,
             boss_total, kappa, p_mults[i],
         )
         og = clash_progress(
-            o_outcome, o_stances[i], turn_state.opponent_qte,
+            o_outcome, o_stances[i], turn_state.opponent_qte if o_qte_by_clash is None else o_qte_by_clash[i],
             opponent.pow, opponent.en, opponent.han,
             boss_total, kappa, o_mults[i],
         )
@@ -157,6 +162,8 @@ def resolve_turn(
 
     t.player_progress = p_prog
     t.opponent_progress = o_prog
+    t.player_clash_qte = list(p_qte_by_clash) if p_qte_by_clash is not None else []
+    t.opponent_clash_qte = list(o_qte_by_clash) if o_qte_by_clash is not None else []
     t.player_clash_progress = p_parts
     t.opponent_clash_progress = o_parts
     # Compatibility: same numbers under the old field names so exporters don't crash.

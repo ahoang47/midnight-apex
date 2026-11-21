@@ -1004,8 +1004,8 @@ MS_FLOOR_POINTS = {
 MS_CREW_BUDGET = {
     "street": (295.24, 308.67, 311.92, 320.73, 328.02, 335.48, 336.50),   # re-pinned for HEAT_RELEASE 0.5 (release-0.5 go-live);
     "wangan": (314.54, 340.16, 352.61, 364.74, 375.30, 385.24, 395.20),   # was 293.98 .. 332.58 / 318.65 .. 390.35 / 354.33 .. 437.06
-    "touge": (370.52, 389.10, 400.41, 411.94, 423.42, 434.22, 444.00),
-}
+    "touge": (364.96, 389.10, 400.41, 411.94, 421.80, 432.32, 442.14),   # Touge passing go-live (variant I, Austin 2026-11-20
+}                                                                         # 6:00 PM PT); was 370.52 389.10 400.41 411.94 423.42 434.22 444.00
 MS_BOSS_KAPPA_MULT = {"street": 0.5, "wangan": 1.0, "touge": 1.0}   # per-race stat weight on the crew boss race only
 # Austin's experience goals as measured targets (strong = 80/80, weak = 60/60, at the floor unless stated).
 MS_TARGETS = {
@@ -1017,3 +1017,32 @@ MS_TARGETS = {
 # (n = 6000; no Street boss total keeps 66-68 with G5 <= 95). Tests allow G5 up to target + this, per district.
 MS_G5_ACCEPTED_MISS = {"street": 1.0}
 MS_BOSS_BAND = (66.0, 68.0)   # Austin 2026-11-19 6:26 PM "keep the boss at 66-68%" (inside G1a 65-70); checked by experience_gauntlet.py
+
+
+# Touge passing go-live (Austin approved 2026-11-20 6:00 PM PT: "Yes, make Touge passing live with these stats."; draft
+# unapproved/barry/touge-passing-v1/, variant I). In these districts Entry, Apex and Exit each resolve their own clash with their
+# own phase QTE, and car order (running total progress) can change after each phase. Touge ONLY: Street and Wangan stay
+# per-turn (their per-phase rule is design canon, acf9b25, but not approved for the sim). The race starts from the PA with no
+# lead/chase roles and no turn-5 swap (presentation; the sim never had roles). Heat is unchanged.
+PER_PHASE_DISTRICTS = ("touge",)
+# Option 2 smoothing (per-phase-combat-v1): phase score = w x this phase's press + (1 - w) x mean of the earlier presses this
+# turn; Entry = its own press. Both sides. 1.0 = each phase on its own press.
+PHASE_SMOOTH_W = 0.35
+# Sim player (player_timing / player_quality): one press per phase from the press model, own RNG = Random(seed + this).
+PLAYER_PRESS_SEED_OFFSET = 15_485_863
+
+
+def sample_press_score(rng, sigma_over_a0: float, width_over_w0: float) -> float:
+    """One timing press: s = max(0, 1 - |e| / a), e ~ N(0, sigma) (a0 units); E[s] = expected_hit_quality."""
+    if width_over_w0 <= 0.0:
+        return 0.0
+    if sigma_over_a0 <= 0.0:
+        return 1.0
+    return round_qte_score(max(0.0, 1.0 - abs(rng.gauss(0.0, sigma_over_a0)) / width_over_w0))
+
+
+def smooth_phase_qte(v, w: float = PHASE_SMOOTH_W):
+    """[Entry, w*Apex + (1-w)*Entry, w*Exit + (1-w)*mean(Entry, Apex)] on the raw phase scores; None / w >= 1 -> unchanged."""
+    if v is None or w is None or w >= 1.0:
+        return v
+    return [v[0]] + [round_qte_score(w * v[i] + (1 - w) * sum(v[:i]) / i) for i in (1, 2)]

@@ -1,4 +1,42 @@
-# touge-passing-v1: Touge passing, start from the PA (Barry DRAFT, UNAPPROVED)
+# touge-passing-v1: Touge passing, start from the PA (Barry, LIVE for Touge)
+
+> **LIVE 2026-11-20 (Austin, 6:00 PM PT: "Yes, make Touge passing live with these stats."): go-live commit GOLIVE.** Promoted into
+> `sim/velocity_shift/` for **Touge only**: `E.PER_PHASE_DISTRICTS = ("touge",)`, `E.PHASE_SMOOTH_W = 0.35`,
+> `E.PLAYER_PRESS_SEED_OFFSET`, `E.sample_press_score`, `E.smooth_phase_qte`, the per-phase path in `match.run_match`, per-clash
+> QTE in `combat.resolve_turn` (`p_qte_by_clash` / `o_qte_by_clash`), `TurnResult.player_clash_qte` / `opponent_clash_qte` /
+> `phase_order`, `MatchConfig.per_phase` (None = by district; False forces per-turn), and the Touge crew stats of variant I
+> (364.96 / 389.10 / 400.41 / 411.94 / 421.80 / 432.32 / 442.14). Street and Wangan stay per-turn. The live
+> `experience_gauntlet.py` reproduces the variant I seed-96 row below bit for bit; Street/Wangan are unchanged. This folder's
+> `touge_passing.py` is now the historical draft (the live sim is the source of truth). Godot port list: section "Godot port
+> (go-live)" just below; the older 10-step list further down is superseded by it.
+
+## Godot port (go-live, for Gordon after Austin tells him)
+
+1. Regenerate `scripts/globals.gd`: `python3 tools/touge_race/gen_globals.py` (sets `PIN_COMMIT` to GOLIVE). New constants to
+   mirror: `PER_PHASE_DISTRICTS` ("touge"), `PHASE_SMOOTH_W` 0.35, and the Touge `MS_CREW_BUDGET` row if Godot reads crew stats.
+   The release-0.5 change (`HEAT_RELEASE` 0.3 → 0.5, 68b3fc9) is still unported and lands with the same regeneration.
+2. `scripts/race_core.gd` `submit_qte()`: in Touge, score clash i with the smoothed phase QTE
+   (Entry = press; Apex = round(0.35 x Apex + 0.65 x Entry); Exit = round(0.35 x Exit + 0.65 x mean(Entry, Apex)), with
+   `round_qte_score`), port of `equations.smooth_phase_qte`. Unplayed phase = 0 as today.
+3. AI QTE: 3 draws per turn from `o_qte_rng` in Entry, Apex, Exit order (Entry = today's draw), each clamped + rounded, then
+   smoothed the same way (`match.py` per-phase block). This changes the AI RNG draw count per turn.
+4. Resolve per clash (`combat.resolve_turn` with `p_qte_by_clash` / `o_qte_by_clash`); track order after each phase on the
+   running totals (`TurnResult.phase_order`) for the visible pass.
+5. Remove the roles and swap: `race_core.gd` `role_first` / `role()` / `swap_after()` / `at_swap()` / banking / `seg_*`;
+   `main.gd` ROLE mode and `--role`; `spec/race_config.json` `swap_after_turn`; `hud/turnout_banner.gd`, the role prompt;
+   `hud/gap_meter.gd` CHASING/LEADING (whole-race gap). Bump the state token version (it stores `role_first`).
+6. PA start: the turnout lot moves to before turn 1 (`track_road.gd`, `touge_dressing.gd`, `turnout_lot.tscn`); visible passing
+   replaces `display.json` `visual_gap.touge` (rival keeps its role's side). Presentation details are still open with Austin
+   (side by side vs one behind at the roll-out).
+7. Rerun parity: `python3 tools/touge_race/parity_touge.py` against GOLIVE (drop `role_first` from its print/args). Until the
+   port lands, Touge parity against the live sim will legitimately FAIL (per-phase vs per-turn); run it against the Godot pin
+   instead (`SIM_PATH` = a checkout of globals.gd's `PIN_COMMIT`), the same way the unported release-0.5 change is handled.
+   Do not mark parity green against GOLIVE before the port.
+
+---
+
+> **STALE below as the current state (pre-go-live drafts; the results tables remain the measured record).**
+
 
 ## 2026-11-20 UPDATE (Austin, 5:54 PM PT session: "Let's try it"): w 0.35 + re-pin, rounded and confirmed on 2 seed sets
 

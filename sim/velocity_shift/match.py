@@ -14,6 +14,11 @@ the card draw is gone. Each turn is one corner of the lap:
   3. End of turn: passive corner load, recovery, release (heat.HeatGauges).
   4. Phi/tau progress per clash x stat weight x heat multiplier; the higher
      total after max_turns wins (ties allowed).
+  Per-phase districts (E.PER_PHASE_DISTRICTS = Touge; Touge passing go-live, Austin 2026-11-20 6:00 PM PT): each clash is
+  scored with its own smoothed phase QTE (E.smooth_phase_qte, w = E.PHASE_SMOOTH_W). Player: the callback's Entry/Apex/Exit
+  scores, or (player_timing / player_quality) one press per phase (E.sample_press_score, Random(seed +
+  E.PLAYER_PRESS_SEED_OFFSET)). AI: one draw per phase (Entry = the per-turn draw, then Apex, Exit). Order after each phase =
+  running totals (TurnResult.phase_order). Stances, heat and the winner rule are unchanged.
 """
 
 import copy
@@ -22,6 +27,7 @@ from typing import Callable, Optional
 
 from .models import Stance, StanceOutcome, MatchConfig, MatchResult, TurnResult, TurnState, ClashResult, ClashContext
 from .combat import resolve_turn, pick_line, corner_at_turn, official_tracks, normalize_district
+from . import equations as E
 from .equations import (resolve_stance, OPPONENT_QTE, OPPONENT_QTE_SD, OPPONENT_QTE_MIN, OPPONENT_QTE_MAX,
                         OPPONENT_QTE_SEED_OFFSET, raw_qte_score, mean_phase_qte, phase_raw_qte, DISTRICTS, round_qte_score)
 from .heat import HeatGauges, track_wear, boss_stance, boss_line_weights
@@ -93,6 +99,9 @@ def run_match(
     o_qte_rng = None
     if o_qte_sd > 0.0:
         o_qte_rng = Random(cfg.seed + OPPONENT_QTE_SEED_OFFSET) if cfg.seed is not None else Random()
+
+    per_phase = (normalize_district(district) in E.PER_PHASE_DISTRICTS) if cfg.per_phase is None else bool(cfg.per_phase)
+    press_rng = Random((cfg.seed or 0) + E.PLAYER_PRESS_SEED_OFFSET) if per_phase else None
 
     p_tot = player.pow + player.en + player.han
     o_tot = opponent.pow + opponent.en + opponent.han
@@ -193,8 +202,24 @@ def run_match(
             opponent_heat_mults=o_mults,
             player_qte_phases=p_phases,
         )
+        pq = oq = None
+        if per_phase:
+            if p_phases:                                   # real play: the Entry/Apex/Exit scores
+                pq = list(p_phases)
+            elif cfg.player_timing is not None or cfg.player_quality is not None:
+                sig = E.qte_sigma_over_a0(None, q_time); zw = E.qte_zone_width(r, cfg.qte_window_mod)
+                pq = [E.sample_press_score(press_rng, sig, zw) for _ in range(3)]
+            if o_qte_rng is not None:
+                oq = [o_qte] + [round_qte_score(min(o_qte_hi, max(o_qte_lo, o_qte_rng.gauss(o_qte_mean, o_qte_sd))))
+                                for _ in range(2)]
+            pq = E.smooth_phase_qte(pq); oq = E.smooth_phase_qte(oq)
         turn_result = resolve_turn(turn_state, player, opponent, main_trace, race_length=cfg.max_turns,
-                                   kappa_mult=cfg.kappa_mult)
+                                   kappa_mult=cfg.kappa_mult, p_qte_by_clash=pq, o_qte_by_clash=oq)
+        if per_phase:
+            cp, co = result.player_total_progress, result.opponent_total_progress
+            for a, b in zip(turn_result.player_clash_progress, turn_result.opponent_clash_progress):
+                cp += a; co += b
+                turn_result.phase_order.append("player" if cp > co else "opponent" if co > cp else "even")
         turn_result.corner_type = corner
         turn_result.opponent_line = list(planned_line)
         turn_result.player_heat_fill = p_heat.fill()

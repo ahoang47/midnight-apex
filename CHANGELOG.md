@@ -8,6 +8,23 @@
 
 ---
 
+## 2026-11-20 — Barry [sim]: Touge passing go-live (per-phase Touge, w 0.35, crew variant I) (Austin approved 6:00 PM PT)
+- **Approval:** Austin, 6:00 PM PT: "Yes, make Touge passing live with these stats." (spec approved 5:01 PM PT; "Let's try it"
+  5:54 PM PT to w 0.35 + the re-pin).
+- **sim/velocity_shift:** `equations.py` `PER_PHASE_DISTRICTS = ("touge",)`, `PHASE_SMOOTH_W = 0.35`,
+  `PLAYER_PRESS_SEED_OFFSET`, `sample_press_score`, `smooth_phase_qte`; Touge `MS_CREW_BUDGET` 370.52 / 389.10 / 400.41 /
+  411.94 / 423.42 / 434.22 / 444.00 → 364.96 / 389.10 / 400.41 / 411.94 / 421.80 / 432.32 / 442.14. `match.py` per-phase path
+  (smoothed phase QTE both sides, one AI draw per phase, order after each phase); `combat.resolve_turn` per-clash QTE (default
+  None = unchanged); `models.py` `MatchConfig.per_phase`, `TurnResult.player_clash_qte` / `opponent_clash_qte` / `phase_order`.
+  Street and Wangan unchanged (per-turn; their per-phase is not approved for the sim). No roles/swap in the sim (never were).
+- **Checks:** pytest 100 passed, 2 xfailed (new `tests/test_touge_passing.py`). Experience gauntlet (n 6000) all pass; Touge
+  reproduces dbdc116 variant I seed 96 bit for bit (G1a 66.63, G2a 31.35, G3c 3.40, G5 94.00); Street/Wangan identical to the
+  release-0.5 numbers.
+- **Godot:** port pending (Gordon, on Austin's word). Touge parity vs the live sim will fail until then; parity runs against the
+  Godot pin meanwhile. Port list in `unapproved/barry/touge-passing-v1/README.md`.
+- **Stale:** campaign planner v2 Touge win tables (per-turn, old crew stats) and the Touge cells of
+  `sim/config/mod_skill_climb_v1.json`. Docs: design/01 decision note, design/07 LIVE block.
+
 ## 2026-11-20 — Barry [sim draft]: Touge passing v1 re-pin rounded and confirmed on 2 seed sets (UNAPPROVED)
 - **Ask:** Austin, "Let's try it" (option 2 smoothing w 0.35 + re-pin G, rounded and rerun before calling it final). Draft
   only, `unapproved/barry/touge-passing-v1/`; sim/ untouched. Runner gained `--touge-budget` and `--seed`.

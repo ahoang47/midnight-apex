@@ -6,7 +6,8 @@ no pins: live AI timing (N(OPPONENT_QTE, OPPONENT_QTE_SD) per turn), live player
 
 Cells per district (Street, Wangan, Touge), each through mod_skill.crew_config on the district's hardest live track, 3 boss
 styles x n/3 seeds (96,000,000 + style x 100,000 + k, the same seeds as scripts/mod_skill_climb.py, so at the default n the
-cells reproduce config/mod_skill_climb_v1.json exactly), ties count half:
+Street/Wangan cells reproduce config/mod_skill_climb_v1.json exactly; Touge is per-phase since the Touge passing go-live
+2026-11-20, so its cells reproduce unapproved/barry/touge-passing-v1 variant I instead), ties count half:
   strong 80/80 at the floor, every rung      -> G1a (boss band), G1b, G3a, G3c, G4a
   weak 60/60 at the max build, every rung    -> G2a, G2b, G3b
   weak 60/60 at the floor, boss              -> G4b

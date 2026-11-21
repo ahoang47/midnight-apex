@@ -79,6 +79,11 @@ class TurnResult:
     player_qte: float = 0.0
     opponent_qte: float = 0.0
     player_qte_phases: list[float] = field(default_factory=list)  # inputs that were averaged into player_qte
+    # Per-phase districts (E.PER_PHASE_DISTRICTS, Touge passing go-live 2026-11-20): the (smoothed) QTE each clash used, and
+    # the running order after each phase ("player" / "opponent" / "even" on total progress so far). Empty = per-turn race.
+    player_clash_qte: list[float] = field(default_factory=list)
+    opponent_clash_qte: list[float] = field(default_factory=list)
+    phase_order: list[str] = field(default_factory=list)
     # Heat: per-clash payoff multipliers, and each side's gauges after the turn
     # (load / capacity in HEAT_ORDER POW, HAN, EN; locked flags; limp clash flags).
     player_heat_mults: list[float] = field(default_factory=list)
@@ -175,6 +180,9 @@ class MatchConfig:
     # Per-race stat weight (mod_skill go-live, Austin approved 2026-11-19): kappa = kappa_for_length(max_turns) x
     # kappa_mult. 1.0 = live default; the Street crew boss races at E.MS_BOSS_KAPPA_MULT["street"] = 0.5.
     kappa_mult: float = 1.0
+    # Per-phase resolution (Touge passing go-live, Austin 2026-11-20 6:00 PM PT): None = district in E.PER_PHASE_DISTRICTS;
+    # True / False force it (tests, legacy parity against a pre-go-live Godot pin).
+    per_phase: bool | None = None
     # District line tables (LINE_SET_C) and the lap. Required by the playable
     # engine: match.py picks the opponent's whole line once per corner/turn
     # from the match RNG, and the corners set the heat costs. `corners` is a
