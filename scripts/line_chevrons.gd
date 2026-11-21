@@ -18,16 +18,27 @@ const COL := {
 var mat_cache: Array[ShaderMaterial] = []
 var cfg: Dictionary = {}  # display.json "line_preview" (PLACEHOLDER bends + chevron measures)
 
+var built_key = null  # Gordon (Austin pt137u frame drop): inputs of the last build; the same inputs keep the built chevrons
+
 func clear() -> void:
+	built_key = null
+	if get_child_count() == 0 and mat_cache.is_empty():
+		return
 	for ch in get_children():
 		remove_child(ch)
 		ch.queue_free()
 	mat_cache.clear()
 
 ## segs: array of {s0, s1, d0, d1, stance, hovered, pending}
+## Called every frame during SELECT; rebuilds only when the line, the path or the fog changed (was: ~40 meshes, materials
+## and nodes created and freed every frame).
 func build(pth, segs: Array, fog: Color, fog_near: float, fog_far: float) -> void:
+	var key := [pth.get_instance_id() if pth is Object else pth, segs, fog, fog_near, fog_far, cfg]
+	if built_key != null and key == built_key:
+		return
 	clear()
-	var tex: Texture2D = load("res://assets/tex/kit/line_chevron.png")
+	built_key = key.duplicate(true)
+	var tex: Texture2D = load("res://assets/tex/kit/env/line_chevron.png")   # the kit piece's texture (Arthur README)
 	if tex == null:
 		return
 	var spacing := float(cfg.get("spacing_m", SPACING))
@@ -79,22 +90,24 @@ func _smooth(k: float) -> float:
 	k = clampf(k, 0.0, 1.0)
 	return k * k * (3.0 - 2.0 * k)
 
+## Austin 2026-11-20 (AGENTS.md: authored assets, code places them): Arthur's kit chevron (assets/env/touge/kit/line_chevron.glb,
+## a flat 0.9 m (X) x 1.0 m (Z) quad pointing +Z, origin on the ground at its centre) placed along the chosen line: scaled to
+## the chevron's width x length, lifted y_m, tinted here (white piece). It replaces the quad this script used to build.
+const KIT := "res://assets/env/touge/kit/line_chevron.glb"
+const KIT_W := 0.9
+const KIT_L := 1.0
+static var _kit_mesh: Mesh = null
+static func kit_mesh() -> Mesh:
+	if _kit_mesh == null:
+		var inst: Node3D = (load(KIT) as PackedScene).instantiate()
+		var mis := inst.find_children("*", "MeshInstance3D", true, false)
+		_kit_mesh = (mis[0] as MeshInstance3D).mesh if not mis.is_empty() else null
+		inst.free()
+	return _kit_mesh
+
 func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Color, fog_near: float, fog_far: float, length: float, hw: float, fog_amt: float) -> MeshInstance3D:
-	fwd = fwd.normalized()
-	var right := Vector3.UP.cross(fwd).normalized()
-	# Texture tip is at V=1 (bottom of line_chevron.png). Put that tip at +fwd
-	# so the point faces the direction of travel, not back at the player.
-	var hl := length * 0.5
-	var v := [
-		pos - right * hw - fwd * hl, pos + right * hw - fwd * hl,
-		pos + right * hw + fwd * hl, pos - right * hw + fwd * hl
-	]
-	var uv := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for idx in [0, 1, 2, 0, 2, 3]:
-		st.set_uv(uv[idx])
-		st.add_vertex(v[idx])
+	fwd = Vector3(fwd.x, 0.0, fwd.z).normalized()
+	var right := Vector3.UP.cross(fwd).normalized()   # basis (right, up, fwd): the kit's +Z tip faces the direction of travel
 	var m := ShaderMaterial.new()
 	m.shader = load("res://shaders/chevron.gdshader")
 	m.set_shader_parameter("tex", tex)
@@ -107,8 +120,9 @@ func _chevron(tex: Texture2D, pos: Vector3, fwd: Vector3, tint: Color, fog: Colo
 	m.render_priority = 2
 	mat_cache.append(m)
 	var mi := MeshInstance3D.new()
-	mi.mesh = st.commit()
+	mi.mesh = kit_mesh()
 	mi.material_override = m
+	mi.transform = Transform3D(Basis(right * (2.0 * hw / KIT_W), Vector3.UP, fwd * (length / KIT_L)), pos)
 	mi.extra_cull_margin = 16384.0
 	mi.layers = 1  # not in the glow pass
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF

@@ -5,7 +5,11 @@
 extends "res://scripts/hud/hud_panel.gd"
 func paint() -> void:
 	var q: Dictionary = st.qte; var i: int = int(q.i)
-	var x0 := 150.0; var y0 := 344.0; var x1 := 490.0; var y1 := 420.0
+	# Austin pt137u (HUD overlap check): the panel was authored at y 344-420 before the heat panel (touch_ui.heat_pos,
+	# y 408-472) existed and ran 12 px into it; it now ends 6 px above the heat panel, same size
+	var hp = st.get("heat_pos", [4, 408])
+	var y1: float = minf(420.0, float(hp[1]) - 6.0); var y0: float = y1 - 76.0
+	var x0 := 150.0; var x1 := 490.0
 	lpanel(x0, y0, x1, y1, L_EDGE_L, 7)
 	t2(x0 + 8, y0 + 5, "%s QTE" % PHN[i], 12, L_AMBER, true)
 	t2(x1 - 8, y0 + 6, "%s at the zone" % String(q.key), 10, SUB, false, "r")

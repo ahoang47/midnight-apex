@@ -19,6 +19,7 @@ const TrackRoad = preload("res://scripts/track_road.gd")
 const Dressing = preload("res://scripts/touge_dressing.gd")
 const CamGuard = preload("res://scripts/cam_guard.gd")   # TOUGE: camera clearance (Austin t114u)
 const LineChevrons = preload("res://scripts/line_chevrons.gd")
+const TougeEnv = preload("res://scripts/touge_env.gd")   # Arthur's authored Touge terrain + its collision proxies
 const WanganDressing = preload("res://scripts/wangan_dressing.gd")   # WANGAN:
 var wangan_far = null   # WANGAN: {group, water} static bay / city / cranes / bridge
 var gif_log: Array = []   # WANGAN: per gif frame: phase, corner, rig, mirror shown (playtest checks pick their frames from it)
@@ -94,6 +95,8 @@ var no_timer := false          # TOUGE debug (Austin t119u): planning + continue
 var scroll_skip := 0.0         # TOUGE: road scroll withheld while the cars use the turnout lot (Austin t114u), so it resumes without a jump
 var scroll_raw_prev := 0.0
 var guard_c = null; var guard_s = null   # cam_guard.gd for the course / the scroll straight
+var touge_env = null   # touge_env.gd on the course (null off the Touge kit)
+var env_draw := {}     # last touge_env.cull() result: sections / tris / draws drawn this frame
 var clip_stats := {"frames": 0, "raw": 0, "fixed": 0, "by_rig_raw": {}, "by_rig_fixed": {}, "max_raw": 0.0, "max_fixed": -1e9}
 var heat_check := {"frames": 0, "max_err": 0.0, "bad": 0, "px_checks": 0, "px_bad": 0, "px_max_err": 0.0}
 var cam_lot_from = null
@@ -266,14 +269,21 @@ func _plan_key_test() -> void:
 			var guard := 0   # playback with the QTE holds, stepped at 60 Hz through the same code as _process
 			while core.phase == "TIMING" and guard < 4000:
 				guard += 1
-				if qte_i <= 2 and qte_seg == "sweep" and float(want_ms[qte_i]) >= 0.0 and _qte_ms() >= float(want_ms[qte_i]): handle_key(KEY_SPACE)
+				# a key pressed at want_ms reaches handle_key at the start of the frame that spans it (Godot runs input before
+				# _process), i.e. while _qte_ms() is still the previous frame's time. The old test waited for _qte_ms() >= want,
+				# so a press in the sweep's last frame (zone end - 16.7 ms .. zone end, e.g. seed 68 QTE 1 at 1155.4 ms) was
+				# never sent and the turn timed out: a test-harness timing bug, not a game bug.
+				if qte_i <= 2 and qte_seg == "sweep" and float(want_ms[qte_i]) >= 0.0 and _qte_ms() + 1000.0 / 60.0 > float(want_ms[qte_i]): handle_key(KEY_SPACE)
 				_step_play(1.0 / 60.0)
 				_ease_gap(1.0 / 60.0)
 				if qte_i < 3 and (rival_offset != off0 or (off0 != 0.0 and rival_offset != 0.0 and signf(rival_offset) != signf(off0))):
 					push_error("seed %d: order/gap changed before Exit QTE (qte_i=%d off0=%s off=%s)" % [sd, qte_i, str(off0), str(rival_offset)]); get_tree().quit(1); return
 			if core.phase == "TIMING" or qte_i != 3: push_error("seed %d: playback never ended" % sd); get_tree().quit(1); return
 			# finish the pass into RESULT and confirm the drawn gap equals the resolved lead (no snap)
-			var want_off: float = Track.rival_draw_offset(core.lead(), disp.visual_gap)
+			# TOUGE: the drawn gap is the role's half-race gap (_touge_offset of seg_lead, as _step_play sets rival_offset_target
+			# when the turn resolves). The test still compared with the two-corner Track.rival_draw_offset(lead) model, which
+			# the touge race replaced, so it failed on every seed (Austin pt137u item 5: a stale test, not a game bug).
+			var want_off: float = _touge_offset(core.seg_lead(), core.role())
 			if absf(off1 - want_off) > 0.001:
 				push_error("seed %d: preview off1 %s != resolved %s" % [sd, str(off1), str(want_off)]); get_tree().quit(1); return
 			while pass_t < float(PB.pass_after_exit_s) and guard < 8000:
@@ -290,10 +300,16 @@ func _plan_key_test() -> void:
 			kt_inputs.append({"seed": sd, "corners": [{"pick": core.picks.duplicate(), "qte": q}]})
 			kt_out.append({"seed": sd, "corners": core.history.duplicate(true), "player_total": core.cum_p, "opponent_total": core.cum_o, "winner": core.winner()})
 			if str(shown) != str(core.result.outcomes): push_error("seed %d: panel %s != sim %s" % [sd, str(shown), str(core.result.outcomes)]); get_tree().quit(1); return
-	var od := ProjectSettings.globalize_path("res://").path_join("../out")
-	FileAccess.open(od.path_join("key_test_inputs.json"), FileAccess.WRITE).store_string(JSON.stringify({"races": kt_inputs}))
-	FileAccess.open(od.path_join("key_test_godot.json"), FileAccess.WRITE).store_string(JSON.stringify({"races": kt_out}, " ", false, true))
-	print("PLAN KEY TEST PASS: 200 seeds, %d locked by keys; camera stop == picks every step; 3 QTEs by SPACE per locked turn (%d unplayed) score = hit_quality(press); B.5a panel results == sim outcomes (sim compare: out/key_test_*.json)" % [n_lock, n_unplayed])
+	# the key-test dumps go where tools/two_corner/run_parity.sh reads them (repo root = the Godot project). "../out" was the
+	# old mockup layout (art/mockups/cel_two_corner/godot -> ../out); in this repo it pointed outside the project, the open()
+	# returned null and the test hung after its last seed instead of printing PASS.
+	var od := ProjectSettings.globalize_path("res://").path_join(".out/two_corner")
+	DirAccess.make_dir_recursive_absolute(od)
+	for fp in [["key_test_inputs.json", JSON.stringify({"races": kt_inputs})], ["key_test_godot.json", JSON.stringify({"races": kt_out}, " ", false, true)]]:
+		var fh := FileAccess.open(od.path_join(fp[0]), FileAccess.WRITE)
+		if fh == null: push_error("plan key test: cannot write %s" % od.path_join(fp[0])); get_tree().quit(1); return
+		fh.store_string(fp[1]); fh.close()
+	print("PLAN KEY TEST PASS: 200 seeds, %d locked by keys; camera stop == picks every step; 3 QTEs by SPACE per locked turn (%d unplayed) score = hit_quality(press); B.5a panel results == sim outcomes (sim compare: .out/two_corner/key_test_*.json)" % [n_lock, n_unplayed])
 	get_tree().quit(0)
 
 # ── viewports, post, HUD ──
@@ -332,6 +348,7 @@ func _build_viewports() -> void:
 	hud_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE; hud_rect.texture = hud_vp.get_texture(); hud_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	hud = $HudVP/Hud; hud.scale = Vector2(2, 2)
 	hud.setup(load("res://assets/tex/kit/font_6x9.png"), _json("res://assets/tex/kit/font.json"), load("res://assets/tex/kit/panel9.png"), load("res://assets/tex/kit/logo_v3.png"))
+	_pause_setup()
 	var IW: int = int(disp.render.internal_w); var IH: int = int(disp.render.internal_h)
 	world_vp.size = Vector2i(IW, IH)
 	mirror_vp.size = Vector2i(int(disp.mirror.w), int(disp.mirror.h))
@@ -439,11 +456,16 @@ func _build_road(dk: String) -> void:
 	var cr = track.build_strip(art, course, -60.0, course.length + 60.0, dk, "CourseRoad")   # the whole continuous course (both corners)
 	var gan := []   # WANGAN: overhead sign gantries: one on the scroll straight, one on the course before corner 2's turn-in
 	if dk == "wangan" and views.size() > 1: gan = [views[1].off + views[1].S - 34.0]
-	corner_d = dressing.build(art, course, -60.0, course.length + 60.0, dk, "CourseDressing", {"gantries": gan, "turnout": turnout_geo}); corner_d.road = cr
+	touge_env = TougeEnv.new() if dk == "touge" and bool(DIST[dk].get("kit6", false)) else null   # Austin 2026-11-20: authored world
+	corner_d = dressing.build(art, course, -60.0, course.length + 60.0, dk, "CourseDressing", {"gantries": gan, "turnout": turnout_geo, "env": touge_env}); corner_d.road = cr
+	if touge_env != null:
+		var cd := _mesh_count(corner_d.group); var ae := _mesh_count(touge_env.root)
+		print("TOUGE_ENV files=%d tris=%d draws=%d lamps=%d | CourseDressing all meshes tris=%d draws=%d (authored %d / %d, code-placed %d / %d)" % [touge_env.stats.files, touge_env.stats.tris, touge_env.stats.draws, touge_env.stats.lamps, cd[0], cd[1], ae[0], ae[1], cd[0] - ae[0], cd[1] - ae[1]])
 	if dk == "touge" and disp.has("cam_guard"):   # TOUGE: camera clearance against the kit (lamps are fixed, so their poses are known now)
 		_stream_district(corner_d, scroll_shown); _stream_district(straight_d, scroll_shown)
 		var lot_l: Array = corner_d.lot_group.get_meta("lamps") if corner_d.get("lot_group") != null else []
 		guard_c = CamGuard.new(); guard_c.setup(course, road_W, DIST[dk], disp.cam_guard, turnout_geo, _lamp_list(corner_d.items, lot_l))
+		if corner_d.has("cut"): guard_c.cut = corner_d.cut; guard_c.cut_a0 = float(corner_d.a0)
 		guard_s = CamGuard.new(); guard_s.setup(straight_path, road_W, DIST[dk], disp.cam_guard, {}, _lamp_list(straight_d.items, []))
 	else:
 		guard_c = null; guard_s = null
@@ -631,7 +653,7 @@ func handle_key(k: int) -> void:
 		if k >= KEY_1 and k <= KEY_3: _pick_stance(PLAN_ORDER[k - KEY_1])   # TOUGE: 1/2/3 = POW/HAN/EN direct pick
 		elif k == KEY_UP: _plan_fix_sel(-1)
 		elif k == KEY_DOWN: _plan_fix_sel(1)
-		elif (k == KEY_LEFT or k == KEY_RIGHT) and core.picks.size() == 0: _plan_lane_step(-1 if k == KEY_LEFT else 1)
+		elif k == KEY_LEFT or k == KEY_RIGHT: _plan_lane_step(-1 if k == KEY_LEFT else 1)   # Austin pt137u: Entry, Apex and Exit
 		elif k == KEY_BACKSPACE: core.unpick(); _plan_fix_sel(0)
 		elif k == KEY_ENTER or k == KEY_KP_ENTER:
 			if core.picks.size() >= 3: _do_lock()
@@ -664,14 +686,15 @@ func _continue() -> void:
 
 ## Entry lane with Left / Right (Austin 2026-11-11: "left and right don't scroll left and right when selecting an entry lane").
 ## Moves to the next drawn lane in that on-screen direction: a left corner has IN on the left, a right corner has OUT on the left.
-## No wrap; lanes with none drawn are skipped.
+## Lanes with none drawn are skipped. Austin pt137u ("left/right is much slower than up/down"): works on all three stops
+## (was Entry only) and wraps like Up / Down, so one press always moves the cursor.
 func _screen_lanes() -> Array: return ["E", "H", "P"] if String(core.corner().dir) == "L" else ["P", "H", "E"]
 func _plan_lane_step(dir: int) -> void:
 	var order := _screen_lanes(); var a := _plan_avail()
-	var j: int = order.find(PLAN_ORDER[plan_sel]) + dir
-	while j >= 0 and j < 3:
+	var j: int = order.find(PLAN_ORDER[plan_sel])
+	for n in 3:
+		j = (j + dir + 3) % 3
 		if int(a[order[j]]) > 0: plan_sel = PLAN_ORDER.find(order[j]); return
-		j += dir
 
 ## corner plate title: turn type + direction (frames: 'HAIRPIN R'; N90 label from display.json corner_cams / guide §13.3)
 func _corner_name(c: Dictionary) -> String:
@@ -738,7 +761,17 @@ func _place(car: Node3D, pth, s: float, d: float) -> Dictionary:
 # ── per-phase QTE during playback (display + input; the scores go to core.submit_qte, which resolves the turn with the sim's averaging) ──
 ## timeline of one sweep in ms: cursor starts at 0, zone = [lead, lead + zone_ms], sweep ends at the zone's far edge
 func _qte_zone() -> Vector2: return Vector2(float(QS.lead_ms), float(QS.lead_ms) + zone_ms)
-func _qte_ms() -> float: return qte_seg_t * 1000.0
+## Austin pt137u: timer off (F6 / --no-timer / display.json debug.no_timer) also stops the QTE timing out. The cursor sweeps
+## 0 -> zone end, then back and forth over the same bar until the player presses; the score is hit_quality at the cursor, the
+## same formula as a timed sweep. Scripted runs keep the timed sweep.
+func _qte_wait() -> bool: return no_timer and script_in == null
+func _qte_ms() -> float:
+	var ms := qte_seg_t * 1000.0
+	if not _qte_wait() or qte_seg != "sweep": return ms
+	var span := _qte_zone().y
+	if span <= 0.0: return ms
+	var u := fmod(ms, 2.0 * span)
+	return u if u <= span else 2.0 * span - u
 ## the phase timer (s): the cars hold for the whole QTE bar (lead + zone + tail, display.json qte_sweep PLACEHOLDERS), and at
 ## least result_hold_s after the score goes up
 func _qte_timer_s() -> float: return maxf(float(QS.lead_ms) + float(C.QTE_ZONE_BASE_MS), _qte_zone().y) / 1000.0 + float(QS.tail_ms) / 1000.0
@@ -761,7 +794,7 @@ func _step_qte(dt: float) -> void:
 		if trace_zone != qte_i and ms >= _qte_zone().x: trace_zone = qte_i; _trace("qte_zone phase=%d" % qte_i)
 		if script_in != null and script_qte.size() == 3 and script_qte[qte_i] != null and ms >= _script_press_ms(script_qte[qte_i]):
 			qte_press_ms[qte_i] = ms; qte_res[qte_i] = Combat.phase_raw_qte(script_qte[qte_i]); qte_seg = "show"; qte_show_t = qte_seg_t
-		elif ms > _qte_zone().y:
+		elif ms > _qte_zone().y and not _qte_wait():
 			_qte_timeout()
 	if qte_seg == "show" and qte_seg_t >= _qte_timer_s() and qte_seg_t - qte_show_t >= float(QS.result_hold_s):
 		qte_i += 1; qte_seg = ""; qte_seg_t = 0.0
@@ -812,7 +845,7 @@ func _shot(name: String) -> void:
 	_render_hud(); _update_scene()
 	meta[name] = {"phase": core.phase, "rig": rig, "uv_offset": scroller.uv_offset, "scroll_m": scroller.scroll_m(), "speed_factor": scroller.factor,
 		"cam": [snappedf(cam_pos.x, 0.001), snappedf(cam_pos.y, 0.001), snappedf(cam_pos.z, 0.001)], "s_player": s_player,
-		"rival_offset": snappedf(rival_offset, 0.001), "rival_offset_target": snappedf(rival_offset_target, 0.001), "leader_changed": leader_changed}
+		"rival_offset": snappedf(rival_offset, 0.001), "rival_offset_target": snappedf(rival_offset_target, 0.001), "leader_changed": leader_changed, "env_draw": env_draw.duplicate()}
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	var img := get_viewport().get_texture().get_image()
@@ -966,8 +999,10 @@ func _run_line_preview_shots() -> void:
 	get_tree().quit()
 
 func dump_state() -> String:
-	var tok := RaceCore.encode_token(core.dump())
-	print("TC3 token ", tok)
+	var d: Dictionary = core.dump()
+	d.cars = {"player": carsel.player, "opp": carsel.opp}   # Austin pt137u: optional key (older TC4 tokens load without it)
+	var tok := RaceCore.encode_token(d)
+	print("TC4 token ", tok)
 	DisplayServer.clipboard_set(tok)
 	var f := FileAccess.open("user://last_state.tc1", FileAccess.WRITE); f.store_string(tok)
 	return tok
@@ -975,7 +1010,11 @@ func dump_state() -> String:
 func load_state(tok: String) -> void:
 	var d := RaceCore.decode_token(tok)
 	if d.is_empty(): return   # outdated TC1/TC2: refused with a message, replay it on its own build
-	var n = RaceCore.new(); n.load_state(cfg, d); core = n
+	# the cars the race was played with: from the token if it has them (Austin pt137u), else the current car select
+	if d.has("cars") and d.cars is Dictionary and disp.cars.order.has(String(d.cars.get("player", ""))) and disp.cars.order.has(String(d.cars.get("opp", ""))):
+		carsel.player = String(d.cars.player); carsel.opp = String(d.cars.opp); _apply_cars()
+	var n = RaceCore.new(); n.load_state(_race_cfg(), d); core = n   # was cfg (race_config.json cars, not the chosen ones)
+	_qte_cam_on_race_start()
 	first_corner = true
 	_setup_corner()
 	if core.phase == "RESULT": reveal = 3
@@ -1049,7 +1088,7 @@ func _touch_buttons() -> Array:
 		return out
 	out.append({"id": "look", "r": r4.call(T.lookback), "label": "LOOK BACK" if not look_back else "FORWARD", "sz": 10, "sel": look_back})
 	if core.phase == "SELECT" and core.picks.size() < 3 and turnout == null:
-		var sr: Array = r4.call(T.stance_row); var lanes := _screen_lanes(); var a := _plan_avail()
+		var sr: Array = _stance_row_rect(r4.call(T.stance_row)); var lanes := _screen_lanes(); var a := _plan_avail()
 		for i in 3:
 			var k: String = lanes[i]
 			out.append({"id": "pick_" + k, "r": [sr[0] + i * (sr[2] + 6.0), sr[1], sr[2], sr[3]], "label": {"P": "POW", "H": "HAN", "E": "EN"}[k],
@@ -1169,7 +1208,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if mode == "RACE" and k == KEY_F9: dump_state()
 	elif mode == "RACE" and k == KEY_F10:
 		var t := DisplayServer.clipboard_get()
-		if t.begins_with("TC1:") or t.begins_with("TC2:") or t.begins_with("TC3:"): load_state(t)
+		if t.strip_edges().begins_with("TC"): load_state(t.strip_edges())   # TC4 (was TC1-TC3 only, so a TC4 token never loaded)
 	else: handle_key(k)
 
 const SEQ_SELECT_N := 6
@@ -1187,6 +1226,11 @@ func _tw(sec: float) -> void:
 	var t0 := clock
 	await _wait_game(func(): return clock >= t0 + sec)
 
+## shot turns (0-based): "shot_turns": [0, 1, 2] or the older single "shot_turn" (default 2)
+func _shot_turn(sc: Dictionary, ci: int) -> bool:
+	if sc.has("shot_turns"): return (sc.shot_turns as Array).map(func(v): return int(v)).has(ci)
+	return ci == int(sc.get("shot_turn", 2))
+
 func _run_touge_script() -> void:
 	var sc: Dictionary = script_in
 	await _tw(0.6); await _shot("t00_menu")
@@ -1198,28 +1242,34 @@ func _run_touge_script() -> void:
 	guard = 0
 	while carsel.opp != want_o and guard < 6: _button("o_next"); guard += 1; await _tw(0.25)
 	await _tw(0.5); await _shot("t01_car_select")
-	handle_key(KEY_DOWN); handle_key(KEY_DOWN); handle_key(KEY_ENTER)   # NEXT -> parked start
+	while int(carsel.sel) != 2: handle_key(KEY_DOWN)   # to NEXT (o_next leaves the cursor on the rival row; was DOWN DOWN = player row)
+	handle_key(KEY_ENTER)   # NEXT -> parked start
 	await _tw(0.6)
 	role_sel = 0 if String(sc.get("role", "chase")) == "lead" else 1
 	await _shot("t02_start_prompt")
 	handle_key(KEY_ENTER)   # LEAD / CHASE
 	await _tw(1.2); await _shot("t03_race_start")
 	var played := []
+	void_on = bool(sc.get("void_sweep", false)) or OS.get_cmdline_user_args().has("--void-sweep")
 	while core.phase != "FINISHED":
 		var ci: int = core.corner_index
 		var inp: Dictionary = sc.corners[ci]
 		var want: String = String(inp.get("pick", "PHE"))
 		await _tw(0.8)
+		if _void_enabled(): await _void_sweep_select(ci)
 		if ci == int(sc.get("lookback_turn", -1)):
 			handle_key(KEY_L); await _tw(0.4); await _shot("t%02d_lookback" % (ci + 1)); handle_key(KEY_L); await _tw(0.2)
-		if ci == 0 or ci == int(sc.get("shot_turn", 2)): await _shot("t%02d_select" % (ci + 1))
+		if ci == 0 or _shot_turn(sc, ci): await _shot("t%02d_select" % (ci + 1))
 		for j in 3:
 			var k: String = want[j] if j < want.length() else "P"
 			if not core.allowed().has(k): k = core.allowed()[0]   # gauge locked: first allowed (logged in touge_result.json)
 			plan_sel = PLAN_ORDER.find(k); await _tw(0.25)
-			if j == 1 and ci == int(sc.get("shot_turn", 2)):
+			if j == 1 and _shot_turn(sc, ci):
 				await _wait_game(func(): return stop_t >= float(SC.move_s) + 0.1)
 				await _shot("t%02d_apex_stop" % (ci + 1))
+			if j == 2 and _shot_turn(sc, ci):   # Exit plan view (Austin pic 5)
+				await _wait_game(func(): return stop_t >= float(SC.move_s) + 0.1)
+				await _shot("t%02d_exit_stop" % (ci + 1))
 			if j == 2: await _heat_px_check("t%02d_select2" % (ci + 1))
 			handle_key(KEY_ENTER)
 			await get_tree().process_frame; await get_tree().process_frame
@@ -1228,7 +1278,11 @@ func _run_touge_script() -> void:
 			var sv = RaceCore.fdec(v)
 			script_qte.append(null if sv == null else Combat.round_qte_score(float(sv)))
 		var cam_turns: Array = (sc.get("cam_turns", []) as Array).map(func(v): return int(v))
-		if ci == int(sc.get("shot_turn", 2)):
+		if _void_enabled():
+			for qi in 3:
+				await _wait_game(func(): return core.phase != "TIMING" or qte_i > qi or (qte_i == qi and qte_seg == "sweep" and _qte_ms() >= float(QS.lead_ms) * 0.5))
+				if core.phase == "TIMING" and qte_i == qi: await _void_sweep_qte(ci, qi)
+		if _shot_turn(sc, ci):
 			await _wait_game(func(): return core.phase != "TIMING" or (qte_i == 1 and qte_seg == "sweep" and _qte_ms() >= float(QS.lead_ms) * 0.3))
 			if core.phase == "TIMING":   # treadmill pair (Austin t115u/t116u): walls / rails / verge scroll with the road, lamps stay
 				await _heat_px_check("t%02d_timing" % (ci + 1))
@@ -1237,6 +1291,7 @@ func _run_touge_script() -> void:
 			if core.phase == "TIMING":
 				await _shot("t%02d_qte_apex" % (ci + 1))
 				await _maybe_qte_cam_still()
+				if _arg("--qte-gap-sweep", null) != null: await _qte_gap_sweep(ci)
 			await _wait_game(func(): return core.phase != "TIMING" or qte_t >= 0.85 * float(disp.playback_s))
 			if core.phase == "TIMING": await _shot("t%02d_playback" % (ci + 1))
 		if cam_turns.has(ci + 1):   # dynamic camera: the corner path at the Entry / Exit QTE holds
@@ -1246,11 +1301,12 @@ func _run_touge_script() -> void:
 			if core.phase == "TIMING": await _shot("t%02d_cam_exit_qte" % (ci + 1))
 		await _wait_game(func(): return core.phase == "RESULT" and reveal >= 3 and result_t > 0.4)
 		await _heat_px_check("t%02d_result" % (ci + 1))
+		if _void_enabled(): await _void_sweep_current("t%02d_result" % (ci + 1))
 		if cam_turns.has(ci + 1): await _shot("t%02d_cam_exit_hold" % (ci + 1))
 		played.append({"pick": String(core.result.player_line), "planned": want, "qte": (core.result.qte_in as Array).map(func(v): return null if v == null else RaceCore.fhex(float(v))), "qte_script": inp.qte, "rival": String(core.result.rival_played),
 			"p": RaceCore.fhex(core.result.player_progress), "o": RaceCore.fhex(core.result.opponent_progress), "role": String(core.result.role),
 			"heat_fill": (core.history[-1].p_fill as Array).map(func(v): return RaceCore.fhex(float(v))), "heat_drawn": hud.P.heat.drawn.duplicate()})
-		if ci == 0 or ci == int(sc.get("shot_turn", 2)) or core.at_swap(): await _shot("t%02d_result" % (ci + 1))
+		if ci == 0 or _shot_turn(sc, ci) or core.at_swap(): await _shot("t%02d_result" % (ci + 1))
 		await _wait_game(func(): return (not pb_started) or pass_t >= float(PB.pass_after_exit_s))
 		var swap: bool = core.at_swap()
 		_continue()
@@ -1259,6 +1315,7 @@ func _run_touge_script() -> void:
 				await _wait_game(func(): return turnout == null or _turnout_u() >= 0.1 + m * 0.2)
 				if turnout != null: await _shot("t%02d_turnout_%d" % [ci + 1, m])
 				if turnout != null and m == 2: await _lot_overview_shot("t%02d_lot_overview" % (ci + 1))
+				if turnout != null and m == 2 and _void_enabled(): await _void_sweep_lot(ci)
 			await _wait_game(func(): return turnout == null)
 			await _tw(0.5); await _shot("t%02d_after_swap" % (ci + 2))
 	await _tw(1.5); await _shot("t99_finish")
@@ -1273,6 +1330,7 @@ func _run_touge_script() -> void:
 	var od: String = shots_dir if shots_dir != "" else ProjectSettings.globalize_path("res://.out")   # was ../out (outside the repo; null file when it is missing)
 	DirAccess.make_dir_recursive_absolute(od)
 	FileAccess.open(od.path_join("touge_result.json"), FileAccess.WRITE).store_string(JSON.stringify(out, " ", false, true))
+	_void_report()
 	print("TOUGE_PLAYTEST_DONE winner=%s P=%f O=%f" % [core.winner(), core.cum_p, core.cum_o])
 	get_tree().quit()
 
@@ -1400,7 +1458,9 @@ func _qte_shots(ci: int) -> void:
 func _process(dt: float) -> void:
 	if perf_on:   # CEL: wall-clock frame time (process + render of every viewport), shots/gif frames excluded
 		var now := Time.get_ticks_usec()
-		if perf_last > 0 and not busy and gif_dir == "" and perf_skip <= 0: perf_dts.append(float(now - perf_last) / 1000.0)
+		if perf_last > 0 and not busy and gif_dir == "" and perf_skip <= 0:
+			perf_dts.append(float(now - perf_last) / 1000.0)
+			_perf_bucket(float(now - perf_last) / 1000.0)
 		perf_skip -= 1; perf_last = now
 	dt = minf(dt, 0.05)
 	if busy: return
@@ -1432,7 +1492,8 @@ func _process(dt: float) -> void:
 		if cont_pending and turnout == null: _continue()
 	wheel_angle += minf(float(RS.wheel_spin_cap_rad_s), v / 0.31) * dt
 	_step_lanes(dt)
-	_render_hud(); _update_scene()
+	_render_hud()
+	_update_scene()
 	if gif_dir != "" and clock >= gif_next:
 		gif_next += gif_dt; _gif_frame()
 
@@ -1653,11 +1714,14 @@ func _update_scene() -> void:
 	if turnout != null: _turnout_clearance()
 	_update_camera(pth.point(s_player, 0.0), pp)
 	_guard_camera(st)
+	if core.phase == "TIMING" and look_back == false: _qte_refit_fov()
 	if cam_override != null: cam_pos = cam_override[0]; cam_look = cam_override[1]; cam_fov = cam_override[2]
 	cam.position = cam_pos
 	cam.look_at(cam_look)
 	cam.fov = cam_fov; glow_cam.fov = cam_fov
 	glow_cam.global_transform = cam.global_transform
+	if touge_env != null and not st:   # draw only the sections within the fog of the camera, the mirror and the player car
+		env_draw = touge_env.cull([cam_pos, player_car.position, mirror_cam.global_position if mirror_cam != null else cam_pos], _env_reach())
 	_arthur_push_nearest_lamps()
 	_arthur_update_trails()
 	var cars_on: bool = not (((core.phase == "SELECT" and mode == "RACE" and _sel_stop() > 0)) and bool(SC.hide_cars_at_stops))
@@ -1676,6 +1740,27 @@ func _update_scene() -> void:
 ## TOUGE (Austin t114u): every camera pose (chase, corner path, exit hold, look-back, parked start, turnout, stops) is checked
 ## against the kit model (cam_guard.gd) and pulled in along its line of sight when it would clip. clip_stats counts the raw and
 ## the fixed poses per rig, so the scripted run reports the before / after numbers (CLIP_CHECK line at the end).
+## [triangles, draw calls (surfaces)] of every MeshInstance3D under n (the road_export.gd dressing_* convention)
+func _mesh_count(n: Node) -> Array:
+	var t := 0; var d := 0
+	for mi in n.find_children("*", "MeshInstance3D", true, false):
+		var m: Mesh = (mi as MeshInstance3D).mesh
+		if m == null: continue
+		for si in m.get_surface_count():
+			if m is ArrayMesh:
+				var il: int = (m as ArrayMesh).surface_get_array_index_len(si)
+				t += (il if il > 0 else (m as ArrayMesh).surface_get_array_len(si)) / 3
+			else:
+				var ar: Array = m.surface_get_arrays(si)
+				t += ((ar[Mesh.ARRAY_INDEX] as PackedInt32Array).size() if ar[Mesh.ARRAY_INDEX] != null else (ar[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()) / 3
+			d += 1
+	return [t, d]
+
+## section draw distance: the district fog_far (everything past it is fog colour = the clear colour) + the cull margin
+func _env_reach() -> float:
+	var D: Dictionary = DIST.get("touge", {})
+	return float(D.get("fog_far", 78.0)) + float(D.get("env_cull_margin_m", 10.0))
+
 func _guard_camera(st: bool) -> void:
 	var g = guard_s if (st or _parked()) else guard_c
 	if g == null or mode == "MENU": return
@@ -1829,7 +1914,7 @@ func _render_hud() -> void:
 		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "build": String(RaceCore.build_info().build), "lead": 0.0 if turnout != null else core.seg_lead(), "gap": 0.0 if turnout != null else core.seg_gap(),
 		"left": left, "total": _pick_timer(), "slots": slots, "hand": core.hand, "used": core.picks,
 		"qte": _qte_hud(), "line": pline, "rline": rline, "outs": outs, "plate": plate, "locked_hold": core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s), "mirror": _mirror_on(), "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
-		"preview_panel": lpv.get("panel", [424, 372, 636, 479]), "gap_pos": lpv.get("gap_pos", [220, 98]),
+		"preview_panel": lpv.get("panel", [424, 369, 636, 476]), "gap_pos": lpv.get("gap_pos", [220, 98]),
 		"result": r, "reveal": reveal, "cont_left": maxf(0.0, float(PB.continue_s) - cont_t), "leader_changed": leader_changed, "winner": core.winner() if core.phase == "FINISHED" else "", "cum_p": core.cum_p, "cum_o": core.cum_o,
 		"last_corner": core.corner_index + 1 >= cfg.corners.size(), "fin": fin if core.phase == "FINISHED" else null})
 
@@ -1839,7 +1924,7 @@ func _qte_hud():
 	var z := _qte_zone()
 	return {"i": qte_i, "seg": qte_seg, "ms": minf(_qte_ms(), z.y) if qte_seg == "sweep" else 0.0, "zone": [z.x, z.y], "zone_w": core.zone_width(),
 		"bar_ms": float(QS.lead_ms) + float(C.QTE_ZONE_BASE_MS) + float(QS.tail_ms), "res": qte_res.duplicate(), "press": qte_press_ms.duplicate(),
-		"line": core.player_line(), "key": String(QS.key), "t_left": maxf(0.0, _qte_timer_s() - qte_seg_t), "t_total": _qte_timer_s()}
+		"line": core.player_line(), "key": String(QS.key), "t_left": _qte_timer_s() if (_qte_wait() and qte_seg == "sweep") else maxf(0.0, _qte_timer_s() - qte_seg_t), "t_total": _qte_timer_s()}
 
 # ── shots9: continuous course, lines, passes (display only; lead / gap always from the sim) ──
 ## straight S, corner 1, join, corner 2, exit as ONE road (track_road.gd build_course, shared with the editor preview)
@@ -2023,8 +2108,24 @@ func _sync_cel() -> void:
 		var m := SubViewport.UPDATE_ALWAYS if _mirror_on() else SubViewport.UPDATE_DISABLED
 		cel_vps[2].render_target_update_mode = m; cel_vps[3].render_target_update_mode = m
 
+## --perf: per-phase frame time + engine monitors (process ms, draw calls, objects, nodes, orphan nodes). Display/debug only.
+var perf_buckets: Dictionary = {}
+func _perf_bucket(ms: float) -> void:
+	var key: String = mode + ":" + String(core.phase) + (":stop%d" % _sel_stop() if core.phase == "SELECT" else "")
+	if not perf_buckets.has(key): perf_buckets[key] = {"n": 0, "ms": 0.0, "max": 0.0, "proc": 0.0, "draw": 0.0, "obj": 0.0, "node": 0.0, "orph": 0.0}
+	var b: Dictionary = perf_buckets[key]
+	b.n += 1; b.ms += ms; b.max = maxf(b.max, ms)
+	b.proc += Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
+	b.draw += Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
+	b.obj += Performance.get_monitor(Performance.OBJECT_COUNT)
+	b.node += Performance.get_monitor(Performance.OBJECT_NODE_COUNT)
+	b.orph += Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)
+
 func _exit_tree() -> void:
 	if not perf_on or perf_dts.size() < 10: return
+	for k in perf_buckets:
+		var b: Dictionary = perf_buckets[k]; var n: float = maxf(1.0, float(b.n))
+		print("PERF_PHASE %s frames=%d mean_ms=%.2f max_ms=%.2f process_ms=%.2f draw_calls=%.0f objects=%.0f nodes=%.0f orphans=%.0f" % [k, b.n, b.ms / n, b.max, b.proc / n, b.draw / n, b.obj / n, b.node / n, b.orph / n])
 	var arr := perf_dts.duplicate(); arr.sort()
 	var tot := 0.0
 	for v in arr: tot += v
@@ -2068,17 +2169,27 @@ func _qte_cam_force() -> String:
 func _qte_cam_pick_turn() -> void:
 	qte_cam_from = null
 	qte_cam_section = -1
+	qte_cam_eff = ""
 	var force := _qte_cam_force()
 	qte_cam_picks = []
 	if qte_cam_rng == null:
 		_qte_cam_on_race_start()
+	var valid := _qte_cam_valid_types()
 	for i in 3:
+		var r: int = qte_cam_rng.randi() if not (force in QTE_CAM_TYPES) else 0   # one display draw per section, as before
 		if force in QTE_CAM_TYPES:
 			qte_cam_picks.append(force)
 		else:
-			qte_cam_picks.append(QTE_CAM_TYPES[qte_cam_rng.randi() % QTE_CAM_TYPES.size()])
+			qte_cam_picks.append(valid[r % valid.size()])
 	if mode == "RACE" and core != null:
 		print("QTE_CAM turn=%d picks=%s force=%s seed=%d" % [core.corner_index + 1, ",".join(qte_cam_picks), force if force != "" else "rng", core.seed_value])
+
+## Austin pt137u: "front" sits ahead of the player looking back down the road. When the player chases (rival ahead, nobody
+## behind) it shows an empty road, so a chase turn draws among outside / chase only. Same single draw per section from the
+## display RNG (seed + 130001); the sim / AI QTE RNGs are never touched. Role is the turn's role (RaceCore), so it is reproducible.
+func _qte_cam_valid_types() -> Array:
+	if core != null and core.role() == "chase": return QTE_CAM_TYPES.filter(func(t): return t != "front")
+	return QTE_CAM_TYPES
 
 func _qte_cams_enabled() -> bool:
 	return disp != null and disp.has("qte_cams")
@@ -2126,13 +2237,146 @@ func _qte_cam_pose(kind: String, pp: Dictionary, pc: Dictionary) -> Array:
 		look2 = car_p
 	return [pos2, look2, float(spec.get("fov", 52.0))]
 
+## Austin pt137u: every QTE camera keeps both cars in frame. Aim at the midpoint of the two cars' bounding spheres; widen the
+## fov (never narrower than the authored one, at most framing.max_fov) until both spheres fit with framing.margin_deg; past
+## max_fov pull the camera back (chase: along the course behind; front: along the course ahead; outside: away from the look
+## point) in framing.step_m steps. cam_guard still runs on the result (_guard_camera), then _qte_refit_fov widens again if the
+## guard pulled the camera in. Display only (DISPLAY PLACEHOLDERS in display.json qte_cams.framing).
+func _qte_framing() -> Dictionary:
+	return disp.get("qte_cams", {}).get("framing", {})
+
+func _car_sphere(car: Node3D) -> Vector3:
+	return car.global_position + Vector3.UP * float(_qte_framing().get("center_y_m", 0.7))
+
+## smallest vertical fov (deg) from pos looking at look that holds every sphere centre in pts (radius R) with the margin;
+## INF when a sphere is behind or beside the lens
+func _fov_needed(pos: Vector3, look: Vector3, pts: Array, R: float) -> float:
+	var f := (look - pos).normalized()
+	if f.length() < 0.5: return INF
+	var rt := f.cross(Vector3.UP).normalized(); var up := rt.cross(f)
+	var aspect: float = 4.0 / 3.0
+	var fr := _qte_framing(); var mg: float = deg_to_rad(float(fr.get("margin_deg", 3.0)))
+	var need := 0.0
+	for c in pts:
+		var v: Vector3 = c - pos; var d := v.length()
+		if d <= R * 1.05: return INF
+		var z := v.dot(f)
+		if z <= 0.0: return INF
+		var a := asin(clampf(R / d, 0.0, 1.0))
+		var hv := atan2(absf(v.dot(up)), z) + a + mg
+		var hh := atan2(absf(v.dot(rt)), z) + a + mg
+		if hv >= PI * 0.5 or hh >= PI * 0.5: return INF
+		need = maxf(need, maxf(hv, atan(tan(hh) / aspect)))
+	return rad_to_deg(2.0 * need)
+
+func _qte_frame_both(kind: String, pose: Array, pp: Dictionary, pc: Dictionary) -> Array:
+	if rival_car == null or not rival_car.visible or player_car == null: return pose + [0.0]
+	var fr := _qte_framing()
+	if fr.is_empty(): return pose + [0.0]
+	var R: float = float(fr.get("radius_m", 2.6)); var max_fov: float = float(fr.get("max_fov", 72.0))
+	var step: float = float(fr.get("step_m", 1.0)); var max_back: float = float(fr.get("max_back_m", 60.0))
+	var pts := [_car_sphere(player_car), _car_sphere(rival_car)]
+	var look: Vector3 = (pts[0] + pts[1]) * 0.5
+	var base_fov: float = float(pose[2])
+	var pth = path if path != null else course
+	var back := 0.0
+	var pos: Vector3 = pose[0]
+	while true:
+		var need := _fov_needed(pos, look, pts, R)
+		if need <= max_fov or back >= max_back:   # 4th value: the fov the pose really needs (INF = a car behind the lens)
+			return [pos, look, clampf(maxf(base_fov, need), base_fov, max_fov), need]
+		back += step
+		if kind == "chase":
+			var ch2 := _chase_pose(pth.point(s_player - back, 0.0)); pos = ch2[0]
+		elif kind == "front":
+			var spec: Dictionary = disp.qte_cams.front
+			var q: Dictionary = pth.point(s_player + float(spec.get("ahead_m", 10.0)) + back, float(spec.get("side_m", 0.0)))
+			pos = Vector3(q.x, float(q.get("y", 0.0)) + float(spec.get("height_m", 2.2)), q.z)
+		else:
+			var away: Vector3 = (pose[0] as Vector3) - look; away.y = 0.0
+			pos = (pose[0] as Vector3) + away.normalized() * back
+	return pose + [0.0]
+
+## after cam_guard: if the guard pulled the lens in, widen the fov again (up to framing.max_fov_guarded) so both cars stay in
+func _qte_refit_fov() -> void:
+	if not String(rig).begins_with("Q") or rival_car == null or player_car == null or not rival_car.visible: return
+	var fr := _qte_framing()
+	if fr.is_empty(): return
+	var need := _fov_needed(cam_pos, cam_look, [_car_sphere(player_car), _car_sphere(rival_car)], float(fr.get("radius_m", 2.6)))
+	if need > cam_fov: cam_fov = minf(need, float(fr.get("max_fov_guarded", 90.0)))
+
+## Austin pt137u item 3 (large gap): a pose "fits" when both cars' spheres fit in max_fov_guarded AFTER cam_guard has pulled
+## it in (the guard runs on every pose, so a pull-back that a wall then undoes is no fit). The drawn pick (display RNG, never
+## re-drawn) is kept whenever it fits. When it cannot (the pull-back limit max_back_m reached, or the guard cut it short), the
+## section falls back without any RNG draw: the other valid types in QTE_CAM_TYPES order, first that fits; if none fits, the
+## one needing the smallest fov (it is then drawn at max_fov_guarded, the rival's sphere partly outside). A pose whose sight
+## line to a car runs through the kit model (cam_guard.clip > framing.los_tol_m: the rival behind a hairpin's cut) ranks below
+## one with both cars in clear view, so the fallback covers occlusion too. The touge gap is clamped to
+## visual_gap.touge.far_m (26 m); --qte-gap-sweep checks it and stress gaps past it (qte_gap_check.json). One QTE_CAM_FALLBACK line per change; the switch blends like a section change.
+var qte_cam_eff := ""   # the type actually shown this section (= the pick unless it fell back)
+var qte_cam_fb_key := ""
+func _qte_pose_eval(kind: String, pp: Dictionary, pc: Dictionary) -> Array:
+	var pose: Array = _qte_frame_both(kind, _qte_cam_pose(kind, pp, pc), pp, pc)
+	if rival_car == null or player_car == null or not rival_car.visible: return [pose, 0.0, 0.0]
+	var g = guard_c if not _in_straight() else guard_s
+	var pos: Vector3 = pose[0]
+	if g != null and not OS.get_cmdline_user_args().has("--no-cam-guard"):
+		g.locate(pos); pos = g.fix(pos, pose[1])
+	var cars := [_car_sphere(player_car), _car_sphere(rival_car)]
+	var need := _fov_needed(pos, pose[1], cars, float(_qte_framing().get("radius_m", 2.6)))
+	return [pose, need, _qte_los_block(g, pos, cars)]
+
+## deepest the kit model (cam_guard.clip minus its near-plane margin, i.e. real metres inside geometry) cuts the sight line
+## from pos to any car centre: a car inside the frame but behind the hairpin's cut slope is not "in frame" for the player.
+## A rail (0.37 m deep) or a lamp post (r 0.3 m) between camera and car stays under framing.los_tol_m (1.0 m); terrain does not.
+func _qte_los_block(g, pos: Vector3, cars: Array) -> float:
+	if g == null: return 0.0
+	var worst := 0.0
+	if g == guard_c and touge_env != null:   # course (authored terrain): the sight line against the *_col proxies themselves, not
+		# sampled clip depth (a 0.3 m gallery wall fell between the 24 samples). Value = metres of the line past the first terrain
+		# hit (the part of the line hidden behind terrain; rails and lamp posts are not in the proxies): <= los_tol = clear view.
+		for c in cars:
+			var h: Dictionary = TougeEnv.seg_hit(pos, c)
+			if not h.is_empty(): worst = maxf(worst, (h.position as Vector3).distance_to(c))
+		return worst
+	for c in cars:
+		for k in range(1, 24):
+			var q: Vector3 = pos.lerp(c, float(k) / 24.0)
+			g.locate(q); worst = maxf(worst, g.clip(q) - float(g.margin))
+	return worst
+
+## rank: 2 = both cars fit and in clear view, 1 = fit but a car is behind terrain, 0 = no fit. The pick wins any tie.
+func _qte_cam_choose(pick: String, pp: Dictionary, pc: Dictionary) -> Array:
+	var lim: float = float(_qte_framing().get("max_fov_guarded", 90.0))
+	var los_tol: float = float(_qte_framing().get("los_tol_m", 1.0))
+	var rank := func(e: Array) -> int: return 0 if float(e[1]) > lim else (2 if float(e[2]) <= los_tol else 1)
+	var ev: Array = _qte_pose_eval(pick, pp, pc)
+	var best := [pick, ev[0], ev[1], rank.call(ev)]
+	if int(best[3]) == 2: return best
+	for k in _qte_cam_valid_types():
+		if k == pick: continue
+		var e2: Array = _qte_pose_eval(k, pp, pc)
+		var r2: int = rank.call(e2)
+		if r2 > int(best[3]) or (r2 == 0 and int(best[3]) == 0 and float(e2[1]) < float(best[2])): best = [k, e2[0], e2[1], r2]
+		if int(best[3]) == 2: return best
+	return best
+
 func _apply_qte_cam(pp: Dictionary, pc: Dictionary, _ch: Array) -> void:
-	var kind := _qte_cam_kind()
+	var pick := _qte_cam_kind()
 	var sec: int = clampi(qte_i, 0, 2)
-	var pose: Array = _qte_cam_pose(kind, pp, pc)
+	var chs: Array = _qte_cam_choose(pick, pp, pc)
+	var kind: String = chs[0]
+	var pose: Array = chs[1]
 	if qte_cam_section != sec:
 		qte_cam_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov, "t0": clock}
 		qte_cam_section = sec
+	elif kind != qte_cam_eff and qte_cam_eff != "":
+		qte_cam_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov, "t0": clock}
+	var fb_key := "%d:%d:%s" % [core.corner_index, sec, kind]
+	if kind != pick and fb_key != qte_cam_fb_key:
+		print("QTE_CAM_FALLBACK turn=%d sec=%d pick=%s shown=%s need_fov=%s gap=%.1f" % [core.corner_index + 1, sec, pick, kind, str(snappedf(float(chs[2]), 0.1)), absf(rival_offset)])
+	qte_cam_fb_key = fb_key
+	qte_cam_eff = kind
 	var ts: float = float(disp.qte_cams.get("transition_s", 0.45))
 	var elapsed: float = clock - float(qte_cam_from.t0) if qte_cam_from != null else 99.0
 	if qte_cam_from != null and elapsed < ts and ts > 0.0:
@@ -2698,3 +2942,393 @@ func _arthur_find_car_lights(n: Node, car: Node3D, heads: Array, tails: Array) -
 					bucket.append(lp)
 	for ch in n.get_children():
 		_arthur_find_car_lights(ch, car, heads, tails)
+
+# ── Pause menu (Austin pt137u): desktop Escape only, no touch button. The Escape key is read directly: this project's ui_cancel
+## action is mapped to Enter / Space (project.godot), which pick and fire QTEs. get_tree().paused stops main.gd's _process
+## (game clock, selection timer, QTE sweep, playback, turnout) where it is; only the PauseInput node (PROCESS_MODE_ALWAYS) runs.
+## Display only: no RNG is drawn, nothing in RaceCore or the state token changes. Resume restores the exact frozen state.
+const PAUSE_ITEMS := ["RESUME", "RESTART RACE", "CAR SELECT", "MAIN MENU"]
+var pause_menu: Dictionary = {}   # {} = not paused
+
+class PauseInput extends Node:
+	var main
+	func _unhandled_input(e: InputEvent) -> void: main._pause_input(e)
+
+func _pause_setup() -> void:
+	var n := PauseInput.new(); n.name = "PauseInput"; n.main = self; n.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(n)
+
+func _pause_allowed() -> bool:
+	return mode == "RACE" and script_in == null and not busy and core != null and core.phase != "FINISHED"
+
+func _pause_input(e: InputEvent) -> void:
+	if not (e is InputEventKey) or not e.pressed or e.echo: return
+	var k: int = (e as InputEventKey).keycode
+	if pause_menu.is_empty():
+		if k == KEY_ESCAPE and _pause_allowed():
+			pause_set(true); get_viewport().set_input_as_handled()
+		return
+	get_viewport().set_input_as_handled()   # while paused no key reaches the race
+	if k == KEY_ESCAPE: pause_set(false)
+	elif k == KEY_UP: pause_menu.sel = (int(pause_menu.sel) + PAUSE_ITEMS.size() - 1) % PAUSE_ITEMS.size(); hud.show_pause(pause_menu)
+	elif k == KEY_DOWN: pause_menu.sel = (int(pause_menu.sel) + 1) % PAUSE_ITEMS.size(); hud.show_pause(pause_menu)
+	elif k >= KEY_1 and k <= KEY_4: pause_choose(k - KEY_1)
+	elif k == KEY_ENTER or k == KEY_KP_ENTER: pause_choose(int(pause_menu.sel))
+
+func pause_set(on: bool) -> void:
+	if on:
+		pause_menu = {"items": PAUSE_ITEMS, "sel": 0}
+	else:
+		pause_menu = {}
+	get_tree().paused = on
+	hud.show_pause(pause_menu)
+	_trace("pause %s phase=%s turn=%d" % [str(on), core.phase, core.corner_index + 1])
+
+func pause_choose(i: int) -> void:
+	pause_set(false)
+	match i:
+		1:   # same seed, cars and first role, from the parked start (as LEAD / CHASE on the prompt)
+			pending_seed = core.seed_value; _choose_role(core.role_first)
+		2: _to_carsel(core.seed_value)
+		3: to_menu()
+
+## Austin pt137u: the POW / HAN / EN pick row (touch_ui.stance_row) and the heat panel (touch_ui.heat_pos + HeatGauges.PANEL_W)
+## were two fixed rects that overlapped by 4 design px, so the heat panel's YOU label and right edge ran under the buttons. Lay
+## the row out between the heat panel's right edge and the PLAN THE LINE panel's left edge (line_preview.panel), keeping
+## the configured y / height and shrinking the button width only when the gap is narrower than 3 x the configured width.
+const HeatGaugesPanel = preload("res://scripts/hud/heat_gauges.gd")
+func _stance_row_rect(sr: Array) -> Array:
+	var gap := 6.0
+	var hp: Array = disp.touch_ui.get("heat_pos", [4, 408])
+	var left: float = float(hp[0]) + HeatGaugesPanel.PANEL_W + gap
+	var pv: Array = disp.get("line_preview", {}).get("panel", [424, 369, 636, 476])
+	var right: float = float(pv[0]) - gap
+	var x0: float = maxf(float(sr[0]), left)
+	var w: float = minf(float(sr[2]), (right - x0 - 2.0 * gap) / 3.0)
+	return [x0, float(sr[1]), w, float(sr[3])]
+
+# ── VOID SWEEP (Austin pt137u pic 5: "ground / slope / trees missing" past the dressing) ──────────────────────────────────
+## --void-sweep (or "void_sweep": true in a touge script): at every camera the race uses (plan stops Entry / Apex / Exit, the
+## three QTE cameras at each QTE, the RESULT camera, the turnout / lot views) render the world once with the clear colour set to
+## pure magenta and the far plane at the district fog_far (anything further is fully fogged = the clear colour in game anyway).
+## A pixel is VOID when it shows the clear colour and its ray, at the far plane, is more than void_drop_m below the road at the
+## camera: the player would see the background where the mountainside / valley should be. VOID_CHECK at the end of the run
+## prints the total and the worst poses; masks for any pose with void pixels go to <shots>/void/.
+var void_on := false
+var void_st = null              # forces straight (true) / corner (false) dressing while a sweep pose renders
+var void_log: Array = []
+const VOID_STEP := 4            # sample every 4th pixel of the 640x480 world view
+const VOID_DROP_M := 12.0
+func _void_enabled() -> bool:
+	return void_on or OS.get_cmdline_user_args().has("--void-sweep")
+
+func _void_yref(pos: Vector3, look: Vector3, st: bool) -> float:
+	var g = guard_s if st else guard_c
+	var y := look.y - 1.0
+	if g != null:
+		var s: float = g.locate(pos)
+		var pth = straight_path if st else course
+		y = minf(y, float(pth.elev(s, 0.0)))
+	return y
+
+func _void_render(tag: String, pos: Vector3, look: Vector3, fov: float, st: bool, guard := true) -> void:
+	var g = guard_s if st else guard_c
+	if guard and g != null and not OS.get_cmdline_user_args().has("--no-cam-guard"):
+		g.locate(pos); pos = g.fix(pos, look)
+	void_st = st
+	straight_d.group.visible = st; corner_d.group.visible = not st; straight_d.road.visible = st; corner_d.road.visible = not st
+	_stream_district(straight_d if st else corner_d, scroll_shown)
+	if touge_env != null and not st: env_draw = touge_env.cull([pos], _env_reach())   # the section draw distance, for this pose
+	for it in corner_d.items:   # the same camera-near card cull _update_scene does, for this pose
+		var o: Node3D = it.obj
+		if it.has("side") and bool(it.get("card", false)): o.visible = o.visible and Vector2(o.position.x - pos.x, o.position.z - pos.z).length() >= 5.5
+	var D: Dictionary = DIST[String(core.corner().district)]
+	var F: float = float(D.get("fog_far", 78.0))
+	var env: Environment = world_vp.world_3d.environment
+	var bg := env.background_color
+	env.background_color = Color(1, 0, 1)
+	cam.far = F
+	cam.position = pos; cam.look_at(look); cam.fov = fov; glow_cam.fov = fov; glow_cam.global_transform = cam.global_transform
+	sky_root.position = pos
+	_sync_cel(); _arthur_push_nearest_lamps()
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	var img := world_vp.get_texture().get_image()
+	env.background_color = bg; cam.far = 400.0; void_st = null
+	var yref := _void_yref(pos, look, st)
+	var fwd := -cam.global_transform.basis.z
+	var n := 0; var tot := 0
+	var mask: Image = null
+	for y in range(0, img.get_height(), VOID_STEP):
+		for x in range(0, img.get_width(), VOID_STEP):
+			var c := img.get_pixel(x, y)
+			if c.r < 0.9 or c.g > 0.12 or c.b < 0.9: continue
+			var dir := cam.project_ray_normal(Vector2(x, y))
+			var dz := dir.dot(fwd)
+			if dz <= 0.01 or dir.y >= 0.0: continue
+			var end := pos + dir * (F / dz)
+			tot += 1
+			if end.y < yref - VOID_DROP_M:
+				n += 1
+				if mask == null: mask = img.duplicate()
+				mask.fill_rect(Rect2i(x - 1, y - 1, VOID_STEP, VOID_STEP), Color(1, 0, 0))
+	var frac := float(n) / float((img.get_height() / VOID_STEP) * (img.get_width() / VOID_STEP))
+	var bx := cam.global_transform.basis
+	var pkey := "straight_%02d" % (core.corner_index + 1) if st else "course"   # each turn has its own straight (straights[ci])
+	void_log.append({"tag": tag, "st": st, "path": pkey, "below_px": n * VOID_STEP * VOID_STEP, "frac": frac, "bg_below_horizon_px": tot * VOID_STEP * VOID_STEP,
+		"pos": [pos.x, pos.y, pos.z], "bx": [bx.x.x, bx.x.y, bx.x.z], "by": [bx.y.x, bx.y.y, bx.y.z], "bz": [bx.z.x, bx.z.y, bx.z.z], "fov": fov, "far": F, "w": img.get_width(), "h": img.get_height()})
+	if shots_dir != "":   # raw frame (clear colour = magenta) for tools/touge_race/void_check.py
+		var vd := shots_dir.path_join("void_raw"); DirAccess.make_dir_recursive_absolute(vd)
+		img.save_png(vd.path_join(tag + ".png"))
+		if not void_paths_dumped.has(pkey): _void_dump_course(pkey); void_paths_dumped[pkey] = true
+	print("VOID %s below_px=%d frac=%.4f" % [tag, n * VOID_STEP * VOID_STEP, frac])
+
+## the course and the scroll straight as samples (position, tangent, road height, drop side, room each side) plus the terrain
+## profiles, so tools/touge_race/void_check.py can tell where the approved roadside (course.gd terrain_profile) should be
+## void_course.json: the course and every turn's own straight (added as the sweep reaches it), sampled every 1 m
+var void_paths_dumped := {}
+var void_dump := {}
+func _void_dump_course(pkey: String) -> void:
+	var D: Dictionary = DIST["touge"]
+	if void_dump.is_empty(): void_dump = {"W": road_W, "fog_far": float(D.fog_far), "paths": {}}   # profiles: void_check.py reads display.json
+	var dump := void_dump
+	for nm in [pkey]:
+		var pth = course if nm == "course" else straight_path
+		var s0: float = -60.0 if nm == "course" else float(RS.straight_from_m)
+		var s1: float = course.length + 60.0 if nm == "course" else float(RS.straight_to_m)
+		var a := []; var s := s0
+		while s <= s1:
+			var q: Dictionary = pth.at(s)
+			a.append([s, float(q.x), float(q.z), float(pth.elev(s, 0.0)), float(q.tx), float(q.tz), float(pth.drop_at(s)), float(pth.tcap_at(s, -1.0)) if pth.has_method("tcap_at") else 1e3, float(pth.tcap_at(s, 1.0)) if pth.has_method("tcap_at") else 1e3])   # terrain room (course.gd rule 3)
+			s += 1.0
+		dump.paths[nm] = a
+	if turnout_geo != null and not (turnout_geo as Dictionary).is_empty():
+		dump.lot = {"s0": float(turnout_geo.s0), "s1": float(turnout_geo.s1), "taper": float(turnout_geo.taper), "w": float(turnout_geo.w), "ins": _lot_ins()}
+	FileAccess.open(shots_dir.path_join("void_course.json"), FileAccess.WRITE).store_string(JSON.stringify(dump))
+
+## plan stops: Entry (the chase pose on the straight, as the player sees it), Apex, Exit (corner dressing)
+func _void_sweep_select(ci: int) -> void:
+	busy = true
+	var ua := OS.get_cmdline_user_args()
+	if ua.has("--terrain-check") and ci == 0:   # geometry only: no terrain over the drivable surface, then quit
+		var ok := _terrain_check(); get_tree().quit(0 if ok else 1); return
+	if ua.has("--void-poses") and ci == 0:   # quick re-check: replay saved course poses (void_check.json rows) on this build, then quit
+		var rows = JSON.parse_string(FileAccess.get_file_as_string(ua[ua.find("--void-poses") + 1]))
+		for r in rows:
+			if bool(r.get("st", false)): continue
+			var ps := Vector3(r.pos[0], r.pos[1], r.pos[2]); var bz := Vector3(r.bz[0], r.bz[1], r.bz[2])
+			await _void_render(String(r.tag), ps, ps - bz * 10.0, float(r.fov), false, true)   # re-guarded on this build
+		_void_report(); print("VOID_POSES_DONE"); get_tree().quit(); return
+	var ch := _chase_pose(straight_path.point(s_player, 0.0)) if straight_path != null else [cam_pos, cam_look]
+	await _void_render("t%02d_plan_E" % (ci + 1), ch[0], ch[1], float(disp.camera.fov), true)
+	for stp in [1, 2]:
+		var p: Array = _stop_pose(stp)
+		await _void_render("t%02d_plan_%s" % [ci + 1, "A" if stp == 1 else "X"], p[0], p[1], float(p[2]), false)
+	busy = false
+
+## the three QTE camera types at this QTE (both cars framed, as _apply_qte_cam would)
+func _void_sweep_qte(ci: int, qi: int) -> void:
+	busy = true
+	var pp := {"x": player_car.position.x, "y": player_car.position.y, "z": player_car.position.z}
+	var pc: Dictionary = path.point(s_player, 0.0)
+	var a: Dictionary = path.at(s_player); pp.tx = a.tx; pp.tz = a.tz
+	for kind in ["outside", "front", "chase"]:
+		var pose: Array = _qte_frame_both(kind, _qte_cam_pose(kind, pp, pc), pp, pc)
+		await _void_render("t%02d_qte%d_%s" % [ci + 1, qi, kind], pose[0], pose[1], float(pose[2]), false)
+	busy = false
+
+func _void_sweep_current(tag: String) -> void:
+	busy = true
+	await _void_render(tag, cam_pos, cam_look, cam_fov, _in_straight(), false)
+	busy = false
+
+## turnout / lot: the race's turnout camera plus the lot from several angles (both flanks, high and low, across the road)
+func _void_sweep_lot(ci: int) -> void:
+	busy = true
+	await _void_render("t%02d_lot_turnout_cam" % (ci + 1), cam_pos, cam_look, cam_fov, false, false)
+	var a: float = turnout_geo.s0; var b: float = turnout_geo.s1; var ins := _lot_ins()
+	var mid: float = (a + b) * 0.5
+	var poses := [
+		["lot_overview", course.point(a - 10.0, -ins * 14.0), 22.0, course.point(mid, ins * (road_W + 4.0)), 55.0],
+		["lot_from_exit_high", course.point(b + 12.0, -ins * 10.0), 18.0, course.point(mid, ins * (road_W + 8.0)), 55.0],
+		["lot_entry_flank", course.point(a - 6.0, -ins * 2.0), 3.0, course.point(a + 4.0, ins * (road_W + 10.0)), 60.0],
+		["lot_exit_flank", course.point(b + 6.0, -ins * 2.0), 3.0, course.point(b - 4.0, ins * (road_W + 10.0)), 60.0],
+		["lot_across_low", course.point(mid, -ins * (road_W + 0.5)), 1.6, course.point(mid, ins * (road_W + 14.0)), 70.0],
+		["lot_top_down", course.point(mid, -ins * 6.0), 40.0, course.point(mid, ins * (road_W + 6.0)), 60.0]]
+	for p in poses:
+		var e: Dictionary = p[1]; var c: Dictionary = p[3]
+		var vp := Vector3(e.x, float(e.y) + float(p[2]), e.z); var vl := Vector3(c.x, float(c.y), c.z)
+		await _void_render("t%02d_%s" % [ci + 1, p[0]], vp, vl, float(p[4]), false, false)
+		if shots_dir != "" and not OS.get_cmdline_user_args().has("--void-no-shots"):
+			cam_override = [vp, vl, float(p[4])]; await _shot("t%02d_%s" % [ci + 1, p[0]]); cam_override = null; busy = true
+	busy = false
+
+## TERRAIN_CHECK (Austin pt155u: terrain slabs over the turnout lot, which the void sweep scored as "ground"): no terrain
+## triangle (touge_dressing meshes named Terr*: bands, skirts, up faces, cross-section faces, gallery walls, the lot hill / cut /
+## flank hill) may intersect or sit above the drivable surface of ANY leg within clear_h: the road (|d| < W) and the lot
+## footprint (inside, out to Ld * taper fraction past the edge), from 5 cm over the surface (z-fight level; underlays sit 6 cm under) up to
+## clear_h (display terrain.road_clear_m). Every triangle is sampled on a <= 0.5 m barycentric grid against every leg near each
+## sample (cam_guard.legs_at), over the course and each turn's scroll straight. Prints TERRAIN_CHECK ... PASS / FAIL.
+func _terrain_check() -> bool:
+	var T: Dictionary = DIST["touge"].get("terrain", {})
+	var H: float = float(T.get("road_clear_m", 8.0))
+	var lot := {} if turnout_geo == null else (turnout_geo as Dictionary)
+	var ins := _lot_ins() if not lot.is_empty() else 0.0
+	var bad := {}; var nt := 0; var npt := 0
+	for which in ["course", "straight"]:
+		var root: Node = corner_d.group if which == "course" else straight_d.group
+		var g = guard_c if which == "course" else guard_s
+		var pth = course if which == "course" else straight_path
+		# terrain triangles (world space), bucketed by their XZ bounds (4 m cells)
+		var tris: Array = []; var names: Array = []; var grid := {}
+		var stack: Array = [root]
+		while not stack.is_empty():
+			var nd: Node = stack.pop_back()
+			for ch in nd.get_children(): stack.append(ch)
+			# course: Arthur's authored terrain (every touge_env section / gallery / lot file under AuthoredEnv, terrain
+			# surfaces only: not its rails, reflectors or lamp posts, which stand at the edge and arch over the road by design);
+			# the scroll straight: its code bands (Terr*)
+			var authored: bool = which == "course" and String(nd.get_path()).contains("/AuthoredEnv/") and not String(nd.get_path()).contains(TougeEnv.BACKDROP)
+			if not (nd is MeshInstance3D) or not (authored or String(nd.name).begins_with("Terr")): continue
+			var mi := nd as MeshInstance3D
+			if mi.mesh == null or String(mi.name).ends_with("_lamps"): continue
+			var xf := mi.global_transform; var nm := String(mi.name)
+			for si in mi.mesh.get_surface_count():
+				var smat: Material = mi.mesh.surface_get_material(si)
+				var smn := String(smat.resource_name).to_lower() if smat != null else ""
+				if authored and smn in TougeEnv.THIN_MATS: continue
+				var arr: Array = mi.mesh.surface_get_arrays(si)
+				var v0: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+				var ix: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+				var v := PackedVector3Array()
+				if ix.is_empty(): v = v0
+				else:
+					for q in ix: v.append(v0[q])
+				for k in range(0, v.size() - 2, 3):
+					var a := xf * v[k]; var b := xf * v[k + 1]; var c := xf * v[k + 2]
+					var ti := tris.size(); tris.append([a, b, c]); names.append(nm)
+					for gx in range(floori(minf(a.x, minf(b.x, c.x)) / 4.0), floori(maxf(a.x, maxf(b.x, c.x)) / 4.0) + 1):
+						for gz in range(floori(minf(a.z, minf(b.z, c.z)) / 4.0), floori(maxf(a.z, maxf(b.z, c.z)) / 4.0) + 1):
+							var kk := Vector2i(gx, gz)
+							if not grid.has(kk): grid[kk] = []
+							(grid[kk] as Array).append(ti)
+		nt += tris.size()
+		# the drivable surface as BUILT (the road strip + the lot floor art), not the analytic elev(s, d): the strip is linear
+		# between its rows / columns, so on a bank ramp it sits up to ~0.25 m off elev() at the edge, and Arthur's terrain meets
+		# the strip's exported edge vertices exactly (unapproved/gordon/road_export) - the analytic height flagged that seam
+		var drv := PackedVector3Array()
+		var droots: Array = [corner_d.road if which == "course" else straight_d.road]
+		if which == "course" and corner_d.get("lot_group") != null: droots.append((corner_d.lot_group as Node).get_node_or_null("Floor"))
+		for dr in droots:
+			if dr == null: continue
+			var dms: Array = dr.find_children("*", "MeshInstance3D", true, false); if dr is MeshInstance3D: dms.append(dr)
+			for dm in dms:
+				var dxf: Transform3D = (dm as MeshInstance3D).global_transform
+				for f in (dm as MeshInstance3D).mesh.get_faces(): drv.append(dxf * f)
+		var dtm := TriangleMesh.new(); dtm.create_from_faces(drv)
+		# the drivable surface of every leg on a 0.5 m grid: the road (|d| < W) and, on the course, the lot footprint
+		var s0: float = -60.0 if which == "course" else float(RS.straight_from_m)
+		var s1: float = course.length + 60.0 if which == "course" else float(RS.straight_to_m)
+		var s := s0
+		while s <= s1:
+			var dmax := road_W; var dmin := -road_W
+			if which == "course" and not lot.is_empty() and s > float(lot.s0) and s < float(lot.s1):
+				var u := clampf(minf(s - float(lot.s0), float(lot.s1) - s) / float(lot.taper), 0.0, 1.0)
+				if ins > 0.0: dmax = road_W + float(lot.w) * u
+				else: dmin = -road_W - float(lot.w) * u
+			var d := dmin + 0.1   # 10 cm inside the edge: the gravel / verge bands start exactly on it
+			while d <= dmax - 0.1 + 1e-6:
+				var q: Dictionary = pth.point(s, d); var ys: float = float(pth.elev(s, d)); npt += 1
+				var dh: Dictionary = dtm.intersect_segment(Vector3(float(q.x), ys + 0.6, float(q.z)), Vector3(float(q.x), ys - 0.6, float(q.z)))
+				if not dh.is_empty(): ys = float(dh.position.y)   # the built surface here (road strip / lot floor)
+				var P := Vector2(float(q.x), float(q.z))
+				for ti in grid.get(Vector2i(floori(P.x / 4.0), floori(P.y / 4.0)), []):
+					var tr: Array = tris[ti]
+					var a: Vector3 = tr[0]; var b: Vector3 = tr[1]; var c: Vector3 = tr[2]
+					var hit := false; var yr := 0.0
+					var v0 := Vector2(b.x - a.x, b.z - a.z); var v1 := Vector2(c.x - a.x, c.z - a.z); var v2 := P - Vector2(a.x, a.z)
+					var den := v0.x * v1.y - v1.x * v0.y
+					if absf(den) > 1e-4:   # a triangle over this spot: its height here
+						var l1 := (v2.x * v1.y - v1.x * v2.y) / den; var l2 := (v0.x * v2.y - v2.x * v0.y) / den
+						if l1 >= -1e-4 and l2 >= -1e-4 and l1 + l2 <= 1.0001:
+							yr = a.y + (b.y - a.y) * l1 + (c.y - a.y) * l2 - ys; hit = yr > 0.05 and yr < H
+					if not hit:   # a vertical face (skirt / up face / cross-section): does it cross the column within 0.25 m?
+						var nrm := (b - a).cross(c - a)
+						if nrm.length() > 1e-6 and absf(nrm.normalized().y) < 0.05:
+							var nn := nrm.normalized() * 0.25; var yy := 0.05
+							while yy < H:   # lowest height over the surface where the face crosses this column
+								var cq := Vector3(P.x, ys + yy, P.y)
+								if Geometry3D.segment_intersects_triangle(cq + nn, cq - nn, a, b, c) != null: hit = true; yr = yy; break
+								yy += 0.25
+					if hit:
+						var key := "%s %s" % [which, names[ti]]
+						if not bad.has(key): bad[key] = {"n": 0, "s0": s, "s1": s, "ymin": yr, "lot": absf(d) > road_W}
+						var r: Dictionary = bad[key]; r.n += 1; r.s0 = minf(r.s0, s); r.s1 = maxf(r.s1, s); r.ymin = minf(r.ymin, yr)
+						if absf(d) > road_W: r.lot = true
+						if r.n <= 2 and OS.get_cmdline_user_args().has("--terrain-verbose"): print("  TERRAIN_HIT %s s=%.1f d=%.2f surf=%.2f y_above=%.2f tri=%s legs(v0)=%s" % [key, s, d, ys, yr, str(tr), str(g.legs_at((tr[0] as Vector3).x, (tr[0] as Vector3).z, 30.0)) if which == "course" else ""])
+				d += 0.5
+			s += 0.5
+	for key in bad:
+		var r: Dictionary = bad[key]
+		print("TERRAIN_OVER %s samples=%d leg_s=%.1f..%.1f y_above_min=%.2f%s" % [key, r.n, r.s0, r.s1, r.ymin, " (lot)" if r.lot else ""])
+	print("TERRAIN_CHECK triangles=%d drivable_samples=%d meshes_over_drivable=%d clear_h=%.1f %s" % [nt, npt, bad.size(), H, "PASS" if bad.is_empty() else "FAIL"])
+	return bad.is_empty()
+
+func _void_report() -> void:
+	if void_log.is_empty(): return
+	var tot := 0; var bad := 0
+	var worst := void_log.duplicate(); worst.sort_custom(func(x, y): return int(x.below_px) > int(y.below_px))
+	for v in void_log:
+		tot += int(v.below_px)
+		if int(v.below_px) > 0: bad += 1
+	var top := []
+	for i in mini(8, worst.size()):
+		if int(worst[i].below_px) > 0: top.append("%s=%d" % [worst[i].tag, int(worst[i].below_px)])
+	print("VOID_SWEEP_DONE poses=%d (below-road clear-colour px %d; the void verdict is tools/touge_race/void_check.py)" % [void_log.size(), tot])
+	if shots_dir != "":
+		FileAccess.open(shots_dir.path_join("void_check.json"), FileAccess.WRITE).store_string(JSON.stringify(void_log, " "))
+
+# ── QTE large-gap check (Austin pt137u item 3) ──
+## --qte-gap-sweep "26,45,70,110": at the Apex QTE hold of every shot turn, force the drawn gap (display only: rival_offset,
+## never the sim) to each value and show every valid camera type through the real path (_apply_qte_cam -> cam_guard ->
+## _qte_refit_fov). For each still: the type shown (pick or fallback), the fov, both cars' sphere fit (_fov_needed <= fov),
+## both car centres inside the viewport, and line of sight (cam_guard.clip along cam -> car). Writes qte_gap_check.json and
+## prints QTE_GAP_CHECK. 26 m = visual_gap.touge.far_m, the largest gap the race can draw; the rest are stress values.
+var qte_gap_log: Array = []
+func _qte_gap_sweep(ci: int) -> void:
+	busy = true
+	var gaps: Array = Array(String(_arg("--qte-gap-sweep", "26")).split(",")).map(func(v): return float(v))
+	var sec: int = clampi(qte_i, 0, 2)
+	var saved_pick: String = qte_cam_picks[sec]; var saved_off := rival_offset
+	var sgn: float = signf(off0) if off0 != 0.0 else (1.0 if core.role() == "chase" else -1.0)
+	var R: float = float(_qte_framing().get("radius_m", 2.6))
+	for g in gaps:
+		for kind in _qte_cam_valid_types():
+			qte_cam_picks[sec] = kind; rival_offset = sgn * float(g)
+			qte_cam_section = sec; qte_cam_from = null; qte_cam_eff = kind
+			var nm := "t%02d_gap%03d_%s_%s" % [ci + 1, int(g), core.role(), kind]
+			await _shot(nm)
+			busy = true
+			var cars := [_car_sphere(player_car), _car_sphere(rival_car)]
+			var need := _fov_needed(cam_pos, cam_look, cars, R)
+			var vs: Vector2 = Vector2(world_vp.size)
+			var inside := true
+			for c in cars:
+				if cam.is_position_behind(c): inside = false; continue
+				var sp := cam.unproject_position(c)
+				if sp.x < 0.0 or sp.y < 0.0 or sp.x > vs.x or sp.y > vs.y: inside = false
+			var los := []
+			var gd = guard_c if not _in_straight() else guard_s
+			for c in cars: los.append(snappedf(_qte_los_block(gd, cam_pos, [c]), 0.01))
+			var shown: String = qte_cam_eff
+			var row := {"turn": ci + 1, "role": core.role(), "gap_m": g, "pick": kind, "shown": shown, "rig": rig, "fov": snappedf(cam_fov, 0.1),
+				"need_fov": snappedf(need, 0.1) if need < 1e6 else -1.0, "spheres_fit": need <= cam_fov + 0.05, "centres_in_view": inside, "clear_view": los.max() <= float(_qte_framing().get("los_tol_m", 1.0)),
+				"los_clip_m": los, "still": nm}
+			qte_gap_log.append(row)
+			print("QTE_GAP turn=%d role=%s gap=%.0f pick=%s shown=%s fov=%.1f need=%.1f fit=%s in_view=%s clear_view=%s los=%s" % [ci + 1, core.role(), g, kind, shown, cam_fov, need, str(row.spheres_fit), str(inside), str(row.clear_view), str(los)])
+	qte_cam_picks[sec] = saved_pick; rival_offset = saved_off; qte_cam_section = sec; qte_cam_from = null; qte_cam_eff = ""
+	var bad := qte_gap_log.filter(func(r): return float(r.gap_m) <= float(disp.visual_gap.touge.far_m) and not (r.spheres_fit and r.centres_in_view and r.clear_view))
+	var f := FileAccess.open(shots_dir.path_join("qte_gap_check.json"), FileAccess.WRITE)
+	if f != null: f.store_string(JSON.stringify({"rows": qte_gap_log, "in_game_bad": bad.size()}, " ")); f.close()
+	print("QTE_GAP_CHECK rows=%d in_game_range_bad=%d %s" % [qte_gap_log.size(), bad.size(), "PASS" if bad.is_empty() else "FAIL"])
+	busy = false

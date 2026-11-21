@@ -42,14 +42,25 @@ func paint() -> void:
 	plate_finish(body, x0, y0, x1, y1)
 	outline(body, EDGE)
 	outline(cut_panel(x0 + 2, y0 + 2, x1 - 2, y1 - 2, 8), EDGE_D)
-	var tab := P([x0 + 22, y0 - 14, x0 + 118, y0 - 14, x0 + 128, y0, x0 + 22, y0])
+	# Austin pt137u: the tab was a fixed 96 x 14 plate under 12 pt heavy text, so the title ran past its right edge and below
+	# its base into the panel header. Size the tab from the measured title and keep the title inside it.
+	var title := "PLAN THE LINE"; var tsz := 11
+	var tw := sw(title, tsz, false, true); var th := float(tsz) + 5.0
+	var tab := P([x0 + 22, y0 - th, x0 + 22 + 7 + tw + 7, y0 - th, x0 + 22 + 7 + tw + 7 + 10, y0, x0 + 22, y0])
 	solid(tab, AMBER)
 	outline(tab, INK)
-	t2(x0 + 29, y0 - 14, "PLAN THE LINE", 12, INK, false, "l", false, false, true)
+	t2(x0 + 29, y0 - th + 1, title, tsz, INK, false, "l", false, false, true)
 	var ph: int = int(pl.phase)
 	var slots: Array = st.get("slots", [null, null, null])
 	# On-screen lane order: left corner IN MID OUT, right corner OUT MID IN. Same mapping on every row.
 	var lanes: Array = ["E", "H", "P"] if String(st.get("dir", "R")) == "L" else ORDER
+	# Austin pt137u: the chips started at a fixed x0 + 56, but the active row label (x0 + 20, 12 pt heavy italic "ENTRY") and a
+	# locked row's label + tick run past that, so ENTRY overlapped the OUT / POW chip. Start the chips after the widest label
+	# (+ tick) and fit three chips into what is left of the panel.
+	var lab_end := 0.0
+	for i2 in 3: lab_end = maxf(lab_end, 20.0 + sw(PH[i2], 12, true, true) + 4.0 + 10.0)
+	var chip_x0 := x0 + maxf(56.0, lab_end + 2.0)
+	var chip_w := minf(44.0, (x1 - 6.0 - chip_x0) / 3.0 - 2.0)
 	for i in 3:
 		var ry := y0 + 6 + i * 30
 		var active: bool = (i == ph and ph < 3)
@@ -76,8 +87,8 @@ func paint() -> void:
 		elif active:
 			chosen_lane = ORDER[int(pl.sel)] if int(pl.sel) >= 0 else ""
 		if active or locked:
-			var lx := x0 + 56
-			var w := 44.0
+			var lx := chip_x0
+			var w := chip_w
 			for k in lanes:
 				var lab: String = LANE[k]
 				var note: String = NAME[k]

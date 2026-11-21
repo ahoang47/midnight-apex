@@ -15,12 +15,14 @@ const GREY := Color8(70, 74, 90)
 var drawn := {}   # TOUGE (Austin t119u): bar fraction actually drawn per gauge this paint (main.gd heat check)
 var drawn_frame := -1
 
+const PANEL_W := 206.0   # main.gd lays the touch stance row out against this (Austin pt137u)
+const PANEL_H := 64.0
 func paint() -> void:
 	var h = st.get("heat")
 	if h == null: return
 	drawn_frame = Engine.get_process_frames()
 	var o := origin(); var x := o.x; var y := o.y
-	var W := 206.0; var H := 64.0
+	var W := PANEL_W; var H := PANEL_H
 	lpanel(x, y, x + W, y + H)
 	t2(x + 6, y + 3, "HEAT", 9, L_DIM, false, "l", true, false, true)
 	if String(h.get("who", "")) != "": t2(x + W - 6, y + 3, String(h.who), 9, L_DIMMER, false, "r", true, false, true)

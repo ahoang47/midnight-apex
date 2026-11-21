@@ -64,10 +64,24 @@ static func build_course(disp: Dictionary, cfg: Dictionary) -> Dictionary:
 		var sw := (prev_end + turn_in) * 0.5
 		if not turnout.is_empty() and int(turnout.turn) == i - 1: sw = maxf(sw, float(turnout.s1) + 6.0)
 		course.drop_runs.append([sw, sides[i]])
-	course.build_caps(course.length + 140.0)
+	var Dt: Dictionary = disp.districts.get("touge", {})
+	var span_side := sides.duplicate()
+	if Dt.has("terrain") and float(Dt.terrain.get("drop_lat_m", 0.0)) > 0.0:   # TOUGE (pt137u item 15): the drop follows the ground
+		var Wd: float = float(disp.road_half_m) if disp.has("road_half_m") else float(disp.lane_width_m) * 1.5 + 1.0
+		var spans := []
+		for i in n: spans.append([views[i].off, views[i].off + S])   # each approach = turn i's scroll straight
+		if not turnout.is_empty(): spans.append([float(turnout.s0) - float(turnout.taper) - 6.0, float(turnout.s1) + 6.0])
+		var td: Dictionary = course.terrain_drop_runs(-60.0, course.length + 60.0, Wd, spans, float(Dt.terrain.drop_lat_m), float(Dt.terrain.get("drop_dy_m", 1.5)), float(Dt.terrain.get("drop_min_run_m", 24.0)))
+		course.drop_runs = td.runs
+		for i in n: span_side[i] = float(td.spans[i])
+	if Dt.has("terrain"):   # TOUGE: contact-aware boundary (course.gd build_caps): the roadside profiles out to the camera reach
+		var Wc: float = float(disp.road_half_m) if disp.has("road_half_m") else float(disp.lane_width_m) * 1.5 + 1.0
+		course.cap_prof = {"W": Wc, "out": Course.terrain_profile(Dt, true), "in": Course.terrain_profile(Dt, false), "clear": float(Dt.terrain.get("clear_m", 12.0)), "road_clear": float(Dt.terrain.get("road_clear_m", 8.0)), "gallery_wall": float(Dt.terrain.get("gallery_wall_m", 3.5)), "lap": float(Dt.terrain.get("step_lap_m", 0.0))}
+	if not turnout.is_empty(): course.lot_cut = {"s0": float(turnout.s0), "s1": float(turnout.s1), "taper": float(turnout.taper), "w": float(turnout.w)}   # lot-aware terrain (course.gd lot_cut)
+	course.build_caps(-60.0, course.length + 60.0)   # the dressed range (main.gd _build_road builds road + dressing on [-60, length + 60])
 	for i in n:
 		var a: Dictionary = course.at(views[i].off)
-		var st = Course.new(a.x, a.z, a.tx, a.tz); st.grade = course.grade; st.y0 = course.elev(views[i].off, 0.0); st.drop_const = sides[i]
+		var st = Course.new(a.x, a.z, a.tx, a.tz); st.grade = course.grade; st.y0 = course.elev(views[i].off, 0.0); st.drop_const = span_side[i]   # = the course's side over this approach
 		straights.append(st.add_straight(100000.0))
 	return {"course": course, "views": views, "straights": straights, "turnout": turnout}
 

@@ -8,6 +8,36 @@
 
 ---
 
+## 2026-11-20 — Gordon [godot]: authored Touge terrain swap-in, asset rule, road export, lot/camera/HUD fixes (Austin go-ahead 2026-11-20 8:18 PM PT: "Commit and push")
+- **Asset rule (AGENTS.md):** everything in the game world is an authored asset, not generated in code. The road surface is the one exception and stays code. Keep generated geometry to the bare minimum. Why: brute-forced procedural terrain caused the slabs, wedges and cracks in playtests, and it costs frame time (Austin, 2026-11-20).
+- **Road export:** `tools/touge_race/road_export.gd` writes `unapproved/gordon/road_export/`: road_surface.glb split into Turn01–10 + LotFloor, plus road_centreline.json at 1 m samples. Arthur models against the exact in-game road. Regenerate with `godot --headless --path . --script tools/touge_race/road_export.gd`.
+- **Terrain swap (new `scripts/touge_env.gd`):**
+  - Loads Arthur's `assets/env/touge/` sections t01–t10, the lot, galleries a/b/c and the backdrop (always on).
+  - Materials map by name to `assets/tex/kit/env/`. Lamp glows and lights spawn at `lamp_head_###`.
+  - Draws only sections within fog_far + 10 m, and builds static collision from the `*_col.glb` proxies.
+  - When the authored env is loaded, these are skipped: Terr* bands, `_pband`/`_vband`/`_xface`/`_gallery`, FloorBase, lot and flank hills, code guardrails and lamp posts, and road-edge underlays.
+- **`assets/env/touge/*.glb.import`:** vertex compression and auto-LODs are off, because compression opened cracks at mesh seams.
+- **Arthur's three flags (`touge_dressing.gd`):** cedars stand on the authored ground and are hidden where another road passes through tree height. Lattice is trimmed at the 7 switch points and placed only where an authored cut exists.
+- **`cam_guard.gd` and QTE line of sight:** rebuilt on the `_col` proxies plus the code road, lot lamps and placed lattice, replacing the analytic terrain model.
+- **Checks:**
+  - TERRAIN_CHECK is rewritten for the assets.
+  - `void_check.py` ray-casts the authored meshes.
+  - `drop_side_check.gd` adds an authored-ground check.
+  - `wall_check.py`, `void_sweep.sh` and `hud_layout_check` are added.
+- **Line chevrons:** use the kit `line_chevron`, scaled 1.9 × 2.3 m, lifted 0.05 m and tinted in code.
+- **Earlier fixes that were still uncommitted (fix report v6):** turnout lot, camera guard, HUD (pause panel, plan/QTE panels, gauges) and the display spec. `spec/build.json` is restamped.
+- **Results:**
+  - Frame draw calls while racing: 11,827 → 8,105.
+  - Terrain: 37.3k tris / 84 draws in total, a mean of 25k tris / 52 draws per pose after culling.
+  - All PASS: parity 300/100/200, GAUSS 340/340, AI QTE 65/65, AUTOFILL, PLAN KEY, DROP_SIDE, WALL (worst 0.41) and CLIP.
+- **Known open:**
+  - VOID: 80 px of 1 px seam dashes in the assets (lot apron, t02 seam). Sent to Arthur.
+  - TERRAIN_CHECK: a 0.10 m lip at t02 s 171 and t09 s 913 from the 0.225 m bank step in `course.gd elev()`. Austin: "Leave the road-edge lip for now".
+  - TERRAIN_CHECK: a 0.05 m gallery_a face over the lot entrance. Sent to Arthur.
+- **Not changed:** no sim/ numbers. Barry's Touge passing (5c79dea) is not ported yet.
+
+---
+
 ## 2026-11-20 — Arthur [art]: authored Touge terrain assets (Austin go-ahead 2026-11-20: "Resolve some of that clipping then pass off.")
 
 - **What:** `assets/env/touge/` holds 10 turn sections (`touge_t01`–`t10`), the turnout lot, galleries a/b/c, a backdrop ridge, 14 `*_col.glb` collision proxies and a README. `assets/env/touge/kit/` holds lamp_post, rail_seg, gallery_bay and line_chevron (replaces the code-built chevrons; white, tinted in code). New textures are in `assets/tex/kit/env/`. Blender source and build scripts are in `art/env/touge/`.

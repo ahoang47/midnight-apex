@@ -9,6 +9,7 @@ One file for the whole repo. Read it before touching anything.
 - **Read `CHANGELOG.md` before planning or executing a change**, to avoid repeating past mistakes.
 - **Log every change in `CHANGELOG.md`** with what changed and the reasoning. Newest entry at the top. Tag the entry with the area (`[sim]`, `[design]`, `[story]`, `[art]`, `[godot]`, `[repo]`) and the owner bot.
 - **`sim/` code is the source of truth for numbers.** Docs in `design/` (and anywhere else) reference the constant by name and file (e.g. `HP_PER_LEVEL` in `sim/velocity_shift/equations.py`) instead of copying values. If a doc and the code disagree, the code wins until the systems owner changes it on purpose.
+- **Everything in the game world is an authored asset, not generated in code** (Austin 2026-11-20). Terrain, hillsides, cliff and cut faces, lots, galleries, buildings and roadside dressing are built as assets (Arthur, `art/` -> `assets/`) and placed in scenes. Godot scripts load and place assets and run gameplay; they don't build world geometry procedurally. The one exception is the road surface, which stays generated in code from the course spec; assets are modelled against Gordon's road export. Keep anything generated in code to the bare minimum: generated geometry is harder to see and fix, and it costs frame time. If something seems to need generated geometry, raise it with Austin and Arthur first.
 - **Stay in your folder.** Changes outside the folders you own go through the owner (or Desmond).
 
 ## Folder map and owners

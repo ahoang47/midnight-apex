@@ -359,6 +359,20 @@
       "fog_near": 9,
       "fog_far": 78,
       "_fog": "Touge fog #0B172B, 9-78 m = the approved B.5b Touge frames: art/ui/line_select_cam/README.md@ab1c4a1:27 (blend50 fog #0B172B, 'closer than in the city scenes') + build_lsc.py@ab1c4a1:21 (FOG_NEAR/FAR 9/78, 'B.3 Touge ~8-55 m, pushed out so the corner reads'). Supersedes B.3 #2A3236 8-55 m (art_direction.md:220, PROPOSAL, Q2 open): newest approved wins. Phase 4 value kept in out/display_before_phase5.json",
+      "terrain": {
+        "reach_m": 100,
+        "out_slope": 0.888,
+        "in_slope": 0.35,
+        "skirt_m": 11,
+        "clear_m": 12,
+        "road_clear_m": 8,
+        "gallery_wall_m": 3.5,
+        "drop_lat_m": 60,
+        "drop_dy_m": 1.5,
+        "drop_min_run_m": 24,
+        "step_lap_m": 1.0,
+        "_doc": "DISPLAY (Gordon, Austin pt137u pic 5 voids): the roadside continues past the approved kit (outside slope -7.5 m at 9 m, inside hill band 10 m at 18 m) at the same outside gradient (7.5/8.45) and a gentle 0.35 rise inside, out to reach_m = fog_far 78 + 22 m (the furthest any race camera sits from the road edge: lot overview 14 m, plan stops), so no camera sees past the dressing before the fog hides it. clear_m (course.gd build_caps): the roadside KIT only stops at another part of the course when its profile would pass within this of that road's height; the far TERRAIN stops at another leg unless it dives >= clear_m under that road (tcap, rule 3), so no hill hangs over a lower leg. Each terrain band edge hangs a skirt of max(skirt_m, the drop to the neighbour terrain at that edge + 1 m) (tstep), so the step between two levels is closed. Checked by the void sweep (--void-sweep, VOID_CHECK). road_clear_m: a skirt stops this far above any road whose gallery line (gallery_wall_m past its edge) it would hang into (tskmax); where a band's cut edge lies under the neighbour's terrain its face continues up to that surface (tup). gallery_wall_m: a road running under another leg gets walls this far past each edge, up to the leg overhead (groof). step_lap_m: at a step between two levels the higher band runs this far past the lower band's edge (tband), so no slot between the skirt and the up face opens to the sky. drop_lat_m / drop_dy_m / drop_min_run_m (item 15, course.gd terrain_drop_runs): where another leg runs within drop_lat_m and differs in height by >= drop_dy_m the drop (guardrail) side faces the LOWER leg and the lattice the higher one; runs shorter than drop_min_run_m merge; 0 = corner rule only. Checked by tools/touge_race/drop_side_check.gd."
+      },
       "sky_zenith": "#010408",
       "sky_horizon": "#0B172B",
       "_sky": "zenith = B.2a design/art/art_direction.md@55b9063:197 (no Touge zenith anywhere); horizon = Touge fog (fog meets the sky, B.7)",
@@ -805,10 +819,11 @@
     },
     "panel": [
       424,
-      372,
+      369,
       636,
-      479
+      476
     ],
+    "_panel_edge": "Austin pt137u (HUD layout check, tools/touge_race/hud_layout_check.py): was 372-479, 1 design px off the bottom edge (cut at some window sizes); every HUD panel keeps >= 4 design px from the screen edge, like the heat panel's 4 px left margin.",
     "gap_pos": [
       220,
       98
@@ -942,6 +957,18 @@
     "chase": {
       "_doc": "The B.5b fixed chase camera (display.json camera.*) with an optional fov override.",
       "fov": 56.74
+    },
+    "framing": {
+      "_doc": "DISPLAY PLACEHOLDERS (Austin pt137u): every QTE camera keeps both cars in frame. Aim at the midpoint of the two cars' bounding spheres (centre = car origin + center_y_m, radius radius_m), widen the fov (never below the type's fov, at most max_fov) until both fit with margin_deg, else pull back step_m at a time (up to max_back_m). After cam_guard the fov may widen again up to max_fov_guarded.",
+      "radius_m": 2.6,
+      "center_y_m": 0.7,
+      "margin_deg": 3.0,
+      "max_fov": 72.0,
+      "max_fov_guarded": 90.0,
+      "step_m": 1.0,
+      "max_back_m": 60.0,
+      "los_tol_m": 1.0,
+      "_fallback_doc": "Austin pt137u item 3: the drawn type is kept when both cars fit (after cam_guard, fov <= max_fov_guarded) and both sight lines run less than los_tol_m deep through the kit model (cam_guard.clip minus its margin: a rail or lamp post between camera and car is fine, a hill is not); otherwise the section shows the first other valid type that does (QTE_CAM_TYPES order, no RNG draw), else the best ranked. QTE_CAM_FALLBACK logs each switch."
     }
   },
   "cars": {

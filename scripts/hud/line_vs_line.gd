@@ -2,11 +2,13 @@
 ## being played, RESULT fills in as each phase plays. k = phase being played (-1 = playback over: every result shown).
 @tool
 extends "res://scripts/hud/hud_panel.gd"
+const RECT := [120.0, 12.0, 466.0, 100.0]   # x0, y0, x1, y1 (design px); hud.gd keeps the gap meter below it
+func bottom() -> float: return RECT[3]
 func paint() -> void:
 	var k: int = int(st.play_phase) if st.phase == "TIMING" else -1
 	var you: String = st.line; var riv: String = st.rline; var outs: Array = st.outs
 	if you.length() < 3 or riv.length() < 3: return
-	var x0 := 120.0; var y0 := 12.0; var x1 := 466.0; var y1 := 100.0
+	var x0: float = RECT[0]; var y0: float = RECT[1]; var x1: float = RECT[2]; var y1: float = RECT[3]
 	lpanel(x0, y0, x1, y1, L_EDGE_L, 8)
 	t2(x0 + 8, y0 + 6, "LINE LOCKED", 12, L_AMBER, true)
 	var cols := [241.0, 331.0, 421.0]

@@ -1,12 +1,10 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/turnout_lot.gd" id="1"]
 [ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_floor.glb" id="2"]
 [ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_curbs.glb" id="3"]
 [ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_stall_lines.glb" id="4"]
 [ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_wheel_stops.glb" id="5"]
-[ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_back_wall.glb" id="6"]
-[ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_hill_top.glb" id="7"]
 [ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_lamps.glb" id="8"]
 [ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_props.glb" id="9"]
 [ext_resource type="PackedScene" path="res://assets/env/turnout_lot/lot_road_paint.glb" id="10"]
@@ -32,11 +30,7 @@ script = ExtResource("1")
 
 [node name="BackWall" type="Node3D" parent="."]
 
-[node name="lot_back_wall" parent="BackWall" instance=ExtResource("6")]
-
 [node name="HillTop" type="Node3D" parent="."]
-
-[node name="lot_hill_top" parent="HillTop" instance=ExtResource("7")]
 
 [node name="Lamps" type="Node3D" parent="."]
 

@@ -18,6 +18,7 @@ var fi: FontFile   # -BoldOblique
 var fb: FontFile   # NimbusSans-Bold (heavier titles); from Arthur's line-preview HUD
 var fa: FontFile   # Archivo Black, short labels (loaded as in Arthur's hud.gd)
 var grain: Texture2D  # noisy plate fill (HUD plates only, 1280 layer after the 640 dither)
+var pause_st: Dictionary = {}  # pause menu (main.gd); drawn on top of the frozen race HUD
 
 ## editor only: which sample state the panels draw
 @export_enum("select", "lock", "qte", "play", "result", "finish", "menu") var editor_preview := "select":
@@ -41,7 +42,7 @@ func setup(font_png: Texture2D, meta: Dictionary, panel_png: Texture2D, logo_png
 	# TOUGE (Gordon, touge-race): new panels created in code (no editor nodes yet): heat gauges, car select, start prompt,
 	# turnout banner and the touch buttons (drawn last, on top)
 	for pair in [["heat", "HeatGauges", "heat_gauges"], ["carsel", "CarSelect", "car_select"], ["role", "RolePrompt", "role_prompt"],
-			["turnout", "TurnoutBanner", "turnout_banner"], ["touch", "TouchButtons", "touch_buttons"]]:
+			["turnout", "TurnoutBanner", "turnout_banner"], ["touch", "TouchButtons", "touch_buttons"], ["pause", "PausePanel", "pause_panel"]]:
 		if not P.has(pair[0]):
 			var c := Control.new(); c.name = pair[1]; c.set_script(load("res://scripts/hud/%s.gd" % pair[2]))
 			c.size = Vector2(640, 480); c.mouse_filter = Control.MOUSE_FILTER_IGNORE; add_child(c); P[pair[0]] = c
@@ -92,11 +93,22 @@ func show_state(s: Dictionary) -> void:
 	# Coords from Arthur pass 4; overridable via st.gap_pos (display.json line_preview.gap_pos).
 	if P.has("gap") and on.has("gap"):
 		var gp = st.get("gap_pos", [220, 98])
-		P.gap.position = Vector2(float(gp[0]), float(gp[1]))
+		var gy := float(gp[1])
+		# Austin pt137u (HUD overlap check): gap_pos sits under the REAR VIEW label (SELECT layout), but during playback /
+		# RESULT the LINE LOCKED panel fills y 12-100 there, so the meter ran 2 px into it: keep it 4 px below that panel
+		if on.has("lvl"): gy = maxf(gy, float(P.lvl.bottom()) + 4.0)
+		P.gap.position = Vector2(float(gp[0]), gy)
+	if not pause_st.is_empty(): on.pause = true
 	for k in P:
 		var n: Control = P[k]
 		n.visible = on.has(k)
 		if n.visible: n.queue_redraw()
+
+## pause menu on / off without rebuilding the race HUD state (the race is frozen while it shows)
+func show_pause(m: Dictionary) -> void:
+	pause_st = m
+	if P.has("pause"):
+		P.pause.visible = not m.is_empty(); P.pause.queue_redraw()
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): _editor_preview()
