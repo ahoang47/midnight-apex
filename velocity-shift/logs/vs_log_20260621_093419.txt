@@ -1,0 +1,51 @@
+========================================================================
+  VELOCITY SHIFT — Match Log
+  Veteran Bruiser vs Bruiser Rival
+  Turns: 19/20  |  Seed: None
+  Result: Bruiser Rival by PLAYER DNF
+  Position: Veteran Bruiser 102% | Bruiser Rival 102%
+  Final DP: Veteran Bruiser 9161.9 | Bruiser Rival 8227.1
+========================================================================
+
+   T      P-Picks O-Picks              Battle  P_QTE O_QTE     P_DP    O_DP    Cum_P   Cum_O
+  ----------------------------------------------------------------------------------------
+   1  DEFE-DEFE-ATTA ATTA-ATTA-DEFE          Player    8.9   7.7    485.3   375.6    485.3   375.6
+             Deal: DEFE ATTA ATTA ATTA ATTA DEFE  |  NEUT DEFE ATTA ATTA DEFE ATTA
+   2  DEFE-ATTA-ATTA ATTA-ATTA-DEFE             Tie    8.9   7.3    417.0   396.5    902.3   772.1
+             Deal: ATTA DEFE ATTA ATTA ATTA ATTA  |  NEUT NEUT ATTA DEFE NEUT ATTA
+   3  NEUT-ATTA-ATTA ATTA-ATTA-ATTA        Opponent    9.9   7.4    428.6   467.1   1330.9  1239.2
+             Deal: NEUT ATTA ATTA NEUT ATTA NEUT  |  NEUT NEUT ATTA ATTA ATTA ATTA
+   4  ATTA-DEFE-NEUT ATTA-ATTA-DEFE          Player    8.9   7.8    560.0   353.8   1890.9  1593.0
+             Deal: ATTA ATTA DEFE NEUT ATTA ATTA  |  NEUT ATTA DEFE DEFE ATTA NEUT
+   5  DEFE-DEFE-ATTA ATTA-ATTA-NEUT          Player    9.9   7.5    716.0   313.5   2607.0  1906.4
+             Deal: ATTA DEFE NEUT DEFE DEFE DEFE  |  ATTA DEFE DEFE NEUT NEUT ATTA
+   6  DEFE-ATTA-NEUT ATTA-ATTA-DEFE          Player    9.9   7.7    624.1   389.5   3231.1  2295.9
+             Deal: NEUT NEUT ATTA ATTA ATTA DEFE  |  ATTA DEFE DEFE ATTA DEFE NEUT
+   7  DEFE-DEFE-ATTA ATTA-ATTA-ATTA          Player    7.9   7.9    497.4   414.3   3728.5  2710.2
+             Deal: DEFE ATTA ATTA DEFE ATTA DEFE  |  NEUT ATTA ATTA ATTA ATTA NEUT
+   8  DEFE-DEFE-NEUT ATTA-ATTA-NEUT          Player    7.9   7.7    498.7   418.1   4227.2  3128.3
+             Deal: DEFE NEUT DEFE NEUT NEUT DEFE  |  ATTA NEUT DEFE DEFE ATTA NEUT
+   9  DEFE-ATTA-ATTA ATTA-ATTA-DEFE             Tie    7.9   7.6    368.6   500.9   4595.8  3629.3
+             Deal: ATTA ATTA DEFE ATTA NEUT ATTA  |  ATTA NEUT DEFE NEUT ATTA DEFE
+  10  DEFE-DEFE-ATTA ATTA-ATTA-DEFE          Player    7.9   7.5    433.4   452.9   5029.2  4082.1
+             Deal: ATTA DEFE DEFE DEFE ATTA ATTA  |  DEFE DEFE ATTA ATTA NEUT DEFE
+  11  NEUT-NEUT-ATTA NEUT-ATTA-DEFE        Opponent    8.9   7.4    350.9   656.4   5380.0  4738.5
+             Deal: NEUT NEUT NEUT ATTA ATTA ATTA  |  ATTA ATTA NEUT ATTA DEFE ATTA
+  12  ATTA-ATTA-DEFE NEUT-DEFE-DEFE             Tie    8.9   7.5    415.6   455.6   5795.6  5194.1
+             Deal: DEFE ATTA ATTA NEUT ATTA ATTA  |  ATTA NEUT DEFE DEFE ATTA DEFE
+  13  ATTA-NEUT-NEUT NEUT-DEFE-ATTA          Player    7.9   7.7    431.6   427.8   6227.2  5622.0
+             Deal: NEUT NEUT ATTA NEUT NEUT DEFE  |  NEUT NEUT NEUT DEFE NEUT ATTA
+  14  NEUT-NEUT-DEFE DEFE-NEUT-NEUT             Tie    8.9   7.7    414.2   457.0   6641.4  6079.0
+             Deal: DEFE NEUT NEUT NEUT NEUT DEFE  |  NEUT ATTA NEUT ATTA NEUT DEFE
+  15  DEFE-ATTA-ATTA NEUT-ATTA-ATTA        Opponent    9.9   7.3    429.8   513.9   7071.2  6592.9
+             Deal: ATTA DEFE DEFE NEUT ATTA NEUT  |  ATTA ATTA DEFE NEUT ATTA DEFE
+  16  ATTA-NEUT-ATTA DEFE-DEFE-NEUT          Player    9.9   7.4    542.7   399.8   7614.0  6992.8
+             Deal: DEFE DEFE ATTA DEFE NEUT ATTA  |  ATTA NEUT ATTA NEUT DEFE DEFE
+  17  ATTA-NEUT-DEFE DEFE-DEFE-ATTA          Player    8.9   7.4    487.7   419.7   8101.7  7412.5
+             Deal: DEFE NEUT ATTA ATTA NEUT NEUT  |  DEFE NEUT DEFE NEUT ATTA ATTA
+  18  NEUT-DEFE-DEFE DEFE-NEUT-ATTA          Player    7.9   7.5    433.1   430.6   8534.8  7843.1
+             Deal: DEFE NEUT DEFE ATTA NEUT NEUT  |  NEUT ATTA DEFE ATTA ATTA ATTA
+  19  NEUT-NEUT-ATTA DEFE-DEFE-ATTA          Player    9.9   7.4    627.1   384.0   9161.9  8227.1
+             Deal: ATTA NEUT ATTA ATTA NEUT ATTA  |  ATTA ATTA DEFE ATTA NEUT DEFE
+
+========================================================================

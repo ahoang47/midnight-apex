@@ -1,0 +1,53 @@
+========================================================================
+  VELOCITY SHIFT — Match Log
+  Starter Endurance vs Swift Rival
+  Turns: 20/20  |  Seed: None
+  Result: Swift Rival (Decision)
+  Position: Starter Endurance 95% | Swift Rival 96%
+  Final DP: Starter Endurance 1881.5 | Swift Rival 1720.1
+========================================================================
+
+   T      P-Picks O-Picks              Battle  P_QTE O_QTE     P_DP    O_DP    Cum_P   Cum_O
+  ----------------------------------------------------------------------------------------
+   1  NEUT-NEUT-DEFE ATTA-ATTA-ATTA        Opponent   10.0   7.7     88.6    94.8     88.6    94.8
+             Deal: NEUT DEFE NEUT NEUT NEUT NEUT  |  NEUT ATTA DEFE ATTA DEFE ATTA
+   2  NEUT-NEUT-ATTA ATTA-DEFE-ATTA             Tie    9.0   8.0     86.0    83.6    174.6   178.5
+             Deal: ATTA ATTA ATTA NEUT DEFE NEUT  |  ATTA ATTA ATTA DEFE NEUT ATTA
+   3  DEFE-ATTA-NEUT NEUT-ATTA-NEUT        Opponent   10.0   7.9     88.5    96.8    263.1   275.3
+             Deal: ATTA DEFE NEUT NEUT NEUT DEFE  |  NEUT DEFE DEFE NEUT DEFE ATTA
+   4  ATTA-ATTA-ATTA DEFE-NEUT-NEUT          Player   10.0   7.8    111.9    76.0    374.9   351.3
+             Deal: ATTA DEFE ATTA ATTA ATTA DEFE  |  NEUT NEUT NEUT NEUT DEFE ATTA
+   5  NEUT-ATTA-NEUT ATTA-ATTA-DEFE             Tie   10.0   8.0     95.4    85.2    470.3   436.5
+             Deal: NEUT ATTA NEUT NEUT ATTA ATTA  |  DEFE NEUT DEFE NEUT ATTA ATTA
+   6  DEFE-ATTA-NEUT NEUT-ATTA-NEUT        Opponent   10.0   7.6     88.6    96.3    558.9   532.9
+             Deal: DEFE NEUT ATTA ATTA DEFE NEUT  |  NEUT DEFE DEFE NEUT NEUT ATTA
+   7  NEUT-ATTA-ATTA DEFE-NEUT-NEUT          Player   10.0   7.6    148.3    61.1    707.2   594.0
+             Deal: ATTA ATTA ATTA NEUT DEFE DEFE  |  ATTA ATTA DEFE ATTA NEUT NEUT
+   8  ATTA-DEFE-NEUT DEFE-DEFE-DEFE             Tie   10.0   7.7     95.5    90.1    802.7   684.1
+             Deal: ATTA DEFE NEUT ATTA ATTA DEFE  |  DEFE ATTA DEFE DEFE ATTA NEUT
+   9  NEUT-DEFE-NEUT NEUT-NEUT-DEFE             Tie   10.0   7.7     95.5    90.6    898.2   774.7
+             Deal: DEFE DEFE ATTA NEUT NEUT DEFE  |  DEFE ATTA NEUT DEFE NEUT ATTA
+  10  ATTA-NEUT-ATTA NEUT-NEUT-NEUT          Player   10.0   7.8    129.5    77.2   1027.7   851.9
+             Deal: ATTA NEUT NEUT DEFE ATTA DEFE  |  NEUT NEUT NEUT ATTA NEUT DEFE
+  11  ATTA-NEUT-NEUT ATTA-NEUT-NEUT             Tie    1.0   7.7      9.5    96.9   1037.3   948.8
+             Deal: ATTA DEFE NEUT DEFE NEUT NEUT  |  ATTA NEUT NEUT NEUT DEFE NEUT
+  12  NEUT-DEFE-ATTA ATTA-ATTA-DEFE        Opponent    2.0   7.5     17.7   104.1   1055.0  1052.9
+             Deal: ATTA NEUT ATTA DEFE NEUT ATTA  |  NEUT NEUT ATTA DEFE ATTA NEUT
+  13  ATTA-DEFE-ATTA ATTA-ATTA-NEUT          Player   10.0   7.8    129.5    69.3   1184.5  1122.1
+             Deal: ATTA NEUT DEFE NEUT ATTA DEFE  |  DEFE DEFE DEFE ATTA ATTA NEUT
+  14  DEFE-NEUT-ATTA ATTA-ATTA-DEFE        Opponent    9.0   7.8     79.7   102.4   1264.1  1224.6
+             Deal: DEFE ATTA NEUT DEFE ATTA DEFE  |  DEFE NEUT NEUT ATTA ATTA NEUT
+  15  DEFE-NEUT-NEUT ATTA-ATTA-ATTA        Opponent    8.0   7.8     70.8   100.6   1334.9  1325.2
+             Deal: DEFE DEFE NEUT NEUT NEUT ATTA  |  DEFE ATTA ATTA ATTA NEUT DEFE
+  16  DEFE-NEUT-ATTA ATTA-ATTA-ATTA             Tie   10.0   7.8     95.4    82.3   1430.4  1407.5
+             Deal: ATTA NEUT DEFE DEFE ATTA ATTA  |  NEUT NEUT ATTA ATTA ATTA DEFE
+  17  DEFE-ATTA-ATTA ATTA-ATTA-DEFE             Tie   10.0   8.0     95.4    85.6   1525.7  1493.1
+             Deal: ATTA DEFE ATTA NEUT ATTA NEUT  |  DEFE NEUT DEFE NEUT ATTA ATTA
+  18  DEFE-NEUT-ATTA ATTA-DEFE-DEFE          Player   10.0   7.7    112.0    77.2   1637.7  1570.3
+             Deal: DEFE DEFE NEUT DEFE ATTA ATTA  |  DEFE DEFE NEUT NEUT ATTA DEFE
+  19  ATTA-ATTA-NEUT ATTA-DEFE-DEFE             Tie   10.0   7.5     95.6    84.5   1733.3  1654.8
+             Deal: ATTA DEFE ATTA DEFE NEUT NEUT  |  DEFE ATTA DEFE ATTA NEUT DEFE
+  20  NEUT-DEFE-ATTA DEFE-ATTA-NEUT          Player   10.0   7.7    148.2    65.3   1881.5  1720.1
+             Deal: NEUT DEFE DEFE NEUT ATTA NEUT  |  NEUT DEFE NEUT DEFE DEFE ATTA
+
+========================================================================
