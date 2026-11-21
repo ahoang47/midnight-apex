@@ -39,10 +39,10 @@ func setup(font_png: Texture2D, meta: Dictionary, panel_png: Texture2D, logo_png
 	fb = _font("res://fonts/NimbusSans-Bold.otf") if ResourceLoader.exists("res://fonts/NimbusSans-Bold.otf") else fn
 	fa = _font("res://fonts/ArchivoBlack-Regular.ttf") if ResourceLoader.exists("res://fonts/ArchivoBlack-Regular.ttf") else fb
 	grain = load("res://assets/tex/kit/plate_grain.png") as Texture2D   # sampled nearest via this HUD CanvasItem
-	# TOUGE (Gordon, touge-race): new panels created in code (no editor nodes yet): heat gauges, car select, start prompt,
-	# turnout banner and the touch buttons (drawn last, on top)
-	for pair in [["heat", "HeatGauges", "heat_gauges"], ["carsel", "CarSelect", "car_select"], ["role", "RolePrompt", "role_prompt"],
-			["turnout", "TurnoutBanner", "turnout_banner"], ["touch", "TouchButtons", "touch_buttons"], ["pause", "PausePanel", "pause_panel"]]:
+	# TOUGE (Gordon, touge-race): new panels created in code (no editor nodes yet): heat gauges, car select and the touch buttons
+	# (drawn last, on top). Touge passing removed the role prompt and the turnout banner (no roles, no swap).
+	for pair in [["heat", "HeatGauges", "heat_gauges"], ["carsel", "CarSelect", "car_select"],
+			["touch", "TouchButtons", "touch_buttons"], ["pause", "PausePanel", "pause_panel"]]:
 		if not P.has(pair[0]):
 			var c := Control.new(); c.name = pair[1]; c.set_script(load("res://scripts/hud/%s.gd" % pair[2]))
 			c.size = Vector2(640, 480); c.mouse_filter = Control.MOUSE_FILTER_IGNORE; add_child(c); P[pair[0]] = c
@@ -64,7 +64,6 @@ func show_state(s: Dictionary) -> void:
 	if st.is_empty(): pass
 	elif st.has("menu"): on.menu = true
 	elif st.has("carsel"): on.carsel = true
-	elif st.has("role_prompt"): on.role = true
 	else:
 		if st.mirror: on.mirror = true
 		on.plate = true; on.gap = true
@@ -83,8 +82,6 @@ func show_state(s: Dictionary) -> void:
 			if st.phase == "FINISHED": on.finish = true
 			else: on.cont = true
 	if st.get("heat") != null and not st.has("menu"): on.heat = true
-	if st.get("turnout") != null:
-		on.turnout = true; on.erase("cont"); on.erase("lvl")
 	if not st.get("buttons", []).is_empty(): on.touch = true
 	if on.has("heat"):
 		var hp = st.get("heat_pos", [4, 410]); P.heat.position = Vector2(float(hp[0]), float(hp[1]))

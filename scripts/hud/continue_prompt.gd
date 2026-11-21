@@ -9,7 +9,10 @@ func paint() -> void:
 	for j in 3:
 		var v = (r.qte_in as Array)[j]
 		ph.append("%s %s" % [["E", "A", "X"][j], "--" if v == null else "%.2f" % float(v)])
-	var s := "QTE %s  avg %.3f%s%s" % ["  ".join(ph), r.q_time, " [auto]" if r.autofilled else "", "  LEAD CHANGE" if st.leader_changed else ""]
+	# Touge passing (per-phase): each clash is scored with its smoothed phase QTE (RaceCore player_clash_qte), not the turn mean
+	var cq: Array = r.get("player_clash_qte", [])
+	var sc := ("avg %.3f" % float(r.q_time)) if cq.is_empty() else ("scored %s" % "/".join(cq.map(func(v): return "%.2f" % float(v))))
+	var s := "QTE %s  %s%s%s" % ["  ".join(ph), sc, " [auto]" if r.autofilled else "", "  LEAD CHANGE" if st.leader_changed else ""]
 	# Under the tie-gap bar (220,98 200x40), which moved under the mirror in the B.5d pass.
 	t2(220, 144, s, 10, SUB, true)
 	if int(st.reveal) >= 3:

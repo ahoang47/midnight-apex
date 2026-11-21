@@ -11,9 +11,8 @@
     "touge": {
       "near_m": 7.0,
       "far_m": 26.0,
-      "neutral_m": 14.0,
       "lead_scale": 2.5,
-      "_doc": "PLACEHOLDER (Gordon, display only). Touge: no visible passing. The rival stays on its role's side: chasing = rival ahead, leading = rival behind. Distance = neutral_m - lead_scale*(far-near)*seg_lead when chasing (closer = winning), neutral_m + ... when leading (farther = winning), clamped to near..far. seg_lead = this half's share lead (resets at the swap)."
+      "_doc": "PLACEHOLDER (Gordon, display only). Touge passing (sim 5c79dea, Austin approved 2026-11-20): visible passing replaces the role sides. The car ahead on screen is the one ahead on running total progress after each phase (RaceCore phase_order; 'even' keeps the order shown). Distance = near_m + lead_scale*(far_m-near_m)*|lead|, clamped to near..far, lead = whole-race share lead; rival ahead = +, behind = -. Start grid: one behind the other, the rival near_m ahead, the player trailing (Austin via Barry 2026-11-20 6:31 PM PT: 'One behind the other, player always trails'; staging only, the sim starts level at 0-0)."
     }
   },
   "road": {
@@ -788,6 +787,8 @@
     "overlap_clear_m": 9.0,
     "_overlap": "PLACEHOLDER: the passer is fully in the open lane while the cars are within 5.5 m along the road, back on its line beyond 9 m (= visual_gap.min_spacing_m)",
     "min_sep_m": 2.6,
+    "dodge_ease_s": 0.25,
+    "_dodge_ease_s": "PLACEHOLDER (Gordon, Touge passing 2026-11-20): time constant of the passer's move to an open lane (main.gd _dodge_target, per frame while the cars overlap during a pass; min_sep_m off the other car's line, inside road_half_m - 1 m).",
     "_min_sep_m": "PLACEHOLDER: lines closer than this while overlapping count as a shared lane",
     "car_len_m": 4.6,
     "_car_len_m": "no-clip check: lateral gap is measured while the cars are within this many m along the road"
@@ -876,28 +877,15 @@
   },
   "road_half_m": 3.75,
   "turnout": {
-    "_doc": "TOUGE turnout after the swap turn (Austin 2026-11-19: 'a small parking area that the cars go into, swap places, and then leave the parking area. They do not stop, they just slow down.'). Arthur's spec: a placeholder straight ~40 m, a little wider. EVERY NUMBER HERE IS A DISPLAY PLACEHOLDER (not sim).",
+    "_doc": "TOUGE turnout lot (Arthur's authored touge_lot.glb + turnout_lot kit) on turn 5's exit straight. Touge passing (Austin 2026-11-20): no swap plays here any more; it is roadside scenery the cars drive past. after_turn places it (display geometry; was race_config swap_after_turn) so the authored terrain, exported against this course, still lines up. Barry's port list moves the PA to before turn 1: that needs Arthur's authored start lot + terrain first. EVERY NUMBER HERE IS A DISPLAY PLACEHOLDER (not sim).",
+    "after_turn": 5,
     "total_m": 110.0,
     "approach_m": 30.0,
     "pocket_m": 62.0,
     "taper_m": 14.0,
     "pocket_w_m": 18.873,
-    "duration_s": 8.5,
-    "min_speed_frac": 0.3,
     "side": -1,
-    "swap_u": [
-      0.3,
-      0.7
-    ],
-    "in_u": [
-      0.08,
-      0.28
-    ],
-    "out_u": [
-      0.72,
-      0.92
-    ],
-    "_numbers": "PLACEHOLDERS (Gordon). total_m = extra straight after turn 5 the cars cover during the swap (keeps the road continuous into turn 6). pocket_m 60 (Arthur suggested ~40 m; 60 keeps the slower car inside the pocket for the whole swap at these speeds). duration 7 s, speed dips to 30 % (never stops). swap_u: the order flips between 30 % and 70 % of the sequence while the leader is in the pocket; in_u / out_u: leader drifts in / out.",
+    "_numbers": "PLACEHOLDERS (Gordon). total_m = extra straight after turn 5 that holds the lot (keeps the road continuous into turn 6 and the authored sections aligned). pocket_m 62 = the lot length incl. tapers.",
     "island_d_m": [
       0.1,
       0.7
@@ -905,25 +893,12 @@
     "curb_h_m": 0.15,
     "stall_w_m": 2.5,
     "stall_d_m": 5.0,
-    "lane_near_m": 2.4,
-    "lane_deep_m": 4.9,
     "lamp_s_frac": [
       0.22,
       0.78
     ],
     "vending_s_frac": 0.5,
     "pool_strength": 0.6,
-    "cam_hold_u": 0.32,
-    "cam_lot_u": [
-      0.32,
-      0.78
-    ],
-    "cam_lot": {
-      "s_frac": 0.95,
-      "d_out_m": -1.2,
-      "h_m": 3.2,
-      "fov": 60.0
-    },
     "_lot": "Lot geometry matches Arthur's approved two-row kit (ccd1126, 2026-11-19): approach 30 m after turn 5's exit, 62 m long incl. 14 m entrance / exit tapers, 18.873 m deep, island curb 0.1-0.7 m, two 5.0 x 2.5 m stall rows at 70 deg. Through-aisle x 0.75-6.75 m (6.0 m clear). lane_near_m / lane_deep_m = 2.4 / 4.9 m beyond the road edge, so two ~2.0 m cars pass with about 0.5 m between them. The P sign is on the island at (0.40, 15.0) m. Duration 8.5 s keeps the entry speed ~20 m/s (playback scroll 21 m/s). Camera: hold after the swap turn's Exit QTE until cam_hold_u, then a fixed shot from the lot's exit end on the valley side of the road (cam_lot), then chase."
   },
   "lookback": {
@@ -1074,7 +1049,7 @@
   "pick_timer_s": 12.0,
   "_pick_timer": "Line-select (pick) timer, seconds. 12.0 = Austin 2026-11-19 (t121 item 9); no sim/globals constant exists. Barry is settling design/02's 8 vs 12 s; replace with the sim constant once it lands.",
   "start_marks": {
-    "_doc": "PLACEHOLDER (Gordon): TOUGE parked-start paint (Austin t121 item 12): flat white stripe across the road ahead of the parked cars (decal, no ink: Cel A road-marking rule, drawn with the chevron shader) + faded grid box round each car slot (centred on +/-lane_width_m).",
+    "_doc": "PLACEHOLDER (Gordon): TOUGE start-grid paint (Austin t121 item 12): flat white stripe across the road ahead of the rival (decal, no ink: Cel A road-marking rule, drawn with the chevron shader) + a faded grid box round each car slot, in single file on the centre line (Touge passing: one behind the other, the player trailing; the rival's slot visual_gap.touge.near_m ahead).",
     "ahead_m": 2.7,
     "stripe_depth_m": 0.45,
     "edge_in_m": 0.25,

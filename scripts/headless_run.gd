@@ -23,9 +23,9 @@ func _bits_check() -> int:
 func _run_one(cfg: Dictionary, inputs: Dictionary, load_tok, dump_after, dump_to) -> Dictionary:
 	var core = RaceCore.new()
 	if load_tok != null: core.load_state(cfg, RaceCore.decode_token(load_tok))
-	else: core.setup(cfg, int(inputs.seed), String(inputs.get("role_first", "chase")))
+	else: core.setup(cfg, int(inputs.seed))
 	var tokens := []
-	var turns := []
+	var turns := []; var phase := []
 	while core.phase != "FINISHED":
 		var inp: Dictionary = inputs.corners[core.corner_index]
 		if core.phase == "SELECT":
@@ -41,6 +41,10 @@ func _run_one(cfg: Dictionary, inputs: Dictionary, load_tok, dump_after, dump_to
 		elif core.phase == "TIMING":
 			var r: Dictionary = core.submit_qte(phases_of(inp))
 			turns.append([RaceCore.fhex(r.player_progress), RaceCore.fhex(r.opponent_progress)])
+			var pq := []; var oq := []
+			for v in r.player_clash_qte: pq.append(RaceCore.fhex(float(v)))
+			for v in r.opponent_clash_qte: oq.append(RaceCore.fhex(float(v)))
+			phase.append({"p_qte": pq, "o_qte": oq, "order": r.phase_order})
 		elif core.phase == "RESULT":
 			tokens.append({"at": "result%d" % core.corner_index, "token": RaceCore.encode_token(core.dump())})
 			if dump_after != null and int(dump_after) == core.corner_index:
@@ -51,7 +55,7 @@ func _run_one(cfg: Dictionary, inputs: Dictionary, load_tok, dump_after, dump_to
 	var rep = RaceCore.new(); rep.load_state(cfg, RaceCore.decode_token(tokens[-1].token))
 	return {"engine": "godot-4.6.3(headless)", "commit": C.PIN_COMMIT, "seed": core.seed_value, "turns": turns,
 		"player_total": RaceCore.fhex(core.cum_p), "opponent_total": RaceCore.fhex(core.cum_o), "winner": core.winner(),
-		"banked": [RaceCore.fhex(core.banked_p), RaceCore.fhex(core.banked_o)], "replay_ok": RaceCore.fhex(rep.cum_p) == RaceCore.fhex(core.cum_p),
+		"phase": phase, "replay_ok": RaceCore.fhex(rep.cum_p) == RaceCore.fhex(core.cum_p),
 		"rng_draws": core.rng.draws}
 
 func _init() -> void:
@@ -59,6 +63,7 @@ func _init() -> void:
 	var cfg_path: String = _opt(args, "--config", "res://spec/race_config.json")
 	var cfg: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(cfg_path))
 	if args.has("--no-draft-blocks"): cfg.use_draft_blocks = false
+	if args.has("--per-turn"): cfg.per_phase = false   # MatchConfig.per_phase False: the per-turn path (Street / Wangan rule)
 	if _opt(args, "--player-car") != null: cfg.player.car = _opt(args, "--player-car")
 	if _opt(args, "--opp-car") != null: cfg.opponent.car = _opt(args, "--opp-car")
 	if _opt(args, "--qte-fn-test") != null:

@@ -83,25 +83,27 @@ var result_t := 0.0
 var meta := {}
 # ── main menu / finish options (display only; START / RESTART always build a fresh RaceCore) ──
 var races: Array = []
-var mode := "RACE"           # TOUGE: MENU -> CARSEL -> ROLE -> RACE
+var mode := "RACE"           # TOUGE: MENU -> CARSEL -> RACE (Touge passing: the race starts from the start grid, no role prompt)
 var carsel := {"sel": 0, "player": "mx5", "opp": "s2000"}   # TOUGE: car select (visual / model only)
-var role_sel := 1             # TOUGE: 0 = LEAD, 1 = CHASE
 var pending_seed := 0
 var look_back := false        # TOUGE: head-on look-back toggle (L key / LOOK BACK button), every race
-var turnout = null            # TOUGE: {t, off0, off_end, sgn0, s0, lat_p0, lat_r0} while the swap plays (after turn 5's RESULT)
-var TO: Dictionary            # display.json turnout (PLACEHOLDERS)
-var turnout_geo: Dictionary   # course s of the pocket (track_road.build_course)
+var turnout_geo: Dictionary   # course s of the turnout lot (track_road.build_course): scenery + camera / void checks; no race event plays there
 var no_timer := false          # TOUGE debug (Austin t119u): planning + continue timers off (F6, --no-timer, display.json debug.no_timer)
-var scroll_skip := 0.0         # TOUGE: road scroll withheld while the cars use the turnout lot (Austin t114u), so it resumes without a jump
-var scroll_raw_prev := 0.0
 var guard_c = null; var guard_s = null   # cam_guard.gd for the course / the scroll straight
 var touge_env = null   # touge_env.gd on the course (null off the Touge kit)
 var env_draw := {}     # last touge_env.cull() result: sections / tris / draws drawn this frame
 var clip_stats := {"frames": 0, "raw": 0, "fixed": 0, "by_rig_raw": {}, "by_rig_fixed": {}, "max_raw": 0.0, "max_fixed": -1e9}
 var heat_check := {"frames": 0, "max_err": 0.0, "bad": 0, "px_checks": 0, "px_bad": 0, "px_max_err": 0.0}
-var cam_lot_from = null
 var buttons: Array = []       # TOUGE: touch buttons drawn this frame (hit-tested by _tap)
-var role_now := "chase"
+## TOUGE passing (sim 5c79dea): who is ahead on screen ("player" / "opponent"): the order after each phase on running totals
+## (RaceCore phase_order; "even" keeps the order shown). Staging only: the race starts with the player trailing (Austin, via Barry
+## 2026-11-20 6:31 PM PT: "One behind the other, player always trails"); the sim starts level at 0-0.
+var touge_order := "opponent"
+var turn_order := "opponent"   # touge_order when the turn started (QTE camera type draw)
+var turn_cum := [0.0, 0.0]     # core.cum_p / cum_o when the turn started
+var shown_cum := [0.0, 0.0]    # running totals after the phases shown so far (gap meter)
+var pass_k := 0                # phases whose order / gap the drawn pass has taken in this turn (0..3)
+var pass_from := 0.0; var pass_to := 0.0   # the drawn gap eases pass_from -> pass_to over pass_after_exit_s after each phase
 var trace_zone := -1; var trace_ready := -1   # TOUGE: one trace line per QTE zone opening / RESULT ready (mobile check)
 var menu := {"items": ["START RACE", "SEED"], "sel": 0, "seed_text": "", "blink": false, "commit": ""}
 var fin := {"items": ["RESTART SAME SEED", "NEW RACE", "MAIN MENU"], "sel": 0}
@@ -123,7 +125,8 @@ var course                    # one continuous Touge road: straight, corner 1, s
 var views: Array = []         # per-corner local view of the course (local 0 = 45 m before turn-in)
 var straights: Array = []     # per-corner infinite-scroll straight, anchored where that corner's approach starts
 var lat_p := 0.0; var lat_r := 0.0; var err_p := 0.0; var err_r := 0.0; var tgt_p = null; var tgt_r = null
-var off0 := 0.0; var off1 := 0.0; var off1_score = null; var pass_plan := {}
+var off0 := 0.0; var off1 := 0.0; var off1_score = null
+var dodge_p := 0.0; var dodge_r := 0.0   # lateral pass offsets (eased): the passer's move to an open lane while the cars overlap
 var pass_t := 0.0             # seconds since the Exit QTE finished; the pass eases over PB.pass_after_exit_s
 var cont_t := 0.0             # after-turn pause (RESULT), auto-continues at PB.continue_s
 var cont_pending := false     # Enter / auto-continue waited until the pass lerp finished
@@ -142,9 +145,8 @@ var qte_press_ms: Array = [null, null, null]  # where the cursor stopped (displa
 var qte_from = null           # camera pose at the start of a move
 var zone_ms := 800.0          # qte_zone_width(r, mod) x QTE_ZONE_BASE_MS for this race (core.zone_ms())
 var min_sep_overlap := 99.0   # smallest lateral gap seen while the cars overlap longitudinally (no-clip check)
-## TOUGE turnout clearance (Arthur ccd1126): car AABBs vs each other, the P sign, stall front (x=6.75) and back wall
-var turnout_clear := {"frames": 0, "car_hits": 0, "sign_hits": 0, "stall_hits": 0, "wall_hits": 0,
-	"min_car_gap": 99.0, "min_sign_gap": 99.0, "min_stall_gap": 99.0, "min_wall_gap": 99.0}
+var start_grid := {}          # TOUGE start grid check (scripted playtest): the parked cars one behind the other, no overlap
+var pass_shots := 0           # scripted playtest: visible-pass stills taken
 var gif_dir := ""; var gif_dt := 0.1; var gif_next := 0.0; var gif_n := 0
 var chevrons: Node3D  # B.5d road chevrons (SELECT only, purely visual)
 # CEL: Cel A port. Toggle = project setting cel/enabled, overridden by user arg --cel 0|1, live key F7.
@@ -179,7 +181,7 @@ func _fit_scale() -> void:
 func _ready() -> void:
 	cfg = _json("res://spec/race_config.json")
 	disp = _json("res://spec/display.json")
-	RS = disp.road_scroller; CC = disp.corner_cams; SC = disp.select_cam; TO = disp.get("turnout", {})
+	RS = disp.road_scroller; CC = disp.corner_cams; SC = disp.select_cam
 	carsel.player = String(cfg.player.car); carsel.opp = String(cfg.opponent.car)
 	if _arg("--player-car") != null: carsel.player = _arg("--player-car")
 	if _arg("--opp-car") != null: carsel.opp = _arg("--opp-car")
@@ -215,9 +217,8 @@ func _ready() -> void:
 	chevrons.cfg = disp.get("line_preview", {})
 	$WorldVP.add_child(chevrons)
 	core = RaceCore.new()
-	role_now = String(_arg("--role", races[0].get("role", "chase") if script_in != null else "chase"))
 	_apply_cars()
-	core.setup(_race_cfg(), seed_v, role_now)
+	core.setup(_race_cfg(), seed_v)
 	_qte_cam_on_race_start()
 	_setup_corner()
 	if script_in != null and bool(script_in.get("touge_flow", false)):
@@ -230,6 +231,20 @@ func _ready() -> void:
 		shots_dir = _arg("--line-preview-shots")
 		DirAccess.make_dir_recursive_absolute(shots_dir)
 		await _run_line_preview_shots()
+
+var kt_min_sep := 99.0; var kt_passes := 0
+## smallest lateral gap between the car centres while they overlap along the road (|gap| < car_len_m), PLAN KEY test
+func _kt_sep() -> void:
+	if absf(rival_offset) < float(PB.car_len_m): kt_min_sep = minf(kt_min_sep, absf(lat_p - lat_r))
+## the wider car's body width (meshes in the car's own frame): two cars side by side clear when their centres are this far apart
+var car_w := -1.0   # cached by _car_width; reset when a car model changes (_apply_cars)
+func _car_width() -> float:
+	if car_w > 0.0: return car_w
+	var w := 0.0
+	for c in [player_car, rival_car]:
+		w = maxf(w, _aabb_in(c, (c as Node3D).global_transform.affine_inverse()).size.x)
+	car_w = w
+	return w
 
 ## Plan the Line key test: random Up/Down/Left/Right/Enter/Backspace over many seeds; every pick must be an unused hand index of the
 ## highlighted stance, the cursor never rests on a 'none drawn' stance, and the 3rd Enter locks exactly the chosen stances.
@@ -275,19 +290,23 @@ func _plan_key_test() -> void:
 				# never sent and the turn timed out: a test-harness timing bug, not a game bug.
 				if qte_i <= 2 and qte_seg == "sweep" and float(want_ms[qte_i]) >= 0.0 and _qte_ms() + 1000.0 / 60.0 > float(want_ms[qte_i]): handle_key(KEY_SPACE)
 				_step_play(1.0 / 60.0)
-				_ease_gap(1.0 / 60.0)
-				if qte_i < 3 and (rival_offset != off0 or (off0 != 0.0 and rival_offset != 0.0 and signf(rival_offset) != signf(off0))):
-					push_error("seed %d: order/gap changed before Exit QTE (qte_i=%d off0=%s off=%s)" % [sd, qte_i, str(off0), str(rival_offset)]); get_tree().quit(1); return
+				_ease_gap(1.0 / 60.0); _step_lanes(1.0 / 60.0); _kt_sep()
+				# Touge passing: the order / gap may change only once a phase has been scored (never before the Entry score)
+				if _phases_scored() == 0 and rival_offset != off0:
+					push_error("seed %d: order/gap changed before the Entry QTE scored (qte_i=%d off0=%s off=%s)" % [sd, qte_i, str(off0), str(rival_offset)]); get_tree().quit(1); return
 			if core.phase == "TIMING" or qte_i != 3: push_error("seed %d: playback never ended" % sd); get_tree().quit(1); return
 			# finish the pass into RESULT and confirm the drawn gap equals the resolved lead (no snap)
-			# TOUGE: the drawn gap is the role's half-race gap (_touge_offset of seg_lead, as _step_play sets rival_offset_target
-			# when the turn resolves). The test still compared with the two-corner Track.rival_draw_offset(lead) model, which
-			# the touge race replaced, so it failed on every seed (Austin pt137u item 5: a stale test, not a game bug).
-			var want_off: float = _touge_offset(core.seg_lead(), core.role())
+			# TOUGE passing: the drawn gap after the Exit phase = the whole-race lead in the order of the sim's phase_order (the
+			# preview the pass used must equal the resolved turn: same clash progress, same order)
+			var want_order := _order_after(turn_order, core.result.phase_order if core.per_phase() else _totals_order(core.cum_p, core.cum_o))
+			if touge_order != want_order:
+				push_error("seed %d: drawn order %s != sim phase_order %s" % [sd, touge_order, str(core.result.phase_order)]); get_tree().quit(1); return
+			var want_off: float = _touge_offset(core.lead(), want_order)
 			if absf(off1 - want_off) > 0.001:
 				push_error("seed %d: preview off1 %s != resolved %s" % [sd, str(off1), str(want_off)]); get_tree().quit(1); return
 			while pass_t < float(PB.pass_after_exit_s) and guard < 8000:
-				guard += 1; _ease_gap(1.0 / 60.0)
+				guard += 1; _ease_gap(1.0 / 60.0); _step_lanes(1.0 / 60.0); _kt_sep()
+			if touge_order != turn_order: kt_passes += 1
 			if absf(rival_offset - want_off) > 0.001:
 				push_error("seed %d: RESULT gap %s != resolved %s (snap?)" % [sd, str(rival_offset), str(want_off)]); get_tree().quit(1); return
 			for i in 3:
@@ -309,6 +328,10 @@ func _plan_key_test() -> void:
 		var fh := FileAccess.open(od.path_join(fp[0]), FileAccess.WRITE)
 		if fh == null: push_error("plan key test: cannot write %s" % od.path_join(fp[0])); get_tree().quit(1); return
 		fh.store_string(fp[1]); fh.close()
+	var cw := _car_width()
+	if kt_min_sep < cw:
+		push_error("PLAN KEY: cars overlap during a pass: lateral %.3f m < car width %.3f m" % [kt_min_sep, cw]); get_tree().quit(1); return
+	print("PASS_LANE_CHECK turns_with_order_change=%d min_lateral_while_overlapping=%.3f car_width=%.3f PASS" % [kt_passes, kt_min_sep, cw])
 	print("PLAN KEY TEST PASS: 200 seeds, %d locked by keys; camera stop == picks every step; 3 QTEs by SPACE per locked turn (%d unplayed) score = hit_quality(press); B.5a panel results == sim outcomes (sim compare: .out/two_corner/key_test_*.json)" % [n_lock, n_unplayed])
 	get_tree().quit(0)
 
@@ -391,6 +414,7 @@ func _set_car(car: Node3D, id: String) -> void:
 		if ch is MeshInstance3D and (ch as MeshInstance3D).material_override is StandardMaterial3D: (ch as MeshInstance3D).layers = CEL_BIT_DECAL
 
 func _apply_cars() -> void:
+	car_w = -1.0
 	_set_car(player_car, carsel.player); _set_car(rival_car, carsel.opp)
 	car_mats.clear(); car_mats.append_array(player_car.mats); car_mats.append_array(rival_car.mats)
 	if core != null and core.corner_index >= 0: _apply_district(String(core.corner().district))
@@ -479,25 +503,27 @@ func _build_road(dk: String) -> void:
 
 func _pp(pth, s: float, d: float, y: float = 0.0) -> Vector3: return ArtKit.pp(pth, s, d, y)
 
-## TOUGE (Austin t121 item 12): flat painted white start stripe across the road just ahead of the parked cars, plus a faded grid
-## box round each car. Flat paint (chevron shader: unlit, fogged, absent from the cel G-buffer) = never inked, per the Cel A
-## road-marking rule. Built on the first scroll straight; it slides back with the road scroll once the race starts.
-## PLACEHOLDER (Gordon) sizes: display.json start_marks.
+## TOUGE (Austin t121 item 12): flat painted white start stripe across the road just ahead of the front car, plus a faded grid
+## box round each car slot. Touge passing: the slots are in single file on the centre line, the rival's _start_offset() ahead
+## (one behind the other, the player trailing). Flat paint (chevron shader: unlit, fogged, absent from the cel G-buffer) = never
+## inked, per the Cel A road-marking rule. Built on the first scroll straight; it slides back with the road scroll once the race
+## starts. PLACEHOLDER (Gordon) sizes: display.json start_marks.
 var start_marks: Node3D = null
 func _start_marks(dressing) -> Node3D:
 	var SM: Dictionary = disp.get("start_marks", {})
 	var g := Node3D.new(); g.name = "StartMarks"; straight_d.group.add_child(g)
-	var s_line: float = 8.0 + float(SM.get("ahead_m", 2.7))   # s_player = 8.0 (start_race), stripe just ahead of the bumpers
+	var slots := [8.0, 8.0 + _start_offset()]   # s_player = 8.0 (start_race); the rival's slot ahead
+	var s_line: float = float(slots[1]) + float(SM.get("ahead_m", 2.7))   # stripe just ahead of the front car's bumper
 	var dep: float = float(SM.get("stripe_depth_m", 0.45)); var edge: float = float(SM.get("edge_in_m", 0.25))
 	var paint = dressing._paint_mat(art, float(SM.get("stripe_gain", 0.92)))
 	g.add_child(art.band(straight_path, s_line, s_line + dep, -(road_W - edge), 0.04, road_W - edge, 0.04, paint, dep, 1))
 	var faded = dressing._paint_mat(art, float(SM.get("box_gain", 0.38)))
 	var bw: float = float(SM.get("box_w_m", 2.5)); var bl: float = float(SM.get("box_l_m", 5.2)); var lw := 0.12
-	for sd in [-1.0, 1.0]:
-		var c: float = sd * float(disp.lane_width_m)
-		var s0 := s_line - 0.3 - bl
+	for sc in slots:
+		var c := 0.0   # centre line (single file)
+		var s1: float = float(sc) + float(SM.get("ahead_m", 2.7)) - 0.3; var s0 := s1 - bl
 		for dd in [c - bw * 0.5, c + bw * 0.5]:
-			g.add_child(art.band(straight_path, s0, s_line - 0.3, dd - lw * 0.5, 0.035, dd + lw * 0.5, 0.035, faded, bl, 1))
+			g.add_child(art.band(straight_path, s0, s1, dd - lw * 0.5, 0.035, dd + lw * 0.5, 0.035, faded, bl, 1))
 		g.add_child(art.band(straight_path, s0, s0 + lw, c - bw * 0.5, 0.035, c + bw * 0.5, 0.035, faded, lw, 1))
 	g.set_meta("s_line", s_line)
 	return g
@@ -529,17 +555,18 @@ func _lamp_list(items: Array, extra: Array) -> Array:
 # ── game flow ──
 func _setup_corner() -> void:
 	var c: Dictionary = core.corner()
-	if mode == "RACE": _trace("turn %d/%d %s %s role=%s" % [core.corner_index + 1, cfg.corners.size(), c.corner, c.dir, core.role()])
+	if mode == "RACE": _trace("turn %d/%d %s %s ahead=%s" % [core.corner_index + 1, cfg.corners.size(), c.corner, c.dir, touge_order])
 	path = views[core.corner_index]; straight_path = straights[core.corner_index]
 	_build_road(c.district)
 	s_player = 8.0; phase_t = 0.0; qte_t = 0.0; reveal = 0; cam_curve_built = false; leader_changed = false
-	cont_t = 0.0; pass_plan = {}; off1_score = null; pass_t = 0.0; cont_pending = false
+	cont_t = 0.0; off1_score = null; pass_t = 0.0; pass_k = 0; cont_pending = false
+	turn_order = touge_order; turn_cum = [core.cum_p, core.cum_o]; shown_cum = turn_cum.duplicate()
 	qte_i = 0; qte_seg = ""; qte_seg_t = 0.0; qte_show_t = 0.0; pb_started = false; qte_res = [null, null, null]; qte_press_ms = [null, null, null]; qte_from = null
 	zone_ms = core.zone_ms()
 	plan_sel = 0; _plan_fix_sel(0)
 	last_stop = 0; stop_t = 99.0; stop_from = null; lock_hold_t = 99.0; lock_from = null
 	rival_lane_d = Track.lane_offset_for_stance(core.entry_tell().stance, c.dir, disp.lane_width_m)
-	rival_offset_target = _touge_offset(core.seg_lead(), core.role())
+	rival_offset_target = _touge_offset(core.lead(), touge_order)
 	scroller.transition_to_straight()
 	if first_corner:
 		rival_offset = rival_offset_target; back_t = 99.0
@@ -551,11 +578,10 @@ func _setup_corner() -> void:
 	_arthur_refresh_look()
 
 ## Full reset for START / RESTART / NEW RACE: a fresh RaceCore (fresh MT19937 seeded from s) and every display-side race variable.
-func start_race(s: int, role_first := "") -> void:
-	if role_first != "": role_now = role_first
-	core = RaceCore.new(); core.setup(_race_cfg(), s, role_now); mode = "RACE"; turnout = null; look_back = false
+func start_race(s: int) -> void:
+	core = RaceCore.new(); core.setup(_race_cfg(), s); mode = "RACE"; look_back = false; touge_order = "opponent"
 	_qte_cam_on_race_start()
-	scroller = RoadScroller.new(RS); scroll_skip = 0.0; scroll_raw_prev = 0.0; clock = 0.0; wheel_angle = 0.0; back_from = null; back_t = 99.0; pending_snap = false
+	scroller = RoadScroller.new(RS); clock = 0.0; wheel_angle = 0.0; back_from = null; back_t = 99.0; pending_snap = false
 	leader_changed = false; rival_offset = 0.0; result_t = 0.0; fin.sel = 0; first_corner = true
 	_setup_corner()
 
@@ -583,15 +609,17 @@ func _finish_choose(i: int) -> void:
 	elif i == 1: start_race(_random_seed())
 	else: to_menu()
 
-# ── TOUGE: car select -> parked start ("Lead or chase first?") -> race ──
+# ── TOUGE: car select -> start grid (one behind the other, the player trails) -> race ──
 func _to_carsel(sd: int) -> void:
 	pending_seed = sd; mode = "CARSEL"; carsel.sel = 0
 	start_race(sd); mode = "CARSEL"   # backdrop: the start line, cars parked
 	_park(); _trace("mode=CARSEL seed=%d" % sd)
 
 func _park() -> void:
-	rival_offset = 0.0; rival_offset_target = 0.0; s_player = 8.0
-	tgt_p = null; tgt_r = null; err_p = 0.0; err_r = 0.0
+	rival_offset = _start_offset(); rival_offset_target = rival_offset; s_player = 8.0
+	# both cars stand on the grid line (d = 0, _pass_lanes while parked): the lane targets start there, so the first race frame
+	# eases out to the planned lanes (_step_lanes carries the jump in err_*) instead of snapping (null targets carried no error)
+	tgt_p = 0.0; tgt_r = 0.0; err_p = 0.0; err_r = 0.0; lat_p = 0.0; lat_r = 0.0; dodge_p = 0.0; dodge_r = 0.0
 
 func _cycle_car(which: String, step: int) -> void:
 	var order: Array = disp.cars.order
@@ -607,34 +635,35 @@ func _carsel_key(k: int) -> void:
 	elif (k == KEY_LEFT or k == KEY_RIGHT) and int(carsel.sel) < 2: _cycle_car("player" if int(carsel.sel) == 0 else "opp", -1 if k == KEY_LEFT else 1)
 	elif k == KEY_ENTER or k == KEY_KP_ENTER:
 		if int(carsel.sel) < 2: carsel.sel = int(carsel.sel) + 1
-		else: _to_role()
+		else: _start_from_grid()
 	elif k == KEY_ESCAPE or k == KEY_BACKSPACE: to_menu()
 
-func _to_role() -> void:
-	mode = "ROLE"; role_sel = 1
-	start_race(pending_seed); mode = "ROLE"; _park(); _trace("mode=ROLE")
+## START on car select: the race runs from the parked start grid (Touge passing: no role prompt; Austin, the race starts
+## from the PA). The cars pull off one behind the other, the player trailing (staging only: the sim is level at 0-0).
+func _start_from_grid() -> void:
+	start_race(pending_seed); _park()
+	_trace("mode=RACE cars=%s/%s ahead=%s" % [carsel.player, carsel.opp, touge_order])
 
-func _role_key(k: int) -> void:
-	if k == KEY_LEFT or k == KEY_UP: role_sel = 0
-	elif k == KEY_RIGHT or k == KEY_DOWN: role_sel = 1
-	elif k == KEY_ENTER or k == KEY_KP_ENTER: _choose_role("lead" if role_sel == 0 else "chase")
-	elif k == KEY_ESCAPE or k == KEY_BACKSPACE: mode = "CARSEL"
+func _parked() -> bool: return mode == "CARSEL"
 
-## the race starts from the chosen position: the cars pull off the line and settle into the role's gap (no snap)
-func _choose_role(r: String) -> void:
-	start_race(pending_seed, r); _park()
-	rival_offset_target = _touge_offset(core.seg_lead(), core.role())
-	_trace("mode=RACE role=%s cars=%s/%s" % [r, carsel.player, carsel.opp])
-
-func _parked() -> bool: return mode == "CARSEL" or mode == "ROLE"
-
-## TOUGE drawn gap (display.json visual_gap.touge, PLACEHOLDERS): the rival never changes side, so there is no visible pass.
-## chase -> rival ahead, nearer as this half's lead grows; lead -> rival behind, farther as this half's lead grows.
-func _touge_offset(seg_lead: float, role: String) -> float:
+## TOUGE drawn gap (display.json visual_gap.touge, PLACEHOLDERS). Touge passing: the car ahead on screen is the one ahead on
+## running total progress (order); the distance grows with the whole-race share lead: near_m + lead_scale x (far_m - near_m) x
+## |lead|, clamped to near..far. Rival ahead = + (order "opponent"), rival behind = - (order "player").
+func _touge_offset(lead: float, order: String) -> float:
 	var T: Dictionary = disp.visual_gap.touge
-	var span: float = float(T.far_m) - float(T.near_m); var k: float = float(T.lead_scale) * span * seg_lead
-	if role == "chase": return clampf(float(T.neutral_m) - k, float(T.near_m), float(T.far_m))
-	return -clampf(float(T.neutral_m) + k, float(T.near_m), float(T.far_m))
+	var d := clampf(float(T.near_m) + float(T.lead_scale) * (float(T.far_m) - float(T.near_m)) * absf(lead), float(T.near_m), float(T.far_m))
+	return -d if order == "player" else d
+
+## the parked start grid: one behind the other, the rival near_m ahead (the player trails; level race, lead 0)
+func _start_offset() -> float: return _touge_offset(0.0, "opponent")
+
+## order shown after a phase_order list: each "player" / "opponent" entry takes over, "even" keeps the order shown
+static func _order_after(prev: String, ph: Array) -> String:
+	var o := prev
+	for v in ph:
+		if String(v) != "even": o = String(v)
+	return o
+static func _totals_order(cp: float, co: float) -> Array: return ["player" if cp > co else ("opponent" if co > cp else "even")]
 
 func _finish_key(k: int) -> void:
 	if k >= KEY_1 and k <= KEY_3: _finish_choose(k - KEY_1)
@@ -646,7 +675,6 @@ func _finish_key(k: int) -> void:
 func handle_key(k: int) -> void:
 	if mode == "MENU": _menu_key(k); return
 	if mode == "CARSEL": _carsel_key(k); return
-	if mode == "ROLE": _role_key(k); return
 	if k == KEY_L and core.phase != "FINISHED": look_back = not look_back; return   # TOUGE: head-on look-back, every race
 	if core.phase == "FINISHED": _finish_key(k); return
 	if core.phase == "SELECT":
@@ -661,7 +689,7 @@ func handle_key(k: int) -> void:
 				_pick_stance(PLAN_ORDER[plan_sel])
 	elif core.phase == "TIMING" and k == KEY_SPACE and qte_i <= 2 and qte_seg == "sweep" and script_in == null:
 		_qte_press()
-	elif core.phase == "RESULT" and (k == KEY_ENTER or k == KEY_KP_ENTER) and reveal >= 3 and turnout == null:
+	elif core.phase == "RESULT" and (k == KEY_ENTER or k == KEY_KP_ENTER) and reveal >= 3:
 		_continue()
 
 ## pick a stance for the next clash (keyboard Enter / 1-3, or a touch lane button); the 3rd pick locks the line
@@ -678,8 +706,6 @@ func _continue() -> void:
 	if pb_started and pass_t < float(PB.pass_after_exit_s):
 		cont_pending = true; return
 	cont_pending = false
-	if core.at_swap() and not TO.is_empty() and turnout == null:   # TOUGE: the turnout plays before turn 6
-		_start_turnout(); return
 	core.next()
 	if core.phase != "FINISHED": _setup_corner()
 	else: _return_to_chase()
@@ -811,7 +837,7 @@ func _hold_t(i: int) -> float:
 ## at the end submit the three scores (resolve_turn averages them). Returns the extra speed for the wheels.
 func _step_play(dt: float) -> float:
 	if not pb_started:
-		pb_started = true; qte_t = 0.0; off0 = rival_offset; off1_score = null; pass_plan = {}; pass_t = 0.0
+		pb_started = true; qte_t = 0.0; off0 = rival_offset; off1_score = null; pass_t = 0.0; pass_k = 0
 	var dv := 0.0
 	if qte_seg != "":
 		_step_qte(dt)
@@ -823,12 +849,10 @@ func _step_play(dt: float) -> float:
 	s_player = 8.0 + _travel() * minf(1.0, qte_t / float(disp.playback_s))
 	_update_pass_target()
 	if qte_t >= float(disp.playback_s) and qte_seg == "" and qte_i >= 3:
-		var before: float = core.lead()
 		core.submit_qte(qte_res.duplicate()); reveal = 0; phase_t = 0.0; result_t = 0.0
 		_trace("result turn=%d line=%s rival=%s p=%f o=%f" % [core.corner_index + 1, core.result.player_line, core.result.rival_played, core.result.player_progress, core.result.opponent_progress])
-		var after: float = core.lead()
-		leader_changed = false   # TOUGE: no visible passing (order never flips in a turn)
-		rival_offset_target = _touge_offset(core.seg_lead(), core.role())  # = off1 (same resolve_turn)
+		_update_pass_target()   # the order / gap of every phase (already shown during playback; RESULT = the resolved turn)
+		rival_offset_target = _touge_offset(core.lead(), touge_order)  # = pass_to after the Exit phase (same resolve_turn)
 		cont_t = 0.0
 	return dv
 
@@ -836,7 +860,7 @@ func _do_lock() -> void:
 	_trace("locked line=%s" % core.player_line() if core.picks.size() >= 3 else "locked (timer)")
 	lock_from = {"pos": cam_pos, "look": cam_look, "fov": cam_fov}; lock_hold_t = 0.0
 	core.lock(); phase_t = 0.0; scroller.transition_to_corner()  # §13.2/§14.2 transition_to_corner
-	off0 = rival_offset; off1_score = null; pass_plan = {}; pass_t = 0.0
+	off0 = rival_offset; off1_score = null; pass_t = 0.0; pass_k = 0
 	await _shot("%slock%d" % [shot_pre, core.corner_index])
 
 func _shot(name: String) -> void:
@@ -1000,9 +1024,9 @@ func _run_line_preview_shots() -> void:
 
 func dump_state() -> String:
 	var d: Dictionary = core.dump()
-	d.cars = {"player": carsel.player, "opp": carsel.opp}   # Austin pt137u: optional key (older TC4 tokens load without it)
+	d.cars = {"player": carsel.player, "opp": carsel.opp}   # Austin pt137u: optional key (optional in TC5 tokens)
 	var tok := RaceCore.encode_token(d)
-	print("TC4 token ", tok)
+	print("TC5 token ", tok)
 	DisplayServer.clipboard_set(tok)
 	var f := FileAccess.open("user://last_state.tc1", FileAccess.WRITE); f.store_string(tok)
 	return tok
@@ -1039,7 +1063,7 @@ func _tap(p: Vector2) -> void:
 			return
 	# no button: a tap anywhere counts as the QTE press during a sweep, and as Enter after a turn
 	if mode == "RACE" and core.phase == "TIMING" and qte_i <= 2 and qte_seg == "sweep": _trace("tap anywhere=qte"); _qte_press()
-	elif mode == "RACE" and core.phase == "RESULT" and reveal >= 3 and turnout == null: _trace("tap anywhere=continue"); _continue()
+	elif mode == "RACE" and core.phase == "RESULT" and reveal >= 3: _trace("tap anywhere=continue"); _continue()
 	else: _trace("tap miss at %d,%d mode=%s" % [roundi(p.x), roundi(p.y), mode])
 
 ## one console line per input / flow event (the Playwright mobile check reads them; cheap, also handy on device logs)
@@ -1054,9 +1078,7 @@ func _button(id: String) -> void:
 		"p_next": carsel.sel = 0; _cycle_car("player", 1)
 		"o_prev": carsel.sel = 1; _cycle_car("opp", -1)
 		"o_next": carsel.sel = 1; _cycle_car("opp", 1)
-		"next": _to_role()
-		"lead": role_sel = 0; _choose_role("lead")
-		"chase": role_sel = 1; _choose_role("chase")
+		"next": _start_from_grid()
 		"pick_P", "pick_H", "pick_E": plan_sel = PLAN_ORDER.find(id.right(1)); _pick_stance(id.right(1))
 		"undo": core.unpick(); _plan_fix_sel(0)
 		"qte": if core.phase == "TIMING" and qte_i <= 2 and qte_seg == "sweep": _qte_press()
@@ -1077,17 +1099,13 @@ func _touch_buttons() -> Array:
 			var y := 270.0 + i * 52.0; var pre := "p_" if i == 0 else "o_"
 			out.append({"id": pre + "prev", "r": [150.0, y, 48.0, 40.0], "label": "<", "sz": 16, "sel": int(carsel.sel) == i})
 			out.append({"id": pre + "next", "r": [442.0, y, 48.0, 40.0], "label": ">", "sz": 16, "sel": int(carsel.sel) == i})
-		out.append({"id": "next", "r": [250.0, 422.0, 140.0, 40.0], "label": "NEXT", "sel": int(carsel.sel) == 2}); return out
-	if mode == "ROLE":
-		out.append({"id": "lead", "r": [166.0, 352.0, 142.0, 60.0], "label": "LEAD", "sub": "mouse", "sz": 18, "sel": role_sel == 0, "col": Color("#3CC8FF")})
-		out.append({"id": "chase", "r": [332.0, 352.0, 142.0, 60.0], "label": "CHASE", "sub": "cat", "sz": 18, "sel": role_sel == 1, "col": Color("#FF9C3C")})
-		return out
+		out.append({"id": "next", "r": [250.0, 422.0, 140.0, 40.0], "label": "START", "sel": int(carsel.sel) == 2}); return out
 	if core.phase == "FINISHED":
 		var fr: Array = r4.call(T.fin_row)
 		for i in 3: out.append({"id": "fin%d" % i, "r": [fr[0] + i * (fr[2] + 8.0), fr[1], fr[2], fr[3]], "label": ["SAME SEED", "NEW RACE", "MENU"][i], "sel": int(fin.sel) == i})
 		return out
 	out.append({"id": "look", "r": r4.call(T.lookback), "label": "LOOK BACK" if not look_back else "FORWARD", "sz": 10, "sel": look_back})
-	if core.phase == "SELECT" and core.picks.size() < 3 and turnout == null:
+	if core.phase == "SELECT" and core.picks.size() < 3:
 		var sr: Array = _stance_row_rect(r4.call(T.stance_row)); var lanes := _screen_lanes(); var a := _plan_avail()
 		for i in 3:
 			var k: String = lanes[i]
@@ -1096,81 +1114,18 @@ func _touch_buttons() -> Array:
 		if core.picks.size() > 0: out.append({"id": "undo", "r": r4.call(T.undo), "label": "UNDO", "sz": 11})
 	elif _qte_active() and qte_seg == "sweep":
 		out.append({"id": "qte", "r": r4.call(T.qte), "label": "TAP", "sz": 18, "sel": true})
-	elif core.phase == "RESULT" and reveal >= 3 and turnout == null:
+	elif core.phase == "RESULT" and reveal >= 3:
 		out.append({"id": "cont", "r": r4.call(T.cont), "label": "CONTINUE", "sel": true})
 	return out
-
-# ── TOUGE: turnout after turn 5 (display only; the sim state is untouched until core.next() banks turns 1-5) ──
-func _start_turnout() -> void:
-	var sgn0: float = signf(rival_offset) if rival_offset != 0.0 else (1.0 if core.role() == "chase" else -1.0)
-	var nr := "lead" if core.role() == "chase" else "chase"
-	turnout = {"t": 0.0, "off0": rival_offset, "sgn0": sgn0, "s0": s_player, "new_role": nr, "off_end": _touge_offset(0.0, nr),
-		"lat_p": lat_p, "lat_r": lat_r}
-	look_back = false
-
-func _turnout_u() -> float: return clampf(float(turnout.t) / float(TO.duration_s), 0.0, 1.0)
-## distance fraction covered at time fraction u: speed = 1 - (1 - m) sin^2(pi u), normalised (dips to m, never stops)
-func _turnout_F(u: float) -> float:
-	var m: float = TO.min_speed_frac
-	return (u - (1.0 - m) * (u / 2.0 - sin(TAU * u) / (4.0 * PI))) / ((1.0 + m) / 2.0)
-
-func _step_turnout(dt: float) -> float:
-	turnout.t = float(turnout.t) + dt
-	var u := _turnout_u(); var s_prev := s_player
-	s_player = float(turnout.s0) + float(TO.total_m) * _turnout_F(u)
-	var near: float = float(disp.visual_gap.touge.near_m); var g0: float = turnout.sgn0
-	var su: Array = TO.swap_u
-	if u < float(su[0]): rival_offset = lerpf(float(turnout.off0), g0 * near, Track.smooth(u / float(su[0])))
-	elif u < float(su[1]): rival_offset = lerpf(g0 * near, -g0 * near, Track.smooth((u - float(su[0])) / (float(su[1]) - float(su[0]))))
-	else: rival_offset = lerpf(-g0 * near, float(turnout.off_end), Track.smooth((u - float(su[1])) / (1.0 - float(su[1]))))
-	rival_offset_target = rival_offset
-	var spd := (s_player - s_prev) / maxf(dt, 1e-6)
-	if u >= 1.0:
-		turnout = null
-		core.next()   # banks turns 1-5 (race_core.next), starts turn 6 with the roles swapped
-		if core.phase != "FINISHED": _setup_corner()
-	return spd
 
 ## line-select (pick) timer: display.json pick_timer_s = 12.0 (Austin 2026-11-19, t121 item 9; no sim/globals constant yet)
 func _pick_timer() -> float:
 	return float(disp.get("pick_timer_s", RaceCore.STRAIGHT_DURATION))
 
-## side of the turnout lot: the inside of the swap turn (-1 = left of travel); the drop is on the other side (Austin t121 item 11)
+## side of the turnout lot: the inside of its turn (-1 = left of travel); the drop is on the other side (Austin t121 item 11)
 func _lot_ins() -> float:
 	if turnout_geo.is_empty(): return -1.0
 	return -course.drop_at((float(turnout_geo.s0) + float(turnout_geo.s1)) * 0.5)
-
-## TOUGE turnout lanes (Austin t114u): both cars pull into the lot through its entrance taper, run its aisle and leave by the
-## exit taper. Lateral position follows the lot outline at each car's own course s (so nobody crosses the island curb): the
-## leader (front car at the start) takes the deep aisle lane and slows, the other car the near lane and goes by.
-func _turnout_lanes() -> Vector2:
-	var ins := _lot_ins()
-	var rival_leads: bool = float(turnout.sgn0) > 0.0
-	var deep := ins * (road_W + float(TO.lane_deep_m)); var near := ins * (road_W + float(TO.lane_near_m))
-	var dp: float = turnout.lat_p; var dr: float = turnout.lat_r
-	if turnout_geo.is_empty(): return Vector2(dp, dr)
-	var a: float = turnout_geo.s0; var b: float = turnout_geo.s1; var tp: float = turnout_geo.taper
-	var prof := func(sc: float) -> float: return Track.smooth(clampf(minf((sc - a) / tp, (b - sc) / tp), 0.0, 1.0))
-	var kp: float = prof.call(path.off + s_player); var kr: float = prof.call(path.off + s_player + rival_offset)
-	return Vector2(lerpf(dp, near if rival_leads else deep, kp), lerpf(dr, deep if rival_leads else near, kr))
-
-## TOUGE turnout camera: the swap turn's held Exit camera watches the cars pull away (authored path, u < cam_hold_u), then a
-## fixed shot from the lot's exit end on the valley side of the road, then back to chase. Returns false = use the corner camera.
-func _turnout_cam(ch: Array, tgt: Vector3) -> bool:
-	var u := _turnout_u()
-	if u < float(TO.cam_hold_u): return false
-	var cl: Dictionary = TO.cam_lot; var out := -_lot_ins()
-	var sl: float = lerpf(float(turnout_geo.s0), float(turnout_geo.s1), float(cl.s_frac))
-	var q: Dictionary = course.point(sl, out * (road_W + float(cl.d_out_m)))
-	var lot_pos := Vector3(q.x, float(q.y) + float(cl.h_m), q.z)
-	var mid: Vector3 = (player_car.position + rival_car.position) * 0.5 + Vector3(0, 0.8, 0)
-	var lu: Array = TO.cam_lot_u
-	rig = "TOL"
-	if u < float(lu[1]):
-		cam_pos = lot_pos; cam_look = mid; cam_fov = float(cl.fov); return true
-	var k := Track.smooth((u - float(lu[1])) / maxf(1.0 - float(lu[1]), 1e-3))
-	cam_pos = lot_pos.lerp(ch[0], k); cam_look = mid.lerp(ch[1], k); cam_fov = lerpf(float(cl.fov), cam_fov, k); rig = "BCH"
-	return true
 
 func _parked_cam(_pp: Dictionary) -> void:
 	var pk: Dictionary = disp.parked_cam
@@ -1208,7 +1163,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if mode == "RACE" and k == KEY_F9: dump_state()
 	elif mode == "RACE" and k == KEY_F10:
 		var t := DisplayServer.clipboard_get()
-		if t.strip_edges().begins_with("TC"): load_state(t.strip_edges())   # TC4 (was TC1-TC3 only, so a TC4 token never loaded)
+		if t.strip_edges().begins_with("TC"): load_state(t.strip_edges())   # TC5 (older TC1-TC4 are refused as outdated by race_core.decode_token)
 	else: handle_key(k)
 
 const SEQ_SELECT_N := 6
@@ -1219,8 +1174,8 @@ const SEQ_CORNER_N := 8
 func _wait_game(pred: Callable) -> void:
 	while not pred.call(): await get_tree().process_frame
 
-# ── TOUGE scripted playtest (spec/touge_playtest.json): menu -> car select -> parked start + prompt -> 10 turns with the
-## turnout swap -> finish, through the same key / button paths a player uses. Writes stills (_shot) and touge_result.json
+# ── TOUGE scripted playtest (spec/touge_playtest.json): menu -> car select -> start grid -> 10 turns with per-phase passing
+## -> finish, through the same key / button paths a player uses. Writes stills (_shot) and touge_result.json
 ## (the stances actually played, exact QTE scores, totals) for tools/parity_touge.py --game-result.
 func _tw(sec: float) -> void:
 	var t0 := clock
@@ -1242,12 +1197,11 @@ func _run_touge_script() -> void:
 	guard = 0
 	while carsel.opp != want_o and guard < 6: _button("o_next"); guard += 1; await _tw(0.25)
 	await _tw(0.5); await _shot("t01_car_select")
-	while int(carsel.sel) != 2: handle_key(KEY_DOWN)   # to NEXT (o_next leaves the cursor on the rival row; was DOWN DOWN = player row)
-	handle_key(KEY_ENTER)   # NEXT -> parked start
-	await _tw(0.6)
-	role_sel = 0 if String(sc.get("role", "chase")) == "lead" else 1
-	await _shot("t02_start_prompt")
-	handle_key(KEY_ENTER)   # LEAD / CHASE
+	while int(carsel.sel) != 2: handle_key(KEY_DOWN)   # to START (o_next leaves the cursor on the rival row; was DOWN DOWN = player row)
+	await _start_grid_check(); await _shot("t02_start_grid")   # car select backdrop = the parked grid
+	await _start_grid_overview_shot("t02_start_grid_overview")   # still parked (the start paint slides back once the race runs)
+	handle_key(KEY_ENTER)   # START -> the race runs from the grid
+	await _start_grid_check()   # first race frame: the same grid (no snap)
 	await _tw(1.2); await _shot("t03_race_start")
 	var played := []
 	void_on = bool(sc.get("void_sweep", false)) or OS.get_cmdline_user_args().has("--void-sweep")
@@ -1278,6 +1232,16 @@ func _run_touge_script() -> void:
 			var sv = RaceCore.fdec(v)
 			script_qte.append(null if sv == null else Combat.round_qte_score(float(sv)))
 		var cam_turns: Array = (sc.get("cam_turns", []) as Array).map(func(v): return int(v))
+		# visible pass stills (Touge passing): the scripted scores are known, so the preview says whether the order flips this turn
+		var flip_k := _script_flip_phase(script_qte)
+		if flip_k >= 0 and pass_shots < int(sc.get("pass_shots", 1)) and not _void_enabled():
+			pass_shots += 1
+			await _wait_game(func(): return core.phase != "TIMING" or pass_k > flip_k)
+			await _shot("t%02d_pass%d_a_start" % [ci + 1, flip_k + 1])
+			await _wait_game(func(): return core.phase == "FINISHED" or pass_k != flip_k + 1 or absf(rival_offset) < 1.0)
+			await _shot("t%02d_pass%d_b_side_by_side" % [ci + 1, flip_k + 1])
+			await _wait_game(func(): return core.phase == "FINISHED" or pass_k != flip_k + 1 or pass_t >= float(PB.pass_after_exit_s))
+			await _shot("t%02d_pass%d_c_done" % [ci + 1, flip_k + 1])
 		if _void_enabled():
 			for qi in 3:
 				await _wait_game(func(): return core.phase != "TIMING" or qte_i > qi or (qte_i == qi and qte_seg == "sweep" and _qte_ms() >= float(QS.lead_ms) * 0.5))
@@ -1304,35 +1268,63 @@ func _run_touge_script() -> void:
 		if _void_enabled(): await _void_sweep_current("t%02d_result" % (ci + 1))
 		if cam_turns.has(ci + 1): await _shot("t%02d_cam_exit_hold" % (ci + 1))
 		played.append({"pick": String(core.result.player_line), "planned": want, "qte": (core.result.qte_in as Array).map(func(v): return null if v == null else RaceCore.fhex(float(v))), "qte_script": inp.qte, "rival": String(core.result.rival_played),
-			"p": RaceCore.fhex(core.result.player_progress), "o": RaceCore.fhex(core.result.opponent_progress), "role": String(core.result.role),
+			"p": RaceCore.fhex(core.result.player_progress), "o": RaceCore.fhex(core.result.opponent_progress), "phase_order": core.result.phase_order, "ahead": touge_order,
 			"heat_fill": (core.history[-1].p_fill as Array).map(func(v): return RaceCore.fhex(float(v))), "heat_drawn": hud.P.heat.drawn.duplicate()})
-		if ci == 0 or _shot_turn(sc, ci) or core.at_swap(): await _shot("t%02d_result" % (ci + 1))
+		if ci == 0 or _shot_turn(sc, ci): await _shot("t%02d_result" % (ci + 1))
+		if not turnout_geo.is_empty() and int(turnout_geo.turn) == ci:   # the turnout lot (scenery now) sits on this turn's exit straight
+			await _lot_overview_shot("t%02d_lot_overview" % (ci + 1))
+			if _void_enabled(): await _void_sweep_lot(ci)
 		await _wait_game(func(): return (not pb_started) or pass_t >= float(PB.pass_after_exit_s))
-		var swap: bool = core.at_swap()
 		_continue()
-		if swap:
-			for m in 5:
-				await _wait_game(func(): return turnout == null or _turnout_u() >= 0.1 + m * 0.2)
-				if turnout != null: await _shot("t%02d_turnout_%d" % [ci + 1, m])
-				if turnout != null and m == 2: await _lot_overview_shot("t%02d_lot_overview" % (ci + 1))
-				if turnout != null and m == 2 and _void_enabled(): await _void_sweep_lot(ci)
-			await _wait_game(func(): return turnout == null)
-			await _tw(0.5); await _shot("t%02d_after_swap" % (ci + 2))
 	await _tw(1.5); await _shot("t99_finish")
-	var out := {"seed": core.seed_value, "role_first": core.role_first, "player_car": carsel.player, "opp_car": carsel.opp,
+	var out := {"seed": core.seed_value, "player_car": carsel.player, "opp_car": carsel.opp,
 		"use_draft_blocks": bool(cfg.get("use_draft_blocks", false)), "corners": played, "player_total": RaceCore.fhex(core.cum_p),
-		"opponent_total": RaceCore.fhex(core.cum_o), "banked": [RaceCore.fhex(core.banked_p), RaceCore.fhex(core.banked_o)], "winner": core.winner(),
-		"min_sep_overlap_m": min_sep_overlap, "clip_check": clip_stats, "heat_check": heat_check, "heat_px": heat_px_log, "turnout_clearance": turnout_clear}
+		"opponent_total": RaceCore.fhex(core.cum_o), "winner": core.winner(),
+		"min_sep_overlap_m": min_sep_overlap, "clip_check": clip_stats, "heat_check": heat_check, "heat_px": heat_px_log, "start_grid": start_grid}
 	print("CLIP_CHECK frames=%d raw_clipping=%d fixed_clipping=%d max_raw_pen=%.3f max_fixed_pen=%.3f raw_by_rig=%s fixed_by_rig=%s" % [clip_stats.frames, clip_stats.raw, clip_stats.fixed, clip_stats.max_raw, clip_stats.max_fixed, str(clip_stats.by_rig_raw), str(clip_stats.by_rig_fixed)])
 	print("HEAT_CHECK frames=%d bad=%d max_err=%s px_checks=%d px_bad=%d px_max_err=%.1f %s" % [heat_check.frames, heat_check.bad, str(heat_check.max_err), heat_check.px_checks, heat_check.px_bad, heat_check.px_max_err, "PASS" if heat_check.bad == 0 and heat_check.px_bad == 0 else "FAIL"])
-	var tc_ok: bool = int(turnout_clear.car_hits) == 0 and int(turnout_clear.sign_hits) == 0 and int(turnout_clear.stall_hits) == 0 and int(turnout_clear.wall_hits) == 0
-	print("TURNOUT_CLEARANCE_CHECK frames=%d car_overlap=%d sign=%d stall=%d wall=%d min_car_gap=%.3f min_sign_gap=%.3f min_stall_gap=%.3f min_wall_gap=%.3f %s" % [int(turnout_clear.frames), int(turnout_clear.car_hits), int(turnout_clear.sign_hits), int(turnout_clear.stall_hits), int(turnout_clear.wall_hits), float(turnout_clear.min_car_gap), float(turnout_clear.min_sign_gap), float(turnout_clear.min_stall_gap), float(turnout_clear.min_wall_gap), "PASS" if tc_ok else "FAIL"])
+	var sg_ok: bool = bool(start_grid.get("ok", false))
+	print("START_GRID_CHECK checks=%d rival_ahead_m=%s same_lane=%s bumper_gap_m=%s player_trails=%s %s" % [int(start_grid.get("n", 0)), str(start_grid.get("ahead_m")), str(start_grid.get("same_lane")), str(start_grid.get("bumper_gap_m")), str(start_grid.get("trails")), "PASS" if sg_ok else "FAIL"])
+	print("PASS_SHOTS %d" % pass_shots)
+	var cw := _car_width()
+	print("PASS_LANE_CHECK min_lateral_while_overlapping=%.3f car_width=%.3f %s" % [min_sep_overlap, cw, "PASS" if min_sep_overlap >= cw else "FAIL"])
 	var od: String = shots_dir if shots_dir != "" else ProjectSettings.globalize_path("res://.out")   # was ../out (outside the repo; null file when it is missing)
 	DirAccess.make_dir_recursive_absolute(od)
 	FileAccess.open(od.path_join("touge_result.json"), FileAccess.WRITE).store_string(JSON.stringify(out, " ", false, true))
 	_void_report()
 	print("TOUGE_PLAYTEST_DONE winner=%s P=%f O=%f" % [core.winner(), core.cum_p, core.cum_o])
 	get_tree().quit()
+
+## TOUGE start grid (Austin via Barry, 2026-11-20 6:31 PM PT: "One behind the other, player always trails"): the parked cars
+## must be in single file (same lateral line), the rival ahead, with clear road between the two cars' meshes. Run on the car
+## select backdrop and on the first race frame (no snap between them).
+func _start_grid_check() -> void:
+	await get_tree().process_frame
+	var lp := _pass_lanes()
+	var ahead := rival_offset
+	var gap := _aabb_gap(_aabb_in(player_car, Transform3D.IDENTITY), _aabb_in(rival_car, Transform3D.IDENTITY))   # the cars' own meshes
+	var ok := ahead > 0.0 and absf(lp.x - lp.y) < 0.01 and gap > 0.5 and touge_order == "opponent"
+	var n := int(start_grid.get("n", 0)) + 1
+	start_grid = {"n": n, "ahead_m": snappedf(ahead, 0.001), "same_lane": absf(lp.x - lp.y) < 0.01, "bumper_gap_m": snappedf(gap, 0.001),
+		"trails": touge_order == "opponent", "ok": ok and bool(start_grid.get("ok", true))}
+
+## review only: a high three-quarter view over the start grid
+func _start_grid_overview_shot(nm: String) -> void:
+	var pth = straight_path
+	var e: Dictionary = pth.point(s_player - 10.0, 7.0); var c: Dictionary = pth.point(s_player + rival_offset * 0.5, 0.0)
+	cam_override = [Vector3(e.x, float(e.get("y", 0.0)) + 9.0, e.z), Vector3(c.x, float(c.get("y", 0.0)) - 3.0, c.z), 50.0]   # cars in the top half (the car select panel)
+	await _shot(nm)
+	cam_override = null
+
+## the phase (0..2) after which the drawn order flips this turn for these phase scores (core.preview), or -1
+func _script_flip_phase(q: Array) -> int:
+	if not core.per_phase(): return -1
+	var res: Dictionary = core.preview(q)
+	var o := touge_order
+	for i in 3:
+		var n := _order_after(o, [res.phase_order[i]])
+		if n != o: return i
+	return -1
 
 ## review only: a high three-quarter view over the turnout lot (camera moved for this one frame, restored next frame)
 func _lot_overview_shot(nm: String) -> void:
@@ -1472,15 +1464,12 @@ func _process(dt: float) -> void:
 	if core.phase == "TIMING": lock_hold_t += dt
 	if not _parked(): scroller.update(dt)   # infinite scroll on the Entry straight and during playback (incl. the QTE holds); TOUGE: parked = speed 0
 	var raw_scroll: float = scroller.scroll_m()
-	if turnout != null: scroll_skip += raw_scroll - scroll_raw_prev   # TOUGE: the lot is fixed; the road scroll waits while the cars use it
-	scroll_raw_prev = raw_scroll
-	if not (core.phase == "SELECT" and _sel_stop() > 0): scroll_shown = raw_scroll - scroll_skip   # Apex / Exit selection stops are static (Austin 2026-11-12)
+	if not (core.phase == "SELECT" and _sel_stop() > 0): scroll_shown = raw_scroll   # Apex / Exit selection stops are static (Austin 2026-11-12)
 	var v: float = 0.0 if _parked() else scroller.speed_ms()
 	if mode == "MENU" or _parked(): phase_t = 0.0  # backdrop: the straight scrolls, the selection timer never runs
 	if core.phase == "SELECT" and phase_t >= _pick_timer() and script_in == null and not no_timer:
 		_do_lock()  # timer expiry -> auto-fill (guide §4.2)
 	if _playing(): v += _step_play(dt)
-	if turnout != null: v += _step_turnout(dt)
 	_ease_gap(dt)
 	if core.phase == "RESULT":
 		result_t += dt
@@ -1488,8 +1477,8 @@ func _process(dt: float) -> void:
 		if reveal >= 3: cont_t += dt
 		if reveal >= 3 and trace_ready != core.corner_index: trace_ready = core.corner_index; _trace("result_ready turn=%d" % (core.corner_index + 1))
 		var auto: bool = script_in == null or bool(script_in.get("demo", {}).get("auto_continue", false))
-		if auto and mode == "RACE" and cont_t >= float(PB.continue_s) and turnout == null and not no_timer: _continue()
-		if cont_pending and turnout == null: _continue()
+		if auto and mode == "RACE" and cont_t >= float(PB.continue_s) and not no_timer: _continue()
+		if cont_pending: _continue()
 	wheel_angle += minf(float(RS.wheel_spin_cap_rad_s), v / 0.31) * dt
 	_step_lanes(dt)
 	_render_hud()
@@ -1581,7 +1570,7 @@ func _update_camera(pc: Dictionary, pp: Dictionary) -> void:
 	if core.phase == "TIMING" and _qte_cams_enabled():
 		_apply_qte_cam(pp, pc, ch)
 		return
-	# TOUGE: chase camera through playback, the turnout and RESULT (the authored corner cameras are not used in the touge race)
+	# TOUGE: chase camera through playback and RESULT (the authored corner cameras are not used in the touge race)
 	if bool(disp.get("touge_chase_only", true)):
 		rig = "BCH"; cam_pos = ch[0]; cam_look = ch[1]
 		if back_from != null and back_t < float(CC.transition_to_straight_s):
@@ -1591,7 +1580,6 @@ func _update_camera(pc: Dictionary, pp: Dictionary) -> void:
 	rig = "BCL" if c.dir == "L" else "BCR"
 	var u: float = qte_t / float(disp.playback_s) if core.phase == "TIMING" else 1.0
 	var tgt := Vector3(pp.x, 0.8 + float(pp.get("y", 0.0)), pp.z)   # TOUGE: road height
-	if turnout != null and _turnout_cam(ch, tgt): return
 	if cc == null or u < float(cc.start_t):  # §12.2 transition_to_corner: chase + side offset, 1.0 s ease
 		var o: Array = CC.transition_to_corner_offset
 		var side := -1.0 if c.dir == "L" else 1.0
@@ -1656,43 +1644,6 @@ func _aabb_gap(a: AABB, b: AABB) -> float:
 	var gx := maxf(dx, 0.0); var gy := maxf(dy, 0.0); var gz := maxf(dz, 0.0)
 	return sqrt(gx * gx + gy * gy + gz * gz)
 
-func _find_named(n: Node, nm: String) -> Node3D:
-	if n.name == nm and n is Node3D: return n as Node3D
-	for ch in n.get_children():
-		var h := _find_named(ch, nm)
-		if h != null: return h
-	return null
-
-## during the turnout, in LotArt space (cars follow +Z): car vs car, P sign, stall front (x=6.75) and back wall (x=pocket_w_m)
-func _turnout_clearance() -> void:
-	var lg = corner_d.get("lot_group") if corner_d != null else null
-	if lg == null: return
-	var la := (lg as Node).get_node_or_null("LotArt") as Node3D
-	if la == null: return
-	var inv := la.global_transform.affine_inverse()
-	var ap := _aabb_in(player_car, inv); var ar := _aabb_in(rival_car, inv)
-	if ap.size == Vector3.ZERO or ar.size == Vector3.ZERO: return
-	turnout_clear.frames = int(turnout_clear.frames) + 1
-	var cg := _aabb_gap(ap, ar)
-	turnout_clear.min_car_gap = minf(float(turnout_clear.min_car_gap), cg)
-	if cg < 0.0: turnout_clear.car_hits = int(turnout_clear.car_hits) + 1
-	var sign := _find_named(lg, "Sign")
-	if sign != null:
-		var sb := _aabb_in(sign, inv)
-		var sg := minf(_aabb_gap(ap, sb), _aabb_gap(ar, sb))
-		turnout_clear.min_sign_gap = minf(float(turnout_clear.min_sign_gap), sg)
-		if sg < 0.0: turnout_clear.sign_hits = int(turnout_clear.sign_hits) + 1
-	var aisle1 := 6.75
-	var wall_x := float(TO.pocket_w_m)
-	for box in [ap, ar]:
-		var b: AABB = box
-		var xmax: float = b.position.x + b.size.x
-		var stall_gap: float = aisle1 - xmax
-		var wall_gap: float = wall_x - xmax
-		turnout_clear.min_stall_gap = minf(float(turnout_clear.min_stall_gap), stall_gap)
-		turnout_clear.min_wall_gap = minf(float(turnout_clear.min_wall_gap), wall_gap)
-		if stall_gap < 0.0: turnout_clear.stall_hits = int(turnout_clear.stall_hits) + 1
-		if wall_gap < 0.0: turnout_clear.wall_hits = int(turnout_clear.wall_hits) + 1
 
 func _update_scene() -> void:
 	var st := _in_straight()
@@ -1711,7 +1662,6 @@ func _update_scene() -> void:
 	var pp := _place(player_car, pth, s_player, lp.x)
 	_place(rival_car, pth, s_player + rival_offset, lp.y)
 	if absf(rival_offset) < float(PB.car_len_m) and player_car.visible: min_sep_overlap = minf(min_sep_overlap, absf(lp.x - lp.y))
-	if turnout != null: _turnout_clearance()
 	_update_camera(pth.point(s_player, 0.0), pp)
 	_guard_camera(st)
 	if core.phase == "TIMING" and look_back == false: _qte_refit_fov()
@@ -1737,7 +1687,7 @@ func _update_scene() -> void:
 	_update_line_preview()
 	_sync_cel()   # CEL:
 
-## TOUGE (Austin t114u): every camera pose (chase, corner path, exit hold, look-back, parked start, turnout, stops) is checked
+## TOUGE (Austin t114u): every camera pose (chase, corner path, exit hold, look-back, parked start grid, stops) is checked
 ## against the kit model (cam_guard.gd) and pulled in along its line of sight when it would clip. clip_stats counts the raw and
 ## the fixed poses per rig, so the scripted run reports the before / after numbers (CLIP_CHECK line at the end).
 ## [triangles, draw calls (surfaces)] of every MeshInstance3D under n (the road_export.gd dressing_* convention)
@@ -1807,7 +1757,6 @@ func _clip_snap(dir: String, nm: String, c0: float, c1: float) -> void:
 func _mirror_on() -> bool:
 	if mode == "MENU" or _parked(): return false   # the menu logo sits where the mirror goes
 	if look_back: return false
-	if turnout != null: return true
 	if core.phase == "SELECT": return _sel_stop() == 0 and not (stop_from != null and stop_t < float(SC.move_s))
 	if core.phase == "TIMING": return lock_hold_t < float(SC.lock_hold_s)
 	return core.phase == "FINISHED" and back_t >= float(CC.transition_to_straight_s)
@@ -1876,8 +1825,6 @@ func _render_hud() -> void:
 			"stats": ("POW %d  HAN %d  EN %d   vs   POW %d  HAN %d  EN %d" % [ps.pow, ps.han, ps.en, os.pow, os.han, os.en]) if draft else "stats: TODO(barry) parity placeholder (even, equal)",
 			"parity": "%s  r = %.3f  (cap %.2f)" % ["IN PARITY" if RaceCore.in_parity(ps, os) else "OUT OF PARITY", rr, float(C.CAR_BLOCKS_PARITY_CAP_R)], "ok": RaceCore.in_parity(ps, os),
 			"source": ("Barry draft blocks @%s (UNAPPROVED) · car choice is visual only" % C.CAR_BLOCKS_PIN) if draft else "car choice is visual only"}}); return
-	if mode == "ROLE":
-		hud.show_state({"buttons": buttons, "role_prompt": {"swap": core.swap_after(), "n": cfg.corners.size(), "you": disp.cars.names[carsel.player], "rival": "%s (%s)" % [String(cfg.opponent.name).to_upper(), disp.cars.names[carsel.opp]]}}); return
 	var c: Dictionary = core.corner()
 	var r = core.result if core.phase == "RESULT" else (core.history[-1] if core.history.size() > 0 else {})
 	var slots := []
@@ -1907,11 +1854,10 @@ func _render_hud() -> void:
 	elif core.phase == "TIMING": plate.mode = "PLAY"; plate.stop = play_phase
 	elif core.phase != "SELECT": plate.mode = "DONE"
 	var lpv: Dictionary = disp.get("line_preview", {})
-	var to_st = null
-	if turnout != null: to_st = {"new_role": turnout.new_role, "from": core.swap_after() + 1, "n": cfg.corners.size(), "banked": core.cum_p - core.cum_o}
+	var sp: float = float(shown_cum[0]); var so: float = float(shown_cum[1])   # running totals after the phases shown (Touge passing)
 	hud.show_state({"phase": core.phase, "title": "TURN %d/%d %s %s (%s)" % [core.corner_index + 1, cfg.corners.size(), String(c.district).to_upper(), c.corner, c.dir],
-		"role": core.role() if turnout == null else String(turnout.new_role), "heat": _heat_hud(), "no_timer": no_timer, "heat_pos": disp.touch_ui.heat_pos, "turnout": to_st, "buttons": buttons,
-		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "build": String(RaceCore.build_info().build), "lead": 0.0 if turnout != null else core.seg_lead(), "gap": 0.0 if turnout != null else core.seg_gap(),
+		"order": touge_order, "heat": _heat_hud(), "no_timer": no_timer, "heat_pos": disp.touch_ui.heat_pos, "buttons": buttons,
+		"sub": "seed %d %s %s %dm/s" % [core.seed_value, C.PIN_COMMIT.substr(0, 7), rig, roundi(scroller.speed_ms())], "build": String(RaceCore.build_info().build), "lead": 0.0 if sp + so == 0.0 else (sp - so) / (sp + so), "gap": sp - so,
 		"left": left, "total": _pick_timer(), "slots": slots, "hand": core.hand, "used": core.picks,
 		"qte": _qte_hud(), "line": pline, "rline": rline, "outs": outs, "plate": plate, "locked_hold": core.phase == "TIMING" and lock_hold_t < float(SC.lock_hold_s), "mirror": _mirror_on(), "play_phase": play_phase, "plan": plan, "turn_m": turn_m, "dir": c.dir, "lanes": lanes,
 		"preview_panel": lpv.get("panel", [424, 369, 636, 476]), "gap_pos": lpv.get("gap_pos", [220, 98]),
@@ -1969,84 +1915,117 @@ func _step_lanes(dt: float) -> void:
 	if tgt_p != null and absf(float(tp) - float(tgt_p)) > 1.2: err_p += float(tgt_p) - float(tp)
 	if tgt_r != null and absf(float(tr) - float(tgt_r)) > 1.2: err_r += float(tgt_r) - float(tr)
 	err_p *= k; err_r *= k; tgt_p = tp; tgt_r = tr
-	lat_p = float(tp) + err_p; lat_r = float(tr) + err_r
+	var dz := _dodge_target(float(tp), float(tr))
+	var kd := 1.0 - exp(-dt / float(PB.get("dodge_ease_s", 0.25)))
+	dodge_p += (dz.x - dodge_p) * kd; dodge_r += (dz.y - dodge_r) * kd
+	lat_p = float(tp) + err_p + dodge_p; lat_r = float(tr) + err_r + dodge_r
+	_keep_apart()
 
-## what the lead will be once this playback resolves: the same Combat.resolve_turn the core calls in submit_qte (pure, no RNG)
-## TOUGE: this half's lead once the turn resolves (core.preview = the same _resolve submit_qte runs, on copies of the gauges)
-func _preview_lead(phases: Array) -> float:
-	var res: Dictionary = core.preview(phases)
-	var cp: float = core.seg_p() + res.player_progress; var co: float = core.seg_o() + res.opponent_progress
-	var t := cp + co
-	return 0.0 if t == 0.0 else (cp - co) / t
+## the cars never pass through each other: while their bodies come within 1.5 m of overlapping along the road, the lateral gap
+## between their centres is held at >= car width + 0.1 m, ramped in over that 1.5 m (continuous, no jump). The passer (else the
+## rival) makes the room, keeping its side of the other car; inside the road (road_half_m - 1 m), the other car takes any rest.
+## _dodge_target already moves the passer out ahead of time; this only bites when lines converge late or the road is narrow.
+func _keep_apart() -> void:
+	if _parked() or (core.phase != "TIMING" and core.phase != "RESULT"): return
+	var L: float = float(PB.car_len_m); var a := absf(rival_offset)
+	if a >= L + 1.5: return
+	var need := (_car_width() + 0.1) * Track.smooth((L + 1.5 - a) / 1.5)
+	var gap := lat_p - lat_r
+	if absf(gap) >= need: return
+	var p_moves := pass_k > 0 and pass_to < pass_from and signf(pass_from) != signf(pass_to)
+	var dir := signf(gap) if gap != 0.0 else (signf(dodge_p) if p_moves and dodge_p != 0.0 else (signf(-dodge_r) if dodge_r != 0.0 else 1.0))
+	var lim: float = (float(disp.road_half_m) if disp.has("road_half_m") else road_W) - 1.0
+	if p_moves:
+		lat_p = clampf(lat_r + dir * need, -lim, lim); lat_r = clampf(lat_p - dir * need, -lim, lim)
+	else:
+		lat_r = clampf(lat_p - dir * need, -lim, lim); lat_p = clampf(lat_r + dir * need, -lim, lim)
 
-func _preview_phases() -> Array: return qte_res.duplicate()
+## Overtake lane (Austin 2026-11-11: "if the exit lane is the same for both cars and one goes for a pass, then the passing car
+## should go to an open lane for the pass animation, and then move into the position it needs to play for the next turn").
+## Touge passing makes passes frequent (any phase, and back again within a turn), so the open lane is chosen per frame, not
+## planned once: from the start of a pass that crosses until the cars are overlap_clear_m apart past it (or closer than
+## car_len_m + 1 m at any time), when their lines are closer than min_sep_m, the passer (the car moving up; else the rival) moves min_sep_m off the other
+## car's line, on the side nearer its own line and inside the road (road_half_m - 1 m). Eased by dodge_ease_s (PLACEHOLDER).
+func _dodge_target(tp: float, tr: float) -> Vector2:
+	if _parked() or (core.phase != "TIMING" and core.phase != "RESULT"): return Vector2.ZERO
+	var crossing := pass_k > 0 and signf(pass_from) != signf(pass_to) and pass_t < float(PB.pass_after_exit_s)
+	var a := absf(rival_offset)
+	# a crossing pass moves out from its start (closing speeds reach ~25 m/s, too fast to start at overlap_clear_m) until the
+	# cars are overlap_clear_m apart again on the far side; otherwise only cars closer than car_len_m + 1 m make room
+	var before_cross := crossing and signf(rival_offset) == signf(pass_from)
+	if not before_cross and (a >= float(PB.overlap_clear_m) or (not crossing and a >= float(PB.car_len_m) + 1.0)): return Vector2.ZERO
+	var sep: float = float(PB.min_sep_m)
+	if absf(tp - tr) >= sep: return Vector2.ZERO
+	var p_moves := crossing and pass_to < pass_from   # the drawn gap shrinking toward / past the rival = the player passes
+	var other := tr if p_moves else tp; var mine := tp if p_moves else tr
+	var prev := dodge_p if p_moves else dodge_r
+	var lim: float = (float(disp.road_half_m) if disp.has("road_half_m") else road_W) - 1.0
+	var best := mine
+	if absf(prev) > 0.05:   # already moving out: keep the side it is on relative to the other car (never cut across it)
+		var side := signf(mine + prev - other) if mine + prev != other else signf(prev)
+		best = clampf(other + side * sep, -lim, lim)
+	else:   # the side the passer is already on (no cutting across the other car's line) if the road leaves 80 % of min_sep_m there
+		var side := signf(mine - other) if mine != other else 1.0
+		best = clampf(other + side * sep, -lim, lim)
+		if absf(best - other) < 0.8 * sep: best = clampf(other - side * sep, -lim, lim)
+	return Vector2(best - tp, 0.0) if p_moves else Vector2(0.0, best - tr)
 
-## pass target + plan: once the Exit QTE has finished (qte_i >= 3), off1 = the visual gap the sim's lead will give
-## (same Combat.resolve_turn core.submit_qte uses). Until then the gap stays at off0 and there is no pass_plan.
-## When the drawn order flips, the passer takes an open lane while the cars overlap if their lines would share a
-## lane there (Austin: shared exit lane -> pass in an open lane, then settle). The sample window is the post-Exit
-## animation (pass_after_exit_s), with s_player still following the playback clock and capping at the end of travel.
+## phases whose score is in this turn (0..3): a phase counts once its QTE result shows (press or timeout); RESULT = all three
+func _phases_scored() -> int:
+	if core.phase == "RESULT": return 3
+	if core.phase != "TIMING": return 0
+	return mini(3, qte_i + (1 if qte_seg == "show" else 0))
+
+## TOUGE passing (sim 5c79dea, Barry's port list item 4/6): the car order can change after each phase. When phase k's score is in,
+## the drawn gap goes to _touge_offset(lead after clashes 1..k, order after phase k): core.preview with the later phases unscored
+## (smoothing is causal, so clash i of the preview is clash i of the resolved turn; the same AI draws, peeked), and the order =
+## the sim's phase_order ("even" keeps the order shown). RESULT uses the resolved turn itself. Per-turn districts keep Austin's
+## 2026-11-12 rule (one change, after the Exit QTE). The passer's open lane while the cars overlap is _dodge_target (per frame).
 func _update_pass_target() -> void:
 	if core.phase != "TIMING" and core.phase != "RESULT": return
-	if qte_i < 3:
-		off1_score = null; pass_plan = {}; return
-	var sc := str(_preview_phases())
-	if off1_score != null and String(off1_score) == sc: return
-	off1_score = sc; off1 = _touge_offset(_preview_lead(_preview_phases()), core.role()); pass_plan = {}
-	return   # TOUGE: the rival never changes side inside a turn, so there is never a pass to plan
-	var pl: String = core.player_line(); var rl: String = core.line
-	var travel: float = _travel()
-	var dur: float = maxf(0.001, float(PB.pass_after_exit_s))
-	var t_hold: float = _hold_t(2)
-	var pb: float = float(disp.playback_s)
-	var others := []; var mine := []; var conflict := false; var passer := "P" if off1 < off0 else "R"
-	for i in 81:
-		var t := dur * i / 80.0
-		var o := lerpf(off0, off1, Track.smooth(t / dur))
-		if absf(o) >= float(PB.overlap_clear_m): continue
-		var sp := 8.0 + travel * minf(1.0, (t_hold + t) / pb)
-		var dp := _line_d(pl, sp); var dr := _line_d(rl, sp + o)
-		if absf(dp - dr) < float(PB.min_sep_m): conflict = true
-		others.append(dr if passer == "P" else dp); mine.append(dp if passer == "P" else dr)
-	if not conflict: return
-	var w: float = disp.lane_width_m; var best := 0.0; var best_v := -1.0
-	var avg := 0.0
-	for m in mine: avg += float(m) / maxf(1.0, mine.size())
-	for L in [-w, 0.0, w]:
-		var mn := 99.0
-		for ot in others: mn = minf(mn, absf(L - float(ot)))
-		var v := mn - 0.01 * absf(L - avg)   # farthest from the other car; ties -> nearest to the passer's own line
-		if v > best_v: best_v = v; best = L
-	pass_plan = {"passer": passer, "open": best}
+	var k := _phases_scored()
+	if not core.per_phase() and k < 3: k = 0
+	if k <= pass_k: return
+	var pc: Array; var oc: Array; var po: Array
+	if core.phase == "RESULT":
+		pc = core.result.player_clash; oc = core.result.opponent_clash; po = core.result.phase_order
+	else:
+		var ph := []
+		for i in 3: ph.append(qte_res[i] if i < k else null)
+		var res: Dictionary = core.preview(ph)
+		pc = res.player_clash; oc = res.opponent_clash; po = res.phase_order
+	var cp: float = float(turn_cum[0]); var co: float = float(turn_cum[1])
+	for i in k: cp += float(pc[i]); co += float(oc[i])
+	if k == 3 and core.phase == "RESULT": cp = core.cum_p; co = core.cum_o   # the resolved totals exactly (core sums the turn first)
+	var order := _order_after(touge_order, po.slice(pass_k, k) if core.per_phase() else _totals_order(cp, co))
+	var lead := 0.0 if cp + co == 0.0 else (cp - co) / (cp + co)
+	if order != touge_order:
+		leader_changed = true; _trace("pass phase=%d ahead=%s" % [k, order])
+	touge_order = order; shown_cum = [cp, co]
+	pass_from = rival_offset; pass_to = _touge_offset(lead, order); off1 = pass_to; off1_score = str(qte_res)
+	pass_k = k; pass_t = 0.0
 
-## longitudinal gap: hold the pre-turn gap exactly until the Exit QTE finishes, then lerp to the post-turn gap
-## over pass_after_exit_s (smoothstep, no exp lag so RESULT lands on the resolved lead with no snap). The
-## animation continues into RESULT when the leftover playback after the Exit hold is too short to read.
+## longitudinal gap: hold the pre-turn gap exactly until the first phase is scored, then after each scored phase lerp from the
+## drawn gap to that phase's gap over pass_after_exit_s (smoothstep, no exp lag, so RESULT lands on the resolved lead with no
+## snap). The last animation continues into RESULT when the leftover playback after the Exit hold is too short to read.
 func _ease_gap(dt: float) -> void:
-	if turnout != null: return   # TOUGE: _step_turnout drives the gap
-	if _parked(): rival_offset = 0.0; return
+	if _parked(): rival_offset = _start_offset(); return
 	if pb_started and (_playing() or core.phase == "RESULT"):
-		if qte_i < 3:
-			rival_offset = off0; return
 		_update_pass_target()
+		if pass_k == 0:
+			rival_offset = off0; return
 		pass_t += dt
 		var dur := maxf(0.001, float(PB.pass_after_exit_s))
-		rival_offset = lerpf(off0, off1, Track.smooth(pass_t / dur))
+		rival_offset = lerpf(pass_from, pass_to, Track.smooth(pass_t / dur))
 		return
 	if core.phase == "TIMING":
 		rival_offset = off0; return
 	rival_offset += (rival_offset_target - rival_offset) * (1.0 - exp(-dt / float(PB.gap_ease_s)))
 
-## lateral positions with the pass offset: the passer moves to the open lane while the cars overlap, then back to its line
+## lateral positions (lat_* already carry the passer's open-lane offset, _dodge_target)
 func _pass_lanes() -> Vector2:
 	var dp := lat_p; var dr := lat_r
-	if _parked(): return Vector2(-float(disp.lane_width_m), float(disp.lane_width_m))   # TOUGE: side by side on the start line (+/-1.45 m)
-	if turnout != null: return _turnout_lanes()
-	if not pass_plan.is_empty() and (core.phase == "TIMING" or core.phase == "RESULT"):
-		var a := absf(rival_offset)
-		var w := 1.0 - Track.smooth((a - float(PB.overlap_full_m)) / (float(PB.overlap_clear_m) - float(PB.overlap_full_m)))
-		if pass_plan.passer == "P": dp = lerpf(dp, float(pass_plan.open), w)
-		else: dr = lerpf(dr, float(pass_plan.open), w)
+	if _parked(): return Vector2(0.0, 0.0)   # TOUGE start grid: one behind the other on the centre line (the rival ahead)
 	return Vector2(dp, dr)
 
 
@@ -2186,9 +2165,10 @@ func _qte_cam_pick_turn() -> void:
 
 ## Austin pt137u: "front" sits ahead of the player looking back down the road. When the player chases (rival ahead, nobody
 ## behind) it shows an empty road, so a chase turn draws among outside / chase only. Same single draw per section from the
-## display RNG (seed + 130001); the sim / AI QTE RNGs are never touched. Role is the turn's role (RaceCore), so it is reproducible.
+## display RNG (seed + 130001); the sim / AI QTE RNGs are never touched. Touge passing: "chasing" = the rival is ahead when the
+## turn starts (turn_order, from the sim's order), so it is reproducible.
 func _qte_cam_valid_types() -> Array:
-	if core != null and core.role() == "chase": return QTE_CAM_TYPES.filter(func(t): return t != "front")
+	if core != null and turn_order == "opponent": return QTE_CAM_TYPES.filter(func(t): return t != "front")
 	return QTE_CAM_TYPES
 
 func _qte_cams_enabled() -> bool:
@@ -2945,7 +2925,7 @@ func _arthur_find_car_lights(n: Node, car: Node3D, heads: Array, tails: Array) -
 
 # ── Pause menu (Austin pt137u): desktop Escape only, no touch button. The Escape key is read directly: this project's ui_cancel
 ## action is mapped to Enter / Space (project.godot), which pick and fire QTEs. get_tree().paused stops main.gd's _process
-## (game clock, selection timer, QTE sweep, playback, turnout) where it is; only the PauseInput node (PROCESS_MODE_ALWAYS) runs.
+## (game clock, selection timer, QTE sweep, playback) where it is; only the PauseInput node (PROCESS_MODE_ALWAYS) runs.
 ## Display only: no RNG is drawn, nothing in RaceCore or the state token changes. Resume restores the exact frozen state.
 const PAUSE_ITEMS := ["RESUME", "RESTART RACE", "CAR SELECT", "MAIN MENU"]
 var pause_menu: Dictionary = {}   # {} = not paused
@@ -2987,8 +2967,8 @@ func pause_set(on: bool) -> void:
 func pause_choose(i: int) -> void:
 	pause_set(false)
 	match i:
-		1:   # same seed, cars and first role, from the parked start (as LEAD / CHASE on the prompt)
-			pending_seed = core.seed_value; _choose_role(core.role_first)
+		1:   # same seed and cars, from the start grid
+			pending_seed = core.seed_value; _start_from_grid()
 		2: _to_carsel(core.seed_value)
 		3: to_menu()
 
@@ -3009,7 +2989,7 @@ func _stance_row_rect(sr: Array) -> Array:
 
 # ── VOID SWEEP (Austin pt137u pic 5: "ground / slope / trees missing" past the dressing) ──────────────────────────────────
 ## --void-sweep (or "void_sweep": true in a touge script): at every camera the race uses (plan stops Entry / Apex / Exit, the
-## three QTE cameras at each QTE, the RESULT camera, the turnout / lot views) render the world once with the clear colour set to
+## three QTE cameras at each QTE, the RESULT camera, the turnout lot views) render the world once with the clear colour set to
 ## pure magenta and the far plane at the district fog_far (anything further is fully fogged = the clear colour in game anyway).
 ## A pixel is VOID when it shows the clear colour and its ray, at the far plane, is more than void_drop_m below the road at the
 ## camera: the player would see the background where the mountainside / valley should be. VOID_CHECK at the end of the run
@@ -3142,7 +3122,7 @@ func _void_sweep_current(tag: String) -> void:
 	await _void_render(tag, cam_pos, cam_look, cam_fov, _in_straight(), false)
 	busy = false
 
-## turnout / lot: the race's turnout camera plus the lot from several angles (both flanks, high and low, across the road)
+## turnout lot (scenery on its turn's exit straight; no race event plays there): the race camera at that turn's RESULT plus the lot from several angles (both flanks, high and low, across the road)
 func _void_sweep_lot(ci: int) -> void:
 	busy = true
 	await _void_render("t%02d_lot_turnout_cam" % (ci + 1), cam_pos, cam_look, cam_fov, false, false)
@@ -3300,13 +3280,13 @@ func _qte_gap_sweep(ci: int) -> void:
 	var gaps: Array = Array(String(_arg("--qte-gap-sweep", "26")).split(",")).map(func(v): return float(v))
 	var sec: int = clampi(qte_i, 0, 2)
 	var saved_pick: String = qte_cam_picks[sec]; var saved_off := rival_offset
-	var sgn: float = signf(off0) if off0 != 0.0 else (1.0 if core.role() == "chase" else -1.0)
+	var sgn: float = signf(off0) if off0 != 0.0 else (1.0 if turn_order == "opponent" else -1.0)
 	var R: float = float(_qte_framing().get("radius_m", 2.6))
 	for g in gaps:
 		for kind in _qte_cam_valid_types():
 			qte_cam_picks[sec] = kind; rival_offset = sgn * float(g)
 			qte_cam_section = sec; qte_cam_from = null; qte_cam_eff = kind
-			var nm := "t%02d_gap%03d_%s_%s" % [ci + 1, int(g), core.role(), kind]
+			var nm := "t%02d_gap%03d_%s_%s" % [ci + 1, int(g), "behind" if sgn > 0.0 else "ahead", kind]
 			await _shot(nm)
 			busy = true
 			var cars := [_car_sphere(player_car), _car_sphere(rival_car)]
@@ -3321,11 +3301,11 @@ func _qte_gap_sweep(ci: int) -> void:
 			var gd = guard_c if not _in_straight() else guard_s
 			for c in cars: los.append(snappedf(_qte_los_block(gd, cam_pos, [c]), 0.01))
 			var shown: String = qte_cam_eff
-			var row := {"turn": ci + 1, "role": core.role(), "gap_m": g, "pick": kind, "shown": shown, "rig": rig, "fov": snappedf(cam_fov, 0.1),
+			var row := {"turn": ci + 1, "player": "behind" if sgn > 0.0 else "ahead", "gap_m": g, "pick": kind, "shown": shown, "rig": rig, "fov": snappedf(cam_fov, 0.1),
 				"need_fov": snappedf(need, 0.1) if need < 1e6 else -1.0, "spheres_fit": need <= cam_fov + 0.05, "centres_in_view": inside, "clear_view": los.max() <= float(_qte_framing().get("los_tol_m", 1.0)),
 				"los_clip_m": los, "still": nm}
 			qte_gap_log.append(row)
-			print("QTE_GAP turn=%d role=%s gap=%.0f pick=%s shown=%s fov=%.1f need=%.1f fit=%s in_view=%s clear_view=%s los=%s" % [ci + 1, core.role(), g, kind, shown, cam_fov, need, str(row.spheres_fit), str(inside), str(row.clear_view), str(los)])
+			print("QTE_GAP turn=%d player=%s gap=%.0f pick=%s shown=%s fov=%.1f need=%.1f fit=%s in_view=%s clear_view=%s los=%s" % [ci + 1, "behind" if sgn > 0.0 else "ahead", g, kind, shown, cam_fov, need, str(row.spheres_fit), str(inside), str(row.clear_view), str(los)])
 	qte_cam_picks[sec] = saved_pick; rival_offset = saved_off; qte_cam_section = sec; qte_cam_from = null; qte_cam_eff = ""
 	var bad := qte_gap_log.filter(func(r): return float(r.gap_m) <= float(disp.visual_gap.touge.far_m) and not (r.spheres_fit and r.centres_in_view and r.clear_view))
 	var f := FileAccess.open(shots_dir.path_join("qte_gap_check.json"), FileAccess.WRITE)

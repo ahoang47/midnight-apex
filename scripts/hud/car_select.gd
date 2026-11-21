@@ -1,6 +1,6 @@
 ## TOUGE (Gordon, touge-race): car select. All five cars in assets/cars (Austin 2026-11-19). Car choice is visual / model only
 ## (Austin t102u: every car statted alike, within parity, no mods, no retune). The stats line shows the block in use and the
-## parity check against the 1.07 cap; touch buttons (touch_buttons.gd) sit on the arrows and NEXT.
+## parity check against the 1.07 cap; touch buttons (touch_buttons.gd) sit on the arrows and START.
 @tool
 extends "res://scripts/hud/hud_panel.gd"
 func paint() -> void:

@@ -5,8 +5,6 @@
   "_track_doc": "corners = sim/config/tracks_v1.json tracks.touge.T1_Akina_Switchbacks, the lap match.race_setup uses by default for Touge (first official track). tools/gen_globals.py asserts they match.",
   "max_turns": 10,
   "_max_turns_doc": "race length in turns = corners = 10; kappa = kappa_for_length(10) (KAPPA_BY_LENGTH x KAPPA_HEAT_MULT)",
-  "swap_after_turn": 5,
-  "_swap_doc": "Austin: cat or mouse is picked first; turnout swap after turn 5. Display only: progress keeps summing in the sim order; turns 1-5 are banked and the on-screen gap resets.",
   "corners": [
     {
       "district": "touge",
@@ -75,5 +73,6 @@
   "opponent_qte_ratio": 1.0,
   "_opponent_qte_ratio_doc": "MatchConfig.opponent_qte_ratio (Austin approved 2026-11-19). Mean raw AI QTE = OPPONENT_QTE (0.80) \u00d7 this. 1.0 is the live default (same as omitting it). Per-turn draw uses OPPONENT_QTE_SD/MIN/MAX from its own RNG seeded race_seed + OPPONENT_QTE_SEED_OFFSET (104729). Optional overrides: opponent_qte_sd / _min / _max.",
   "use_draft_blocks": true,
-  "_use_draft_blocks_doc": "true = Barry's car blocks, unapproved/barry/touge-race-parity/blocks.json @ fd59332 (still UNAPPROVED; globals.gd CAR_DRAFT_BLOCKS). false = the TODO(barry) even/equal placeholder for every car. Settings per that file: 10 turns, touge, no mods, no retune, opponent QTE ratio 1.0 (= OPPONENT_QTE)."
+  "_use_draft_blocks_doc": "true = Barry's car blocks, unapproved/barry/touge-race-parity/blocks.json @ fd59332 (still UNAPPROVED; globals.gd CAR_DRAFT_BLOCKS). false = the TODO(barry) even/equal placeholder for every car. Settings per that file: 10 turns, touge, no mods, no retune, opponent QTE ratio 1.0 (= OPPONENT_QTE).",
+  "_touge_passing_doc": "Touge passing (sim 5c79dea, Austin approved 2026-11-20 6:00 PM PT): no lead/chase roles and no turn-5 swap. Per-phase scoring follows sim equations.PER_PHASE_DISTRICTS (globals.gd); optional \"per_phase\": true/false forces it (MatchConfig.per_phase). The start formation is display only (display.json visual_gap.touge)."
 }

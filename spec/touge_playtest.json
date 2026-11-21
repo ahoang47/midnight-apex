@@ -1,12 +1,12 @@
 {
- "_doc": "TOUGE scripted playtest (Gordon). main.gd _run_touge_script: menu -> car select (player BRZ, rival S2000) -> parked start + 'Lead or chase first?' -> CHASE -> 10 turns -> turnout swap after turn 5 -> finish. Picks are wanted stances (a locked gauge falls back to the first allowed); QTE = raw phase scores.",
+ "_doc": "TOUGE scripted playtest (Gordon). main.gd _run_touge_script: menu -> car select (player BRZ, rival S2000) -> START from the start grid (one behind the other, player trails; Touge passing 5c79dea: no role prompt, no turnout swap) -> 10 turns with per-phase passing -> finish. Picks are wanted stances (a locked gauge falls back to the first allowed); QTE = raw phase scores. pass_shots = how many visible passes to photograph (the first turns whose order flips).",
  "touge_flow": true,
  "seed": 20261119,
- "role": "chase",
  "player_car": "brz",
  "opp_car": "s2000",
  "lookback_turn": 6,
  "shot_turn": 2,
+ "pass_shots": 1,
  "corners": [
   {
    "pick": "PHE",

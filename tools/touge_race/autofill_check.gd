@@ -5,7 +5,7 @@
 extends SceneTree
 const RaceCore = preload("res://scripts/race_core.gd")
 func _race(cfg: Dictionary, seed_v: int, forced = null) -> Dictionary:
-	var core = RaceCore.new(); core.setup(cfg, seed_v, "lead")
+	var core = RaceCore.new(); core.setup(cfg, seed_v)
 	var lines := []; var k := 0
 	while core.phase != "FINISHED":
 		if core.phase == "SELECT":

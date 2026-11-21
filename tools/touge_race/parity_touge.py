@@ -5,7 +5,10 @@ For N seeds: random wanted stances + random Entry/Apex/Exit scores (some unplaye
 actually played (locked gauges -> least-loaded fallback in this harness, limp forced by the engine) and the exact phase
 scores (IEEE-754 hex) go to Godot, which must reproduce every turn's progress and both totals bit for bit.
 Stats: the TODO(barry) even, equal placeholder (POW = HAN = EN = 1 both sides), same as globals.gd.
-Usage: python3 tools/touge_race/parity_touge.py [N]   (needs /workspace/tools/godot; run from anywhere)
+Touge passing (sim 5c79dea): Touge is per-phase (each clash its own smoothed phase QTE, 3 AI draws per turn); every turn's
+per-clash QTEs (both sides) and the order after each phase (TurnResult.phase_order) must match too. --per-turn forces
+MatchConfig.per_phase False on both sides (the Street / Wangan per-turn path, which must stay bit-identical).
+Usage: python3 tools/touge_race/parity_touge.py [N] [--per-turn]   (needs /workspace/tools/godot; run from anywhere)
 """
 import json, os, random, struct, subprocess, sys
 from pathlib import Path
@@ -41,6 +44,8 @@ def stats_for(car, use_draft):
     b = json.loads(subprocess.check_output(["git", "-C", str(REPO), "show", "%s:%s" % (pin, BLOCKS)], text=True))["cars"][car]
     return (float(b["pow"]), float(b["en"]), float(b["han"]))
 PS = OS_ = None
+PER_TURN = "--per-turn" in sys.argv
+def _pp(): return {"per_phase": False} if PER_TURN else {}
 
 def sim_race(seed, rnd):
     want = [[rnd.choice("PHE") for _ in range(3)] for _ in range(CFG["max_turns"])]
@@ -52,13 +57,16 @@ def sim_race(seed, rnd):
                       district=CFG["district"], corners=[c["corner"] for c in CFG["corners"]], qte_window_mod=CFG["qte_window_mod"],
                       opponent_qte_ratio=CFG.get("opponent_qte_ratio"),
                       opponent_qte_sd=CFG.get("opponent_qte_sd"), opponent_qte_min=CFG.get("opponent_qte_min"),
-                      opponent_qte_max=CFG.get("opponent_qte_max"))
+                      opponent_qte_max=CFG.get("opponent_qte_max"), **_pp())
     res = run_match(cfg, stance, lambda t: tuple(qte[t - 1]))
     corners = [{"pick": "".join(LET[s] for s in tr.player_stances), "qte": [None if v is None else hexf(v) for v in qte[i]]}
                for i, tr in enumerate(res.turn_results)]
     truth = {"turns": [[hexf(tr.player_progress), hexf(tr.opponent_progress)] for tr in res.turn_results],
              "player_total": hexf(res.player_total_progress), "opponent_total": hexf(res.opponent_total_progress), "winner": res.winner,
-             "limp": sum(any(tr.player_limp) for tr in res.turn_results)}
+             "limp": sum(any(tr.player_limp) for tr in res.turn_results),
+             "phase": [{"p_qte": [hexf(v) for v in tr.player_clash_qte], "o_qte": [hexf(v) for v in tr.opponent_clash_qte],
+                        "order": list(tr.phase_order)} for tr in res.turn_results],
+             "passes": sum(1 for tr in res.turn_results for a, b in zip(["opponent"] + tr.phase_order, tr.phase_order) if a != b and "even" not in (a, b))}
     return {"seed": seed, "corners": corners}, truth
 
 def game_check(path):
@@ -80,6 +88,8 @@ def game_check(path):
     res = run_match(cfg, stance, lambda t: tuple(qte[t - 1]))
     turns_ok = all(hexf(tr.player_progress) == c["p"] and hexf(tr.opponent_progress) == c["o"] and "".join(LET[s] for s in tr.player_stances) == c["pick"]
                    and "".join(LET[s] for s in tr.opponent_stances) == c["rival"] for tr, c in zip(res.turn_results, g["corners"]))
+    # Touge passing: the order the game drew after each phase must be the sim's phase_order
+    turns_ok = turns_ok and all(c.get("phase_order", []) == list(tr.phase_order) for tr, c in zip(res.turn_results, g["corners"]))
     tot_ok = hexf(res.player_total_progress) == g["player_total"] and hexf(res.opponent_total_progress) == g["opponent_total"]
     win_ok = res.winner == g["winner"]
     # Austin t119u: the gauges the game drew after each turn must be the sim's TurnResult.player_heat_fill (bit for bit, and the
@@ -89,8 +99,8 @@ def game_check(path):
                    for tr, c in zip(res.turn_results, g["corners"]) if c.get("heat_drawn") for k, i in (("P", 0), ("H", 1), ("E", 2)))
     print("GAUGES vs SIM %s: post-turn fill %s, drawn bars %s" % ("PASS" if heat_ok and drawn_ok else "FAIL", "ok" if heat_ok else "MISMATCH", "ok" if drawn_ok else "MISMATCH"))
     win_ok = win_ok and heat_ok and drawn_ok
-    print("GAME vs SIM %s: seed %d %s vs %s, role_first %s; turns %s, totals %s, winner %s (sim %s, game %s)" % (
-        "PASS" if turns_ok and tot_ok and win_ok else "FAIL", g["seed"], g["player_car"], g["opp_car"], g["role_first"],
+    print("GAME vs SIM %s: seed %d %s vs %s; turns + phase order %s, totals %s, winner %s (sim %s, game %s)" % (
+        "PASS" if turns_ok and tot_ok and win_ok else "FAIL", g["seed"], g["player_car"], g["opp_car"],
         "ok" if turns_ok else "MISMATCH", "ok" if tot_ok else "MISMATCH", "ok" if win_ok else "MISMATCH", res.winner, g["winner"]))
     sys.exit(0 if turns_ok and tot_ok and win_ok else 1)
 
@@ -98,12 +108,12 @@ def main():
     global PS, OS_
     if "--game-result" in sys.argv: game_check(sys.argv[sys.argv.index("--game-result") + 1]); return
     ap = argparse.ArgumentParser(); ap.add_argument("n", nargs="?", type=int, default=300)
-    ap.add_argument("--no-draft-blocks", action="store_true"); ap.add_argument("--player-car"); ap.add_argument("--opp-car")
+    ap.add_argument("--no-draft-blocks", action="store_true"); ap.add_argument("--per-turn", action="store_true"); ap.add_argument("--player-car"); ap.add_argument("--opp-car")
     a = ap.parse_args(); n = a.n
     use = CFG.get("use_draft_blocks", False) and not a.no_draft_blocks
     pc = a.player_car or CFG["player"]["car"]; oc = a.opp_car or CFG["opponent"]["car"]
     PS = stats_for(pc, use); OS_ = stats_for(oc, use)
-    extra = (["--no-draft-blocks"] if a.no_draft_blocks else []) + ["--player-car", pc, "--opp-car", oc]
+    extra = (["--no-draft-blocks"] if a.no_draft_blocks else []) + (["--per-turn"] if PER_TURN else []) + ["--player-car", pc, "--opp-car", oc]
     rnd = random.Random(20261119)
     races, truths = [], []
     for i in range(n):
@@ -115,13 +125,15 @@ def main():
     got = json.loads(out.read_text())["races"]
     bad = 0
     for t, g in zip(truths, got):
-        ok = t["turns"] == g["turns"] and t["player_total"] == g["player_total"] and t["opponent_total"] == g["opponent_total"] and \
+        ok = t["turns"] == g["turns"] and t["phase"] == g["phase"] and t["player_total"] == g["player_total"] and t["opponent_total"] == g["opponent_total"] and \
              {"Player": "P", "Tie": "Tie"}.get(t["winner"], "O") == {"Player": "P", "Tie": "Tie"}.get(g["winner"], "O")
         bad += not ok
         if not ok and bad <= 3: print("MISMATCH seed", g["seed"], "\n sim ", t, "\n godot", g)
     wins = sum(t["winner"] == "Player" for t in truths); limps = sum(t["limp"] for t in truths)
-    print("TOUGE PARITY %s [%s vs %s, %s]: %d/%d races bit-identical (sim %s at %s); player wins %d, turns with limp %d" % (
-        "PASS" if bad == 0 else "FAIL", pc, oc, "blocks.json" if use else "placeholder", n - bad, n, SIM_PIN[:7], SIM, wins, limps))
+    passes = sum(t["passes"] for t in truths)
+    print("TOUGE PARITY %s [%s vs %s, %s, %s]: %d/%d races bit-identical incl. per-clash QTE + phase order (sim %s at %s); player wins %d, turns with limp %d, phase lead changes %d" % (
+        "PASS" if bad == 0 else "FAIL", pc, oc, "blocks.json" if use else "placeholder", "per-turn forced" if PER_TURN else "per-phase by district",
+        n - bad, n, SIM_PIN[:7], SIM, wins, limps, passes))
     sys.exit(1 if bad else 0)
 
 if __name__ == "__main__":

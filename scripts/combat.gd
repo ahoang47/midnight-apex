@@ -294,7 +294,9 @@ static func loser_to_stance(s: String) -> String: return "H" if s == "P" else ("
 ## combat.py resolve_turn (Phi/tau + heat). p_line / o_line: 3 stance letters each; p_mults / o_mults: per-clash heat
 ## multipliers from heat.gd play() (TurnState.player_heat_mults / opponent_heat_mults). phases: Entry / Apex / Exit raw scores
 ## (null = unplayed = 0); when 3 are given the turn's player_qte = mean_phase_qte(phases) (combat.py resolve_turn).
-static func resolve_turn(p_line: Array, o_line: Array, player: Dictionary, opponent: Dictionary, p_q: float, o_q: float, race_length: int, phases: Array = [], p_mults: Array = [1.0, 1.0, 1.0], o_mults: Array = [1.0, 1.0, 1.0]) -> Dictionary:
+## p_qte_by_clash / o_qte_by_clash (Touge passing, sim 5c79dea): length-3 per-clash QTEs that score clash i instead of the turn
+## score (per-phase districts); null = the turn score (every per-turn race, unchanged).
+static func resolve_turn(p_line: Array, o_line: Array, player: Dictionary, opponent: Dictionary, p_q: float, o_q: float, race_length: int, phases: Array = [], p_mults: Array = [1.0, 1.0, 1.0], o_mults: Array = [1.0, 1.0, 1.0], p_qte_by_clash = null, o_qte_by_clash = null) -> Dictionary:
 	var ph_out := []
 	if not phases.is_empty():
 		for v in phases: ph_out.append(phase_raw_qte(v))
@@ -308,11 +310,12 @@ static func resolve_turn(p_line: Array, o_line: Array, player: Dictionary, oppon
 	var pp := 0.0; var op := 0.0
 	for i in outcomes.size():
 		var o: int = outcomes[i]
-		var pg := clash_progress(o, p_line[i], p_q, player.pow, player.en, player.han, boss_total, kappa, float(p_mults[i]))
-		var og := clash_progress(-o, o_line[i], o_q, opponent.pow, opponent.en, opponent.han, boss_total, kappa, float(o_mults[i]))
+		var pg := clash_progress(o, p_line[i], p_q if p_qte_by_clash == null else float(p_qte_by_clash[i]), player.pow, player.en, player.han, boss_total, kappa, float(p_mults[i]))
+		var og := clash_progress(-o, o_line[i], o_q if o_qte_by_clash == null else float(o_qte_by_clash[i]), opponent.pow, opponent.en, opponent.han, boss_total, kappa, float(o_mults[i]))
 		pp += pg; op += og; pc.append(pg); oc.append(og)
 	var sum := 0
 	for o in outcomes: sum += o
 	return {"outcomes": outcomes, "battle_winner": "Player" if sum > 0 else ("Opponent" if sum < 0 else "Tie"),
 		"player_clash": pc, "opponent_clash": oc, "player_progress": pp, "opponent_progress": op, "kappa": kappa,
-		"player_qte": p_q, "player_qte_phases": ph_out}
+		"player_qte": p_q, "player_qte_phases": ph_out,
+		"player_clash_qte": [] if p_qte_by_clash == null else p_qte_by_clash.duplicate(), "opponent_clash_qte": [] if o_qte_by_clash == null else o_qte_by_clash.duplicate()}

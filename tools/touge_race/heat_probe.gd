@@ -5,7 +5,7 @@ func _init() -> void:
 	var cfg: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://spec/race_config.json"))
 	var inp: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://spec/touge_playtest.json"))
 	cfg.player.car = inp.player_car; cfg.opponent.car = inp.opp_car
-	var core = RaceCore.new(); core.setup(cfg, int(inp.seed), String(inp.role))
+	var core = RaceCore.new(); core.setup(cfg, int(inp.seed))
 	print("CAP ", core.p_heat.cap, " REC ", core.p_heat.rec, " REL ", core.p_heat.release)
 	while core.phase != "FINISHED":
 		var c: Dictionary = inp.corners[core.corner_index]

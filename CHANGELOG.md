@@ -8,6 +8,30 @@
 
 ---
 
+## 2026-11-20 — Gordon [godot]: Touge passing port (sim 5c79dea) — no roles or swap, per-phase passing, single-file start (Austin go-ahead 2026-11-20 10:26 PM PT: "push")
+- **What:**
+  - `globals.gd` is regenerated from sim 5c79dea: PER_PHASE_DISTRICTS ["touge"], PHASE_SMOOTH_W 0.35, the new Touge crew stats, and HEAT_RELEASE 0.3 -> 0.5. `gen_globals.py` now exports these names.
+  - `race_core.gd`: each Touge clash uses its smoothed phase QTE (Entry; Apex = round(.35A + .65E); Exit = round(.35X + .65 mean(E,A))). The AI draws 3 times per turn. The running order is tracked after each phase. `combat.gd` uses per-clash QTE.
+- **Removed:**
+  - The lead/chase roles and the turn-5 swap: role_first, banked_*, swap_after/role/at_swap, seg_*, the ROLE mode and --role, and swap_after_turn.
+  - The `role_prompt.gd` and `turnout_banner.gd` panels and the turnout playback.
+  - The CHASING/LEADING labels in `gap_meter.gd`.
+  - The save token is bumped TC4 -> TC5.
+- **Display:**
+  - Each pass after a phase is shown as a 2.5 s pass. The overtaking car steers to one side and keeps at least a car's width plus 0.1 m between the cars.
+  - The start is single file on the start straight, with the player trailing (Austin: "One behind the other, player always trails"; staging only, the sim starts level). The turn-5 lot stays as scenery for now (Austin, 10:23 PM: "We can keep the lot as dressing right now").
+- **Why:** Austin dropped cat and mouse. Barry's passing spec went live in the sim at 5c79dea, which Austin approved at 6:00 PM PT. In Touge, passes can now happen after every phase. Street and Wangan keep the rule that the order only changes after the exit QTE.
+- **Checks:**
+  - Parity vs 5c79dea: 300/100/200 PASS, and the per-turn Street/Wangan path 300 PASS. GAUSS 340/340, AI QTE 65/65, AUTOFILL, PLAN KEY + PASS_LANE, and DROP_SIDE all PASS.
+  - The playtest passes: CLIP 0, HEAT, START_GRID (replaces TURNOUT_CLEARANCE_CHECK) and GAME vs SIM.
+  - VOID is 72 px of known asset seams (sent to Arthur). WALL PASS.
+- **Open:**
+  - Tied totals keep the order shown on screen.
+  - The QTE camera type is picked from the order at the start of each turn.
+  - A real starting lot before turn 1 would need Arthur to author it.
+
+---
+
 ## 2026-11-20 — Barry [sim]: archived unapproved resources-v1..v4 drafts (Austin's call via Desmond: commit box-only work, storage isn't durable)
 - Added `unapproved/barry/resources-v1` through `resources-v4` (scripts, JSON results, logs, notes). Unapproved drafts only; nothing in sim/ or design/ changed.
 - Left out 8 `.npz` result arrays (~86 MB). Why: they regenerate from `run_v2.py`, `run_v3.py`, `run_v4.py` and `retune/run_v4b.py` in the same folders.

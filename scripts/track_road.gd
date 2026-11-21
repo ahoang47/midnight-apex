@@ -32,6 +32,7 @@ static func build_course(disp: Dictionary, cfg: Dictionary) -> Dictionary:
 	var D0: Dictionary = disp.districts.get(String(cfg.corners[0].district), {})   # TOUGE: downhill grade + bank (display.json)
 	course.grade = float(D0.get("grade", 0.0)); course.bank = float(D0.get("bank", 0.0)); course.bank_ramp_m = float(D0.get("bank_ramp_m", 8.0))
 	var TO: Dictionary = disp.get("turnout", {})
+	var to_turn: int = int(TO.get("after_turn", -1))   # TOUGE: the turnout lot's turn (display geometry; not a race rule since Touge passing)
 	var views := []; var straights := []; var turnout := {}
 	var n: int = cfg.corners.size()
 	for i in n:
@@ -40,7 +41,7 @@ static func build_course(disp: Dictionary, cfg: Dictionary) -> Dictionary:
 		var R: float = g.corner_radius_m; var A: float = deg_to_rad(float(g.corner_angle_deg)); var sg := 1.0 if String(c.dir) == "L" else -1.0
 		var anchor: float = course.length - S
 		var E: float = float(disp.road.exit_m) if i == n - 1 else 10.0 + S - 8.0
-		if not TO.is_empty() and i + 1 == int(cfg.get("swap_after_turn", -1)): E += float(TO.total_m)   # TOUGE: turnout straight after the swap turn
+		if not TO.is_empty() and i + 1 == to_turn: E += float(TO.total_m)   # TOUGE: turnout straight after its turn
 		if g.has("arcs"):   # WANGAN: compound corner (increasing radius); the View keeps R = arc length / A, so R*A is the true arc
 			var tot := 0.0; var ang := 0.0
 			for ar in g.arcs:   # TOUGE: optional 3rd entry = direction multiplier (-1 = the opposite way: esses, chicane)
@@ -50,11 +51,11 @@ static func build_course(disp: Dictionary, cfg: Dictionary) -> Dictionary:
 		else:
 			course.add_arc(R, A, sg).add_straight(E)
 		views.append(Course.View.new(course, anchor, S, R, A, E, sg))
-		if not TO.is_empty() and i + 1 == int(cfg.get("swap_after_turn", -1)):   # TOUGE: turnout pocket on turn 5's exit straight
+		if not TO.is_empty() and i + 1 == to_turn:   # TOUGE: turnout pocket on turn 5's exit straight
 			var t0: float = anchor + S + R * A + float(TO.approach_m)
 			turnout = {"s0": t0, "s1": t0 + float(TO.pocket_m), "taper": float(TO.taper_m), "w": float(TO.pocket_w_m), "turn": i, "local_s0": S + R * A + float(TO.approach_m), "cfg": TO}
 	# TOUGE (Austin t121 item 11): outside of corner i = its turn direction (L -> right / +1, R -> left / -1). Each run starts
-	# halfway along the straight before the corner; the swap turn's run holds until the turnout lot has ended.
+	# halfway along the straight before the corner; the turnout turn's run holds until the turnout lot has ended.
 	var sides := []
 	for i in n: sides.append(1.0 if String(cfg.corners[i].dir) == "L" else -1.0)
 	course.drop_runs = [[-1e9, sides[0]]]

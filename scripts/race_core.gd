@@ -5,10 +5,13 @@
 ## same turn is refused, and with all three locked the engine's limp stance is the only one offered, as match.py does).
 ## TIMING holds the three per-phase QTEs; submit_qte() resolves the turn exactly in match.py order:
 ##   per clash: rival plays boss_stance under its gauges, player plays its pick; end_turn both; resolve_turn with the mults.
-##   AI raw QTE is drawn once per turn from its own RNG (seed + OPPONENT_QTE_SEED_OFFSET), never the race RNG:
+##   AI raw QTE is drawn from its own RNG (seed + OPPONENT_QTE_SEED_OFFSET), never the race RNG:
 ##   round_qte_score(clamp(gauss(OPPONENT_QTE * opponent_qte_ratio, SD), MIN, MAX)); sd 0 = the fixed mean (match.py).
-## Touge cat / mouse (Austin): role chosen first, swap after swap_after_turn. Purely presentational: progress keeps summing,
-## turns 1..swap are BANKED at the swap and the on-screen gap restarts from 0; the winner is cum totals (same as every race).
+## Touge passing (sim 5c79dea, Austin approved 2026-11-20 6:00 PM PT): in C.PER_PHASE_DISTRICTS each clash is scored with its
+##   own smoothed phase QTE (equations.smooth_phase_qte, w = C.PHASE_SMOOTH_W) for both sides; the AI draws 3 times per turn
+##   (Entry = the per-turn draw, then Apex, Exit); car order after each phase = running totals (match.py phase_order).
+##   No lead/chase roles and no turn-5 swap (Austin: the race starts from the PA). The winner is the higher total after the
+##   last turn; being ahead has no mechanical effect.
 extends RefCounted
 signal event(type: String, data: Dictionary)
 
@@ -47,8 +50,6 @@ var cum_o := 0.0
 var history: Array = []
 var result = null
 var autofilled := false
-var role_first := "chase"        # "lead" (mouse) or "chase" (cat) for turns 1..swap_after_turn
-var banked_p := 0.0; var banked_o := 0.0; var banked := false
 
 ## TODO(barry): pending parity block. globals.gd CAR_STAT_BLOCKS[car] is null for every car, so both sides use the even,
 ## equal stand-in PARITY_PLACEHOLDER_UNITS (only shares and r reach the maths: r = 1, shares 1/3). Car choice is visual only.
@@ -93,8 +94,8 @@ func zone_width() -> float:
 func zone_ms() -> float:
 	return zone_width() * C.QTE_ZONE_BASE_MS
 
-func setup(c: Dictionary, s: int, first_role: String = "chase") -> void:
-	cfg = c; seed_value = s; role_first = first_role
+func setup(c: Dictionary, s: int) -> void:
+	cfg = c; seed_value = s
 	var st := stats_from_config(c); player = st.player; opponent = st.opponent
 	rng = PyRandom.new(s)
 	# match.py opponent_qte_mean / opponent_qte_spread: ratio None = unscaled OPPONENT_QTE; sd/min/max None = live constants.
@@ -113,17 +114,26 @@ func setup(c: Dictionary, s: int, first_role: String = "chase") -> void:
 	var wear: Array = C.TRACK_WEAR   # heat.track_wear(district, lap), computed by the sim (globals.gd)
 	p_heat = Heat.for_player(player.pow, player.en, player.han, race_r(), wear)
 	o_heat = Heat.for_boss(opponent.pow, opponent.en, opponent.han, wear)
-	cum_p = 0.0; cum_o = 0.0; history = []; banked_p = 0.0; banked_o = 0.0; banked = false
+	cum_p = 0.0; cum_o = 0.0; history = []
 	_start_corner(0)
 
 func corner() -> Dictionary:
 	return cfg.corners[corner_index]
 
-func swap_after() -> int: return int(cfg.get("swap_after_turn", 5))
-## player's role this corner: "lead" (mouse) or "chase" (cat)
-func role() -> String:
-	if corner_index < swap_after(): return role_first
-	return "chase" if role_first == "lead" else "lead"
+## match.py: per_phase = district in E.PER_PHASE_DISTRICTS (MatchConfig.per_phase None); race_config "per_phase" true/false forces it
+func per_phase() -> bool:
+	var f = cfg.get("per_phase", null)
+	if f != null: return bool(f)
+	return C.PER_PHASE_DISTRICTS.has(String(corner().district).to_lower())
+
+## equations.smooth_phase_qte: [Entry, round(w*Apex + (1-w)*Entry), round(w*Exit + (1-w)*mean(Entry, Apex))] on the phase
+## scores; null / w >= 1 -> unchanged. The mean is Python sum() / i (Combat.py_sum = CPython's compensated sum, bit for bit).
+static func smooth_phase_qte(v, w: float = C.PHASE_SMOOTH_W):
+	if v == null or w >= 1.0: return v
+	var out := [float(v[0])]
+	for i in [1, 2]:
+		out.append(Combat.round_qte_score(w * float(v[i]) + (1 - w) * Combat.py_sum(v.slice(0, i)) / i))
+	return out
 
 func _start_corner(i: int) -> void:
 	corner_index = i
@@ -206,13 +216,30 @@ func _draw_opponent_qte(r) -> float:
 		return o_qte_mean
 	return Combat.round_qte_score(clampf(r.gauss(o_qte_mean, o_qte_sd), o_qte_lo, o_qte_hi))
 
-## preview (pure, no RNG, no state change): the turn result these phase scores would give
+## This turn's AI QTE draws, in match.py order: the per-turn draw; in a per-phase district (with an RNG) two more (Apex, Exit),
+## so o_qte_rng advances 3 times per turn there. Returns {turn, by_clash} (by_clash null = per-turn).
+func _draw_opponent(r) -> Dictionary:
+	var o_qte := _draw_opponent_qte(r)
+	if not per_phase() or r == null: return {"turn": o_qte, "by_clash": null}
+	return {"turn": o_qte, "by_clash": [o_qte, _draw_opponent_qte(r), _draw_opponent_qte(r)]}
+
+## preview (pure, no RNG, no state change): the turn result these phase scores would give. Unscored phases count as unplayed
+## (0); smoothing is causal, so clash i of a preview with phases 0..i scored is clash i of the final turn.
 func preview(phases: Array) -> Dictionary:
 	var pg = p_heat.copy(); var og = o_heat.copy()
 	var peek = null if o_qte_rng == null else o_qte_rng.clone()
-	return _resolve(pg, og, phases, _draw_opponent_qte(peek))
+	return _resolve(pg, og, phases, _draw_opponent(peek))
 
-func _resolve(pg, og, phases: Array, o_qte: float) -> Dictionary:
+## running order after each phase (match.py phase_order): "player" / "opponent" / "even" on total progress so far
+static func phase_order_of(cp0: float, co0: float, pc: Array, oc: Array) -> Array:
+	var out := []; var cp := cp0; var co := co0
+	for i in pc.size():
+		cp += float(pc[i]); co += float(oc[i])
+		out.append("player" if cp > co else ("opponent" if co > cp else "even"))
+	return out
+
+func _resolve(pg, og, phases: Array, od: Dictionary) -> Dictionary:
+	var o_qte: float = od.turn
 	var k: String = corner().corner
 	var pl := []; var ol := []; var pm := []; var om := []; var plimp := []; var olimp := []
 	for ci in 3:
@@ -222,17 +249,22 @@ func _resolve(pg, og, phases: Array, o_qte: float) -> Dictionary:
 		var r_p: Dictionary = pg.play(p_s, k)
 		pl.append(p_s); ol.append(o_s); pm.append(r_p.mult); om.append(r_o.mult); plimp.append(r_p.limp); olimp.append(r_o.limp)
 	pg.end_turn(k); og.end_turn(k)
-	var res := Combat.resolve_turn(pl, ol, player, opponent, Combat.mean_phase_qte(phases), o_qte, int(cfg.max_turns), phases, pm, om)
+	var pq = null; var oq = null
+	if per_phase():   # match.py: the phase scores (phase_raw_qte: unplayed = 0, rounded), smoothed; the AI's 3 draws, smoothed
+		pq = []
+		for v in phases: pq.append(Combat.phase_raw_qte(v))
+		pq = smooth_phase_qte(pq); oq = smooth_phase_qte(od.by_clash)
+	var res := Combat.resolve_turn(pl, ol, player, opponent, Combat.mean_phase_qte(phases), o_qte, int(cfg.max_turns), phases, pm, om, pq, oq)
 	res.p_line = "".join(pl); res.o_line = "".join(ol); res.p_mults = pm; res.o_mults = om; res.p_limp = plimp; res.o_limp = olimp
 	res.opponent_qte = o_qte
+	res.phase_order = phase_order_of(cum_p, cum_o, res.player_clash, res.opponent_clash) if per_phase() else []
 	return res
 
 func submit_qte(phases: Array):
 	if phase != "TIMING": return null
 	assert(phases.size() == 3, "three phase scores")
 	qte_in = phases.duplicate()
-	var o_qte: float = _draw_opponent_qte(o_qte_rng)
-	var res := _resolve(p_heat, o_heat, phases, o_qte)
+	var res := _resolve(p_heat, o_heat, phases, _draw_opponent(o_qte_rng))
 	cum_p += res.player_progress; cum_o += res.opponent_progress
 	var c := corner()
 	result = {"district": c.district, "corner": c.corner, "line": line, "line_index": line_index, "rival_played": res.o_line,
@@ -240,27 +272,23 @@ func submit_qte(phases: Array):
 		"q_time": res.player_qte, "opponent_qte": res.opponent_qte, "zone_width": zone_width(), "p_mults": res.p_mults, "o_mults": res.o_mults, "p_limp": res.p_limp,
 		"outcomes": res.outcomes, "player_clash": res.player_clash, "opponent_clash": res.opponent_clash,
 		"player_progress": res.player_progress, "opponent_progress": res.opponent_progress,
-		"cum_player": cum_p, "cum_opponent": cum_o, "rng_draws_after": rng.draws, "autofilled": autofilled, "role": role(),
+		"cum_player": cum_p, "cum_opponent": cum_o, "rng_draws_after": rng.draws, "autofilled": autofilled,
+		"player_clash_qte": res.player_clash_qte, "opponent_clash_qte": res.opponent_clash_qte, "phase_order": res.phase_order,
 		"p_fill": p_heat.fill(), "p_locked": p_heat.locked.duplicate(), "o_fill": o_heat.fill(), "o_locked": o_heat.locked.duplicate()}
 	history.append(result)
 	phase = "RESULT"
 	event.emit("result", result)
 	return result
 
-## true between the swap corner's RESULT and the next corner (main.gd plays the turnout here)
-func at_swap() -> bool: return phase == "RESULT" and corner_index + 1 == swap_after() and corner_index + 1 < cfg.corners.size()
-
 func next() -> void:
 	if phase != "RESULT": return
-	if corner_index + 1 == swap_after() and not banked:   # turnout: bank turns 1..swap (heat carries on untouched)
-		banked_p = cum_p; banked_o = cum_o; banked = true
 	if corner_index + 1 < cfg.corners.size():
 		_start_corner(corner_index + 1)
 	else:
 		phase = "FINISHED"
 		event.emit("finish", {"winner": winner()})
 
-## winner: banked + turns after the swap = the plain cum totals, decided exactly as match.py (higher total, exact tie = Tie)
+## winner: the cum totals, decided exactly as match.py (higher total after the last turn, exact tie = Tie)
 func winner() -> String:
 	return "Player" if cum_p > cum_o else ("Opponent" if cum_o > cum_p else "Tie")
 
@@ -270,14 +298,6 @@ func lead() -> float:  # whole race share lead
 
 func gap() -> float:
 	return cum_p - cum_o
-
-## this half's progress (since the swap, or since the start): what the touge gap meter and the drawn gap show
-func seg_p() -> float: return cum_p - banked_p
-func seg_o() -> float: return cum_o - banked_o
-func seg_lead() -> float:
-	var t := seg_p() + seg_o()
-	return 0.0 if t == 0.0 else (seg_p() - seg_o()) / t
-func seg_gap() -> float: return seg_p() - seg_o()
 
 static func fhex(x: float) -> String:
 	var b := Combat._bits(x)
@@ -296,16 +316,16 @@ func dump() -> Dictionary:
 		var q := []
 		for v in h.qte_in: q.append(null if v == null else fhex(float(v)))
 		turns.append({"picks": h.picks.duplicate(), "auto": h.autofilled, "qte": q})
-	return {"schema": "TC4", "sim": C.PIN_COMMIT.substr(0, 7), "build": String(bi.build), "seed": seed_value, "rng_draws": rng.draws,
-		"role_first": role_first, "corner_index": corner_index, "phase": phase, "picks": picks.duplicate(), "auto": autofilled, "turns": turns,
+	return {"schema": "TC5", "sim": C.PIN_COMMIT.substr(0, 7), "build": String(bi.build), "seed": seed_value, "rng_draws": rng.draws,
+		"corner_index": corner_index, "phase": phase, "picks": picks.duplicate(), "auto": autofilled, "turns": turns,
 		"cum_player": fhex(cum_p), "cum_opponent": fhex(cum_o)}
 
 func load_state(c: Dictionary, d: Dictionary) -> void:
-	assert(d.schema == "TC4", "outdated token" if str(d.get("schema", "")) in ["TC1", "TC2", "TC3"] else "unknown schema")
+	assert(d.schema == "TC5", "outdated token" if str(d.get("schema", "")) in ["TC1", "TC2", "TC3", "TC4"] else "unknown schema")
 	assert(String(d.sim) == C.PIN_COMMIT.substr(0, 7), "token is from sim %s; this build is sim %s: replay it on its own build" % [d.sim, C.PIN_COMMIT.substr(0, 7)])
 	if String(d.build) != String(build_info().build):
-		push_warning("TC4 token from build %s, running build %s (same sim pin): results replay; visuals may differ" % [d.build, build_info().build])
-	setup(c, int(d.seed), String(d.role_first))
+		push_warning("TC5 token from build %s, running build %s (same sim pin): results replay; visuals may differ" % [d.build, build_info().build])
+	setup(c, int(d.seed))
 	for t in d.turns:
 		for i in t.picks: pick(int(i))
 		lock(); autofilled = bool(t.auto)
@@ -322,8 +342,8 @@ func load_state(c: Dictionary, d: Dictionary) -> void:
 		push_error("replay desync")
 		assert(false, "replay desync")
 
-## ── compact token TC4:<sim7>:<build10>:<base64url(json)>:<CRC16 hex4> (CRC over "TC4" + sim7 + build + payload bytes) ──
-## TC1-TC3 (card-draw sims) are refused as outdated tokens; TC4 = G2 heat touge race.
+## ── compact token TC5:<sim7>:<build10>:<base64url(json)>:<CRC16 hex4> (CRC over "TC5" + sim7 + build + payload bytes) ──
+## TC1-TC3 (card-draw sims) and TC4 (cat / mouse: role_first in the state, per-turn Touge AI QTE) are refused as outdated tokens; TC5 = Touge passing (per-phase, no roles; sim 5c79dea).
 static func crc16(bytes: PackedByteArray) -> int:
 	var crc := 0xFFFF
 	for b in bytes:
@@ -334,20 +354,20 @@ static func crc16(bytes: PackedByteArray) -> int:
 
 static func encode_token(d: Dictionary) -> String:
 	var payload: PackedByteArray = JSON.stringify(d, "", false, true).to_utf8_buffer()
-	var head: PackedByteArray = ("TC4" + String(d.sim) + String(d.build)).to_utf8_buffer()
+	var head: PackedByteArray = ("TC5" + String(d.sim) + String(d.build)).to_utf8_buffer()
 	var crc: String = "%04X" % crc16(head + payload)
 	var b64: String = Marshalls.raw_to_base64(payload).replace("+", "-").replace("/", "_").replace("=", "")
-	return "TC4:%s:%s:%s:%s" % [d.sim, d.build, b64, crc]
+	return "TC5:%s:%s:%s:%s" % [d.sim, d.build, b64, crc]
 
 static func decode_token(tok: String) -> Dictionary:
 	var parts := tok.strip_edges().split(":")
-	if parts[0] == "TC1" or parts[0] == "TC2" or parts[0] == "TC3":
-		push_error("outdated token (%s): this build uses TC4 (G2 heat touge race). Replay that token on the build that made it." % parts[0])
+	if parts[0] in ["TC1", "TC2", "TC3", "TC4"]:
+		push_error("outdated token (%s): this build uses TC5 (Touge passing, per-phase). Replay that token on the build that made it." % parts[0])
 		return {}
-	assert(parts[0] == "TC4" and parts.size() == 5, "bad token")
+	assert(parts[0] == "TC5" and parts.size() == 5, "bad token")
 	var s := parts[3].replace("-", "+").replace("_", "/")
 	while s.length() % 4 != 0: s += "="
 	var payload: PackedByteArray = Marshalls.base64_to_raw(s)
-	var calc: String = "%04X" % crc16(("TC4" + parts[1] + parts[2]).to_utf8_buffer() + payload)
+	var calc: String = "%04X" % crc16(("TC5" + parts[1] + parts[2]).to_utf8_buffer() + payload)
 	assert(calc == parts[4], "CRC mismatch")
 	return JSON.parse_string(payload.get_string_from_utf8())

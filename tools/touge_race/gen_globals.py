@@ -69,6 +69,10 @@ NAMES = [
     "BOSS_HEAT_CAP_TURNS", "BOSS_HEAT_RECOVERY", "BOSS_HEAT_RELEASE", "BOSS_HEAT_LOCK_ON_PASSIVE",
     # ladder / parity cap
     "K_STEP", "LADDER_RUNGS", "LADDER_TARGET_R", "BOSS_TARGET_R", "BOSS_STAT_SHARES", "DISTRICTS",
+    # crew ladder stats (mirrored; the touge race still runs on the car placeholder / draft blocks, not these)
+    "MS_CREW_BUDGET",
+    # Touge passing go-live (5c79dea): per-phase districts and the phase smoothing weight (equations.smooth_phase_qte)
+    "PER_PHASE_DISTRICTS", "PHASE_SMOOTH_W",
 ]
 
 def main():
